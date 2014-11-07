@@ -1,0 +1,91 @@
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1704" measuredH="489" mockupW="1678" mockupH="474">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::DataGrid" x="26" y="84" w="-1" h="-1" measuredW="508" measuredH="111" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Order%2C%20Lesson%20Number%2CTitle%2C%20Lesson%0A10%2C%201%2C%20%20Latin%20-%20a%20Subject-Object-Verb%20%28SOV%29%20Language.%2C%20Latin%201%0A11%2C%201.1%2C%20Modifications%20of%20the%20basic%20sentence%20pattern%2C%20Latin%201%0A20%2C%202%2C%20Noun%20inflection.%2C%20Latin%201</text>
+      </controlProperties>
+    </control>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::Title" x="26" y="15" w="-1" h="-1" measuredW="313" measuredH="43" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Grammar%20Lesson</text>
+      </controlProperties>
+    </control>
+    <control controlID="2" controlTypeID="com.balsamiq.mockups::TextInput" x="969" y="159" w="-1" h="-1" measuredW="291" measuredH="27" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Latin%2C%20a%20Subject-Object-Verb%20%28SOV%29%20Language.</text>
+      </controlProperties>
+    </control>
+    <control controlID="3" controlTypeID="com.balsamiq.mockups::Canvas" x="880" y="84" w="824" h="405" measuredW="100" measuredH="70" zOrder="0" locked="false" isInGroup="-1"/>
+    <control controlID="4" controlTypeID="com.balsamiq.mockups::Button" x="892" y="438" w="-1" h="-1" measuredW="52" measuredH="27" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Save</text>
+      </controlProperties>
+    </control>
+    <control controlID="5" controlTypeID="com.balsamiq.mockups::Label" x="892" y="162" w="-1" h="-1" measuredW="26" measuredH="21" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Title</text>
+      </controlProperties>
+    </control>
+    <control controlID="6" controlTypeID="com.balsamiq.mockups::Label" x="892" y="211" w="-1" h="-1" measuredW="43" measuredH="21" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Lesson</text>
+      </controlProperties>
+    </control>
+    <control controlID="7" controlTypeID="com.balsamiq.mockups::ComboBox" x="969" y="209" w="-1" h="-1" measuredW="68" measuredH="24" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Latin%201</text>
+      </controlProperties>
+    </control>
+    <control controlID="8" controlTypeID="com.balsamiq.mockups::SubTitle" x="980" y="95" w="-1" h="-1" measuredW="43" measuredH="27" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Edit</text>
+      </controlProperties>
+    </control>
+    <control controlID="9" controlTypeID="com.balsamiq.mockups::TextInput" x="969" y="262" w="-1" h="-1" measuredW="25" measuredH="27" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>11</text>
+      </controlProperties>
+    </control>
+    <control controlID="10" controlTypeID="com.balsamiq.mockups::Label" x="893" y="262" w="-1" h="-1" measuredW="35" measuredH="21" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Order</text>
+      </controlProperties>
+    </control>
+    <control controlID="11" controlTypeID="com.balsamiq.mockups::Canvas" x="590" y="86" w="248" h="107" measuredW="100" measuredH="70" zOrder="11" locked="false" isInGroup="-1"/>
+    <control controlID="12" controlTypeID="com.balsamiq.mockups::Label" x="607" y="140" w="-1" h="-1" measuredW="36" measuredH="21" zOrder="12" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Leson</text>
+      </controlProperties>
+    </control>
+    <control controlID="13" controlTypeID="com.balsamiq.mockups::ComboBox" x="691" y="138" w="-1" h="-1" measuredW="68" measuredH="24" zOrder="13" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Latin%201</text>
+      </controlProperties>
+    </control>
+    <control controlID="14" controlTypeID="com.balsamiq.mockups::SubTitle" x="671" y="97" w="-1" h="-1" measuredW="56" measuredH="27" zOrder="14" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Filter</text>
+      </controlProperties>
+    </control>
+    <control controlID="16" controlTypeID="com.balsamiq.mockups::Label" x="892" y="357" w="-1" h="-1" measuredW="26" measuredH="21" zOrder="15" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Text</text>
+      </controlProperties>
+    </control>
+    <control controlID="17" controlTypeID="com.balsamiq.mockups::TextArea" x="969" y="357" w="692" h="66" measuredW="200" measuredH="140" zOrder="16" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>The%20basic%20word%20order%20of%20Latin%20is%20SOV.%20Typical%20sentences%20then%20have%20the%20verb%20in%20final%20position%2C%20as%20in%20the%20sentence%20Oppidum%20condunt.%20Because%20personal%20subjects%20are%20included%20in%20the%20verb%20form%2C%20a%20separate%20subject%20may%20be%20lacking.%0A%20%0AA%20fuller%20pattern%20is%20found%20in%20the%20following%20sentence%3A%20Aeneas%20ab%20nomine%20uxoris%20Lavinium%20appellat.%20The%20sentence%20also%20includes%20an%20adverbial%20phrase%20placed%2C%20as%20frequently%2C%20before%20the%20object%2C%20which%20typically%20stands%20directly%20before%20the%20verb.%20Similar%20sentences%20are%20found%20at%20the%20beginning%20of%20this%20passage.</text>
+      </controlProperties>
+    </control>
+    <control controlID="22" controlTypeID="com.balsamiq.mockups::TextInput" x="969" y="304" w="-1" h="-1" measuredW="27" measuredH="27" zOrder="17" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>1.1</text>
+      </controlProperties>
+    </control>
+    <control controlID="23" controlTypeID="com.balsamiq.mockups::Label" x="893" y="304" w="-1" h="-1" measuredW="56" measuredH="21" zOrder="18" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Lesson%20%23</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
