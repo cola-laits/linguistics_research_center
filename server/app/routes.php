@@ -15,3 +15,10 @@ Route::get('/', function()
 {
 	return View::make('hello');
 });
+
+Route::get('eieol', function()
+{
+	$serieses = EieolSeries::all();
+	
+	return View::make('eieol')->with('serieses', $serieses);
+});

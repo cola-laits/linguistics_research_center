@@ -1,0 +1,18 @@
+General
+	setup different environments
+	setup bamboo to build server environments
+
+Admin
+	build admin navbar
+	authentication
+	
+Public
+	template
+	EIEOL
+		Lessons
+		TOC
+		Gloss
+		Dictionary
+		Meanings
+	Lexicon
+	Hook into rest of site
