@@ -16,7 +16,7 @@ View::share('static_site',Config::get('lrc_settings.static_site'));
 
 Route::get('/', function()
 {
-	return View::make('hello');
+	return Redirect::to(Config::get('lrc_settings.static_site'));
 });
 
 Route::get('eieol', function()
