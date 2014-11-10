@@ -1,18 +1,26 @@
 General
 	setup different environments
 	setup bamboo to build server environments
+	404 errors
 
 Admin
+	http://alexsears.com/tutorial/create-admin-interface-laravel
+	http://stackoverflow.com/questions/23295463/best-practice-for-creating-administrator-interface-in-laravel-4
+	use https
 	build admin navbar
-	authentication
+	authentication - use before filter
 	
 Public
 	template
+	Unicode info and test (make sure page matches an images)
 	EIEOL
 		Lessons
+			Handle 2 languages in one lesson
+			Unicode
 		TOC
-		Gloss
+		Gloss - only show records that are used by lessons
 		Dictionary
 		Meanings
+		Load old data
 	Lexicon
-	Hook into rest of site
+	Links to/from static pages
