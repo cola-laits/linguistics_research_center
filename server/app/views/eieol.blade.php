@@ -3,7 +3,7 @@
 @section('content')
 
 @include('menu_eieol')
-@include('menu_lesson')
+@include('menu_lesson', array('data'=>'data'))
 @include('menu_book_links')
 @include('menu_more_info')
 
@@ -170,7 +170,7 @@ centuries A.D., plus an additional pair of Geg lessons covering texts from the 1
     
     <ul>
     @foreach($serieses as $series)
-        <li>{{ HTML::link('lesson/' . $series->id . '/0', $series->title, array('title' => $series->title )) }} </li>
+        <li>{{ HTML::link('lesson/' . $series->id . '/0', $series->title, array('title' => $series->expanded_title )) }} </li>
     @endforeach
   	</ul>
     

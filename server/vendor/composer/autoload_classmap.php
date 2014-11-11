@@ -6,8 +6,12 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddMenuFieldsToSeries' => $baseDir . '/app/database/migrations/2014_11_10_142958_add_menu_fields_to_series.php',
     'BaseController' => $baseDir . '/app/controllers/BaseController.php',
+    'CreateSeriesTable' => $baseDir . '/app/database/migrations/2014_11_07_165948_create_series_table.php',
     'DatabaseSeeder' => $baseDir . '/app/database/seeds/DatabaseSeeder.php',
+    'EieolSeries' => $baseDir . '/app/models/EieolSeries.php',
+    'EieolSeriesSeeder' => $baseDir . '/app/database/seeds/EieolSeriesSeeder.php',
     'HomeController' => $baseDir . '/app/controllers/HomeController.php',
     'IlluminateQueueClosure' => $vendorDir . '/laravel/framework/src/Illuminate/Queue/IlluminateQueueClosure.php',
     'SessionHandlerInterface' => $vendorDir . '/symfony/http-foundation/Symfony/Component/HttpFoundation/Resources/stubs/SessionHandlerInterface.php',
