@@ -26,3 +26,10 @@ Route::get('eieol', function()
 	$data['serieses'] = EieolSeries::all()->sortBy('order');
 	return View::make('eieol')->with($data);
 });
+
+Route::get('lesson/{series_id}/{order}', function($series_id, $order)
+{
+	$data = array();
+	$data['lesson'] = EieolLesson::where('series_id', '=', $series_id)->where('order', '=', $order)->firstOrFail();
+	return View::make('lesson')->with($data);
+});

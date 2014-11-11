@@ -14,6 +14,7 @@ Public
 	Unicode info and test (make sure page matches an images)
 	EIEOL
 		Lessons
+			lesson resource menu on lesson page
 			Handle 2 languages in one lesson
 			Unicode
 		TOC

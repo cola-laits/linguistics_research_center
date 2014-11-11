@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'AddMenuFieldsToSeries' => $baseDir . '/app/database/migrations/2014_11_10_142958_add_menu_fields_to_series.php',
     'BaseController' => $baseDir . '/app/controllers/BaseController.php',
+    'CreateLessonTable' => $baseDir . '/app/database/migrations/2014_11_11_130955_create_lesson_table.php',
     'CreateSeriesTable' => $baseDir . '/app/database/migrations/2014_11_07_165948_create_series_table.php',
     'DatabaseSeeder' => $baseDir . '/app/database/seeds/DatabaseSeeder.php',
     'EieolSeries' => $baseDir . '/app/models/EieolSeries.php',
