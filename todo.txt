@@ -24,4 +24,4 @@ Public
 		Meanings
 		Load old data
 	Lexicon
-	Links to/from static pages
+	Links to/from static pages, share css and header?

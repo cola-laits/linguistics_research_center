@@ -1,5 +1,7 @@
 @extends('layout')
 
+@section('title') {{$lesson->title}}@stop
+
 @section('content')
 
 @include('menu_eieol')

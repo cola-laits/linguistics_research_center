@@ -1,5 +1,7 @@
 @extends('layout')
 
+@section('title') Early Indo-European Online: Introduction to the Language Lessons @stop
+
 @section('content')
 
 @include('menu_eieol')

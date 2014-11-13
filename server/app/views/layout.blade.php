@@ -3,7 +3,7 @@
 <head>	<!-- Standard Header for new CoLA-style design with Balkan tree leaf -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <meta name='Generator' content='doStdHtmlX.pl' />
-<title>Early Indo-European Online: Introduction to the Language Lessons</title>
+<title>@section('title') The Linguistics Research Center @show</title>
 {{ HTML::style('css/lrcstyle.css') }}
 <link rel='index' href='{{$static_site}}' />
 
