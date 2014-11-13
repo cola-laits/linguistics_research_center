@@ -2,15 +2,16 @@ General
 	setup different environments
 	setup bamboo to build server environments
 	404 errors
+	htaccess file needs to send login and admin pages through https
 
 Admin
-	http://alexsears.com/tutorial/create-admin-interface-laravel
-	http://stackoverflow.com/questions/23295463/best-practice-for-creating-administrator-interface-in-laravel-4
-	use https
-	build admin navbar
-	authentication - use before filter
+	build admin navbar - not on login page
+	Maintain user
+	Maintain series
+	Maintain lessons
 	
 Public
+***Titles on each page
 	Unicode info and test (make sure page matches an images)
 	EIEOL
 		Lessons

@@ -33,3 +33,43 @@ Route::get('lesson/{series_id}/{order}', function($series_id, $order)
 	$data['lesson'] = EieolLesson::where('series_id', '=', $series_id)->where('order', '=', $order)->firstOrFail();
 	return View::make('lesson')->with($data);
 });
+
+Route::get('login', function()
+{
+	return View::make('login');
+});
+
+Route::post('login', function()
+{
+	$username = Input::get('username');
+	$password = Input::get('password');
+	
+	if (Auth::attempt(['username' => $username, 'password' => $password]))
+	{
+		return Redirect::intended('admin/');
+	}
+	
+	return Redirect::back()
+	->withInput()
+	->withErrors('That username/password combo does not exist.');
+});
+
+Route::get('logout', function()
+{
+	Auth::logout();
+	Session::flush();
+ 	return Redirect::to('/');
+});
+
+
+Route::group(array('prefix'=> 'admin', 'before' => 'auth'), function() {
+	Route::get('/', function()
+	{
+		return View::make('admin_index');
+	});
+	Route::get('/user', function()
+	{
+		return View::make('admin_user');
+	});
+
+});
