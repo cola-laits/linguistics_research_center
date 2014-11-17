@@ -63,13 +63,10 @@ Route::get('logout', function()
 
 
 Route::group(array('prefix'=> 'admin', 'before' => 'auth'), function() {
+	Route::resource('/user', 'UserController');
+	
 	Route::get('/', function()
 	{
 		return View::make('admin_index');
 	});
-	Route::get('/user', function()
-	{
-		return View::make('admin_user');
-	});
-
 });

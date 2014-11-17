@@ -6,7 +6,6 @@ Deploy
 	make sure we don't show errors
 
 Admin
-***Maintain user
 	Use bootstraps has-error, has-success and has-feedback/icons and help-block
 	Maintain series
 	Maintain lessons
