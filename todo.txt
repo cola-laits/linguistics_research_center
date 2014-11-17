@@ -1,17 +1,17 @@
-General
+Deploy
 	setup different environments
 	setup bamboo to build server environments
 	404 errors
 	htaccess file needs to send login and admin pages through https
+	make sure we don't show errors
 
 Admin
-	build admin navbar - not on login page
-	Maintain user
+***Maintain user
+	Use bootstraps has-error, has-success and has-feedback/icons and help-block
 	Maintain series
 	Maintain lessons
 	
 Public
-***Titles on each page
 	Unicode info and test (make sure page matches an images)
 	EIEOL
 		Lessons
