@@ -1,20 +1,28 @@
 @extends('admin_layout')
  
-@section('title') Edit User @stop
+@section('title') {{$action}} User @stop
  
 @section('content')
  
 <div class='col-lg-8 col-lg-offset-2'>
  
-    <h1><i class='fa fa-user'></i> Edit User</h1>
+    <h1><i class='fa fa-user'></i> {{$action}} User</h1>
     
     @if ($errors->has())
-        @foreach ($errors->all() as $error)
-            <div class='bg-danger alert'>{{ $error }}</div>
-        @endforeach
+    	<div class='bg-danger alert'>
+    		<ul>
+	        @foreach ($errors->all() as $error)
+	            <li>{{ $error }}</li>
+	        @endforeach
+	        </ul>
+        </div>
     @endif
  
-    {{ Form::model($user, ['role' => 'form', 'url' => '/admin/user/' . $user->id, 'method' => 'PUT']) }}
+ 	@if ($action == 'Create')
+ 		{{ Form::open(['role' => 'form', 'url' => '/admin/user']) }}
+ 	@else
+    	{{ Form::model($user, ['role' => 'form', 'url' => '/admin/user/' . $user->id, 'method' => 'PUT']) }}
+	@endif
  
     <div class='form-group @if ($errors->has('first_name')) has-error @endif  '>
         {{ Form::label('first_name', 'First Name') }}
@@ -35,6 +43,18 @@
         {{ Form::label('email', 'Email') }}
         {{ Form::email('email', null, ['placeholder' => 'Email', 'class' => 'form-control']) }}
     </div>
+    
+    @if ($action == 'Create')
+	    <div class='form-group @if ($errors->has('password')) has-error @endif  '>
+	        {{ Form::label('password', 'Password') }}
+	        {{ Form::password('password', ['placeholder' => 'Password', 'class' => 'form-control']) }}
+	    </div>
+	 
+	    <div class='form-group @if ($errors->has('password')) has-error @endif  '>
+	        {{ Form::label('password_confirmation', 'Confirm Password') }}
+	        {{ Form::password('password_confirmation', ['placeholder' => 'Confirm Password', 'class' => 'form-control']) }}
+	    </div>
+	@endif
  
     <div class='form-group'>
         {{ Form::submit('Update', ['class' => 'btn btn-primary']) }}

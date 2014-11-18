@@ -64,7 +64,7 @@
     
 	        <!-- navbar -->
 		    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-		      <div class="container">
+		      <div class="container-fluid">
 		        <div class="navbar-header">
 		          <div class="navbar-brand">LRC Admin</div>
 		        </div>

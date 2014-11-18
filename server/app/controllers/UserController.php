@@ -21,7 +21,7 @@ class UserController extends BaseController {
 	 */
 	public function create()
 	{
-		return View::make('user.create');
+		return View::make('user.form', ['action' => 'Create']);
 	}
 
 
@@ -75,7 +75,7 @@ class UserController extends BaseController {
 	public function edit($id)
 	{
 		$user = User::find($id);
-		return View::make('user.edit', [ 'user' => $user ]);
+		return View::make('user.form', [ 'user' => $user, 'action' => 'Edit' ]);
 	}
 
 
