@@ -13,7 +13,7 @@
 
 //share lets us pass data to all routes
 View::share('static_site',Config::get('lrc_settings.static_site'));
-View::share('lesson_menu', EieolSeries::all()->sortBy('menu_order'));
+View::share('lesson_menu', EieolSeries::where('published', '=', True)->get()->sortBy('menu_order'));
 
 Route::get('/', function()
 {
@@ -23,7 +23,7 @@ Route::get('/', function()
 Route::get('eieol', function()
 {
 	$data = array();
-	$data['serieses'] = EieolSeries::all()->sortBy('order');
+	$data['serieses'] = EieolSeries::where('published', '=', True)->get()->sortBy('order');
 	return View::make('eieol')->with($data);
 });
 
