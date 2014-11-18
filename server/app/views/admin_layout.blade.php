@@ -70,7 +70,7 @@
 		        </div>
 		        
 		        <ul class="nav navbar-nav">
-		          <li>{{ HTML::link('/admin/', 'Menu', array('title' => 'Admin Menu')) }}</li>
+		          <li>{{ HTML::link('/admin/eieol_series', 'Series', array('title' => 'Series Maintenance')) }}</li>
 		          <li>{{ HTML::link('/admin/user', 'Users', array('title' => 'User Maintenance' )) }}</li>
 		        </ul>
 		        

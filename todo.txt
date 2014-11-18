@@ -11,6 +11,7 @@ Admin
 	Maintain lessons
 	
 Public
+****change menu and eieol page to only get published series
 	Unicode info and test (make sure page matches an images)
 	EIEOL
 		Lessons
@@ -24,3 +25,7 @@ Public
 		Load old data
 	Lexicon
 	Links to/from static pages, share css and header?
+	
+	
+Future Ideas
+	Screen for users to change their password

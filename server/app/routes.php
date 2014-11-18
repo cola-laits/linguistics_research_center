@@ -46,7 +46,7 @@ Route::post('login', function()
 	
 	if (Auth::attempt(['username' => $username, 'password' => $password]))
 	{
-		return Redirect::intended('admin/');
+		return Redirect::intended('admin/eieol_series');
 	}
 	
 	return Redirect::back()
@@ -64,9 +64,5 @@ Route::get('logout', function()
 
 Route::group(array('prefix'=> 'admin', 'before' => 'auth'), function() {
 	Route::resource('/user', 'UserController');
-	
-	Route::get('/', function()
-	{
-		return View::make('admin_index');
-	});
+	Route::resource('/eieol_series', 'EieolSeriesController');
 });
