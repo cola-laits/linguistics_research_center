@@ -10,7 +10,7 @@ class EieolSeriesController extends BaseController {
 	public function index()
 	{
 		$serieses = EieolSeries::all()->sortBy('order');
-        return View::make('eieol_series.index', ['serieses' => $serieses]);
+        return View::make('eieol_series.eieol_series_index', ['serieses' => $serieses]);
 	}
 
 
@@ -21,7 +21,7 @@ class EieolSeriesController extends BaseController {
 	 */
 	public function create()
 	{
-		return View::make('eieol_series.form', ['action' => 'Create']);
+		return View::make('eieol_series.eieol_series_form', ['action' => 'Create']);
 	}
 
 
@@ -34,9 +34,9 @@ class EieolSeriesController extends BaseController {
 	{
 		
 		$rules = array(
-				'title' => 'required|unique:eieol_series',
-				'order' => 'required|integer',
 				'published'  => 'boolean',
+				'order' => 'required|integer',
+				'title' => 'required|unique:eieol_series',
 				'menu_name'  => 'required',
 				'menu_order'  => 'required|integer',
 				'expanded_title'  => 'required',
@@ -51,9 +51,9 @@ class EieolSeriesController extends BaseController {
 		
 			$series = new EieolSeries;
 			
-			$series->title = Input::get('title');
-			$series->order = Input::get('order');
 			$series->published = Input::get('published');
+			$series->order = Input::get('order');
+			$series->title = Input::get('title');
 			$series->menu_name = Input::get('menu_name');
 			$series->menu_order = Input::get('menu_order');
 			$series->expanded_title = Input::get('expanded_title');
@@ -77,7 +77,8 @@ class EieolSeriesController extends BaseController {
 	public function edit($id)
 	{
 		$series = EieolSeries::find($id);
-		return View::make('eieol_series.form', [ 'series' => $series, 'action' => 'Edit' ]);
+		$lessons = EieolLesson::where('series_id', '=', $id)->get()->sortBy('order');
+		return View::make('eieol_series.eieol_series_form', [ 'series' => $series, 'lessons' => $lessons, 'action' => 'Edit' ]);
 	}
 
 
@@ -90,8 +91,8 @@ class EieolSeriesController extends BaseController {
 	public function update($id)
 	{
 		$rules = array(
-				'title' => 'required|unique:eieol_series,title,' . $id,
 				'order' => 'required|integer',
+				'title' => 'required|unique:eieol_series,title,' . $id,
 				'published'  => 'boolean',
 				'menu_name'  => 'required',
 				'menu_order'  => 'required|integer',

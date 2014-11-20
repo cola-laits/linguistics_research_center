@@ -6,9 +6,11 @@ Deploy
 	make sure we don't show errors
 
 Admin
-	Use bootstraps has-error, has-success and has-feedback/icons and help-block
-	Maintain series
 	Maintain lessons
+		Tiny MCE
+		Popup keyboard - ability to customize
+		Sorting?
+	Authorization by series?
 	
 Public
 	Unicode info and test (make sure page matches an images)
@@ -28,3 +30,4 @@ Public
 	
 Future Ideas
 	Screen for users to change their password
+	Save versions of changes like SVN

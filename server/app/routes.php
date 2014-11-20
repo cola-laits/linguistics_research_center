@@ -65,4 +65,5 @@ Route::get('logout', function()
 Route::group(array('prefix'=> 'admin', 'before' => 'auth'), function() {
 	Route::resource('/user', 'UserController');
 	Route::resource('/eieol_series', 'EieolSeriesController');
+	Route::resource('/eieol_lesson', 'EieolLessonController');
 });

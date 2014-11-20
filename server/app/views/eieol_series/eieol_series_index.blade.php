@@ -4,7 +4,7 @@
  
 @section('content')
  
-<div class='col-lg-8 col-lg-offset-2'>
+<div class='col-lg-12'>
  
     <h1><i class="fa fa-book"></i> Series Administration</h1>
     
@@ -23,7 +23,6 @@
                     <th>Menu Name</th>
                     <th>Menu Order</th>
                     <th>Expanded Title</th>
-                    <th>Added</th>
                     <th>Updated</th>
                     <th></th>
                 </tr>
@@ -45,8 +44,7 @@
                     <td>{{ $series->menu_name }}</td>
                     <td>{{ $series->menu_order }}</td>
                     <td>{{ $series->expanded_title }}</td>
-                    <td>{{ $series->created_at->format('m/d/Y h:ia') }} <br/> by {{ $series->created_by }}</td>
-                    <td>{{ $series->updated_at->format('m/d/Y h:ia') }} <br/> by {{ $series->updated_by }}</td>
+                    <td>{{ $series->updated_at->format('m/d/Y h:ia') }} by {{ $series->updated_by }}</td>
                     <td>
                         <a href="/admin/eieol_series/{{ $series->id }}/edit" class="btn btn-info pull-left" style="margin-right: 3px;">Edit</a>
                     </td>

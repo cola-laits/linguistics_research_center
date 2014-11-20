@@ -57,7 +57,7 @@
 	@endif
  
     <div class='form-group'>
-        {{ Form::submit('Update', ['class' => 'btn btn-primary']) }}
+        {{ Form::submit($action, ['class' => 'btn btn-primary']) }}
     </div>
  
     {{ Form::close() }}

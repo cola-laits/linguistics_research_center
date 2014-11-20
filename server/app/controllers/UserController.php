@@ -10,7 +10,7 @@ class UserController extends BaseController {
 	public function index()
 	{
 		$users = User::all();
-        return View::make('user.index', ['users' => $users]);
+        return View::make('user.user_index', ['users' => $users]);
 	}
 
 
@@ -21,7 +21,7 @@ class UserController extends BaseController {
 	 */
 	public function create()
 	{
-		return View::make('user.form', ['action' => 'Create']);
+		return View::make('user.user_form', ['action' => 'Create']);
 	}
 
 
@@ -35,10 +35,10 @@ class UserController extends BaseController {
 		
 		$rules = array(
 				'first_name' => 'required',
-				'last_name' => 'required',
-				'username'  => 'required|unique:user',
-				'email'     => 'required|email|unique:user',
-				'password'  => 'required|min:8|confirmed',
+				'last_name'  => 'required',
+				'username'   => 'required|unique:user',
+				'email'      => 'required|email|unique:user',
+				'password'   => 'required|min:8|confirmed',
 		);
 		$validator = Validator::make(Input::all(), $rules);
 		
@@ -75,7 +75,7 @@ class UserController extends BaseController {
 	public function edit($id)
 	{
 		$user = User::find($id);
-		return View::make('user.form', [ 'user' => $user, 'action' => 'Edit' ]);
+		return View::make('user.user_form', [ 'user' => $user, 'action' => 'Edit' ]);
 	}
 
 
@@ -89,9 +89,9 @@ class UserController extends BaseController {
 	{
 		$rules = array(
 				'first_name' => 'required',
-				'last_name' => 'required',
-				'username'  => 'required|unique:user,username,' . $id,
-				'email'     => 'required|email|unique:user,email,' .$id,
+				'last_name'  => 'required',
+				'username'   => 'required|unique:user,username,' . $id,
+				'email'      => 'required|email|unique:user,email,' .$id,
 		);
 		$validator = Validator::make(Input::all(), $rules);
 		
