@@ -66,7 +66,7 @@ class EieolLessonController extends BaseController {
 	{
 		$lesson = EieolLesson::find($id);
 		$series = $lesson->series;
-		return View::make('eieol_lesson.eieol_lesson_form', ['lesson' => $lesson, 'series' => $series, 'action' => 'Edit' ]);
+		return View::make('eieol_lesson.eieol_lesson_form', ['lesson' => $lesson, 'series' => $series, 'action' => 'Edit']);
 	}
 
 

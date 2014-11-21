@@ -17,7 +17,6 @@
 
 <h1>{{$lesson->title}}</h1>
 {{$lesson->intro_text}}
-<hr/>
 {{$lesson->lesson_translation}}
 
 

@@ -5,7 +5,6 @@
 <meta name='Generator' content='doStdHtmlX.pl' />
 <title>@section('title') The Linguistics Research Center @show</title>
 {{ HTML::style('css/lrcstyle.css') }}
-<link rel='index' href='{{$static_site}}' />
 
 
 <!-- Dublin Core Metadata (DC) -->
@@ -84,7 +83,7 @@
 			<img src="http://www.utexas.edu/cola/centers/lrc/images/wordmarks_utla.gif" alt="The University of Texas at Austin; College of Liberal Arts" />
 		</div>
 		<div id="banner"> <!-- open div for banner graphic -->
-			<!--  border='0' width='900' height='120' /> -->
+
 			{{ HTML::image('images/LRCbannerB.jpg', $alt="Linguistics Research Center", $attributes = array('border'=>0, 'width'=>900, 'height'=>120)) }}
 		</div> <!-- close banner graphic -->
 	</div> <!-- close contentheader -->

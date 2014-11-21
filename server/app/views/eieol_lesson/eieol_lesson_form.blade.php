@@ -68,5 +68,10 @@
     {{ Form::close() }}
     
 </div>
+
+<script>
+	CKEDITOR.replace( 'intro_text',{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', allowedContent : true} );
+	CKEDITOR.replace( 'lesson_translation',{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', allowedContent : true}  );
+</script>
  
 @stop

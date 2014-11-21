@@ -7,8 +7,10 @@
         {{ HTML::style('//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css') }}
         {{ HTML::style('//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css') }}
         
-        {{ HTML::script('https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js') }}
-        {{ HTML::script('http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js') }}
+        
+        {{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js') }}
+        {{ HTML::script('//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js') }}
+        {{ HTML::script('//cdn.ckeditor.com/4.4.5.1/full/ckeditor.js') }}
   
         <style>
             body {
@@ -38,6 +40,22 @@
 
 					
     });
+
+
+    $mytoolbar =
+    	[
+    		{ name: 'document', items : [ 'Source'] },
+			{ name: 'clipboard', items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] },
+			{ name: 'editing', items : [ 'Find','Replace','-','SelectAll','-','SpellChecker' ] },
+			{ name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
+			{ name: 'paragraph', items : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote','-',
+			                   			   'JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','BidiLtr','BidiRtl' ] },
+			{ name: 'links', items : [ 'Link','Unlink','Anchor' ] },
+			{ name: 'insert', items : [ 'Table','HorizontalRule','SpecialChar'] },
+			{ name: 'styles', items : [ 'Format','FontSize' ] },
+			{ name: 'colors', items : [ 'TextColor','BGColor' ] },
+			{ name: 'tools', items : [ 'Maximize'] }
+    	];
     </script>
     
 	
