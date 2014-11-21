@@ -11,7 +11,7 @@ class EieolLessonController extends BaseController {
 	public function create()
 	{
 		$series = EieolSeries::find(Input::get('series_id'));
-		return View::make('eieol_lesson.eieol_lesson_form', ['series' => $series, 'action' => 'Create']);
+		return View::make('eieol_lesson.eieol_lesson_create', ['series' => $series, 'action' => 'Create']);
 	}
 
 
@@ -27,8 +27,7 @@ class EieolLessonController extends BaseController {
 				'order' => 'required|integer|unique:eieol_lesson,order,null,id,series_id,'. Input::get('series_id'),
 				'title' => 'required|unique:eieol_lesson,title,null,id,series_id,'. Input::get('series_id'),
 				'intro_text' => 'required',
-				'series_id' => 'required'
-				//'series_id' => 'required|exists:eieol_series,id'
+				'series_id' => 'required|exists:eieol_series,id'
 		);
 		$validator = Validator::make(Input::all(), $rules);
 		
@@ -44,7 +43,6 @@ class EieolLessonController extends BaseController {
 			$lesson->order = Input::get('order');
 			$lesson->series_id = Input::get('series_id');
 			$lesson->intro_text = Input::get('intro_text');
-			$lesson->lesson_translation = Input::get('lesson_translation');
 			$lesson->created_by = Auth::user()->username;
 			$lesson->updated_by = Auth::user()->username;
 			
@@ -66,7 +64,7 @@ class EieolLessonController extends BaseController {
 	{
 		$lesson = EieolLesson::find($id);
 		$series = $lesson->series;
-		return View::make('eieol_lesson.eieol_lesson_form', ['lesson' => $lesson, 'series' => $series, 'action' => 'Edit']);
+		return View::make('eieol_lesson.eieol_lesson_edit', ['lesson' => $lesson, 'series' => $series, 'action' => 'Edit']);
 	}
 
 
@@ -82,8 +80,7 @@ class EieolLessonController extends BaseController {
 				'order' => 'required|integer|unique:eieol_lesson,order,' . $id . ',id,series_id,'. Input::get('series_id'),
 				'title' => 'required|unique:eieol_lesson,title,' . $id . ',id,series_id,'. Input::get('series_id'),
 				'intro_text' => 'required',
-				'series_id' => 'required'
-				//'series_id' => 'required|exists:eieol_series,id'
+				'series_id' => 'required|exists:eieol_series,id'
 		);
 		$validator = Validator::make(Input::all(), $rules);
 		
