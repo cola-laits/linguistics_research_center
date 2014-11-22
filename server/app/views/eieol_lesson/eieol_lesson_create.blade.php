@@ -1,12 +1,12 @@
 @extends('admin_layout')
  
-@section('title') {{$action}} Lesson Editor @stop
+@section('title') Create Lesson @stop
  
 @section('content')
  
 <div class='col-lg-12'>
  
-    <h1><i class='fa fa-file-text'></i> {{$action}} Lesson for {{ HTML::link('admin/eieol_series/' . $series->id . '/edit', $series->title , array('title' => 'Return to series' )) }}</h1>
+    <h1><i class='fa fa-file-text'></i> Create Lesson for {{ HTML::link('admin/eieol_series/' . $series->id . '/edit', $series->title , array('title' => 'Return to series' )) }}</h1>
     
     @if (Session::has('message'))
 	    <div class="alert alert-info">{{ Session::get('message') }}</div>
@@ -22,11 +22,7 @@
         </div>
     @endif
  
- 	@if ($action == 'Create')
- 		{{ Form::open(['role' => 'form', 'url' => '/admin/eieol_lesson', 'class' => 'form']) }}
- 	@else
-    	{{ Form::model($lesson, ['role' => 'form', 'url' => '/admin/eieol_lesson/' . $lesson->id, 'method' => 'PUT', 'class' => 'form']) }}
-	@endif
+ 	{{ Form::open(['role' => 'form', 'url' => '/admin/eieol_lesson', 'class' => 'form']) }}
 	
 	{{ Form::hidden('series_id', $series->id) }}
 	
@@ -53,7 +49,7 @@
 	<br/>
  
     <div class='form-group col-sm-1'>
-        {{ Form::submit($action, ['class' => 'btn btn-primary']) }}
+        {{ Form::submit('Create', ['class' => 'btn btn-primary']) }}
     </div>
 	
     {{ Form::close() }}

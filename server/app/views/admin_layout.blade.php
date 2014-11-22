@@ -44,7 +44,7 @@
 
     $mytoolbar =
     	[
-    		{ name: 'document', items : [ 'Source'] },
+    		{ name: 'document', items : [ 'Source', '-', 'Save',] },
 			{ name: 'clipboard', items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] },
 			{ name: 'editing', items : [ 'Find','Replace','-','SelectAll','-','SpellChecker' ] },
 			{ name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },

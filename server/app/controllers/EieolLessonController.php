@@ -11,7 +11,7 @@ class EieolLessonController extends BaseController {
 	public function create()
 	{
 		$series = EieolSeries::find(Input::get('series_id'));
-		return View::make('eieol_lesson.eieol_lesson_create', ['series' => $series, 'action' => 'Create']);
+		return View::make('eieol_lesson.eieol_lesson_create', ['series' => $series]);
 	}
 
 
@@ -64,7 +64,7 @@ class EieolLessonController extends BaseController {
 	{
 		$lesson = EieolLesson::find($id);
 		$series = $lesson->series;
-		return View::make('eieol_lesson.eieol_lesson_edit', ['lesson' => $lesson, 'series' => $series, 'action' => 'Edit']);
+		return View::make('eieol_lesson.eieol_lesson_edit', ['lesson' => $lesson, 'series' => $series]);
 	}
 
 
@@ -95,13 +95,24 @@ class EieolLessonController extends BaseController {
 			$lesson->order = Input::get('order');
 			$lesson->series_id = Input::get('series_id');
 			$lesson->intro_text = Input::get('intro_text');
-			$lesson->lesson_translation = Input::get('lesson_translation');
 			$lesson->updated_by = Auth::user()->username;
 				
 			$lesson->save();
 			Session::flash('message', $lesson->title . ' has been updated');
 			return Redirect::to('/admin/eieol_lesson/' . $id . '/edit');
 		}
+	}
+	
+	public function update_translation($id)
+	{
+		$lesson = EieolLesson::find($id);
+			
+		$lesson->lesson_translation = Input::get('lesson_translation');
+		$lesson->updated_by = Auth::user()->username;
+
+		$lesson->save();
+		Session::flash('message', 'Translation has been updated');
+		return Redirect::to('/admin/eieol_lesson/' . $id . '/edit');
 	}
 
 }
