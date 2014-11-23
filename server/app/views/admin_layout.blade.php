@@ -23,7 +23,7 @@
     
     <script type="text/javascript">
     $(document).ready(function(){
-		//highlight the menu for whichever page we are on
+		//highlight the menu for whichever page we are on - only works for main pages, not edit or create pages
 		$('a[href$="' + this.location.pathname + '"]').parent().addClass('active');
 
 		//generic delete confirmation
@@ -36,8 +36,6 @@
 		            $form.trigger('submit');
 		        });
 		});
-
-
 					
     });
 
