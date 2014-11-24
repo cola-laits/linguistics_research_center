@@ -6,6 +6,7 @@
  
         {{ HTML::style('//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css') }}
         {{ HTML::style('//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css') }}
+        {{ HTML::style('css/adminstyle.css') }}
         
         
         {{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js') }}
@@ -42,7 +43,7 @@
 
     $mytoolbar =
     	[
-    		{ name: 'document', items : [ 'Source', '-', 'Save',] },
+    		{ name: 'document', items : [ 'Source'] },
 			{ name: 'clipboard', items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] },
 			{ name: 'editing', items : [ 'Find','Replace','-','SelectAll','-','SpellChecker' ] },
 			{ name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },

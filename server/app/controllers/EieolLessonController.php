@@ -76,6 +76,7 @@ class EieolLessonController extends BaseController {
 	 */
 	public function update($id)
 	{
+		Log::error('in update');
 		$rules = array(			
 				'order' => 'required|integer|unique:eieol_lesson,order,' . $id . ',id,series_id,'. Input::get('series_id'),
 				'title' => 'required|unique:eieol_lesson,title,' . $id . ',id,series_id,'. Input::get('series_id'),
@@ -85,23 +86,29 @@ class EieolLessonController extends BaseController {
 		$validator = Validator::make(Input::all(), $rules);
 		
 		if ($validator->fails()) {
-			return Redirect::to('/admin/eieol_lesson/' . $id . '/edit')
-			->withErrors($validator->messages())
-			->withInput();
+			Log::error('in fail');
+			return Response::json(array(
+					'fail' => true,
+					'errors' => $validator->getMessageBag()->toArray()
+			));
 		} else {
-			$lesson = EieolLesson::find($id);
+			Log::error('in pass');
+ 			$lesson = EieolLesson::find($id);
 			
-			$lesson->title = Input::get('title');
-			$lesson->order = Input::get('order');
-			$lesson->series_id = Input::get('series_id');
+ 			$lesson->title = Input::get('title');
+ 			$lesson->order = Input::get('order');
 			$lesson->intro_text = Input::get('intro_text');
-			$lesson->updated_by = Auth::user()->username;
-				
-			$lesson->save();
-			Session::flash('message', $lesson->title . ' has been updated');
-			return Redirect::to('/admin/eieol_lesson/' . $id . '/edit');
+ 			$lesson->updated_by = Auth::user()->username;
+			
+ 			$lesson->save();
+			return Response::json(array(
+					'success' => true,
+					'message' => 'Update was successful'
+			));
+
 		}
 	}
+	
 	
 	public function update_translation($id)
 	{
@@ -111,8 +118,11 @@ class EieolLessonController extends BaseController {
 		$lesson->updated_by = Auth::user()->username;
 
 		$lesson->save();
-		Session::flash('message', 'Translation has been updated');
-		return Redirect::to('/admin/eieol_lesson/' . $id . '/edit');
+		//Session::flash('message', 'Translation has been updated');
+		return Response::json(array(
+				'success' => true,
+				'message' => 'Translation was udated successfully'
+		));
 	}
 
 }
