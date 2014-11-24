@@ -2,6 +2,8 @@ Admin
 	Maintain lessons
 		Popup keyboard - ability to customize
 		Sorting?
+		Grammar - add, update, remove
+		Glossed texts - add, update, remove
 	Authorization by series?
 	
 Public

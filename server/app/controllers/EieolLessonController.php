@@ -76,7 +76,6 @@ class EieolLessonController extends BaseController {
 	 */
 	public function update($id)
 	{
-		Log::error('in update');
 		$rules = array(			
 				'order' => 'required|integer|unique:eieol_lesson,order,' . $id . ',id,series_id,'. Input::get('series_id'),
 				'title' => 'required|unique:eieol_lesson,title,' . $id . ',id,series_id,'. Input::get('series_id'),
@@ -86,13 +85,11 @@ class EieolLessonController extends BaseController {
 		$validator = Validator::make(Input::all(), $rules);
 		
 		if ($validator->fails()) {
-			Log::error('in fail');
 			return Response::json(array(
 					'fail' => true,
 					'errors' => $validator->getMessageBag()->toArray()
 			));
 		} else {
-			Log::error('in pass');
  			$lesson = EieolLesson::find($id);
 			
  			$lesson->title = Input::get('title');
