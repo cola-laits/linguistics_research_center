@@ -74,6 +74,7 @@
 	
     $(document).ready(function(){
 		var grammar_ctr = 0;
+		var glossed_text_ctr = 0;
         
         //trigger highlight form if inputs change.  If you are using ckeditor, you have to do that with its on change function
         $(':input').keyup(highlight_form); //listen for typing
@@ -104,6 +105,19 @@
     			if(this.checkDirty())
     				$('#'+new_form_id).css("background-color", "#EBAD99");
     		});
+    	});
+
+    	//this clones the default add glossed text form 
+    	$( "#add_glossed_text" ).click(function() {	
+    		glossed_text_ctr ++;
+    		var new_div_id = "new_glossed_text_div_" + glossed_text_ctr;
+    		var new_form_id = "new_glossed_text_form_" + glossed_text_ctr;
+    		
+    		var new_div = $( "#new_glossed_text_div" ).clone(true).attr("id",new_div_id);
+    		new_div.appendTo( "#glossed_texts" );
+    		new_div.show();
+    		
+    		$('#new_glossed_text_form', '#'+new_div_id).attr("id",new_form_id);
     	});
 		
     });//document ready
@@ -176,6 +190,100 @@
     
     <hr/>
     <h2>Glossed Texts</h2>
+    
+    
+    
+    <!-- ---------------------------------------------------------------------------------------- -->
+    
+    
+    
+    
+    <div id ="glossed_texts">
+	    @foreach ($glossed_texts as $glossed_text)
+	          {{ Form::model($glossed_text, ['role' => 'form',
+			    					   'url' => '/admin/eieol_glossed_text/' . $glossed_text->id, 
+			    					   'method' => 'PUT', 
+			    					   'class' => 'form ajax_form',
+			    					   'id' => 'glossed_text_form_' . $glossed_text->id
+			    					  ]) }}
+					
+					<div class='row'>
+						<div class='col-sm-1'></div>
+						
+						<div class='form-group col-sm-1 '>
+					        {{ Form::label('order', 'Order') }}
+					        {{ Form::text('order', null, ['placeholder' => 'Order', 'class' => 'form-control']) }}
+					        <div id ="order_error" class="alert-danger errors"></div>
+					    </div>
+					    	
+					    <div class='form-group col-sm-8'>
+					        {{ Form::label('glossed_text', 'Glossed Text') }}
+					        {{ Form::text('glossed_text', null, ['placeholder' => 'Glossed Text', 'class' => 'form-control']) }}
+					        <div id ="glossed_text_error" class="alert-danger errors"></div>
+					    </div>	    
+					    
+					    <div class='form-group col-sm-1 '>
+						    {{ Form::submit('Edit', ['class' => 'btn btn-primary']) }}
+						</div>
+				    </div>
+			    
+			    {{ Form::close() }}
+			    <hr/>
+	    @endforeach
+    </div>
+    
+    <!-- This is the template for adding new glossed text.  It is not used, but cloned when we want to add a new one -->
+    <div id="new_glossed_text_div" style="display: none">
+	    {{ Form::open(['role' => 'form',
+		    		   'url' => '/admin/eieol_glossed_text/', 
+		    		   'class' => 'form ajax_form',
+		    		   'id' => 'new_glossed_text_form'
+		    		  ]) }} 
+		    	
+		    	{{ Form::hidden('lesson_id', $lesson->id) }}
+		    	
+				<div class='row'>
+					<div class='col-sm-1'></div>
+					
+					<div class='form-group col-sm-1'>
+				        {{ Form::label('order', 'Order') }}
+				        {{ Form::text('order', null, ['placeholder' => 'Order', 'class' => 'form-control']) }}
+				        <div id ="order_error" class="alert-danger errors"></div>
+				    </div>
+				    
+				    <div class='form-group col-sm-9'>
+				        {{ Form::label('glossed_text', 'Glossed Text') }}
+				        {{ Form::text('glossed_text', null, ['placeholder' => 'Glossed Text', 'class' => 'form-control']) }}
+				        <div id ="glossed_text_error" class="alert-danger errors"></div>
+				    </div>	      
+				    {{ Form::submit('Add', ['class' => 'btn btn-primary']) }}
+			    </div>
+		    
+		    {{ Form::close() }}
+		    <hr/>
+	  </div>
+	  
+	  
+	  <!-- Button that will clone the new glossed text template -->
+	  <div class='row'>
+	  	<div class='col-sm-1'></div>
+	  	<div class="col-sm-1">
+	  		<a class="btn btn-success" id="add_glossed_text">Create New Glossed Text</a>
+	  	</div>
+	  </div>
+	  
+	  
+	  
+    
+    
+    
+    <!-- ---------------------------------------------------------------------------------------- -->
+    
+    
+    
+    
+    
+    
     <hr/>
     
     <h2>Text and Translation</h2>
@@ -213,49 +321,49 @@
 	<hr/>
     <h2>Grammar</h2>	
     <div id ="grammars">
-    @foreach ($grammars as $grammar)
-          {{ Form::model($grammar, ['role' => 'form',
-		    					   'url' => '/admin/eieol_grammar/' . $grammar->id, 
-		    					   'method' => 'PUT', 
-		    					   'class' => 'form ajax_form',
-		    					   'id' => 'grammar_form_' . $grammar->id
-		    					  ]) }}
-				
-				<div class='row'>
-					<div class='col-sm-1'></div>
+	    @foreach ($grammars as $grammar)
+	          {{ Form::model($grammar, ['role' => 'form',
+			    					   'url' => '/admin/eieol_grammar/' . $grammar->id, 
+			    					   'method' => 'PUT', 
+			    					   'class' => 'form ajax_form',
+			    					   'id' => 'grammar_form_' . $grammar->id
+			    					  ]) }}
 					
-					<div class='form-group col-sm-1 '>
-				        {{ Form::label('order', 'Order') }}
-				        {{ Form::text('order', null, ['placeholder' => 'Order', 'class' => 'form-control']) }}
-				        <div id ="order_error" class="alert-danger errors"></div>
+					<div class='row'>
+						<div class='col-sm-1'></div>
+						
+						<div class='form-group col-sm-1 '>
+					        {{ Form::label('order', 'Order') }}
+					        {{ Form::text('order', null, ['placeholder' => 'Order', 'class' => 'form-control']) }}
+					        <div id ="order_error" class="alert-danger errors"></div>
+					    </div>
+					    
+					    <div class='form-group col-sm-1 '>
+					        {{ Form::label('section_number', 'Section Number') }}
+					        {{ Form::text('section_number', null, ['placeholder' => 'Section Number', 'class' => 'form-control']) }}
+					        <div id ="section_number_error" class="alert-danger errors"></div>
+					    </div>
+					    	
+					    <div class='form-group col-sm-3'>
+					        {{ Form::label('title', 'Title') }}
+					        {{ Form::text('title', null, ['placeholder' => 'Title', 'class' => 'form-control']) }}
+					        <div id ="title_error" class="alert-danger errors"></div>
+					    </div>
+					    
+					    <br/>
+					    
+					    <div class='form-group col-sm-10 col-sm-offset-1'>
+					        {{ Form::label('grammar_text', 'Grammar Text') }}
+					        {{ Form::textarea('grammar_text', null, ['placeholder' => 'Grammar Text', 'class' => 'form-control', 'size' => '100x10', 'id' => 'grammar_text_' . $grammar->id]) }}
+					        <div id ="grammar_text_error" class="alert-danger errors"></div>
+					        {{ Form::submit('Edit', ['class' => 'btn btn-primary']) }}
+					    </div>		    
+			
 				    </div>
-				    
-				    <div class='form-group col-sm-1 '>
-				        {{ Form::label('section_number', 'Section Number') }}
-				        {{ Form::text('section_number', null, ['placeholder' => 'Section Number', 'class' => 'form-control']) }}
-				        <div id ="section_number_error" class="alert-danger errors"></div>
-				    </div>
-				    	
-				    <div class='form-group col-sm-3'>
-				        {{ Form::label('title', 'Title') }}
-				        {{ Form::text('title', null, ['placeholder' => 'Title', 'class' => 'form-control']) }}
-				        <div id ="title_error" class="alert-danger errors"></div>
-				    </div>
-				    
-				    <br/>
-				    
-				    <div class='form-group col-sm-10 col-sm-offset-1'>
-				        {{ Form::label('grammar_text', 'Grammar Text') }}
-				        {{ Form::textarea('grammar_text', null, ['placeholder' => 'Grammar Text', 'class' => 'form-control', 'size' => '100x10', 'id' => 'grammar_text_' . $grammar->id]) }}
-				        <div id ="grammar_text_error" class="alert-danger errors"></div>
-				        {{ Form::submit('Edit', ['class' => 'btn btn-primary']) }}
-				    </div>		    
-		
-			    </div>
-		    
-		    {{ Form::close() }}
-		    <hr/>
-    @endforeach
+			    
+			    {{ Form::close() }}
+			    <hr/>
+	    @endforeach
     </div>
     
     <!-- This is the template for adding new grammars.  It is not used, but cloned when we want to add a new one -->
