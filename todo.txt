@@ -2,8 +2,6 @@ Admin
 	Maintain lessons
 		Popup keyboard - ability to customize
 		Sorting?
-		Grammar - remove?
-		Glossed texts - add, update, remove
 		Calculate lesson text - jquerry?  refresh after adds
 		Glosses
 		Headwords
@@ -38,6 +36,7 @@ Deploy
 	make sure we don't show errors
 		
 Future Ideas
+	Remove grammars and glossed texts?
 	Screen for users to change their password
 	Save versions of lessons like SVN
 	On lesson page, warn if they try to leave without saving something
