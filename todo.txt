@@ -2,8 +2,12 @@ Admin
 	Maintain lessons
 		Popup keyboard - ability to customize
 		Sorting?
-		Grammar - add, update, remove
+		Grammar - remove?
 		Glossed texts - add, update, remove
+		Calculate lesson text - jquerry?  refresh after adds
+		Glosses
+		Headwords
+		Keywords
 	Authorization by series?
 	
 Public
