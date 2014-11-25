@@ -217,6 +217,52 @@
 		    <hr/>
     @endforeach
     
+    {{ Form::open(['role' => 'form',
+	    		   'url' => '/admin/eieol_grammar/', 
+	    		   'class' => 'form ajax_form',
+	    		   'id' => 'grammar_form_new' 
+	    		  ]) }} 
+	    		  
+	    		  <!-- TODO change form url and id after submitted, as well as textarea id and ckeditor listeners -->
+	    		  <!-- TODO add this form when they click it -->
+	    	
+	    	{{ Form::hidden('lesson_id', $lesson->id) }}
+	    	
+			<div class='row'>
+				<div class='col-sm-1'></div>
+				
+				<div class='form-group col-sm-1 '>
+			        {{ Form::label('order', 'Order') }}
+			        {{ Form::text('order', null, ['placeholder' => 'Order', 'class' => 'form-control']) }}
+			        <div id ="order_error" class="alert-danger errors"></div>
+			    </div>
+			    
+			    <div class='form-group col-sm-1 '>
+			        {{ Form::label('section_number', 'Section Number') }}
+			        {{ Form::text('section_number', null, ['placeholder' => 'Section Number', 'class' => 'form-control']) }}
+			        <div id ="section_number_error" class="alert-danger errors"></div>
+			    </div>
+			    	
+			    <div class='form-group col-sm-3'>
+			        {{ Form::label('title', 'Title') }}
+			        {{ Form::text('title', null, ['placeholder' => 'Title', 'class' => 'form-control']) }}
+			        <div id ="title_error" class="alert-danger errors"></div>
+			    </div>
+			    
+			    <br/>
+			    
+			    <div class='form-group col-sm-10 col-sm-offset-1'>
+			        {{ Form::label('grammar_text', 'Grammar Text') }}
+			        {{ Form::textarea('grammar_text', null, ['placeholder' => 'Grammar Text', 'class' => 'form-control', 'size' => '100x10', 'id' => 'grammar_text_new']) }}
+			        <div id ="grammar_text_error" class="alert-danger errors"></div>
+			        {{ Form::submit('Add', ['class' => 'btn btn-primary']) }}
+			    </div>		    
+	
+		    </div>
+	    
+	    {{ Form::close() }}
+	    <hr/>
+    
 </div>
 
 <script>
@@ -240,6 +286,12 @@
 				$('#grammar_form_{{$grammar->id}}').css("background-color", "#EBAD99");
 		});
 	@endforeach
+
+	CKEDITOR.replace( 'grammar_text_new',{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', allowedContent : true, extraPlugins : 'onchange'}  );
+	CKEDITOR.instances['grammar_text_new'].on('change', function() {
+		if(this.checkDirty())
+			$('#grammar_form_new').css("background-color", "#EBAD99");
+	});
 </script>
  
 @stop
