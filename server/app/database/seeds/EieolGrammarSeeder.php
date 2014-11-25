@@ -19,7 +19,15 @@ class EieolGrammarSeeder extends Seeder {
         						  'grammar_text' => 'this is the content of the grammar lesson', 
         						  'section_number' => '1', 
         						  'created_by' => 'fmcgrath', 
-        						  'updated_by' => 'fmcgrath'));        
+        						  'updated_by' => 'fmcgrath'));      
+
+        EieolGrammar::create(array('title' => 'Modifications of the basic sentence pattern, with non-finite forms making up the verbs in clauses.',
+        		'lesson_id' => 1,
+        		'order' => 10,
+        		'grammar_text' => 'this is the content of the second grammar lesson',
+        		'section_number' => '2',
+        		'created_by' => 'fmcgrath',
+        		'updated_by' => 'fmcgrath'));
           
 
 	}

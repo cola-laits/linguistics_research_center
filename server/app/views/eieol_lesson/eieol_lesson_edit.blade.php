@@ -29,8 +29,9 @@
 		        
 	        	if(json['fail']) {
 	  		      $.each(json['errors'], function( index, value ) {
-	  		        var errorDiv = '#'+index+'_error';
-	  		        $(errorDiv).html(value);
+		  		      var formDiv = "#"+myform.attr('id');
+	  		          var errorDiv = '#'+index+'_error';
+	  		          $(errorDiv, formDiv).html(value);
 	  		      });
 	  		      $('#successMessage').empty();          
 	  		    }  //json fail
@@ -97,13 +98,11 @@
  
     <h1><i class='fa fa-file-text'></i> Edit Lesson for {{ HTML::link('admin/eieol_series/' . $series->id . '/edit', $series->title , array('title' => 'Return to series' )) }}</h1>
     
-    <div id="successMessage"></div>
-    
     {{ Form::model($lesson, ['role' => 'form', 
     						 'url' => '/admin/eieol_lesson/' . $lesson->id, 
     						 'method' => 'PUT', 
-    						 'class' => 'form ajax_form', 
-    						 'id' => 'update_form',
+    						 'class' => 'form ajax_form',
+    						 'id' => 'update_form'
     						 ]) }}
 		
 		{{ Form::hidden('series_id', $series->id) }}
@@ -156,8 +155,8 @@
     {{ Form::model($lesson, ['role' => 'form', 
     						 'url' => '/admin/eieol_lesson/update_translation/' . $lesson->id, 
     						 'method' => 'PUT', 
-    						 'class' => 'form ajax_form', 
-    						 'id' => 'update_translation_form',
+    						 'class' => 'form ajax_form',
+    						 'id' => 'update_translation_form'
     						 ]) }}
 		    
 		<div class='row'>
@@ -174,21 +173,73 @@
 	
 	<hr/>
     <h2>Grammar</h2>	
+    @foreach ($grammars as $grammar)
+          {{ Form::model($grammar, ['role' => 'form',
+		    					   'url' => '/admin/eieol_grammar/' . $grammar->id, 
+		    					   'method' => 'PUT', 
+		    					   'class' => 'form ajax_form',
+		    					   'id' => 'grammar_form_' . $grammar->id
+		    					  ]) }}
+				
+				<div class='row'>
+					<div class='col-sm-1'></div>
+					
+					<div class='form-group col-sm-1 '>
+				        {{ Form::label('order', 'Order') }}
+				        {{ Form::text('order', null, ['placeholder' => 'Order', 'class' => 'form-control']) }}
+				        <div id ="order_error" class="alert-danger errors"></div>
+				    </div>
+				    
+				    <div class='form-group col-sm-1 '>
+				        {{ Form::label('section_number', 'Section Number') }}
+				        {{ Form::text('section_number', null, ['placeholder' => 'Section Number', 'class' => 'form-control']) }}
+				        <div id ="section_number_error" class="alert-danger errors"></div>
+				    </div>
+				    	
+				    <div class='form-group col-sm-3'>
+				        {{ Form::label('title', 'Title') }}
+				        {{ Form::text('title', null, ['placeholder' => 'Title', 'class' => 'form-control']) }}
+				        <div id ="title_error" class="alert-danger errors"></div>
+				    </div>
+				    
+				    <br/>
+				    
+				    <div class='form-group col-sm-10 col-sm-offset-1'>
+				        {{ Form::label('grammar_text', 'Grammar Text') }}
+				        {{ Form::textarea('grammar_text', null, ['placeholder' => 'Grammar Text', 'class' => 'form-control', 'size' => '100x10', 'id' => 'grammar_text_' . $grammar->id]) }}
+				        <div id ="grammar_text_error" class="alert-danger errors"></div>
+				        {{ Form::submit('Edit', ['class' => 'btn btn-primary']) }}
+				    </div>		    
+		
+			    </div>
+		    
+		    {{ Form::close() }}
+		    <hr/>
+    @endforeach
     
 </div>
 
 <script>
 	CKEDITOR.plugins.addExternal( 'onchange', '/js/', 'onchangeplugin.js' );
 	CKEDITOR.replace( 'intro_text',{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', allowedContent : true, extraPlugins : 'onchange'} );
-	CKEDITOR.replace( 'lesson_translation',{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', allowedContent : true, extraPlugins : 'onchange'}  );
 	CKEDITOR.instances['intro_text'].on('change', function() {
 		if(this.checkDirty())
 			$('#update_form').css("background-color", "#EBAD99");
 	});
+	
+	CKEDITOR.replace( 'lesson_translation',{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', allowedContent : true, extraPlugins : 'onchange'}  );
 	CKEDITOR.instances['lesson_translation'].on('change', function() {
 		if(this.checkDirty())
 			$('#update_translation_form').css("background-color", "#EBAD99");
 	});
+
+	@foreach ($grammars as $grammar)
+		CKEDITOR.replace( 'grammar_text_{{$grammar->id}}',{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', allowedContent : true, extraPlugins : 'onchange'}  );
+		CKEDITOR.instances['grammar_text_{{$grammar->id}}'].on('change', function() {
+			if(this.checkDirty())
+				$('#grammar_form_{{$grammar->id}}').css("background-color", "#EBAD99");
+		});
+	@endforeach
 </script>
  
 @stop

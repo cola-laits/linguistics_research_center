@@ -36,3 +36,4 @@ Deploy
 Future Ideas
 	Screen for users to change their password
 	Save versions of lessons like SVN
+	On lesson page, warn if they try to leave without saving something
