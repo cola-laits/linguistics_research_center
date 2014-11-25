@@ -17,6 +17,7 @@ class EieolGrammarController extends BaseController {
 				'grammar_text' => 'required',
 				'lesson_id' => 'required|exists:eieol_lesson,id'
 		);
+		
 		$validator = Validator::make(Input::all(), $rules);
 		
 		if ($validator->fails()) {
@@ -38,6 +39,8 @@ class EieolGrammarController extends BaseController {
 			$grammar->save();
 			return Response::json(array(
 					'success' => true,
+					'added' => true,
+					'action' => '/admin/eieol_grammar/' . $grammar->id, //sent to turn the create form into an update form
 					'message' => 'Grammar: ' . $grammar->title . ' was successfully updated.'
 			));
 		
