@@ -1,5 +1,6 @@
 Admin
 	Maintain lessons
+		Remove order as key from glossed_text, grammar and lesson?  Won't ever sort by just order.
 		Popup keyboard - ability to customize
 		Sorting?
 		Glosses

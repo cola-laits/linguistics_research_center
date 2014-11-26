@@ -6,5 +6,6 @@ class EieolGlossedText extends Eloquent {
 	public function series()
 	{
 		return $this->belongsTo('EieolLesson');
+		return $this->belongsToMany('EieolGloss', 'eieol_gloss');
 	}
 }
