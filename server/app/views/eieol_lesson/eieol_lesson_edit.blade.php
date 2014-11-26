@@ -5,7 +5,15 @@
 @section('content')
 
 <script type="text/javascript">
-	
+
+	function generate_lesson_text() {
+		var lesson_text = '';
+		$("form", "#glossed_texts").each(function() {
+			lesson_text += $('#glossed_text', this).val() + ' ';
+		});
+		$('#lesson_text').html(lesson_text);
+	} //generate_lesson_text
+
 	function ajax_submit(myform) { 
 		//generic ajax function.   This will prevent the regular submission and send it by ajax instead.
 
@@ -54,7 +62,10 @@
         		    $('<input>').attr({type: 'hidden', value: 'PUT', name: '_method'}).appendTo(formDiv);
     		    }  
     		  
-	  		    $(".spinner").hide(); 
+    		    //rebuild lesson text
+    			generate_lesson_text();
+
+    			$(".spinner").hide(); 
 	        }, //success
 	        
 	        error : function(xml_http_request, text_status, error_thrown) {
@@ -75,6 +86,9 @@
     $(document).ready(function(){
 		var grammar_ctr = 0;
 		var glossed_text_ctr = 0;
+
+		//build lesson text
+		generate_lesson_text();
         
         //trigger highlight form if inputs change.  If you are using ckeditor, you have to do that with its on change function
         $(':input').keyup(highlight_form); //listen for typing
@@ -218,7 +232,7 @@
 					    	
 					    <div class='form-group col-sm-8'>
 					        {{ Form::label('glossed_text', 'Glossed Text') }}
-					        {{ Form::text('glossed_text', null, ['placeholder' => 'Glossed Text', 'class' => 'form-control']) }}
+					        {{ Form::text('glossed_text', null, ['placeholder' => 'Glossed Text', 'class' => 'form-control', 'id' => 'glossed_text']) }}
 					        <div id ="glossed_text_error" class="alert-danger errors"></div>
 					    </div>	    
 					    
@@ -251,12 +265,15 @@
 				        <div id ="order_error" class="alert-danger errors"></div>
 				    </div>
 				    
-				    <div class='form-group col-sm-9'>
+				    <div class='form-group col-sm-8'>
 				        {{ Form::label('glossed_text', 'Glossed Text') }}
 				        {{ Form::text('glossed_text', null, ['placeholder' => 'Glossed Text', 'class' => 'form-control']) }}
 				        <div id ="glossed_text_error" class="alert-danger errors"></div>
-				    </div>	      
-				    {{ Form::submit('Add', ['class' => 'btn btn-primary']) }}
+				    </div>	     
+				    
+				    <div class='form-group col-sm-1 '> 
+				    	{{ Form::submit('Add', ['class' => 'btn btn-primary']) }}
+				    </div>
 			    </div>
 		    
 		    {{ Form::close() }}
@@ -290,9 +307,8 @@
     
     <div class='row'>
 		<div class='col-sm-10 col-sm-offset-1'>
-	        Lesson Text 
-	        <div class="well">
-	        	calculate and display
+	        <strong>Lesson Text</strong> 
+	        <div class="well" id="lesson_text">
 	        </div>
 	    </div>
 	    <br/>

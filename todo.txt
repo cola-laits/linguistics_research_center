@@ -2,7 +2,6 @@ Admin
 	Maintain lessons
 		Popup keyboard - ability to customize
 		Sorting?
-		Calculate lesson text - jquerry?  refresh after adds
 		Glosses
 		Headwords
 		Keywords
