@@ -17,7 +17,7 @@ class CreateGlossTable extends Migration {
 			$table->increments('id');
 			$table->string('surface_form');
 			$table->string('part_of_speech');
-			$table->string('analysis');
+			$table->string('analysis')->nullable();
 			$table->integer('head_word_id')->unsigned();
 			$table->foreign('head_word_id')->references('id')->on('eieol_head_word');
 			$table->string('contextual_gloss');

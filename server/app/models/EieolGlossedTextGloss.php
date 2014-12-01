@@ -1,5 +1,5 @@
 <?php 
 
-class EieolGlossTextGloss extends Eloquent {
+class EieolGlossedTextGloss extends Eloquent {
 	protected $table = 'eieol_glossed_text_gloss';
 }
