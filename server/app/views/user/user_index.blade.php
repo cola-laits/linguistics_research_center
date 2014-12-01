@@ -29,13 +29,13 @@
             <tbody>
                 @foreach ($users as $user)
                 <tr>
-                    <td>{{ $user->getFullName() }}</td>
-                    <td>{{ $user->username }}</td>
-                    <td>{{ $user->email }}</td>
-                    <td>{{ $user->created_at->format('m/d/Y h:ia') }} <br/> by {{ $user->created_by }}</td>
-                    <td>{{ $user->updated_at->format('m/d/Y h:ia') }} <br/> by {{ $user->updated_by }}</td>
+                    <td>{{{ $user->getFullName() }}}</td>
+                    <td>{{{ $user->username }}}</td>
+                    <td>{{{ $user->email }}}</td>
+                    <td>{{{ $user->created_at->format('m/d/Y h:ia') }}} <br/> by {{{ $user->created_by }}}</td>
+                    <td>{{{ $user->updated_at->format('m/d/Y h:ia') }}} <br/> by {{{ $user->updated_by }}}</td>
                     <td>
-                        <a href="/admin/user/{{ $user->id }}/edit" class="btn btn-info pull-left" style="margin-right: 3px;">Edit</a>
+                        <a href="/admin/user/{{{ $user->id }}}/edit" class="btn btn-info pull-left" style="margin-right: 3px;">Edit</a>
                         {{ Form::open(['url' => '/admin/user/' . $user->id, 'method' => 'DELETE', 'style' => 'display:inline']) }}
                         {{ Form::submit('Delete', ['class' => 'btn btn-danger delete'])}}
                         {{ Form::close() }}

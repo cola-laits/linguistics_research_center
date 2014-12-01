@@ -1,6 +1,6 @@
 {
     "providers": [
-        "Illuminate\\Foundation\\Providers\\ArtisanServiceProvider",
+        "Barryvdh\\Debugbar\\ServiceProvider",
         "Illuminate\\Auth\\AuthServiceProvider",
         "Illuminate\\Cache\\CacheServiceProvider",
         "Illuminate\\Session\\CommandsServiceProvider",
@@ -28,6 +28,7 @@
         "Illuminate\\Workbench\\WorkbenchServiceProvider"
     ],
     "eager": [
+        "Barryvdh\\Debugbar\\ServiceProvider",
         "Illuminate\\Cookie\\CookieServiceProvider",
         "Illuminate\\Database\\DatabaseServiceProvider",
         "Illuminate\\Encryption\\EncryptionServiceProvider",
@@ -37,9 +38,6 @@
         "Illuminate\\Workbench\\WorkbenchServiceProvider"
     ],
     "deferred": {
-        "artisan": "Illuminate\\Foundation\\Providers\\ArtisanServiceProvider",
-        "command.changes": "Illuminate\\Foundation\\Providers\\ArtisanServiceProvider",
-        "command.environment": "Illuminate\\Foundation\\Providers\\ArtisanServiceProvider",
         "auth": "Illuminate\\Auth\\AuthServiceProvider",
         "cache": "Illuminate\\Cache\\CacheServiceProvider",
         "cache.store": "Illuminate\\Cache\\CacheServiceProvider",
@@ -110,9 +108,6 @@
         "validation.presence": "Illuminate\\Validation\\ValidationServiceProvider"
     },
     "when": {
-        "Illuminate\\Foundation\\Providers\\ArtisanServiceProvider": [
-
-        ],
         "Illuminate\\Auth\\AuthServiceProvider": [
 
         ],

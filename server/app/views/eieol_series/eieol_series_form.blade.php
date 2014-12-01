@@ -1,12 +1,12 @@
 @extends('admin_layout')
  
-@section('title') {{$action}} Series Editor @stop
+@section('title') {{{$action}}} Series Editor @stop
  
 @section('content')
  
 <div class='col-lg-12'>
  
-    <h1><i class='fa fa-book'></i> {{$action}} Series</h1>
+    <h1><i class='fa fa-book'></i> {{{$action}}} Series</h1>
     
     @if (Session::has('message'))
 	    <div class="alert alert-info">{{ Session::get('message') }}</div>
@@ -16,7 +16,7 @@
     	<div class='bg-danger alert'>
     		<ul>
 	        @foreach ($errors->all() as $error)
-	            <li>{{ $error }}</li>
+	            <li>{{{ $error }}}</li>
 	        @endforeach
 	        </ul>
         </div>
@@ -68,8 +68,8 @@
     </div>
     
     @if ($action != 'Create')
-	    <i>Created {{ $series->created_at->format('m/d/Y h:ia') }} by {{ $series->created_by }} | 
-	    Updated {{ $series->updated_at->format('m/d/Y h:ia') }} by {{ $series->updated_by }}</i>
+	    <i>Created {{{ $series->created_at->format('m/d/Y h:ia') }}} by {{{ $series->created_by }}} | 
+	    Updated {{{ $series->updated_at->format('m/d/Y h:ia') }}} by {{{ $series->updated_by }}}</i>
 	 
 	 	<hr/>
 	 	<h2>Lessons</h2>
@@ -89,11 +89,11 @@
 	            <tbody>
 	                @foreach ($lessons as $lesson)
 	                <tr>
-	                    <td>{{ $lesson->order }}</td>
-	                    <td>{{ $lesson->title }}</td>
-	                    <td>{{ $lesson->updated_at->format('m/d/Y h:ia') }} by {{ $lesson->updated_by }}</td>
+	                    <td>{{{ $lesson->order }}}</td>
+	                    <td>{{{ $lesson->title }}}</td>
+	                    <td>{{{ $lesson->updated_at->format('m/d/Y h:ia') }}} by {{{ $lesson->updated_by }}}</td>
 	                    <td>
-	                        <a href="/admin/eieol_lesson/{{ $lesson->id }}/edit" class="btn btn-info pull-left" style="margin-right: 3px;">Edit</a>
+	                        <a href="/admin/eieol_lesson/{{{ $lesson->id }}}/edit" class="btn btn-info pull-left" style="margin-right: 3px;">Edit</a>
 	                    </td>
 	                </tr>
 	                @endforeach
@@ -101,7 +101,7 @@
 	 
 	        </table>
 	    </div>
-	    <a href="/admin/eieol_lesson/create?series_id={{ $series->id }}" class="btn btn-success">Add New Lesson</a>
+	    <a href="/admin/eieol_lesson/create?series_id={{{ $series->id }}}" class="btn btn-success">Add New Lesson</a>
 	@endif
     
 </div>

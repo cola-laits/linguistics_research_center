@@ -164,6 +164,9 @@
 <div class='col-lg-12'>
  
     <h1><i class='fa fa-file-text'></i> Edit Lesson for {{ HTML::link('admin/eieol_series/' . $series->id . '/edit', $series->title , array('title' => 'Return to series' )) }}</h1>
+    <div class='bg-danger alert'>
+    	If you change the order of items on this page, they will not appear in that order until you refresh the page.
+    </div>
     
     {{ Form::model($lesson, ['role' => 'form', 
     						 'url' => '/admin/eieol_lesson/' . $lesson->id, 
@@ -242,6 +245,20 @@
 				    </div>
 			    
 			    {{ Form::close() }}
+			    
+			    
+			    @foreach ($glossed_text->glosses as $gloss)
+			   		<div class='row'>
+			   			<div class='col-sm-2'></div>
+			   			<div class='col-sm-1'>
+			   				{{{$gloss->pivot->order}}}
+			   			</div>
+			   			<div class='col-sm-8'>
+			    			{{{$gloss->surface_form}}} -- {{{$gloss->part_of_speech}}}; {{$gloss->analysis}} {{{$gloss->head_word->word}}} {{{$gloss->head_word->definition}}} <strong>--{{{$gloss->contextual_gloss}}}</strong><br/>
+			    		</div>
+			    	</div>
+			    @endforeach
+
 			    <hr/>
 	    @endforeach
     </div>
@@ -457,10 +474,10 @@
 
 	//apply the ckeditor to each exisiting grammar
 	@foreach ($grammars as $grammar)
-		CKEDITOR.replace( 'grammar_text_{{$grammar->id}}',{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', allowedContent : true, extraPlugins : 'onchange'}  );
-		CKEDITOR.instances['grammar_text_{{$grammar->id}}'].on('change', function() {
+		CKEDITOR.replace( 'grammar_text_{{{$grammar->id}}}',{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', allowedContent : true, extraPlugins : 'onchange'}  );
+		CKEDITOR.instances['grammar_text_{{{$grammar->id}}}'].on('change', function() {
 			if(this.checkDirty())
-				$('#grammar_form_{{$grammar->id}}').css("background-color", "#EBAD99");
+				$('#grammar_form_{{{$grammar->id}}}').css("background-color", "#EBAD99");
 		});
 	@endforeach
 </script>

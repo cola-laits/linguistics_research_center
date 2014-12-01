@@ -1,18 +1,18 @@
 @extends('admin_layout')
  
-@section('title') {{$action}} User @stop
+@section('title') {{{$action}}} User @stop
  
 @section('content')
  
 <div class='col-lg-8 col-lg-offset-2'>
  
-    <h1><i class='fa fa-user'></i> {{$action}} User</h1>
+    <h1><i class='fa fa-user'></i> {{{$action}}} User</h1>
     
     @if ($errors->has())
     	<div class='bg-danger alert'>
     		<ul>
 	        @foreach ($errors->all() as $error)
-	            <li>{{ $error }}</li>
+	            <li>{{{ $error }}}</li>
 	        @endforeach
 	        </ul>
         </div>
