@@ -58,6 +58,7 @@
 
     		    if(json['added']) { //if we just performed an add, we need to change the form to an update form
         		    $(formDiv).find(":submit").attr('value','Edit');
+        		    $(formDiv).find(":submit").attr('class', 'btn btn-primary');
         		    $(formDiv).attr("action", json['action']);
         		    $('<input>').attr({type: 'hidden', value: 'PUT', name: '_method'}).appendTo(formDiv);
     		    }  
@@ -82,6 +83,25 @@
 		my_form.css("background-color", "#EBAD99");
 	} //highlight form
 
+
+	//ajax search for glosses
+	function searchGlosses(gloss) {
+		if (gloss.length==0) { 
+			document.getElementById("gloss_search_result").innerHTML="";
+		    document.getElementById("gloss_search_result").style.border="0px";
+		    return;
+		}
+		xmlhttp=new XMLHttpRequest();
+		xmlhttp.onreadystatechange=function() {
+		  if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+			  document.getElementById("gloss_search_result").innerHTML=xmlhttp.responseText;
+			  document.getElementById("gloss_search_result").style.border="1px solid #A5ACB2"; 
+		  }
+		}
+		xmlhttp.open("GET","/admin/eieol_gloss?gloss="+gloss,true);
+		xmlhttp.send();
+	}
+
 	
     $(document).ready(function(){
 		var grammar_ctr = 0;
@@ -99,6 +119,31 @@
     		ajax_submit($(this));
     		return false; // this keeps the form from submitting
     	});//submit
+
+    	//popup to attach gloss
+		$(".attach_gloss").click(function(e) {
+		    e.preventDefault();
+		    $("#gloss_search_input").val("");
+		    $("#attach_gloss_modal").modal('show');
+		    $("#gloss_search_input").focus();
+		    document.getElementById("gloss_search_result").innerHTML="";
+		    document.getElementById("gloss_search_result").style.border="0px";
+		});
+
+    	
+    	//this clones the default add glossed text form 
+    	$( "#add_glossed_text" ).click(function() {	
+    		glossed_text_ctr ++;
+    		var new_div_id = "new_glossed_text_div_" + glossed_text_ctr;
+    		var new_form_id = "new_glossed_text_form_" + glossed_text_ctr;
+    		
+    		var new_div = $( "#new_glossed_text_div" ).clone(true).attr("id",new_div_id);
+    		new_div.appendTo( "#glossed_texts" );
+    		new_div.show();
+    		
+    		$('#new_glossed_text_form', '#'+new_div_id).attr("id",new_form_id);
+    	});
+    	
 
     	//this clones the default add grammar form and turns on the ckeditor for it
     	$( "#add_grammar" ).click(function() {	
@@ -119,19 +164,6 @@
     			if(this.checkDirty())
     				$('#'+new_form_id).css("background-color", "#EBAD99");
     		});
-    	});
-
-    	//this clones the default add glossed text form 
-    	$( "#add_glossed_text" ).click(function() {	
-    		glossed_text_ctr ++;
-    		var new_div_id = "new_glossed_text_div_" + glossed_text_ctr;
-    		var new_form_id = "new_glossed_text_form_" + glossed_text_ctr;
-    		
-    		var new_div = $( "#new_glossed_text_div" ).clone(true).attr("id",new_div_id);
-    		new_div.appendTo( "#glossed_texts" );
-    		new_div.show();
-    		
-    		$('#new_glossed_text_form', '#'+new_div_id).attr("id",new_form_id);
     	});
 		
     });//document ready
@@ -154,6 +186,22 @@
             </div>
             <div class="modal-body" id="success_messaage">
                 Update was successful
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="attach_gloss_modal" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Attach Gloss</h4>
+            </div>
+            <div class="modal-body" id="success_messaage">
+                {{ Form::label('gloss_search_input', 'Search Gloss') }}
+		        {{ Form::text('gloss_search_input', null, ['placeholder' => 'Search Gloss', 'class' => 'form-control', 'onkeyup' => 'searchGlosses(this.value)']) }}
+            	<div id="gloss_search_result"></div>
             </div>
         </div>
     </div>
@@ -258,6 +306,13 @@
 			    		</div>
 			    	</div>
 			    @endforeach
+			    
+			    <div class='row'>
+			   		<div class='col-sm-2'></div>
+			   		<div class='form-group col-sm-1 '> 
+				    	{{ Form::submit('Attach Gloss', ['class' => 'btn btn-success attach_gloss']) }}
+				    </div>
+				</div>
 
 			    <hr/>
 	    @endforeach
@@ -289,7 +344,7 @@
 				    </div>	     
 				    
 				    <div class='form-group col-sm-1 '> 
-				    	{{ Form::submit('Add', ['class' => 'btn btn-primary']) }}
+				    	{{ Form::submit('Add', ['class' => 'btn btn-success']) }}
 				    </div>
 			    </div>
 		    
@@ -436,7 +491,7 @@
 				        {{ Form::label('grammar_text', 'Grammar Text') }}
 				        {{ Form::textarea('grammar_text', null, ['placeholder' => 'Grammar Text', 'class' => 'form-control', 'size' => '100x10', 'id' => 'new_grammar_text']) }}
 				        <div id ="grammar_text_error" class="alert-danger errors"></div>
-				        {{ Form::submit('Add', ['class' => 'btn btn-primary']) }}
+				        {{ Form::submit('Add', ['class' => 'btn btn-success']) }}
 				    </div>		    
 		
 			    </div>

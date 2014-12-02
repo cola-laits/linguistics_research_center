@@ -17,6 +17,12 @@
             body {
                 margin-top: 70px;
             }
+            
+            #attach_gloss_modal .modal-content{
+            	height: 800px;
+            	width: 1200px;
+            	margin-left: -500px;
+            }
         </style>
 
     </head>

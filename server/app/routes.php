@@ -79,4 +79,5 @@ Route::group(array('prefix'=> 'admin', 'before' => 'auth'), function() {
 	Route::resource('/eieol_lesson', 'EieolLessonController');
 	Route::resource('/eieol_grammar', 'EieolGrammarController');
 	Route::resource('/eieol_glossed_text', 'EieolGlossedTextController');
+	Route::resource('/eieol_gloss', 'EieolGlossController');
 });
