@@ -43,4 +43,3 @@ Future Ideas
 	Save versions of lessons like SVN
 	On lesson page, warn if they try to leave without saving something
 	Reorder things by dragging?
-	
