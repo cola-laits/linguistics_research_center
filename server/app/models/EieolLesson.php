@@ -7,4 +7,14 @@ class EieolLesson extends Eloquent {
 	{
 		return $this->belongsTo('EieolSeries');
 	}
+	
+	public function grammars()
+	{
+		return $this->hasMany('EieolGrammar', 'lesson_id', 'id')->orderBy('order');
+	}
+	
+	public function glossed_texts()
+	{
+		return $this->hasMany('EieolGlossedText', 'lesson_id', 'id')->orderBy('order');
+	}
 }

@@ -11,12 +11,13 @@ Admin
 	
 Public
 	Unicode info and test (make sure page matches an images)
-	Lesson 0, add menu
 	EIEOL
 		Lessons
+			Lesson 0, add menu
 			lesson resource menu on lesson page
 			Handle 2 languages in one lesson
 			Unicode
+			Grammars need anchors
 		TOC
 		Gloss - only show records that are used by lessons
 		Dictionary

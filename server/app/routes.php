@@ -30,7 +30,17 @@ Route::get('eieol', function()
 Route::get('lesson/{series_id}/{order}', function($series_id, $order)
 {
 	$data = array();
-	$data['lesson'] = EieolLesson::where('series_id', '=', $series_id)->where('order', '=', $order)->firstOrFail();
+	$data['lesson'] = EieolLesson::with('grammars')
+								 ->with('glossed_texts.glosses.head_word')
+								 ->where('series_id', '=', $series_id)
+								 ->where('order', '=', $order)
+								 ->firstOrFail();
+	
+	$data['lesson_text'] = '';
+	foreach ($data['lesson']->glossed_texts as $glossed_text) {
+		$data['lesson_text'] .= $glossed_text->glossed_text . ' ';
+	}
+	
 	return View::make('lesson')->with($data);
 });
 
