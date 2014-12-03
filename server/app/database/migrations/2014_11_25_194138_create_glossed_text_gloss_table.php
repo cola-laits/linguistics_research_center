@@ -24,7 +24,6 @@ class CreateGlossedTextGlossTable extends Migration {
 			$table->string('created_by');
 			$table->string('updated_by');
 		
-			$table->unique(array('glossed_text_id', 'gloss_id'));
 			$table->index(array('glossed_text_id', 'order', 'gloss_id'));
 		});
 	}

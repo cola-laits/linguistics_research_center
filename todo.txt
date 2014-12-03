@@ -2,11 +2,15 @@ Admin
 	Maintain lessons
 		Popup keyboard - ability to customize
 		Sorting?
-		Glosses
+****Glosses
+****POS pulldown or add
+****analysis pulldown or add
 		Headwords
 		Keywords
 		Authorization by series?
 		Add Pokorny ID to headword
+		Remove grammars, glossed texts, glossed_text_glosses
+	Maintain Lexicon
 	
 Public
 	Unicode info and test (make sure page matches an images)
@@ -26,7 +30,9 @@ Public
 	Links to/from static pages, share css and header?
 	
 	
-	
+Load
+	Load lessons
+	Load Lexicon	
 	
 	
 Deploy
@@ -37,9 +43,8 @@ Deploy
 	make sure we don't show errors
 		
 Future Ideas
-	Remove grammars, glossed texts, glossed_text_glosses
 	Screen for users to change their password
 	Save versions of lessons like SVN
 	On lesson page, warn if they try to leave without saving something
-	Reorder things by dragging?
+	Reorder things by dragging
 	Preview lesson before publishing

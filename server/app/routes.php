@@ -78,7 +78,7 @@ Route::group(array('prefix'=> 'admin', 'before' => 'auth'), function() {
 	Route::put('/eieol_lesson/update_translation/{id}', 'EieolLessonController@update_translation');
 	Route::resource('/eieol_lesson', 'EieolLessonController');
 	Route::resource('/eieol_grammar', 'EieolGrammarController');
+	Route::resource('/eieol_glossed_text_gloss', 'EieolGlossedTextGlossController');
 	Route::resource('/eieol_glossed_text', 'EieolGlossedTextController');
 	Route::resource('/eieol_gloss', 'EieolGlossController');
-	Route::resource('/eieol_glossed_text_gloss', 'EieolGlossedTextGlossController');
 });

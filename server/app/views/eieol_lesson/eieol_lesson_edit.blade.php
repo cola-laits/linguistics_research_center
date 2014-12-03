@@ -6,12 +6,15 @@
 
 <script type="text/javascript">
 
+	var glossed_text_id = 0; //to be used by gloss attach modal
+
 	function generate_lesson_text() {
+		//every time they update the glossed text, we calculate the full text and display it below
 		var lesson_text = '';
 		$("form", "#glossed_texts").each(function() {
 			lesson_text += $('#glossed_text', this).val() + ' ';
 		});
-		$('#lesson_text').html(lesson_text);
+		$('#lesson_text').html(lesson_text); //replace div with new text
 	} //generate_lesson_text
 
 	function ajax_submit(myform) { 
@@ -28,7 +31,7 @@
 		
 	    //hide any previous error messages
 	    $(".errors", formDiv).empty();
-	    
+
 	    //function that handles ajax form submission
 		$.ajax({
 			type: "POST",
@@ -48,7 +51,7 @@
 	  		    }  //json fail
 	  		    
 	  		    if(json['success']) { //briefly show a success popup and turn off form background
-	  		        $('#success_messaage').html(json['message']);
+	  		        $('#success_message').html(json['message']);
 	  		        $("#update_confirm").modal('show');
 		  		    setTimeout(function(){
 		  		        $("#update_confirm").modal('hide');
@@ -86,14 +89,14 @@
 
 	//ajax search for glosses
 	function searchGlosses(gloss) {
-		if (gloss.length==0) { 
+		if (gloss.length==0) { //if the search is blank, reset the result box
 			document.getElementById("gloss_search_result").innerHTML="";
 		    document.getElementById("gloss_search_result").style.border="0px";
 		    return;
 		}
 		xmlhttp=new XMLHttpRequest();
 		xmlhttp.onreadystatechange=function() {
-		  if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+		  if (xmlhttp.readyState==4 && xmlhttp.status==200) { //if ajax is successful, load result box
 			  document.getElementById("gloss_search_result").innerHTML=xmlhttp.responseText;
 			  document.getElementById("gloss_search_result").style.border="1px solid #A5ACB2"; 
 		  }
@@ -121,15 +124,83 @@
     	});//submit
 
     	//popup to attach gloss
-		$(".attach_gloss").click(function(e) {
-		    e.preventDefault();
-		    $("#gloss_search_input").val("");
-		    $("#attach_gloss_modal").modal('show');
-		    $("#gloss_search_input").focus();
-		    document.getElementById("gloss_search_result").innerHTML="";
-		    document.getElementById("gloss_search_result").style.border="0px";
+		$(".attach_gloss_form").submit(function() {
+		    glossed_text_id = $(this).find("#glossed_text_id").val(); //this sets the global variable so we can attach a selected gloss
+		    $("#gloss_search_input").val(""); //reset the input box
+		    $("#attach_gloss_modal").modal('show'); 
+		    $("#gloss_search_input").focus(); //put cursor in search box
+		    document.getElementById("gloss_search_result").innerHTML=""; //reset result box so it's empty each time the click it
+		    document.getElementById("gloss_search_result").style.border="0px"; //remove the border from the result box
+		    return false;
 		});
 
+    	//this is when they click on a gloss in the gloss listining modal
+		$("#gloss_search_result").on('click', 'a', function() {
+			
+			//calculate next order by finding the highest order in the form and adding 10
+			next_gloss_order = 0;
+			temp_div = '#glossed_text_' + glossed_text_id + '_glosses'; //get div that surrouds glosses for given glossed text
+			$("form", temp_div).each(function() { // get the value of each order
+				order = parseInt($('#order', this).val());
+				if(order > next_gloss_order) {
+					next_gloss_order = order;
+				}
+			});
+			next_gloss_order += 10;
+
+			var mydata = {};
+			mydata['gloss_id'] = $(this).attr('id');
+			mydata['glossed_text_id'] = glossed_text_id; //set when displaying attach modal
+			mydata['order'] = next_gloss_order;
+			mydata['token'] = '{{csrf_token()}}';
+			console.log(mydata);
+			
+
+			$.ajax({
+				type: "POST",
+		        url:'/admin/eieol_glossed_text_gloss',
+		        data:mydata,
+		        dataType: "html",
+		        
+		        success : function(data){
+			        var json = JSON.parse(data);    
+			        console.log(json);
+			        
+		        	if(json['fail']) { 
+		        		alert('Ajax Error: ' + json['msg']);
+		  		    }  //json fail
+		  		    
+		  		    if(json['success']) { //briefly show a success popup and turn off form background
+		  		    	var new_div_id = "new_glossed_text_gloss_div_" + json['id'];
+		  	    		//var new_form_id = "new_glossed_text_form_" + glossed_text_ctr;
+		  	    		
+		  	    		var new_div = $( "#new_glossed_text_gloss_div" ).clone(true).attr("id",new_div_id);
+		  	    		new_div.appendTo( temp_div );
+		  	    		new_div.show();
+		  	    		
+		  	    		//$('#new_glossed_text_form', '#'+new_div_id).attr("id",new_form_id);
+		  	    		
+		  		    	$("#attach_gloss_modal").modal('hide'); 
+		  		    	$('#success_message').html('Gloss successfully added.');
+		  		        $("#update_confirm").modal('show');
+			  		    setTimeout(function(){
+			  		        $("#update_confirm").modal('hide');
+			  		    }, 1000);
+		  		    } //json success
+	    
+		        }, //success
+		        
+		        error : function(xml_http_request, text_status, error_thrown) {
+		        	alert('Ajax Error: ' + text_status + '/ ' + xml_http_request + '/ ' + error_thrown);
+		        } //error
+
+		    }); //ajax call
+
+			//TODO clone form - make sure it's update, set order, text and hidden glossed_text_gloss_id
+			//TODO test if changed order of one on page, don't update and try to reuse it
+
+			//TODO when adding a new glossed text, need to be able to add glosses
+		});
     	
     	//this clones the default add glossed text form 
     	$( "#add_glossed_text" ).click(function() {	
@@ -184,7 +255,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">Update Confirmation</h4>
             </div>
-            <div class="modal-body" id="success_messaage">
+            <div class="modal-body" id="success_message">
                 Update was successful
             </div>
         </div>
@@ -198,7 +269,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">Attach Gloss</h4>
             </div>
-            <div class="modal-body" id="success_messaage">
+            <div class="modal-body">
                 {{ Form::label('gloss_search_input', 'Search Gloss') }}
 		        {{ Form::text('gloss_search_input', null, ['placeholder' => 'Search Gloss', 'class' => 'form-control', 'onkeyup' => 'searchGlosses(this.value)']) }}
             	<div id="gloss_search_result"></div>
@@ -206,8 +277,6 @@
         </div>
     </div>
 </div>
-
-
 
 <div class='col-lg-12'>
  
@@ -258,10 +327,7 @@
     
     
     
-    <!-- ---------------------------------------------------------------------------------------- -->
-    
-    
-    
+    <!-- ---------------------------------------------------------------------------------------- -->  
     
     <div id ="glossed_texts">
 	    @foreach ($glossed_texts as $glossed_text)
@@ -294,42 +360,49 @@
 			    
 			    {{ Form::close() }}
 			    
+			    <div id="glossed_text_{{$glossed_text->id}}_glosses">
 			    
-			    @foreach ($glossed_text->glosses as $gloss)
-				    {{ Form::model($gloss, ['role' => 'form',
-				    					   'url' => '/admin/eieol_glossed_text_gloss/' . $gloss->pivot->id, 
-				    					   'method' => 'PUT', 
-				    					   'class' => 'form ajax_form',
-				    					   'id' => 'glossed_text_gloss_form_' . $gloss->pivot->id
-				    					  ]) }}
-						
-						<div class='row'>
-							<div class='col-sm-2'></div>
+				    @foreach ($glossed_text->glosses as $gloss)
+					    {{ Form::model($gloss, ['role' => 'form',
+					    					   'url' => '/admin/eieol_glossed_text_gloss/' . $gloss->pivot->id, 
+					    					   'method' => 'PUT', 
+					    					   'class' => 'form ajax_form',
+					    					   'id' => 'glossed_text_gloss_form_' . $gloss->pivot->id
+					    					  ]) }}
 							
-							<div class='form-group col-sm-1 '>
-						        {{ Form::label('order', 'Order') }}
-						        {{ Form::text('order', $gloss->pivot->order, ['placeholder' => 'Order', 'class' => 'form-control']) }}
-						        <div id ="order_error" class="alert-danger errors"></div>
+							<div class='row'>
+								<div class='col-sm-2'></div>
+								
+								<div class='form-group col-sm-1 '>
+							        {{ Form::label('order', 'Order') }}
+							        {{ Form::text('order', $gloss->pivot->order, ['placeholder' => 'Order', 'class' => 'form-control']) }}
+							        <div id ="order_error" class="alert-danger errors"></div>
+							    </div>
+							    
+							    <div class='form-group col-sm-1 '>
+								    {{ Form::submit('Edit', ['class' => 'btn btn-primary']) }}
+								</div>
+							    	
+							    <div class='col-sm-7'>
+				    				{{{$gloss->surface_form}}} -- {{{$gloss->part_of_speech}}}; {{$gloss->analysis}} {{{$gloss->head_word->word}}} {{{$gloss->head_word->definition}}} <strong>--{{{$gloss->contextual_gloss}}}</strong><br/>
+				    			</div>   
+							      
 						    </div>
-						    
-						    <div class='form-group col-sm-1 '>
-							    {{ Form::submit('Edit', ['class' => 'btn btn-primary']) }}
-							</div>
-						    	
-						    <div class='col-sm-7'>
-			    				{{{$gloss->surface_form}}} -- {{{$gloss->part_of_speech}}}; {{$gloss->analysis}} {{{$gloss->head_word->word}}} {{{$gloss->head_word->definition}}} <strong>--{{{$gloss->contextual_gloss}}}</strong><br/>
-			    			</div>   
-						      
-					    </div>
-				    
-				    {{ Form::close() }}
-
-			    @endforeach
+					    
+					    {{ Form::close() }}
+	
+				    @endforeach
 			    
+			    </div>
+			   
+			    <!-- this will open a modal to attach a gloss to the glossed text --> 
 			    <div class='row'>
 			   		<div class='col-sm-2'></div>
 			   		<div class='form-group col-sm-1 '> 
-				    	{{ Form::submit('Attach Gloss', ['class' => 'btn btn-success attach_gloss']) }}
+			   			{{ Form::open(['class' => 'attach_gloss_form']) }} 
+			   				{{ Form::hidden('glossed_text_id', $glossed_text->id, ['id' => 'glossed_text_id']) }}
+				    		{{ Form::submit('Attach Gloss', ['class' => 'btn btn-success']) }}
+				    	{{ Form::close() }}
 				    </div>
 				</div>
 
@@ -384,6 +457,35 @@
 	  
     
     
+    	<!-- This is the template for adding new glossed_text_GLOSS.  It is not used, but cloned when we want to add a new one -->
+    	<div id="new_glossed_text_gloss_div" style="display: none">
+	    	{{ Form::open(['role' => 'form',
+		   		   'url' => '/admin/eieol_glossed_text_gloss/', 
+		   		   'class' => 'form ajax_form',
+		   		   'id' => 'new_glossed_text_gloss_form'
+		   		  ]) }} 
+		    	
+		   		{{ Form::hidden('_method', 'PUT') }}
+		   		<div class='row'>
+					<div class='col-sm-2'></div>
+					
+					<div class='form-group col-sm-1 '>
+				        {{ Form::label('order', 'Order') }}
+				        {{ Form::text('order', null, ['placeholder' => 'Order', 'class' => 'form-control']) }}
+				        <div id ="order_error" class="alert-danger errors"></div>
+				    </div>
+				    
+				    <div class='form-group col-sm-1 '>
+					    {{ Form::submit('Edit', ['class' => 'btn btn-primary']) }}
+					</div>
+				    	
+				    <div class='col-sm-7 gloss_text'>
+		   			</div>   
+				      
+			    </div>
+		    
+		    {{ Form::close() }}
+    	</div>
     
     <!-- ---------------------------------------------------------------------------------------- -->
     
