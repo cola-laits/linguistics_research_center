@@ -1,0 +1,84 @@
+<?php
+
+class EieolGlossedTextGlossController extends BaseController {	
+
+	/**
+	 * Store a newly created resource in storage.
+	 *
+	 * @return Response
+	 */
+	public function store()
+	{
+	
+		$rules = array(			
+				'order' => 'required|integer|unique:eieol_glossed_text_gloss,order,null,id,glossed_text_id,'. Input::get('glossed_text_id'),
+				'glossed_text_id' => 'required|exists:eieol_glossed_text,id',
+				'gloss_id' => 'required|exists:eieol_gloss,id|unique:eieol_glossed_text_gloss,gloss_id,null,id,glossed_text_id,'. Input::get('glossed_text_id')
+		);
+	
+		$validator = Validator::make(Input::all(), $rules);
+		
+		if ($validator->fails()) {
+			return Response::json(array(
+					'fail' => true,
+					'errors' => $validator->getMessageBag()->toArray()
+			));
+		} else {
+			$glossed_text_gloss = new EieolGlossedTextGloss;
+				
+			$glossed_text_gloss->order = Input::get('order');
+			$glossed_text_gloss->glossed_text_id = Input::get('glossed_text_id');
+			$glossed_text_gloss->gloss_id = Input::get('gloss_id');
+			$glossed_text_gloss->created_by = Auth::user()->username;
+			$glossed_text_gloss->updated_by = Auth::user()->username;
+				
+			$glossed_text_gloss->save();
+			return Response::json(array(
+					'success' => true,
+					'added' => true,
+					'action' => '/admin/eieol_glossed_text_gloss/' . $glossed_text_gloss->id, //sent to turn the create form into an update form
+					'message' => 'Gloss was successfully attached.'
+			));
+		
+		}
+	
+	}
+				
+				
+	
+	/**
+	 * Update the specified resource in storage.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function update($id)
+	{
+
+		$rules = array(			
+				'order' => 'required|integer|unique:eieol_glossed_text_gloss,order,null,id,glossed_text_id,'. Input::get('glossed_text_id')
+		);
+		
+		$validator = Validator::make(Input::all(), $rules);
+		
+		if ($validator->fails()) {
+			return Response::json(array(
+					'fail' => true,
+					'errors' => $validator->getMessageBag()->toArray()
+			));
+		} else {
+ 			$glossed_text_gloss = EieolGlossedTextGloss::find($id);
+			
+ 			$glossed_text_gloss->order = Input::get('order');
+ 			$glossed_text_gloss->updated_by = Auth::user()->username;
+			
+ 			$glossed_text_gloss->save();
+			return Response::json(array(
+					'success' => true,
+					'message' => 'Gloss order was successfully updated.'
+			));
+
+		}
+	}
+
+}

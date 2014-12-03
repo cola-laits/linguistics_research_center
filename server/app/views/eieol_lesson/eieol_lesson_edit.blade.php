@@ -296,15 +296,34 @@
 			    
 			    
 			    @foreach ($glossed_text->glosses as $gloss)
-			   		<div class='row'>
-			   			<div class='col-sm-2'></div>
-			   			<div class='col-sm-1'>
-			   				{{{$gloss->pivot->order}}}
-			   			</div>
-			   			<div class='col-sm-8'>
-			    			{{{$gloss->surface_form}}} -- {{{$gloss->part_of_speech}}}; {{$gloss->analysis}} {{{$gloss->head_word->word}}} {{{$gloss->head_word->definition}}} <strong>--{{{$gloss->contextual_gloss}}}</strong><br/>
-			    		</div>
-			    	</div>
+				    {{ Form::model($gloss, ['role' => 'form',
+				    					   'url' => '/admin/eieol_glossed_text_gloss/' . $gloss->pivot->id, 
+				    					   'method' => 'PUT', 
+				    					   'class' => 'form ajax_form',
+				    					   'id' => 'glossed_text_gloss_form_' . $gloss->pivot->id
+				    					  ]) }}
+						
+						<div class='row'>
+							<div class='col-sm-2'></div>
+							
+							<div class='form-group col-sm-1 '>
+						        {{ Form::label('order', 'Order') }}
+						        {{ Form::text('order', $gloss->pivot->order, ['placeholder' => 'Order', 'class' => 'form-control']) }}
+						        <div id ="order_error" class="alert-danger errors"></div>
+						    </div>
+						    
+						    <div class='form-group col-sm-1 '>
+							    {{ Form::submit('Edit', ['class' => 'btn btn-primary']) }}
+							</div>
+						    	
+						    <div class='col-sm-7'>
+			    				{{{$gloss->surface_form}}} -- {{{$gloss->part_of_speech}}}; {{$gloss->analysis}} {{{$gloss->head_word->word}}} {{{$gloss->head_word->definition}}} <strong>--{{{$gloss->contextual_gloss}}}</strong><br/>
+			    			</div>   
+						      
+					    </div>
+				    
+				    {{ Form::close() }}
+
 			    @endforeach
 			    
 			    <div class='row'>

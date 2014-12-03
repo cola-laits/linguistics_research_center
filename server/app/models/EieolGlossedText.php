@@ -9,6 +9,8 @@ class EieolGlossedText extends Eloquent {
 	}
 	public function glosses()
 	{
-		return $this->belongsToMany('EieolGloss', 'eieol_glossed_text_gloss', 'glossed_text_id', 'gloss_id')->orderBy('eieol_glossed_text_gloss.order')->withPivot('order');
+		return $this->belongsToMany('EieolGloss', 'eieol_glossed_text_gloss', 'glossed_text_id', 'gloss_id')
+					->orderBy('eieol_glossed_text_gloss.order')
+					->withPivot('order', 'id');
 	}
 }

@@ -1,6 +1,5 @@
 Admin
 	Maintain lessons
-		Remove order as key from glossed_text, grammar and lesson?  Won't ever sort by just order.
 		Popup keyboard - ability to customize
 		Sorting?
 		Glosses
@@ -38,8 +37,9 @@ Deploy
 	make sure we don't show errors
 		
 Future Ideas
-	Remove grammars and glossed texts?
+	Remove grammars, glossed texts, glossed_text_glosses
 	Screen for users to change their password
 	Save versions of lessons like SVN
 	On lesson page, warn if they try to leave without saving something
 	Reorder things by dragging?
+	Preview lesson before publishing
