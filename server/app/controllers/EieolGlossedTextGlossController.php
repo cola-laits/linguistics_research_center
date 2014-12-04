@@ -57,7 +57,7 @@ class EieolGlossedTextGlossController extends BaseController {
 	{
 
 		$rules = array(			
-				'order' => 'required|integer|unique:eieol_glossed_text_gloss,order,null,id,glossed_text_id,'. Input::get('glossed_text_id')
+				'order' => 'required|integer|unique:eieol_glossed_text_gloss,order,' . $id . ',id,glossed_text_id,'. Input::get('glossed_text_id')
 		);
 		
 		$validator = Validator::make(Input::all(), $rules);

@@ -148,12 +148,14 @@
 			});
 			next_gloss_order += 10;
 
+			
+			gloss_text = $(this).html();
+
 			var mydata = {};
 			mydata['gloss_id'] = $(this).attr('id');
 			mydata['glossed_text_id'] = glossed_text_id; //set when displaying attach modal
 			mydata['order'] = next_gloss_order;
 			mydata['token'] = '{{csrf_token()}}';
-			console.log(mydata);
 			
 
 			$.ajax({
@@ -164,7 +166,6 @@
 		        
 		        success : function(data){
 			        var json = JSON.parse(data);    
-			        console.log(json);
 			        
 		        	if(json['fail']) { 
 		        		alert('Ajax Error: ' + json['msg']);
@@ -172,13 +173,18 @@
 		  		    
 		  		    if(json['success']) { //briefly show a success popup and turn off form background
 		  		    	var new_div_id = "new_glossed_text_gloss_div_" + json['id'];
-		  	    		//var new_form_id = "new_glossed_text_form_" + glossed_text_ctr;
+		  	    		var new_form_id = "new_glossed_text_gloss_form_" + json['id'];
+		  	    		var new_form_action = "/admin/eieol_glossed_text_gloss/" + json['id']
 		  	    		
 		  	    		var new_div = $( "#new_glossed_text_gloss_div" ).clone(true).attr("id",new_div_id);
 		  	    		new_div.appendTo( temp_div );
 		  	    		new_div.show();
-		  	    		
-		  	    		//$('#new_glossed_text_form', '#'+new_div_id).attr("id",new_form_id);
+						
+		  	    		$('#new_glossed_text_gloss_form', '#'+new_div_id).find("#order").attr('value',next_gloss_order);
+		  	    		$('#new_glossed_text_gloss_form', '#'+new_div_id).find("#glossed_text_id").attr('value',glossed_text_id);
+		  	    		$('#new_glossed_text_gloss_form', '#'+new_div_id).find(".gloss_text").html(gloss_text);
+		  	    		$('#new_glossed_text_gloss_form', '#'+new_div_id).attr("action",new_form_action);
+		  	    		$('#new_glossed_text_gloss_form', '#'+new_div_id).attr("id",new_form_id);
 		  	    		
 		  		    	$("#attach_gloss_modal").modal('hide'); 
 		  		    	$('#success_message').html('Gloss successfully added.');
@@ -196,9 +202,6 @@
 
 		    }); //ajax call
 
-			//TODO clone form - make sure it's update, set order, text and hidden glossed_text_gloss_id
-			//TODO test if changed order of one on page, don't update and try to reuse it
-
 			//TODO when adding a new glossed text, need to be able to add glosses
 		});
     	
@@ -207,11 +210,14 @@
     		glossed_text_ctr ++;
     		var new_div_id = "new_glossed_text_div_" + glossed_text_ctr;
     		var new_form_id = "new_glossed_text_form_" + glossed_text_ctr;
+    		new_sub_div = "glossed_text_" + glossed_text_ctr + "_glosses"
     		
     		var new_div = $( "#new_glossed_text_div" ).clone(true).attr("id",new_div_id);
     		new_div.appendTo( "#glossed_texts" );
     		new_div.show();
-    		
+
+    		$('#new_glossed_text_glosses').attr("id",new_sub_div);
+    		$('#new_glossed_text_form', '#'+new_div_id).find("#glossed_text_id").attr('value',glossed_text_ctr);
     		$('#new_glossed_text_form', '#'+new_div_id).attr("id",new_form_id);
     	});
     	
@@ -369,7 +375,7 @@
 					    					   'class' => 'form ajax_form',
 					    					   'id' => 'glossed_text_gloss_form_' . $gloss->pivot->id
 					    					  ]) }}
-							
+							{{ Form::hidden('glossed_text_id', $glossed_text->id, ['id' => 'glossed_text_id']) }}
 							<div class='row'>
 								<div class='col-sm-2'></div>
 								
@@ -441,6 +447,23 @@
 			    </div>
 		    
 		    {{ Form::close() }}
+		    
+		    <div id="new_glossed_text_glosses"> <!-- TODO override this -->
+		    </div>
+		    
+		    <!-- this will open a modal to attach a gloss to the glossed text --> 
+		    <div class='row'>
+		   		<div class='col-sm-2'></div>
+		   		<div class='form-group col-sm-1 '> 
+		   			{{ Form::open(['class' => 'attach_gloss_form']) }} 
+		   				{{ Form::hidden('glossed_text_id', $glossed_text->id, ['id' => 'glossed_text_id']) }} <!-- TODO override this -->
+			    		{{ Form::submit('Attach Gloss', ['class' => 'btn btn-success']) }}
+			    	{{ Form::close() }}
+			    </div>
+			</div>
+		    
+		    
+		    
 		    <hr/>
 	  </div>
 	  
@@ -466,12 +489,13 @@
 		   		  ]) }} 
 		    	
 		   		{{ Form::hidden('_method', 'PUT') }}
+		   		{{ Form::hidden('glossed_text_id', 0, ['id' => 'glossed_text_id']) }}
 		   		<div class='row'>
 					<div class='col-sm-2'></div>
 					
 					<div class='form-group col-sm-1 '>
 				        {{ Form::label('order', 'Order') }}
-				        {{ Form::text('order', null, ['placeholder' => 'Order', 'class' => 'form-control']) }}
+				        {{ Form::text('order', null, ['placeholder' => 'Order', 'class' => 'form-control', 'id' => 'order']) }}
 				        <div id ="order_error" class="alert-danger errors"></div>
 				    </div>
 				    

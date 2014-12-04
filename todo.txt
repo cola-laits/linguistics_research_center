@@ -3,8 +3,8 @@ Admin
 		Popup keyboard - ability to customize
 		Sorting?
 ****Glosses
-****POS pulldown or add
-****analysis pulldown or add
+	POS pulldown or add
+	anaysis pulldown or add
 		Headwords
 		Keywords
 		Authorization by series?
@@ -16,6 +16,7 @@ Public
 	Unicode info and test (make sure page matches an images)
 	EIEOL
 		Lessons
+			Take out order as parm.  Send ID in url.  If no ID, get lowest order
 			Lesson 0, add menu
 			lesson resource menu on lesson page
 			Handle 2 languages in one lesson
@@ -41,6 +42,7 @@ Deploy
 	404 errors
 	htaccess file needs to send login and admin pages through https
 	make sure we don't show errors
+	hide debuger from users.  Show to me?
 		
 Future Ideas
 	Screen for users to change their password
