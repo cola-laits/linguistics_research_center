@@ -37,6 +37,7 @@ class EieolGlossedTextController extends BaseController {
 					'success' => true,
 					'added' => true,
 					'action' => '/admin/eieol_glossed_text/' . $glossed_text->id, //sent to turn the create form into an update form
+					'glossed_text_id' => $glossed_text->id,
 					'message' => 'Glossed Text was successfully added.'
 			));
 		

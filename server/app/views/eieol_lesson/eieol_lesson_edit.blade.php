@@ -64,6 +64,22 @@
         		    $(formDiv).find(":submit").attr('class', 'btn btn-primary');
         		    $(formDiv).attr("action", json['action']);
         		    $('<input>').attr({type: 'hidden', value: 'PUT', name: '_method'}).appendTo(formDiv);
+
+        		    //if they just added a glossed text, we need to further customize the form
+        		    if (json.hasOwnProperty('glossed_text_id')) {
+        		    	$("#add_glossed_text").show(); //now that they've saved the glossed text, they can add another
+
+        		    	$('#new_glossed_text_div').find('#attach_gloss_form').find("#glossed_text_id").attr('value',json['glossed_text_id']);
+        	    		$('#new_glossed_text_div').find('#attach_gloss_form').find("#attach_gloss_button").show();
+        	    		$('#new_glossed_text_div').attr("id",'glossed_text_div_' + json['glossed_text_id']);
+        	    		$('#new_glossed_text_form').attr("id",'glossed_text_form_' + json['glossed_text_id'] );
+        	    		$('#new_glossed_text_glosses').attr("id",'glossed_text_' + json['glossed_text_id'] + '_glosses');
+        	    		
+
+
+        	    		//$('#new_glossed_text_form', '#'+new_div_id).find("#glossed_text_id").attr('value',glossed_text_ctr);
+        	    		
+        		    }
     		    }  
     		  
     		    //rebuild lesson text
@@ -108,7 +124,6 @@
 	
     $(document).ready(function(){
 		var grammar_ctr = 0;
-		var glossed_text_ctr = 0;
 
 		//build lesson text
 		generate_lesson_text();
@@ -202,23 +217,15 @@
 
 		    }); //ajax call
 
-			//TODO when adding a new glossed text, need to be able to add glosses
 		});
     	
     	//this clones the default add glossed text form 
-    	$( "#add_glossed_text" ).click(function() {	
-    		glossed_text_ctr ++;
-    		var new_div_id = "new_glossed_text_div_" + glossed_text_ctr;
-    		var new_form_id = "new_glossed_text_form_" + glossed_text_ctr;
-    		new_sub_div = "glossed_text_" + glossed_text_ctr + "_glosses"
-    		
-    		var new_div = $( "#new_glossed_text_div" ).clone(true).attr("id",new_div_id);
+    	$("#add_glossed_text").click(function() {	
+    		var new_div = $( "#new_glossed_text_div" ).clone(true);
     		new_div.appendTo( "#glossed_texts" );
     		new_div.show();
-
-    		$('#new_glossed_text_glosses').attr("id",new_sub_div);
-    		$('#new_glossed_text_form', '#'+new_div_id).find("#glossed_text_id").attr('value',glossed_text_ctr);
-    		$('#new_glossed_text_form', '#'+new_div_id).attr("id",new_form_id);
+    		
+    		$("#add_glossed_text").hide(); //hide the button so they can't add another glossed text till they finsish this one
     	});
     	
 
@@ -421,8 +428,8 @@
 	    {{ Form::open(['role' => 'form',
 		    		   'url' => '/admin/eieol_glossed_text/', 
 		    		   'class' => 'form ajax_form',
-		    		   'id' => 'new_glossed_text_form'
-		    		  ]) }} 
+		    		   'id' => 'new_glossed_text_form'  
+		    		  ]) }}
 		    	
 		    	{{ Form::hidden('lesson_id', $lesson->id) }}
 		    	
@@ -437,7 +444,7 @@
 				    
 				    <div class='form-group col-sm-8'>
 				        {{ Form::label('glossed_text', 'Glossed Text') }}
-				        {{ Form::text('glossed_text', null, ['placeholder' => 'Glossed Text', 'class' => 'form-control']) }}
+				        {{ Form::text('glossed_text', null, ['placeholder' => 'Glossed Text', 'class' => 'form-control', 'id' => 'glossed_text']) }}
 				        <div id ="glossed_text_error" class="alert-danger errors"></div>
 				    </div>	     
 				    
@@ -448,16 +455,16 @@
 		    
 		    {{ Form::close() }}
 		    
-		    <div id="new_glossed_text_glosses"> <!-- TODO override this -->
+		    <div id="new_glossed_text_glosses">
 		    </div>
 		    
 		    <!-- this will open a modal to attach a gloss to the glossed text --> 
 		    <div class='row'>
 		   		<div class='col-sm-2'></div>
 		   		<div class='form-group col-sm-1 '> 
-		   			{{ Form::open(['class' => 'attach_gloss_form']) }} 
-		   				{{ Form::hidden('glossed_text_id', $glossed_text->id, ['id' => 'glossed_text_id']) }} <!-- TODO override this -->
-			    		{{ Form::submit('Attach Gloss', ['class' => 'btn btn-success']) }}
+		   			{{ Form::open(['class' => 'attach_gloss_form', 'id' => 'attach_gloss_form']) }} 
+		   				{{ Form::hidden('glossed_text_id', 0, ['id' => 'glossed_text_id']) }} 
+			    		{{ Form::submit('Attach Gloss', ['class' => 'btn btn-success', 'id' => 'attach_gloss_button', 'style' => 'display: none']) }}
 			    	{{ Form::close() }}
 			    </div>
 			</div>
