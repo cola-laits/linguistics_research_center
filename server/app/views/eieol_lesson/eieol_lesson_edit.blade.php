@@ -6,8 +6,6 @@
 
 <script type="text/javascript">
 
-	var glossed_text_id = 0; //to be used by gloss attach modal
-
 	function generate_lesson_text() {
 		//every time they update the glossed text, we calculate the full text and display it below
 		var lesson_text = '';
@@ -85,8 +83,8 @@
         		    	CKEDITOR.instances['new_grammar_text'].destroy(true); 
         		    	
 						//rename div, form and text area
-        		    	new_form_id = 'grammar_form_' + json['grammar_id'];
-            		    new_text_id = 'grammar_text_' + json['grammar_id'];
+        		    	var new_form_id = 'grammar_form_' + json['grammar_id'];
+            		    var new_text_id = 'grammar_text_' + json['grammar_id'];
             		    $('#grammars').find('#new_grammar_div').attr("id",'grammar_div_' + json['grammar_id']);
         		    	$('#grammars').find('#new_grammar_form').attr("id",new_form_id);
         	    		$('#grammars').find('#new_grammar_text').attr("id",new_text_id);
@@ -170,7 +168,7 @@
 		$("#gloss_search_result").on('click', 'a', function() {
 			
 			//calculate next order by finding the highest order in the form and adding 10
-			next_gloss_order = 0;
+			var next_gloss_order = 0;
 			temp_div = '#glossed_text_' + glossed_text_id + '_glosses'; //get div that surrouds glosses for given glossed text
 			$("form", temp_div).each(function() { // get the value of each order
 				order = parseInt($('#order', this).val());
@@ -180,7 +178,6 @@
 			});
 			next_gloss_order += 10;
 
-			
 			gloss_text = $(this).html();
 
 			var mydata = {};
@@ -238,10 +235,21 @@
     	
     	//this clones the default add glossed text form 
     	$("#add_glossed_text").click(function() {	
-    		var new_div = $( "#new_glossed_text_div" ).clone(true);
-    		new_div.appendTo( "#glossed_texts" );
+    		var new_div = $("#new_glossed_text_div").clone(true);
+    		new_div.appendTo("#glossed_texts");
     		new_div.show();
-    		
+
+    		//calculate next order by finding the highest order in the form and adding 10
+			var next_glosssed_text_order = 0;
+			$(".glossed_text_form").each(function() { // get the value of each order
+				order = parseInt($('#order', this).val());
+				if(order > next_glosssed_text_order) {
+					next_glosssed_text_order = order;
+				}
+			});
+			next_glosssed_text_order += 10;
+			$("#glossed_texts").find("#new_glossed_text_div").find("#order").val(next_glosssed_text_order);
+			
     		$("#add_glossed_text").hide(); //hide the button so they can't add another glossed text till they finsish this one
     	});
     	
@@ -257,6 +265,17 @@
     			if(this.checkDirty())
     				$('#new_grammar_form').css("background-color", "#EBAD99");
     		});
+
+    		//calculate next order by finding the highest order in the form and adding 10
+			var next_grammar_order = 0;
+			$(".grammar_form").each(function() { // get the value of each order
+				order = parseInt($('#order', this).val());
+				if(order > next_grammar_order) {
+					next_grammar_order = order;
+				}
+			});
+			next_grammar_order += 10;
+			$("#grammars").find("#new_grammar_div").find("#order").val(next_grammar_order);
 
     		$("#add_grammar").hide(); //hide the button so they can't add another glossed text till they finsish this one
     	});
@@ -346,19 +365,22 @@
     
     {{ Form::close() }}
     
-    <hr/>
-    <h2>Glossed Texts</h2>
+
     
     
     
     <!-- ---------------------------------------------------------------------------------------- -->  
+    
+    
+    <hr/>
+    <h2>Glossed Texts</h2>
     
     <div id ="glossed_texts">
 	    @foreach ($glossed_texts as $glossed_text)
 	          {{ Form::model($glossed_text, ['role' => 'form',
 			    					   'url' => '/admin/eieol_glossed_text/' . $glossed_text->id, 
 			    					   'method' => 'PUT', 
-			    					   'class' => 'form ajax_form',
+			    					   'class' => 'form ajax_form glossed_text_form',
 			    					   'id' => 'glossed_text_form_' . $glossed_text->id
 			    					  ]) }}
 					
@@ -367,7 +389,7 @@
 						
 						<div class='form-group col-sm-1 '>
 					        {{ Form::label('order', 'Order') }}
-					        {{ Form::text('order', null, ['placeholder' => 'Order', 'class' => 'form-control']) }}
+					        {{ Form::text('order', null, ['placeholder' => 'Order', 'class' => 'form-control', 'id' => 'order']) }}
 					        <div id ="order_error" class="alert-danger errors"></div>
 					    </div>
 					    	
@@ -438,7 +460,7 @@
     <div id="new_glossed_text_div" style="display: none">
 	    {{ Form::open(['role' => 'form',
 		    		   'url' => '/admin/eieol_glossed_text/', 
-		    		   'class' => 'form ajax_form',
+		    		   'class' => 'form ajax_form glossed_text_form',
 		    		   'id' => 'new_glossed_text_form'  
 		    		  ]) }}
 		    	
@@ -449,7 +471,7 @@
 					
 					<div class='form-group col-sm-1'>
 				        {{ Form::label('order', 'Order') }}
-				        {{ Form::text('order', null, ['placeholder' => 'Order', 'class' => 'form-control']) }}
+				        {{ Form::text('order', null, ['placeholder' => 'Order', 'class' => 'form-control', 'id' => 'order']) }}
 				        <div id ="order_error" class="alert-danger errors"></div>
 				    </div>
 				    
@@ -580,7 +602,7 @@
 	          {{ Form::model($grammar, ['role' => 'form',
 			    					   'url' => '/admin/eieol_grammar/' . $grammar->id, 
 			    					   'method' => 'PUT', 
-			    					   'class' => 'form ajax_form',
+			    					   'class' => 'form ajax_form grammar_form',
 			    					   'id' => 'grammar_form_' . $grammar->id
 			    					  ]) }}
 					
@@ -589,7 +611,7 @@
 						
 						<div class='form-group col-sm-1 '>
 					        {{ Form::label('order', 'Order') }}
-					        {{ Form::text('order', null, ['placeholder' => 'Order', 'class' => 'form-control']) }}
+					        {{ Form::text('order', null, ['placeholder' => 'Order', 'class' => 'form-control', 'id' => 'order']) }}
 					        <div id ="order_error" class="alert-danger errors"></div>
 					    </div>
 					    
@@ -625,7 +647,7 @@
     <div id="new_grammar_div" style="display: none">
 	    {{ Form::open(['role' => 'form',
 		    		   'url' => '/admin/eieol_grammar/', 
-		    		   'class' => 'form ajax_form',
+		    		   'class' => 'form ajax_form grammar_form',
 		    		   'id' => 'new_grammar_form'
 		    		  ]) }} 
 		    	
@@ -636,7 +658,7 @@
 					
 					<div class='form-group col-sm-1'>
 				        {{ Form::label('order', 'Order') }}
-				        {{ Form::text('order', null, ['placeholder' => 'Order', 'class' => 'form-control']) }}
+				        {{ Form::text('order', null, ['placeholder' => 'Order', 'class' => 'form-control', 'id' => 'order']) }}
 				        <div id ="order_error" class="alert-danger errors"></div>
 				    </div>
 				    
