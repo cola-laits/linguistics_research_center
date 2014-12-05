@@ -74,11 +74,29 @@
         	    		$('#new_glossed_text_div').attr("id",'glossed_text_div_' + json['glossed_text_id']);
         	    		$('#new_glossed_text_form').attr("id",'glossed_text_form_' + json['glossed_text_id'] );
         	    		$('#new_glossed_text_glosses').attr("id",'glossed_text_' + json['glossed_text_id'] + '_glosses');
-        	    		
+        		    }
 
 
-        	    		//$('#new_glossed_text_form', '#'+new_div_id).find("#glossed_text_id").attr('value',glossed_text_ctr);
-        	    		
+        		  //if they just added a grammar, we need to further customize the form
+        		    if (json.hasOwnProperty('grammar_id')) {
+        		    	$("#add_grammar").show(); //now that they've saved the grammar, they can add another
+
+        		    	//remove old ckeditor
+        		    	CKEDITOR.instances['new_grammar_text'].destroy(true); 
+        		    	
+						//rename div, form and text area
+        		    	new_form_id = 'grammar_form_' + json['grammar_id'];
+            		    new_text_id = 'grammar_text_' + json['grammar_id'];
+            		    $('#grammars').find('#new_grammar_div').attr("id",'grammar_div_' + json['grammar_id']);
+        		    	$('#grammars').find('#new_grammar_form').attr("id",new_form_id);
+        	    		$('#grammars').find('#new_grammar_text').attr("id",new_text_id);
+
+        	    		//attach new ckeditor
+        	    		CKEDITOR.replace(new_text_id,{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', allowedContent : true, extraPlugins : 'onchange'}  );
+        	    		CKEDITOR.instances[new_text_id].on('change', function() {
+        	    			if(this.checkDirty())
+        	    				$('#'+new_form_id).css("background-color", "#EBAD99");
+        	    		});
         		    }
     		    }  
     		  
@@ -123,12 +141,11 @@
 
 	
     $(document).ready(function(){
-		var grammar_ctr = 0;
 
 		//build lesson text
 		generate_lesson_text();
         
-        //trigger highlight form if inputs change.  If you are using ckeditor, you have to do that with its on change function
+        //highlight form if inputs change.  If you are using ckeditor, you have to do that with its on change function
         $(':input').keyup(highlight_form); //listen for typing
     	$(':input').change(highlight_form); //listen for clicking
 
@@ -231,23 +248,17 @@
 
     	//this clones the default add grammar form and turns on the ckeditor for it
     	$( "#add_grammar" ).click(function() {	
-    		grammar_ctr ++;
-    		var new_div_id = "new_grammar_div_" + grammar_ctr;
-    		var new_form_id = "new_grammar_form_" + grammar_ctr;
-    		var new_text_id = "new_grammar_text_" + grammar_ctr;
-    		
-    		var new_div = $( "#new_grammar_div" ).clone(true).attr("id",new_div_id);
+    		var new_div = $( "#new_grammar_div" ).clone(true);
     		new_div.appendTo( "#grammars" );
     		new_div.show();
     		
-    		$('#new_grammar_form', '#'+new_div_id).attr("id",new_form_id);
-    		$('#new_grammar_text', '#'+new_form_id).attr("id",new_text_id);
-    		
-    		CKEDITOR.replace( new_text_id,{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', allowedContent : true, extraPlugins : 'onchange'}  );
-    		CKEDITOR.instances[new_text_id].on('change', function() {
+    		CKEDITOR.replace('new_grammar_text',{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', allowedContent : true, extraPlugins : 'onchange'}  );
+    		CKEDITOR.instances['new_grammar_text'].on('change', function() {
     			if(this.checkDirty())
-    				$('#'+new_form_id).css("background-color", "#EBAD99");
+    				$('#new_grammar_form').css("background-color", "#EBAD99");
     		});
+
+    		$("#add_grammar").hide(); //hide the button so they can't add another glossed text till they finsish this one
     	});
 		
     });//document ready
@@ -558,6 +569,10 @@
 	    
 	{{ Form::close() }}
 	
+	
+	<!-- ---------------------------------------------------------------------------------------- -->
+	
+	
 	<hr/>
     <h2>Grammar</h2>	
     <div id ="grammars">
@@ -662,6 +677,9 @@
 	  </div>
     
 </div>
+
+
+<!-- ---------------------------------------------------------------------------------------- -->
 
 <script>
 	//apply the ckeditor to the intro text
