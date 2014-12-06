@@ -14,12 +14,7 @@ class EieolGlossController extends BaseController {
 		$glosses = EieolGloss::with('head_word')->where('surface_form', 'LIKE', Input::get('gloss') . '%')->take(25)->get()->sortBy('surface_form');
 		foreach ($glosses as $gloss) {
 			$text .= '<a id="' . $gloss->id . '">' .
-					 $gloss->surface_form . ' -- ' . 
-					 $gloss->part_of_speech . '; ' . 
-					 $gloss->analysis . ' ' .
-					 htmlentities($gloss->head_word->word) . ' ' .
-					 $gloss->head_word->definition .
-					 '<strong> -- ' . $gloss->contextual_gloss . '</strong>' .
+					 $gloss->getDisplayGloss() .
 					 '</a>' .
 					 '<br/>';				
 		}
@@ -27,6 +22,99 @@ class EieolGlossController extends BaseController {
 			return 'No matching glosses found';
 		} else {
 			return $text;
+		}
+	}
+	
+	
+	/**
+	 * Store a newly created resource in storage.
+	 *
+	 * @return Response
+	 */
+	public function store()
+	{
+	
+		$rules = array(
+			'surface_form' => 'required|unique:eieol_gloss,surface_form,null,id,part_of_speech,' . Input::get('part_of_speech') . ',analysis,' . Input::get('analysis'), 
+			'part_of_speech' => 'required',
+			'contextual_gloss' => 'required',
+			'head_word_id' => 'required|exists:eieol_head_word,id'
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+	
+		if ($validator->fails()) {
+			return Response::json(array(
+					'fail' => true,
+					'errors' => $validator->getMessageBag()->toArray()
+			));
+		} else {
+			$gloss = new EieolGloss;
+	
+			$gloss->surface_form = Input::get('surface_form');
+			$gloss->part_of_speech = Input::get('part_of_speech');
+			$gloss->analysis = Input::get('analysis');
+			$gloss->contextual_gloss = Input::get('contextual_gloss');
+			$gloss->head_word_id = Input::get('head_word_id');
+			$gloss->created_by = Auth::user()->username;
+			$gloss->updated_by = Auth::user()->username;
+	
+			$gloss->save();
+			
+			$gloss = EieolGloss::with('head_word')->find($gloss->id);
+			
+			return Response::json(array(
+					'success' => true,
+					'added' => true,
+					'gloss_id' => $gloss->id,
+					'gloss_display' => $gloss->getDisplayGloss(),
+					'message' => 'Gloss was successfully added.'
+			));
+	
+		}
+	
+	}
+	
+	/**
+	 * Update the specified resource in storage.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function update($id)
+	{
+		$rules = array(
+			'surface_form' => 'required|unique:eieol_gloss, surface_form, null, id, part_of_speech,' . Input::get('part_of_speech') . ',analysis,' . Input::get('analysis'),
+			'part_of_speech' => 'required',
+			'contextual_gloss' => 'required',
+			'head_word_id' => 'required|exists:eieol_head_word,id'
+		);
+		
+		$validator = Validator::make(Input::all(), $rules);
+	
+		if ($validator->fails()) {
+			return Response::json(array(
+					'fail' => true,
+					'errors' => $validator->getMessageBag()->toArray()
+			));
+		} else {
+			$gloss = EieolGloss::find($id);
+			
+			$gloss->surface_form = Input::get('surface_form');
+			$gloss->part_of_speech = Input::get('part_of_speech');
+			$gloss->analysis = Input::get('analysis');
+			$gloss->contextual_gloss = Input::get('contextual_gloss');
+			$gloss->head_word_id = Input::get('head_word_id');
+			$gloss->created_by = Auth::user()->username;
+			$gloss->updated_by = Auth::user()->username;
+			
+			$gloss->save();
+			
+			return Response::json(array(
+					'success' => true,
+					'message' => 'Gloss was successfully updated.'
+			));
+	
 		}
 	}
 	

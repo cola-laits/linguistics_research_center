@@ -24,7 +24,7 @@
 	<ul>
 	@foreach ($glossed_text->glosses as $gloss)
    		<li>
-    		{{{$gloss->surface_form}}} -- {{{$gloss->part_of_speech}}}; {{$gloss->analysis}} {{{$gloss->head_word->word}}} {{{$gloss->head_word->definition}}} <strong>--{{{$gloss->contextual_gloss}}}</strong><br/>
+    		{{$gloss->getDisplayGloss()}}<br/>
     	</li>
     @endforeach
     </ul>

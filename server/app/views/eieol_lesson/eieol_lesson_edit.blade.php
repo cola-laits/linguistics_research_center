@@ -20,7 +20,7 @@
 
 		$(".spinner").show();
 
-		//get values from CKEditor and pu them into textarea fields
+		//get values from CKEditor and put them into textarea fields
 		for ( instance in CKEDITOR.instances )
 		    CKEDITOR.instances[instance].updateElement();
 
@@ -111,6 +111,69 @@
 	    }); //ajax call
 	} //ajax submit function
 
+	function attach_gloss(gloss_id, gloss_text) {
+		//calculate next order by finding the highest order in the form and adding 10
+		var next_gloss_order = 0;
+		temp_div = '#glossed_text_' + glossed_text_id + '_glosses'; //get div that surrouds glosses for given glossed text
+		$("form", temp_div).each(function() { // get the value of each order
+			order = parseInt($('#order', this).val());
+			if(order > next_gloss_order) {
+				next_gloss_order = order;
+			}
+		});
+		next_gloss_order += 10;
+
+		var mydata = {};
+		mydata['gloss_id'] = gloss_id;
+		mydata['glossed_text_id'] = glossed_text_id; //set when displaying attach modal
+		mydata['order'] = next_gloss_order;
+		mydata['token'] = '{{csrf_token()}}';
+		
+		$.ajax({
+			type: "POST",
+	        url:'/admin/eieol_glossed_text_gloss',
+	        data:mydata,
+	        dataType: "html",
+	        
+	        success : function(data){
+		        var json = JSON.parse(data);    
+		        
+	        	if(json['fail']) { 
+	        		alert('Ajax Error: ' + json['msg']);
+	  		    }  //json fail
+	  		    
+	  		    if(json['success']) { //briefly show a success popup and turn off form background
+	  		    	var new_div_id = "new_glossed_text_gloss_div_" + json['id'];
+	  	    		var new_form_id = "new_glossed_text_gloss_form_" + json['id'];
+	  	    		var new_form_action = "/admin/eieol_glossed_text_gloss/" + json['id']
+	  	    		
+	  	    		var new_div = $( "#new_glossed_text_gloss_div" ).clone(true).attr("id",new_div_id);
+	  	    		new_div.appendTo( temp_div );
+	  	    		new_div.show();
+					
+	  	    		$('#new_glossed_text_gloss_form', '#'+new_div_id).find("#order").attr('value',next_gloss_order);
+	  	    		$('#new_glossed_text_gloss_form', '#'+new_div_id).find("#glossed_text_id").attr('value',glossed_text_id);
+	  	    		$('#new_glossed_text_gloss_form', '#'+new_div_id).find(".gloss_text").html(gloss_text);
+	  	    		$('#new_glossed_text_gloss_form', '#'+new_div_id).attr("action",new_form_action);
+	  	    		$('#new_glossed_text_gloss_form', '#'+new_div_id).attr("id",new_form_id);
+	  	    		
+	  		    	$("#attach_gloss_modal").modal('hide'); 
+	  		    	$('#success_message').html('Gloss successfully added.');
+	  		        $("#update_confirm").modal('show');
+		  		    setTimeout(function(){
+		  		        $("#update_confirm").modal('hide');
+		  		    }, 1000);
+	  		    } //json success
+    
+	        }, //success
+	        
+	        error : function(xml_http_request, text_status, error_thrown) {
+	        	alert('Ajax Error: ' + text_status + '/ ' + xml_http_request + '/ ' + error_thrown);
+	        } //error
+
+	    }); //ajax call
+	} //attach gloss function
+
 
 	//highlight forms if they are changed
 	function highlight_form(){
@@ -123,14 +186,12 @@
 	function searchGlosses(gloss) {
 		if (gloss.length==0) { //if the search is blank, reset the result box
 			document.getElementById("gloss_search_result").innerHTML="";
-		    document.getElementById("gloss_search_result").style.border="0px";
 		    return;
 		}
 		xmlhttp=new XMLHttpRequest();
 		xmlhttp.onreadystatechange=function() {
 		  if (xmlhttp.readyState==4 && xmlhttp.status==200) { //if ajax is successful, load result box
 			  document.getElementById("gloss_search_result").innerHTML=xmlhttp.responseText;
-			  document.getElementById("gloss_search_result").style.border="1px solid #A5ACB2"; 
 		  }
 		}
 		xmlhttp.open("GET","/admin/eieol_gloss?gloss="+gloss,true);
@@ -160,69 +221,39 @@
 		    $("#attach_gloss_modal").modal('show'); 
 		    $("#gloss_search_input").focus(); //put cursor in search box
 		    document.getElementById("gloss_search_result").innerHTML=""; //reset result box so it's empty each time the click it
-		    document.getElementById("gloss_search_result").style.border="0px"; //remove the border from the result box
+		    $('#new_gloss_form').trigger("reset"); //reset the new gloss form
+		    $(".errors", '#new_gloss_form').empty(); //reset gloss form error divs
 		    return false;
 		});
 
-    	//this is when they click on a gloss in the gloss listining modal
+    	//this is when they click on a gloss in the gloss listing modal
 		$("#gloss_search_result").on('click', 'a', function() {
-			
-			//calculate next order by finding the highest order in the form and adding 10
-			var next_gloss_order = 0;
-			temp_div = '#glossed_text_' + glossed_text_id + '_glosses'; //get div that surrouds glosses for given glossed text
-			$("form", temp_div).each(function() { // get the value of each order
-				order = parseInt($('#order', this).val());
-				if(order > next_gloss_order) {
-					next_gloss_order = order;
-				}
-			});
-			next_gloss_order += 10;
+			attach_gloss($(this).attr('id'), $(this).html());
+		});
 
-			gloss_text = $(this).html();
-
-			var mydata = {};
-			mydata['gloss_id'] = $(this).attr('id');
-			mydata['glossed_text_id'] = glossed_text_id; //set when displaying attach modal
-			mydata['order'] = next_gloss_order;
-			mydata['token'] = '{{csrf_token()}}';
-			
-
+		//when they add a new gloss
+		$("#new_gloss_form").submit(function() {	
+			$(".errors", '#new_gloss_form').empty();
 			$.ajax({
 				type: "POST",
-		        url:'/admin/eieol_glossed_text_gloss',
-		        data:mydata,
+		        url:$("#new_gloss_form").attr('action'),
+		        data:$("#new_gloss_form").serialize(),
 		        dataType: "html",
 		        
 		        success : function(data){
 			        var json = JSON.parse(data);    
 			        
-		        	if(json['fail']) { 
-		        		alert('Ajax Error: ' + json['msg']);
+		        	if(json['fail']) { //go through all errors and set error messages, just within this form;
+		  		      $.each(json['errors'], function( index, value ) {
+		  		          var errorDiv = '#'+index+'_error';
+		  		          $(errorDiv, "#new_gloss_form").html(value);
+		  		      });        
 		  		    }  //json fail
 		  		    
-		  		    if(json['success']) { //briefly show a success popup and turn off form background
-		  		    	var new_div_id = "new_glossed_text_gloss_div_" + json['id'];
-		  	    		var new_form_id = "new_glossed_text_gloss_form_" + json['id'];
-		  	    		var new_form_action = "/admin/eieol_glossed_text_gloss/" + json['id']
-		  	    		
-		  	    		var new_div = $( "#new_glossed_text_gloss_div" ).clone(true).attr("id",new_div_id);
-		  	    		new_div.appendTo( temp_div );
-		  	    		new_div.show();
-						
-		  	    		$('#new_glossed_text_gloss_form', '#'+new_div_id).find("#order").attr('value',next_gloss_order);
-		  	    		$('#new_glossed_text_gloss_form', '#'+new_div_id).find("#glossed_text_id").attr('value',glossed_text_id);
-		  	    		$('#new_glossed_text_gloss_form', '#'+new_div_id).find(".gloss_text").html(gloss_text);
-		  	    		$('#new_glossed_text_gloss_form', '#'+new_div_id).attr("action",new_form_action);
-		  	    		$('#new_glossed_text_gloss_form', '#'+new_div_id).attr("id",new_form_id);
-		  	    		
-		  		    	$("#attach_gloss_modal").modal('hide'); 
-		  		    	$('#success_message').html('Gloss successfully added.');
-		  		        $("#update_confirm").modal('show');
-			  		    setTimeout(function(){
-			  		        $("#update_confirm").modal('hide');
-			  		    }, 1000);
+		  		    if(json['success']) { 
+		  		      	$(this).css("background-color", "#FFFFFF");
+		  		        attach_gloss(json['gloss_id'], json['gloss_display']);
 		  		    } //json success
-	    
 		        }, //success
 		        
 		        error : function(xml_http_request, text_status, error_thrown) {
@@ -230,8 +261,9 @@
 		        } //error
 
 		    }); //ajax call
-
-		});
+		    
+		    return false; // this keeps the form from submitting
+    	});//add gloss
     	
     	//this clones the default add glossed text form 
     	$("#add_glossed_text").click(function() {	
@@ -316,10 +348,66 @@
                 {{ Form::label('gloss_search_input', 'Search Gloss') }}
 		        {{ Form::text('gloss_search_input', null, ['placeholder' => 'Search Gloss', 'class' => 'form-control', 'onkeyup' => 'searchGlosses(this.value)']) }}
             	<div id="gloss_search_result"></div>
+            	           	
+            	
+		    	<hr/>
+				<h4>Or Add New Gloss</h4>
+				<div class='row'>
+				
+					{{ Form::open(['role' => 'form',
+		    		   'url' => '/admin/eieol_gloss/', 
+		    		   'class' => 'form',
+		    		   'id' => 'new_gloss_form'  
+		    		  ]) }}
+		    		  
+					<div class='form-group col-sm-2'>
+				        {{ Form::label('surface_form', 'Surface Form') }}
+				        {{ Form::text('surface_form', null, ['placeholder' => 'Surface Form', 'class' => 'form-control', 'id' => 'surface_form']) }}
+				        <div id ="surface_form_error" class="alert-danger errors"></div>
+				    </div>
+				    
+				    <div class='form-group col-sm-2'>
+				        {{ Form::label('part_of_speech', 'Part Of Speech') }}
+				        {{ Form::text('part_of_speech', null, ['placeholder' => 'Part Of Speech', 'class' => 'form-control', 'id' => 'part_of_speech']) }}
+				        <div id ="part_of_speech_error" class="alert-danger errors"></div>
+				    </div>	     
+				    
+				     <div class='form-group col-sm-2'>
+				        {{ Form::label('analysis', 'Analysis') }}
+				        {{ Form::text('analysis', null, ['placeholder' => 'Analysis', 'class' => 'form-control', 'id' => 'analysis']) }}
+				        <div id ="analysis_error" class="alert-danger errors"></div>
+				    </div>	     
+				    
+				     <div class='form-group col-sm-2'>
+				        {{ Form::label('head_word_id', 'Head Word ID') }}
+				        {{ Form::hidden('head_word_id', '1') }} <!-- TODO make this a popup -->
+				        <div id ="head_word_id_error" class="alert-danger errors"></div>
+				    </div>	     
+				    
+				     <div class='form-group col-sm-2'>
+				        {{ Form::label('contextual_gloss', 'Contextual Gloss') }}
+				        {{ Form::text('contextual_gloss', null, ['placeholder' => 'Contextual Gloss', 'class' => 'form-control', 'id' => 'contextual_gloss']) }}
+				        <div id ="contextual_gloss_error" class="alert-danger errors"></div>
+				    </div>	     
+				    
+				    <div class='form-group col-sm-1 '> 
+				    	{{ Form::submit('Add', ['class' => 'btn btn-success']) }}
+				    </div>
+			    </div>
+			    
+			    <!-- TODO: build update gloss page -->
+			    <!-- TODO: on update gloss modal, list all glossed text using it?-->
+			    
+		    
+		    {{ Form::close() }}
             </div>
         </div>
     </div>
 </div>
+
+
+
+<!-- ---------------------------------------------------------------------------------------- -->  
 
 <div class='col-lg-12'>
  
@@ -430,7 +518,7 @@
 								</div>
 							    	
 							    <div class='col-sm-7'>
-				    				{{{$gloss->surface_form}}} -- {{{$gloss->part_of_speech}}}; {{$gloss->analysis}} {{{$gloss->head_word->word}}} {{{$gloss->head_word->definition}}} <strong>--{{{$gloss->contextual_gloss}}}</strong><br/>
+							    	{{$gloss->getDisplayGloss()}}<br/>
 				    			</div>   
 							      
 						    </div>
