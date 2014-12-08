@@ -81,4 +81,5 @@ Route::group(array('prefix'=> 'admin', 'before' => 'auth'), function() {
 	Route::resource('/eieol_glossed_text_gloss', 'EieolGlossedTextGlossController');
 	Route::resource('/eieol_glossed_text', 'EieolGlossedTextController');
 	Route::resource('/eieol_gloss', 'EieolGlossController');
+	Route::resource('/eieol_headword', 'EieolHeadWordController');
 });

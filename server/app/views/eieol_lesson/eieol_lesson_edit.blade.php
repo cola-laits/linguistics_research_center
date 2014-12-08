@@ -277,13 +277,17 @@
 		    $("#edit_gloss_modal").modal("show"); 
 		    $("#surface_form", "#edit_gloss_form").focus(); //put cursor in search box
 		    //load form with data for the record they want to edit
-		    var data = $(this).find("#gloss_data").val();
-		    var json = $.parseJSON(data);
-		    $.each(json, function(key, value){
+		    var gloss_data = $(this).find("#gloss_data").val();
+		    var gloss_json = $.parseJSON(gloss_data);
+		    $.each(gloss_json, function(key, value){
 			    $('[name='+key+']', edit_gloss_form).val(value);
 		    });
+
+		    console.log($(this).find("#head_word_display").val());
+		    $('#head_word_display', '#edit_gloss_form').text($(this).find("#head_word_display").val()).html();
+		    
 		    $(".errors", "#edit_gloss_form").empty(); //reset gloss form error divs
-		    $("#edit_gloss_form").attr("action", "/admin/eieol_gloss/" + json['id']);
+		    $("#edit_gloss_form").attr("action", "/admin/eieol_gloss/" + gloss_json['id']);
 		    return false;
 		}); //edit gloss
     	
@@ -386,8 +390,8 @@
 				        <div id ="analysis_error" class="alert-danger errors"></div>
 				    </div>	     
 				    
-				     <div class='form-group col-sm-2'>
-				        {{ Form::label('head_word_id', 'Head Word ID') }}
+				     <div class='form-group col-sm-3'>
+				        {{ Form::label('head_word_id', 'Head Word') }}
 				        {{ Form::hidden('head_word_id', '1') }} <!-- TODO make this a popup -->
 				        <div id ="head_word_id_error" class="alert-danger errors"></div>
 				    </div>	     
@@ -445,9 +449,10 @@
 				        <div id ="analysis_error" class="alert-danger errors"></div>
 				    </div>	     
 				    
-				     <div class='form-group col-sm-2'>
-				        {{ Form::label('head_word_id', 'Head Word ID') }}
+				     <div class='form-group col-sm-3'>
+				        {{ Form::label('head_word_id', 'Head Word') }}
 				        {{ Form::hidden('head_word_id', '1') }} <!-- TODO make this a popup -->
+				        <div id="head_word_display"></div>
 				        <div id ="head_word_id_error" class="alert-danger errors"></div>
 				    </div>	     
 				    
@@ -589,6 +594,7 @@
 			    			<div class='col-sm-1'>
 			    				{{ Form::open(['class' => 'edit_gloss']) }} 
 			    					{{ Form::hidden('gloss_data', $gloss, ['id' => 'gloss_data']) }}
+			    					{{ Form::hidden('head_word_display', $gloss->head_word->getDisplayHeadWord(), ['id' => 'head_word_display']) }}
 			    					{{ Form::submit('Edit Gloss', ['class' => 'btn btn-primary']) }}
 			    				{{ Form::close() }}
 			    			</div>

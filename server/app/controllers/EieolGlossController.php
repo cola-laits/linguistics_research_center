@@ -105,7 +105,6 @@ class EieolGlossController extends BaseController {
 			$gloss->analysis = Input::get('analysis');
 			$gloss->contextual_gloss = Input::get('contextual_gloss');
 			$gloss->head_word_id = Input::get('head_word_id');
-			$gloss->created_by = Auth::user()->username;
 			$gloss->updated_by = Auth::user()->username;
 			
 			$gloss->save();
