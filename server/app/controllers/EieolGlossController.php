@@ -98,7 +98,7 @@ class EieolGlossController extends BaseController {
 					'errors' => $validator->getMessageBag()->toArray()
 			));
 		} else {
-			$gloss = EieolGloss::find($id);
+			$gloss = EieolGloss::with('head_word')->find($id);
 			
 			$gloss->surface_form = Input::get('surface_form');
 			$gloss->part_of_speech = Input::get('part_of_speech');
@@ -112,7 +112,9 @@ class EieolGlossController extends BaseController {
 			
 			return Response::json(array(
 					'success' => true,
-					'message' => 'Gloss was successfully updated.'
+					'message' => 'Gloss was successfully updated.',
+					'gloss_id' => $gloss->id,
+					'gloss_display' => $gloss->getDisplayGloss(),
 			));
 	
 		}

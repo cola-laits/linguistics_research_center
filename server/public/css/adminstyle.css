@@ -6,7 +6,7 @@ body {
 	display:none; 
 	text-align: center;
 	font-size: 24px;
-	z-index:99;
+	z-index:99999;
 	color:#fff;
 	padding-top: 100px;
 	position:fixed; 

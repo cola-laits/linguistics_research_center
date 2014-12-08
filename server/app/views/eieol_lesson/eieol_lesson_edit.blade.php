@@ -55,6 +55,13 @@
 		  		        $("#update_confirm").modal('hide');
 		  		    }, 1000);
 	  		      	myform.css("background-color", "#FFFFFF");
+
+	  		      	//if they updated a gloss, we need to change the text of every occurrence of it on the page
+	  		      	if(json.hasOwnProperty('gloss_id')) {
+						$(".gloss_" + json['gloss_id']).each(function() {
+							$(this).html(json['gloss_display']);
+						});
+	  		      	}
 	  		    } //json success
 
     		    if(json['added']) { //if we just performed an add, we need to change the form to an update form
@@ -276,7 +283,6 @@
 			    $('[name='+key+']', edit_gloss_form).val(value);
 		    });
 		    $(".errors", "#edit_gloss_form").empty(); //reset gloss form error divs
-			console.log("/admin/eieol_gloss/" + json['id']);
 		    $("#edit_gloss_form").attr("action", "/admin/eieol_gloss/" + json['id']);
 		    return false;
 		}); //edit gloss
@@ -334,24 +340,10 @@
 </script>
  
  
- <div class="spinner">
+<div class="spinner">
   {{ HTML::image('images/ajax_loader_red_350.gif', $alt="Loading", $attributes = array('border'=>0, 'width'=>150, 'height'=>150))  }}<br/>Please Wait...
 </div>
 
-
-<div id="update_confirm" class="modal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Update Confirmation</h4>
-            </div>
-            <div class="modal-body" id="success_message">
-                Update was successful
-            </div>
-        </div>
-    </div>
-</div>
 
 <div id="attach_gloss_modal" class="modal">
     <div class="modal-dialog">
@@ -590,7 +582,7 @@
 							    {{ Form::close() }}
 							</div>
 						    	
-						    <div class='col-sm-5'>
+						    <div class='col-sm-5 gloss_{{$gloss->id}}'>
 						    	{{$gloss->getDisplayGloss()}} 
 			    			</div>   
 			    			
@@ -894,5 +886,20 @@
 		});
 	@endforeach
 </script>
+
+<!-- This has to be defined after any other modals so it will show up if in a modal -->
+<div id="update_confirm" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Update Confirmation</h4>
+            </div>
+            <div class="modal-body" id="success_message">
+                Update was successful
+            </div>
+        </div>
+    </div>
+</div>
  
 @stop
