@@ -2,10 +2,10 @@ Admin
 	Maintain lessons
 		Popup keyboard - ability to customize
 		Sorting?
-****Glosses
-	POS pulldown or add
-	anaysis pulldown or add
-		Headwords - modal to lookup/add, modal to update that also lists all glosses that use it
+		Glosses - list all glossed text using it?
+		POS pulldown or add
+		anaysis pulldown or add
+		Headwords - modal to lookup/add, modal to update (list all glosses that use it?)
 		Keywords
 		Authorization by series?
 		Add Pokorny ID to headword

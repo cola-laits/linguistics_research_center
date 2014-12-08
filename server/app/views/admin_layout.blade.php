@@ -12,18 +12,6 @@
         {{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js') }}
         {{ HTML::script('//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js') }}
         {{ HTML::script('//cdn.ckeditor.com/4.4.5.1/full/ckeditor.js') }}
-  
-        <style>
-            body {
-                margin-top: 70px;
-            }
-            
-            #attach_gloss_modal .modal-content{
-            	height: 800px;
-            	width: 1200px;
-            	margin-left: -500px;
-            }
-        </style>
 
     </head>
     <body>

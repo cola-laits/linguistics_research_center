@@ -84,7 +84,7 @@ class EieolGlossController extends BaseController {
 	public function update($id)
 	{
 		$rules = array(
-			'surface_form' => 'required|unique:eieol_gloss, surface_form, null, id, part_of_speech,' . Input::get('part_of_speech') . ',analysis,' . Input::get('analysis'),
+			'surface_form' => 'required|unique:eieol_gloss,surface_form,' . $id . ',id,part_of_speech,' . Input::get('part_of_speech') . ',analysis,' . Input::get('analysis'), 
 			'part_of_speech' => 'required',
 			'contextual_gloss' => 'required',
 			'head_word_id' => 'required|exists:eieol_head_word,id'

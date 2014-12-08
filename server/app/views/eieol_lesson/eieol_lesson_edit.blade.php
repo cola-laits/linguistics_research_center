@@ -264,6 +264,22 @@
 		    
 		    return false; // this keeps the form from submitting
     	});//add gloss
+
+    	//popup to edit gloss
+		$(".edit_gloss").submit(function() {
+		    $("#edit_gloss_modal").modal("show"); 
+		    $("#surface_form", "#edit_gloss_form").focus(); //put cursor in search box
+		    //load form with data for the record they want to edit
+		    var data = $(this).find("#gloss_data").val();
+		    var json = $.parseJSON(data);
+		    $.each(json, function(key, value){
+			    $('[name='+key+']', edit_gloss_form).val(value);
+		    });
+		    $(".errors", "#edit_gloss_form").empty(); //reset gloss form error divs
+			console.log("/admin/eieol_gloss/" + json['id']);
+		    $("#edit_gloss_form").attr("action", "/admin/eieol_gloss/" + json['id']);
+		    return false;
+		}); //edit gloss
     	
     	//this clones the default add glossed text form 
     	$("#add_glossed_text").click(function() {	
@@ -393,12 +409,67 @@
 				    <div class='form-group col-sm-1 '> 
 				    	{{ Form::submit('Add', ['class' => 'btn btn-success']) }}
 				    </div>
-			    </div>
-			    
-			    <!-- TODO: build update gloss page -->
-			    <!-- TODO: on update gloss modal, list all glossed text using it?-->
-			    
+			    </div>			    
 		    
+		    {{ Form::close() }}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="edit_gloss_modal" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Edit Gloss</h4>
+            </div>
+            <div class="modal-body">
+				<div class='row'>
+				
+					{{ Form::open(['role' => 'form',
+		    		   'url' => '', 
+		    		   'method' => 'PUT',
+		    		   'class' => 'form ajax_form',
+		    		   'id' => 'edit_gloss_form'  
+		    		  ]) }}
+		    		  
+					<div class='form-group col-sm-2'>
+				        {{ Form::label('surface_form', 'Surface Form') }}
+				        {{ Form::text('surface_form', null, ['placeholder' => 'Surface Form', 'class' => 'form-control', 'id' => 'surface_form']) }}
+				        <div id ="surface_form_error" class="alert-danger errors"></div>
+				    </div>
+				    
+				    <div class='form-group col-sm-2'>
+				        {{ Form::label('part_of_speech', 'Part Of Speech') }}
+				        {{ Form::text('part_of_speech', null, ['placeholder' => 'Part Of Speech', 'class' => 'form-control', 'id' => 'part_of_speech']) }}
+				        <div id ="part_of_speech_error" class="alert-danger errors"></div>
+				    </div>	     
+				    
+				     <div class='form-group col-sm-2'>
+				        {{ Form::label('analysis', 'Analysis') }}
+				        {{ Form::text('analysis', null, ['class' => 'form-control', 'id' => 'analysis']) }}
+				        <div id ="analysis_error" class="alert-danger errors"></div>
+				    </div>	     
+				    
+				     <div class='form-group col-sm-2'>
+				        {{ Form::label('head_word_id', 'Head Word ID') }}
+				        {{ Form::hidden('head_word_id', '1') }} <!-- TODO make this a popup -->
+				        <div id ="head_word_id_error" class="alert-danger errors"></div>
+				    </div>	     
+				    
+				     <div class='form-group col-sm-2'>
+				        {{ Form::label('contextual_gloss', 'Contextual Gloss') }}
+				        {{ Form::text('contextual_gloss', null, ['placeholder' => 'Contextual Gloss', 'class' => 'form-control', 'id' => 'contextual_gloss']) }}
+				        <div id ="contextual_gloss_error" class="alert-danger errors"></div>
+				    </div>	     
+				    
+				    <div class='form-group col-sm-1 '> 
+				    	{{ Form::submit('Edit', ['class' => 'btn btn-success']) }}
+				    </div>
+			    </div>
+
 		    {{ Form::close() }}
             </div>
         </div>
@@ -497,33 +568,40 @@
 			    <div id="glossed_text_{{$glossed_text->id}}_glosses">
 			    
 				    @foreach ($glossed_text->glosses as $gloss)
-					    {{ Form::model($gloss, ['role' => 'form',
-					    					   'url' => '/admin/eieol_glossed_text_gloss/' . $gloss->pivot->id, 
-					    					   'method' => 'PUT', 
-					    					   'class' => 'form ajax_form',
-					    					   'id' => 'glossed_text_gloss_form_' . $gloss->pivot->id
-					    					  ]) }}
-							{{ Form::hidden('glossed_text_id', $glossed_text->id, ['id' => 'glossed_text_id']) }}
-							<div class='row'>
-								<div class='col-sm-2'></div>
-								
-								<div class='form-group col-sm-1 '>
-							        {{ Form::label('order', 'Order') }}
-							        {{ Form::text('order', $gloss->pivot->order, ['placeholder' => 'Order', 'class' => 'form-control']) }}
-							        <div id ="order_error" class="alert-danger errors"></div>
-							    </div>
-							    
-							    <div class='form-group col-sm-1 '>
-								    {{ Form::submit('Edit', ['class' => 'btn btn-primary']) }}
-								</div>
-							    	
-							    <div class='col-sm-7'>
-							    	{{$gloss->getDisplayGloss()}}<br/>
-				    			</div>   
-							      
-						    </div>
 					    
-					    {{ Form::close() }}
+						<div class='row'>
+							<div class='col-sm-2'></div>
+							
+							<div class='form-group col-sm-1 '>
+								{{ Form::model($gloss, ['role' => 'form',
+				    					   'url' => '/admin/eieol_glossed_text_gloss/' . $gloss->pivot->id, 
+				    					   'method' => 'PUT', 
+				    					   'class' => 'form ajax_form',
+				    					   'id' => 'glossed_text_gloss_form_' . $gloss->pivot->id
+				    					  ]) }}
+								{{ Form::hidden('glossed_text_id', $glossed_text->id, ['id' => 'glossed_text_id']) }}
+						        {{ Form::label('order', 'Order') }}
+						        {{ Form::text('order', $gloss->pivot->order, ['placeholder' => 'Order', 'class' => 'form-control']) }}
+						        <div id ="order_error" class="alert-danger errors"></div>
+						    </div>
+						    
+						    <div class='form-group col-sm-1 '>
+							    {{ Form::submit('Edit Order', ['class' => 'btn btn-primary']) }}
+							    {{ Form::close() }}
+							</div>
+						    	
+						    <div class='col-sm-5'>
+						    	{{$gloss->getDisplayGloss()}} 
+			    			</div>   
+			    			
+			    			<div class='col-sm-1'>
+			    				{{ Form::open(['class' => 'edit_gloss']) }} 
+			    					{{ Form::hidden('gloss_data', $gloss, ['id' => 'gloss_data']) }}
+			    					{{ Form::submit('Edit Gloss', ['class' => 'btn btn-primary']) }}
+			    				{{ Form::close() }}
+			    			</div>
+						      
+					    </div>
 	
 				    @endforeach
 			    
