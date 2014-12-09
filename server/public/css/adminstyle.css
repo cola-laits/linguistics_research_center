@@ -35,3 +35,15 @@ body {
 	width: 1000px;
 	margin-left: -200px;
 }
+
+
+#attach_head_word_modal .modal-content{
+	height: 650px;
+	width: 800px;
+	margin-left: -300px;
+}
+
+#head_word_search_result {
+	height:300px;
+	border: 1px solid #A5ACB2;
+}

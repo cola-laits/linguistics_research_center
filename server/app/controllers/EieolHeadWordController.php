@@ -90,7 +90,7 @@ class EieolHeadWordController extends BaseController {
 					'errors' => $validator->getMessageBag()->toArray()
 			));
 		} else {
-			$head_word = EieolHeadWord::->find($id);
+			$head_word = EieolHeadWord::find($id);
 			
 			$head_word->word = Input::get('word');
 			$head_word->definition = Input::get('definition');

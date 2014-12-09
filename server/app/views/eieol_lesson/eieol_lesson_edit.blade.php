@@ -205,6 +205,22 @@
 		xmlhttp.send();
 	}
 
+	//ajax search for head words
+	function searchHeadWords(head_word) {
+		if (head_word.length==0) { //if the search is blank, reset the result box
+			document.getElementById("head_word_search_result").innerHTML="";
+		    return;
+		}
+		xmlhttp=new XMLHttpRequest();
+		xmlhttp.onreadystatechange=function() {
+		  if (xmlhttp.readyState==4 && xmlhttp.status==200) { //if ajax is successful, load result box
+			  document.getElementById("head_word_search_result").innerHTML=xmlhttp.responseText;
+		  }
+		}
+		xmlhttp.open("GET","/admin/eieol_head_word?head_word="+head_word,true);
+		xmlhttp.send();
+	}
+
 	
     $(document).ready(function(){
 
@@ -284,12 +300,25 @@
 		    });
 
 		    console.log($(this).find("#head_word_display").val());
-		    $('#head_word_display', '#edit_gloss_form').text($(this).find("#head_word_display").val()).html();
+		    $('#head_word_display', '#edit_gloss_form').text($(this).find("#head_word_display").val()).html(); //we have to use this syntax so <> will display correctly
 		    
 		    $(".errors", "#edit_gloss_form").empty(); //reset gloss form error divs
 		    $("#edit_gloss_form").attr("action", "/admin/eieol_gloss/" + gloss_json['id']);
 		    return false;
 		}); //edit gloss
+
+
+		//popup to attach headword to gloss
+		$("#attach_head_word_button").click(function() {
+			console.log('hi');
+		    $("#head_word_search_input").val(""); //reset the input box
+		    $("#attach_head_word_modal").modal('show'); 
+		    $("#head_word_search_input").focus(); //put cursor in search box
+		    document.getElementById("head_word_search_result").innerHTML=""; //reset result box so it's empty each time the click it
+		    $('#new_head_word_form').trigger("reset"); //reset the new gloss form
+		    $(".errors", '#new_head_word_form').empty(); //reset gloss form error divs
+		    return false;
+		});
     	
     	//this clones the default add glossed text form 
     	$("#add_glossed_text").click(function() {	
@@ -392,7 +421,8 @@
 				    
 				     <div class='form-group col-sm-3'>
 				        {{ Form::label('head_word_id', 'Head Word') }}
-				        {{ Form::hidden('head_word_id', '1') }} <!-- TODO make this a popup -->
+				        {{ Form::hidden('head_word_id', '1') }} <br/>
+				        {{ Form::button('Attach Head Word', ['class' => 'btn btn-success', 'id' => 'attach_head_word_button']) }}
 				        <div id ="head_word_id_error" class="alert-danger errors"></div>
 				    </div>	     
 				    
@@ -467,6 +497,53 @@
 				    </div>
 			    </div>
 
+		    {{ Form::close() }}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="attach_head_word_modal" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Attach Head Word</h4>
+            </div>
+            <div class="modal-body">
+                {{ Form::label('head_word_search_input', 'Search Head Word') }}
+		        {{ Form::text('head_word_search_input', null, ['placeholder' => 'Search Head Words', 'class' => 'form-control', 'onkeyup' => 'searchHeadWords(this.value)']) }}
+            	<div id="head_word_search_result"></div>
+            	           	
+            	
+		    	<hr/>
+				<h4>Or Add New Head Word</h4>
+				<div class='row'>
+				
+					{{ Form::open(['role' => 'form',
+		    		   'url' => '/admin/eieol_head_word/', 
+		    		   'class' => 'form',
+		    		   'id' => 'new_head_word_form'  
+		    		  ]) }}
+		    		  
+					<div class='form-group col-sm-5'>
+				        {{ Form::label('word', 'Word') }}
+				        {{ Form::text('word', null, ['placeholder' => 'Word', 'class' => 'form-control', 'id' => 'word']) }}
+				        <div id ="word_form_error" class="alert-danger errors"></div>
+				    </div>
+				    
+				    <div class='form-group col-sm-5'>
+				        {{ Form::label('definition', 'Definition') }}
+				        {{ Form::text('definition', null, ['placeholder' => 'Definition', 'class' => 'form-control', 'id' => 'definition']) }}
+				        <div id ="definition_error" class="alert-danger errors"></div>
+				    </div>	     
+
+				    <div class='form-group col-sm-1 '> 
+				    	{{ Form::submit('Add', ['class' => 'btn btn-success']) }}
+				    </div>
+			    </div>			    
+		    
 		    {{ Form::close() }}
             </div>
         </div>
