@@ -36,9 +36,12 @@ class EieolGlossedTextGlossController extends BaseController {
 			$glossed_text_gloss->updated_by = Auth::user()->username;
 				
 			$glossed_text_gloss->save();
+			
+			//now get it so we can return gloss and headword
+			$glossed_text_gloss = EieolGlossedTextGloss::with('gloss')->find($glossed_text_gloss->id);
 			return Response::json(array(
 					'success' => true,
-					'id' => $glossed_text_gloss->id
+					'id' => $glossed_text_gloss->id,
 			));
 		
 		}
@@ -76,7 +79,7 @@ class EieolGlossedTextGlossController extends BaseController {
  			$glossed_text_gloss->save();
 			return Response::json(array(
 					'success' => true,
-					'message' => 'Gloss order was successfully updated.'
+					'message' => 'Gloss order was successfully updated.',
 			));
 
 		}

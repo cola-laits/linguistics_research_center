@@ -5,7 +5,7 @@ Admin
 		Glosses - list all glossed text using it?
 		POS pulldown or add
 		anaysis pulldown or add
-		Headwords - modal to lookup/add, modal to update, validate form word starts and ends with <> (list all glosses that use it?)
+		Headwords - modal to lookup/add(need backend), modal to update(code in regular and clone), validate form word starts and ends with <> (list all glosses that use it?)
 		Keywords
 		Authorization by series?
 		Add Pokorny ID to headword

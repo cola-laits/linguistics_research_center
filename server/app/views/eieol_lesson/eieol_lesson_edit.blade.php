@@ -149,7 +149,7 @@
 	        		alert('Ajax Error: ' + json['msg']);
 	  		    }  //json fail
 	  		    
-	  		    if(json['success']) { //briefly show a success popup and turn off form background
+	  		    if(json['success']) { 
 	  		    	var new_div_id = "new_glossed_text_gloss_div_" + json['id'];
 	  	    		var new_form_id = "new_glossed_text_gloss_form_" + json['id'];
 	  	    		var new_form_action = "/admin/eieol_glossed_text_gloss/" + json['id']
@@ -161,9 +161,12 @@
 	  	    		$('#new_glossed_text_gloss_form', '#'+new_div_id).find("#order").attr('value',next_gloss_order);
 	  	    		$('#new_glossed_text_gloss_form', '#'+new_div_id).find("#glossed_text_id").attr('value',glossed_text_id);
 	  	    		$('#new_glossed_text_gloss_form', '#'+new_div_id).find(".gloss_text").html(gloss_text);
+	  	    		$('#new_glossed_text_gloss_form', '#'+new_div_id).find(".gloss_text").addClass('gloss_' + gloss_id);
 	  	    		$('#new_glossed_text_gloss_form', '#'+new_div_id).attr("action",new_form_action);
 	  	    		$('#new_glossed_text_gloss_form', '#'+new_div_id).attr("id",new_form_id);
-	  	    		
+
+	  	    		$('#edit_gloss', '#'+new_div_id).find("#gloss_id").attr('value',gloss_id);
+
 	  		    	$("#attach_gloss_modal").modal('hide'); 
 	  		    	$('#success_message').html('Gloss successfully added.');
 	  		        $("#update_confirm").modal('show');
@@ -292,25 +295,37 @@
 		$(".edit_gloss").submit(function() {
 		    $("#edit_gloss_modal").modal("show"); 
 		    $("#surface_form", "#edit_gloss_form").focus(); //put cursor in search box
-		    //load form with data for the record they want to edit
-		    var gloss_data = $(this).find("#gloss_data").val();
-		    var gloss_json = $.parseJSON(gloss_data);
-		    $.each(gloss_json, function(key, value){
-			    $('[name='+key+']', edit_gloss_form).val(value);
-		    });
-
-		    console.log($(this).find("#head_word_display").val());
-		    $('#head_word_display', '#edit_gloss_form').text($(this).find("#head_word_display").val()).html(); //we have to use this syntax so <> will display correctly
-		    
 		    $(".errors", "#edit_gloss_form").empty(); //reset gloss form error divs
-		    $("#edit_gloss_form").attr("action", "/admin/eieol_gloss/" + gloss_json['id']);
+		    
+		    //load form with data for the record they want to edit
+		    $.ajax({
+				type: "GET",
+		        url: "/admin/eieol_gloss/" + $(this).find("#gloss_id").val(),
+		        data: null,
+		        dataType: "json",
+		        
+		        success : function(data){
+			        $.each(data, function(key, value){
+					    $('[name='+key+']', edit_gloss_form).val(value);
+				    });
+
+				    $('#head_word_display', '#edit_gloss_form').text(data['head_word']['word'] + ' ' + data['head_word']['definition']).html(); //we have to use this syntax so <> will display correctly
+
+				    $("#edit_gloss_form").attr("action", "/admin/eieol_gloss/" + data['id']);
+		        }, //success
+		        
+		        error : function(xml_http_request, text_status, error_thrown) {
+		        	alert('Ajax Error: ' + text_status + '/ ' + xml_http_request + '/ ' + error_thrown);
+		        } //error
+
+		    }); //ajax call
+		    
 		    return false;
 		}); //edit gloss
 
 
 		//popup to attach headword to gloss
 		$("#attach_head_word_button").click(function() {
-			console.log('hi');
 		    $("#head_word_search_input").val(""); //reset the input box
 		    $("#attach_head_word_modal").modal('show'); 
 		    $("#head_word_search_input").focus(); //put cursor in search box
@@ -670,8 +685,7 @@
 			    			
 			    			<div class='col-sm-1'>
 			    				{{ Form::open(['class' => 'edit_gloss']) }} 
-			    					{{ Form::hidden('gloss_data', $gloss, ['id' => 'gloss_data']) }}
-			    					{{ Form::hidden('head_word_display', $gloss->head_word->getDisplayHeadWord(), ['id' => 'head_word_display']) }}
+			    					{{ Form::hidden('gloss_id', $gloss->id, ['id' => 'gloss_id']) }}
 			    					{{ Form::submit('Edit Gloss', ['class' => 'btn btn-primary']) }}
 			    				{{ Form::close() }}
 			    			</div>
@@ -781,15 +795,22 @@
 				    </div>
 				    
 				    <div class='form-group col-sm-1 '>
-					    {{ Form::submit('Edit', ['class' => 'btn btn-primary']) }}
+					    {{ Form::submit('Edit Order', ['class' => 'btn btn-primary']) }}
+					    {{ Form::close() }}
 					</div>
 				    	
-				    <div class='col-sm-7 gloss_text'>
+				    <div class='col-sm-5 gloss_text'>
 		   			</div>   
+		   			
+		   			<div class='col-sm-1'>
+	    				{{ Form::open(['class' => 'edit_gloss', 'id' => 'edit_gloss']) }} 
+	    					{{ Form::hidden('gloss_id', null, ['id' => 'gloss_id']) }}
+	    					{{ Form::submit('Edit Gloss', ['class' => 'btn btn-primary']) }}
+	    				{{ Form::close() }}
+	    			</div>
 				      
 			    </div>
 		    
-		    {{ Form::close() }}
     	</div>
     
     <!-- ---------------------------------------------------------------------------------------- -->

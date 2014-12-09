@@ -25,6 +25,19 @@ class EieolGlossController extends BaseController {
 		}
 	}
 	
+
+	
+	/**
+	 * Display the specified resource.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function show($id)
+	{
+		return EieolGloss::with('head_word')->find($id)->toJson();
+	}
+	
 	
 	/**
 	 * Store a newly created resource in storage.
