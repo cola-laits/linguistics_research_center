@@ -184,6 +184,14 @@
 	    }); //ajax call
 	} //attach gloss function
 
+	function attach_head_word(head_word_id, head_word_text) {
+		$('#new_gloss_form').find("#head_word_id").attr('value', head_word_id);
+		$('#new_gloss_form').find("#head_word_text").html(head_word_text);
+		
+		$('#new_gloss_form').find("#attach_head_word_button").html('Change Head Word');
+	    $('#new_gloss_form').find("#attach_head_word_button").attr('class', 'btn btn-primary btn-sm');
+		$("#attach_head_word_modal").modal('hide'); 
+	} //attach head word
 
 	//highlight forms if they are changed
 	function highlight_form(input){
@@ -255,6 +263,9 @@
 		    document.getElementById("gloss_search_result").innerHTML=""; //reset result box so it's empty each time the click it
 		    $('#new_gloss_form').trigger("reset"); //reset the new gloss form
 		    $(".errors", '#new_gloss_form').empty(); //reset gloss form error divs
+		    $('#new_gloss_form').find("#attach_head_word_button").html('Attach Head Word'); //reset headword button
+		    $('#new_gloss_form').find("#attach_head_word_button").attr('class', 'btn btn-success btn-sm'); //reset headword button
+		    $('#new_gloss_form').find("#head_word_text").html(''); //reset headword text
 		    return false;
 		});
 
@@ -330,7 +341,7 @@
 		}); //edit gloss
 
 
-		//popup to attach headword to gloss
+		//popup to attach head word to gloss
 		$("#attach_head_word_button").click(function() {
 		    $("#head_word_search_input").val(""); //reset the input box
 		    $("#attach_head_word_modal").modal('show'); 
@@ -340,6 +351,45 @@
 		    $(".errors", '#new_head_word_form').empty(); //reset gloss form error divs
 		    return false;
 		});
+
+		//this is when they click on a head word in the head word listing modal
+		$("#head_word_search_result").on('click', 'a', function() {
+			attach_head_word($(this).attr('id'), $(this).html());
+		});
+
+		//when they add a new headword
+		$("#new_head_word_form").submit(function() {	
+			$(".errors", '#new_head_word_form').empty();
+			$.ajax({
+				type: "POST",
+		        url:$("#new_head_word_form").attr('action'),
+		        data:$("#new_head_word_form").serialize(),
+		        dataType: "html",
+		        
+		        success : function(data){
+			        var json = JSON.parse(data);    
+			        
+		        	if(json['fail']) { //go through all errors and set error messages, just within this form;
+		  		      $.each(json['errors'], function( index, value ) {
+		  		          var errorDiv = '#'+index+'_error';
+		  		          $(errorDiv, "#new_head_word_form").html(value);
+		  		      });        
+		  		    }  //json fail
+		  		    
+		  		    if(json['success']) { 
+		  		      	$(this).css("background-color", "#FFFFFF");
+		  		        attach_head_word(json['head_word_id'], json['head_word_display']);
+		  		    } //json success
+		        }, //success
+		        
+		        error : function(xml_http_request, text_status, error_thrown) {
+		        	alert('Ajax Error: ' + text_status + '/ ' + xml_http_request + '/ ' + error_thrown);
+		        } //error
+
+		    }); //ajax call
+		    
+		    return false; // this keeps the form from submitting
+    	});//add gloss
     	
     	//this clones the default add glossed text form 
     	$("#add_glossed_text").click(function() {	
@@ -442,7 +492,8 @@
 				    
 				     <div class='form-group col-sm-3'>
 				        {{ Form::label('head_word_id', 'Head Word') }}
-				        {{ Form::hidden('head_word_id', '1') }} <br/>
+				        {{ Form::hidden('head_word_id', null) }} <br/>
+				        <div id="head_word_text"></div>
 				        {{ Form::button('Attach Head Word', ['class' => 'btn btn-success btn-sm', 'id' => 'attach_head_word_button']) }}
 				        <div id ="head_word_id_error" class="alert-danger errors"></div>
 				    </div>	     
@@ -551,7 +602,7 @@
 					<div class='form-group col-sm-5'>
 				        {{ Form::label('word', 'Word') }}
 				        {{ Form::text('word', null, ['placeholder' => 'Word', 'class' => 'form-control', 'id' => 'word']) }}
-				        <div id ="word_form_error" class="alert-danger errors"></div>
+				        <div id ="word_error" class="alert-danger errors"></div>
 				    </div>
 				    
 				    <div class='form-group col-sm-5'>
