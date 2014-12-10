@@ -184,12 +184,14 @@
 	    }); //ajax call
 	} //attach gloss function
 
-	function attach_head_word(head_word_id, head_word_text) {
-		$('#new_gloss_form').find("#head_word_id").attr('value', head_word_id);
-		$('#new_gloss_form').find("#head_word_text").html(head_word_text);
+	function attach_head_word(head_word_id, head_word_display) {
+		//gloss_form is set when they open the head word modal
+		console.log(gloss_form);
+		$(gloss_form).find("#head_word_id").attr('value', head_word_id);
+		$(gloss_form).find("#head_word_display").html(head_word_display);
 		
-		$('#new_gloss_form').find("#attach_head_word_button").html('Change Head Word');
-	    $('#new_gloss_form').find("#attach_head_word_button").attr('class', 'btn btn-primary btn-sm');
+		$(gloss_form).find("#attach_head_word_button").html('Change Head Word');
+	    $(gloss_form).find("#attach_head_word_button").attr('class', 'btn btn-primary btn-sm');
 		$("#attach_head_word_modal").modal('hide'); 
 	} //attach head word
 
@@ -265,7 +267,7 @@
 		    $(".errors", '#new_gloss_form').empty(); //reset gloss form error divs
 		    $('#new_gloss_form').find("#attach_head_word_button").html('Attach Head Word'); //reset headword button
 		    $('#new_gloss_form').find("#attach_head_word_button").attr('class', 'btn btn-success btn-sm'); //reset headword button
-		    $('#new_gloss_form').find("#head_word_text").html(''); //reset headword text
+		    $('#new_gloss_form').find("#head_word_display").html(''); //reset headword text
 		    return false;
 		});
 
@@ -342,7 +344,8 @@
 
 
 		//popup to attach head word to gloss
-		$("#attach_head_word_button").click(function() {
+		$("#attach_head_word_button, #change_head_word_button").click(function() {
+			gloss_form = $(this).closest('form'); //we will use this in the attach_head_word function
 		    $("#head_word_search_input").val(""); //reset the input box
 		    $("#attach_head_word_modal").modal('show'); 
 		    $("#head_word_search_input").focus(); //put cursor in search box
@@ -493,7 +496,7 @@
 				     <div class='form-group col-sm-3'>
 				        {{ Form::label('head_word_id', 'Head Word') }}
 				        {{ Form::hidden('head_word_id', null) }} <br/>
-				        <div id="head_word_text"></div>
+				        <div id="head_word_display"></div>
 				        {{ Form::button('Attach Head Word', ['class' => 'btn btn-success btn-sm', 'id' => 'attach_head_word_button']) }}
 				        <div id ="head_word_id_error" class="alert-danger errors"></div>
 				    </div>	     
@@ -553,8 +556,9 @@
 				    
 				     <div class='form-group col-sm-3'>
 				        {{ Form::label('head_word_id', 'Head Word') }}
-				        {{ Form::hidden('head_word_id', '1') }} <!-- TODO make this a popup -->
+				        {{ Form::hidden('head_word_id', null) }}
 				        <div id="head_word_display"></div>
+				        {{ Form::button('Change Head Word', ['class' => 'btn btn-primary btn-sm', 'id' => 'change_head_word_button']) }}
 				        <div id ="head_word_id_error" class="alert-danger errors"></div>
 				    </div>	     
 				    

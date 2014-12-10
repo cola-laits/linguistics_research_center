@@ -122,11 +122,14 @@ class EieolGlossController extends BaseController {
 			
 			$gloss->save();
 			
+			//get it again in case they change the headword
+			$gloss = EieolGloss::with('head_word')->find($id);
+			
 			return Response::json(array(
 					'success' => true,
 					'message' => 'Gloss was successfully updated.',
 					'gloss_id' => $gloss->id,
-					'gloss_display' => $gloss->getDisplayGloss(),
+					'gloss_display' => '<br>' . $gloss->getDisplayGloss(),
 			));
 	
 		}
