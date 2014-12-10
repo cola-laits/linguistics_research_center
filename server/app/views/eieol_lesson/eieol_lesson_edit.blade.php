@@ -160,7 +160,7 @@
 					
 	  	    		$('#new_glossed_text_gloss_form', '#'+new_div_id).find("#order").attr('value',next_gloss_order);
 	  	    		$('#new_glossed_text_gloss_form', '#'+new_div_id).find("#glossed_text_id").attr('value',glossed_text_id);
-	  	    		$('#new_glossed_text_gloss_form', '#'+new_div_id).find(".gloss_text").html(gloss_text);
+	  	    		$('#new_glossed_text_gloss_form', '#'+new_div_id).find(".gloss_text").html('<br/>' + gloss_text);
 	  	    		$('#new_glossed_text_gloss_form', '#'+new_div_id).find(".gloss_text").addClass('gloss_' + gloss_id);
 	  	    		$('#new_glossed_text_gloss_form', '#'+new_div_id).attr("action",new_form_action);
 	  	    		$('#new_glossed_text_gloss_form', '#'+new_div_id).attr("id",new_form_id);
@@ -447,7 +447,7 @@
 				        <div id ="contextual_gloss_error" class="alert-danger errors"></div>
 				    </div>	     
 				    
-				    <div class='form-group col-sm-1 '> 
+				    <div class='form-group col-sm-1 bottom_button'> 
 				    	{{ Form::submit('Add', ['class' => 'btn btn-success']) }}
 				    </div>
 			    </div>			    
@@ -507,7 +507,7 @@
 				        <div id ="contextual_gloss_error" class="alert-danger errors"></div>
 				    </div>	     
 				    
-				    <div class='form-group col-sm-1 '> 
+				    <div class='form-group col-sm-1 bottom_button'> 
 				    	{{ Form::submit('Edit', ['class' => 'btn btn-success']) }}
 				    </div>
 			    </div>
@@ -554,7 +554,7 @@
 				        <div id ="definition_error" class="alert-danger errors"></div>
 				    </div>	     
 
-				    <div class='form-group col-sm-1 '> 
+				    <div class='form-group col-sm-1 bottom_button'> 
 				    	{{ Form::submit('Add', ['class' => 'btn btn-success']) }}
 				    </div>
 			    </div>			    
@@ -647,7 +647,7 @@
 					        <div id ="glossed_text_error" class="alert-danger errors"></div>
 					    </div>	    
 					    
-					    <div class='form-group col-sm-1 '>
+					    <div class='form-group col-sm-1 bottom_button'>
 						    {{ Form::submit('Edit', ['class' => 'btn btn-primary']) }}
 						</div>
 				    </div>
@@ -674,16 +674,17 @@
 						        <div id ="order_error" class="alert-danger errors"></div>
 						    </div>
 						    
-						    <div class='form-group col-sm-1 '>
+						    <div class='form-group col-sm-1 bottom_button'>
 							    {{ Form::submit('Edit Order', ['class' => 'btn btn-primary']) }}
 							    {{ Form::close() }}
 							</div>
 						    	
 						    <div class='col-sm-5 gloss_{{$gloss->id}}'>
+						    	<br/>
 						    	{{$gloss->getDisplayGloss()}} 
 			    			</div>   
 			    			
-			    			<div class='col-sm-1'>
+			    			<div class='col-sm-1 bottom_button'>
 			    				{{ Form::open(['class' => 'edit_gloss']) }} 
 			    					{{ Form::hidden('gloss_id', $gloss->id, ['id' => 'gloss_id']) }}
 			    					{{ Form::submit('Edit Gloss', ['class' => 'btn btn-primary']) }}
@@ -736,7 +737,7 @@
 				        <div id ="glossed_text_error" class="alert-danger errors"></div>
 				    </div>	     
 				    
-				    <div class='form-group col-sm-1 '> 
+				    <div class='form-group col-sm-1 bottom_button'> 
 				    	{{ Form::submit('Add', ['class' => 'btn btn-success']) }}
 				    </div>
 			    </div>
@@ -794,7 +795,7 @@
 				        <div id ="order_error" class="alert-danger errors"></div>
 				    </div>
 				    
-				    <div class='form-group col-sm-1 '>
+				    <div class='form-group col-sm-1 bottom_button'>
 					    {{ Form::submit('Edit Order', ['class' => 'btn btn-primary']) }}
 					    {{ Form::close() }}
 					</div>
@@ -802,7 +803,7 @@
 				    <div class='col-sm-5 gloss_text'>
 		   			</div>   
 		   			
-		   			<div class='col-sm-1'>
+		   			<div class='col-sm-1 bottom_button'>
 	    				{{ Form::open(['class' => 'edit_gloss', 'id' => 'edit_gloss']) }} 
 	    					{{ Form::hidden('gloss_id', null, ['id' => 'gloss_id']) }}
 	    					{{ Form::submit('Edit Gloss', ['class' => 'btn btn-primary']) }}
