@@ -186,8 +186,8 @@
 
 
 	//highlight forms if they are changed
-	function highlight_form(){
-		var my_form = $(this).closest('form');
+	function highlight_form(input){
+		var my_form = $(input).closest('form');
 		my_form.css("background-color", "#EBAD99");
 	} //highlight form
 
@@ -231,8 +231,14 @@
 		generate_lesson_text();
         
         //highlight form if inputs change.  If you are using ckeditor, you have to do that with its on change function
-        $(':input').keyup(highlight_form); //listen for typing
-    	$(':input').change(highlight_form); //listen for clicking
+        $(':input').keyup(function (e) { //listen for typing
+            if(e.keyCode != 9){ //ignore tabs
+                highlight_form(this); 
+            }
+        });
+    	$(':input').change(function () { //listen for clicking
+            highlight_form(this); 
+        });
 
     	//bind all ajax forms to our ajax function
     	$('.ajax_form').submit(function(){
@@ -437,7 +443,7 @@
 				     <div class='form-group col-sm-3'>
 				        {{ Form::label('head_word_id', 'Head Word') }}
 				        {{ Form::hidden('head_word_id', '1') }} <br/>
-				        {{ Form::button('Attach Head Word', ['class' => 'btn btn-success', 'id' => 'attach_head_word_button']) }}
+				        {{ Form::button('Attach Head Word', ['class' => 'btn btn-success btn-sm', 'id' => 'attach_head_word_button']) }}
 				        <div id ="head_word_id_error" class="alert-danger errors"></div>
 				    </div>	     
 				    
