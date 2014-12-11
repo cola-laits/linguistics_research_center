@@ -36,11 +36,14 @@ class EieolHeadWordController extends BaseController {
 	{
 	
 		$rules = array(
-			'word' => 'required|unique:eieol_head_word,word,null,id,definition,' . Input::get('definition'), 
+			'word' => 'required|regex:/^<.*>$/|unique:eieol_head_word,word,null,id,definition,' . Input::get('definition'), 
 			'definition' => 'required',
 		);
+		$messages = array(
+				'word.regex' => 'Word must start with "<" and end with ">"'
+		);
 
-		$validator = Validator::make(Input::all(), $rules);
+		$validator = Validator::make(Input::all(), $rules, $messages);
 	
 		if ($validator->fails()) {
 			return Response::json(array(
@@ -78,11 +81,14 @@ class EieolHeadWordController extends BaseController {
 	public function update($id)
 	{
 		$rules = array(
-			'word' => 'required|unique:eieol_head_word,word,' . $id . ',id,definition,' . Input::get('definition'), 
+			'word' => 'required|regex:/^<.*>$/|unique:eieol_head_word,word,' . $id . ',id,definition,' . Input::get('definition'), 
 			'definition' => 'required',
 		);
+		$messages = array(
+				'word.regex' => 'Word must start with "<" and end with ">"'
+		);
 		
-		$validator = Validator::make(Input::all(), $rules);
+		$validator = Validator::make(Input::all(), $rules, $messages);
 	
 		if ($validator->fails()) {
 			return Response::json(array(

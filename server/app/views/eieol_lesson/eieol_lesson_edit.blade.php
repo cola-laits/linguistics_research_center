@@ -186,7 +186,6 @@
 
 	function attach_head_word(head_word_id, head_word_display) {
 		//gloss_form is set when they open the head word modal
-		console.log(gloss_form);
 		$(gloss_form).find("#head_word_id").attr('value', head_word_id);
 		$(gloss_form).find("#head_word_display").html(head_word_display);
 		
