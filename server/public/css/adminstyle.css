@@ -35,4 +35,16 @@ body {
 	background:red;
 }
 
-.ui-autocomplete {position: absolute; cursor: default;z-index:9999 !important;}  
+.ui-autocomplete { /*so ui autocomplete shows above modals*/
+	position: absolute;
+	cursor: default;
+	z-index:9999 !important;
+} 
+
+#keywords_tag {
+	text-transform: uppercase;
+}
+
+#keywords_tagsinput span{
+	text-transform: uppercase;
+}

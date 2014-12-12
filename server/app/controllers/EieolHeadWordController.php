@@ -62,7 +62,7 @@ class EieolHeadWordController extends BaseController {
 				//now deal with keywords
 				$keyword_recs = array();
 				foreach (explode(',',Input::get('keywords')) as $keyword) {
-					$keyword_recs[] = new EieolHeadWordKeyword(array('keyword' => $keyword, 'created_by' => Auth::user()->username, 'updated_by' => Auth::user()->username,));
+					$keyword_recs[] = new EieolHeadWordKeyword(array('keyword' => strtoupper($keyword), 'created_by' => Auth::user()->username, 'updated_by' => Auth::user()->username,));
 				}
 				$head_word->keywords()->saveMany($keyword_recs);
 				
@@ -121,7 +121,7 @@ class EieolHeadWordController extends BaseController {
 				//now deal with keywords
 				$keyword_recs = array();
 				foreach (explode(',',Input::get('keywords')) as $keyword) {
-					$keyword_recs[] = new EieolHeadWordKeyword(array('keyword' => $keyword, 'updated_by' => Auth::user()->username,));
+					$keyword_recs[] = new EieolHeadWordKeyword(array('keyword' => strtoupper($keyword), 'updated_by' => Auth::user()->username,));
 				}
 				$head_word->keywords()->saveMany($keyword_recs);
 			

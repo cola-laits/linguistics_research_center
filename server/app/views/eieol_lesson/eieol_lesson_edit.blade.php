@@ -242,7 +242,7 @@
 		generate_lesson_text();
 
 		//turn on tags for keywords (in head word modal)
-		$('#keywords').tagsInput({
+		$('.keywords').tagsInput({
 			'height':'50px',
 			'width':'100%',
 			'defaultText':'Keyword',
@@ -628,7 +628,7 @@
 				    
 				    <div class='form-group col-sm-4'>
 				        {{ Form::label('keywords', 'Keywords') }}
-				        {{ Form::text('keywords', null, ['placeholder' => 'Keywords', 'class' => 'form-control', 'id' => 'keywords']) }}
+				        {{ Form::text('keywords', null, ['placeholder' => 'Keywords', 'class' => 'form-control keywords', 'id' => 'keywords']) }}
 				        <div class="alert-warning">Separate with commas</div>
 				        <div id ="keywords_error" class="alert-danger errors"></div>
 				    </div>	 
