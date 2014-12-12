@@ -10,7 +10,9 @@
 		//every time they update the glossed text, we calculate the full text and display it below
 		var lesson_text = '';
 		$("form", "#glossed_texts").each(function() {
-			lesson_text += $('#glossed_text', this).val() + ' ';
+			if ($('#glossed_text', this).val() != null) { //without this, it will try to include edit gloss forms
+				lesson_text += $('#glossed_text', this).val() + ' ';
+			}
 		});
 		$('#lesson_text').html(lesson_text); //replace div with new text
 	} //generate_lesson_text
@@ -238,7 +240,16 @@
 
 		//build lesson text
 		generate_lesson_text();
-        
+
+		//turn on tags for keywords (in head word modal)
+		$('#keywords').tagsInput({
+			'height':'50px',
+			'width':'100%',
+			'defaultText':'Keyword',
+			'autocomplete_url':'/admin/eieol_head_word_keyword/filtered_list'
+		});
+		
+		       
         //highlight form if inputs change.  If you are using ckeditor, you have to do that with its on change function
         $(':input').keyup(function (e) { //listen for typing
             if(e.keyCode != 9){ //ignore tabs
@@ -349,8 +360,9 @@
 		    $("#attach_head_word_modal").modal('show'); 
 		    $("#head_word_search_input").focus(); //put cursor in search box
 		    document.getElementById("head_word_search_result").innerHTML=""; //reset result box so it's empty each time the click it
-		    $('#new_head_word_form').trigger("reset"); //reset the new gloss form
-		    $(".errors", '#new_head_word_form').empty(); //reset gloss form error divs
+		    $('#new_head_word_form').trigger("reset"); //reset the new head word form
+		    $('#keywords').importTags(""); //trigger reset doesn't work because of the jquery tags, so do this one manually
+		    $(".errors", '#new_head_word_form').empty(); //reset head word form error divs
 		    return false;
 		});
 
@@ -445,7 +457,7 @@
     
 </script>
  
- 
+
 <div class="spinner">
   {{ HTML::image('images/ajax_loader_red_350.gif', $alt="Loading", $attributes = array('border'=>0, 'width'=>150, 'height'=>150))  }}<br/>Please Wait...
 </div>
@@ -482,7 +494,7 @@
 				    
 				    <div class='form-group col-sm-2'>
 				        {{ Form::label('part_of_speech', 'Part Of Speech') }}
-				        {{ Form::text('part_of_speech', null, ['placeholder' => 'Part Of Speech', 'class' => 'form-control', 'id' => 'part_of_speech']) }}
+				        {{ Form::text('part_of_speech', null, ['placeholder' => 'Part Of Speech', 'class' => 'form-control part_of_speech', 'id' => 'part_of_speech']) }}
 				        <div id ="part_of_speech_error" class="alert-danger errors"></div>
 				    </div>	     
 				    
@@ -543,7 +555,7 @@
 				    
 				    <div class='form-group col-sm-2'>
 				        {{ Form::label('part_of_speech', 'Part Of Speech') }}
-				        {{ Form::text('part_of_speech', null, ['placeholder' => 'Part Of Speech', 'class' => 'form-control', 'id' => 'part_of_speech']) }}
+				        {{ Form::text('part_of_speech', null, ['placeholder' => 'Part Of Speech', 'class' => 'form-control part_of_speech', 'id' => 'part_of_speech']) }}
 				        <div id ="part_of_speech_error" class="alert-danger errors"></div>
 				    </div>	     
 				    
@@ -602,17 +614,24 @@
 		    		   'id' => 'new_head_word_form'  
 		    		  ]) }}
 		    		  
-					<div class='form-group col-sm-5'>
+					<div class='form-group col-sm-3'>
 				        {{ Form::label('word', 'Word') }}
 				        {{ Form::text('word', null, ['placeholder' => 'Word', 'class' => 'form-control', 'id' => 'word']) }}
 				        <div id ="word_error" class="alert-danger errors"></div>
 				    </div>
 				    
-				    <div class='form-group col-sm-5'>
+				    <div class='form-group col-sm-3'>
 				        {{ Form::label('definition', 'Definition') }}
 				        {{ Form::text('definition', null, ['placeholder' => 'Definition', 'class' => 'form-control', 'id' => 'definition']) }}
 				        <div id ="definition_error" class="alert-danger errors"></div>
 				    </div>	     
+				    
+				    <div class='form-group col-sm-4'>
+				        {{ Form::label('keywords', 'Keywords') }}
+				        {{ Form::text('keywords', null, ['placeholder' => 'Keywords', 'class' => 'form-control', 'id' => 'keywords']) }}
+				        <div class="alert-warning">Separate with commas</div>
+				        <div id ="keywords_error" class="alert-danger errors"></div>
+				    </div>	 
 
 				    <div class='form-group col-sm-1 bottom_button'> 
 				    	{{ Form::submit('Add', ['class' => 'btn btn-success']) }}
@@ -624,8 +643,6 @@
         </div>
     </div>
 </div>
-
-
 
 <!-- ---------------------------------------------------------------------------------------- -->  
 

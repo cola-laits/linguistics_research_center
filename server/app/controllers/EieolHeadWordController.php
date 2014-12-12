@@ -38,8 +38,10 @@ class EieolHeadWordController extends BaseController {
 		$rules = array(
 			'word' => 'required|regex:/^<.*>$/|unique:eieol_head_word,word,null,id,definition,' . Input::get('definition'), 
 			'definition' => 'required',
+			'keywords' => 'required',
 		);
 		$messages = array(
+				'word.unique' => 'This Word/Definition combination already exists',
 				'word.regex' => 'Word must start with "<" and end with ">"'
 		);
 
@@ -51,14 +53,28 @@ class EieolHeadWordController extends BaseController {
 					'errors' => $validator->getMessageBag()->toArray()
 			));
 		} else {
-			$head_word = new EieolHeadWord;
-	
-			$head_word->word = Input::get('word');
-			$head_word->definition = Input::get('definition');
-			$head_word->created_by = Auth::user()->username;
-			$head_word->updated_by = Auth::user()->username;
-	
-			$head_word->save();
+			$head_word_id = DB::transaction(function() {
+				$head_word = new EieolHeadWord;
+		
+				$head_word->word = Input::get('word');
+				$head_word->definition = Input::get('definition');
+				$head_word->created_by = Auth::user()->username;
+				$head_word->updated_by = Auth::user()->username;
+		
+				$head_word->save();
+				
+				//now deal with keywords
+				$keyword_recs = array();
+				foreach (explode(',',Input::get('keywords')) as $keyword) {
+					$keyword_recs[] = new EieolHeadWordKeyword(array('keyword' => $keyword, 'created_by' => Auth::user()->username, 'updated_by' => Auth::user()->username,));
+				}
+				$head_word->keywords()->saveMany($keyword_recs);
+				
+				return $head_word->id;
+			}); //end transaction
+			
+			
+			$head_word = EieolHeadWord::find($head_word_id);
 			
 			return Response::json(array(
 					'success' => true,
@@ -85,6 +101,7 @@ class EieolHeadWordController extends BaseController {
 			'definition' => 'required',
 		);
 		$messages = array(
+				'word.unique' => 'This Word/Definition combination already exists',
 				'word.regex' => 'Word must start with "<" and end with ">"'
 		);
 		
@@ -96,13 +113,26 @@ class EieolHeadWordController extends BaseController {
 					'errors' => $validator->getMessageBag()->toArray()
 			));
 		} else {
+			DB::transaction(function() {
+				$head_word = EieolHeadWord::find($id);
+			
+				$head_word->word = Input::get('word');
+				$head_word->definition = Input::get('definition');
+				$head_word->updated_by = Auth::user()->username;
+			
+				$head_word->save();
+			
+				//now deal with keywords
+				$keyword_recs = array();
+				foreach (explode(',',Input::get('keywords')) as $keyword) {
+					$keyword_recs[] = new EieolHeadWordKeyword(array('keyword' => $keyword, 'updated_by' => Auth::user()->username,));
+				}
+				$head_word->keywords()->saveMany($keyword_recs);
+			
+				return $head_word->id;
+			}); //end transaction
+						
 			$head_word = EieolHeadWord::find($id);
-			
-			$head_word->word = Input::get('word');
-			$head_word->definition = Input::get('definition');
-			$head_word->updated_by = Auth::user()->username;
-			
-			$head_word->save();
 			
 			return Response::json(array(
 					'success' => true,

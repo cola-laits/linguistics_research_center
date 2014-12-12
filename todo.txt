@@ -1,15 +1,48 @@
 Admin
 	Maintain lessons
+		Handle 2 languages in one lesson
+			- add lang field to lesson
+			- stamp lang on gloss, head word and keyword
+			- change look ups to limit to lang
+			- take lookups out of index and make own function
 		Popup keyboard - ability to customize
 		Sorting?
 		Glosses - list all glossed text using it?
 		POS pulldown or add
+			$.ajax({
+	            dataType: "json",
+	            type : 'GET',
+	            url: '/admin/eieol_head_word_keyword',
+	            success: function(data) {
+	                console.log(data);
+	            	$(".part_of_speech").autocomplete({
+	        		    source: data
+	        		});
+	            }
+	        });
+	        
+	        $(".part_of_speech").autocomplete({
+		    source: function (request, response) {
+		        $.ajax({
+		            dataType: "json",
+		            type : 'GET',
+		            url: '/admin/eieol_head_word_keyword',
+		            success: function(data) {
+		            	response(data)
+	
+		            }
+		        });
+		    }
+		});
+        
 		anaysis pulldown or add
 		Headwords - modal to update(code in regular and clone), list all glosses that use it?
 		Keywords
 		Authorization by series?
 		Add Pokorny ID to headword
 		Remove grammars, glossed texts, glossed_text_glosses
+		Part of Speech editor
+		Analysis editor
 	Maintain Lexicon
 	
 Public

@@ -53,8 +53,11 @@ class EieolGlossController extends BaseController {
 			'contextual_gloss' => 'required',
 			'head_word_id' => 'required|exists:eieol_head_word,id'
 		);
+		$messages = array(
+				'surface_form.unique' => 'This Surface Form/Part of Speech/Analysis combination already exists',
+		);
 
-		$validator = Validator::make(Input::all(), $rules);
+		$validator = Validator::make(Input::all(), $rules, $messages);
 	
 		if ($validator->fails()) {
 			return Response::json(array(
@@ -102,8 +105,11 @@ class EieolGlossController extends BaseController {
 			'contextual_gloss' => 'required',
 			'head_word_id' => 'required|exists:eieol_head_word,id'
 		);
+		$messages = array(
+				'surface_form.unique' => 'This Surface Form/Part of Speech/Analysis combination already exists',
+		);
 		
-		$validator = Validator::make(Input::all(), $rules);
+		$validator = Validator::make(Input::all(), $rules,$messages);
 	
 		if ($validator->fails()) {
 			return Response::json(array(

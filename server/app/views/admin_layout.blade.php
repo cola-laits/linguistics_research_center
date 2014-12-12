@@ -7,12 +7,15 @@
         {{ HTML::style('//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css') }}
         {{ HTML::style('//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css') }}
         {{ HTML::style('css/adminstyle.css') }}
-        
+        {{ HTML::style('css/jquery.tagsinput.css') }}
+        {{ HTML::style('https://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css') }}
         
         {{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js') }}
         {{ HTML::script('//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js') }}
         {{ HTML::script('//cdn.ckeditor.com/4.4.5.1/full/ckeditor.js') }}
-
+        {{ HTML::script('js/jquery.tagsinput.js') }}
+        {{ HTML::script('https://code.jquery.com/ui/1.11.2/jquery-ui.min.js') }}
+ 
     </head>
     <body>
     
