@@ -2,14 +2,9 @@
 
 class EieolGlossController extends BaseController {	
 	
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index()
+	public function filtered_list()
 	{
-		//this does NOT list all glosses.  It's is a search that returns glosses that start with the url parm "gloss"
+		//this is a search that returns glosses that start with the url parm "gloss"
 		$text = '';
 		$glosses = EieolGloss::with('head_word')->where('surface_form', 'LIKE', Input::get('gloss') . '%')->take(25)->get()->sortBy('surface_form');
 		foreach ($glosses as $gloss) {

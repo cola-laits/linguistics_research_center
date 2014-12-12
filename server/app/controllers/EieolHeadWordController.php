@@ -2,14 +2,10 @@
 
 class EieolHeadWordController extends BaseController {	
 	
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index()
+
+	public function filtered_list()
 	{
-		//this does NOT list all head words.  It's is a search that returns head words that contain with the url parm "headword"
+		//this  is a search that returns head words that contain with the url parm "headword"
 		//since head words starts with a <, it looks for any matching chars.
 		$text = '';
 		$head_words = EieolHeadWord::where('word', 'LIKE', '%' . Input::get('head_word') . '%')->take(25)->get()->sortBy('word');

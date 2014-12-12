@@ -9,6 +9,8 @@ Admin
 		Sorting?
 		Glosses - list all glossed text using it?
 		POS pulldown or add
+		
+			This way loads it once
 			$.ajax({
 	            dataType: "json",
 	            type : 'GET',
@@ -21,10 +23,15 @@ Admin
 	            }
 	        });
 	        
+	        This way loads requires the backend to filter by request.term
+	        http://stackoverflow.com/questions/21871172/jquery-autocomplete-not-filtering-data
 	        $(".part_of_speech").autocomplete({
 		    source: function (request, response) {
 		        $.ajax({
 		            dataType: "json",
+		            data: {
+	                    term: request.term,
+	                },
 		            type : 'GET',
 		            url: '/admin/eieol_head_word_keyword',
 		            success: function(data) {
@@ -39,7 +46,7 @@ Admin
 		Headwords - modal to update(code in regular and clone), list all glosses that use it?
 		Keywords
 		Authorization by series?
-		Add Pokorny ID to headword
+		Add Pokorny ID to headword - add to forms
 		Remove grammars, glossed texts, glossed_text_glosses
 		Part of Speech editor
 		Analysis editor

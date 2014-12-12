@@ -215,7 +215,7 @@
 			  document.getElementById("gloss_search_result").innerHTML=xmlhttp.responseText;
 		  }
 		}
-		xmlhttp.open("GET","/admin/eieol_gloss?gloss="+gloss,true);
+		xmlhttp.open("GET","/admin/eieol_gloss/filtered_list?gloss="+gloss,true);
 		xmlhttp.send();
 	}
 
@@ -231,7 +231,7 @@
 			  document.getElementById("head_word_search_result").innerHTML=xmlhttp.responseText;
 		  }
 		}
-		xmlhttp.open("GET","/admin/eieol_head_word?head_word="+head_word,true);
+		xmlhttp.open("GET","/admin/eieol_head_word/filtered_list?head_word="+head_word,true);
 		xmlhttp.send();
 	}
 
