@@ -425,10 +425,9 @@
 			        $.each(data, function(key, value){
 					    $('[name='+key+']', '#edit_head_word_form').val(value);
 				    });
-			        $('#edit_keywords').importTags(data['keywords']); //because of the jquery tags, so do this one manually
-			        //$('#edit_head_word_form').find('#keywords').importTags('Peter,Paul,Mary'); //because of the jquery tags, so do this one manually
-					//$('#keywords', '#edit_head_word_form').importTags('Bill,Ted,Rufus');
+			        $('#edit_keywords').importTags(data['keywords']); //because of the jquery tags, do this one manually
 				    $("#edit_head_word_form").attr("action", "/admin/eieol_head_word/" + data['id']);
+				    $("#head_word_glosses").html("<strong>This is used by the following glosses:</strong> " + data['glosses']);
 		        }, //success
 		        
 		        error : function(xml_http_request, text_status, error_thrown) {
@@ -762,9 +761,13 @@
 				    <div class='form-group col-sm-1 bottom_button'> 
 				    	{{ Form::submit('Edit', ['class' => 'btn btn-primary']) }}
 				    </div>
+				    
+				    {{ Form::close() }}
 			    </div>			    
 		    
-		    {{ Form::close() }}
+		   		<div class="well" id="head_word_glosses"></div>
+	        </div>
+	        
             </div>
         </div>
     </div>

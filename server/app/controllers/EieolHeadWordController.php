@@ -30,8 +30,15 @@ class EieolHeadWordController extends BaseController {
 	 */
 	public function show($id)
 	{
-		$head_word = EieolHeadWord::with('keywords')->find($id);
+		$head_word = EieolHeadWord::with('keywords', 'glosses')->find($id);
 		$return_head_word = $head_word->toArray();
+		
+		$return_head_word['glosses'] = '';
+		foreach($head_word->glosses as $gloss){
+			$return_head_word['glosses'] .= $gloss->surface_form . ', ';
+		}
+		$return_head_word['glosses'] = rtrim($return_head_word['glosses'], ', ');
+		
 		$return_head_word['keywords'] = '';
 		foreach($head_word->keywords as $keyword) {
 			$return_head_word['keywords'] .= $keyword->keyword . ',';
