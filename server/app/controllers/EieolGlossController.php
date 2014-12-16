@@ -72,6 +72,27 @@ class EieolGlossController extends BaseController {
 	
 			$gloss->save();
 			
+			//add part of speech if new
+			if (PartOfSpeech::where('part_of_speech', '=', Input::get('part_of_speech'))->count() == 0 ) {
+				$part_of_speech = new PartOfSpeech;
+				$part_of_speech->part_of_speech = Input::get('part_of_speech');
+				$part_of_speech->created_by = Auth::user()->username;
+				$part_of_speech->updated_by = Auth::user()->username;
+				$part_of_speech->save();
+			}
+				
+			//add analysis if new
+			if (Input::has('analysis')) {
+				if (EieolAnalysis::where('analysis', '=', Input::get('analysis'))->count() == 0 ) {
+					$analysis = new EieolAnalysis;
+					$analysis->analysis = Input::get('analysis');
+					$analysis->created_by = Auth::user()->username;
+					$analysis->updated_by = Auth::user()->username;
+					$analysis->save();
+				}
+			}
+			
+			//get it to return full display with head word
 			$gloss = EieolGloss::with('head_word')->find($gloss->id);
 			
 			return Response::json(array(
@@ -123,6 +144,26 @@ class EieolGlossController extends BaseController {
 			
 			$gloss->save();
 			
+			//add part of speech if new
+			if (PartOfSpeech::where('part_of_speech', '=', Input::get('part_of_speech'))->count() == 0 ) {
+				$part_of_speech = new PartOfSpeech;
+				$part_of_speech->part_of_speech = Input::get('part_of_speech');
+				$part_of_speech->created_by = Auth::user()->username;
+				$part_of_speech->updated_by = Auth::user()->username;
+				$part_of_speech->save();
+			}
+			
+			//add analysis if new
+			if (Input::has('analysis')) {
+				if (EieolAnalysis::where('analysis', '=', Input::get('analysis'))->count() == 0 ) {
+					$analysis = new EieolAnalysis;
+					$analysis->analysis = Input::get('analysis');
+					$analysis->created_by = Auth::user()->username;
+					$analysis->updated_by = Auth::user()->username;
+					$analysis->save();
+				}
+			}
+				
 			//get it again in case they change the headword
 			$gloss = EieolGloss::with('head_word')->find($id);
 			

@@ -7,48 +7,14 @@ Admin
 			- take lookups out of index and make own function
 		Popup keyboard - ability to customize
 		Sorting?
-		Glosses - list all glossed text using it?
-		POS pulldown or add
-		
-			This way loads it once
-			$.ajax({
-	            dataType: "json",
-	            type : 'GET',
-	            url: '/admin/eieol_head_word_keyword',
-	            success: function(data) {
-	                console.log(data);
-	            	$(".part_of_speech").autocomplete({
-	        		    source: data
-	        		});
-	            }
-	        });
-	        
-	        This way loads requires the backend to filter by request.term
-	        http://stackoverflow.com/questions/21871172/jquery-autocomplete-not-filtering-data
-	        $(".part_of_speech").autocomplete({
-		    source: function (request, response) {
-		        $.ajax({
-		            dataType: "json",
-		            data: {
-	                    term: request.term,
-	                },
-		            type : 'GET',
-		            url: '/admin/eieol_head_word_keyword',
-		            success: function(data) {
-		            	response(data)
-	
-		            }
-		        });
-		    }
-		});
-        
-		anaysis pulldown or add
-		Headwords - list all glosses that use it?
+****Glosses - list all glossed text using it?
+****Headwords - list all glosses that use it?
 		Authorization by series?
 		Add Pokorny ID to headword - add to forms
-		BUttons to remove grammars, glossed texts, glossed_text_glosses
-		Part of Speech editor
-		Analysis editor
+****Buttons to remove grammars, glossed texts, glossed_text_glosses
+	
+	Part of Speech editor?
+	Analysis editor?
 	Maintain Lexicon
 	
 Public

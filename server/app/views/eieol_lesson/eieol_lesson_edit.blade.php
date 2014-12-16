@@ -254,6 +254,41 @@
 			'defaultText':'',
 			'autocomplete_url':'/admin/eieol_head_word_keyword/filtered_list'
 		});
+
+		//autocomplete fields
+		$(".part_of_speech").autocomplete({
+		    source: function (request, response) {
+		        $.ajax({
+		            dataType: "json",
+		            data: {
+	                    term: request.term,
+	                },
+		            type : 'GET',
+		            url: '/admin/part_of_speech/filtered_list',
+		            success: function(data) {
+		            	response(data)
+	
+		            }
+		        });
+		    }
+		}); //part of speech autocomplete
+
+		$(".analysis").autocomplete({
+		    source: function (request, response) {
+		        $.ajax({
+		            dataType: "json",
+		            data: {
+	                    term: request.term,
+	                },
+		            type : 'GET',
+		            url: '/admin/eieol_analysis/filtered_list',
+		            success: function(data) {
+		            	response(data)
+	
+		            }
+		        });
+		    }
+		}); //analysis autocomplete
 		
 		       
         //highlight form if inputs change.  If you are using ckeditor, you have to do that with its on change function
@@ -543,7 +578,7 @@
 				    
 				     <div class='form-group col-sm-2'>
 				        {{ Form::label('analysis', 'Analysis') }}
-				        {{ Form::text('analysis', null, ['placeholder' => 'Analysis', 'class' => 'form-control', 'id' => 'analysis']) }}
+				        {{ Form::textarea('analysis', null, ['placeholder' => 'Analysis', 'class' => 'form-control analysis', 'id' => 'analysis', 'size' => '10x4']) }}
 				        <div id ="analysis_error" class="alert-danger errors"></div>
 				    </div>	     
 				    
@@ -604,7 +639,7 @@
 				    
 				     <div class='form-group col-sm-2'>
 				        {{ Form::label('analysis', 'Analysis') }}
-				        {{ Form::text('analysis', null, ['class' => 'form-control', 'id' => 'analysis']) }}
+				        {{ Form::textarea('analysis', null, ['class' => 'form-control analysis', 'id' => 'analysis', 'size' => '10x4']) }}
 				        <div id ="analysis_error" class="alert-danger errors"></div>
 				    </div>	     
 				    
