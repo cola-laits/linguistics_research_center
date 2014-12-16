@@ -30,7 +30,23 @@ class EieolGlossController extends BaseController {
 	 */
 	public function show($id)
 	{
-		return EieolGloss::with('head_word')->find($id)->toJson();
+		$gloss = EieolGloss::with('head_word', 'glossed_texts.lesson')->find($id);
+		$return_gloss = $gloss->toArray();
+		
+ 		$lessons = array();
+ 		foreach($gloss->glossed_texts as $glossed_text){
+ 			if (!in_array($glossed_text->lesson->title,$lessons)) {
+ 				$lessons[] = $glossed_text->lesson->title;
+ 			}
+		}
+		
+		$return_gloss['lessons'] = '';
+		foreach($lessons as $lesson) {
+			$return_gloss['lessons'] .=  $lesson . ', ';
+		}
+		$return_gloss['lessons'] = rtrim($return_gloss['lessons'], ', ');
+		
+		return $return_gloss;
 	}
 	
 	

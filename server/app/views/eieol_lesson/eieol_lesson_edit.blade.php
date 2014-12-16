@@ -377,7 +377,7 @@
 				    });
 
 				    $('#head_word_display', '#edit_gloss_form').text(data['head_word']['word'] + ' ' + data['head_word']['definition']).html(); //we have to use this syntax so <> will display correctly
-
+				    $("#gloss_lessons").html("<strong>This is used by the following lessons:</strong> " + data['lessons']);
 				    $("#edit_gloss_form").attr("action", "/admin/eieol_gloss/" + data['id']);
 		        }, //success
 		        
@@ -598,9 +598,8 @@
 				    <div class='form-group col-sm-1 bottom_button'> 
 				    	{{ Form::submit('Add', ['class' => 'btn btn-success']) }}
 				    </div>
+				    {{ Form::close() }}
 			    </div>			    
-		    
-		    {{ Form::close() }}
             </div>
         </div>
     </div>
@@ -660,9 +659,10 @@
 				    <div class='form-group col-sm-1 bottom_button'> 
 				    	{{ Form::submit('Edit', ['class' => 'btn btn-success']) }}
 				    </div>
+				    {{ Form::close() }}
 			    </div>
 
-		    {{ Form::close() }}
+		    	<div class="well" id="gloss_lessons"></div>
             </div>
         </div>
     </div>
@@ -714,9 +714,8 @@
 				    <div class='form-group col-sm-1 bottom_button'> 
 				    	{{ Form::submit('Add', ['class' => 'btn btn-success']) }}
 				    </div>
+				    {{ Form::close() }}
 			    </div>			    
-		    
-		    {{ Form::close() }}
             </div>
         </div>
     </div>
