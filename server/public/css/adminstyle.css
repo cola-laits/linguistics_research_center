@@ -41,10 +41,10 @@ body {
 	z-index:9999 !important;
 } 
 
-#keywords_tag {
+.tagsinput input {
 	text-transform: uppercase;
 }
 
-#keywords_tagsinput span{
+.tagsinput span{
 	text-transform: uppercase;
 }

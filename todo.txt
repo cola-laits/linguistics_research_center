@@ -43,11 +43,10 @@ Admin
 		});
         
 		anaysis pulldown or add
-		Headwords - modal to update(code in regular and clone), list all glosses that use it?
-		Keywords
+		Headwords - list all glosses that use it?
 		Authorization by series?
 		Add Pokorny ID to headword - add to forms
-		Remove grammars, glossed texts, glossed_text_glosses
+		BUttons to remove grammars, glossed texts, glossed_text_glosses
 		Part of Speech editor
 		Analysis editor
 	Maintain Lexicon

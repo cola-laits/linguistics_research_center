@@ -242,10 +242,16 @@
 		generate_lesson_text();
 
 		//turn on tags for keywords (in head word modal)
-		$('.keywords').tagsInput({
+		$('#new_keywords').tagsInput({
 			'height':'50px',
 			'width':'100%',
-			'defaultText':'Keyword',
+			'defaultText':'',
+			'autocomplete_url':'/admin/eieol_head_word_keyword/filtered_list'
+		});
+		$('#edit_keywords').tagsInput({
+			'height':'50px',
+			'width':'100%',
+			'defaultText':'',
 			'autocomplete_url':'/admin/eieol_head_word_keyword/filtered_list'
 		});
 		
@@ -322,10 +328,7 @@
 
     	//popup to edit gloss
 		$(".edit_gloss").submit(function() {
-		    $("#edit_gloss_modal").modal("show"); 
-		    $("#surface_form", "#edit_gloss_form").focus(); //put cursor in search box
-		    $(".errors", "#edit_gloss_form").empty(); //reset gloss form error divs
-		    
+		    		    
 		    //load form with data for the record they want to edit
 		    $.ajax({
 				type: "GET",
@@ -335,7 +338,7 @@
 		        
 		        success : function(data){
 			        $.each(data, function(key, value){
-					    $('[name='+key+']', edit_gloss_form).val(value);
+					    $('[name='+key+']', '#edit_gloss_form').val(value);
 				    });
 
 				    $('#head_word_display', '#edit_gloss_form').text(data['head_word']['word'] + ' ' + data['head_word']['definition']).html(); //we have to use this syntax so <> will display correctly
@@ -348,12 +351,16 @@
 		        } //error
 
 		    }); //ajax call
+
+		    $(".errors", "#edit_gloss_form").empty(); //reset gloss form error divs
+		    $("#edit_gloss_modal").modal("show"); 
+		    $("#surface_form", "#edit_gloss_form").focus(); //put cursor in first field
 		    
 		    return false;
 		}); //edit gloss
 
 
-		//popup to attach head word to gloss
+		//popup to attach or change head word to gloss
 		$("#attach_head_word_button, #change_head_word_button").click(function() {
 			gloss_form = $(this).closest('form'); //we will use this in the attach_head_word function
 		    $("#head_word_search_input").val(""); //reset the input box
@@ -361,8 +368,44 @@
 		    $("#head_word_search_input").focus(); //put cursor in search box
 		    document.getElementById("head_word_search_result").innerHTML=""; //reset result box so it's empty each time the click it
 		    $('#new_head_word_form').trigger("reset"); //reset the new head word form
-		    $('#keywords').importTags(""); //trigger reset doesn't work because of the jquery tags, so do this one manually
+		    $('#new_keywords').importTags(""); //trigger reset doesn't work because of the jquery tags, so do this one manually
 		    $(".errors", '#new_head_word_form').empty(); //reset head word form error divs
+		    return false;
+		});
+
+		//popup to edit head word
+		$("#edit_head_word_button").click(function() {
+		    
+		    gloss_form = $(this).closest('form'); //get gloss form so we can get head_word_id
+		    head_word_id = $(gloss_form).find("#head_word_id").val();
+		    
+		    //load form with data for the record they want to edit
+		    $.ajax({
+				type: "GET",
+		        url: "/admin/eieol_head_word/" + head_word_id,
+		        data: null,
+		        dataType: "json",
+		        
+		        success : function(data){
+			        $.each(data, function(key, value){
+					    $('[name='+key+']', '#edit_head_word_form').val(value);
+				    });
+			        $('#edit_keywords').importTags(data['keywords']); //because of the jquery tags, so do this one manually
+			        //$('#edit_head_word_form').find('#keywords').importTags('Peter,Paul,Mary'); //because of the jquery tags, so do this one manually
+					//$('#keywords', '#edit_head_word_form').importTags('Bill,Ted,Rufus');
+				    $("#edit_head_word_form").attr("action", "/admin/eieol_head_word/" + data['id']);
+		        }, //success
+		        
+		        error : function(xml_http_request, text_status, error_thrown) {
+		        	alert('Ajax Error: ' + text_status + '/ ' + xml_http_request + '/ ' + error_thrown);
+		        } //error
+
+		    }); //ajax call
+ 
+		    $(".errors", '#edit_head_word_form').empty(); //reset head word form error divs
+		    $("#edit_head_word_modal").modal('show');
+		    $("#word", "#edit_head_word_form").focus(); //put cursor in first field
+		    
 		    return false;
 		});
 
@@ -570,6 +613,7 @@
 				        {{ Form::hidden('head_word_id', null) }}
 				        <div id="head_word_display"></div>
 				        {{ Form::button('Change Head Word', ['class' => 'btn btn-primary btn-sm', 'id' => 'change_head_word_button']) }}
+				        {{ Form::button('Edit Head Word', ['class' => 'btn btn-primary btn-sm', 'id' => 'edit_head_word_button']) }}
 				        <div id ="head_word_id_error" class="alert-danger errors"></div>
 				    </div>	     
 				    
@@ -616,7 +660,7 @@
 		    		  
 					<div class='form-group col-sm-3'>
 				        {{ Form::label('word', 'Word') }}
-				        {{ Form::text('word', null, ['placeholder' => 'Word', 'class' => 'form-control', 'id' => 'word']) }}
+				        {{ Form::textarea('word', null, ['placeholder' => 'Word', 'class' => 'form-control', 'size' => '10x4']) }}
 				        <div id ="word_error" class="alert-danger errors"></div>
 				    </div>
 				    
@@ -628,13 +672,60 @@
 				    
 				    <div class='form-group col-sm-4'>
 				        {{ Form::label('keywords', 'Keywords') }}
-				        {{ Form::text('keywords', null, ['placeholder' => 'Keywords', 'class' => 'form-control keywords', 'id' => 'keywords']) }}
+				        {{ Form::text('keywords', null, ['class' => 'form-control keywords', 'id' => 'new_keywords']) }}
 				        <div class="alert-warning">Separate with commas</div>
 				        <div id ="keywords_error" class="alert-danger errors"></div>
 				    </div>	 
 
 				    <div class='form-group col-sm-1 bottom_button'> 
 				    	{{ Form::submit('Add', ['class' => 'btn btn-success']) }}
+				    </div>
+			    </div>			    
+		    
+		    {{ Form::close() }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="edit_head_word_modal" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Edit Head Word</h4>
+            </div>
+            <div class="modal-body">
+				<div class='row'>
+				
+					{{ Form::open(['role' => 'form',
+		    		   'url' => '/admin/eieol_head_word/', 
+		    		   'method' => 'PUT',
+		    		   'class' => 'form ajax_form',
+		    		   'id' => 'edit_head_word_form'  
+		    		  ]) }}
+		    		  
+					<div class='form-group col-sm-3'>
+				        {{ Form::label('word', 'Word') }}
+				        {{ Form::textarea('word', null, ['placeholder' => 'Word', 'class' => 'form-control', 'size' => '10x4']) }}
+				        <div id ="word_error" class="alert-danger errors"></div>
+				    </div>
+				    
+				    <div class='form-group col-sm-3'>
+				        {{ Form::label('definition', 'Definition') }}
+				        {{ Form::text('definition', null, ['placeholder' => 'Definition', 'class' => 'form-control', 'id' => 'definition']) }}
+				        <div id ="definition_error" class="alert-danger errors"></div>
+				    </div>	     
+				    
+				    <div class='form-group col-sm-4'>
+				        {{ Form::label('keywords', 'Keywords') }}
+				        {{ Form::text('keywords', null, ['class' => 'form-control keywords', 'id' => 'edit_keywords']) }}
+				        <div class="alert-warning">Separate with commas</div>
+				        <div id ="keywords_error" class="alert-danger errors"></div>
+				    </div>	 
+
+				    <div class='form-group col-sm-1 bottom_button'> 
+				    	{{ Form::submit('Edit', ['class' => 'btn btn-primary']) }}
 				    </div>
 			    </div>			    
 		    

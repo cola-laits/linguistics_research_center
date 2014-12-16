@@ -22,6 +22,23 @@ class EieolHeadWordController extends BaseController {
 		}
 	}
 	
+	/**
+	 * Display the specified resource.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function show($id)
+	{
+		$head_word = EieolHeadWord::with('keywords')->find($id);
+		$return_head_word = $head_word->toArray();
+		$return_head_word['keywords'] = '';
+		foreach($head_word->keywords as $keyword) {
+			$return_head_word['keywords'] .= $keyword->keyword . ',';
+		}
+		return $return_head_word;
+	}
+	
 	
 	/**
 	 * Store a newly created resource in storage.
@@ -49,7 +66,7 @@ class EieolHeadWordController extends BaseController {
 					'errors' => $validator->getMessageBag()->toArray()
 			));
 		} else {
-			$head_word_id = DB::transaction(function() {
+			$head_word = DB::transaction(function() {
 				$head_word = new EieolHeadWord;
 		
 				$head_word->word = Input::get('word');
@@ -66,11 +83,8 @@ class EieolHeadWordController extends BaseController {
 				}
 				$head_word->keywords()->saveMany($keyword_recs);
 				
-				return $head_word->id;
+				return $head_word;
 			}); //end transaction
-			
-			
-			$head_word = EieolHeadWord::find($head_word_id);
 			
 			return Response::json(array(
 					'success' => true,
@@ -109,9 +123,8 @@ class EieolHeadWordController extends BaseController {
 					'errors' => $validator->getMessageBag()->toArray()
 			));
 		} else {
-			DB::transaction(function() {
-				$head_word = EieolHeadWord::find($id);
-			
+			$head_word = DB::transaction(function($id) use ($id) {
+				$head_word = EieolHeadWord::with('keywords')->find($id);
 				$head_word->word = Input::get('word');
 				$head_word->definition = Input::get('definition');
 				$head_word->updated_by = Auth::user()->username;
@@ -119,16 +132,33 @@ class EieolHeadWordController extends BaseController {
 				$head_word->save();
 			
 				//now deal with keywords
-				$keyword_recs = array();
+				
+				//build list of all keywords sent in
+				$input_keywords = array();
 				foreach (explode(',',Input::get('keywords')) as $keyword) {
-					$keyword_recs[] = new EieolHeadWordKeyword(array('keyword' => strtoupper($keyword), 'updated_by' => Auth::user()->username,));
+					$input_keywords[] = strtoupper($keyword);
 				}
-				$head_word->keywords()->saveMany($keyword_recs);
+				
+				//build list of all keywords on the table, if a word is on file but not in input, delete it
+				$table_keywords = array();
+				foreach ($head_word->keywords as $keyword) {
+					if (!in_array($keyword->keyword, $input_keywords)) {
+						$keyword->delete();
+					} else {
+						$table_keywords[] = $keyword->keyword;
+					}
+				}
+				
+				//if a word is in the input but not on file, add it
+				foreach($input_keywords as $keyword) {
+					if (!in_array($keyword, $table_keywords)) {
+						$keyword_rec = new EieolHeadWordKeyword(array('keyword' => $keyword, 'created_by' => Auth::user()->username, 'updated_by' => Auth::user()->username,));
+						$head_word->keywords()->save($keyword_rec);
+					}
+				}
 			
-				return $head_word->id;
+				return $head_word;
 			}); //end transaction
-						
-			$head_word = EieolHeadWord::find($id);
 			
 			return Response::json(array(
 					'success' => true,
