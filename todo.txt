@@ -10,8 +10,7 @@ Admin
 		Sorting?
 		Authorization by series?
 		Add Pokorny ID to headword - add to forms
-****Buttons to remove glossed_text_glosses
-	
+
 	Part of Speech editor?
 	Analysis editor?
 	Maintain Lexicon

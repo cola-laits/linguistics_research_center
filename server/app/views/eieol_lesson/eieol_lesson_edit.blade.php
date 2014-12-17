@@ -155,7 +155,7 @@
 	  		    }  //json fail
 	  		    
 	  		    if(json['success']) { 
-	  		    	var new_div_id = "new_glossed_text_gloss_div_" + json['id'];
+	  		    	var new_div_id = "glossed_text_gloss_" + json['id'] + "_div";
 	  	    		var new_form_id = "new_glossed_text_gloss_form_" + json['id'];
 	  	    		var new_form_action = "/admin/eieol_glossed_text_gloss/" + json['id']
 	  	    		
@@ -169,6 +169,9 @@
 	  	    		$('#new_glossed_text_gloss_form', '#'+new_div_id).find(".gloss_text").addClass('gloss_' + gloss_id);
 	  	    		$('#new_glossed_text_gloss_form', '#'+new_div_id).attr("action",new_form_action);
 	  	    		$('#new_glossed_text_gloss_form', '#'+new_div_id).attr("id",new_form_id);
+	  	    		$('.delete_glossed_text_gloss', '#' + new_div_id).show();
+	  	    		$('.delete_glossed_text_gloss_form', '#'+new_div_id).attr("action",new_form_action);
+	  	    		$('#glossed_text_gloss_id', '#'+new_div_id).val(json['id']);
 
 	  	    		$('#edit_gloss', '#'+new_div_id).find("#gloss_id").attr('value',gloss_id);
 
@@ -397,6 +400,38 @@
 		    return false;
 		}); //edit gloss
 
+		//delete glossed_text_gloss confirmation
+		$(".delete_glossed_text_gloss").click(function(e) {
+		    e.preventDefault();
+		    var form=$(this).closest('form');
+		    var my_div = 'glossed_text_gloss_' + $(form).find("#glossed_text_gloss_id").val() + '_div';
+		    $("#delete_glossed_text_gloss_confirm").modal('show')
+		    	.one('click', '#delete_confirmed', function (e) {
+		    		$.ajax({
+						type: "POST",
+				        url:form.attr('action'),
+				        data:{'_method':'delete'},
+				        dataType: "html",
+				        
+				        success : function(){
+				        	$('#' + my_div).remove();
+				            $("#delete_glossed_text_gloss_confirm").modal('hide');
+
+				            $('#success_message').html('Gloss has been unattached.');
+			  		        $("#update_confirm").modal('show');
+				  		    setTimeout(function(){
+				  		        $("#update_confirm").modal('hide');
+				  		    }, 1000);
+				        }, //success
+				        
+				        error : function(xml_http_request, text_status, error_thrown) {
+				        	alert('Ajax Error: ' + text_status + '/ ' + xml_http_request + '/ ' + error_thrown);
+				        } //error
+
+				    }); //ajax call		            
+		        });
+		}); //delete glossed_text_gloss
+
 
 		//popup to attach or change head word to gloss
 		$("#attach_head_word_button, #change_head_word_button").click(function() {
@@ -483,7 +518,7 @@
 		    }); //ajax call
 		    
 		    return false; // this keeps the form from submitting
-    	});//add gloss
+    	});//add headword
     	
     	//this clones the default add glossed text form 
     	$("#add_glossed_text").click(function() {	
@@ -508,19 +543,18 @@
     	//delete glossed text confirmation
 		$(".delete_glossed_text").click(function(e) {
 		    e.preventDefault();
-		    var $form=$(this).closest('form');
-		    var $div = $($form).closest('div');
-		    console.log($div);
+		    var form = $(this).closest('form');
+		    var div = $(form).closest('div');
 		    $("#delete_glossed_text_confirm").modal('show')
 		    	.one('click', '#delete_confirmed', function (e) {
 		    		$.ajax({
 						type: "POST",
-				        url:$form.attr('action'),
+				        url:form.attr('action'),
 				        data:{'_method':'delete'},
 				        dataType: "html",
 				        
 				        success : function(){
-				        	$div.remove();
+				        	div.remove();
 				            $("#delete_glossed_text_confirm").modal('hide');
 
 				            $('#success_message').html('Glossed Text has been deleted.');
@@ -568,17 +602,17 @@
     	//delete grammar confirmation
 		$(".delete_grammar").click(function(e) {
 		    e.preventDefault();
-		    var $form=$(this).closest('form');
+		    var form=$(this).closest('form');
 		    $("#delete_grammar_confirm").modal('show')
 		    	.one('click', '#delete_confirmed', function (e) {
 		    		$.ajax({
 						type: "POST",
-				        url:$form.attr('action'),
+				        url:form.attr('action'),
 				        data:{'_method':'delete'},
 				        dataType: "html",
 				        
 				        success : function(){
-				        	$form.remove();
+				        	form.remove();
 				            $("#delete_grammar_confirm").modal('hide');
 
 				            $('#success_message').html('Grammar has been deleted.');
@@ -852,14 +886,14 @@
                 All attached glosses will be unattached, though they will still be on file and possibly used by other glossed texts.</small></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="delete_confirmed">Delete</button>
+                <button type="button" class="btn btn-danger" id="delete_confirmed">Delete</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
 </div>
 
-<div id="delete_gloss" class="modal fade">
+<div id="delete_glossed_text_gloss_confirm" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -872,7 +906,7 @@
                 The gloss will still be on file and possibly used by other glossed texts.</small></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="delete_confirmed">Remove</button>
+                <button type="button" class="btn btn-danger" id="delete_confirmed">Remove</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
             </div>
         </div>
@@ -891,7 +925,7 @@
                 <p class="text-warning"><small>This action can not be undone later.  The contents of this grammar will be deleted.</small></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="delete_confirmed">Delete</button>
+                <button type="button" class="btn btn-danger" id="delete_confirmed">Delete</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
             </div>
         </div>
@@ -995,7 +1029,7 @@
 			    <div id="glossed_text_{{$glossed_text->id}}_glosses">
 			    
 				    @foreach ($glossed_text->glosses as $gloss)
-					    
+					  <div id="glossed_text_gloss_{{$gloss->pivot->id}}_div">  
 						<div class='row'>
 							<div class='col-sm-2'></div>
 							
@@ -1017,7 +1051,7 @@
 							    {{ Form::close() }}
 							</div>
 						    	
-						    <div class='col-sm-5 gloss_{{$gloss->id}}'>
+						    <div class='col-sm-4 gloss_{{$gloss->id}}'>
 						    	<br/>
 						    	{{$gloss->getDisplayGloss()}} 
 			    			</div>   
@@ -1028,9 +1062,17 @@
 			    					{{ Form::submit('Edit Gloss', ['class' => 'btn btn-primary']) }}
 			    				{{ Form::close() }}
 			    			</div>
+			    			
+			    			<div class='form-group col-sm-1 bottom_button'>
+			    				{{ Form::open(['class' => 'delete_glossed_text_gloss_form',
+			    							   'url' => '/admin/eieol_glossed_text_gloss/' . $gloss->pivot->id]) }} 
+				            		{{ Form::hidden('glossed_text_gloss_id', $gloss->pivot->id, ['id' => 'glossed_text_gloss_id']) }}
+				            		{{ Form::button('Remove', ['class' => 'btn btn-danger delete_glossed_text_gloss'])}}   
+				            	{{ Form::close() }} 
+							</div>
 						      
 					    </div>
-	
+					  </div>
 				    @endforeach
 			    
 			    </div>
@@ -1143,7 +1185,7 @@
 					    {{ Form::close() }}
 					</div>
 				    	
-				    <div class='col-sm-5 gloss_text'>
+				    <div class='col-sm-4 gloss_text'>
 		   			</div>   
 		   			
 		   			<div class='col-sm-1 bottom_button'>
@@ -1152,16 +1194,20 @@
 	    					{{ Form::submit('Edit Gloss', ['class' => 'btn btn-primary']) }}
 	    				{{ Form::close() }}
 	    			</div>
-				      
+				    
+				    <div class='form-group col-sm-1 bottom_button'>
+				    	{{ Form::open(['class' => 'delete_glossed_text_gloss_form',
+	    							   'url' => '/admin/eieol_glossed_text_gloss/']) }} 
+	    					{{ Form::hidden('glossed_text_gloss_id', null, ['id' => 'glossed_text_gloss_id']) }}
+		            		{{ Form::button('Remove', ['class' => 'btn btn-danger delete_glossed_text_gloss', 'style' => 'display: none'])}}  
+		            	{{ Form::close() }} 
+					</div>
+					  
 			    </div>
 		    
     	</div>
     
     <!-- ---------------------------------------------------------------------------------------- -->
-    
-    
-    
-    
     
     
     <hr/>
