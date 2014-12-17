@@ -97,6 +97,7 @@
             		    $('#grammars').find('#new_grammar_div').attr("id",'grammar_div_' + json['grammar_id']);
         		    	$('#grammars').find('#new_grammar_form').attr("id",new_form_id);
         	    		$('#grammars').find('#new_grammar_text').attr("id",new_text_id);
+        	    		$('#grammars').find('.delete_grammar').show();
 
         	    		//attach new ckeditor
         	    		CKEDITOR.replace(new_text_id,{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', allowedContent : true, extraPlugins : 'onchange'}  );
@@ -528,6 +529,38 @@
 
     		$("#add_grammar").hide(); //hide the button so they can't add another glossed text till they finsish this one
     	});
+
+    	//delete grammar confirmation
+		$(".delete_grammar").click(function(e) {
+		    e.preventDefault();
+		    var $form=$(this).closest('form');
+			console.log($form.attr('action'))
+		    $("#delete_grammar_confirm").modal('show')
+		    	.one('click', '#delete_confirmed', function (e) {
+		    		$.ajax({
+						type: "POST",
+				        url:$form.attr('action'),
+				        data:{'_method':'delete'},
+				        dataType: "html",
+				        
+				        success : function(){
+				        	$form.remove();
+				            $("#delete_grammar_confirm").modal('hide');
+
+				            $('#success_message').html('Grammar has been deleted.');
+			  		        $("#update_confirm").modal('show');
+				  		    setTimeout(function(){
+				  		        $("#update_confirm").modal('hide');
+				  		    }, 1000);
+				        }, //success
+				        
+				        error : function(xml_http_request, text_status, error_thrown) {
+				        	alert('Ajax Error: ' + text_status + '/ ' + xml_http_request + '/ ' + error_thrown);
+				        } //error
+
+				    }); //ajax call		            
+		        });
+		}); //delete grammar
 		
     });//document ready
 
@@ -771,6 +804,26 @@
         </div>
     </div>
 </div>
+
+
+<div id="delete_grammar_confirm" class="modal fade">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                <h4 class="modal-title">Delete Confirmation</h4>
+	            </div>
+	            <div class="modal-body">
+	                Are you sure you want to delete this Grammar lesson?  <br/><br/>
+	                <p class="text-warning"><small>This action can not be undone later.  The contents of this grammar will be deleted.</small></p>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-primary" id="delete_confirmed">Delete</button>
+	                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
 
 <!-- ---------------------------------------------------------------------------------------- -->  
 
@@ -1095,18 +1148,31 @@
 					        <div id ="title_error" class="alert-danger errors"></div>
 					    </div>
 					    
-					    <br/>
-					    
+					</div>
+					
+					<div class='row'>    
 					    <div class='form-group col-sm-10 col-sm-offset-1'>
 					        {{ Form::label('grammar_text', 'Grammar Text') }}
 					        {{ Form::textarea('grammar_text', null, ['placeholder' => 'Grammar Text', 'class' => 'form-control', 'size' => '100x10', 'id' => 'grammar_text_' . $grammar->id]) }}
 					        <div id ="grammar_text_error" class="alert-danger errors"></div>
-					        {{ Form::submit('Edit', ['class' => 'btn btn-primary']) }}
-					    </div>		    
-			
+					        
+					    </div>	
+					</div>
+					
+					<div class='row'>
+			    		<div class='form-group col-sm-1 '></div>
+			    		<div class='form-group col-sm-1 '>
+			    			{{ Form::submit('Edit', ['class' => 'btn btn-primary']) }}
+					        
+			    		</div>
+			    		
+			    		<div class='form-group col-sm-8 '></div>
+			    		<div class='form-group col-sm-1 '>
+			            	{{ Form::button('Delete', ['class' => 'btn btn-danger delete_grammar'])}}    
+						</div>
 				    </div>
-			    
 			    {{ Form::close() }}
+			    
 			    <hr/>
 	    @endforeach
     </div>
@@ -1142,18 +1208,34 @@
 				        <div id ="title_error" class="alert-danger errors"></div>
 				    </div>
 				    
-				    <br/>
+				</div>
+				
+				<div class='row'>
 				    
 				    <div class='form-group col-sm-10 col-sm-offset-1'>
 				        {{ Form::label('grammar_text', 'Grammar Text') }}
 				        {{ Form::textarea('grammar_text', null, ['placeholder' => 'Grammar Text', 'class' => 'form-control', 'size' => '100x10', 'id' => 'new_grammar_text']) }}
 				        <div id ="grammar_text_error" class="alert-danger errors"></div>
-				        {{ Form::submit('Add', ['class' => 'btn btn-success']) }}
+				        
 				    </div>		    
 		
 			    </div>
+			    
+			    <div class='row'>
+		    		<div class='form-group col-sm-1 '></div>
+		    		<div class='form-group col-sm-1 '>
+		    			{{ Form::submit('Add', ['class' => 'btn btn-success']) }}
+				        
+		    		</div>
+		    		
+		    		<div class='form-group col-sm-8 '></div>
+		    		<div class='form-group col-sm-1 '>
+		            	{{ Form::button('Delete', ['class' => 'btn btn-danger delete_grammar', 'style' => 'display: none'])}}    
+					</div>
+			    </div>
 		    
 		    {{ Form::close() }}
+                        
 		    <hr/>
 	  </div>
 	  
