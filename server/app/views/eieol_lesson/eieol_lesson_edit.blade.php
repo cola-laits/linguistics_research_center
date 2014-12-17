@@ -555,6 +555,7 @@
 				        
 				        success : function(){
 				        	div.remove();
+				        	generate_lesson_text();
 				            $("#delete_glossed_text_confirm").modal('hide');
 
 				            $('#success_message').html('Glossed Text has been deleted.');
