@@ -75,12 +75,14 @@
         		    //if they just added a glossed text, we need to further customize the form
         		    if (json.hasOwnProperty('glossed_text_id')) {
         		    	$("#add_glossed_text").show(); //now that they've saved the glossed text, they can add another
-
+        		    	var new_form_id = 'glossed_text_form_' + json['glossed_text_id'];
+        		    	var new_div_id = 'glossed_text_div_' + json['glossed_text_id'];
         		    	$('#new_glossed_text_div').find('#attach_gloss_form').find("#glossed_text_id").attr('value',json['glossed_text_id']);
         	    		$('#new_glossed_text_div').find('#attach_gloss_form').find("#attach_gloss_button").show();
-        	    		$('#new_glossed_text_div').attr("id",'glossed_text_div_' + json['glossed_text_id']);
-        	    		$('#new_glossed_text_form').attr("id",'glossed_text_form_' + json['glossed_text_id'] );
+        	    		$('#new_glossed_text_div').attr("id",new_div_id);
+        	    		$('#new_glossed_text_form').attr("id", new_form_id);
         	    		$('#new_glossed_text_glosses').attr("id",'glossed_text_' + json['glossed_text_id'] + '_glosses');
+        	    		$('#' +  new_form_id).find('.delete_glossed_text').show();
         		    }
 
 
@@ -502,6 +504,39 @@
 			
     		$("#add_glossed_text").hide(); //hide the button so they can't add another glossed text till they finsish this one
     	});
+
+    	//delete glossed text confirmation
+		$(".delete_glossed_text").click(function(e) {
+		    e.preventDefault();
+		    var $form=$(this).closest('form');
+		    var $div = $($form).closest('div');
+		    console.log($div);
+		    $("#delete_glossed_text_confirm").modal('show')
+		    	.one('click', '#delete_confirmed', function (e) {
+		    		$.ajax({
+						type: "POST",
+				        url:$form.attr('action'),
+				        data:{'_method':'delete'},
+				        dataType: "html",
+				        
+				        success : function(){
+				        	$div.remove();
+				            $("#delete_glossed_text_confirm").modal('hide');
+
+				            $('#success_message').html('Glossed Text has been deleted.');
+			  		        $("#update_confirm").modal('show');
+				  		    setTimeout(function(){
+				  		        $("#update_confirm").modal('hide');
+				  		    }, 1000);
+				        }, //success
+				        
+				        error : function(xml_http_request, text_status, error_thrown) {
+				        	alert('Ajax Error: ' + text_status + '/ ' + xml_http_request + '/ ' + error_thrown);
+				        } //error
+
+				    }); //ajax call		            
+		        });
+		}); //delete glossed text
     	
 
     	//this clones the default add grammar form and turns on the ckeditor for it
@@ -534,7 +569,6 @@
 		$(".delete_grammar").click(function(e) {
 		    e.preventDefault();
 		    var $form=$(this).closest('form');
-			console.log($form.attr('action'))
 		    $("#delete_grammar_confirm").modal('show')
 		    	.one('click', '#delete_confirmed', function (e) {
 		    		$.ajax({
@@ -805,25 +839,64 @@
     </div>
 </div>
 
+<div id="delete_glossed_text_confirm" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Delete Confirmation</h4>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this Glossed Text?  <br/><br/>
+                <p class="text-warning"><small>This action can not be undone later.  The contents of this glossed text will be deleted.<br/>
+                All attached glosses will be unattached, though they will still be on file and possibly used by other glossed texts.</small></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="delete_confirmed">Delete</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="delete_gloss" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Removal Confirmation</h4>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to remove this gloss?  <br/><br/>
+                <p class="text-warning"><small>This action can not be undone later.  The contents of this gloss will be unattached from this glossed text.<br/><br/>
+                The gloss will still be on file and possibly used by other glossed texts.</small></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="delete_confirmed">Remove</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div id="delete_grammar_confirm" class="modal fade">
-	    <div class="modal-dialog">
-	        <div class="modal-content">
-	            <div class="modal-header">
-	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	                <h4 class="modal-title">Delete Confirmation</h4>
-	            </div>
-	            <div class="modal-body">
-	                Are you sure you want to delete this Grammar lesson?  <br/><br/>
-	                <p class="text-warning"><small>This action can not be undone later.  The contents of this grammar will be deleted.</small></p>
-	            </div>
-	            <div class="modal-footer">
-	                <button type="button" class="btn btn-primary" id="delete_confirmed">Delete</button>
-	                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-	            </div>
-	        </div>
-	    </div>
-	</div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Delete Confirmation</h4>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this Grammar lesson?  <br/><br/>
+                <p class="text-warning"><small>This action can not be undone later.  The contents of this grammar will be deleted.</small></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="delete_confirmed">Delete</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- ---------------------------------------------------------------------------------------- -->  
 
@@ -883,6 +956,8 @@
     
     <div id ="glossed_texts">
 	    @foreach ($glossed_texts as $glossed_text)
+	    	<div id = 'glossed_text_div_{{$glossed_text->id}}'>
+	    
 	          {{ Form::model($glossed_text, ['role' => 'form',
 			    					   'url' => '/admin/eieol_glossed_text/' . $glossed_text->id, 
 			    					   'method' => 'PUT', 
@@ -899,7 +974,7 @@
 					        <div id ="order_error" class="alert-danger errors"></div>
 					    </div>
 					    	
-					    <div class='form-group col-sm-8'>
+					    <div class='form-group col-sm-7'>
 					        {{ Form::label('glossed_text', 'Glossed Text') }}
 					        {{ Form::text('glossed_text', null, ['placeholder' => 'Glossed Text', 'class' => 'form-control', 'id' => 'glossed_text']) }}
 					        <div id ="glossed_text_error" class="alert-danger errors"></div>
@@ -908,6 +983,11 @@
 					    <div class='form-group col-sm-1 bottom_button'>
 						    {{ Form::submit('Edit', ['class' => 'btn btn-primary']) }}
 						</div>
+					
+			    		<div class='form-group col-sm-1 bottom_button'>
+			            	{{ Form::button('Delete', ['class' => 'btn btn-danger delete_glossed_text'])}}    
+						</div>
+	
 				    </div>
 			    
 			    {{ Form::close() }}
@@ -967,6 +1047,7 @@
 				</div>
 
 			    <hr/>
+			</div>
 	    @endforeach
     </div>
     
@@ -989,7 +1070,7 @@
 				        <div id ="order_error" class="alert-danger errors"></div>
 				    </div>
 				    
-				    <div class='form-group col-sm-8'>
+				    <div class='form-group col-sm-7'>
 				        {{ Form::label('glossed_text', 'Glossed Text') }}
 				        {{ Form::text('glossed_text', null, ['placeholder' => 'Glossed Text', 'class' => 'form-control', 'id' => 'glossed_text']) }}
 				        <div id ="glossed_text_error" class="alert-danger errors"></div>
@@ -998,6 +1079,10 @@
 				    <div class='form-group col-sm-1 bottom_button'> 
 				    	{{ Form::submit('Add', ['class' => 'btn btn-success']) }}
 				    </div>
+				    
+				    <div class='form-group col-sm-1 bottom_button'>
+		            	{{ Form::button('Delete', ['class' => 'btn btn-danger delete_glossed_text', 'style' => 'display: none'])}}    
+					</div>
 			    </div>
 		    
 		    {{ Form::close() }}
