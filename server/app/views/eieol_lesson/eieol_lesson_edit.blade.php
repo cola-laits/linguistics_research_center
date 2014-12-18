@@ -802,7 +802,7 @@
 				    
 				    <div class='form-group col-sm-3'>
 				        {{ Form::label('definition', 'Definition') }}
-				        {{ Form::text('definition', null, ['placeholder' => 'Definition', 'class' => 'form-control', 'id' => 'definition']) }}
+				        {{ Form::textarea('definition', null, ['placeholder' => 'Definition', 'class' => 'form-control', 'id' => 'definition', 'size' => '10x4']) }}
 				        <div id ="definition_error" class="alert-danger errors"></div>
 				    </div>	     
 				    
@@ -848,7 +848,7 @@
 				    
 				    <div class='form-group col-sm-3'>
 				        {{ Form::label('definition', 'Definition') }}
-				        {{ Form::text('definition', null, ['placeholder' => 'Definition', 'class' => 'form-control', 'id' => 'definition']) }}
+				        {{ Form::textarea('definition', null, ['placeholder' => 'Definition', 'class' => 'form-control', 'id' => 'definition', 'size' => '10x4']) }}
 				        <div id ="definition_error" class="alert-danger errors"></div>
 				    </div>	     
 				    

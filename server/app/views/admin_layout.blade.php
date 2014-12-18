@@ -2,6 +2,7 @@
 <html lang='en'>
     <head>
         <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>LRC Admin - @yield('title')</title>
  
         {{ HTML::style('//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css') }}
