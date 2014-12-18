@@ -261,6 +261,18 @@
 			'autocomplete_url':'/admin/eieol_head_word_keyword/filtered_list'
 		});
 
+		//these two functions prevent users from tabbing out of the keywords fields.  We want them to stay and enter a comma after each word
+		$('#new_keywords_tag').keypress(function (e) { //listen for typing
+            if(e.keyCode == 9){ // tab
+                e.preventDefault();
+            }
+        });
+		$('#edit_keywords_tag').keypress(function (e) { //listen for typing
+            if(e.keyCode == 9){ // tab
+                e.preventDefault();
+            }
+        });
+
 		//autocomplete fields
 		$(".part_of_speech").autocomplete({
 		    source: function (request, response) {
