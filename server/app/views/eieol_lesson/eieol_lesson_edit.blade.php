@@ -852,6 +852,8 @@ $('.custom-keyboard').keyboard({
 		    		   'id' => 'new_gloss_form'  
 		    		  ]) }}
 		    		  
+		    		{{ Form::hidden('language_id', $lesson->language_id) }}
+		    		  
 					<div class='form-group col-sm-2'>
 				        {{ Form::label('surface_form', 'Surface Form') }}
 				        {{ Form::text('surface_form', null, ['placeholder' => 'Surface Form', 'class' => 'form-control', 'id' => 'surface_form']) }}
@@ -946,7 +948,7 @@ $('.custom-keyboard').keyboard({
 				    </div>	     
 				    
 				    <div class='form-group col-sm-1 bottom_button'> 
-				    	{{ Form::submit('Edit', ['class' => 'btn btn-success']) }}
+				    	{{ Form::submit('Edit', ['class' => 'btn btn-primary']) }}
 				    </div>
 				    {{ Form::close() }}
 			    </div>
@@ -980,6 +982,8 @@ $('.custom-keyboard').keyboard({
 		    		   'class' => 'form',
 		    		   'id' => 'new_head_word_form'  
 		    		  ]) }}
+		    		  
+		    		{{ Form::hidden('language_id', $lesson->language_id) }}
 		    		  
 					<div class='form-group col-sm-3'>
 				        {{ Form::label('word', 'Word') }}

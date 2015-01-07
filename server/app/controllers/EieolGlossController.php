@@ -63,6 +63,7 @@ class EieolGlossController extends BaseController {
 			'surface_form' => 'required|unique:eieol_gloss,surface_form,null,id,part_of_speech,"' . Input::get('part_of_speech') . '",analysis,"' . Input::get('analysis') . '"', 
 			'part_of_speech' => 'required',
 			'contextual_gloss' => 'required',
+			'language_id' => 'required',
 			'head_word_id' => 'required|exists:eieol_head_word,id'
 		);
 		$messages = array(
@@ -84,6 +85,7 @@ class EieolGlossController extends BaseController {
 			$gloss->analysis = Input::get('analysis');
 			$gloss->contextual_gloss = Input::get('contextual_gloss');
 			$gloss->head_word_id = Input::get('head_word_id');
+			$gloss->language_id = Input::get('language_id');
 			$gloss->created_by = Auth::user()->username;
 			$gloss->updated_by = Auth::user()->username;
 	

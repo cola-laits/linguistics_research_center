@@ -60,6 +60,7 @@ class EieolHeadWordController extends BaseController {
 			'word' => 'required|regex:/^<.*>$/|unique:eieol_head_word,word,null,id,definition,"' . Input::get('definition') . '"', 
 			'definition' => 'required',
 			'keywords' => 'required',
+			'language_id' => 'required',
 		);
 		$messages = array(
 				'word.unique' => 'This Word/Definition combination already exists',
@@ -79,6 +80,7 @@ class EieolHeadWordController extends BaseController {
 		
 				$head_word->word = Input::get('word');
 				$head_word->definition = Input::get('definition');
+				$head_word->language_id = Input::get('language_id');
 				$head_word->created_by = Auth::user()->username;
 				$head_word->updated_by = Auth::user()->username;
 		
@@ -87,7 +89,10 @@ class EieolHeadWordController extends BaseController {
 				//now deal with keywords
 				$keyword_recs = array();
 				foreach (explode(',',Input::get('keywords')) as $keyword) {
-					$keyword_recs[] = new EieolHeadWordKeyword(array('keyword' => strtoupper($keyword), 'created_by' => Auth::user()->username, 'updated_by' => Auth::user()->username,));
+					$keyword_recs[] = new EieolHeadWordKeyword(array('keyword' => strtoupper($keyword),
+																	 'language_id' => Input::get('language_id'),
+																	 'created_by' => Auth::user()->username, 
+																	 'updated_by' => Auth::user()->username,));
 				}
 				$head_word->keywords()->saveMany($keyword_recs);
 				
@@ -162,7 +167,10 @@ class EieolHeadWordController extends BaseController {
 				//if a word is in the input but not on file, add it
 				foreach($input_keywords as $keyword) {
 					if (!in_array($keyword, $table_keywords)) {
-						$keyword_rec = new EieolHeadWordKeyword(array('keyword' => $keyword, 'created_by' => Auth::user()->username, 'updated_by' => Auth::user()->username,));
+						$keyword_rec = new EieolHeadWordKeyword(array('keyword' => $keyword, 
+																	  'language_id' => Input::get('language_id'),
+																	  'created_by' => Auth::user()->username, 
+																	  'updated_by' => Auth::user()->username,));
 						$head_word->keywords()->save($keyword_rec);
 					}
 				}

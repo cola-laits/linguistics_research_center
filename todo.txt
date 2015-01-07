@@ -1,7 +1,6 @@
 Admin
 	Maintain lessons
 ****Handle 2 languages in one lesson
-****- add lang field to lesson	
 ****- stamp lang on gloss, head word and keyword
 ****- change look ups to limit to lang
 
