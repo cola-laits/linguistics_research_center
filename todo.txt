@@ -1,17 +1,17 @@
 Admin
 	Maintain lessons
 		Handle 2 languages in one lesson
-			- add lang field to lesson
+****- add lang field to lesson	
 			- stamp lang on gloss, head word and keyword
 			- change look ups to limit to lang
-			- take lookups out of index and make own function
-	****Popup keyboard - ability to customize
-	****save and display unicode
+
+****Popup keyboard - ability to customize
+					http://mottie.github.io/Keyboard/index.html
 		Sorting?
 		Authorization by series?
 		Add Pokorny ID to headword - add to forms
 
-	Part of Speech editor?
+	Part of Speech editor? use FrozenNode?
 	Analysis editor?
 	Maintain Lexicon
 	
