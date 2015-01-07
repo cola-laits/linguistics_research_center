@@ -1,9 +1,9 @@
 Admin
 	Maintain lessons
-		Handle 2 languages in one lesson
+****Handle 2 languages in one lesson
 ****- add lang field to lesson	
-			- stamp lang on gloss, head word and keyword
-			- change look ups to limit to lang
+****- stamp lang on gloss, head word and keyword
+****- change look ups to limit to lang
 
 ****Popup keyboard - ability to customize
 					http://mottie.github.io/Keyboard/index.html
@@ -26,7 +26,7 @@ Public
 			Unicode
 			Grammars need anchors
 		TOC
-		Gloss - only show records that are used by lessons
+		Gloss - only show records that are used by lessons/lang
 		Dictionary
 		Meanings
 		Load old data

@@ -91,6 +91,7 @@
 		        
 		        <ul class="nav navbar-nav">
 		          <li>{{ HTML::link('/admin/eieol_series', 'Series', array('title' => 'Series Maintenance')) }}</li>
+		          <li>{{ HTML::link('/admin/eieol_language', 'Language', array('title' => 'Language Maintenance')) }}</li>
 		          <li>{{ HTML::link('/admin/user', 'Users', array('title' => 'User Maintenance' )) }}</li>
 		        </ul>
 		        
