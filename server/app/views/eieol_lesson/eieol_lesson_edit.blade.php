@@ -1153,6 +1153,12 @@ $('.custom-keyboard').keyboard({
 		        <div id ="title_error" class="alert-danger errors"></div>
 		    </div>
 		    
+		    <div class='form-group col-sm-2'>
+		        {{ Form::label('language', 'Language') }}<br/>
+		        {{ Form::select('language', $languages, $lesson->language_id, ['class' => 'form-control']) }}
+		        <div id ="language_error" class="alert-danger errors"></div>
+		    </div>
+		    
 		    <br/>
 		    
 		    <div class='form-group col-sm-10 col-sm-offset-1'>

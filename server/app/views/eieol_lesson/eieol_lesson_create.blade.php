@@ -36,6 +36,11 @@
 	        {{ Form::label('title', 'Title') }}
 	        {{ Form::text('title', null, ['placeholder' => 'Title', 'class' => 'form-control']) }}
 	    </div>
+	    
+	    <div class='form-group col-sm-2 @if ($errors->has('language')) has-error @endif  '>
+	        {{ Form::label('language', 'Language') }}<br/>
+	        {{ Form::select('language', $languages, null, ['class' => 'form-control']) }}
+	    </div>
     
     </div>
 	    

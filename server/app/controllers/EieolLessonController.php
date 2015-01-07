@@ -11,7 +11,11 @@ class EieolLessonController extends BaseController {
 	public function create()
 	{
 		$series = EieolSeries::find(Input::get('series_id'));
-		return View::make('eieol_lesson.eieol_lesson_create', ['series' => $series]);
+		$languages = array();
+		$languages[''] = 'Select a Language';
+		$languages += EieolLanguage::lists('language','id');
+		return View::make('eieol_lesson.eieol_lesson_create', ['series' => $series,
+															   'languages' => $languages]);
 	}
 
 
@@ -26,6 +30,7 @@ class EieolLessonController extends BaseController {
 		$rules = array(
 				'order' => 'required|integer|unique:eieol_lesson,order,null,id,series_id,'. Input::get('series_id'),
 				'title' => 'required|unique:eieol_lesson,title,null,id,series_id,'. Input::get('series_id'),
+				'language' => 'required',
 				'intro_text' => 'required',
 				'series_id' => 'required|exists:eieol_series,id'
 		);
@@ -42,6 +47,7 @@ class EieolLessonController extends BaseController {
 			$lesson->title = Input::get('title');
 			$lesson->order = Input::get('order');
 			$lesson->series_id = Input::get('series_id');
+			$lesson->language_id = Input::get('language');
 			$lesson->intro_text = Input::get('intro_text');
 			$lesson->created_by = Auth::user()->username;
 			$lesson->updated_by = Auth::user()->username;
@@ -66,11 +72,15 @@ class EieolLessonController extends BaseController {
 		$series = $lesson->series;
 		$grammars = EieolGrammar::where('lesson_id', '=', $id)->get()->sortBy('order');
 		$glossed_texts = EieolGlossedText::with('glosses.head_word')->where('lesson_id', '=', $id)->get()->sortBy('order');
+		$languages = array();
+		$languages[''] = 'Select a Language';
+		$languages += EieolLanguage::lists('language','id');
 		
 		return View::make('eieol_lesson.eieol_lesson_edit', ['lesson' => $lesson, 
 															 'series' => $series, 
 															 'grammars' => $grammars, 
-															 'glossed_texts' => $glossed_texts]);
+															 'glossed_texts' => $glossed_texts,
+															 'languages' => $languages]);
 	}
 
 
@@ -85,6 +95,7 @@ class EieolLessonController extends BaseController {
 		$rules = array(			
 				'order' => 'required|integer|unique:eieol_lesson,order,' . $id . ',id,series_id,'. Input::get('series_id'),
 				'title' => 'required|unique:eieol_lesson,title,' . $id . ',id,series_id,'. Input::get('series_id'),
+				'language' => 'required',
 				'intro_text' => 'required',
 				'series_id' => 'required|exists:eieol_series,id'
 		);
@@ -101,6 +112,7 @@ class EieolLessonController extends BaseController {
  			$lesson->title = Input::get('title');
  			$lesson->order = Input::get('order');
 			$lesson->intro_text = Input::get('intro_text');
+			$lesson->language_id = Input::get('language');
  			$lesson->updated_by = Auth::user()->username;
 			
  			$lesson->save();
