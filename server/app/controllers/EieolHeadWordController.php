@@ -8,7 +8,9 @@ class EieolHeadWordController extends BaseController {
 		//this  is a search that returns head words that contain with the url parm "headword"
 		//since head words starts with a <, it looks for any matching chars.
 		$text = '';
-		$head_words = EieolHeadWord::where('word', 'LIKE', '%' . Input::get('head_word') . '%')->take(25)->get()->sortBy('word');
+		$head_words = EieolHeadWord::where('word', 'LIKE', '%' . Input::get('head_word') . '%')
+								->where('language_id', '=', Input::get('language') . '%')
+								->take(25)->get()->sortBy('word');
 		foreach ($head_words as $head_word) {
 			$text .= '<a id="' . $head_word->id . '">' .
 					 $head_word->getDisplayHeadWord() .
@@ -77,7 +79,7 @@ class EieolHeadWordController extends BaseController {
 		} else {
 			$returned_head_word = DB::transaction(function() {
 				$head_word = new EieolHeadWord;
-		
+				log::error(Input::get('language_id'));
 				$head_word->word = Input::get('word');
 				$head_word->definition = Input::get('definition');
 				$head_word->language_id = Input::get('language_id');
@@ -89,6 +91,7 @@ class EieolHeadWordController extends BaseController {
 				//now deal with keywords
 				$keyword_recs = array();
 				foreach (explode(',',Input::get('keywords')) as $keyword) {
+					log::error(Input::get('language_id'));
 					$keyword_recs[] = new EieolHeadWordKeyword(array('keyword' => strtoupper($keyword),
 																	 'language_id' => Input::get('language_id'),
 																	 'created_by' => Auth::user()->username, 

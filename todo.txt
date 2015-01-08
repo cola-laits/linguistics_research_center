@@ -1,10 +1,6 @@
 Admin
 	Maintain lessons
-****Handle 2 languages in one lesson
-****- stamp lang on gloss, head word and keyword
-****- change look ups to limit to lang
-
-****Popup keyboard - ability to customize
+        Popup keyboard - ability to customize
 					http://mottie.github.io/Keyboard/index.html
 		Sorting?
 		Authorization by series?

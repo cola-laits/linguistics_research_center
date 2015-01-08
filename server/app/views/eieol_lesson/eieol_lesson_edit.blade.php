@@ -61,9 +61,9 @@
 
 	  		    	//if they updated the language, we need to change the hidden language ids
 	  		      	if(json.hasOwnProperty('language_id')) {
-		  		      	console.log('yep');
 						$(".language_id_class").each(function() {
 							$(this).attr('value',json['language_id']);;
+							hold_language_id = json['language_id'];
 						});
 	  		      	}
 	  		      	
@@ -230,7 +230,7 @@
 			  document.getElementById("gloss_search_result").innerHTML=xmlhttp.responseText;
 		  }
 		}
-		xmlhttp.open("GET","/admin/eieol_gloss/filtered_list?gloss="+gloss,true);
+		xmlhttp.open("GET","/admin/eieol_gloss/filtered_list?gloss="+gloss+"&language="+hold_language_id,true);
 		xmlhttp.send();
 	}
 
@@ -246,13 +246,16 @@
 			  document.getElementById("head_word_search_result").innerHTML=xmlhttp.responseText;
 		  }
 		}
-		xmlhttp.open("GET","/admin/eieol_head_word/filtered_list?head_word="+head_word,true);
+		xmlhttp.open("GET","/admin/eieol_head_word/filtered_list?head_word="+head_word+"&language="+hold_language_id,true);
 		xmlhttp.send();
 	}
 
 	
     $(document).ready(function(){
 
+    	//set language js variable so we can use it for the gloss, head word and keyword lookups
+    	hold_language_id = {{$lesson->language_id}};
+    	
 		//build lesson text
 		generate_lesson_text();
 
@@ -261,13 +264,13 @@
 			'height':'50px',
 			'width':'100%',
 			'defaultText':'',
-			'autocomplete_url':'/admin/eieol_head_word_keyword/filtered_list'
+			'autocomplete_url':'/admin/eieol_head_word_keyword/filtered_list?language='+hold_language_id
 		});
 		$('#edit_keywords').tagsInput({
 			'height':'50px',
 			'width':'100%',
 			'defaultText':'',
-			'autocomplete_url':'/admin/eieol_head_word_keyword/filtered_list'
+			'autocomplete_url':'/admin/eieol_head_word_keyword/filtered_list?language='+hold_language_id
 		});
 
 //jquery virtual keyboard
