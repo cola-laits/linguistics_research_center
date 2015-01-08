@@ -78,41 +78,44 @@ class EieolGlossController extends BaseController {
 					'errors' => $validator->getMessageBag()->toArray()
 			));
 		} else {
-			$gloss = new EieolGloss;
-	
-			$gloss->surface_form = Input::get('surface_form');
-			$gloss->part_of_speech = Input::get('part_of_speech');
-			$gloss->analysis = Input::get('analysis');
-			$gloss->contextual_gloss = Input::get('contextual_gloss');
-			$gloss->head_word_id = Input::get('head_word_id');
-			$gloss->language_id = Input::get('language_id');
-			$gloss->created_by = Auth::user()->username;
-			$gloss->updated_by = Auth::user()->username;
-	
-			$gloss->save();
-			
-			//add part of speech if new
-			if (PartOfSpeech::where('part_of_speech', '=', Input::get('part_of_speech'))->count() == 0 ) {
-				$part_of_speech = new PartOfSpeech;
-				$part_of_speech->part_of_speech = Input::get('part_of_speech');
-				$part_of_speech->created_by = Auth::user()->username;
-				$part_of_speech->updated_by = Auth::user()->username;
-				$part_of_speech->save();
-			}
+			$gloss_id = DB::transaction(function() {
+				$gloss = new EieolGloss;
+		
+				$gloss->surface_form = Input::get('surface_form');
+				$gloss->part_of_speech = Input::get('part_of_speech');
+				$gloss->analysis = Input::get('analysis');
+				$gloss->contextual_gloss = Input::get('contextual_gloss');
+				$gloss->head_word_id = Input::get('head_word_id');
+				$gloss->language_id = Input::get('language_id');
+				$gloss->created_by = Auth::user()->username;
+				$gloss->updated_by = Auth::user()->username;
+		
+				$gloss->save();
 				
-			//add analysis if new
-			if (Input::has('analysis')) {
-				if (EieolAnalysis::where('analysis', '=', Input::get('analysis'))->count() == 0 ) {
-					$analysis = new EieolAnalysis;
-					$analysis->analysis = Input::get('analysis');
-					$analysis->created_by = Auth::user()->username;
-					$analysis->updated_by = Auth::user()->username;
-					$analysis->save();
+				//add part of speech if new
+				if (PartOfSpeech::where('part_of_speech', '=', Input::get('part_of_speech'))->count() == 0 ) {
+					$part_of_speech = new PartOfSpeech;
+					$part_of_speech->part_of_speech = Input::get('part_of_speech');
+					$part_of_speech->created_by = Auth::user()->username;
+					$part_of_speech->updated_by = Auth::user()->username;
+					$part_of_speech->save();
 				}
-			}
+					
+				//add analysis if new
+				if (Input::has('analysis')) {
+					if (EieolAnalysis::where('analysis', '=', Input::get('analysis'))->count() == 0 ) {
+						$analysis = new EieolAnalysis;
+						$analysis->analysis = Input::get('analysis');
+						$analysis->created_by = Auth::user()->username;
+						$analysis->updated_by = Auth::user()->username;
+						$analysis->save();
+					}
+				}
+				return $gloss->id;
+			});//end transaction
 			
 			//get it to return full display with head word
-			$gloss = EieolGloss::with('head_word')->find($gloss->id);
+			$gloss = EieolGloss::with('head_word')->find($gloss_id);
 			
 			return Response::json(array(
 					'success' => true,
@@ -153,36 +156,38 @@ class EieolGlossController extends BaseController {
 					'errors' => $validator->getMessageBag()->toArray()
 			));
 		} else {
-			$gloss = EieolGloss::with('head_word')->find($id);
-			
-			$gloss->surface_form = Input::get('surface_form');
-			$gloss->part_of_speech = Input::get('part_of_speech');
-			$gloss->analysis = Input::get('analysis');
-			$gloss->contextual_gloss = Input::get('contextual_gloss');
-			$gloss->head_word_id = Input::get('head_word_id');
-			$gloss->updated_by = Auth::user()->username;
-			
-			$gloss->save();
-			
-			//add part of speech if new
-			if (PartOfSpeech::where('part_of_speech', '=', Input::get('part_of_speech'))->count() == 0 ) {
-				$part_of_speech = new PartOfSpeech;
-				$part_of_speech->part_of_speech = Input::get('part_of_speech');
-				$part_of_speech->created_by = Auth::user()->username;
-				$part_of_speech->updated_by = Auth::user()->username;
-				$part_of_speech->save();
-			}
-			
-			//add analysis if new
-			if (Input::has('analysis')) {
-				if (EieolAnalysis::where('analysis', '=', Input::get('analysis'))->count() == 0 ) {
-					$analysis = new EieolAnalysis;
-					$analysis->analysis = Input::get('analysis');
-					$analysis->created_by = Auth::user()->username;
-					$analysis->updated_by = Auth::user()->username;
-					$analysis->save();
+			DB::transaction(function($id) use ($id) {
+				$gloss = EieolGloss::with('head_word')->find($id);
+				
+				$gloss->surface_form = Input::get('surface_form');
+				$gloss->part_of_speech = Input::get('part_of_speech');
+				$gloss->analysis = Input::get('analysis');
+				$gloss->contextual_gloss = Input::get('contextual_gloss');
+				$gloss->head_word_id = Input::get('head_word_id');
+				$gloss->updated_by = Auth::user()->username;
+				
+				$gloss->save();
+				
+				//add part of speech if new
+				if (PartOfSpeech::where('part_of_speech', '=', Input::get('part_of_speech'))->count() == 0 ) {
+					$part_of_speech = new PartOfSpeech;
+					$part_of_speech->part_of_speech = Input::get('part_of_speech');
+					$part_of_speech->created_by = Auth::user()->username;
+					$part_of_speech->updated_by = Auth::user()->username;
+					$part_of_speech->save();
 				}
-			}
+				
+				//add analysis if new
+				if (Input::has('analysis')) {
+					if (EieolAnalysis::where('analysis', '=', Input::get('analysis'))->count() == 0 ) {
+						$analysis = new EieolAnalysis;
+						$analysis->analysis = Input::get('analysis');
+						$analysis->created_by = Auth::user()->username;
+						$analysis->updated_by = Auth::user()->username;
+						$analysis->save();
+					}
+				}
+			}); //end transaction
 				
 			//get it again in case they change the headword
 			$gloss = EieolGloss::with('head_word')->find($id);

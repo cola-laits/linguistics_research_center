@@ -75,7 +75,7 @@ class EieolHeadWordController extends BaseController {
 					'errors' => $validator->getMessageBag()->toArray()
 			));
 		} else {
-			$head_word = DB::transaction(function() {
+			$returned_head_word = DB::transaction(function() {
 				$head_word = new EieolHeadWord;
 		
 				$head_word->word = Input::get('word');
@@ -102,8 +102,8 @@ class EieolHeadWordController extends BaseController {
 			return Response::json(array(
 					'success' => true,
 					'added' => true,
-					'head_word_id' => $head_word->id,
-					'head_word_display' => $head_word->getDisplayHeadWord(),
+					'head_word_id' => $returned_head_word->id,
+					'head_word_display' => $returned_head_word->getDisplayHeadWord(),
 					'message' => 'Head Word was successfully added.'
 			));
 	

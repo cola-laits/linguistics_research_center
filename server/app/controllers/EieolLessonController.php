@@ -72,6 +72,8 @@ class EieolLessonController extends BaseController {
 		$series = $lesson->series;
 		$grammars = EieolGrammar::where('lesson_id', '=', $id)->get()->sortBy('order');
 		$glossed_texts = EieolGlossedText::with('glosses.head_word')->where('lesson_id', '=', $id)->get()->sortBy('order');
+		
+		//get languages for pulldown
 		$languages = array();
 		$languages[''] = 'Select a Language';
 		$languages += EieolLanguage::lists('language','id');
@@ -107,20 +109,39 @@ class EieolLessonController extends BaseController {
 					'errors' => $validator->getMessageBag()->toArray()
 			));
 		} else {
- 			$lesson = EieolLesson::find($id);
+			DB::transaction(function($id) use ($id) {
+	 			$lesson = EieolLesson::find($id);
+	 			
+	 			//if they change the language, we have to sweep all the glosses, head words and keywords
+	 			if ($lesson->language_id != Input::get('language')) {
+	 				$glossed_texts = EieolGlossedText::with('glosses.head_word.keywords')->where('lesson_id', '=', $id)->get();
+	 				foreach ($glossed_texts as $glossed_text) {
+	 					foreach ($glossed_text->glosses as $gloss) {
+	 						$gloss->language_id = Input::get('language');
+	 						$gloss->save();
+	 						$gloss->head_word->language_id = Input::get('language');
+	 						$gloss->head_word->save();
+	 						foreach ($gloss->head_word->keywords as $keyword) {
+	 							$keyword->language_id = Input::get('language');
+	 							$keyword->save();
+	 						}
+	 					}
+	 				}
+	 			}
+				
+	 			$lesson->title = Input::get('title');
+	 			$lesson->order = Input::get('order');
+				$lesson->intro_text = Input::get('intro_text');
+				$lesson->language_id = Input::get('language');
+	 			$lesson->updated_by = Auth::user()->username;
+				
+	 			$lesson->save();
+			});
 			
- 			$lesson->title = Input::get('title');
- 			$lesson->order = Input::get('order');
-			$lesson->intro_text = Input::get('intro_text');
-			$lesson->language_id = Input::get('language');
- 			$lesson->updated_by = Auth::user()->username;
-			
- 			$lesson->save();
 			return Response::json(array(
 					'success' => true,
 					'message' => 'Update was successful'
 			));
-
 		}
 	}
 	
