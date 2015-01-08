@@ -58,6 +58,15 @@
 		  		    }, 1000);
 	  		      	myform.css("background-color", "#FFFFFF");
 
+
+	  		    	//if they updated the language, we need to change the hidden language ids
+	  		      	if(json.hasOwnProperty('language_id')) {
+		  		      	console.log('yep');
+						$(".language_id_class").each(function() {
+							$(this).attr('value',json['language_id']);;
+						});
+	  		      	}
+	  		      	
 	  		      	//if they updated a gloss, we need to change the text of every occurrence of it on the page
 	  		      	if(json.hasOwnProperty('gloss_id')) {
 						$(".gloss_" + json['gloss_id']).each(function() {
@@ -852,7 +861,7 @@ $('.custom-keyboard').keyboard({
 		    		   'id' => 'new_gloss_form'  
 		    		  ]) }}
 		    		  
-		    		{{ Form::hidden('language_id', $lesson->language_id) }}
+		    		{{ Form::hidden('language_id', $lesson->language_id, ['class' => 'language_id_class']) }}
 		    		  
 					<div class='form-group col-sm-2'>
 				        {{ Form::label('surface_form', 'Surface Form') }}
@@ -983,7 +992,7 @@ $('.custom-keyboard').keyboard({
 		    		   'id' => 'new_head_word_form'  
 		    		  ]) }}
 		    		  
-		    		{{ Form::hidden('language_id', $lesson->language_id) }}
+		    		{{ Form::hidden('language_id', $lesson->language_id, ['class' => 'language_id_class']) }}
 		    		  
 					<div class='form-group col-sm-3'>
 				        {{ Form::label('word', 'Word') }}

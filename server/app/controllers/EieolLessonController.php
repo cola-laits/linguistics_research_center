@@ -109,11 +109,13 @@ class EieolLessonController extends BaseController {
 					'errors' => $validator->getMessageBag()->toArray()
 			));
 		} else {
-			DB::transaction(function($id) use ($id) {
+			$language_updated = DB::transaction(function($id) use ($id) {
 	 			$lesson = EieolLesson::find($id);
 	 			
+	 			$language_updated = false;
 	 			//if they change the language, we have to sweep all the glosses, head words and keywords
 	 			if ($lesson->language_id != Input::get('language')) {
+	 				$language_updated = true;
 	 				$glossed_texts = EieolGlossedText::with('glosses.head_word.keywords')->where('lesson_id', '=', $id)->get();
 	 				foreach ($glossed_texts as $glossed_text) {
 	 					foreach ($glossed_text->glosses as $gloss) {
@@ -136,12 +138,22 @@ class EieolLessonController extends BaseController {
 	 			$lesson->updated_by = Auth::user()->username;
 				
 	 			$lesson->save();
+	 			
+	 			return $language_updated;
 			});
 			
-			return Response::json(array(
-					'success' => true,
-					'message' => 'Update was successful'
-			));
+			if ($language_updated) {
+				return Response::json(array(
+						'success' => true,
+						'message' => 'Update was successful',
+						'language_id' => Input::get('language'),
+				));
+			} else {
+				return Response::json(array(
+						'success' => true,
+						'message' => 'Update was successful',
+				));
+			}
 		}
 	}
 	
