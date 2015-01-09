@@ -20,6 +20,7 @@
         <!-- keyboard widget css & script  -->
 		{{ HTML::style('packages/Keyboard-master/css/keyboard.css') }}
 		{{ HTML::script('packages/Keyboard-master/js/jquery.keyboard.js') }}
+		{{ HTML::script('packages/Keyboard-master/js/jquery.mousewheel.js') }}
 		{{ HTML::script('packages/Keyboard-master/js/jquery.keyboard.extension-typing.js') }}
  
     </head>

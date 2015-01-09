@@ -28,6 +28,11 @@
         {{ Form::label('language', 'Language') }}
         {{ Form::text('language', null, ['placeholder' => 'Language', 'class' => 'form-control']) }}
     </div>
+    
+    <div class='form-group @if ($errors->has('custom_keyboard_layout')) has-error @endif  '>
+        {{ Form::label('custom_keyboard_layout', 'Custom Keyboard Layout') }}
+        {{ Form::textarea('custom_keyboard_layout', null, ['placeholder' => 'Custom Keyboard Layout', 'class' => 'form-control', 'size' => '150x25']) }}
+    </div>
  
     <div class='form-group'>
         {{ Form::submit($action, ['class' => 'btn btn-primary']) }}

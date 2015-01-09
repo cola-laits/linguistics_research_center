@@ -68,8 +68,7 @@ class EieolLessonController extends BaseController {
 	 */
 	public function edit($id)
 	{
-		$lesson = EieolLesson::find($id);
-		$series = $lesson->series;
+		$lesson = EieolLesson::with('series', 'language')->find($id);
 		$grammars = EieolGrammar::where('lesson_id', '=', $id)->get()->sortBy('order');
 		$glossed_texts = EieolGlossedText::with('glosses.head_word')->where('lesson_id', '=', $id)->get()->sortBy('order');
 		
@@ -79,7 +78,6 @@ class EieolLessonController extends BaseController {
 		$languages += EieolLanguage::lists('language','id');
 		
 		return View::make('eieol_lesson.eieol_lesson_edit', ['lesson' => $lesson, 
-															 'series' => $series, 
 															 'grammars' => $grammars, 
 															 'glossed_texts' => $glossed_texts,
 															 'languages' => $languages]);

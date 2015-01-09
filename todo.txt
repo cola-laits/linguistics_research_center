@@ -48,3 +48,6 @@ Future Ideas
 	On lesson page, warn if they try to leave without saving something
 	Reorder things by dragging
 	Preview lesson before publishing
+	Make part of speech and/or analysis unique for a language
+	If we end up using jquery virtual keyboard, give them a way to add combos (diacritics)
+				see https://github.com/Mottie/Keyboard/wiki/Usability#usecombos

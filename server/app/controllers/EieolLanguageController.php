@@ -47,6 +47,7 @@ class EieolLanguageController extends BaseController {
 			$language = new EieolLanguage;
 			
 			$language->language = Input::get('language');
+			$language->custom_keyboard_layout = Input::get('custom_keyboard_layout');
 			$language->created_by = Auth::user()->username;
 			$language->updated_by = Auth::user()->username;
 			
@@ -92,6 +93,7 @@ class EieolLanguageController extends BaseController {
 			$language = EieolLanguage::find($id);
 			
 			$language->language = Input::get('language');
+			$language->custom_keyboard_layout = Input::get('custom_keyboard_layout');
 			$language->updated_by = Auth::user()->username;
 			
 			$language->save();

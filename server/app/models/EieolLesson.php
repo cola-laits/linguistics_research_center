@@ -17,4 +17,9 @@ class EieolLesson extends Eloquent {
 	{
 		return $this->hasMany('EieolGlossedText', 'lesson_id', 'id')->orderBy('order');
 	}
+	
+	public function language()
+	{
+		return $this->hasOne('EieolLanguage','id','language_id');
+	}
 }

@@ -33,7 +33,6 @@ class AddMenuFieldsToSeries extends Migration {
 			$table->dropColumn('menu_name');
 			$table->dropColumn('menu_order');
 			$table->dropColumn('expanded_title');
-			
 		});
 	}
 
