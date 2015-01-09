@@ -1,6 +1,6 @@
 Admin
 	Maintain lessons
-        Popup keyboard - ability to customize
+        custom keyboard - make work with ckeditor
 					http://mottie.github.io/Keyboard/index.html
 		Sorting?
 		Authorization by series?
@@ -49,5 +49,6 @@ Future Ideas
 	Reorder things by dragging
 	Preview lesson before publishing
 	Make part of speech and/or analysis unique for a language
-	If we end up using jquery virtual keyboard, give them a way to add combos (diacritics)
+	If we end up using jquery virtual keyboard, give them a way to add combos (diacritics)?
 				see https://github.com/Mottie/Keyboard/wiki/Usability#usecombos
+		Also show which ones are available

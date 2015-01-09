@@ -21,6 +21,7 @@ class AddMenuFieldsToSeries extends Migration {
 		});
 	}
 
+	
 	/**
 	 * Reverse the migrations.
 	 *
