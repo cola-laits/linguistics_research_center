@@ -27,15 +27,23 @@ Route::get('eieol', function()
 	return View::make('eieol')->with($data);
 });
 
-Route::get('lesson/{series_id}/{order}', function($series_id, $order)
+Route::get('lesson/{series_id}', function($series_id)
 {
 	$data = array();
-	$data['lesson'] = EieolLesson::with('grammars')
-								 ->with('glossed_texts.glosses.head_word')
-								 ->where('series_id', '=', $series_id)
-								 ->where('order', '=', $order)
-								 ->firstOrFail();
 	
+	if (Input::has('id')) {
+		$data['lesson'] = EieolLesson::with('grammars')
+									->with('glossed_texts.glosses.head_word')
+									->where('id', '=', Input::get('id'))
+									->firstOrFail();
+	} else {
+		$data['lesson'] = EieolLesson::with('grammars')
+									 ->with('glossed_texts.glosses.head_word')
+									 ->where('series_id', '=', $series_id)
+									 ->orderBy('order')
+									 ->first();
+	}
+	log::error($data['lesson']);
 	$data['lesson_text'] = '';
 	foreach ($data['lesson']->glossed_texts as $glossed_text) {
 		$data['lesson_text'] .= $glossed_text->glossed_text . ' ';

@@ -172,7 +172,7 @@ centuries A.D., plus an additional pair of Geg lessons covering texts from the 1
     
     <ul>
     @foreach($serieses as $series)
-        <li>{{ HTML::link('lesson/' . $series->id . '/0', $series->title, array('title' => $series->expanded_title )) }} </li>
+        <li>{{ HTML::link('lesson/' . $series->id, $series->title, array('title' => $series->expanded_title )) }} </li>
     @endforeach
   	</ul>
     

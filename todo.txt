@@ -2,7 +2,7 @@ Admin
 	Maintain lessons
         custom keyboard - make work with ckeditor
 					http://mottie.github.io/Keyboard/index.html
-		Sorting?
+		Sorting -uksort, see http://stackoverflow.com/questions/6350510/how-can-i-sort-arrays-in-php-by-a-custom-alphabet
 		Authorization by series?
 		Add Pokorny ID to headword - add to forms
 
@@ -14,12 +14,10 @@ Public
 	Unicode info and test (make sure page matches an images)
 	EIEOL
 		Lessons
-			Take out order as parm.  Send ID in url.  If no ID, get lowest order
-			Lesson 0, add menu
+			Lesson 0, add menu - take out Lesson Text, Grammar and Translations header tags
 			lesson resource menu on lesson page
 			Handle 2 languages in one lesson
-			Unicode
-			Grammars need anchors
+			Grammars and glosses need anchors
 		TOC
 		Gloss - only show records that are used by lessons/lang
 		Dictionary

@@ -91,7 +91,6 @@ class EieolHeadWordController extends BaseController {
 				//now deal with keywords
 				$keyword_recs = array();
 				foreach (explode(',',Input::get('keywords')) as $keyword) {
-					log::error(Input::get('language_id'));
 					$keyword_recs[] = new EieolHeadWordKeyword(array('keyword' => strtoupper($keyword),
 																	 'language_id' => Input::get('language_id'),
 																	 'created_by' => Auth::user()->username, 
