@@ -31,7 +31,8 @@
     
     <div class='form-group @if ($errors->has('custom_keyboard_layout')) has-error @endif  '>
         {{ Form::label('custom_keyboard_layout', 'Custom Keyboard Layout') }}
-        {{ Form::textarea('custom_keyboard_layout', null, ['placeholder' => 'Custom Keyboard Layout', 'class' => 'form-control', 'size' => '150x25']) }}
+        {{ Form::textarea('custom_keyboard_layout', null, ['placeholder' => 'Custom Keyboard Layout', 'class' => 'form-control', 'size' => '150x15']) }}
+        <div class="alert-warning">This should be a list of unicode characters in the following format: '\u042f', '\u03da', '\u03db', '\u03c0'</div>
     </div>
  
     <div class='form-group'>

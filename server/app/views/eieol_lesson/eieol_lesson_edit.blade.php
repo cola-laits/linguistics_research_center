@@ -111,7 +111,7 @@
         	    		$('#grammars').find('.delete_grammar').show();
 
         	    		//attach new ckeditor
-        	    		CKEDITOR.replace(new_text_id,{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', allowedContent : true, extraPlugins : 'onchange'}  );
+        	    		CKEDITOR.replace(new_text_id,{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', allowedContent : true, extraPlugins : 'onchange', specialChars : [ {{$lesson->language->custom_keyboard_layout}} ] }  );
         	    		CKEDITOR.instances[new_text_id].on('change', function() {
         	    			if(this.checkDirty())
         	    				$('#'+new_form_id).css("background-color", "#EBAD99");
@@ -272,13 +272,9 @@
 			'defaultText':'',
 			'autocomplete_url':'/admin/eieol_head_word_keyword/filtered_list?language='+hold_language_id
 		});
-
-		//jquery virtual keyboard
-		$('.custom-keyboard').keyboard({
-		  layout       : 'custom',
-		  customLayout: {{$lesson->language->custom_keyboard_layout}},
-		  autoAccept   : true,		
-		}).addTyping({});
+		  
+		//custom keyboard for text inputs
+		$('.custom-keyboard').specialedit([ {{$lesson->language->custom_keyboard_layout}} ]); 
 
 		//these two functions prevent users from tabbing out of the keywords fields.  We want them to stay and enter a comma after each word
 		$('#new_keywords_tag').keypress(function (e) { //listen for typing
@@ -611,7 +607,7 @@
     		new_div.appendTo( "#grammars" );
     		new_div.show();
     		
-    		CKEDITOR.replace('new_grammar_text',{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', allowedContent : true, extraPlugins : 'onchange'}  );
+    		CKEDITOR.replace('new_grammar_text',{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', allowedContent : true, extraPlugins : 'onchange', specialChars : [ {{$lesson->language->custom_keyboard_layout}} ]}  );
     		CKEDITOR.instances['new_grammar_text'].on('change', function() {
     			if(this.checkDirty())
     				$('#new_grammar_form').css("background-color", "#EBAD99");
@@ -681,8 +677,10 @@
                 <h4 class="modal-title">Attach Gloss</h4>
             </div>
             <div class="modal-body">
-                {{ Form::label('gloss_search_input', 'Search Gloss') }}
-		        {{ Form::text('gloss_search_input', null, ['placeholder' => 'Search Gloss', 'class' => 'form-control', 'onkeyup' => 'searchGlosses(this.value)']) }}
+            	<div class='col-lg-12'>
+                	{{ Form::label('gloss_search_input', 'Search Gloss') }}
+		        	{{ Form::text('gloss_search_input', null, ['placeholder' => 'Search Gloss', 'class' => 'form-control custom-keyboard', 'onkeyup' => 'searchGlosses(this.value)']) }}
+		        </div>
             	<div id="gloss_search_result"></div>
             	           	
             	
@@ -700,7 +698,7 @@
 		    		  
 					<div class='form-group col-sm-2'>
 				        {{ Form::label('surface_form', 'Surface Form') }}
-				        {{ Form::text('surface_form', null, ['placeholder' => 'Surface Form', 'class' => 'form-control', 'id' => 'surface_form']) }}
+				        {{ Form::text('surface_form', null, ['placeholder' => 'Surface Form', 'class' => 'form-control custom-keyboard', 'id' => 'surface_form']) }}
 				        <div id ="surface_form_error" class="alert-danger errors"></div>
 				    </div>
 				    
@@ -760,7 +758,7 @@
 		    		  
 					<div class='form-group col-sm-2'>
 				        {{ Form::label('surface_form', 'Surface Form') }}
-				        {{ Form::text('surface_form', null, ['placeholder' => 'Surface Form', 'class' => 'form-control', 'id' => 'surface_form']) }}
+				        {{ Form::text('surface_form', null, ['placeholder' => 'Surface Form', 'class' => 'form-control custom-keyboard', 'id' => 'surface_form']) }}
 				        <div id ="surface_form_error" class="alert-danger errors"></div>
 				    </div>
 				    
@@ -812,46 +810,49 @@
                 <h4 class="modal-title">Attach Head Word</h4>
             </div>
             <div class="modal-body">
-                {{ Form::label('head_word_search_input', 'Search Head Word') }}
-		        {{ Form::text('head_word_search_input', null, ['placeholder' => 'Search Head Words', 'class' => 'form-control', 'onkeyup' => 'searchHeadWords(this.value)']) }}
+            	<div class='col-lg-12'>
+                	{{ Form::label('head_word_search_input', 'Search Head Word') }}
+		        	{{ Form::text('head_word_search_input', null, ['placeholder' => 'Search Head Words', 'class' => 'form-control custom-keyboard', 'onkeyup' => 'searchHeadWords(this.value)']) }}
+            	</div>
             	<div id="head_word_search_result"></div>
             	           	
             	
 		    	<hr/>
 				<h4>Or Add New Head Word</h4>
 				<div class='row'>
-				
-					{{ Form::open(['role' => 'form',
-		    		   'url' => '/admin/eieol_head_word/', 
-		    		   'class' => 'form',
-		    		   'id' => 'new_head_word_form'  
-		    		  ]) }}
-		    		  
-		    		{{ Form::hidden('language_id', $lesson->language_id, ['class' => 'language_id_class']) }}
-		    		  
-					<div class='form-group col-sm-3'>
-				        {{ Form::label('word', 'Word') }}
-				        {{ Form::textarea('word', null, ['placeholder' => 'Word', 'class' => 'form-control', 'size' => '10x4']) }}
-				        <div id ="word_error" class="alert-danger errors"></div>
-				    </div>
-				    
-				    <div class='form-group col-sm-3'>
-				        {{ Form::label('definition', 'Definition') }}
-				        {{ Form::textarea('definition', null, ['placeholder' => 'Definition', 'class' => 'form-control', 'id' => 'definition', 'size' => '10x4']) }}
-				        <div id ="definition_error" class="alert-danger errors"></div>
-				    </div>	     
-				    
-				    <div class='form-group col-sm-4'>
-				        {{ Form::label('keywords', 'Keywords') }}
-				        {{ Form::text('keywords', null, ['class' => 'form-control keywords', 'id' => 'new_keywords']) }}
-				        <div class="alert-warning">Separate with commas</div>
-				        <div id ="keywords_error" class="alert-danger errors"></div>
-				    </div>	 
-
-				    <div class='form-group col-sm-1 bottom_button'> 
-				    	{{ Form::submit('Add', ['class' => 'btn btn-success']) }}
-				    </div>
-				    {{ Form::close() }}
+					<div class='col-sm-12'>
+						{{ Form::open(['role' => 'form',
+			    		   'url' => '/admin/eieol_head_word/', 
+			    		   'class' => 'form',
+			    		   'id' => 'new_head_word_form'  
+			    		  ]) }}
+			    		  
+			    		{{ Form::hidden('language_id', $lesson->language_id, ['class' => 'language_id_class']) }}
+			    		  
+						<div class='form-group'>
+					        {{ Form::label('word', 'Word') }}
+					        {{ Form::text('word', null, ['placeholder' => 'Word', 'class' => 'form-control custom-keyboard']) }}
+					        <div id ="word_error" class="alert-danger errors"></div>
+					    </div>
+					    
+					    <div class='form-group'>
+					        {{ Form::label('definition', 'Definition') }}
+					        {{ Form::text('definition', null, ['placeholder' => 'Definition', 'class' => 'form-control', 'id' => 'definition']) }}
+					        <div id ="definition_error" class="alert-danger errors"></div>
+					    </div>	     
+					    
+					    <div class='form-group'>
+					        {{ Form::label('keywords', 'Keywords') }}
+					        {{ Form::text('keywords', null, ['class' => 'form-control keywords', 'id' => 'new_keywords']) }}
+					        <div class="alert-warning">Separate with commas</div>
+					        <div id ="keywords_error" class="alert-danger errors"></div>
+					    </div>	 
+	
+					    <div class='form-group bottom_button'> 
+					    	{{ Form::submit('Add', ['class' => 'btn btn-success']) }}
+					    </div>
+					    {{ Form::close() }}
+					</div>
 			    </div>			    
             </div>
         </div>
@@ -867,39 +868,40 @@
             </div>
             <div class="modal-body">
 				<div class='row'>
-				
-					{{ Form::open(['role' => 'form',
-		    		   'url' => '/admin/eieol_head_word/', 
-		    		   'method' => 'PUT',
-		    		   'class' => 'form ajax_form',
-		    		   'id' => 'edit_head_word_form'  
-		    		  ]) }}
-		    		  
-					<div class='form-group col-sm-3'>
-				        {{ Form::label('word', 'Word') }}
-				        {{ Form::textarea('word', null, ['placeholder' => 'Word', 'class' => 'form-control', 'size' => '10x4']) }}
-				        <div id ="word_error" class="alert-danger errors"></div>
-				    </div>
-				    
-				    <div class='form-group col-sm-3'>
-				        {{ Form::label('definition', 'Definition') }}
-				        {{ Form::textarea('definition', null, ['placeholder' => 'Definition', 'class' => 'form-control', 'id' => 'definition', 'size' => '10x4']) }}
-				        <div id ="definition_error" class="alert-danger errors"></div>
-				    </div>	     
-				    
-				    <div class='form-group col-sm-4'>
-				        {{ Form::label('keywords', 'Keywords') }}
-				        {{ Form::text('keywords', null, ['class' => 'form-control keywords', 'id' => 'edit_keywords']) }}
-				        <div class="alert-warning">Separate with commas</div>
-				        <div id ="keywords_error" class="alert-danger errors"></div>
-				    </div>	 
-
-				    <div class='form-group col-sm-1 bottom_button'> 
-				    	{{ Form::submit('Edit', ['class' => 'btn btn-primary']) }}
-				    </div>
-				    
-				    {{ Form::close() }}
-			    </div>			    
+					<div class='col-sm-12'>
+						{{ Form::open(['role' => 'form',
+			    		   'url' => '/admin/eieol_head_word/', 
+			    		   'method' => 'PUT',
+			    		   'class' => 'form ajax_form',
+			    		   'id' => 'edit_head_word_form'  
+			    		  ]) }}
+			    		  
+						<div class='form-group'>
+					        {{ Form::label('word', 'Word') }}
+					        {{ Form::text('word', null, ['placeholder' => 'Word', 'class' => 'form-control custom-keyboard']) }}
+					        <div id ="word_error" class="alert-danger errors"></div>
+					    </div>
+					    
+					    <div class='form-group'>
+					        {{ Form::label('definition', 'Definition') }}
+					        {{ Form::text('definition', null, ['placeholder' => 'Definition', 'class' => 'form-control', 'id' => 'definition']) }}
+					        <div id ="definition_error" class="alert-danger errors"></div>
+					    </div>	
+					    
+					    <div class='form-group'>
+					        {{ Form::label('keywords', 'Keywords') }}
+					        {{ Form::text('keywords', null, ['class' => 'form-control keywords', 'id' => 'edit_keywords']) }}
+					        <div class="alert-warning">Separate with commas</div>
+					        <div id ="keywords_error" class="alert-danger errors"></div>
+					    </div>	
+	
+					    <div class='form-group bottom_button'> 
+					    	{{ Form::submit('Edit', ['class' => 'btn btn-primary']) }}
+					    </div>
+					    
+					    {{ Form::close() }}
+				    </div>			
+			    </div>    
 		    
 		   		<div class="well" id="head_word_glosses"></div>
 	        </div>
@@ -969,7 +971,6 @@
 </div>
 
 <!-- ---------------------------------------------------------------------------------------- -->  
-
 <div class='col-lg-12'>
  
     <h1><i class='fa fa-file-text'></i> Edit Lesson for {{ HTML::link('admin/eieol_series/' . $lesson->series->id . '/edit', $lesson->series->title , array('title' => 'Return to series' )) }}</h1>
@@ -1052,7 +1053,7 @@
 					    	
 					    <div class='form-group col-sm-7'>
 					        {{ Form::label('glossed_text', 'Glossed Text') }}
-					        {{ Form::text('glossed_text', null, ['placeholder' => 'Glossed Text', 'class' => 'form-control', 'id' => 'glossed_text']) }}
+					        {{ Form::text('glossed_text', null, ['placeholder' => 'Glossed Text', 'class' => 'form-control custom-keyboard', 'id' => 'glossed_text']) }}
 					        <div id ="glossed_text_error" class="alert-danger errors"></div>
 					    </div>	    
 					    
@@ -1156,7 +1157,7 @@
 				    
 				    <div class='form-group col-sm-7'>
 				        {{ Form::label('glossed_text', 'Glossed Text') }}
-				        {{ Form::text('glossed_text', null, ['placeholder' => 'Glossed Text', 'class' => 'form-control', 'id' => 'glossed_text']) }}
+				        {{ Form::text('glossed_text', null, ['placeholder' => 'Glossed Text', 'class' => 'form-control custom-keyboard', 'id' => 'glossed_text']) }}
 				        <div id ="glossed_text_error" class="alert-danger errors"></div>
 				    </div>	     
 				    
@@ -1317,7 +1318,7 @@
 					    	
 					    <div class='form-group col-sm-3'>
 					        {{ Form::label('title', 'Title') }}
-					        {{ Form::text('title', null, ['placeholder' => 'Title', 'class' => 'form-control']) }}
+					        {{ Form::text('title', null, ['placeholder' => 'Title', 'class' => 'form-control custom-keyboard']) }}
 					        <div id ="title_error" class="alert-danger errors"></div>
 					    </div>
 					    
@@ -1377,7 +1378,7 @@
 				    	
 				    <div class='form-group col-sm-3'>
 				        {{ Form::label('title', 'Title') }}
-				        {{ Form::text('title', null, ['placeholder' => 'Title', 'class' => 'form-control']) }}
+				        {{ Form::text('title', null, ['placeholder' => 'Title', 'class' => 'form-control custom-keyboard']) }}
 				        <div id ="title_error" class="alert-danger errors"></div>
 				    </div>
 				    
@@ -1430,14 +1431,14 @@
 	CKEDITOR.plugins.addExternal( 'onchange', '/js/', 'onchangeplugin.js' );
 	
 	//apply the ckeditor to the intro text
-	CKEDITOR.replace( 'intro_text',{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', allowedContent : true, extraPlugins : 'onchange'} );
+	CKEDITOR.replace( 'intro_text',{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', allowedContent : true, extraPlugins : 'onchange', specialChars : [ {{$lesson->language->custom_keyboard_layout}} ] } );
 	CKEDITOR.instances['intro_text'].on('change', function() {
 		if(this.checkDirty())
 			$('#update_form').css("background-color", "#EBAD99");
 	});
 
 	//apply the ckeditor to the translation
-	CKEDITOR.replace( 'lesson_translation',{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', allowedContent : true, extraPlugins : 'onchange'}  );
+	CKEDITOR.replace( 'lesson_translation',{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', allowedContent : true, extraPlugins : 'onchange', specialChars : [ {{$lesson->language->custom_keyboard_layout}} ]}  );
 	CKEDITOR.instances['lesson_translation'].on('change', function() {
 		if(this.checkDirty())
 			$('#update_translation_form').css("background-color", "#EBAD99"); 
@@ -1445,7 +1446,7 @@
 
 	//apply the ckeditor to each exisiting grammar
 	@foreach ($grammars as $grammar)
-		CKEDITOR.replace( 'grammar_text_{{{$grammar->id}}}',{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', allowedContent : true, extraPlugins : 'onchange'}  );
+		CKEDITOR.replace( 'grammar_text_{{{$grammar->id}}}',{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', allowedContent : true, extraPlugins : 'onchange', specialChars : [ {{$lesson->language->custom_keyboard_layout}} ]}  );
 		CKEDITOR.instances['grammar_text_{{{$grammar->id}}}'].on('change', function() {
 			if(this.checkDirty())
 				$('#grammar_form_{{{$grammar->id}}}').css("background-color", "#EBAD99");

@@ -16,12 +16,8 @@
         {{ HTML::script('//cdn.ckeditor.com/4.4.5.1/full/ckeditor.js') }}
         {{ HTML::script('js/jquery.tagsinput.js') }}
         {{ HTML::script('https://code.jquery.com/ui/1.11.2/jquery-ui.min.js') }}
-        
-        <!-- keyboard widget css & script  -->
-		{{ HTML::style('packages/Keyboard-master/css/keyboard.css') }}
-		{{ HTML::script('packages/Keyboard-master/js/jquery.keyboard.js') }}
-		{{ HTML::script('packages/Keyboard-master/js/jquery.mousewheel.js') }}
-		{{ HTML::script('packages/Keyboard-master/js/jquery.keyboard.extension-typing.js') }}
+        {{ HTML::script('js/specialedit.jquery.js') }}
+
  
     </head>
     <body>

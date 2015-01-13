@@ -79,7 +79,6 @@ class EieolHeadWordController extends BaseController {
 		} else {
 			$returned_head_word = DB::transaction(function() {
 				$head_word = new EieolHeadWord;
-				log::error(Input::get('language_id'));
 				$head_word->word = Input::get('word');
 				$head_word->definition = Input::get('definition');
 				$head_word->language_id = Input::get('language_id');
@@ -121,7 +120,6 @@ class EieolHeadWordController extends BaseController {
 	 */
 	public function update($id)
 	{
-		log::error(Input::all());
 		$rules = array(
 				//have to put definition in quotes in case it has a comma in it
 			'word' => 'required|regex:/^<.*>$/|unique:eieol_head_word,word,' . $id . ',id,definition,"' . Input::get('definition') . '"', 

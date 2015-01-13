@@ -43,7 +43,6 @@ Route::get('lesson/{series_id}', function($series_id)
 									 ->orderBy('order')
 									 ->first();
 	}
-	log::error($data['lesson']);
 	$data['lesson_text'] = '';
 	foreach ($data['lesson']->glossed_texts as $glossed_text) {
 		$data['lesson_text'] .= $glossed_text->glossed_text . ' ';
