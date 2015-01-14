@@ -680,6 +680,7 @@
             	<div class='col-lg-12'>
                 	{{ Form::label('gloss_search_input', 'Search Gloss') }}
 		        	{{ Form::text('gloss_search_input', null, ['placeholder' => 'Search Gloss', 'class' => 'form-control custom-keyboard', 'onkeyup' => 'searchGlosses(this.value)']) }}
+		        	<br/><br/>
 		        </div>
             	<div id="gloss_search_result"></div>
             	           	
@@ -833,6 +834,7 @@
             	<div class='col-lg-12'>
                 	{{ Form::label('head_word_search_input', 'Search Head Word') }}
 		        	{{ Form::text('head_word_search_input', null, ['placeholder' => 'Search Head Words', 'class' => 'form-control custom-keyboard', 'onkeyup' => 'searchHeadWords(this.value)']) }}
+            		<br/><br/>
             	</div>
             	<div id="head_word_search_result"></div>
             	           	

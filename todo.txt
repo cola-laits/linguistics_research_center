@@ -1,12 +1,11 @@
 Admin
-	Maintain lessons
-		Add Pokorny ID to headword - add to forms
 	Language
 		Audit on custom keyboard to make sure it's in right format
 		Sorting -uksort, see http://stackoverflow.com/questions/6350510/how-can-i-sort-arrays-in-php-by-a-custom-alphabet
 	Part of Speech editor? use FrozenNode?
 	Analysis editor?
 	Maintain Lexicon
+		Add Pokorny ID to headword - add to forms
 	
 Public
 	Unicode info and test (make sure page matches an images)
