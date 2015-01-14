@@ -33,12 +33,12 @@ Route::get('lesson/{series_id}', function($series_id)
 	
 	if (Input::has('id')) {
 		$data['lesson'] = EieolLesson::with('grammars')
-									->with('glossed_texts.glosses.head_word')
+									->with('glossed_texts.glosses.elements.head_word')
 									->where('id', '=', Input::get('id'))
 									->firstOrFail();
 	} else {
 		$data['lesson'] = EieolLesson::with('grammars')
-									 ->with('glossed_texts.glosses.head_word')
+									 ->with('glossed_texts.glosses.elements.head_word')
 									 ->where('series_id', '=', $series_id)
 									 ->orderBy('order')
 									 ->first();

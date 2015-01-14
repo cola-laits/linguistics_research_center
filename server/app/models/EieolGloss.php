@@ -3,15 +3,14 @@
 class EieolGloss extends Eloquent {
 	protected $table = 'eieol_gloss';
 	
-	public function head_word()
-	{
-		return $this->belongsTo('EieolHeadWord');
-	}
-	
-	
 	public function glossed_texts()
 	{
 		return $this->belongsToMany('EieolGlossedText', 'eieol_glossed_text_gloss', 'gloss_id', 'glossed_text_id')->withPivot('order', 'id');
+	}
+	
+	public function elements()
+	{
+		return $this->hasMany('EieolElement', 'gloss_id', 'id')->orderBy('order');
 	}
 	
 	/**
@@ -21,11 +20,19 @@ class EieolGloss extends Eloquent {
 	 */
 	public function getDisplayGloss()
 	{
-		return $this->surface_form . ' -- ' .
-				$this->part_of_speech . '; ' .
-				$this->analysis . ' ' .
-				htmlentities($this->head_word->word) . ' ' .
-				$this->head_word->definition .
-				'<strong> -- ' . $this->contextual_gloss . '</strong>';
+		$string = $this->surface_form . ' -- ';
+		$i=0;
+		foreach($this->elements as $element){
+			$i++;
+			if ($i != 1) {
+				$string .= ' + ';
+			}
+			$string .= $element->part_of_speech . '; ' .
+						$element->analysis . ' ' .
+						htmlentities($element->head_word->word) . ' ' .
+						$element->head_word->definition;
+		}
+		$string .= '<strong> -- ' . $this->contextual_gloss . '</strong>';
+		return $string;
 	}
 }

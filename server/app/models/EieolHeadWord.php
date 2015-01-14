@@ -8,14 +8,13 @@ class EieolHeadWord extends Eloquent {
 		return $this->hasMany('EieolHeadWordKeyword', 'head_word_id', 'id')->orderBy('keyword');
 	}
 	
-	public function glosses()
+	public function elements()
 	{
-		return $this->hasMany('EieolGloss', 'head_word_id', 'id')->orderBy('surface_form');
+		return $this->hasMany('EieolElement', 'head_word_id', 'id');
 	}
 	
 	public function getDisplayHeadWord()
 	{
-		return htmlentities($this->word) . ' ' .
-				$this->definition;
+		return $this->word . ' ' . $this->definition;
 	}
 }

@@ -70,7 +70,7 @@ class EieolLessonController extends BaseController {
 	{
 		$lesson = EieolLesson::with('series', 'language')->find($id);
 		$grammars = EieolGrammar::where('lesson_id', '=', $id)->get()->sortBy('order');
-		$glossed_texts = EieolGlossedText::with('glosses.head_word')->where('lesson_id', '=', $id)->get()->sortBy('order');
+		$glossed_texts = EieolGlossedText::with('glosses.elements.head_word')->where('lesson_id', '=', $id)->get()->sortBy('order');
 		
 		//get languages for pulldown
 		$languages = array();
@@ -114,16 +114,18 @@ class EieolLessonController extends BaseController {
 	 			//if they change the language, we have to sweep all the glosses, head words and keywords
 	 			if ($lesson->language_id != Input::get('language')) {
 	 				$language_updated = true;
-	 				$glossed_texts = EieolGlossedText::with('glosses.head_word.keywords')->where('lesson_id', '=', $id)->get();
+	 				$glossed_texts = EieolGlossedText::with('glosses.elements.head_word.keywords')->where('lesson_id', '=', $id)->get();
 	 				foreach ($glossed_texts as $glossed_text) {
 	 					foreach ($glossed_text->glosses as $gloss) {
 	 						$gloss->language_id = Input::get('language');
 	 						$gloss->save();
-	 						$gloss->head_word->language_id = Input::get('language');
-	 						$gloss->head_word->save();
-	 						foreach ($gloss->head_word->keywords as $keyword) {
-	 							$keyword->language_id = Input::get('language');
-	 							$keyword->save();
+	 						foreach($gloss->elements as $element) {
+	 							$element->head_word->language_id = Input::get('language');
+	 							$element->head_word->save();
+	 							foreach ($element->head_word->keywords as $keyword) {
+	 								$keyword->language_id = Input::get('language');
+	 								$keyword->save();
+	 							}
 	 						}
 	 					}
 	 				}

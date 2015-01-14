@@ -1,11 +1,9 @@
 Admin
 	Maintain lessons
-        custom keyboard - make work with ckeditor
-					http://mottie.github.io/Keyboard/index.html
-		Sorting -uksort, see http://stackoverflow.com/questions/6350510/how-can-i-sort-arrays-in-php-by-a-custom-alphabet
-		Authorization by series?
 		Add Pokorny ID to headword - add to forms
-
+	Language
+		Audit on custom keyboard to make sure it's in right format
+		Sorting -uksort, see http://stackoverflow.com/questions/6350510/how-can-i-sort-arrays-in-php-by-a-custom-alphabet
 	Part of Speech editor? use FrozenNode?
 	Analysis editor?
 	Maintain Lexicon
@@ -41,11 +39,13 @@ Deploy
 	hide debuger from users.  Show to me?
 		
 Future Ideas
+	Authorization by series?
 	Screen for users to change their password
 	Save versions of lessons like SVN
 	On lesson page, warn if they try to leave without saving something
 	Reorder things by dragging
 	Preview lesson before publishing
+	Delete an element from a gloss
 	Make part of speech and/or analysis unique for a language
 	If we end up using jquery virtual keyboard, give them a way to add combos (diacritics)?
 				see https://github.com/Mottie/Keyboard/wiki/Usability#usecombos

@@ -203,11 +203,8 @@
 
 	function attach_head_word(head_word_id, head_word_display) {
 		//gloss_form is set when they open the head word modal
-		$(gloss_form).find("#head_word_id").attr('value', head_word_id);
-		$(gloss_form).find("#head_word_display").html(head_word_display);
-		
-		$(gloss_form).find("#attach_head_word_button").html('Change Head Word');
-	    $(gloss_form).find("#attach_head_word_button").attr('class', 'btn btn-primary btn-sm');
+		$(gloss_form).find("#element_" + element_id + "_head_word_id").attr('value', head_word_id);
+		$(gloss_form).find("#element_" + element_id + "_head_word_display").html(head_word_display);
 		$("#attach_head_word_modal").modal('hide'); 
 	} //attach head word
 
@@ -347,11 +344,11 @@
 		    $("#attach_gloss_modal").modal('show'); 
 		    $("#gloss_search_input").focus(); //put cursor in search box
 		    document.getElementById("gloss_search_result").innerHTML=""; //reset result box so it's empty each time the click it
-		    $('#new_gloss_form').trigger("reset"); //reset the new gloss form
+		    $('#new_gloss_form')[0].reset(); //reset the new gloss form
 		    $(".errors", '#new_gloss_form').empty(); //reset gloss form error divs
-		    $('#new_gloss_form').find("#attach_head_word_button").html('Attach Head Word'); //reset headword button
-		    $('#new_gloss_form').find("#attach_head_word_button").attr('class', 'btn btn-success btn-sm'); //reset headword button
-		    $('#new_gloss_form').find("#head_word_display").html(''); //reset headword text
+		    for (i=1; i<=3; i++) {
+		    	$('#element_' + i + '_head_word_display', '#new_gloss_form').text(''); //reset headword text
+		    }  
 		    return false;
 		});
 
@@ -405,11 +402,14 @@
 		        dataType: "json",
 		        
 		        success : function(data){
+		    		$('#edit_gloss_form')[0].reset();
 			        $.each(data, function(key, value){
 					    $('[name='+key+']', '#edit_gloss_form').val(value);
 				    });
-
-				    $('#head_word_display', '#edit_gloss_form').text(data['head_word']['word'] + ' ' + data['head_word']['definition']).html(); //we have to use this syntax so <> will display correctly
+				    for (i=1; i<=3; i++) {
+				    	$('#element_' + i + '_head_word_display', '#edit_gloss_form').text(''); //we only get ones that already exist, so reset it first
+				    	$('#element_' + i + '_head_word_display', '#edit_gloss_form').text(data['element_' + i + '_head_word_display']).html();//we have to use .html() so <> will display correctly
+				    }    
 				    $("#gloss_lessons").html("<strong>This is used by the following lessons:</strong> " + data['lessons']);
 				    $("#edit_gloss_form").attr("action", "/admin/eieol_gloss/" + data['id']);
 		        }, //success
@@ -461,13 +461,13 @@
 
 
 		//popup to attach or change head word to gloss
-		$("#attach_head_word_button, #change_head_word_button").click(function() {
+		$(".pick_head_word_button").click(function() {
 			gloss_form = $(this).closest('form'); //we will use this in the attach_head_word function
 		    $("#head_word_search_input").val(""); //reset the input box
 		    $("#attach_head_word_modal").modal('show'); 
 		    $("#head_word_search_input").focus(); //put cursor in search box
 		    document.getElementById("head_word_search_result").innerHTML=""; //reset result box so it's empty each time the click it
-		    $('#new_head_word_form').trigger("reset"); //reset the new head word form
+		    $('#new_head_word_form')[0].reset(); //reset the new head word form
 		    $('#new_keywords').importTags(""); //trigger reset doesn't work because of the jquery tags, so do this one manually
 		    $(".errors", '#new_head_word_form').empty(); //reset head word form error divs
 		    return false;
@@ -477,7 +477,7 @@
 		$("#edit_head_word_button").click(function() {
 		    
 		    gloss_form = $(this).closest('form'); //get gloss form so we can get head_word_id
-		    head_word_id = $(gloss_form).find("#head_word_id").val();
+		    head_word_id = $(gloss_form).find("#element_" + element_id + "_head_word_id").val();
 		    
 		    //load form with data for the record they want to edit
 		    $.ajax({
@@ -686,53 +686,62 @@
             	
 		    	<hr/>
 				<h4>Or Add New Gloss</h4>
-				<div class='row'>
 				
-					{{ Form::open(['role' => 'form',
-		    		   'url' => '/admin/eieol_gloss/', 
-		    		   'class' => 'form',
-		    		   'id' => 'new_gloss_form'  
-		    		  ]) }}
+				{{ Form::open(['role' => 'form',
+		    		  'url' => '/admin/eieol_gloss/', 
+		    		  'class' => 'form',
+		    		  'id' => 'new_gloss_form'  
+		    	]) }}
 		    		  
 		    		{{ Form::hidden('language_id', $lesson->language_id, ['class' => 'language_id_class']) }}
-		    		  
-					<div class='form-group col-sm-2'>
-				        {{ Form::label('surface_form', 'Surface Form') }}
-				        {{ Form::text('surface_form', null, ['placeholder' => 'Surface Form', 'class' => 'form-control custom-keyboard', 'id' => 'surface_form']) }}
-				        <div id ="surface_form_error" class="alert-danger errors"></div>
-				    </div>
 				    
-				    <div class='form-group col-sm-2'>
-				        {{ Form::label('part_of_speech', 'Part Of Speech') }}
-				        {{ Form::text('part_of_speech', null, ['placeholder' => 'Part Of Speech', 'class' => 'form-control part_of_speech', 'id' => 'part_of_speech']) }}
-				        <div id ="part_of_speech_error" class="alert-danger errors"></div>
-				    </div>	     
-				    
-				     <div class='form-group col-sm-2'>
-				        {{ Form::label('analysis', 'Analysis') }}
-				        {{ Form::textarea('analysis', null, ['placeholder' => 'Analysis', 'class' => 'form-control analysis', 'id' => 'analysis', 'size' => '10x4']) }}
-				        <div id ="analysis_error" class="alert-danger errors"></div>
-				    </div>	     
-				    
-				     <div class='form-group col-sm-3'>
-				        {{ Form::label('head_word_id', 'Head Word') }}
-				        {{ Form::hidden('head_word_id', null) }} <br/>
-				        <div id="head_word_display"></div>
-				        {{ Form::button('Attach Head Word', ['class' => 'btn btn-success btn-sm', 'id' => 'attach_head_word_button']) }}
-				        <div id ="head_word_id_error" class="alert-danger errors"></div>
-				    </div>	     
-				    
-				     <div class='form-group col-sm-2'>
-				        {{ Form::label('contextual_gloss', 'Contextual Gloss') }}
-				        {{ Form::text('contextual_gloss', null, ['placeholder' => 'Contextual Gloss', 'class' => 'form-control', 'id' => 'contextual_gloss']) }}
-				        <div id ="contextual_gloss_error" class="alert-danger errors"></div>
-				    </div>	     
-				    
-				    <div class='form-group col-sm-1 bottom_button'> 
-				    	{{ Form::submit('Add', ['class' => 'btn btn-success']) }}
-				    </div>
-				    {{ Form::close() }}
-			    </div>			    
+				    @for ($i = 1; $i <= 3; $i++)
+				    	<div class='row'>
+				    	@if ($i == 1)
+						    <div class='form-group col-sm-2'>
+						        {{ Form::label('surface_form', 'Surface Form') }}
+						        {{ Form::text('surface_form', null, ['placeholder' => 'Surface Form', 'class' => 'form-control custom-keyboard', 'id' => 'surface_form']) }}
+						        <div id ="surface_form_error" class="alert-danger errors"></div>
+						    </div>
+						@else
+				    		<div class='form-group col-sm-2'></div>
+				    	@endif
+				    	
+					    <div class='form-group col-sm-2'>
+					        {{ Form::label('element_' . $i . '_part_of_speech', 'Part Of Speech') }}
+					        {{ Form::text('element_' . $i . '_part_of_speech', null, ['placeholder' => 'Part Of Speech', 'class' => 'form-control part_of_speech']) }}
+					        <div id ="element_{{$i}}_part_of_speech_error" class="alert-danger errors"></div>
+					    </div>	     
+					    
+					     <div class='form-group col-sm-3'>
+					        {{ Form::label('element_' . $i . '_analysis', 'Analysis') }}
+					        {{ Form::textarea('element_' . $i . '_analysis', null, ['class' => 'form-control analysis', 'size' => '10x2']) }}
+					        <div id ="element_{{$i}}_analysis_error" class="alert-danger errors"></div>
+					    </div>	     
+					    
+					     <div class='form-group col-sm-2'>
+					        {{ Form::label('element_' . $i . '_head_word_id', 'Head Word') }}
+					        {{ Form::hidden('element_' . $i . '_head_word_id', null, ['id' => 'element_' . $i . '_head_word_id']) }}
+					        <div id="element_{{$i}}_head_word_display"></div>
+					        {{ Form::button('Pick Head Word', ['class' => 'btn btn-primary btn-sm pick_head_word_button', 'onclick' => 'element_id =' . $i]) }}
+					        <div id ="element_{{$i}}_head_word_id_error" class="alert-danger errors"></div>
+					    </div>	   
+					    
+					    @if ($i == 1)  
+					    	<div class='form-group col-sm-2'>
+						        {{ Form::label('contextual_gloss', 'Contextual Gloss') }}
+						        {{ Form::text('contextual_gloss', null, ['placeholder' => 'Contextual Gloss', 'class' => 'form-control', 'id' => 'contextual_gloss']) }}
+						        <div id ="contextual_gloss_error" class="alert-danger errors"></div>
+						    </div>	     
+						    
+						    <div class='form-group col-sm-1 bottom_button'> 
+						    	{{ Form::submit('Add', ['class' => 'btn btn-success']) }}
+						    </div>
+						@endif
+						
+						</div>
+					@endfor
+				{{ Form::close() }}		    
             </div>
         </div>
     </div>
@@ -747,53 +756,64 @@
                 <h4 class="modal-title">Edit Gloss</h4>
             </div>
             <div class="modal-body">
-				<div class='row'>
 				
-					{{ Form::open(['role' => 'form',
-		    		   'url' => '', 
-		    		   'method' => 'PUT',
-		    		   'class' => 'form ajax_form',
-		    		   'id' => 'edit_gloss_form'  
-		    		  ]) }}
+				{{ Form::open(['role' => 'form',
+		    		  'url' => '', 
+		    		  'method' => 'PUT',
+		    		  'class' => 'form ajax_form',
+		    		  'id' => 'edit_gloss_form'  
+		    	]) }}
 		    		  
-					<div class='form-group col-sm-2'>
-				        {{ Form::label('surface_form', 'Surface Form') }}
-				        {{ Form::text('surface_form', null, ['placeholder' => 'Surface Form', 'class' => 'form-control custom-keyboard', 'id' => 'surface_form']) }}
-				        <div id ="surface_form_error" class="alert-danger errors"></div>
-				    </div>
-				    
-				    <div class='form-group col-sm-2'>
-				        {{ Form::label('part_of_speech', 'Part Of Speech') }}
-				        {{ Form::text('part_of_speech', null, ['placeholder' => 'Part Of Speech', 'class' => 'form-control part_of_speech', 'id' => 'part_of_speech']) }}
-				        <div id ="part_of_speech_error" class="alert-danger errors"></div>
-				    </div>	     
-				    
-				     <div class='form-group col-sm-2'>
-				        {{ Form::label('analysis', 'Analysis') }}
-				        {{ Form::textarea('analysis', null, ['class' => 'form-control analysis', 'id' => 'analysis', 'size' => '10x4']) }}
-				        <div id ="analysis_error" class="alert-danger errors"></div>
-				    </div>	     
-				    
-				     <div class='form-group col-sm-3'>
-				        {{ Form::label('head_word_id', 'Head Word') }}
-				        {{ Form::hidden('head_word_id', null) }}
-				        <div id="head_word_display"></div>
-				        {{ Form::button('Change Head Word', ['class' => 'btn btn-primary btn-sm', 'id' => 'change_head_word_button']) }}
-				        {{ Form::button('Edit Head Word', ['class' => 'btn btn-primary btn-sm', 'id' => 'edit_head_word_button']) }}
-				        <div id ="head_word_id_error" class="alert-danger errors"></div>
-				    </div>	     
-				    
-				     <div class='form-group col-sm-2'>
-				        {{ Form::label('contextual_gloss', 'Contextual Gloss') }}
-				        {{ Form::text('contextual_gloss', null, ['placeholder' => 'Contextual Gloss', 'class' => 'form-control', 'id' => 'contextual_gloss']) }}
-				        <div id ="contextual_gloss_error" class="alert-danger errors"></div>
-				    </div>	     
-				    
-				    <div class='form-group col-sm-1 bottom_button'> 
-				    	{{ Form::submit('Edit', ['class' => 'btn btn-primary']) }}
-				    </div>
-				    {{ Form::close() }}
-			    </div>
+				    @for ($i = 1; $i <= 3; $i++)
+				    	<div class='row'>
+				    	@if ($i == 1)
+						    <div class='form-group col-sm-2'>
+						        {{ Form::label('surface_form', 'Surface Form') }}
+						        {{ Form::text('surface_form', null, ['placeholder' => 'Surface Form', 'class' => 'form-control custom-keyboard', 'id' => 'surface_form']) }}
+						        <div id ="surface_form_error" class="alert-danger errors"></div>
+						    </div>
+						@else
+				    		<div class='form-group col-sm-2'></div>
+				    	@endif
+				    	
+				    	{{ Form::hidden('element_' . $i . '_id', null) }}
+					    <div class='form-group col-sm-2'>
+					        {{ Form::label('element_' . $i . '_part_of_speech', 'Part Of Speech') }}
+					        {{ Form::text('element_' . $i . '_part_of_speech', null, ['placeholder' => 'Part Of Speech', 'class' => 'form-control part_of_speech']) }}
+					        <div id ="element_{{$i}}_part_of_speech_error" class="alert-danger errors"></div>
+					    </div>	     
+					    
+					     <div class='form-group col-sm-3'>
+					        {{ Form::label('element_' . $i . '_analysis', 'Analysis') }}
+					        {{ Form::textarea('element_' . $i . '_analysis', null, ['class' => 'form-control analysis', 'size' => '10x2']) }}
+					        <div id ="element_{{$i}}_analysis_error" class="alert-danger errors"></div>
+					    </div>	     
+					    
+					     <div class='form-group col-sm-2'>
+					        {{ Form::label('element_' . $i . '_head_word_id', 'Head Word') }}
+					        {{ Form::hidden('element_' . $i . '_head_word_id', null, ['id' => 'element_' . $i . '_head_word_id']) }}
+					        <div id="element_{{$i}}_head_word_display"></div>
+					        {{ Form::button('Pick Head Word', ['class' => 'btn btn-primary btn-sm pick_head_word_button', 'onclick' => 'element_id =' . $i]) }}
+					        {{ Form::button('Edit Head Word', ['class' => 'btn btn-primary btn-sm', 'id' => 'edit_head_word_button', 'onclick' => 'element_id =' . $i]) }}
+					        <div id ="element_{{$i}}_head_word_id_error" class="alert-danger errors"></div>
+					    </div>	   
+					    
+					    @if ($i == 1)  
+					    	<div class='form-group col-sm-2'>
+						        {{ Form::label('contextual_gloss', 'Contextual Gloss') }}
+						        {{ Form::text('contextual_gloss', null, ['placeholder' => 'Contextual Gloss', 'class' => 'form-control', 'id' => 'contextual_gloss']) }}
+						        <div id ="contextual_gloss_error" class="alert-danger errors"></div>
+						    </div>	     
+						    
+						    <div class='form-group col-sm-1 bottom_button'> 
+						    	{{ Form::submit('Edit', ['class' => 'btn btn-primary']) }}
+						    </div>
+						@endif
+						
+						</div>
+					@endfor
+				     
+				{{ Form::close() }}
 
 		    	<div class="well" id="gloss_lessons"></div>
             </div>
@@ -875,6 +895,8 @@
 			    		   'class' => 'form ajax_form',
 			    		   'id' => 'edit_head_word_form'  
 			    		  ]) }}
+			    		  
+			    		  {{ Form::hidden('language_id', $lesson->language_id, ['class' => 'language_id_class']) }}
 			    		  
 						<div class='form-group'>
 					        {{ Form::label('word', 'Word') }}

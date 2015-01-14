@@ -13,7 +13,7 @@ class EieolHeadWordController extends BaseController {
 								->take(25)->get()->sortBy('word');
 		foreach ($head_words as $head_word) {
 			$text .= '<a id="' . $head_word->id . '">' .
-					 $head_word->getDisplayHeadWord() .
+					 htmlentities($head_word->getDisplayHeadWord()) .
 					 '</a>' .
 					 '<br/>';				
 		}
@@ -32,14 +32,21 @@ class EieolHeadWordController extends BaseController {
 	 */
 	public function show($id)
 	{
-		$head_word = EieolHeadWord::with('keywords', 'glosses')->find($id);
-		$return_head_word = $head_word->toArray();
+		$head_word = EieolHeadWord::with('keywords', 'elements')->find($id);
+		$return_head_word = $head_word->toArray();		
 		
-		$return_head_word['glosses'] = '';
-		foreach($head_word->glosses as $gloss){
-			$return_head_word['glosses'] .= $gloss->surface_form . ', ';
+		$glosses = array();
+		foreach($head_word->elements as $element){
+			if (!in_array($element->gloss->surface_form,$glosses)) {
+				$glosses[] = $element->gloss->surface_form;
+			}
 		}
-		$return_head_word['glosses'] = rtrim($return_head_word['glosses'], ', ');
+		sort($glosses);	
+		$return_head_word['glosses'] = '';
+		foreach($glosses as $gloss) {
+			$return_head_word['glosses'] .=  $gloss . ', ';
+		}		
+		$return_head_word['glosses'] = rtrim($return_head_word['glosses'], ', '); //trim off last comma
 		
 		$return_head_word['keywords'] = '';
 		foreach($head_word->keywords as $keyword) {
@@ -104,7 +111,7 @@ class EieolHeadWordController extends BaseController {
 					'success' => true,
 					'added' => true,
 					'head_word_id' => $returned_head_word->id,
-					'head_word_display' => $returned_head_word->getDisplayHeadWord(),
+					'head_word_display' => htmlentities($returned_head_word->getDisplayHeadWord()),
 					'message' => 'Head Word was successfully added.'
 			));
 	
@@ -182,7 +189,7 @@ class EieolHeadWordController extends BaseController {
 					'success' => true,
 					'message' => 'Head Word was successfully updated.',
 					'head_word_id' => $head_word->id,
-					'head_word_display' => $head_word->getDisplayHeadWord(),
+					'head_word_display' => htmlentities($head_word->getDisplayHeadWord()),
 			));
 	
 		}
