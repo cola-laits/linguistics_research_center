@@ -410,6 +410,15 @@
 				    	$('#element_' + i + '_head_word_display', '#edit_gloss_form').text(''); //we only get ones that already exist, so reset it first
 				    	$('#element_' + i + '_head_word_display', '#edit_gloss_form').text(data['element_' + i + '_head_word_display']).html();//we have to use .html() so <> will display correctly
 				    }    
+
+				    for (i=2; i<=3; i++) {
+						if (data.hasOwnProperty('element_' + i + '_id')) {
+							$('#element_' + i).show();
+						} else {
+							$('#element_' + i).hide();
+						}
+				    }
+					    
 				    $("#gloss_lessons").html("<strong>This is used by the following lessons:</strong> " + data['lessons']);
 				    $("#edit_gloss_form").attr("action", "/admin/eieol_gloss/" + data['id']);
 		        }, //success
@@ -422,6 +431,7 @@
 
 		    $(".errors", "#edit_gloss_form").empty(); //reset gloss form error divs
 		    $("#edit_gloss_modal").modal("show"); 
+		    $('#edit_gloss_form').css("background-color", "#FFFFFF");
 		    $("#surface_form", "#edit_gloss_form").focus(); //put cursor in first field
 		    
 		    return false;
@@ -474,7 +484,7 @@
 		});
 
 		//popup to edit head word
-		$("#edit_head_word_button").click(function() {
+		$(".edit_head_word_button").click(function() {
 		    
 		    gloss_form = $(this).closest('form'); //get gloss form so we can get head_word_id
 		    head_word_id = $(gloss_form).find("#element_" + element_id + "_head_word_id").val();
@@ -502,6 +512,7 @@
 		    }); //ajax call
  
 		    $(".errors", '#edit_head_word_form').empty(); //reset head word form error divs
+		    $('#edit_head_word_form').css("background-color", "#FFFFFF");
 		    $("#edit_head_word_modal").modal('show');
 		    $("#word", "#edit_head_word_form").focus(); //put cursor in first field
 		    
@@ -657,6 +668,12 @@
 				    }); //ajax call		            
 		        });
 		}); //delete grammar
+
+		$('.show_element').click(function() {
+			  var content = $(this).next();
+			  $(content).slideToggle('slow');
+			  return false;
+			});
 		
     });//document ready
 
@@ -705,6 +722,8 @@
 						        <div id ="surface_form_error" class="alert-danger errors"></div>
 						    </div>
 						@else
+							<a class="show_element" href="#"><i class='fa fa-plus-square-o '></i></a>
+							<div class = "element">
 				    		<div class='form-group col-sm-2'></div>
 				    	@endif
 				    	
@@ -738,6 +757,8 @@
 						    <div class='form-group col-sm-1 bottom_button'> 
 						    	{{ Form::submit('Add', ['class' => 'btn btn-success']) }}
 						    </div>
+						@else
+							</div>
 						@endif
 						
 						</div>
@@ -774,6 +795,8 @@
 						        <div id ="surface_form_error" class="alert-danger errors"></div>
 						    </div>
 						@else
+							<a class="show_element" href="#"><i class='fa fa-plus-square-o '></i></a>
+							<div class = "element" id = "element_{{$i}}">
 				    		<div class='form-group col-sm-2'></div>
 				    	@endif
 				    	
@@ -795,7 +818,7 @@
 					        {{ Form::hidden('element_' . $i . '_head_word_id', null, ['id' => 'element_' . $i . '_head_word_id']) }}
 					        <div id="element_{{$i}}_head_word_display"></div>
 					        {{ Form::button('Pick Head Word', ['class' => 'btn btn-primary btn-sm pick_head_word_button', 'onclick' => 'element_id =' . $i]) }}
-					        {{ Form::button('Edit Head Word', ['class' => 'btn btn-primary btn-sm', 'id' => 'edit_head_word_button', 'onclick' => 'element_id =' . $i]) }}
+					        {{ Form::button('Edit Head Word', ['class' => 'btn btn-primary btn-sm edit_head_word_button', 'onclick' => 'element_id =' . $i]) }}
 					        <div id ="element_{{$i}}_head_word_id_error" class="alert-danger errors"></div>
 					    </div>	   
 					    
@@ -809,6 +832,8 @@
 						    <div class='form-group col-sm-1 bottom_button'> 
 						    	{{ Form::submit('Edit', ['class' => 'btn btn-primary']) }}
 						    </div>
+						@else
+							</div>
 						@endif
 						
 						</div>
