@@ -690,7 +690,7 @@
 				
 				{{ Form::open(['role' => 'form',
 		    		  'url' => '/admin/eieol_gloss/', 
-		    		  'class' => 'form',
+		    		  'class' => 'form modal_form',
 		    		  'id' => 'new_gloss_form'  
 		    	]) }}
 		    		  
@@ -761,7 +761,7 @@
 				{{ Form::open(['role' => 'form',
 		    		  'url' => '', 
 		    		  'method' => 'PUT',
-		    		  'class' => 'form ajax_form',
+		    		  'class' => 'form ajax_form modal_form',
 		    		  'id' => 'edit_gloss_form'  
 		    	]) }}
 		    		  
@@ -845,7 +845,7 @@
 					<div class='col-sm-12'>
 						{{ Form::open(['role' => 'form',
 			    		   'url' => '/admin/eieol_head_word/', 
-			    		   'class' => 'form',
+			    		   'class' => 'form modal_form',
 			    		   'id' => 'new_head_word_form'  
 			    		  ]) }}
 			    		  
@@ -894,7 +894,7 @@
 						{{ Form::open(['role' => 'form',
 			    		   'url' => '/admin/eieol_head_word/', 
 			    		   'method' => 'PUT',
-			    		   'class' => 'form ajax_form',
+			    		   'class' => 'form ajax_form modal_form',
 			    		   'id' => 'edit_head_word_form'  
 			    		  ]) }}
 			    		  

@@ -48,3 +48,7 @@ body {
 .tagsinput span{
 	text-transform: uppercase;
 }
+
+.modal_form {
+	padding:10px;
+}
