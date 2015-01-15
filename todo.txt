@@ -13,7 +13,8 @@ Admin
 Public
 	Unicode info and test (make sure page matches an images)
 	EIEOL
-		Gloss - only show records that are used by lessons/lang
+		Gloss 
+			- customize sort
 		Dictionary
 		Meanings
 		Tocharian has a bibliography

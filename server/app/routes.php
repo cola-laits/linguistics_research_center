@@ -14,7 +14,7 @@
 function get_series_info($series_id) {
 	$data = array();
 	$data['series'] = EieolSeries::find($series_id);
-	$data['lessons'] = EieolLesson::with('grammars')->where('series_id', '=', $series_id)->get()->sortBy('order');
+	$data['lessons'] = EieolLesson::with('grammars', 'language')->where('series_id', '=', $series_id)->get()->sortBy('order');
 	
 	$data['languages'] = array();
 	foreach($data['lessons'] as $lesson) {
@@ -71,6 +71,30 @@ Route::get('eieol_toc/{series_id}', function($series_id)
 {
 	$data = get_series_info($series_id);
 	return View::make('eieol_toc')->with($data);
+});
+
+Route::get('eieol_master_gloss/{series_id}/{language_id}', function($series_id, $language_id)
+{
+	$data = get_series_info($series_id);
+	$data['language'] = EieolLanguage::find($language_id);
+	$lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word')->where('series_id', '=', $series_id)->where('language_id', '=', $language_id)->get();
+	$data['glosses'] = array();
+	foreach ($lessons as $lesson) {
+		foreach ($lesson->glossed_texts as $glossed_text) {
+			foreach ($glossed_text->glosses as $gloss) {
+				if (!key_exists($gloss->surface_form, $data['glosses'])) {
+					$data['glosses'][$gloss->surface_form] = $gloss->toArray();
+					$data['glosses'][$gloss->surface_form]['displayGlossForMasterGloss'] = $gloss->getDisplayGlossForMasterGloss();
+					$data['glosses'][$gloss->surface_form]['glossed_text_gloss_ids'] = array();
+					$data['glosses'][$gloss->surface_form]['glossed_text_gloss_ids'][$gloss->pivot->id] = $lesson;
+				} else {	
+					$data['glosses'][$gloss->surface_form]['glossed_text_gloss_ids'][$gloss->pivot->id] = $lesson;
+				}
+			}
+		}
+	}
+	ksort($data['glosses']);
+	return View::make('eieol_master_gloss')->with($data);
 });
 
 Route::get('login', function()

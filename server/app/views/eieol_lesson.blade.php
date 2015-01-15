@@ -25,7 +25,7 @@
 	<ul>
 	@foreach ($glossed_text->glosses as $gloss)
    		<li>
-   			<a name='gloss_{{$gloss->id}}'></a>
+   			<a name='glossed_text_gloss_{{$gloss->pivot->id}}'></a>
     		{{$gloss->getDisplayGloss()}}<br/>
     	</li>
     @endforeach

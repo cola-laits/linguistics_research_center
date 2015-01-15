@@ -35,4 +35,22 @@ class EieolGloss extends Eloquent {
 		$string .= '<strong> -- ' . $this->contextual_gloss . '</strong>';
 		return $string;
 	}
+	
+	
+	public function getDisplayGlossForMasterGloss()
+	{
+		$string = '';
+		$i=0;
+		foreach($this->elements as $element){
+			$i++;
+			if ($i != 1) {
+				$string .= ' + ';
+			}
+			$string .= $element->part_of_speech . '; ' .
+					$element->analysis . ' ' .
+					htmlentities($element->head_word->word) . ' ' .
+					$element->head_word->definition;
+		}
+		return $string;
+	}
 }
