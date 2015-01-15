@@ -16,9 +16,11 @@ Public
 		Gloss 
 			- customize sort
 		Dictionary
+			- only show records that are used by lessons/lang
+			- customize sort
 		Meanings
+			- only show records that are used by lessons/lang
 		Tocharian has a bibliography
-		Previous and next buttons	
 	Lexicon
 	Links to/from static pages, share css and header?
 	
@@ -36,6 +38,7 @@ Deploy
 		
 Future Ideas
 	Authorization by series?
+	Previous and next buttons on EIEOL lessons?
 	Public site search
 	Screen for users to change their password
 	Save versions of lessons like SVN

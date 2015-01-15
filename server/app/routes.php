@@ -97,6 +97,21 @@ Route::get('eieol_master_gloss/{series_id}/{language_id}', function($series_id, 
 	return View::make('eieol_master_gloss')->with($data);
 });
 
+Route::get('eieol_base_form_dictionary/{series_id}/{language_id}', function($series_id, $language_id)
+{
+	$data = get_series_info($series_id);
+	$data['language'] = EieolLanguage::find($language_id);
+	return View::make('eieol_base_form_dictionary')->with($data);
+});
+
+
+Route::get('eieol_english_meaning_index/{series_id}/{language_id}', function($series_id, $language_id)
+{
+	$data = get_series_info($series_id);
+	$data['language'] = EieolLanguage::find($language_id);
+	return View::make('eieol_english_meaning_index')->with($data);
+});
+
 Route::get('login', function()
 {
 	return View::make('login');
