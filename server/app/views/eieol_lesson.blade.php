@@ -25,6 +25,7 @@
 	<ul>
 	@foreach ($glossed_text->glosses as $gloss)
    		<li>
+   			<a name='gloss_{{$gloss->id}}'></a>
     		{{$gloss->getDisplayGloss()}}<br/>
     	</li>
     @endforeach
@@ -45,31 +46,34 @@
 @if (count($lesson->grammars) != 0)
 	<h2>Grammar</h2>
 	@foreach ($lesson->grammars as $grammar)
+		<a name='grammar_{{$grammar->id}}'></a>
 		<h5>{{$grammar->section_number}} {{$grammar->title}}</h5>
 		{{$grammar->grammar_text}}
 	@endforeach
 @endif
 
-@if ($lesson_text == '') <!-- If there is no lesson text, assume this is the intro and display the list of lessons -->
+
+<!-- If there is no lesson text, assume this is the intro and display the list of lessons -->
+@if ($lesson_text == '') 
 	<h1>The Lessons</h1>
 	<ul>
 	@foreach ($lessons as $lesson)
-		<li>{{ HTML::link('lesson/' . $series_id . '?id=' . $lesson->id, $lesson->title, array('title' => $lesson->title )) }}</li>
-	 @endforeach
-	 </ul>
+		<li>{{ HTML::link('eieol_lesson/' . $series->id . '?id=' . $lesson->id, $lesson->title, array('title' => $lesson->title )) }}</li>
+	@endforeach
+	</ul>
 	 
-	 <h6>Options:</h6>
+	<h6>Options:</h6>
 
 	<ul>
-		<li>Show full {{ HTML::link('toc/' . $series_id, "Table of Contents")}} with Grammar Points index</li>
+		<li>Show full {{ HTML::link('eieol_toc/' . $series->id, "Table of Contents")}} with Grammar Points index</li>
 		@foreach($languages as $language)
-			<li>Open a {{ HTML::link('master_gloss/' . $series_id . '/' . $language->id, "Master Glossary window")}} for these {{$language->language}} texts</li>
+			<li>Open a {{ HTML::link('eieol_master_gloss/' . $series->id . '/' . $language->id, "Master Glossary window")}} for these {{$language->language}} texts</li>
 		@endforeach
 		@foreach($languages as $language)
-			<li>Open a {{ HTML::link('base_form_dictionary/' . $series_id . '/' . $language->id, "Base Form Dictionary window")}} for these {{$language->language}} texts</li>
+			<li>Open a {{ HTML::link('eieol_base_form_dictionary/' . $series->id . '/' . $language->id, "Base Form Dictionary window")}} for these {{$language->language}} texts</li>
 		@endforeach
 		@foreach($languages as $language)
-			<li>Open an {{ HTML::link('english_meaning_index/' . $series_id . '/' . $language->id, "English Meaning Index window")}} for these {{$language->language}} texts</li>
+			<li>Open an {{ HTML::link('eieol_english_meaning_index/' . $series->id . '/' . $language->id, "English Meaning Index window")}} for these {{$language->language}} texts</li>
 		@endforeach
 	</ul>
 	 

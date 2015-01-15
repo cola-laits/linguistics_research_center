@@ -11,6 +11,21 @@
 |
 */
 
+function get_series_info($series_id) {
+	$data = array();
+	$data['series'] = EieolSeries::find($series_id);
+	$data['lessons'] = EieolLesson::with('grammars')->where('series_id', '=', $series_id)->get()->sortBy('order');
+	
+	$data['languages'] = array();
+	foreach($data['lessons'] as $lesson) {
+		if (!in_array($lesson->language, $data['languages'])) {
+			$data['languages'][] = $lesson->language;
+		}
+	}
+	
+	return $data;
+}
+
 //share lets us pass data to all routes
 View::share('static_site',Config::get('lrc_settings.static_site'));
 View::share('lesson_menu', EieolSeries::where('published', '=', True)->get()->sortBy('menu_order'));
@@ -27,18 +42,9 @@ Route::get('eieol', function()
 	return View::make('eieol')->with($data);
 });
 
-Route::get('lesson/{series_id}', function($series_id)
+Route::get('eieol_lesson/{series_id}', function($series_id)
 {
-	$data = array();
-	$data['series_id'] = $series_id;
-	$data['lessons'] = EieolLesson::where('series_id', '=', $series_id)->get()->sortBy('order');
-	
-	$data['languages'] = array();
-	foreach($data['lessons'] as $lesson) {
-		if (!in_array($lesson->language, $data['languages'])) {
-			$data['languages'][] = $lesson->language;
-		}
-	}
+	$data = get_series_info($series_id);
 	
 	if (Input::has('id')) {
 		$data['lesson'] = EieolLesson::with('grammars')
@@ -58,7 +64,13 @@ Route::get('lesson/{series_id}', function($series_id)
 		$data['lesson_text'] .= $glossed_text->glossed_text . ' ';
 	}
 	
-	return View::make('lesson')->with($data);
+	return View::make('eieol_lesson')->with($data);
+});
+
+Route::get('eieol_toc/{series_id}', function($series_id)
+{
+	$data = get_series_info($series_id);
+	return View::make('eieol_toc')->with($data);
 });
 
 Route::get('login', function()
