@@ -30,6 +30,15 @@ Route::get('eieol', function()
 Route::get('lesson/{series_id}', function($series_id)
 {
 	$data = array();
+	$data['series_id'] = $series_id;
+	$data['lessons'] = EieolLesson::where('series_id', '=', $series_id)->get()->sortBy('order');
+	
+	$data['languages'] = array();
+	foreach($data['lessons'] as $lesson) {
+		if (!in_array($lesson->language, $data['languages'])) {
+			$data['languages'][] = $lesson->language;
+		}
+	}
 	
 	if (Input::has('id')) {
 		$data['lesson'] = EieolLesson::with('grammars')
@@ -37,6 +46,7 @@ Route::get('lesson/{series_id}', function($series_id)
 									->where('id', '=', Input::get('id'))
 									->firstOrFail();
 	} else {
+		//if they didn't send an id, get the first lesson
 		$data['lesson'] = EieolLesson::with('grammars')
 									 ->with('glossed_texts.glosses.elements.head_word')
 									 ->where('series_id', '=', $series_id)

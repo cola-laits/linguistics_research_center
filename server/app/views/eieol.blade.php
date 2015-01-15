@@ -5,7 +5,7 @@
 @section('content')
 
 @include('menu_eieol')
-@include('menu_lesson', array('data'=>'data'))
+@include('menu_series', array('data'=>'data'))
 @include('menu_book_links')
 @include('menu_more_info')
 

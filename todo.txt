@@ -14,23 +14,19 @@ Public
 	Unicode info and test (make sure page matches an images)
 	EIEOL
 		Lessons
-			Lesson 0, add menu - take out Lesson Text, Grammar and Translations header tags
-			lesson resource menu on lesson page
-			Handle 2 languages in one lesson
 			Grammars and glosses need anchors
 		TOC
 		Gloss - only show records that are used by lessons/lang
 		Dictionary
 		Meanings
-		Load old data
+		Tocharian has a bibliography
+		Previous and next buttons	
 	Lexicon
 	Links to/from static pages, share css and header?
-	
 	
 Load
 	Load lessons
 	Load Lexicon	
-	
 	
 Deploy
 	setup different environments
