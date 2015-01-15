@@ -205,6 +205,7 @@
 		//gloss_form is set when they open the head word modal
 		$(gloss_form).find("#element_" + element_id + "_head_word_id").attr('value', head_word_id);
 		$(gloss_form).find("#element_" + element_id + "_head_word_display").html(head_word_display);
+		highlight_form($(gloss_form));
 		$("#attach_head_word_modal").modal('hide'); 
 	} //attach head word
 
@@ -403,6 +404,11 @@
 		        
 		        success : function(data){
 		    		$('#edit_gloss_form')[0].reset();
+		    		//for some reason the reset doesn't reset all the fields
+		    		for (i=1; i<=3; i++) {
+				    	$('#element_' + i + '_head_word_id', '#edit_gloss_form').val('');
+				    }  
+				    
 			        $.each(data, function(key, value){
 					    $('[name='+key+']', '#edit_gloss_form').val(value);
 				    });
@@ -421,6 +427,10 @@
 					    
 				    $("#gloss_lessons").html("<strong>This is used by the following lessons:</strong> " + data['lessons']);
 				    $("#edit_gloss_form").attr("action", "/admin/eieol_gloss/" + data['id']);
+				    $(".errors", "#edit_gloss_form").empty(); //reset gloss form error divs
+				    $("#edit_gloss_modal").modal("show"); 
+				    $('#edit_gloss_form').css("background-color", "#FFFFFF");
+				    $("#surface_form", "#edit_gloss_form").focus(); //put cursor in first field
 		        }, //success
 		        
 		        error : function(xml_http_request, text_status, error_thrown) {
@@ -429,10 +439,7 @@
 
 		    }); //ajax call
 
-		    $(".errors", "#edit_gloss_form").empty(); //reset gloss form error divs
-		    $("#edit_gloss_modal").modal("show"); 
-		    $('#edit_gloss_form').css("background-color", "#FFFFFF");
-		    $("#surface_form", "#edit_gloss_form").focus(); //put cursor in first field
+		    
 		    
 		    return false;
 		}); //edit gloss
@@ -488,6 +495,10 @@
 		    
 		    gloss_form = $(this).closest('form'); //get gloss form so we can get head_word_id
 		    head_word_id = $(gloss_form).find("#element_" + element_id + "_head_word_id").val();
+			if (head_word_id == '') {
+				alert('Please add a Head Word before editing it.');
+				return false;
+			}
 		    
 		    //load form with data for the record they want to edit
 		    $.ajax({
@@ -503,6 +514,10 @@
 			        $('#edit_keywords').importTags(data['keywords']); //because of the jquery tags, do this one manually
 				    $("#edit_head_word_form").attr("action", "/admin/eieol_head_word/" + data['id']);
 				    $("#head_word_glosses").html("<strong>This is used by the following glosses:</strong> " + data['glosses']);
+				    $(".errors", '#edit_head_word_form').empty(); //reset head word form error divs
+				    $('#edit_head_word_form').css("background-color", "#FFFFFF");
+				    $("#edit_head_word_modal").modal('show');
+				    $("#word", "#edit_head_word_form").focus(); //put cursor in first field
 		        }, //success
 		        
 		        error : function(xml_http_request, text_status, error_thrown) {
@@ -510,11 +525,6 @@
 		        } //error
 
 		    }); //ajax call
- 
-		    $(".errors", '#edit_head_word_form').empty(); //reset head word form error divs
-		    $('#edit_head_word_form').css("background-color", "#FFFFFF");
-		    $("#edit_head_word_modal").modal('show');
-		    $("#word", "#edit_head_word_form").focus(); //put cursor in first field
 		    
 		    return false;
 		});

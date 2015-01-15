@@ -1,4 +1,7 @@
 Admin
+	Unicode
+		http://htmlpurifier.org/docs/enduser-utf8.html
+		Before storing - run text through PHP Normalizer class to canonicalize it using NFC
 	Language
 		Audit on custom keyboard to make sure it's in right format
 		Sorting -uksort, see http://stackoverflow.com/questions/6350510/how-can-i-sort-arrays-in-php-by-a-custom-alphabet
@@ -39,6 +42,7 @@ Deploy
 		
 Future Ideas
 	Authorization by series?
+	Public site search
 	Screen for users to change their password
 	Save versions of lessons like SVN
 	On lesson page, warn if they try to leave without saving something

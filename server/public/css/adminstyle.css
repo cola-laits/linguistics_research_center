@@ -56,3 +56,7 @@ body {
 .element {
     display:none;
 }
+
+.show_element {
+	margin-left: 10px;
+}
