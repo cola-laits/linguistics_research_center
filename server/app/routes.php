@@ -77,18 +77,32 @@ Route::get('eieol_master_gloss/{series_id}/{language_id}', function($series_id, 
 {
 	$data = get_series_info($series_id);
 	$data['language'] = EieolLanguage::find($language_id);
-	$lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word')->where('series_id', '=', $series_id)->where('language_id', '=', $language_id)->get();
+	$lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word')
+							->where('series_id', '=', $series_id)
+							->where('language_id', '=', $language_id)
+							->get()
+							->sortBy('order');
 	$data['glosses'] = array();
 	foreach ($lessons as $lesson) {
 		foreach ($lesson->glossed_texts as $glossed_text) {
 			foreach ($glossed_text->glosses as $gloss) {
-				if (!key_exists($gloss->surface_form, $data['glosses'])) {
-					$data['glosses'][$gloss->surface_form] = $gloss->toArray();
-					$data['glosses'][$gloss->surface_form]['displayGlossForMasterGloss'] = $gloss->getDisplayGlossForMasterGloss();
-					$data['glosses'][$gloss->surface_form]['glossed_text_gloss_ids'] = array();
-					$data['glosses'][$gloss->surface_form]['glossed_text_gloss_ids'][$gloss->pivot->id] = $lesson;
+				$key = $gloss->surface_form;
+				$i = 0;
+				foreach($gloss->elements as $element){
+					$i++;
+					if ($i != 1) {
+						$key .= ' + ';
+					}
+					$key .= $element->part_of_speech . '; ' .
+							$element->analysis . ' ';
+				}
+				if (!key_exists($key, $data['glosses'])) {
+					$data['glosses'][$key] = $gloss->toArray();
+					$data['glosses'][$key]['displayGlossForMasterGloss'] = $gloss->getDisplayGlossForMasterGloss();
+					$data['glosses'][$key]['glossed_text_gloss_ids'] = array();
+					$data['glosses'][$key]['glossed_text_gloss_ids'][$gloss->pivot->id] = $lesson;
 				} else {	
-					$data['glosses'][$gloss->surface_form]['glossed_text_gloss_ids'][$gloss->pivot->id] = $lesson;
+					$data['glosses'][$key]['glossed_text_gloss_ids'][$gloss->pivot->id] = $lesson;
 				}
 			}
 		}
@@ -101,6 +115,30 @@ Route::get('eieol_base_form_dictionary/{series_id}/{language_id}', function($ser
 {
 	$data = get_series_info($series_id);
 	$data['language'] = EieolLanguage::find($language_id);
+	$lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word')
+		->where('series_id', '=', $series_id)
+		->where('language_id', '=', $language_id)
+		->get()
+		->sortBy('order');
+	$data['head_words'] = array();
+	foreach ($lessons as $lesson) {
+		foreach ($lesson->glossed_texts as $glossed_text) {
+			foreach ($glossed_text->glosses as $gloss) {
+				foreach ($gloss->elements as $element) {
+					$key = $element->head_word->word . ' -- ' . $element->head_word->definition;
+					if (!key_exists($key, $data['head_words'])) {
+						$data['head_words'][$key] = $element->head_word->toArray();
+						$data['head_words'][$key]['word'] = htmlentities($data['head_words'][$key]['word']);
+						$data['head_words'][$key]['glossed_text_gloss_ids'] = array();
+						$data['head_words'][$key]['glossed_text_gloss_ids'][$gloss->pivot->id] = $lesson;
+					} else {
+						$data['head_words'][$key]['glossed_text_gloss_ids'][$gloss->pivot->id] = $lesson;
+					}
+			}
+			}
+		}
+	}
+	ksort($data['head_words']);
 	return View::make('eieol_base_form_dictionary')->with($data);
 });
 

@@ -35,5 +35,16 @@ of pointers to Proto-Indo-European roots identified by Julius Pokorny in his mon
 in 1989).  Because Pokorny is becoming increasingly outdated, we may revise these links in the 
 future; however, for the time being, this information might prove interesting to those who are 
 curious about Indo-European etymology. Notice of potential error is always welcome.</p>
+<br/><br/><br/>
+
+@foreach ($head_words as $head_word)
+	<dt>{{$head_word['word']}} {{$head_word['definition']}} --</dt>
+	<dd>
+		@foreach ($head_word['glossed_text_gloss_ids'] as $id => $lesson)
+			{{ HTML::link('eieol_lesson/' . $series->id . '?id=' . $lesson->id . '#glossed_text_gloss_' . $id,
+					  $lesson->title)}}
+		@endforeach
+	</dd>
+@endforeach
 
 @stop

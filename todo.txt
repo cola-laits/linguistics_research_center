@@ -18,6 +18,7 @@ Public
 		Dictionary
 			- only show records that are used by lessons/lang
 			- customize sort
+			- links to Pokorny
 		Meanings
 			- only show records that are used by lessons/lang
 		Tocharian has a bibliography
