@@ -26,6 +26,7 @@ form that appears in lesson texts and, for each word, its unique glosses. In add
 links are provided to every appearance, in every numbered lesson, of the word/gloss in question. With this index one may perform a quick 
 "word look-up" and, in addition, study how words are used in context by clicking on their links.
 <br/><br/><br/>
+
 @foreach ($glosses as $gloss)
 	<dt>{{$gloss['surface_form']}}</dt>
 	<dd>

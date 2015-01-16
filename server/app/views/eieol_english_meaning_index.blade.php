@@ -43,6 +43,16 @@ are shown for your inspection and judgment.  Modest effort was invested in tunin
 ignore [apparently] superfluous, high-frequency words (e.g., the preposition "of") that, in the 
 presence of [apparently] more important words, contribute little or no useful information to an 
 index; unfortunately this may result in some words, in some contexts, being unfairly omitted.</p>
+<br/><br/><br/>
 
+@foreach ($keywords as $keyword)
+	<dt>{{$keyword['keyword']}} {{$keyword['head_word']}} --</dt>
+	<dd>
+		@foreach ($keyword['glossed_text_gloss_ids'] as $id => $lesson)
+			{{ HTML::link('eieol_lesson/' . $series->id . '?id=' . $lesson->id . '#glossed_text_gloss_' . $id,
+					  $lesson->title)}}
+		@endforeach
+	</dd>
+@endforeach
 
 @stop

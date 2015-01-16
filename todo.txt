@@ -41,6 +41,8 @@ Future Ideas
 	Authorization by series?
 	Previous and next buttons on EIEOL lessons?
 	Public site search
+	Public site - is it a problem that the url for all the pages will change
+	Public site - test efficiency (after load)
 	Screen for users to change their password
 	Save versions of lessons like SVN
 	On lesson page, warn if they try to leave without saving something

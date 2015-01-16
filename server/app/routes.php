@@ -80,6 +80,7 @@ Route::get('eieol_master_gloss/{series_id}/{language_id}', function($series_id, 
 	$lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word')
 							->where('series_id', '=', $series_id)
 							->where('language_id', '=', $language_id)
+							->select(array('id','title'))
 							->get()
 							->sortBy('order');
 	$data['glosses'] = array();
@@ -118,6 +119,7 @@ Route::get('eieol_base_form_dictionary/{series_id}/{language_id}', function($ser
 	$lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word')
 		->where('series_id', '=', $series_id)
 		->where('language_id', '=', $language_id)
+		->select(array('id','title'))
 		->get()
 		->sortBy('order');
 	$data['head_words'] = array();
@@ -147,6 +149,33 @@ Route::get('eieol_english_meaning_index/{series_id}/{language_id}', function($se
 {
 	$data = get_series_info($series_id);
 	$data['language'] = EieolLanguage::find($language_id);
+	$lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word.keywords')
+	->where('series_id', '=', $series_id)
+	->where('language_id', '=', $language_id)
+	->select(array('id','title'))
+	->get()
+	->sortBy('order');
+	$data['keywords'] = array();
+	foreach ($lessons as $lesson) {
+		foreach ($lesson->glossed_texts as $glossed_text) {
+			foreach ($glossed_text->glosses as $gloss) {
+				foreach ($gloss->elements as $element) {
+					foreach ($element->head_word->keywords as $keyword) {
+						$key = $keyword->keyword . ' -- ' . $element->head_word->word . ' -- ' . $element->head_word->definition;
+						if (!key_exists($key, $data['keywords'])) {
+							$data['keywords'][$key] = $keyword->toArray();
+							$data['keywords'][$key]['head_word'] = htmlentities($element->head_word->word) . ' ' . $element->head_word->definition;
+							$data['keywords'][$key]['glossed_text_gloss_ids'] = array();
+							$data['keywords'][$key]['glossed_text_gloss_ids'][$gloss->pivot->id] = $lesson;
+						} else {
+							$data['keywords'][$key]['glossed_text_gloss_ids'][$gloss->pivot->id] = $lesson;
+						}
+					}
+				}
+			}
+		}
+	}
+	ksort($data['keywords']);
 	return View::make('eieol_english_meaning_index')->with($data);
 });
 
