@@ -80,7 +80,7 @@ Route::get('eieol_master_gloss/{series_id}/{language_id}', function($series_id, 
 	$lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word')
 							->where('series_id', '=', $series_id)
 							->where('language_id', '=', $language_id)
-							->select(array('id','title'))
+							->select(array('id','title','order'))
 							->get()
 							->sortBy('order');
 	$data['glosses'] = array();
@@ -119,7 +119,7 @@ Route::get('eieol_base_form_dictionary/{series_id}/{language_id}', function($ser
 	$lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word')
 		->where('series_id', '=', $series_id)
 		->where('language_id', '=', $language_id)
-		->select(array('id','title'))
+		->select(array('id','title','order'))
 		->get()
 		->sortBy('order');
 	$data['head_words'] = array();
@@ -152,7 +152,7 @@ Route::get('eieol_english_meaning_index/{series_id}/{language_id}', function($se
 	$lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word.keywords')
 	->where('series_id', '=', $series_id)
 	->where('language_id', '=', $language_id)
-	->select(array('id','title'))
+	->select(array('id','title','order'))
 	->get()
 	->sortBy('order');
 	$data['keywords'] = array();

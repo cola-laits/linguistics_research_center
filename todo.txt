@@ -16,11 +16,8 @@ Public
 		Gloss 
 			- customize sort
 		Dictionary
-			- only show records that are used by lessons/lang
 			- customize sort
 			- links to Pokorny
-		Meanings
-			- only show records that are used by lessons/lang
 		Tocharian has a bibliography
 	Lexicon
 	Links to/from static pages, share css and header?
@@ -39,6 +36,9 @@ Deploy
 		
 Future Ideas
 	Authorization by series?
+	When updating - warn if it has been updated since you loaded it.
+	Elements - need more than 3, less than 10
+	CKEditor - can we preserve source formatting?
 	Previous and next buttons on EIEOL lessons?
 	Public site search
 	Public site - is it a problem that the url for all the pages will change
