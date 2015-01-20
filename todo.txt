@@ -4,23 +4,29 @@ Admin
 		Before storing - run text through PHP Normalizer class to canonicalize it using NFC
 	Language
 		Audit on custom keyboard to make sure it's in right format
-		Sorting -uksort, see http://stackoverflow.com/questions/6350510/how-can-i-sort-arrays-in-php-by-a-custom-alphabet
+		Audit sorting to make sure it's in the right format.
+		Store <span lang='code' class='blah'>
+	CKEditor
+		Add language plugin http://ckeditor.com/forums/Plugins/Language-Semantics
+			Give them a way to specify the language(s) on the Language page?
 	Part of Speech editor? use FrozenNode?
-	Analysis editor?
+	Analysis editor? use FrozenNode?
 	Maintain Lexicon
-		Add Pokorny ID to headword - add to forms
+		Add Pokorny ID to headword, add to EIEOL forms, add to load programs
 	
 Public
 	Unicode info and test (make sure page matches an images)
+	Add <span lang="code" class="blah"> from language file to glossed texts and parts of gloss
 	EIEOL
-		Gloss 
-			- customize sort
 		Dictionary
-			- customize sort
 			- links to Pokorny
 		Tocharian has a bibliography
 	Lexicon
 	Links to/from static pages, share css and header?
+	Public pages
+		Where will they live
+		CMS?
+		Which pages will be kept?
 	
 Load
 	Load lessons

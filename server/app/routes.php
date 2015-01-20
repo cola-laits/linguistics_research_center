@@ -26,6 +26,42 @@ function get_series_info($series_id) {
 	return $data;
 }
 
+
+function alphabet_sorter($a, $b) {
+	//key_compare_func for uksort.
+	//because we expect unicode, we use multibyte string functions
+	//log::error($a . ' ' . $b);
+	
+	//because this function is passed by uksort, we pass the alphabet in a global
+	global $alphabet;
+
+	//get length of each word and see which is shorter
+	$aLen = mb_strlen($a,'UTF-8');
+	$bLen = mb_strlen($b,'UTF-8');
+	$shorterLen = min($aLen, $bLen);
+	
+	//loop through shorter length
+	for ($i=0; $i < $shorterLen; $i++) {
+		
+		//get i-th character from each word
+		$aChar = mb_substr($a, $i, 1, 'UTF-8');
+		$bChar = mb_substr($b, $i, 1, 'UTF-8');
+		
+		//get position in alphabet for each character
+		$aVal=mb_strpos($alphabet, $aChar, 0,'UTF-8');
+		$bVal=mb_strpos($alphabet, $bChar, 0,'UTF-8');
+		//log::error($aChar . ' ' . $aVal . ' ' . $bChar . ' ' . $bVal);
+		
+		//return 1 if a is bigger, else, -1
+		if ($aVal!=$bVal) {
+			return $aVal > $bVal ? 1 : -1;
+		}
+	}
+	//if you get here, the shorter is the same as the longer.
+	//so if the shorter is b, return 1
+	return $shorterLen==$bLen ? 1 : -1;
+}
+
 //share lets us pass data to all routes
 View::share('static_site',Config::get('lrc_settings.static_site'));
 View::share('lesson_menu', EieolSeries::where('published', '=', True)->get()->sortBy('menu_order'));
@@ -94,7 +130,8 @@ Route::get('eieol_master_gloss/{series_id}/{language_id}', function($series_id, 
 					if ($i != 1) {
 						$key .= ' + ';
 					}
-					$key .= $element->part_of_speech . '; ' .
+					$key .= ' ' .
+							$element->part_of_speech . '; ' .
 							$element->analysis . ' ';
 				}
 				if (!key_exists($key, $data['glosses'])) {
@@ -108,7 +145,9 @@ Route::get('eieol_master_gloss/{series_id}/{language_id}', function($series_id, 
 			}
 		}
 	}
-	ksort($data['glosses']);
+	global $alphabet;
+	$alphabet = $data['language']->custom_sort;
+	uksort($data['glosses'], 'alphabet_sorter');
 	return View::make('eieol_master_gloss')->with($data);
 });
 
@@ -140,7 +179,9 @@ Route::get('eieol_base_form_dictionary/{series_id}/{language_id}', function($ser
 			}
 		}
 	}
-	ksort($data['head_words']);
+	global $alphabet;
+	$alphabet = $data['language']->custom_sort;
+	uksort($data['head_words'],'alphabet_sorter');
 	return View::make('eieol_base_form_dictionary')->with($data);
 });
 
