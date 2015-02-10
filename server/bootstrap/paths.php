@@ -51,7 +51,7 @@ return array(
 	| you want to change the location of this directory for your apps.
 	|
 	*/
-
-	'storage' => __DIR__.'/../app/storage',
+		
+	'storage' => '/laravel_storage',
 
 );

@@ -1,4 +1,5 @@
 Admin
+	On Series pages, when listing lessons, show their language
 	Unicode
 		http://htmlpurifier.org/docs/enduser-utf8.html
 		Before storing - run text through PHP Normalizer class to canonicalize it using NFC
@@ -9,8 +10,11 @@ Admin
 	CKEditor
 		Add language plugin http://ckeditor.com/forums/Plugins/Language-Semantics
 			Give them a way to specify the language(s) on the Language page?
+		Turn on speel check as you go or make sure regular spell check works.
+		Add a unicode checker that will flag any unicode that doesn't have a lang tag on it.  Or check on backen in validator.
 	Part of Speech editor? use FrozenNode?
 	Analysis editor? use FrozenNode?
+	Need roman transliteration of Armenian (Unicode 2).  Load it as separate lesson.
 	Maintain Lexicon
 		Add Pokorny ID to headword, add to EIEOL forms, add to load programs
 	
@@ -22,6 +26,7 @@ Public
 			- links to Pokorny
 		Tocharian has a bibliography
 	Lexicon
+	New EIEOL and Lexicon pages do not share same url structure.  How big of an issue is this?  What do we do when someone goes to an old bookmarked page?
 	Links to/from static pages, share css and header?
 	Public pages
 		Where will they live

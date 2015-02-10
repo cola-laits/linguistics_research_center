@@ -43,7 +43,7 @@ class Connector {
 		$username = array_get($config, 'username');
 
 		$password = array_get($config, 'password');
-
+		
 		return new PDO($dsn, $username, $password, $options);
 	}
 
