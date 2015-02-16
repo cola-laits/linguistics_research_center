@@ -6,7 +6,7 @@ Admin
 	Language
 		Audit on custom keyboard to make sure it's in right format
 		Audit sorting to make sure it's in the right format.
-		Store <span lang='code' class='blah'>
+		Store language code so we can tag things <span lang='code' class='blah'>
 	CKEditor
 		Add language plugin http://ckeditor.com/forums/Plugins/Language-Semantics
 			Give them a way to specify the language(s) on the Language page?
@@ -21,6 +21,8 @@ Admin
 Public
 	Unicode info and test (make sure page matches an images)
 	Add <span lang="code" class="blah"> from language file to glossed texts and parts of gloss
+	Lesson page
+		- When building lesson text, add <blockquote lang='la'>
 	EIEOL
 		Dictionary
 			- links to Pokorny
@@ -38,8 +40,6 @@ Load
 	Load Lexicon	
 	
 Deploy
-	setup different environments
-	setup bamboo to build server environments
 	404 errors
 	htaccess file needs to send login and admin pages through https
 	make sure we don't show errors

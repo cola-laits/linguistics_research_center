@@ -16,7 +16,7 @@
 
 <!-- end Standard Header for new CoLA-style design -->
 
-<h1>{{$lesson->title}}</h1>
+<h1>{{$series->title}}</h1>
 {{$lesson->intro_text}}
 
 @foreach ($lesson->glossed_texts as $glossed_text)
