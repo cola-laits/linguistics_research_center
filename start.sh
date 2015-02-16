@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
  
 # Do the migration.  Migration environment is APP_ENV + '-migrate', or 'local' if APP_ENV is blank.
 MIGRATE_ENV='local'
