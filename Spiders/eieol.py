@@ -189,7 +189,7 @@ for ul in uls:
         
         #write to file
         print 'writing ' + series_name
-        with open('output/'+series_name+'.json','w') as outfile:
+        with open('../server/app/storage/data_load/'+series_name+'.json','w') as outfile:
             json.dump(lessons,outfile)
         print '---------------------------'
     #end for language li
