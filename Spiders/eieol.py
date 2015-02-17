@@ -82,6 +82,7 @@ for ul in uls:
                 lesson['lesson_intro'] = lesson_intro[0:gloss_pos]
                 lesson['lesson_intro'] = lesson['lesson_intro'].replace('\r',' ')
                 lesson['lesson_intro'] = lesson['lesson_intro'].replace('\n',' ')
+                lesson['lesson_intro'] = lesson['lesson_intro'].replace('\t',' ')
                 lesson['lesson_intro'] = lesson['lesson_intro'].replace('  ',' ')
 
                 #everything between translation and the next h4 is the translation
@@ -91,6 +92,7 @@ for ul in uls:
                 #take out \r and \n
                 temp_trans = temp_trans.replace('\r',' ')
                 temp_trans = temp_trans.replace('\n',' ')
+                temp_trans = temp_trans.replace('\t',' ')
                 temp_trans = temp_trans.replace('  ',' ')
                 lesson['lesson_translation'] = temp_trans
 # 
@@ -175,6 +177,7 @@ for ul in uls:
                 
                 lesson['lesson_intro'] = lesson['lesson_intro'].replace('\r',' ')
                 lesson['lesson_intro'] = lesson['lesson_intro'].replace('\n',' ')
+                lesson['lesson_intro'] = lesson['lesson_intro'].replace('\t',' ')
                 lesson['lesson_intro'] = lesson['lesson_intro'].replace('  ',' ')
                 lesson['lesson_translation'] = ''
             #endif
