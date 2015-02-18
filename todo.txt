@@ -27,6 +27,7 @@ Public
 		Dictionary
 			- links to Pokorny
 		Tocharian has a bibliography
+		next and prev buttons
 	Lexicon
 	New EIEOL and Lexicon pages do not share same url structure.  How big of an issue is this?  What do we do when someone goes to an old bookmarked page?
 	Links to/from static pages, share css and header?
@@ -37,6 +38,12 @@ Public
 	
 Load
 	Load lessons
+		Sanskrit 
+			appendix 1 has link back to intro
+			appendix 2 has links back to lessons
+		Tocharian intro has link to TOC
+		Series with 2 languages:
+			Tocharian (Toch A 1-5, Toch B 6-10), Baltic(Lithuanian 1-7 Latvian 8-10), Albanian(Tosk 1-3 Geg 4-5), Iranian(Old Avestan 1-4 Young Avestan 5-6 Old Persian 7-10)
 	Load Lexicon	
 	
 Deploy
@@ -44,6 +51,7 @@ Deploy
 	htaccess file needs to send login and admin pages through https
 	make sure we don't show errors
 	hide debuger from users.  Show to me?
+	remove load controller and app/storage/data_load/
 		
 Future Ideas
 	Authorization by series?

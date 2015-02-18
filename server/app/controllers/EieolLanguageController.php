@@ -9,7 +9,7 @@ class EieolLanguageController extends BaseController {
 	 */
 	public function index()
 	{
-		$languages = EieolLanguage::all();
+		$languages = EieolLanguage::all()->sortBy('language');
         return View::make('eieol_language.eieol_language_index', ['languages' => $languages]);
 	}
 

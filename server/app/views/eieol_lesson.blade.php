@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title') {{$lesson->title}}@stop
+@section('title') {{strip_tags($lesson->title)}}@stop
 
 @section('content')
 
@@ -53,12 +53,16 @@
 @endif
 
 
-<!-- If there is no lesson text, assume this is the intro and display the list of lessons -->
-@if ($lesson_text == '') 
-	<h1>The Lessons</h1>
+<!-- If intro, display the list of lessons -->
+@if ($lesson->order == 0) 
+	<h5>The {{$series->menu_name}} Lessons</h5>
 	<ul>
 	@foreach ($lessons as $lesson)
-		<li>{{ HTML::link('eieol_lesson/' . $series->id . '?id=' . $lesson->id, $lesson->title, array('title' => $lesson->title )) }}</li>
+		@if ($lesson->order != 0)
+			<li>
+				<a href='/eieol_lesson/{{$series->id}}?id={{$lesson->id}}'>{{$lesson->title}}</a>
+			</li>
+		@endif
 	@endforeach
 	</ul>
 	 

@@ -24,7 +24,7 @@
 
 <h5>Lessons</h5>
 @foreach ($lessons as $lesson)
-	{{ HTML::link('eieol_lesson/' . $series->id . '?id=' . $lesson->id, $lesson->title, array('title' => $lesson->title )) }}<br/>
+	<a href='/eieol_lesson/{{$series->id}}?id={{$lesson->id}}'>{{$lesson->title}}</a><br/>
 @endforeach
 
 <h5>Grammar Points</h5>

@@ -28,4 +28,6 @@ Route::group(array('prefix'=> 'admin', 'before' => 'auth'), function() {
 	Route::get('/part_of_speech/filtered_list', 'PartOfSpeechController@filtered_list');
 	Route::get('/eieol_analysis/filtered_list', 'EieolAnalysisController@filtered_list');
 	Route::resource('/eieol_language', 'EieolLanguageController');
+	
+	Route::get('eieol_load', 'LoadController@eieol_load');
 });

@@ -90,7 +90,7 @@
 	                @foreach ($lessons as $lesson)
 	                <tr>
 	                    <td>{{{ $lesson->order }}}</td>
-	                    <td>{{{ $lesson->title }}}</td>
+	                    <td>{{ $lesson->title }}</td>
 	                    <td>{{{ $lesson->updated_at->format('m/d/Y h:ia') }}} by {{{ $lesson->updated_by }}}</td>
 	                    <td>
 	                        <a href="/admin/eieol_lesson/{{{ $lesson->id }}}/edit" class="btn btn-info pull-left" style="margin-right: 3px;">Edit</a>
