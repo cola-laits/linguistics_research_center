@@ -156,17 +156,15 @@ for ul in uls:
                 if 'Lessons</h5>' in lesson_intro:
                     lesson['lesson_intro'] = lesson_intro.split('Lessons</h5>')[0]
                     lesson['lesson_intro'] = lesson['lesson_intro'].rsplit('<h5>',1)[0]
-                else:
-                    lesson['lesson_intro'] = lesson_intro
-                #endif
-                
-                #remove links to lessons and options
-                if 'Lessons</h6>' in lesson_intro:
+                elif 'Lessons</h6>' in lesson_intro:
                     lesson['lesson_intro'] = lesson_intro.split('Lessons</h6>')[0]
                     lesson['lesson_intro'] = lesson['lesson_intro'].rsplit('<h6>',1)[0]
                 else:
                     lesson['lesson_intro'] = lesson_intro
                 #endif
+                #endif
+                
+                
                 
                 #get bottom of page, only on intros, not appendix
                 if '<h4>Related Language Courses at UT</h4>' in lesson_intro:
