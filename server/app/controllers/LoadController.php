@@ -91,6 +91,9 @@ class LoadController extends BaseController {
 
 	public function eieol_load()
 	{
+		//some series have 2 languages:
+		//Tocharian (Toch A 1-5, Toch B 6-10), Baltic(Lithuanian 1-7 Latvian 8-10), Albanian(Tosk 1-3 Geg 4-5), Iranian(Old Avestan 1-4 Young Avestan 5-6 Old Persian 7-10)
+	
 		$serieses = array();
 		
 		$series = array();
