@@ -67,22 +67,58 @@ function delete_series_children($series_id) {
 function store_lessons($series) {
 	$myfile = fopen($series['path'], "r") or die("Unable to open file!");
 	$data = json_decode(fread($myfile,filesize($series['path'])));
+	$stored_lessons = array();
 	for($i = 0; $i<count($data); $i++) {
-		print $i . ' ' . $data[$i]->title . '<br/>';
-		$lesson = new EieolLesson;
-		$lesson->title = $data[$i]->title;
-		$lesson->order = $data[$i]->order * 10;
-		$lesson->series_id = $series['series_id'];
+		$lesson = $data[$i];
+		print $i . ' ' . $lesson->title . '<br/>';
+		$new_lesson = new EieolLesson;
+		$new_lesson->title =  Normalizer::normalize($lesson->title, Normalizer::FORM_C );
+		$new_lesson->order = $lesson->order * 10;
+		$new_lesson->series_id = $series['series_id'];
 		if (array_key_exists('language_id',$series) ) {
-			$lesson->language_id = $series['language_id'];
+			$new_lesson->language_id = $series['language_id'];
 		} else {
-			$lesson->language_id = $series['language_id_' . (string) $data[$i]->order];
+			$new_lesson->language_id = $series['language_id_' . (string) $lesson->order];
 		}
-		$lesson->intro_text = $data[$i]->lesson_intro;
-		$lesson->lesson_translation = $data[$i]->lesson_translation;
-		$lesson->created_by = 'loader';
-		$lesson->updated_by = 'loader';
-		$lesson->save();
+		$new_lesson->intro_text = Normalizer::normalize($lesson->intro_text, Normalizer::FORM_C );
+		$new_lesson->lesson_translation =  Normalizer::normalize($lesson->lesson_translation, Normalizer::FORM_C );
+		$new_lesson->created_by = 'loader';
+		$new_lesson->updated_by = 'loader';
+		
+		//Tocharian intro has a link to TOC.
+		if ($series['series_id'] == 15 && $i == 0) {
+			$new_lesson->intro_text = str_replace('tokol-TC-X.html', '/eieol_toc/15', $new_lesson->intro_text);
+		}
+		
+		//Sanskrit Appendix 1 has link to intro
+		if ($series['series_id'] == 10 && $i == 11) {
+			$new_lesson->intro_text = str_replace('vedol-0-X.html', '/eieol_lesson/10', $new_lesson->intro_text);
+		}
+		
+		//Sanskrit Appendix 2 has a bunch of links that need to be update
+		if ($series['series_id'] == 10 && $i == 12) {
+			for($j = 1; $j<=10; $j++) {
+				$new_lesson->intro_text = str_replace('vedol-' . (string)$j . '-X.html', '/eieol_lesson/10?id=' . (string)$stored_lessons[$j], $new_lesson->intro_text);
+			}
+		}
+		
+		$new_lesson->save();
+		$stored_lessons[$i] = $new_lesson->id;
+		
+		//load grammars
+		if (array_key_exists('grammars',$lesson) ) {
+			foreach ($lesson->grammars as $grammar){
+				$new_grammar = new EieolGrammar;
+				$new_grammar->title = Normalizer::normalize($grammar->title, Normalizer::FORM_C );
+				$new_grammar->order = $grammar->order;
+				$new_grammar->section_number = $grammar->section_number;
+				$new_grammar->grammar_text = Normalizer::normalize($grammar->grammar_text, Normalizer::FORM_C );				$new_grammar->lesson_id = $new_lesson->id;
+				$new_grammar->created_by = 'loader';
+				$new_grammar->updated_by = 'loader';
+				$new_grammar->save();
+			}
+		} //if grammars
+		
 	}
 	fclose($myfile);
 } //store lessons
@@ -91,6 +127,8 @@ class LoadController extends BaseController {
 
 	public function eieol_load()
 	{
+		ini_set('memory_limit','256M');
+		
 		//some series have 2 languages:
 		//Tocharian (Toch A 1-5, Toch B 6-10), Baltic(Lithuanian 1-7 Latvian 8-10), Albanian(Tosk 1-3 Geg 4-5), Iranian(Old Avestan 1-4 Young Avestan 5-6 Old Persian 7-10)
 	
@@ -145,6 +183,12 @@ class LoadController extends BaseController {
 		$series['series_id'] = 5;
 		$series['language_id'] = 9;
 		$series['path'] = '/var/www/html/app/storage/data_load/Classical Armenian Online.json';
+		$serieses[] = $series;
+		
+		$series = array();
+		$series['series_id'] = 19;
+		$series['language_id'] = 9;
+		$series['path'] = '/var/www/html/app/storage/data_load/Classical Armenian Online - Romanized.json';
 		$serieses[] = $series;
 		
 		$series = array();
@@ -231,14 +275,17 @@ class LoadController extends BaseController {
 		$series['language_id_9'] = 4;
 		$series['language_id_10'] = 4;
 		$series['language_id_11'] = 4;
+		$series['language_id_20'] = 3;
 		$series['path'] = '/var/www/html/app/storage/data_load/Tocharian Online.json';
 		$serieses[] = $series;
 		
 		foreach($serieses as $series) {
-			print_series($series['series_id']);
+			//print_series($series['series_id']);
 			delete_series_children($series['series_id']);
 			store_lessons($series);
 		}
+		
+		print '<hr/>done';
 	
 	} //end eieol_load function
 	

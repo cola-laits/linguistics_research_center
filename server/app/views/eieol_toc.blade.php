@@ -36,7 +36,7 @@
 			&nbsp;&nbsp;&nbsp;
 		@endfor
 		{{ HTML::link('eieol_lesson/' . $series->id . '?id=' . $lesson->id . '#grammar_' . $grammar->id,
-					  $grammar->section_number . '. ' . $grammar->title,
+					  $grammar->section_number . '.' . $grammar->title,
 					  array('title' => $grammar->title )) }}<br/>
 	@endforeach
 @endforeach

@@ -1,7 +1,6 @@
 Admin
 	On Series pages, when listing lessons, show their language
 	Unicode
-		http://htmlpurifier.org/docs/enduser-utf8.html
 		Before storing - run text through PHP Normalizer class to canonicalize it using NFC
 	Language
 		Audit on custom keyboard to make sure it's in right format
@@ -14,7 +13,6 @@ Admin
 		Add a unicode checker that will flag any unicode that doesn't have a lang tag on it.  Or check on backen in validator.
 	Part of Speech editor? use FrozenNode?
 	Analysis editor? use FrozenNode?
-	Need roman transliteration of Armenian (Unicode 2).  Load it as separate lesson.
 	Maintain Lexicon
 		Add Pokorny ID to headword, add to EIEOL forms, add to load programs
 	
@@ -26,8 +24,6 @@ Public
 	EIEOL
 		Dictionary
 			- links to Pokorny
-		Tocharian has a bibliography
-		next and prev buttons
 	Lexicon
 	New EIEOL and Lexicon pages do not share same url structure.  How big of an issue is this?  What do we do when someone goes to an old bookmarked page?
 	Links to/from static pages, share css and header?
@@ -38,10 +34,6 @@ Public
 	
 Load
 	Load lessons
-		Sanskrit 
-			appendix 1 has link back to intro
-			appendix 2 has links back to lessons
-		Tocharian intro has link to TOC
 	Load Lexicon	
 	
 Deploy
@@ -66,6 +58,7 @@ Future Ideas
 	Reorder things by dragging
 	Preview lesson before publishing
 	Delete an element from a gloss
+	EIEOL public pages  - next and prev buttons
 	Make part of speech and/or analysis unique for a language
 	If we end up using jquery virtual keyboard, give them a way to add combos (diacritics)?
 				see https://github.com/Mottie/Keyboard/wiki/Usability#usecombos
