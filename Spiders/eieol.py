@@ -43,6 +43,20 @@ for ul in uls:
     to_load['Classical Armenian Online - Romanized']['anchor_name'] = 'Arm'
     
     for series_name, series_parms in to_load.iteritems():
+        #
+        #
+        #
+        #
+        #if series_name != 'Latin Online':
+        #if series_name != 'Ancient Sanskrit Online':
+        #if series_name != 'Old Norse Online':
+        #    continue
+        #endif
+        #
+        #
+        #
+        #
+        
         print 'starting ' + series_name
         toc_path = series_parms['toc_path']
         anchor_name = series_parms['anchor_name']
@@ -88,21 +102,79 @@ for ul in uls:
                 
                 #strip off series title
                 intro_text = intro_text.split('</h1>')[1].strip()
-                intro_text = intro_text
                 
                 #get intro text
                 #first find where the analysis starts
+                intro_text = intro_text.replace('<h4>Reading and Textual Analyis</h4>','<h4>Reading and Textual Analysis</h4>')
+                intro_text = intro_text.replace('<h4>Lesson 1 Text</h4>','<h4>Reading and Textual Analysis</h4>')
+                intro_text = intro_text.replace('<h4>Lesson 2 Text</h4>','<h4>Reading and Textual Analysis</h4>')
+                intro_text = intro_text.replace('<h4>Lesson 3 Text</h4>','<h4>Reading and Textual Analysis</h4>')
+                intro_text = intro_text.replace('<h4>Lesson 4 Text</h4>','<h4>Reading and Textual Analysis</h4>')
+                intro_text = intro_text.replace('<h4>Lesson 5 Text</h4>','<h4>Reading and Textual Analysis</h4>')
+                intro_text = intro_text.replace('<h4>Lesson 6 Text</h4>','<h4>Reading and Textual Analysis</h4>')
+                intro_text = intro_text.replace('<h4>Lesson 7 Text</h4>','<h4>Reading and Textual Analysis</h4>')
+                intro_text = intro_text.replace('<h4>Lesson 8 Text</h4>','<h4>Reading and Textual Analysis</h4>')
+                intro_text = intro_text.replace('<h4>Lesson 9 Text</h4>','<h4>Reading and Textual Analysis</h4>')
+                intro_text = intro_text.replace('<h4>Lesson 10 Text</h4>','<h4>Reading and Textual Analysis</h4>')
                 h4_pos = intro_text.find('<h4>Reading and Textual Analysis</h4>')
-                #then get first ul, which would be the list of glosses
-                ul_pos = intro_text.find('<ul>', h4_pos)
+                #the first list of glosses should be a combination of ul, li and a tags
+                ul_pos = intro_text.find('<ul>\r<li><a', h4_pos)
+                if ul_pos == -1:
+                    ul_pos = intro_text.find('<ul>\r\n<li><a', h4_pos)
+                
                 #the first gloss should be the <p tag right before the gloss
                 gloss_pos = intro_text.rfind('<p',h4_pos,ul_pos)
-                
+                #print intro_text
+                #print h4_pos, ul_pos, gloss_pos
                 lesson['intro_text'] = intro_text[0:gloss_pos]
                 lesson['intro_text'] = lesson['intro_text'].replace('\r',' ')
                 lesson['intro_text'] = lesson['intro_text'].replace('\n',' ')
                 lesson['intro_text'] = lesson['intro_text'].replace('\t',' ')
                 lesson['intro_text'] = lesson['intro_text'].replace('  ',' ')
+                
+                
+                #now let's get some glossed texts
+                lesson['glossed_texts'] = []
+
+                glossy = BeautifulSoup(intro_text[gloss_pos:])
+                #print glossy
+                glossed_text_ctr = 0
+                for p in glossy.find_all('p'):
+                    glossed_text_ctr += 1;
+                    glossed_text = {}
+                    #take out span classes, we'll add them when we display
+                    for match in p.findAll('span'):
+                        match.replaceWithChildren()
+                    print p.renderContents()
+                    glossed_text['glossed_text'] = p.renderContents()
+                    
+                    glossed_text['order'] = glossed_text_ctr
+                    
+                    glossed_text['glosses'] = []
+                    gloss_ctr = 0
+                    ul = p.findNext('ul')
+                    for li in ul.find_all('li'):
+                        gloss_ctr += 1
+                        gloss={}
+                        print li
+                        if li.find("tt"):
+                            gloss['surface_form'] = li.find("tt").renderContents()
+                        else:
+                            gloss['surface_form'] = li.find("span").renderContents()
+                        #endif
+                        #print gloss['surface_form']
+                        gloss['contextual_gloss'] = li.find("b").renderContents()
+                        gloss['order'] = gloss_ctr
+                        if '#' in li.renderContents():
+                            comments = li.renderContents().split('#')[1]
+                            gloss['comments'] = BeautifulSoup(comments).find("font").renderContents()
+                        #
+                        glossed_text['glosses'].append(gloss)
+                    #endfor li
+                    
+                    lesson['glossed_texts'].append(glossed_text)
+                    
+                #end for p
 
                 #everything between translation and the next h4 is the translation
                 temp_trans = splits[1].split('<h4>Translation</h4>')[1]

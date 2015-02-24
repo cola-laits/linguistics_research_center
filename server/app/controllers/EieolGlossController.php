@@ -8,7 +8,7 @@ class EieolGlossController extends BaseController {
 		$text = '';
 		$glosses = EieolGloss::with('elements.head_word')->where('surface_form', 'LIKE', Input::get('gloss') . '%')
 												->where('language_id', '=', Input::get('language') . '%')
-												->take(25)->get()->sortBy('surface_form');
+												->take(15)->get()->sortBy('surface_form');
 		foreach ($glosses as $gloss) {
 			$text .= '<a id="' . $gloss->id . '">' .
 					 $gloss->getDisplayGloss() .
@@ -104,6 +104,7 @@ class EieolGlossController extends BaseController {
 				$gloss->surface_form = Input::get('surface_form');
 				$gloss->contextual_gloss = Input::get('contextual_gloss');
 				$gloss->language_id = Input::get('language_id');
+				$gloss->comments = Input::get('comments');
 				$gloss->created_by = Auth::user()->username;
 				$gloss->updated_by = Auth::user()->username;
 		
@@ -206,6 +207,7 @@ class EieolGlossController extends BaseController {
 				
 				$gloss->surface_form = Input::get('surface_form');
 				$gloss->contextual_gloss = Input::get('contextual_gloss');
+				$gloss->comments = Input::get('comments');
 				$gloss->updated_by = Auth::user()->username;
 				
 				$gloss->save();

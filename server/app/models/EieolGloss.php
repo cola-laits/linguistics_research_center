@@ -33,6 +33,11 @@ class EieolGloss extends Eloquent {
 						$element->head_word->definition;
 		}
 		$string .= '<strong> -- ' . $this->contextual_gloss . '</strong>';
+		
+		if ($this->comments) {
+			$string .= ' # ' . $this->comments;
+		}
+		
 		return $string;
 	}
 	

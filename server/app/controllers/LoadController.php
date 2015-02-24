@@ -76,10 +76,11 @@ function store_lessons($series) {
 		$new_lesson->order = $lesson->order * 10;
 		$new_lesson->series_id = $series['series_id'];
 		if (array_key_exists('language_id',$series) ) {
-			$new_lesson->language_id = $series['language_id'];
+			$temp_language_id = $series['language_id'];
 		} else {
-			$new_lesson->language_id = $series['language_id_' . (string) $lesson->order];
+			$temp_language_id = $series['language_id_' . (string) $lesson->order];
 		}
+		$new_lesson->language_id = $temp_language_id;
 		$new_lesson->intro_text = Normalizer::normalize($lesson->intro_text, Normalizer::FORM_C );
 		$new_lesson->lesson_translation =  Normalizer::normalize($lesson->lesson_translation, Normalizer::FORM_C );
 		$new_lesson->created_by = 'loader';
@@ -105,12 +106,45 @@ function store_lessons($series) {
 		$new_lesson->save();
 		$stored_lessons[$i] = $new_lesson->id;
 		
+		//load glossed_texts
+		if (array_key_exists('glossed_texts',$lesson) ) {
+			foreach ($lesson->glossed_texts as $glossed_text){
+				$new_glossed_text = new EieolGlossedText;
+				$new_glossed_text->lesson_id = $new_lesson->id;
+				$new_glossed_text->glossed_text = Normalizer::normalize($glossed_text->glossed_text, Normalizer::FORM_C );
+				$new_glossed_text->order = $glossed_text->order * 10;
+				$new_glossed_text->created_by = 'loader';
+				$new_glossed_text->updated_by = 'loader';
+				$new_glossed_text->save();
+				
+				foreach ($glossed_text->glosses as $gloss) {
+					$new_gloss = new EieolGloss;
+					$new_gloss->surface_form = Normalizer::normalize($gloss->surface_form, Normalizer::FORM_C );
+					$new_gloss->contextual_gloss = Normalizer::normalize($gloss->contextual_gloss, Normalizer::FORM_C );
+					if (array_key_exists('comments',$gloss) ) {
+						$new_gloss->comments = Normalizer::normalize($gloss->comments, Normalizer::FORM_C );
+					}
+					$new_gloss->language_id = $temp_language_id;
+					$new_gloss->created_by = 'loader';
+					$new_gloss->updated_by = 'loader';
+					$new_gloss->save();
+					
+					$new_glossed_text_gloss = new EieolGlossedTextGloss;
+					$new_glossed_text_gloss->glossed_text_id = $new_glossed_text->id;
+					$new_glossed_text_gloss->gloss_id = $new_gloss->id;
+					$new_glossed_text_gloss->order = $gloss->order * 10;
+					$new_glossed_text_gloss->save();
+				}
+			}
+		} //if grammars
+		
 		//load grammars
 		if (array_key_exists('grammars',$lesson) ) {
 			foreach ($lesson->grammars as $grammar){
 				$new_grammar = new EieolGrammar;
+				$new_grammar->lesson_id = $new_lesson->id;
 				$new_grammar->title = Normalizer::normalize($grammar->title, Normalizer::FORM_C );
-				$new_grammar->order = $grammar->order;
+				$new_grammar->order = $grammar->order * 10;
 				$new_grammar->section_number = $grammar->section_number;
 				$new_grammar->grammar_text = Normalizer::normalize($grammar->grammar_text, Normalizer::FORM_C );				$new_grammar->lesson_id = $new_lesson->id;
 				$new_grammar->created_by = 'loader';
@@ -128,6 +162,7 @@ class LoadController extends BaseController {
 	public function eieol_load()
 	{
 		ini_set('memory_limit','256M');
+		ini_set('max_execution_time', 300);
 		
 		//some series have 2 languages:
 		//Tocharian (Toch A 1-5, Toch B 6-10), Baltic(Lithuanian 1-7 Latvian 8-10), Albanian(Tosk 1-3 Geg 4-5), Iranian(Old Avestan 1-4 Young Avestan 5-6 Old Persian 7-10)

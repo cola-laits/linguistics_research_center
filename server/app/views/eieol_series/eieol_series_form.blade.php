@@ -81,6 +81,7 @@
 	                <tr>
 	                    <th>Order</th>
 	                    <th>Title</th>
+	                    <th>Language</th>
 	                    <th>Updated</th>
 	                    <th></th>
 	                </tr>
@@ -91,6 +92,7 @@
 	                <tr>
 	                    <td>{{{ $lesson->order }}}</td>
 	                    <td>{{ $lesson->title }}</td>
+	                    <td>{{ $lesson->language->language }}</td>
 	                    <td>{{{ $lesson->updated_at->format('m/d/Y h:ia') }}} by {{{ $lesson->updated_by }}}</td>
 	                    <td>
 	                        <a href="/admin/eieol_lesson/{{{ $lesson->id }}}/edit" class="btn btn-info pull-left" style="margin-right: 3px;">Edit</a>

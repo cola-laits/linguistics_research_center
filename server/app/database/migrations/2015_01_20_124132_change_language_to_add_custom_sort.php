@@ -32,4 +32,3 @@ class ChangeLanguageToAddCustomSort extends Migration {
 	}
 
 }
-

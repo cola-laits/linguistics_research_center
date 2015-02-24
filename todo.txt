@@ -1,16 +1,13 @@
 Admin
-	On Series pages, when listing lessons, show their language
-	Unicode
-		Before storing - run text through PHP Normalizer class to canonicalize it using NFC
+*	Before storing - run text through PHP Normalizer class to canonicalize it using NFC
 	Language
 		Audit on custom keyboard to make sure it's in right format
 		Audit sorting to make sure it's in the right format.
-		Store language code so we can tag things <span lang='code' class='blah'>
+*		Store language code and class so we can tag things <span lang='code' class='blah'>
 	CKEditor
 		Add language plugin http://ckeditor.com/forums/Plugins/Language-Semantics
 			Give them a way to specify the language(s) on the Language page?
 		Turn on speel check as you go or make sure regular spell check works.
-		Add a unicode checker that will flag any unicode that doesn't have a lang tag on it.  Or check on backen in validator.
 	Part of Speech editor? use FrozenNode?
 	Analysis editor? use FrozenNode?
 	Maintain Lexicon
@@ -18,19 +15,19 @@ Admin
 	
 Public
 	Unicode info and test (make sure page matches an images)
-	Add <span lang="code" class="blah"> from language file to glossed texts and parts of gloss
 	Lesson page
-		- When building lesson text, add <blockquote lang='la'>
+*		- When building lesson text, glossed_text, add <blockquote lang='la' class>
+*		- Add <span lang="code" class="blah"> from language file to glossed texts and parts of gloss
+*		- make format of glosses same as old site
 	EIEOL
-		Dictionary
-			- links to Pokorny
+		Dictionary - links to Pokorny
 	Lexicon
 	New EIEOL and Lexicon pages do not share same url structure.  How big of an issue is this?  What do we do when someone goes to an old bookmarked page?
-	Links to/from static pages, share css and header?
 	Public pages
 		Where will they live
 		CMS?
 		Which pages will be kept?
+		Links to/from static pages, share css and header?
 	
 Load
 	Load lessons
@@ -60,6 +57,5 @@ Future Ideas
 	Delete an element from a gloss
 	EIEOL public pages  - next and prev buttons
 	Make part of speech and/or analysis unique for a language
-	If we end up using jquery virtual keyboard, give them a way to add combos (diacritics)?
-				see https://github.com/Mottie/Keyboard/wiki/Usability#usecombos
-		Also show which ones are available
+	CKEditor: Add a unicode checker that will flag any unicode that doesn't have a lang tag on it.  Or check on backen in validator.
+	EIEOL editor - make glossed texts use CKEditor
