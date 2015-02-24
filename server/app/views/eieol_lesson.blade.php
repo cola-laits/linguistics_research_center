@@ -56,7 +56,7 @@
 <!-- If intro, display the list of lessons -->
 @if ($lesson->order == 0) 
 	<h5>The {{$series->menu_name}} Lessons</h5>
-	<ul>
+	<ol>
 	@foreach ($lessons as $lesson)
 		@if ($lesson->order != 0)
 			<li>
@@ -64,7 +64,7 @@
 			</li>
 		@endif
 	@endforeach
-	</ul>
+	</ol>
 	 
 	<h6>Options:</h6>
 

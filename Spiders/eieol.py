@@ -47,10 +47,10 @@ for ul in uls:
         #
         #
         #
-        #if series_name != 'Latin Online':
+        if series_name != 'Latin Online':
         #if series_name != 'Ancient Sanskrit Online':
         #if series_name != 'Old Norse Online':
-        #    continue
+            continue
         #endif
         #
         #
