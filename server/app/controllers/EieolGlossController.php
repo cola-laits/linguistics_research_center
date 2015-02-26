@@ -98,6 +98,23 @@ class EieolGlossController extends BaseController {
 					'errors' => $validator->getMessageBag()->toArray()
 			));
 		} else {
+			
+			
+			//let's check to make sure this doesn't exist already
+			$glosses = EieolGloss::where('surface_form', '=', Input::get('surface_form'))
+								->where('language_id', '=', Input::get('language_id'))->get();
+			foreach($glosses as $gloss) {
+				$count = EieolElement::where('gloss_id', '=', $gloss->id)
+										->where('part_of_speech', '=', Input::get('element_1_part_of_speech'))
+										->where('analysis', '=', Input::get('element_1_analysis'))->count();
+				if ($count > 0) {
+					return Response::json(array(
+							'fail' => true,
+							'errors' => array('surface_form' => array(0 => 'This Surface Form/Part of Speech/Analysis combination already exists'))
+					));
+				}
+			}
+
 			$gloss_id = DB::transaction(function() {
 				$gloss = new EieolGloss;
 		
@@ -202,6 +219,24 @@ class EieolGlossController extends BaseController {
 					'errors' => $validator->getMessageBag()->toArray()
 			));
 		} else {
+			
+			//let's check to make sure this doesn't exist already
+			$glosses = EieolGloss::where('surface_form', '=', Input::get('surface_form'))
+						->where('language_id', '=', Input::get('language_id'))
+						->where('id', '!=', $id)->get();
+			foreach($glosses as $gloss) {
+				$count = EieolElement::where('gloss_id', '=', $gloss->id)
+				->where('part_of_speech', '=', Input::get('element_1_part_of_speech'))
+				->where('analysis', '=', Input::get('element_1_analysis'))->count();
+				if ($count > 0) {
+					return Response::json(array(
+							'fail' => true,
+							'errors' => array('surface_form' => array(0 => 'This Surface Form/Part of Speech/Analysis combination already exists'))
+					));
+				}
+			}
+			
+			
 			DB::transaction(function($id) use ($id) {
 				$gloss = EieolGloss::with('elements.head_word')->find($id);
 				

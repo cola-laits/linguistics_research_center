@@ -340,6 +340,7 @@
 
     	//popup to attach gloss
 		$(".attach_gloss_form").submit(function() {
+			$("#new_gloss_form").css("background-color", "#FFFFFF");
 		    glossed_text_id = $(this).find("#glossed_text_id").val(); //this sets the global variable so we can attach a selected gloss
 		    $("#gloss_search_input").val(""); //reset the input box
 		    $("#attach_gloss_modal").modal('show'); 
@@ -349,6 +350,7 @@
 		    $(".errors", '#new_gloss_form').empty(); //reset gloss form error divs
 		    for (i=1; i<=3; i++) {
 		    	$('#element_' + i + '_head_word_display', '#new_gloss_form').text(''); //reset headword text
+		    	$('#element_' + i + '_head_word_id', '#new_gloss_form').val('');//reset headword id
 		    }  
 		    return false;
 		});
@@ -479,6 +481,7 @@
 
 		//popup to attach or change head word to gloss
 		$(".pick_head_word_button").click(function() {
+			$("#new_head_word_form").css("background-color", "#FFFFFF");
 			gloss_form = $(this).closest('form'); //we will use this in the attach_head_word function
 		    $("#head_word_search_input").val(""); //reset the input box
 		    $("#attach_head_word_modal").modal('show'); 
@@ -805,6 +808,8 @@
 		    		  'class' => 'form ajax_form modal_form',
 		    		  'id' => 'edit_gloss_form'  
 		    	]) }}
+		    	
+		    		{{ Form::hidden('language_id', $lesson->language_id, ['class' => 'language_id_class']) }}
 		    		  
 				    @for ($i = 1; $i <= 3; $i++)
 				    	<div class='row'>

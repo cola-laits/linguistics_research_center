@@ -1,0 +1,15 @@
+<ul class="menu">
+	<li class="first">Lesson Resources</li>	
+	<li><?php echo HTML::link('eieol_toc/' . $series->id, "Contents"); ?></li>
+	<?php foreach($languages as $language): ?>
+		<li><?php echo HTML::link('eieol_master_gloss/' . $series->id . '/' . $language->id, $language->language . " Glossary"); ?></li>
+	<?php endforeach; ?>
+	<?php foreach($languages as $language): ?>
+		<li><?php echo HTML::link('eieol_base_form_dictionary/' . $series->id . '/' . $language->id, $language->language . " Dictionary"); ?></li>
+	<?php endforeach; ?>
+	<?php foreach($languages as $language): ?>
+		<li><?php echo HTML::link('eieol_english_meaning_index/' . $series->id . '/' . $language->id, $language->language . " Meanings"); ?></li>
+	<?php endforeach; ?>
+		
+</ul>
+<br />

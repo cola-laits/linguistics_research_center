@@ -49,8 +49,7 @@ index; unfortunately this may result in some words, in some contexts, being unfa
 	<dt>{{$keyword['keyword']}} {{$keyword['head_word']}} --</dt>
 	<dd>
 		@foreach ($keyword['glossed_text_gloss_ids'] as $id => $lesson)
-			{{ HTML::link('eieol_lesson/' . $series->id . '?id=' . $lesson->id . '#glossed_text_gloss_' . $id,
-					  $lesson->title)}}
+			<a href='/eieol_lesson/{{$series->id}}?id={{$lesson->id}}#glossed_text_gloss_{{$id}}'>{{$lesson->title}}</a>
 		@endforeach
 	</dd>
 @endforeach

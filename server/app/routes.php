@@ -30,4 +30,6 @@ Route::group(array('prefix'=> 'admin', 'before' => 'auth'), function() {
 	Route::resource('/eieol_language', 'EieolLanguageController');
 	
 	Route::get('eieol_load', 'LoadController@eieol_load');
+	Route::get('eieol_delete', 'LoadController@eieol_delete');
+	Route::get('element_count', 'LoadController@element_count');
 });

@@ -1,8 +1,11 @@
 Admin
+	Screen for users to change their password
 *	Before storing - run text through PHP Normalizer class to canonicalize it using NFC
+	Elements - need more than 6 - see element_count in LoadController
 	Language
 		Audit on custom keyboard to make sure it's in right format
 		Audit sorting to make sure it's in the right format.
+		Default sort to ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
 *		Store language code and class so we can tag things <span lang='code' class='blah'>
 	CKEditor
 		Add language plugin http://ckeditor.com/forums/Plugins/Language-Semantics
@@ -43,13 +46,11 @@ Deploy
 Future Ideas
 	Authorization by series?
 	When updating - warn if it has been updated since you loaded it.
-	Elements - need more than 3, less than 10
 	CKEditor - can we preserve source formatting?
 	Previous and next buttons on EIEOL lessons?
 	Public site search
 	Public site - is it a problem that the url for all the pages will change
 	Public site - test efficiency (after load)
-	Screen for users to change their password
 	Save versions of lessons like SVN
 	On lesson page, warn if they try to leave without saving something
 	Reorder things by dragging

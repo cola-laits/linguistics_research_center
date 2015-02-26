@@ -47,10 +47,13 @@ for ul in uls:
         #
         #
         #
-        if series_name != 'Latin Online':
+        #if series_name != 'Latin Online':
         #if series_name != 'Ancient Sanskrit Online':
         #if series_name != 'Old Norse Online':
-            continue
+        #if series_name != 'Old English Online':
+        #if series_name != 'Old Church Slavonic Online':
+        #if series_name != 'Albanian Online':
+        #    continue
         #endif
         #
         #
@@ -66,7 +69,7 @@ for ul in uls:
         toc_html = urllib2.urlopen(toc_path).read()
  
         #get just the part of the page with toc
-        lessons_toc_html = toc_html.split('<h5>Lessons</h5>')[1]
+        lessons_toc_html = unicode(toc_html).split('<h5>Lessons</h5>')[1]
         lessons_toc_html = lessons_toc_html.split('<h5>Grammar Points</h5>')[0]
         lessons_toc = BeautifulSoup(lessons_toc_html)
  
@@ -74,11 +77,7 @@ for ul in uls:
         for lesson_tag in lessons_toc.find_all('a'):
             lesson = {}
  
-            #convert tag to unicode and remove a tags
-            temp_text = unicode(lesson_tag)
-            temp_pos = temp_text.find('>') + 1
-            temp_text = temp_text[temp_pos:]
-            temp_text = temp_text.replace('</a>','')
+            temp_text = lesson_tag.renderContents()
 
             #first part is the order number
             lesson['order'] = int(temp_text.split('.')[0])
@@ -162,12 +161,44 @@ for ul in uls:
                         else:
                             gloss['surface_form'] = li.find("span").renderContents()
                         #endif
-                        #print gloss['surface_form']
+                        
+                        new_elements = []
+                        element_ctr = 0
+                        middle = li.renderContents().split('<nobr>--</nobr>')[1]
+                        elements = middle.split(' +')
+                        for element in elements:
+                            element_ctr += 1
+                            new_element = {}
+                            new_element['order'] = element_ctr
+                            first_part = element.split('<nobr>')[0]
+                            first_part_splits = first_part.split(';')
+                            new_element['part_of_speech'] = first_part_splits[0].strip()
+                            if len(first_part_splits) > 1:
+                                new_element['analysis'] = first_part_splits[1].strip()
+                            #endif
+                            new_head_word = {}
+                            
+                            word = element.split('&lt;')[1]
+                            word = word.split('&gt;')[0]
+                            word = word.split('>')[1]
+                            word = word.split('</span')[0].strip()
+                                
+                            new_head_word['word'] = '<' + word + '>'
+                            new_head_word['definition'] = element.split('</nobr>')[1].strip()
+                            new_element['head_word'] = new_head_word
+                            new_elements.append(new_element)
+                        #endfor element
+                        
+                        gloss['elements'] = new_elements
+                        
+                        
                         gloss['contextual_gloss'] = li.find("b").renderContents()
                         gloss['order'] = gloss_ctr
                         if '#' in li.renderContents():
                             comments = li.renderContents().split('#')[1]
-                            gloss['comments'] = BeautifulSoup(comments).find("font").renderContents()
+                            comments = comments.replace("<font size='-1'>","")
+                            comments = comments.replace("</font>","")
+                            gloss['comments'] = comments
                         #
                         glossed_text['glosses'].append(gloss)
                     #endfor li

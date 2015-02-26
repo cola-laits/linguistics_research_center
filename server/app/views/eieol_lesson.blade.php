@@ -21,7 +21,7 @@
 
 @foreach ($lesson->glossed_texts as $glossed_text)
 	<div class="glossed_text">{{$glossed_text->glossed_text}}</div>
-	<br/><br/>
+	<br/>
 	<ul>
 	@foreach ($glossed_text->glosses as $gloss)
    		<li>
@@ -35,7 +35,7 @@
 
 @if ($lesson_text != '')
 	<h2>Lesson Text</h2>
-	{{$lesson_text}}
+	<blockquote>{{$lesson_text}}</blockquote>
 @endif
 	      
 @if ($lesson->lesson_translation != '')	        

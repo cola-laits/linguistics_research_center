@@ -68,6 +68,8 @@ function store_lessons($series) {
 	$myfile = fopen($series['path'], "r") or die("Unable to open file!");
 	$data = json_decode(fread($myfile,filesize($series['path'])));
 	$stored_lessons = array();
+	$stored_glosses = array();
+	$stored_head_words = array();
 	for($i = 0; $i<count($data); $i++) {
 		$lesson = $data[$i];
 		print $i . ' ' . $lesson->title . '<br/>';
@@ -118,25 +120,79 @@ function store_lessons($series) {
 				$new_glossed_text->save();
 				
 				foreach ($glossed_text->glosses as $gloss) {
-					$new_gloss = new EieolGloss;
-					$new_gloss->surface_form = Normalizer::normalize($gloss->surface_form, Normalizer::FORM_C );
-					$new_gloss->contextual_gloss = Normalizer::normalize($gloss->contextual_gloss, Normalizer::FORM_C );
-					if (array_key_exists('comments',$gloss) ) {
-						$new_gloss->comments = Normalizer::normalize($gloss->comments, Normalizer::FORM_C );
-					}
-					$new_gloss->language_id = $temp_language_id;
-					$new_gloss->created_by = 'loader';
-					$new_gloss->updated_by = 'loader';
-					$new_gloss->save();
-					
 					$new_glossed_text_gloss = new EieolGlossedTextGloss;
+					
+					$surface_form = Normalizer::normalize($gloss->surface_form, Normalizer::FORM_C );
+					$part_of_speech = $gloss->elements[0]->part_of_speech;
+					if (array_key_exists('analysis',$gloss->elements[0])) {
+						$analysis = $gloss->elements[0]->analysis;
+					} else {
+						$analysis = '';
+					}
+					$gloss_key = strtoupper($surface_form) . '~~~' .  strtoupper($part_of_speech) . '~~~' . strtoupper($analysis);
+					//log::error($gloss_key);
+					
+					if (array_key_exists($gloss_key,$stored_glosses)) {
+						$new_glossed_text_gloss->gloss_id = $stored_glosses[$gloss_key];
+					} else {					
+						$new_gloss = new EieolGloss;
+						$new_gloss->surface_form = $surface_form;
+						$new_gloss->contextual_gloss = Normalizer::normalize($gloss->contextual_gloss, Normalizer::FORM_C );
+						if (array_key_exists('comments',$gloss) ) {
+							$new_gloss->comments = Normalizer::normalize($gloss->comments, Normalizer::FORM_C );
+						}
+						$new_gloss->language_id = $temp_language_id;
+						$new_gloss->created_by = 'loader';
+						$new_gloss->updated_by = 'loader';
+						$new_gloss->save();
+						$stored_glosses[$gloss_key] = $new_gloss->id;
+						$new_glossed_text_gloss->gloss_id = $new_gloss->id;
+						
+						foreach ($gloss->elements as $element) {
+							$new_element = new EieolElement;
+						
+							$word = Normalizer::normalize($element->head_word->word, Normalizer::FORM_C );
+							$definition = Normalizer::normalize($element->head_word->definition, Normalizer::FORM_C );
+							$head_word_key = strtoupper($word) . '~~~' . strtoupper($definition);
+							//Log::error($head_word_key);
+						
+							if (array_key_exists($head_word_key,$stored_head_words)) {
+								$new_element->head_word_id = $stored_head_words[$head_word_key];
+							} else {
+								$new_head_word = new EieolHeadWord;
+								$new_head_word->word = $word;
+								$new_head_word->definition = $definition;
+								$new_head_word->language_id = $temp_language_id;
+								$new_head_word->created_by = 'loader';
+								$new_head_word->updated_by = 'loader';
+								$new_head_word->save();
+								$stored_head_words[$head_word_key] = $new_head_word->id;
+								$new_element->head_word_id = $new_head_word->id;
+							}
+						
+							//Log::error($stored_head_words);
+						
+							$new_element->gloss_id = $new_gloss->id;
+							$new_element->part_of_speech = $element->part_of_speech;
+							if (array_key_exists('analysis',$element)) {
+								$new_element->analysis = $element->analysis;
+							}
+							$new_element->order = $element->order;
+							$new_element->created_by = 'loader';
+							$new_element->updated_by = 'loader';
+							$new_element->save();
+						
+						} //for each element
+					}
 					$new_glossed_text_gloss->glossed_text_id = $new_glossed_text->id;
-					$new_glossed_text_gloss->gloss_id = $new_gloss->id;
 					$new_glossed_text_gloss->order = $gloss->order * 10;
+					$new_glossed_text_gloss->created_by = 'loader';
+					$new_glossed_text_gloss->updated_by = 'loader';
 					$new_glossed_text_gloss->save();
-				}
-			}
-		} //if grammars
+					
+				} //for each gloss
+			} //for each glossed_text
+		} //if glossed_texts
 		
 		//load grammars
 		if (array_key_exists('grammars',$lesson) ) {
@@ -157,171 +213,208 @@ function store_lessons($series) {
 	fclose($myfile);
 } //store lessons
 
-class LoadController extends BaseController {	
-
-	public function eieol_load()
-	{
-		ini_set('memory_limit','256M');
-		ini_set('max_execution_time', 300);
-		
-		//some series have 2 languages:
-		//Tocharian (Toch A 1-5, Toch B 6-10), Baltic(Lithuanian 1-7 Latvian 8-10), Albanian(Tosk 1-3 Geg 4-5), Iranian(Old Avestan 1-4 Young Avestan 5-6 Old Persian 7-10)
+function build_serieses() {
+	//some series have 2 languages:
+	//Tocharian (Toch A 1-5, Toch B 6-10), Baltic(Lithuanian 1-7 Latvian 8-10), Albanian(Tosk 1-3 Geg 4-5), Iranian(Old Avestan 1-4 Young Avestan 5-6 Old Persian 7-10)
 	
-		$serieses = array();
-		
-		$series = array();
-		$series['series_id'] = 1;
-		$series['language_id'] = 1;
-		$series['path'] = '/var/www/html/app/storage/data_load/Latin Online.json';
-		$serieses[] = $series;
-		
-		$series = array();
-		$series['series_id'] = 2;
-		$series['language_id'] = 2;
-		$series['path'] = '/var/www/html/app/storage/data_load/Classical Greek Online.json';
-		$serieses[] = $series;
-		
-		$series = array();
-		$series['series_id'] = 16;
-		$series['language_id_0'] = 6;
-		$series['language_id_1'] = 6;
-		$series['language_id_2'] = 6;
-		$series['language_id_3'] = 6;
-		$series['language_id_4'] = 21;
-		$series['language_id_5'] = 21;
-		$series['path'] = '/var/www/html/app/storage/data_load/Albanian Online.json';
-		$serieses[] = $series;
-		
-		$series = array();
-		$series['series_id'] = 10;
-		$series['language_id'] = 7;
-		$series['path'] = '/var/www/html/app/storage/data_load/Ancient Sanskrit Online.json';
-		$serieses[] = $series;
-		
-		$series = array();
-		$series['series_id'] = 8;
-		$series['language_id_0'] = 8;
-		$series['language_id_1'] = 8;
-		$series['language_id_2'] = 8;
-		$series['language_id_3'] = 8;
-		$series['language_id_4'] = 8;
-		$series['language_id_5'] = 8;
-		$series['language_id_6'] = 8;
-		$series['language_id_7'] = 8;
-		$series['language_id_8'] = 20;
-		$series['language_id_9'] = 20;
-		$series['language_id_10'] = 20;
-		$series['path'] = '/var/www/html/app/storage/data_load/Baltic Online.json';
-		$serieses[] = $series;
-		
-		$series = array();
-		$series['series_id'] = 5;
-		$series['language_id'] = 9;
-		$series['path'] = '/var/www/html/app/storage/data_load/Classical Armenian Online.json';
-		$serieses[] = $series;
-		
-		$series = array();
-		$series['series_id'] = 19;
-		$series['language_id'] = 9;
-		$series['path'] = '/var/www/html/app/storage/data_load/Classical Armenian Online - Romanized.json';
-		$serieses[] = $series;
-		
-		$series = array();
-		$series['series_id'] = 11;
-		$series['language_id'] = 10;
-		$series['path'] = '/var/www/html/app/storage/data_load/Gothic Online.json';
-		$serieses[] = $series;
-		
-		$series = array();
-		$series['series_id'] = 9;
-		$series['language_id'] = 11;
-		$series['path'] = '/var/www/html/app/storage/data_load/Hittite Online.json';
-		$serieses[] = $series;
-		
-		$series = array();
-		$series['series_id'] = 3;
-		$series['language_id'] = 12;
-		$series['path'] = '/var/www/html/app/storage/data_load/New Testament Greek Online.json';
-		$serieses[] = $series;
-		
-		$series = array();
-		$series['series_id'] = 4;
-		$series['language_id'] = 13;
-		$series['path'] = '/var/www/html/app/storage/data_load/Old Church Slavonic Online.json';
-		$serieses[] = $series;
-		
-		$series = array();
-		$series['series_id'] = 14;
-		$series['language_id'] = 14;
-		$series['path'] = '/var/www/html/app/storage/data_load/Old English Online.json';
-		$serieses[] = $series;
-		
-		$series = array();
-		$series['series_id'] = 12;
-		$series['language_id'] = 15;
-		$series['path'] = '/var/www/html/app/storage/data_load/Old French Online.json';
-		$serieses[] = $series;
-		
-		$series = array();
-		$series['series_id'] = 6;
-		$series['language_id_0'] = 16;
-		$series['language_id_1'] = 16;
-		$series['language_id_2'] = 16;
-		$series['language_id_3'] = 16;
-		$series['language_id_4'] = 16;
-		$series['language_id_5'] = 23;
-		$series['language_id_6'] = 23;
-		$series['language_id_7'] = 22;
-		$series['language_id_8'] = 22;
-		$series['language_id_9'] = 22;
-		$series['language_id_10'] = 22;
-		$series['path'] = '/var/www/html/app/storage/data_load/Old Iranian Online.json';
-		$serieses[] = $series;
-		
-		$series = array();
-		$series['series_id'] = 13;
-		$series['language_id'] = 17;
-		$series['path'] = '/var/www/html/app/storage/data_load/Old Irish Online.json';
-		$serieses[] = $series;
-		
-		$series = array();
-		$series['series_id'] = 7;
-		$series['language_id'] = 18;
-		$series['path'] = '/var/www/html/app/storage/data_load/Old Norse Online.json';
-		$serieses[] = $series;
-		
-		$series = array();
-		$series['series_id'] = 17;
-		$series['language_id'] = 19;
-		$series['path'] = '/var/www/html/app/storage/data_load/Old Russian Online.json';
-		$serieses[] = $series;
-		
-		$series = array();
-		$series['series_id'] = 15;
-		$series['language_id_0'] = 3;
-		$series['language_id_1'] = 3;
-		$series['language_id_2'] = 3;
-		$series['language_id_3'] = 3;
-		$series['language_id_4'] = 3;
-		$series['language_id_5'] = 3;
-		$series['language_id_6'] = 4;
-		$series['language_id_7'] = 4;
-		$series['language_id_8'] = 4;
-		$series['language_id_9'] = 4;
-		$series['language_id_10'] = 4;
-		$series['language_id_11'] = 4;
-		$series['language_id_20'] = 3;
-		$series['path'] = '/var/www/html/app/storage/data_load/Tocharian Online.json';
-		$serieses[] = $series;
-		
+	$serieses = array();
+	
+	$series = array();
+	$series['series_id'] = 1;
+	$series['language_id'] = 1;
+	$series['path'] = '/var/www/html/app/storage/data_load/Latin Online.json';
+	$serieses[] = $series;
+	
+	$series = array();
+	$series['series_id'] = 2;
+	$series['language_id'] = 2;
+	$series['path'] = '/var/www/html/app/storage/data_load/Classical Greek Online.json';
+	$serieses[] = $series;
+
+	$series = array();
+	$series['series_id'] = 16;
+	$series['language_id_0'] = 6;
+	$series['language_id_1'] = 6;
+	$series['language_id_2'] = 6;
+	$series['language_id_3'] = 6;
+	$series['language_id_4'] = 21;
+	$series['language_id_5'] = 21;
+	$series['path'] = '/var/www/html/app/storage/data_load/Albanian Online.json';
+	$serieses[] = $series;
+
+	$series = array();
+	$series['series_id'] = 10;
+	$series['language_id'] = 7;
+	$series['path'] = '/var/www/html/app/storage/data_load/Ancient Sanskrit Online.json';
+	$serieses[] = $series;
+
+	$series = array();
+	$series['series_id'] = 8;
+	$series['language_id_0'] = 8;
+	$series['language_id_1'] = 8;
+	$series['language_id_2'] = 8;
+	$series['language_id_3'] = 8;
+	$series['language_id_4'] = 8;
+	$series['language_id_5'] = 8;
+	$series['language_id_6'] = 8;
+	$series['language_id_7'] = 8;
+	$series['language_id_8'] = 20;
+	$series['language_id_9'] = 20;
+	$series['language_id_10'] = 20;
+	$series['path'] = '/var/www/html/app/storage/data_load/Baltic Online.json';
+	$serieses[] = $series;
+
+	$series = array();
+	$series['series_id'] = 5;
+	$series['language_id'] = 9;
+	$series['path'] = '/var/www/html/app/storage/data_load/Classical Armenian Online.json';
+	$serieses[] = $series;
+
+	$series = array();
+	$series['series_id'] = 19;
+	$series['language_id'] = 9;
+	$series['path'] = '/var/www/html/app/storage/data_load/Classical Armenian Online - Romanized.json';
+	$serieses[] = $series;
+
+	$series = array();
+	$series['series_id'] = 11;
+	$series['language_id'] = 10;
+	$series['path'] = '/var/www/html/app/storage/data_load/Gothic Online.json';
+	$serieses[] = $series;
+
+	$series = array();
+	$series['series_id'] = 9;
+	$series['language_id'] = 11;
+	$series['path'] = '/var/www/html/app/storage/data_load/Hittite Online.json';
+	$serieses[] = $series;
+
+	$series = array();
+	$series['series_id'] = 3;
+	$series['language_id'] = 12;
+	$series['path'] = '/var/www/html/app/storage/data_load/New Testament Greek Online.json';
+	$serieses[] = $series;
+
+	$series = array();
+	$series['series_id'] = 4;
+	$series['language_id'] = 13;
+	$series['path'] = '/var/www/html/app/storage/data_load/Old Church Slavonic Online.json';
+	$serieses[] = $series;
+
+	$series = array();
+	$series['series_id'] = 14;
+	$series['language_id'] = 14;
+	$series['path'] = '/var/www/html/app/storage/data_load/Old English Online.json';
+	$serieses[] = $series;
+
+	$series = array();
+	$series['series_id'] = 12;
+	$series['language_id'] = 15;
+	$series['path'] = '/var/www/html/app/storage/data_load/Old French Online.json';
+	$serieses[] = $series;
+
+	$series = array();
+	$series['series_id'] = 6;
+	$series['language_id_0'] = 16;
+	$series['language_id_1'] = 16;
+	$series['language_id_2'] = 16;
+	$series['language_id_3'] = 16;
+	$series['language_id_4'] = 16;
+	$series['language_id_5'] = 23;
+	$series['language_id_6'] = 23;
+	$series['language_id_7'] = 22;
+	$series['language_id_8'] = 22;
+	$series['language_id_9'] = 22;
+	$series['language_id_10'] = 22;
+	$series['path'] = '/var/www/html/app/storage/data_load/Old Iranian Online.json';
+	$serieses[] = $series;
+
+	$series = array();
+	$series['series_id'] = 13;
+	$series['language_id'] = 17;
+	$series['path'] = '/var/www/html/app/storage/data_load/Old Irish Online.json';
+	$serieses[] = $series;
+
+	$series = array();
+	$series['series_id'] = 7;
+	$series['language_id'] = 18;
+	$series['path'] = '/var/www/html/app/storage/data_load/Old Norse Online.json';
+	$serieses[] = $series;
+
+	$series = array();
+	$series['series_id'] = 17;
+	$series['language_id'] = 19;
+	$series['path'] = '/var/www/html/app/storage/data_load/Old Russian Online.json';
+	$serieses[] = $series;
+
+	$series = array();
+	$series['series_id'] = 15;
+	$series['language_id_0'] = 3;
+	$series['language_id_1'] = 3;
+	$series['language_id_2'] = 3;
+	$series['language_id_3'] = 3;
+	$series['language_id_4'] = 3;
+	$series['language_id_5'] = 3;
+	$series['language_id_6'] = 4;
+	$series['language_id_7'] = 4;
+	$series['language_id_8'] = 4;
+	$series['language_id_9'] = 4;
+	$series['language_id_10'] = 4;
+	$series['language_id_11'] = 4;
+	$series['language_id_20'] = 3;
+	$series['path'] = '/var/www/html/app/storage/data_load/Tocharian Online.json';
+	$serieses[] = $series;
+	
+	return $serieses;
+}//build_serieses
+
+class LoadController extends BaseController {	
+	
+	
+	public function eieol_delete()
+	{
+		$serieses = build_serieses();
+	
 		foreach($serieses as $series) {
 			//print_series($series['series_id']);
 			delete_series_children($series['series_id']);
+		}
+	
+		print '<hr/>done';
+	
+	} //end eieol_delete function
+
+	public function eieol_load()
+	{
+		ini_set('memory_limit','512M');
+		ini_set('max_execution_time', 500);
+		
+		$serieses = build_serieses();
+
+		foreach($serieses as $series) {
+			delete_series_children($series['series_id']);
+		}
+		
+		foreach($serieses as $series) {
+			print 'loading  ' . $series['path'] . '<br/>';
 			store_lessons($series);
 		}
 		
 		print '<hr/>done';
 	
 	} //end eieol_load function
+	
+	public function element_count()
+	{
+		$glosses = EieolGloss::get();
+		foreach($glosses as $gloss) {
+			$count = EieolElement::where('gloss_id', '=', $gloss->id)->count();
+			if ($count > 3) {
+				print $gloss->id . ' ' . $count . '<br/>';
+			}
+		}
+	
+		print '<hr/>done';
+	
+	} //end element_count function
 	
 } //end load controller
