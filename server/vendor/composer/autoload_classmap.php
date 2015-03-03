@@ -7,7 +7,6 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'AddCommentsToGloss' => $baseDir . '/app/database/migrations/2015_02_23_114336_add_comments_to_gloss.php',
-    'AddLangCodesToLanguage' => $baseDir . '/app/database/migrations/2015_02_24_153531_add_lang_codes_to_language.php',
     'AddMenuFieldsToSeries' => $baseDir . '/app/database/migrations/2014_11_10_142958_add_menu_fields_to_series.php',
     'Barryvdh\\Debugbar\\Console\\ClearCommand' => $vendorDir . '/barryvdh/laravel-debugbar/src/Console/ClearCommand.php',
     'Barryvdh\\Debugbar\\Console\\PublishCommand' => $vendorDir . '/barryvdh/laravel-debugbar/src/Console/PublishCommand.php',
@@ -52,6 +51,7 @@ return array(
     'Boris\\ShallowParser' => $vendorDir . '/d11wtq/boris/lib/Boris/ShallowParser.php',
     'Carbon\\Carbon' => $vendorDir . '/nesbot/carbon/src/Carbon/Carbon.php',
     'ChangeElementUniqueness' => $baseDir . '/app/database/migrations/2015_01_14_140027_change_element_uniqueness.php',
+    'ChangeGlossCommentsToLongtext' => $baseDir . '/app/database/migrations/2015_02_27_161949_change_gloss_comments_to_longtext.php',
     'ChangeGlossToPointToLanguage' => $baseDir . '/app/database/migrations/2015_01_07_094005_change_gloss_to_point_to_language.php',
     'ChangeGlossToUseElement' => $baseDir . '/app/database/migrations/2015_01_13_111707_change_gloss_to_use_element.php',
     'ChangeHeadWordCollation' => $baseDir . '/app/database/migrations/2015_02_26_091441_change_head_word_collation.php',

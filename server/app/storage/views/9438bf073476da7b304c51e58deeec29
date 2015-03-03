@@ -3,21 +3,31 @@
     <head>
         <meta name='viewport' content='width=device-width, initial-scale=1'>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>LRC Admin - @yield('title')</title>
+        <title>LRC Admin - <?php echo $__env->yieldContent('title'); ?></title>
  
-        {{ HTML::style('//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css') }}
-        {{ HTML::style('//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css') }}
-        {{ HTML::style('css/lrcstyle.css') }}
-        {{ HTML::style('css/adminstyle.css') }}
-        {{ HTML::style('css/jquery.tagsinput.css') }}
-        {{ HTML::style('https://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css') }}
+        <?php echo HTML::style('//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css'); ?>
+
+        <?php echo HTML::style('//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'); ?>
+
+        <?php echo HTML::style('css/adminstyle.css'); ?>
+
+        <?php echo HTML::style('css/jquery.tagsinput.css'); ?>
+
+        <?php echo HTML::style('https://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css'); ?>
+
         
-        {{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js') }}
-        {{ HTML::script('//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js') }}
-        {{ HTML::script('//cdn.ckeditor.com/4.4.5.1/full/ckeditor.js') }}
-        {{ HTML::script('js/jquery.tagsinput.js') }}
-        {{ HTML::script('https://code.jquery.com/ui/1.11.2/jquery-ui.min.js') }}
-        {{ HTML::script('js/specialedit.jquery.js') }}
+        <?php echo HTML::script('//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'); ?>
+
+        <?php echo HTML::script('//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js'); ?>
+
+        <?php echo HTML::script('//cdn.ckeditor.com/4.4.5.1/full/ckeditor.js'); ?>
+
+        <?php echo HTML::script('js/jquery.tagsinput.js'); ?>
+
+        <?php echo HTML::script('https://code.jquery.com/ui/1.11.2/jquery-ui.min.js'); ?>
+
+        <?php echo HTML::script('js/specialedit.jquery.js'); ?>
+
 
  
     </head>
@@ -79,7 +89,7 @@
 	    </div>
 	</div>
     
-    	@if(Request::path() != 'login')
+    	<?php if(Request::path() != 'login'): ?>
     
 	        <!-- navbar -->
 		    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -89,21 +99,21 @@
 		        </div>
 		        
 		        <ul class="nav navbar-nav">
-		          <li>{{ HTML::link('/admin/eieol_series', 'Series', array('title' => 'Series Maintenance')) }}</li>
-		          <li>{{ HTML::link('/admin/eieol_language', 'Language', array('title' => 'Language Maintenance')) }}</li>
-		          <li>{{ HTML::link('/admin/user', 'Users', array('title' => 'User Maintenance' )) }}</li>
+		          <li><?php echo HTML::link('/admin/eieol_series', 'Series', array('title' => 'Series Maintenance')); ?></li>
+		          <li><?php echo HTML::link('/admin/eieol_language', 'Language', array('title' => 'Language Maintenance')); ?></li>
+		          <li><?php echo HTML::link('/admin/user', 'Users', array('title' => 'User Maintenance' )); ?></li>
 		        </ul>
 		        
 		        <ul class="nav navbar-nav navbar-right">
-		          <li>{{ HTML::link('logout', 'Logout', array('title' => 'Logout' )) }}</li>
+		          <li><?php echo HTML::link('logout', 'Logout', array('title' => 'Logout' )); ?></li>
 		        </ul>
 		      </div>
 		    </nav>
 	    
-	    @endif
+	    <?php endif; ?>
 	
 	    <div class="container-fluid">		
-	        @yield('content')
+	        <?php echo $__env->yieldContent('content'); ?>
 	    </div>
  
     </body>

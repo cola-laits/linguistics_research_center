@@ -416,7 +416,7 @@
 				    });
 				    for (i=1; i<=3; i++) {
 				    	$('#element_' + i + '_head_word_display', '#edit_gloss_form').text(''); //we only get ones that already exist, so reset it first
-				    	$('#element_' + i + '_head_word_display', '#edit_gloss_form').text(data['element_' + i + '_head_word_display']).html();//we have to use .html() so <> will display correctly
+				    	$('#element_' + i + '_head_word_display', '#edit_gloss_form').html(data['element_' + i + '_head_word_display']);
 				    }    
 
 				    for (i=2; i<=3; i++) {
@@ -954,7 +954,7 @@
 			    		   'url' => '/admin/eieol_head_word/', 
 			    		   'method' => 'PUT',
 			    		   'class' => 'form ajax_form modal_form',
-			    		   'id' => 'edit_head_word_form'  
+			    		   'id' => 'edit_head_word_form'
 			    		  ]) }}
 			    		  
 			    		  {{ Form::hidden('language_id', $lesson->language_id, ['class' => 'language_id_class']) }}

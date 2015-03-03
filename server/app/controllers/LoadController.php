@@ -121,15 +121,23 @@ function store_lessons($series) {
 				
 				foreach ($glossed_text->glosses as $gloss) {
 					$new_glossed_text_gloss = new EieolGlossedTextGloss;
-					
 					$surface_form = Normalizer::normalize($gloss->surface_form, Normalizer::FORM_C );
 					$part_of_speech = $gloss->elements[0]->part_of_speech;
+					$contextual_gloss = Normalizer::normalize($gloss->contextual_gloss, Normalizer::FORM_C );
+					
 					if (array_key_exists('analysis',$gloss->elements[0])) {
 						$analysis = $gloss->elements[0]->analysis;
 					} else {
 						$analysis = '';
 					}
-					$gloss_key = strtoupper($surface_form) . '~~~' .  strtoupper($part_of_speech) . '~~~' . strtoupper($analysis);
+					
+					//get first headword
+					foreach ($gloss->elements as $element) {
+						$head_word = Normalizer::normalize($element->head_word->word, Normalizer::FORM_C );
+						break;
+					}
+					
+					$gloss_key = $surface_form . '~~~' .  $part_of_speech . '~~~' . $analysis . '~~~' . $contextual_gloss . '~~~' . $head_word . '~~~' . $temp_language_id;
 					//log::error($gloss_key);
 					
 					if (array_key_exists($gloss_key,$stored_glosses)) {
@@ -137,7 +145,7 @@ function store_lessons($series) {
 					} else {					
 						$new_gloss = new EieolGloss;
 						$new_gloss->surface_form = $surface_form;
-						$new_gloss->contextual_gloss = Normalizer::normalize($gloss->contextual_gloss, Normalizer::FORM_C );
+						$new_gloss->contextual_gloss = $contextual_gloss;
 						if (array_key_exists('comments',$gloss) ) {
 							$new_gloss->comments = Normalizer::normalize($gloss->comments, Normalizer::FORM_C );
 						}
@@ -153,7 +161,7 @@ function store_lessons($series) {
 						
 							$word = Normalizer::normalize($element->head_word->word, Normalizer::FORM_C );
 							$definition = Normalizer::normalize($element->head_word->definition, Normalizer::FORM_C );
-							$head_word_key = strtoupper($word) . '~~~' . strtoupper($definition);
+							$head_word_key = $word . '~~~' . $definition . '~~~' . $temp_language_id;
 							//Log::error($head_word_key);
 						
 							if (array_key_exists($head_word_key,$stored_head_words)) {
@@ -215,7 +223,10 @@ function store_lessons($series) {
 
 function build_serieses() {
 	//some series have 2 languages:
-	//Tocharian (Toch A 1-5, Toch B 6-10), Baltic(Lithuanian 1-7 Latvian 8-10), Albanian(Tosk 1-3 Geg 4-5), Iranian(Old Avestan 1-4 Young Avestan 5-6 Old Persian 7-10)
+	//Tocharian (Toch A 1-5, Toch B 6-10), 
+	//Baltic(Lithuanian 1-7 Latvian 8-10), 
+	//Albanian(Tosk 1-3 Geg 4-5), 
+	//Iranian(Avestan 1-6 Old Persian 7-10)
 	
 	$serieses = array();
 	
@@ -223,12 +234,14 @@ function build_serieses() {
 	$series['series_id'] = 1;
 	$series['language_id'] = 1;
 	$series['path'] = '/var/www/html/app/storage/data_load/Latin Online.json';
+	$series['index'] = array(1 => '/var/www/html/app/storage/data_load/indexes/latol-EI-X.json');
 	$serieses[] = $series;
 	
 	$series = array();
 	$series['series_id'] = 2;
 	$series['language_id'] = 2;
 	$series['path'] = '/var/www/html/app/storage/data_load/Classical Greek Online.json';
+	$series['index'] = array(2 => '/var/www/html/app/storage/data_load/indexes/grkol-EI-X.json');
 	$serieses[] = $series;
 
 	$series = array();
@@ -240,12 +253,16 @@ function build_serieses() {
 	$series['language_id_4'] = 21;
 	$series['language_id_5'] = 21;
 	$series['path'] = '/var/www/html/app/storage/data_load/Albanian Online.json';
+	$series['index'] = array(6 => '/var/www/html/app/storage/data_load/indexes/albol-EI-X.json', //Tosk 1-3
+							 21 => '/var/www/html/app/storage/data_load/indexes/gegol-EI-X.json'); //Geg 4-5
+	
 	$serieses[] = $series;
 
 	$series = array();
 	$series['series_id'] = 10;
 	$series['language_id'] = 7;
 	$series['path'] = '/var/www/html/app/storage/data_load/Ancient Sanskrit Online.json';
+	$series['index'] = array(7 => '/var/www/html/app/storage/data_load/indexes/vedol-EI-X.json');
 	$serieses[] = $series;
 
 	$series = array();
@@ -262,54 +279,64 @@ function build_serieses() {
 	$series['language_id_9'] = 20;
 	$series['language_id_10'] = 20;
 	$series['path'] = '/var/www/html/app/storage/data_load/Baltic Online.json';
+	$series['index'] = array(8 => '/var/www/html/app/storage/data_load/indexes/litol-EI-X.json', //Lithuanian 1-7 
+							20 => '/var/www/html/app/storage/data_load/indexes/lavol-EI-X.json'); //Latvian 8-10
 	$serieses[] = $series;
 
 	$series = array();
 	$series['series_id'] = 5;
 	$series['language_id'] = 9;
 	$series['path'] = '/var/www/html/app/storage/data_load/Classical Armenian Online.json';
+	$series['index'] = array(9 => '/var/www/html/app/storage/data_load/indexes/armol-EI-X.json');
 	$serieses[] = $series;
 
 	$series = array();
 	$series['series_id'] = 19;
-	$series['language_id'] = 9;
+	$series['language_id'] = 24;
 	$series['path'] = '/var/www/html/app/storage/data_load/Classical Armenian Online - Romanized.json';
+	$series['index'] = array(24 => '/var/www/html/app/storage/data_load/indexes/armol-EI.json');
 	$serieses[] = $series;
 
 	$series = array();
 	$series['series_id'] = 11;
 	$series['language_id'] = 10;
 	$series['path'] = '/var/www/html/app/storage/data_load/Gothic Online.json';
+	$series['index'] = array(10 => '/var/www/html/app/storage/data_load/indexes/gotol-EI-X.json');
 	$serieses[] = $series;
 
 	$series = array();
 	$series['series_id'] = 9;
 	$series['language_id'] = 11;
 	$series['path'] = '/var/www/html/app/storage/data_load/Hittite Online.json';
+	$series['index'] = array(11 => '/var/www/html/app/storage/data_load/indexes/hitol-EI-X.json');
 	$serieses[] = $series;
 
 	$series = array();
 	$series['series_id'] = 3;
 	$series['language_id'] = 12;
 	$series['path'] = '/var/www/html/app/storage/data_load/New Testament Greek Online.json';
+	$series['index'] = array(12 => '/var/www/html/app/storage/data_load/indexes/ntgol-EI-X.json');
 	$serieses[] = $series;
 
 	$series = array();
 	$series['series_id'] = 4;
 	$series['language_id'] = 13;
 	$series['path'] = '/var/www/html/app/storage/data_load/Old Church Slavonic Online.json';
+	$series['index'] = array(13 => '/var/www/html/app/storage/data_load/indexes/ocsol-EI-X.json');
 	$serieses[] = $series;
 
 	$series = array();
 	$series['series_id'] = 14;
 	$series['language_id'] = 14;
 	$series['path'] = '/var/www/html/app/storage/data_load/Old English Online.json';
+	$series['index'] = array(14 => '/var/www/html/app/storage/data_load/indexes/engol-EI-X.json');
 	$serieses[] = $series;
 
 	$series = array();
 	$series['series_id'] = 12;
 	$series['language_id'] = 15;
 	$series['path'] = '/var/www/html/app/storage/data_load/Old French Online.json';
+	$series['index'] = array(15 => '/var/www/html/app/storage/data_load/indexes/ofrol-EI-X.json');
 	$serieses[] = $series;
 
 	$series = array();
@@ -319,31 +346,36 @@ function build_serieses() {
 	$series['language_id_2'] = 16;
 	$series['language_id_3'] = 16;
 	$series['language_id_4'] = 16;
-	$series['language_id_5'] = 23;
-	$series['language_id_6'] = 23;
+	$series['language_id_5'] = 16;
+	$series['language_id_6'] = 16;
 	$series['language_id_7'] = 22;
 	$series['language_id_8'] = 22;
 	$series['language_id_9'] = 22;
 	$series['language_id_10'] = 22;
 	$series['path'] = '/var/www/html/app/storage/data_load/Old Iranian Online.json';
+	$series['index'] = array(16 => '/var/www/html/app/storage/data_load/indexes/aveol-EI-X.json', //Avestan 1-6 
+						22=> '/var/www/html/app/storage/data_load/indexes/opeol-EI-X.json'); //Old Persian 7-10
 	$serieses[] = $series;
 
 	$series = array();
 	$series['series_id'] = 13;
 	$series['language_id'] = 17;
 	$series['path'] = '/var/www/html/app/storage/data_load/Old Irish Online.json';
+	$series['index'] = array(17 => '/var/www/html/app/storage/data_load/indexes/iriol-EI-X.json');
 	$serieses[] = $series;
 
 	$series = array();
 	$series['series_id'] = 7;
 	$series['language_id'] = 18;
 	$series['path'] = '/var/www/html/app/storage/data_load/Old Norse Online.json';
+	$series['index'] = array(18 => '/var/www/html/app/storage/data_load/indexes/norol-EI-X.json');
 	$serieses[] = $series;
 
 	$series = array();
 	$series['series_id'] = 17;
 	$series['language_id'] = 19;
 	$series['path'] = '/var/www/html/app/storage/data_load/Old Russian Online.json';
+	$series['index'] = array(19 => '/var/www/html/app/storage/data_load/indexes/oruol-EI-X.json');
 	$serieses[] = $series;
 
 	$series = array();
@@ -362,6 +394,8 @@ function build_serieses() {
 	$series['language_id_11'] = 4;
 	$series['language_id_20'] = 3;
 	$series['path'] = '/var/www/html/app/storage/data_load/Tocharian Online.json';
+	$series['index'] = array(3 => '/var/www/html/app/storage/data_load/indexes/tokol-EI-X.json', //Toch A 1-5
+					4 =>  '/var/www/html/app/storage/data_load/indexes/txbol-EI-X.json'); //Toch B 6-10
 	$serieses[] = $series;
 	
 	return $serieses;
@@ -372,6 +406,9 @@ class LoadController extends BaseController {
 	
 	public function eieol_delete()
 	{
+		ini_set('memory_limit','512M');
+		ini_set('max_execution_time', 500);
+		
 		$serieses = build_serieses();
 	
 		foreach($serieses as $series) {
@@ -399,9 +436,52 @@ class LoadController extends BaseController {
 			store_lessons($series);
 		}
 		
-		print '<hr/>done';
+		print '<hr/>done<br/>Go into PHPMyAdmin and convert head word <dales, dalles, dallĂŠ> to <dales, dalles, dallé><br/>Then run index load.';
 	
 	} //end eieol_load function
+	
+	public function index_load()
+	{
+		ini_set('memory_limit','320M');
+		ini_set('max_execution_time', 500);
+		print 'this should only be run after the eieol_load';
+	
+		$serieses = build_serieses();
+	
+		foreach($serieses as $series) {
+			print 'indexing  ' . $series['path'] . '<br/>';
+			foreach($series['index'] as $lang => $url) {
+				//if ($lang != 1) {
+				//	continue;
+				//}
+				print $lang. ' ' . $url . '<br/>';
+				$myfile = fopen($url, "r") or die("Unable to open file!");
+				$data = json_decode(fread($myfile,filesize($url)));
+				for($i = 0; $i<count($data); $i++) {
+					$head_word = Normalizer::normalize($data[$i]->head_word, Normalizer::FORM_C );
+					//hack to fix bad data
+					if ($data[$i]->definition == 'strike ...against') {
+						$data[$i]->definition = 'strike...against';
+					}
+					print $data[$i]->keyword  . ' ' . htmlentities($head_word) . ' ' . $data[$i]->definition . '<br/>';
+					//Log::error($data[$i]->keyword  . ' ' . $head_word . ' ' . $data[$i]->definition);
+					$head_word = EieolHeadWord::where('word', '=', $head_word)
+												->where('definition', 'like',  '%' . $data[$i]->definition .  '%')
+												->where('language_id', '=', $lang)->first();
+					$new_head_word_keyword = new EieolHeadWordKeyword;
+					$new_head_word_keyword->keyword = $data[$i]->keyword;
+					$new_head_word_keyword->head_word_id = $head_word['id'];
+					$new_head_word_keyword->language_id = $lang;
+					$new_head_word_keyword->created_by = 'loader';
+					$new_head_word_keyword->updated_by = 'loader';
+					$new_head_word_keyword->save();
+				}
+			}
+		}
+	
+		print '<hr/>done';
+	
+	} //end index_load function
 	
 	public function element_count()
 	{

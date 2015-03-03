@@ -156,7 +156,7 @@ class PublicController extends BaseController {
 						$key = $element->head_word->word . ' -- ' . $element->head_word->definition;
 						if (!key_exists($key, $data['head_words'])) {
 							$data['head_words'][$key] = $element->head_word->toArray();
-							$data['head_words'][$key]['word'] = htmlentities($data['head_words'][$key]['word']);
+							$data['head_words'][$key]['display'] = $element->head_word->getDisplayHeadWord();
 							$data['head_words'][$key]['glossed_text_gloss_ids'] = array();
 							$data['head_words'][$key]['glossed_text_gloss_ids'][$gloss->pivot->id] = $lesson;
 						} else {
@@ -192,7 +192,7 @@ class PublicController extends BaseController {
 							$key = $keyword->keyword . ' -- ' . $element->head_word->word . ' -- ' . $element->head_word->definition;
 							if (!key_exists($key, $data['keywords'])) {
 								$data['keywords'][$key] = $keyword->toArray();
-								$data['keywords'][$key]['head_word'] = htmlentities($element->head_word->word) . ' ' . $element->head_word->definition;
+								$data['keywords'][$key]['head_word'] =  $element->head_word->getDisplayHeadWord();
 								$data['keywords'][$key]['glossed_text_gloss_ids'] = array();
 								$data['keywords'][$key]['glossed_text_gloss_ids'][$gloss->pivot->id] = $lesson;
 							} else {

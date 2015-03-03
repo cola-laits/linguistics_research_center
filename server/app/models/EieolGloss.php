@@ -27,10 +27,10 @@ class EieolGloss extends Eloquent {
 			if ($i != 1) {
 				$string .= ' + ';
 			}
+			
 			$string .= $element->part_of_speech . '; ' .
 						$element->analysis . ' ' .
-						htmlentities($element->head_word->word) . ' ' .
-						$element->head_word->definition;
+						$element->head_word->getDisplayHeadWord();
 		}
 		$string .= '<strong> -- ' . $this->contextual_gloss . '</strong>';
 		
@@ -51,10 +51,10 @@ class EieolGloss extends Eloquent {
 			if ($i != 1) {
 				$string .= ' + ';
 			}
+			
 			$string .= $element->part_of_speech . '; ' .
 					$element->analysis . ' ' .
-					htmlentities($element->head_word->word) . ' ' .
-					$element->head_word->definition;
+					$element->head_word->getDisplayHeadWord();
 		}
 		return $string;
 	}

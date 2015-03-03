@@ -20,7 +20,7 @@
 
 <?php foreach($lesson->glossed_texts as $glossed_text): ?>
 	<div class="glossed_text"><?php echo $glossed_text->glossed_text; ?></div>
-	<br/><br/>
+	<br/>
 	<ul>
 	<?php foreach($glossed_text->glosses as $gloss): ?>
    		<li>
@@ -34,8 +34,7 @@
 
 <?php if($lesson_text != ''): ?>
 	<h2>Lesson Text</h2>
-	<?php echo $lesson_text; ?>
-
+	<blockquote><?php echo $lesson_text; ?></blockquote>
 <?php endif; ?>
 	      
 <?php if($lesson->lesson_translation != ''): ?>	        

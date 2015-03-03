@@ -38,7 +38,7 @@ curious about Indo-European etymology. Notice of potential error is always welco
 <br/><br/><br/>
 
 @foreach ($head_words as $head_word)
-	<dt>{{$head_word['word']}} {{$head_word['definition']}} --</dt>
+	<dt>{{$head_word['display']}} --</dt>
 	<dd>
 		@foreach ($head_word['glossed_text_gloss_ids'] as $id => $lesson)
 			<a href='/eieol_lesson/{{$series->id}}?id={{$lesson->id}}#glossed_text_gloss_{{$id}}'>{{$lesson->title}}</a>

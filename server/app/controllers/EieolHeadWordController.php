@@ -13,7 +13,7 @@ class EieolHeadWordController extends BaseController {
 								->take(10)->get()->sortBy('word');
 		foreach ($head_words as $head_word) {
 			$text .= '<a id="' . $head_word->id . '">' .
-					 htmlentities($head_word->getDisplayHeadWord()) .
+					 $head_word->getDisplayHeadWord() .
 					 '</a>' .
 					 '<br/>';				
 		}
@@ -33,7 +33,7 @@ class EieolHeadWordController extends BaseController {
 	public function show($id)
 	{
 		$head_word = EieolHeadWord::with('keywords', 'elements')->find($id);
-		$return_head_word = $head_word->toArray();		
+		$return_head_word = $head_word->toArray();	
 		
 		$glosses = array();
 		foreach($head_word->elements as $element){
@@ -111,7 +111,7 @@ class EieolHeadWordController extends BaseController {
 					'success' => true,
 					'added' => true,
 					'head_word_id' => $returned_head_word->id,
-					'head_word_display' => htmlentities($returned_head_word->getDisplayHeadWord()),
+					'head_word_display' => $returned_head_word->getDisplayHeadWord(),
 					'message' => 'Head Word was successfully added.'
 			));
 	
@@ -189,7 +189,7 @@ class EieolHeadWordController extends BaseController {
 					'success' => true,
 					'message' => 'Head Word was successfully updated.',
 					'head_word_id' => $head_word->id,
-					'head_word_display' => htmlentities($head_word->getDisplayHeadWord()),
+					'head_word_display' => $head_word->getDisplayHeadWord(),
 			));
 	
 		}

@@ -15,6 +15,12 @@ class EieolHeadWord extends Eloquent {
 	
 	public function getDisplayHeadWord()
 	{
-		return $this->word . ' ' . $this->definition;
+		//trim <> and replace with &chars
+		$word = $this->word;
+		$word = substr($word,1);
+		$word = substr($word,0,-1);
+		$word = "&lt;" . $word . "&gt;";
+		
+		return $word . ' ' . $this->definition;
 	}
 }

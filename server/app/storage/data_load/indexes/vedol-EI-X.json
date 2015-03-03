@@ -1,0 +1,5137 @@
+[
+	{
+		"head_word": "<kr\u00e1tu>",
+		"definition": "power, intellectual ability",
+		"keyword": "ABILITY"
+	},
+
+	{
+		"head_word": "<\u221ama\u1e43h, m\u00e1\u1e43hate>",
+		"definition": "<i>effect, bring about</i>",
+		"keyword": "ABOUT"
+	},
+
+	{
+		"head_word": "<\u0101han\u00e1s>",
+		"definition": "<i>abundantly productive</i>",
+		"keyword": "ABUNDANTLY"
+	},
+
+	{
+		"head_word": "<\u221ap\u012b, p\u00ednvati>",
+		"definition": "swell, yield abundantly",
+		"keyword": "ABUNDANTLY"
+	},
+
+	{
+		"head_word": "<\u221avr\u0325, vr\u0325\u1e47\u012bt\u00e9>",
+		"definition": "choose, accept",
+		"keyword": "ACCEPT"
+	},
+
+	{
+		"head_word": "<\u221asac, s\u00e1cate>",
+		"definition": "accompany",
+		"keyword": "ACCOMPANY"
+	},
+
+	{
+		"head_word": "<saj\u00f3\u1e63as>",
+		"definition": "accordant",
+		"keyword": "ACCORDANT"
+	},
+
+	{
+		"head_word": "<\u221abhuj, bhu\u00f1j\u00e1te>",
+		"definition": "turn to account",
+		"keyword": "ACCOUNT"
+	},
+
+	{
+		"head_word": "<k\u00e1rman>",
+		"definition": "act, deed",
+		"keyword": "ACT"
+	},
+
+	{
+		"head_word": "<\u221avi\u1e63, vive\u1e63\u1e6di>",
+		"definition": "be active",
+		"keyword": "ACTIVE"
+	},
+
+	{
+		"head_word": "<\u00e1diti>",
+		"definition": "<i>freedom,</i> Aditi",
+		"keyword": "ADITI"
+	},
+
+	{
+		"head_word": "<\u0101dity\u00e1>",
+		"definition": "of Aditi, son of Aditi",
+		"keyword": "ADITI"
+	},
+
+	{
+		"head_word": "<\u00e1m\u012bv\u0101>",
+		"definition": "affliction",
+		"keyword": "AFFLICTION"
+	},
+
+	{
+		"head_word": "<pur\u0101j\u0101<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "born aforetime",
+		"keyword": "AFORETIME"
+	},
+
+	{
+		"head_word": "<dev\u00e1\u1e43-devam>",
+		"definition": "god after god",
+		"keyword": "AFTER"
+	},
+
+	{
+		"head_word": "<dev\u00f3-devas>",
+		"definition": "god after god",
+		"keyword": "AFTER"
+	},
+
+	{
+		"head_word": "<div\u00e9-dive>",
+		"definition": "day after day",
+		"keyword": "AFTER"
+	},
+
+	{
+		"head_word": "<\u00e1nu>",
+		"definition": "after",
+		"keyword": "AFTER"
+	},
+
+	{
+		"head_word": "<pr\u00e1ti>",
+		"definition": "against",
+		"keyword": "AGAINST"
+	},
+
+	{
+		"head_word": "<jara\u1e47\u0101<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "old age",
+		"keyword": "AGE"
+	},
+
+	{
+		"head_word": "<agn\u00ed>",
+		"definition": "fire, Agni",
+		"keyword": "AGNI"
+	},
+
+	{
+		"head_word": "<ant\u00e1rik\u1e63a>",
+		"definition": "airy space, atmosphere",
+		"keyword": "AIRY"
+	},
+
+	{
+		"head_word": "<r\u00e1jas>",
+		"definition": "airy space, dark region",
+		"keyword": "AIRY"
+	},
+
+	{
+		"head_word": "<j\u012bv\u00e1>",
+		"definition": "alive, living",
+		"keyword": "ALIVE"
+	},
+
+	{
+		"head_word": "<\u221aj\u012bv, j\u012b<sup><font size=\"+1\">\u0301</font></sup>vati>",
+		"definition": "be alive",
+		"keyword": "ALIVE"
+	},
+
+	{
+		"head_word": "<cit>",
+		"definition": "even, all",
+		"keyword": "ALL"
+	},
+
+	{
+		"head_word": "<s\u00e1rva>",
+		"definition": "whole, all",
+		"keyword": "ALL"
+	},
+
+	{
+		"head_word": "<vai\u015bv\u0101nar\u00e1>",
+		"definition": "for all men, universal",
+		"keyword": "ALL"
+	},
+
+	{
+		"head_word": "<v\u00ed\u015bva>",
+		"definition": "all",
+		"keyword": "ALL"
+	},
+
+	{
+		"head_word": "<vi\u015bv\u00e1vedas>",
+		"definition": "all-knowing one",
+		"keyword": "ALL-KNOWING"
+	},
+
+	{
+		"head_word": "<\u0101<sup><font size=\"+1\">\u0301</font></sup>pya>",
+		"definition": "alliance",
+		"keyword": "ALLIANCE"
+	},
+
+	{
+		"head_word": "<vi\u015bv\u0101<sup><font size=\"+1\">\u0301</font></sup>h\u0101>",
+		"definition": "always",
+		"keyword": "ALWAYS"
+	},
+
+	{
+		"head_word": "<sa\u1e43sth\u00e9>",
+		"definition": "in amongst",
+		"keyword": "AMONGST"
+	},
+
+	{
+		"head_word": "<pratn\u00e1>",
+		"definition": "ancient",
+		"keyword": "ANCIENT"
+	},
+
+	{
+		"head_word": "<ca>",
+		"definition": "and",
+		"keyword": "AND"
+	},
+
+	{
+		"head_word": "<ut\u00e1>",
+		"definition": "and",
+		"keyword": "AND"
+	},
+
+	{
+		"head_word": "<a\u1e43h\u00fa>",
+		"definition": "narrowness, anxiety",
+		"keyword": "ANXIETY"
+	},
+
+	{
+		"head_word": "<v\u00ed\u015bvy\u0101>",
+		"definition": "<i>anywhere</i>",
+		"keyword": "ANYWHERE"
+	},
+
+	{
+		"head_word": "<v\u00ed>",
+		"definition": "apart",
+		"keyword": "APART"
+	},
+
+	{
+		"head_word": "<\u221adr\u0325\u015b>",
+		"definition": "see, appear",
+		"keyword": "APPEAR"
+	},
+
+	{
+		"head_word": "<ket\u00fa>",
+		"definition": "appearance, shining out, ray",
+		"keyword": "APPEARANCE"
+	},
+
+	{
+		"head_word": "<bhakt\u00e1>",
+		"definition": "<i>what is apportioned</i>",
+		"keyword": "APPORTIONED"
+	},
+
+	{
+		"head_word": "<\u221ay\u0101, y\u0101<sup><font size=\"+1\">\u0301</font></sup>ti>",
+		"definition": "approach with longing, solicit",
+		"keyword": "APPROACH"
+	},
+
+	{
+		"head_word": "<b\u0101h\u00fa>",
+		"definition": "arm",
+		"keyword": "ARM"
+	},
+
+	{
+		"head_word": "<p\u00e1ri>",
+		"definition": "around, out of",
+		"keyword": "AROUND"
+	},
+
+	{
+		"head_word": "<\u015b\u00e1ru>",
+		"definition": "arrow",
+		"keyword": "ARROW"
+	},
+
+	{
+		"head_word": "<\u00ed\u1e63umant>",
+		"definition": "bearing arrows",
+		"keyword": "ARROWS"
+	},
+
+	{
+		"head_word": "<aryam\u00e1n>",
+		"definition": "Aryaman",
+		"keyword": "ARYAMAN"
+	},
+
+	{
+		"head_word": "<a\u015bv\u00edn>",
+		"definition": "horseman, Ashvin",
+		"keyword": "ASHVIN"
+	},
+
+	{
+		"head_word": "<\u221aprach, pr\u0325ch\u00e1ti>",
+		"definition": "ask, ask for",
+		"keyword": "ASK"
+	},
+
+	{
+		"head_word": "<ma\u1e43h\u00e1n\u0101>",
+		"definition": "<i>assuredly</i>",
+		"keyword": "ASSUREDLY"
+	},
+
+	{
+		"head_word": "<ant\u00e1rik\u1e63a>",
+		"definition": "airy space, atmosphere",
+		"keyword": "ATMOSPHERE"
+	},
+
+	{
+		"head_word": "<\u221ak\u0101\u015b, c\u0101<sup><font size=\"+1\">\u0301</font></sup>ka\u015b\u012bti>",
+		"definition": "observe, pay attention to",
+		"keyword": "ATTENTION"
+	},
+
+	{
+		"head_word": "<suma\u1e45g\u00e1la>",
+		"definition": "auspicious, bringing luck",
+		"keyword": "AUSPICIOUS"
+	},
+
+	{
+		"head_word": "<d\u016brak\u00e1m>",
+		"definition": "far away",
+		"keyword": "AWAY"
+	},
+
+	{
+		"head_word": "<\u00e1pa>",
+		"definition": "away",
+		"keyword": "AWAY"
+	},
+
+	{
+		"head_word": "<\u221asidh, s\u00e9dhati>",
+		"definition": "drive away",
+		"keyword": "AWAY"
+	},
+
+	{
+		"head_word": "<\u221ayu, yuy\u00f3ti>",
+		"definition": "keep away",
+		"keyword": "AWAY"
+	},
+
+	{
+		"head_word": "<durmat\u00ed>",
+		"definition": "bad thought, envy",
+		"keyword": "BAD"
+	},
+
+	{
+		"head_word": "<k\u0101r\u00fa>",
+		"definition": "bard",
+		"keyword": "BARD"
+	},
+
+	{
+		"head_word": "<\u221aas, \u00e1sti>",
+		"definition": "be",
+		"keyword": "BE"
+	},
+
+	{
+		"head_word": "<\u221abh\u016b, bh\u00e1vati>",
+		"definition": "be",
+		"keyword": "BE"
+	},
+
+	{
+		"head_word": "<usr\u00edy\u0101>",
+		"definition": "<i>beam</i>",
+		"keyword": "BEAM"
+	},
+
+	{
+		"head_word": "<\u221abhr\u0325, bh\u00e1rati>",
+		"definition": "bring, bear",
+		"keyword": "BEAR"
+	},
+
+	{
+		"head_word": "<\u221ajan, j\u00e1nati>",
+		"definition": "produce, create, bear",
+		"keyword": "BEAR"
+	},
+
+	{
+		"head_word": "<\u00ed\u1e63umant>",
+		"definition": "bearing arrows",
+		"keyword": "BEARING"
+	},
+
+	{
+		"head_word": "<h\u00ed>",
+		"definition": "for, because",
+		"keyword": "BECAUSE"
+	},
+
+	{
+		"head_word": "<v\u00e1re\u1e47ya>",
+		"definition": "beloved",
+		"keyword": "BELOVED"
+	},
+
+	{
+		"head_word": "<v\u0101m\u00e1>",
+		"definition": "dear, beloved thing",
+		"keyword": "BELOVED"
+	},
+
+	{
+		"head_word": "<v\u00e1su>",
+		"definition": "good, beneficent",
+		"keyword": "BENEFICENT"
+	},
+
+	{
+		"head_word": "<priy\u00e1k\u1e63atra>",
+		"definition": "ruling benevolently",
+		"keyword": "BENEVOLENTLY"
+	},
+
+	{
+		"head_word": "<ri\u015b\u0101<sup><font size=\"+1\">\u0301</font></sup>das>",
+		"definition": "<i>benign</i>",
+		"keyword": "BENIGN"
+	},
+
+	{
+		"head_word": "<adr\u00fah>",
+		"definition": "not betraying",
+		"keyword": "BETRAYING"
+	},
+
+	{
+		"head_word": "<v\u00e1syas\u0101-vasyas\u0101>",
+		"definition": "with better and better",
+		"keyword": "BETTER"
+	},
+
+	{
+		"head_word": "<\u00e1ti>",
+		"definition": "beyond",
+		"keyword": "BEYOND"
+	},
+
+	{
+		"head_word": "<ar\u1e47av\u00e1>",
+		"definition": "billowing, foaming",
+		"keyword": "BILLOWING"
+	},
+
+	{
+		"head_word": "<\u015bak\u00fani>",
+		"definition": "(a kind of bird)",
+		"keyword": "BIRD"
+	},
+
+	{
+		"head_word": "<\u015bak\u00fanti>",
+		"definition": "(a kind of bird)",
+		"keyword": "BIRD"
+	},
+
+	{
+		"head_word": "<\u015b\u00e1m>",
+		"definition": "blessing, blessed",
+		"keyword": "BLESSED"
+	},
+
+	{
+		"head_word": "<\u015b\u00e1\u1e43t\u0101ti>",
+		"definition": "blessed",
+		"keyword": "BLESSED"
+	},
+
+	{
+		"head_word": "<\u015b\u00e1m>",
+		"definition": "blessing, blessed",
+		"keyword": "BLESSING"
+	},
+
+	{
+		"head_word": "<\u221av\u0101, v\u0101<sup><font size=\"+1\">\u0301</font></sup>ti>",
+		"definition": "blow",
+		"keyword": "BLOW"
+	},
+
+	{
+		"head_word": "<na\u00fa>",
+		"definition": "boat",
+		"keyword": "BOAT"
+	},
+
+	{
+		"head_word": "<sumn\u00e1>",
+		"definition": "favour, boon",
+		"keyword": "BOON"
+	},
+
+	{
+		"head_word": "<pur\u0101j\u0101<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "born aforetime",
+		"keyword": "BORN"
+	},
+
+	{
+		"head_word": "<\u221aj\u0101, j\u0101<sup><font size=\"+1\">\u0301</font></sup>yate>",
+		"definition": "be born",
+		"keyword": "BORN"
+	},
+
+	{
+		"head_word": "<ubh\u00e1ya>",
+		"definition": "both",
+		"keyword": "BOTH"
+	},
+
+	{
+		"head_word": "<citr\u00e1>",
+		"definition": "bright, radiant",
+		"keyword": "BRIGHT"
+	},
+
+	{
+		"head_word": "<vy\u00fa\u1e63>",
+		"definition": "brightening",
+		"keyword": "BRIGHTENING"
+	},
+
+	{
+		"head_word": "<bh\u0101<sup><font size=\"+1\">\u0301</font></sup>svant>",
+		"definition": "possessing light, brightness",
+		"keyword": "BRIGHTNESS"
+	},
+
+	{
+		"head_word": "<bh\u0101n\u00fa>",
+		"definition": "brightness, shining",
+		"keyword": "BRIGHTNESS"
+	},
+
+	{
+		"head_word": "<\u221abhr\u0325, bh\u00e1rati>",
+		"definition": "bring, bear",
+		"keyword": "BRING"
+	},
+
+	{
+		"head_word": "<\u221ama\u1e43h, m\u00e1\u1e43hate>",
+		"definition": "<i>effect, bring about</i>",
+		"keyword": "BRING"
+	},
+
+	{
+		"head_word": "<\u221avah, v\u00e1hati>",
+		"definition": "conduct, bring",
+		"keyword": "BRING"
+	},
+
+	{
+		"head_word": "<mayobh\u016b<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "bringing happiness",
+		"keyword": "BRINGING"
+	},
+
+	{
+		"head_word": "<suma\u1e45g\u00e1la>",
+		"definition": "auspicious, bringing luck",
+		"keyword": "BRINGING"
+	},
+
+	{
+		"head_word": "<s\u00e1v\u012bman>",
+		"definition": "bringing to life",
+		"keyword": "BRINGING"
+	},
+
+	{
+		"head_word": "<ur\u00fa>",
+		"definition": "broad, spacious",
+		"keyword": "BROAD"
+	},
+
+	{
+		"head_word": "<br\u00e1hmav\u0101has>",
+		"definition": "brought by prayer",
+		"keyword": "BROUGHT"
+	},
+
+	{
+		"head_word": "<g\u00edrv\u0101has>",
+		"definition": "brought by song",
+		"keyword": "BROUGHT"
+	},
+
+	{
+		"head_word": "<t\u00fa>",
+		"definition": "then, but",
+		"keyword": "BUT"
+	},
+
+	{
+		"head_word": "<br\u00e1hmav\u0101has>",
+		"definition": "brought by prayer",
+		"keyword": "BY"
+	},
+
+	{
+		"head_word": "<d\u00edv\u0101>",
+		"definition": "by day",
+		"keyword": "BY"
+	},
+
+	{
+		"head_word": "<g\u00edrv\u0101has>",
+		"definition": "brought by song",
+		"keyword": "BY"
+	},
+
+	{
+		"head_word": "<n\u00e1ktam>",
+		"definition": "by night",
+		"keyword": "BY"
+	},
+
+	{
+		"head_word": "<yaj\u00f1\u00e1vr\u0325ddha>",
+		"definition": "strengthened by worship",
+		"keyword": "BY"
+	},
+
+	{
+		"head_word": "<h\u00e1va>",
+		"definition": "call",
+		"keyword": "CALL"
+	},
+
+	{
+		"head_word": "<\u221ah\u016b, h\u00e1vate>",
+		"definition": "invoke, call upon",
+		"keyword": "CALL"
+	},
+
+	{
+		"head_word": "<g\u00f3mant>",
+		"definition": "consisting of cattle",
+		"keyword": "CATTLE"
+	},
+
+	{
+		"head_word": "<pa\u015b\u00fa>",
+		"definition": "cattle",
+		"keyword": "CATTLE"
+	},
+
+	{
+		"head_word": "<h\u00f3tr\u0325>",
+		"definition": "celebrant",
+		"keyword": "CELEBRANT"
+	},
+
+	{
+		"head_word": "<prav\u0101<sup><font size=\"+1\">\u0301</font></sup>cya>",
+		"definition": "to be celebrated",
+		"keyword": "CELEBRATED"
+	},
+
+	{
+		"head_word": "<avayun\u00e1>",
+		"definition": "<i>without distinction, without certainty</i>",
+		"keyword": "CERTAINTY"
+	},
+
+	{
+		"head_word": "<vay\u00fanavant>",
+		"definition": "<i>possessing distinction, certainty</i>",
+		"keyword": "CERTAINTY"
+	},
+
+	{
+		"head_word": "<v\u0101<sup><font size=\"+1\">\u0301</font></sup>rya>",
+		"definition": "choice (thing), precious gift",
+		"keyword": "CHOICE"
+	},
+
+	{
+		"head_word": "<\u221avr\u0325, vr\u0325\u1e47\u012bt\u00e9>",
+		"definition": "choose, accept",
+		"keyword": "CHOOSE"
+	},
+
+	{
+		"head_word": "<pari\u1e63\u00e1d>",
+		"definition": "surrounding thing, coil",
+		"keyword": "COIL"
+	},
+
+	{
+		"head_word": "<him\u00e1>",
+		"definition": "<i>cold, frost</i>",
+		"keyword": "COLD"
+	},
+
+	{
+		"head_word": "<\u221avi\u015b, vi\u015b\u00e1te>",
+		"definition": "enter, come to rest",
+		"keyword": "COME"
+	},
+
+	{
+		"head_word": "<dhr\u0325t\u00e1vrata>",
+		"definition": "whose command is firm",
+		"keyword": "COMMAND"
+	},
+
+	{
+		"head_word": "<vrat\u00e1>",
+		"definition": "holy law, divine commandment",
+		"keyword": "COMMANDMENT"
+	},
+
+	{
+		"head_word": "<\u221an\u012b, n\u00e1yati>",
+		"definition": "lead, conduct",
+		"keyword": "CONDUCT"
+	},
+
+	{
+		"head_word": "<\u221avah, v\u00e1hati>",
+		"definition": "conduct, bring",
+		"keyword": "CONDUCT"
+	},
+
+	{
+		"head_word": "<vid\u00e1tha>",
+		"definition": "<i>confident knowledge, wise judgement</i>",
+		"keyword": "CONFIDENT"
+	},
+
+	{
+		"head_word": "<abdim\u00e1nt>",
+		"definition": "consisting of storm-clouds",
+		"keyword": "CONSISTING"
+	},
+
+	{
+		"head_word": "<g\u00f3mant>",
+		"definition": "consisting of cattle",
+		"keyword": "CONSISTING"
+	},
+
+	{
+		"head_word": "<\u221avr\u0325, vr\u0325\u1e47\u00f3ti>",
+		"definition": "contain, hinder",
+		"keyword": "CONTAIN"
+	},
+
+	{
+		"head_word": "<\u00e1jma>",
+		"definition": "course, path",
+		"keyword": "COURSE"
+	},
+
+	{
+		"head_word": "<\u00e1yana>",
+		"definition": "going, course",
+		"keyword": "COURSE"
+	},
+
+	{
+		"head_word": "<\u00e9va>",
+		"definition": "going, course",
+		"keyword": "COURSE"
+	},
+
+	{
+		"head_word": "<\u221avy\u0101, vy\u00e1yati>",
+		"definition": "cover",
+		"keyword": "COVER"
+	},
+
+	{
+		"head_word": "<\u221ajan, j\u00e1nati>",
+		"definition": "produce, create, bear",
+		"keyword": "CREATE"
+	},
+
+	{
+		"head_word": "<praj\u0101<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "creature, progeny",
+		"keyword": "CREATURE"
+	},
+
+	{
+		"head_word": "<praj\u0101<sup><font size=\"+1\">\u0301</font></sup>pati>",
+		"definition": "creature-lord, lord of creatures",
+		"keyword": "CREATURE-LORD"
+	},
+
+	{
+		"head_word": "<praj\u0101<sup><font size=\"+1\">\u0301</font></sup>pati>",
+		"definition": "creature-lord, lord of creatures",
+		"keyword": "CREATURES"
+	},
+
+	{
+		"head_word": "<\u221atr\u0325\u0304, tir\u00e1ti>",
+		"definition": "cross",
+		"keyword": "CROSS"
+	},
+
+	{
+		"head_word": "<\u221akrand, kr\u00e1ndati>",
+		"definition": "cry out",
+		"keyword": "CRY"
+	},
+
+	{
+		"head_word": "<\u221avra\u015bc, vr\u0325\u015bc\u00e1ti>",
+		"definition": "cut up",
+		"keyword": "CUT"
+	},
+
+	{
+		"head_word": "<r\u00e1jas>",
+		"definition": "airy space, dark region",
+		"keyword": "DARK"
+	},
+
+	{
+		"head_word": "<t\u00e1mas>",
+		"definition": "darkness",
+		"keyword": "DARKNESS"
+	},
+
+	{
+		"head_word": "<duhit\u0155\u0325>",
+		"definition": "daughter",
+		"keyword": "DAUGHTER"
+	},
+
+	{
+		"head_word": "<u\u1e63\u00e1s>",
+		"definition": "dawn",
+		"keyword": "DAWN"
+	},
+
+	{
+		"head_word": "<ady\u00e1>",
+		"definition": "on this day, today",
+		"keyword": "DAY"
+	},
+
+	{
+		"head_word": "<div\u00e9-dive>",
+		"definition": "day after day",
+		"keyword": "DAY"
+	},
+
+	{
+		"head_word": "<dy\u00fa, d\u00edv>",
+		"definition": "sky, heaven, day",
+		"keyword": "DAY"
+	},
+
+	{
+		"head_word": "<d\u00edv\u0101>",
+		"definition": "by day",
+		"keyword": "DAY"
+	},
+
+	{
+		"head_word": "<\u00e1han>",
+		"definition": "day, daylight",
+		"keyword": "DAY"
+	},
+
+	{
+		"head_word": "<\u00e1han>",
+		"definition": "day, daylight",
+		"keyword": "DAYLIGHT"
+	},
+
+	{
+		"head_word": "<\u00e1hn\u0101-ahn\u0101>",
+		"definition": "with repeated daylight",
+		"keyword": "DAYLIGHT"
+	},
+
+	{
+		"head_word": "<v\u0101m\u00e1>",
+		"definition": "dear, beloved thing",
+		"keyword": "DEAR"
+	},
+
+	{
+		"head_word": "<\u00e1d\u0101bhya>",
+		"definition": "not to be deceived",
+		"keyword": "DECEIVED"
+	},
+
+	{
+		"head_word": "<k\u00e1rman>",
+		"definition": "act, deed",
+		"keyword": "DEED"
+	},
+
+	{
+		"head_word": "<v\u012bry\u00e0>",
+		"definition": "heroic deed, manly strength",
+		"keyword": "DEED"
+	},
+
+	{
+		"head_word": "<\u015br\u00fatya>",
+		"definition": "deed worthy of fame",
+		"keyword": "DEED"
+	},
+
+	{
+		"head_word": "<vr\u0325tr\u00e1>",
+		"definition": "hindrance, demon, Vritra",
+		"keyword": "DEMON"
+	},
+
+	{
+		"head_word": "<jan\u00fas>",
+		"definition": "descent, kind",
+		"keyword": "DESCENT"
+	},
+
+	{
+		"head_word": "<sp\u0101rh\u00e1>",
+		"definition": "desirable",
+		"keyword": "DESIRABLE"
+	},
+
+	{
+		"head_word": "<\u221ai\u1e63, ich\u00e1ti>",
+		"definition": "long for, desire",
+		"keyword": "DESIRE"
+	},
+
+	{
+		"head_word": "<avasy\u00fa>",
+		"definition": "desiring help",
+		"keyword": "DESIRING"
+	},
+
+	{
+		"head_word": "<\u221ahan, h\u00e1nti>",
+		"definition": "strike, destroy",
+		"keyword": "DESTROY"
+	},
+
+	{
+		"head_word": "<\u221arad, r\u00e1dati>",
+		"definition": "dig",
+		"keyword": "DIG"
+	},
+
+	{
+		"head_word": "<prad\u00ed\u015b>",
+		"definition": "direction, region",
+		"keyword": "DIRECTION"
+	},
+
+	{
+		"head_word": "<vicak\u1e63a\u1e47\u00e1>",
+		"definition": "far-sighted, discerning",
+		"keyword": "DISCERNING"
+	},
+
+	{
+		"head_word": "<ratnabh\u0101<sup><font size=\"+1\">\u0301</font></sup>j>",
+		"definition": "dispensing treasure",
+		"keyword": "DISPENSING"
+	},
+
+	{
+		"head_word": "<par\u00e1s>",
+		"definition": "in the distance",
+		"keyword": "DISTANCE"
+	},
+
+	{
+		"head_word": "<par\u0101v\u00e1t>",
+		"definition": "distance",
+		"keyword": "DISTANCE"
+	},
+
+	{
+		"head_word": "<avayun\u00e1>",
+		"definition": "<i>without distinction, without certainty</i>",
+		"keyword": "DISTINCTION"
+	},
+
+	{
+		"head_word": "<vay\u00fanavant>",
+		"definition": "<i>possessing distinction, certainty</i>",
+		"keyword": "DISTINCTION"
+	},
+
+	{
+		"head_word": "<bhakt\u00ed>",
+		"definition": "distribution",
+		"keyword": "DISTRIBUTION"
+	},
+
+	{
+		"head_word": "<da\u00edvya>",
+		"definition": "divine",
+		"keyword": "DIVINE"
+	},
+
+	{
+		"head_word": "<dev\u00e1>",
+		"definition": "divine, god",
+		"keyword": "DIVINE"
+	},
+
+	{
+		"head_word": "<dev\u012b<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "divine, goddess",
+		"keyword": "DIVINE"
+	},
+
+	{
+		"head_word": "<vrat\u00e1>",
+		"definition": "holy law, divine commandment",
+		"keyword": "DIVINE"
+	},
+
+	{
+		"head_word": "<\u221akr\u0325, kr\u0325\u1e47\u00f3ti>",
+		"definition": "do, make",
+		"keyword": "DO"
+	},
+
+	{
+		"head_word": "<puruk\u0155\u0325t>",
+		"definition": "doing much",
+		"keyword": "DOING"
+	},
+
+	{
+		"head_word": "<n\u00ed>",
+		"definition": "down",
+		"keyword": "DOWN"
+	},
+
+	{
+		"head_word": "<\u00e1va>",
+		"definition": "down",
+		"keyword": "DOWN"
+	},
+
+	{
+		"head_word": "<ny\u00e1\u00f1cana>",
+		"definition": "<i>downward slope</i>",
+		"keyword": "DOWNWARD"
+	},
+
+	{
+		"head_word": "<\u00e1hi>",
+		"definition": "snake, dragon",
+		"keyword": "DRAGON"
+	},
+
+	{
+		"head_word": "<\u221asidh, s\u00e9dhati>",
+		"definition": "drive away",
+		"keyword": "DRIVE"
+	},
+
+	{
+		"head_word": "<\u00e1dvayas>",
+		"definition": "not duplicitous, trustworthy",
+		"keyword": "DUPLICITOUS"
+	},
+
+	{
+		"head_word": "<j\u012br\u00e1>",
+		"definition": "eager",
+		"keyword": "EAGER"
+	},
+
+	{
+		"head_word": "<\u015byen\u00e1>",
+		"definition": "eagle",
+		"keyword": "EAGLE"
+	},
+
+	{
+		"head_word": "<bh\u016b<sup><font size=\"+1\">\u0301</font></sup>mi>",
+		"definition": "earth, land",
+		"keyword": "EARTH"
+	},
+
+	{
+		"head_word": "<dy\u0101<sup><font size=\"+1\">\u0301</font></sup>v\u0101pr\u0325thiv\u012b<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "Heaven and Earth",
+		"keyword": "EARTH"
+	},
+
+	{
+		"head_word": "<ih\u00e1>",
+		"definition": "here, here on earth",
+		"keyword": "EARTH"
+	},
+
+	{
+		"head_word": "<pr\u0325thiv\u012b<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "earth",
+		"keyword": "EARTH"
+	},
+
+	{
+		"head_word": "<p\u0101<sup><font size=\"+1\">\u0301</font></sup>rthiva>",
+		"definition": "earthly",
+		"keyword": "EARTHLY"
+	},
+
+	{
+		"head_word": "<suh\u00e1va>",
+		"definition": "easily invoked",
+		"keyword": "EASILY"
+	},
+
+	{
+		"head_word": "<\u221ama\u1e43h, m\u00e1\u1e43hate>",
+		"definition": "<i>effect, bring about</i>",
+		"keyword": "EFFECT"
+	},
+
+	{
+		"head_word": "<paribh\u016b<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "encompassing",
+		"keyword": "ENCOMPASSING"
+	},
+
+	{
+		"head_word": "<\u221aju\u1e63, ju\u1e63\u00e1te>",
+		"definition": "enjoy",
+		"keyword": "ENJOY"
+	},
+
+	{
+		"head_word": "<prasav\u012bt\u0155\u0325>",
+		"definition": "enlivener",
+		"keyword": "ENLIVENER"
+	},
+
+	{
+		"head_word": "<savit\u0155\u0325>",
+		"definition": "enlivener, Savitar",
+		"keyword": "ENLIVENER"
+	},
+
+	{
+		"head_word": "<\u221avi\u015b, vi\u015b\u00e1te>",
+		"definition": "enter, come to rest",
+		"keyword": "ENTER"
+	},
+
+	{
+		"head_word": "<durmat\u00ed>",
+		"definition": "bad thought, envy",
+		"keyword": "ENVY"
+	},
+
+	{
+		"head_word": "<ark\u00e1>",
+		"definition": "song of praise, eulogy",
+		"keyword": "EULOGY"
+	},
+
+	{
+		"head_word": "<st\u00f3ma>",
+		"definition": "eulogy",
+		"keyword": "EULOGY"
+	},
+
+	{
+		"head_word": "<cit>",
+		"definition": "even, all",
+		"keyword": "EVEN"
+	},
+
+	{
+		"head_word": "<yuvany\u00fa>",
+		"definition": "ever young",
+		"keyword": "EVER"
+	},
+
+	{
+		"head_word": "<sad\u0101<sup><font size=\"+1\">\u0301</font></sup>vr\u0325dha>",
+		"definition": "ever-beneficent",
+		"keyword": "EVER-BENEFICENT"
+	},
+
+	{
+		"head_word": "<\u015ba\u015bvadh\u0101<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "evermore",
+		"keyword": "EVERMORE"
+	},
+
+	{
+		"head_word": "<c\u00e1k\u1e63u\u1e63e-cak\u1e63u\u1e63e>",
+		"definition": "to every eye",
+		"keyword": "EVERY"
+	},
+
+	{
+		"head_word": "<bh\u00favana>",
+		"definition": "being, existence",
+		"keyword": "EXISTENCE"
+	},
+
+	{
+		"head_word": "<n\u016b<sup><font size=\"+1\">\u0301</font></sup>tana>",
+		"definition": "now existing",
+		"keyword": "EXISTING"
+	},
+
+	{
+		"head_word": "<man\u012b\u1e63\u0101<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "thought, expression of thought",
+		"keyword": "EXPRESSION"
+	},
+
+	{
+		"head_word": "<\u221ayam, y\u00e1chati>",
+		"definition": "extend, stretch out",
+		"keyword": "EXTEND"
+	},
+
+	{
+		"head_word": "<c\u00e1k\u1e63u\u1e63e-cak\u1e63u\u1e63e>",
+		"definition": "to every eye",
+		"keyword": "EYE"
+	},
+
+	{
+		"head_word": "<\u221asridh, sr\u00e9dhati>",
+		"definition": "slip, fail",
+		"keyword": "FAIL"
+	},
+
+	{
+		"head_word": "<sr\u00eddh>",
+		"definition": "failure, misfortune",
+		"keyword": "FAILURE"
+	},
+
+	{
+		"head_word": "<s\u016bn\u00e1r\u012b>",
+		"definition": "fair lady",
+		"keyword": "FAIR"
+	},
+
+	{
+		"head_word": "<\u015br\u00e1vas>",
+		"definition": "fame",
+		"keyword": "FAME"
+	},
+
+	{
+		"head_word": "<\u015br\u00fatya>",
+		"definition": "deed worthy of fame",
+		"keyword": "FAME"
+	},
+
+	{
+		"head_word": "<d\u012brgha\u015br\u00fattama>",
+		"definition": "most widely known, famed",
+		"keyword": "FAMED"
+	},
+
+	{
+		"head_word": "<d\u016brak\u00e1m>",
+		"definition": "far away",
+		"keyword": "FAR"
+	},
+
+	{
+		"head_word": "<y\u0101<sup><font size=\"+1\">\u0301</font></sup>t>",
+		"definition": "so far as, in as much as",
+		"keyword": "FAR"
+	},
+
+	{
+		"head_word": "<vicak\u1e63a\u1e47\u00e1>",
+		"definition": "far-sighted, discerning",
+		"keyword": "FAR-SIGHTED"
+	},
+
+	{
+		"head_word": "<p\u00e1ra>",
+		"definition": "former, farther",
+		"keyword": "FARTHER"
+	},
+
+	{
+		"head_word": "<p\u00edtrya>",
+		"definition": "of the fathers",
+		"keyword": "FATHERS"
+	},
+
+	{
+		"head_word": "<r\u0101<sup><font size=\"+1\">\u0301</font></sup>dhas>",
+		"definition": "favour, gift",
+		"keyword": "FAVOUR"
+	},
+
+	{
+		"head_word": "<sumat\u00ed>",
+		"definition": "good thought, favour",
+		"keyword": "FAVOUR"
+	},
+
+	{
+		"head_word": "<sumn\u00e1>",
+		"definition": "favour, boon",
+		"keyword": "FAVOUR"
+	},
+
+	{
+		"head_word": "<vak\u1e63\u00e1\u1e47\u0101>",
+		"definition": "<i>fertile place</i>",
+		"keyword": "FERTILE"
+	},
+
+	{
+		"head_word": "<y\u00fadh>",
+		"definition": "fighting",
+		"keyword": "FIGHTING"
+	},
+
+	{
+		"head_word": "<pr\u0325\u0304, pr\u0325\u1e47\u0101<sup><font size=\"+1\">\u0301</font></sup>ti>",
+		"definition": "fill",
+		"keyword": "FILL"
+	},
+
+	{
+		"head_word": "<\u221apr\u0101>",
+		"definition": "fill",
+		"keyword": "FILL"
+	},
+
+	{
+		"head_word": "<\u221avid, vind\u00e1ti>",
+		"definition": "find",
+		"keyword": "FIND"
+	},
+
+	{
+		"head_word": "<su\u1e63\u1e6dut\u00ed>",
+		"definition": "fine hymn of praise",
+		"keyword": "FINE"
+	},
+
+	{
+		"head_word": "<supar\u1e47\u00e1>",
+		"definition": "finely-plumed",
+		"keyword": "FINELY-PLUMED"
+	},
+
+	{
+		"head_word": "<agn\u00ed>",
+		"definition": "fire, Agni",
+		"keyword": "FIRE"
+	},
+
+	{
+		"head_word": "<dhr\u0325t\u00e1vrata>",
+		"definition": "whose command is firm",
+		"keyword": "FIRM"
+	},
+
+	{
+		"head_word": "<dh\u00e1rman>",
+		"definition": "support, fixed order",
+		"keyword": "FIXED"
+	},
+
+	{
+		"head_word": "<arciv\u00e1nt>",
+		"definition": "possessing rays, flaming",
+		"keyword": "FLAMING"
+	},
+
+	{
+		"head_word": "<vidy\u00fat>",
+		"definition": "lightning flash",
+		"keyword": "FLASH"
+	},
+
+	{
+		"head_word": "<\u00e1jra>",
+		"definition": "plain, flatland",
+		"keyword": "FLATLAND"
+	},
+
+	{
+		"head_word": "<patayi\u1e63\u1e47\u00fa>",
+		"definition": "flying",
+		"keyword": "FLYING"
+	},
+
+	{
+		"head_word": "<ar\u1e47av\u00e1>",
+		"definition": "billowing, foaming",
+		"keyword": "FOAMING"
+	},
+
+	{
+		"head_word": "<v\u00ed\u015b>",
+		"definition": "settlement, folk",
+		"keyword": "FOLK"
+	},
+
+	{
+		"head_word": "<v\u00e1nasp\u00e1ti>",
+		"definition": "forest lord, tree",
+		"keyword": "FOREST"
+	},
+
+	{
+		"head_word": "<\u221amr\u0325\u1e63, m\u0155\u0325\u1e63yate>",
+		"definition": "ignore, forget",
+		"keyword": "FORGET"
+	},
+
+	{
+		"head_word": "<r\u016bp\u00e1>",
+		"definition": "form",
+		"keyword": "FORM"
+	},
+
+	{
+		"head_word": "<p\u00e1ra>",
+		"definition": "former, farther",
+		"keyword": "FORMER"
+	},
+
+	{
+		"head_word": "<p\u016b<sup><font size=\"+1\">\u0301</font></sup>rva>",
+		"definition": "former, previous",
+		"keyword": "FORMER"
+	},
+
+	{
+		"head_word": "<pr\u00e1>",
+		"definition": "forth",
+		"keyword": "FORTH"
+	},
+
+	{
+		"head_word": "<prasav\u00e1>",
+		"definition": "(<i>lit.</i>) forth-impelling",
+		"keyword": "FORTH-IMPELLING"
+	},
+
+	{
+		"head_word": "<bhadrav\u0101d\u00edn>",
+		"definition": "of fortunate pronouncement",
+		"keyword": "FORTUNATE"
+	},
+
+	{
+		"head_word": "<bhadr\u00e1>",
+		"definition": "fortunate, happy",
+		"keyword": "FORTUNATE"
+	},
+
+	{
+		"head_word": "<sa\u00fabhaga>",
+		"definition": "gift of fortune",
+		"keyword": "FORTUNE"
+	},
+
+	{
+		"head_word": "<dh\u0101<sup><font size=\"+1\">\u0301</font></sup>man>",
+		"definition": "foundation, just law, precept",
+		"keyword": "FOUNDATION"
+	},
+
+	{
+		"head_word": "<cat\u00far>",
+		"definition": "four",
+		"keyword": "FOUR"
+	},
+
+	{
+		"head_word": "<c\u00e1turbhr\u0325\u1e63\u1e6di>",
+		"definition": "four-cornered",
+		"keyword": "FOUR-CORNERED"
+	},
+
+	{
+		"head_word": "<c\u00e1tu\u1e63pad>",
+		"definition": "four-footed",
+		"keyword": "FOUR-FOOTED"
+	},
+
+	{
+		"head_word": "<\u221amuc, mu\u00f1c\u00e1te>",
+		"definition": "make free",
+		"keyword": "FREE"
+	},
+
+	{
+		"head_word": "<\u00e1diti>",
+		"definition": "<i>freedom,</i> Aditi",
+		"keyword": "FREEDOM"
+	},
+
+	{
+		"head_word": "<mitr\u00e1>",
+		"definition": "friend, Mitra",
+		"keyword": "FRIEND"
+	},
+
+	{
+		"head_word": "<s\u00e1khi>",
+		"definition": "friend",
+		"keyword": "FRIEND"
+	},
+
+	{
+		"head_word": "<mitr\u00e1mahas>",
+		"definition": "friend-great, many-friended",
+		"keyword": "FRIEND-GREAT"
+	},
+
+	{
+		"head_word": "<\u0101<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "from, in",
+		"keyword": "FROM"
+	},
+
+	{
+		"head_word": "<him\u00e1>",
+		"definition": "<i>cold, frost</i>",
+		"keyword": "FROST"
+	},
+
+	{
+		"head_word": "<p\u00e1yas>",
+		"definition": "<i>fruitfulness, plenty</i>",
+		"keyword": "FRUITFULNESS"
+	},
+
+	{
+		"head_word": "<apar\u00e1m>",
+		"definition": "in the future",
+		"keyword": "FUTURE"
+	},
+
+	{
+		"head_word": "<\u00fattara>",
+		"definition": "higher, future",
+		"keyword": "FUTURE"
+	},
+
+	{
+		"head_word": "<samudr\u00e1>",
+		"definition": "gathering place of waters, sea",
+		"keyword": "GATHERING"
+	},
+
+	{
+		"head_word": "<s\u016b, suv\u00e1ti>",
+		"definition": "generate, impel",
+		"keyword": "GENERATE"
+	},
+
+	{
+		"head_word": "<yug\u00e1>",
+		"definition": "generation",
+		"keyword": "GENERATION"
+	},
+
+	{
+		"head_word": "<sud\u0101<sup><font size=\"+1\">\u0301</font></sup>nu>",
+		"definition": "generous, liberal",
+		"keyword": "GENEROUS"
+	},
+
+	{
+		"head_word": "<r\u0101<sup><font size=\"+1\">\u0301</font></sup>dhas>",
+		"definition": "favour, gift",
+		"keyword": "GIFT"
+	},
+
+	{
+		"head_word": "<sa\u00fabhaga>",
+		"definition": "gift of fortune",
+		"keyword": "GIFT"
+	},
+
+	{
+		"head_word": "<v\u0101<sup><font size=\"+1\">\u0301</font></sup>rya>",
+		"definition": "choice (thing), precious gift",
+		"keyword": "GIFT"
+	},
+
+	{
+		"head_word": "<s\u00e1r\u0101ti>",
+		"definition": "giving together",
+		"keyword": "GIVING"
+	},
+
+	{
+		"head_word": "<m\u00e1r\u012bci>",
+		"definition": "particle of light, gleaming light",
+		"keyword": "GLEAMING"
+	},
+
+	{
+		"head_word": "<\u221agam, g\u00e1chati>",
+		"definition": "go",
+		"keyword": "GO"
+	},
+
+	{
+		"head_word": "<\u221ai, \u00e9ti>",
+		"definition": "go",
+		"keyword": "GO"
+	},
+
+	{
+		"head_word": "<\u221ar\u0325, \u00edyarti>",
+		"definition": "go, send",
+		"keyword": "GO"
+	},
+
+	{
+		"head_word": "<\u221asr\u0325j, sr\u0325j\u00e1ti>",
+		"definition": "let go",
+		"keyword": "GO"
+	},
+
+	{
+		"head_word": "<\u221ay\u0101, y\u0101<sup><font size=\"+1\">\u0301</font></sup>ti>",
+		"definition": "go, travel",
+		"keyword": "GO"
+	},
+
+	{
+		"head_word": "<dev\u00e1>",
+		"definition": "divine, god",
+		"keyword": "GOD"
+	},
+
+	{
+		"head_word": "<dev\u00e1\u1e43-devam>",
+		"definition": "god after god",
+		"keyword": "GOD"
+	},
+
+	{
+		"head_word": "<dev\u00f3-devas>",
+		"definition": "god after god",
+		"keyword": "GOD"
+	},
+
+	{
+		"head_word": "<mar\u00fat>",
+		"definition": "Marut, storm god",
+		"keyword": "GOD"
+	},
+
+	{
+		"head_word": "<dev\u00e1kr\u0325ta>",
+		"definition": "god-made",
+		"keyword": "GOD-MADE"
+	},
+
+	{
+		"head_word": "<dev\u012b<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "divine, goddess",
+		"keyword": "GODDESS"
+	},
+
+	{
+		"head_word": "<m\u0101<sup><font size=\"+1\">\u0301</font></sup>ruta>",
+		"definition": "of the storm gods, the Maruts'",
+		"keyword": "GODS"
+	},
+
+	{
+		"head_word": "<\u00e1yana>",
+		"definition": "going, course",
+		"keyword": "GOING"
+	},
+
+	{
+		"head_word": "<\u00e9va>",
+		"definition": "going, course",
+		"keyword": "GOING"
+	},
+
+	{
+		"head_word": "<h\u00e1rike\u015ba>",
+		"definition": "gold-tressed",
+		"keyword": "GOLD-TRESSED"
+	},
+
+	{
+		"head_word": "<sug\u00e1>",
+		"definition": "good passage",
+		"keyword": "GOOD"
+	},
+
+	{
+		"head_word": "<sumat\u00ed>",
+		"definition": "good thought, favour",
+		"keyword": "GOOD"
+	},
+
+	{
+		"head_word": "<susara\u1e47\u00e1>",
+		"definition": "good passage",
+		"keyword": "GOOD"
+	},
+
+	{
+		"head_word": "<suv\u012b<sup><font size=\"+1\">\u0301</font></sup>ra>",
+		"definition": "of good manhood",
+		"keyword": "GOOD"
+	},
+
+	{
+		"head_word": "<su\u015bara\u1e47\u00e1>",
+		"definition": "good shelterer, good protector",
+		"keyword": "GOOD"
+	},
+
+	{
+		"head_word": "<su\u015b\u00e1rman>",
+		"definition": "of good shelter, tutelary",
+		"keyword": "GOOD"
+	},
+
+	{
+		"head_word": "<v\u00e1su>",
+		"definition": "good, beneficent",
+		"keyword": "GOOD"
+	},
+
+	{
+		"head_word": "<sum\u00e1nas>",
+		"definition": "good-minded, well-disposed",
+		"keyword": "GOOD-MINDED"
+	},
+
+	{
+		"head_word": "<magh\u00e1van>",
+		"definition": "gracious",
+		"keyword": "GRACIOUS"
+	},
+
+	{
+		"head_word": "<\u221adh\u0101, d\u00e1dh\u0101ti>",
+		"definition": "place, grant",
+		"keyword": "GRANT"
+	},
+
+	{
+		"head_word": "<\u221ar\u0101>",
+		"definition": "grant",
+		"keyword": "GRANT"
+	},
+
+	{
+		"head_word": "<mah\u00e1nt>",
+		"definition": "great, mighty",
+		"keyword": "GREAT"
+	},
+
+	{
+		"head_word": "<m\u00e1h>",
+		"definition": "great",
+		"keyword": "GREAT"
+	},
+
+	{
+		"head_word": "<mahitv\u00e1>",
+		"definition": "greatness, majesty",
+		"keyword": "GREATNESS"
+	},
+
+	{
+		"head_word": "<mah\u00e1n>",
+		"definition": "greatness",
+		"keyword": "GREATNESS"
+	},
+
+	{
+		"head_word": "<supr\u00e1\u1e47\u012bti>",
+		"definition": "safe guidance",
+		"keyword": "GUIDANCE"
+	},
+
+	{
+		"head_word": "<supr\u00e1\u1e47\u012bti>",
+		"definition": "guiding safely",
+		"keyword": "GUIDING"
+	},
+
+	{
+		"head_word": "<\u00e1n\u0101gas>",
+		"definition": "without guilt",
+		"keyword": "GUILT"
+	},
+
+	{
+		"head_word": "<an\u0101gastv\u00e1>",
+		"definition": "guiltlessness, innocence",
+		"keyword": "GUILTLESSNESS"
+	},
+
+	{
+		"head_word": "<abh\u00ed\u1e63\u1e6di>",
+		"definition": "being at hand, ready help",
+		"keyword": "HAND"
+	},
+
+	{
+		"head_word": "<mayobh\u016b<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "bringing happiness",
+		"keyword": "HAPPINESS"
+	},
+
+	{
+		"head_word": "<m\u00e1yas>",
+		"definition": "happiness",
+		"keyword": "HAPPINESS"
+	},
+
+	{
+		"head_word": "<bhadr\u00e1>",
+		"definition": "fortunate, happy",
+		"keyword": "HAPPY"
+	},
+
+	{
+		"head_word": "<durg\u00e1>",
+		"definition": "hard way",
+		"keyword": "HARD"
+	},
+
+	{
+		"head_word": "<r\u00ed\u1e63>",
+		"definition": "harm",
+		"keyword": "HARM"
+	},
+
+	{
+		"head_word": "<dv\u00e9\u1e63as>",
+		"definition": "hatred",
+		"keyword": "HATRED"
+	},
+
+	{
+		"head_word": "<\u221a\u012b\u015b, \u012b<sup><font size=\"+1\">\u0301</font></sup>\u015be>",
+		"definition": "have mastery over",
+		"keyword": "HAVE"
+	},
+
+	{
+		"head_word": "<praj\u0101<sup><font size=\"+1\">\u0301</font></sup>vant>",
+		"definition": "having progeny",
+		"keyword": "HAVING"
+	},
+
+	{
+		"head_word": "<va\u015b\u00edn>",
+		"definition": "having sway",
+		"keyword": "HAVING"
+	},
+
+	{
+		"head_word": "<s\u00e1s, s\u0101<sup><font size=\"+1\">\u0301</font></sup>, t\u00e1t>",
+		"definition": "that; he, she, it",
+		"keyword": "HE"
+	},
+
+	{
+		"head_word": "<bhi\u1e63\u00e1j>",
+		"definition": "healer",
+		"keyword": "HEALER"
+	},
+
+	{
+		"head_word": "<\u221a\u015bru, \u015br\u0325\u1e47\u00f3ti>",
+		"definition": "hear",
+		"keyword": "HEAR"
+	},
+
+	{
+		"head_word": "<\u221atap, t\u00e1pati>",
+		"definition": "heat, warm",
+		"keyword": "HEAT"
+	},
+
+	{
+		"head_word": "<dy\u00fa, d\u00edv>",
+		"definition": "sky, heaven, day",
+		"keyword": "HEAVEN"
+	},
+
+	{
+		"head_word": "<dy\u0101<sup><font size=\"+1\">\u0301</font></sup>v\u0101pr\u0325thiv\u012b<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "Heaven and Earth",
+		"keyword": "HEAVEN"
+	},
+
+	{
+		"head_word": "<sv\u00e0r>",
+		"definition": "sunlight, heaven",
+		"keyword": "HEAVEN"
+	},
+
+	{
+		"head_word": "<divy\u00e1>",
+		"definition": "heavenly",
+		"keyword": "HEAVENLY"
+	},
+
+	{
+		"head_word": "<prav\u00e1t>",
+		"definition": "mountain slope, height",
+		"keyword": "HEIGHT"
+	},
+
+	{
+		"head_word": "<abh\u00ed\u1e63\u1e6di>",
+		"definition": "being at hand, ready help",
+		"keyword": "HELP"
+	},
+
+	{
+		"head_word": "<avasy\u00fa>",
+		"definition": "desiring help",
+		"keyword": "HELP"
+	},
+
+	{
+		"head_word": "<\u00e1vas>",
+		"definition": "help",
+		"keyword": "HELP"
+	},
+
+	{
+		"head_word": "<\u016bt\u00ed>",
+		"definition": "help",
+		"keyword": "HELP"
+	},
+
+	{
+		"head_word": "<ih\u00e1>",
+		"definition": "here, here on earth",
+		"keyword": "HERE"
+	},
+
+	{
+		"head_word": "<it\u00e1s>",
+		"definition": "from here",
+		"keyword": "HERE"
+	},
+
+	{
+		"head_word": "<v\u012br\u00e1>",
+		"definition": "hero, man, strong son",
+		"keyword": "HERO"
+	},
+
+	{
+		"head_word": "<v\u012bry\u00e0>",
+		"definition": "heroic deed, manly strength",
+		"keyword": "HEROIC"
+	},
+
+	{
+		"head_word": "<br\u0325h\u00e1nt>",
+		"definition": "high, lofty",
+		"keyword": "HIGH"
+	},
+
+	{
+		"head_word": "<br\u0325h\u00e1t>",
+		"definition": "on high",
+		"keyword": "HIGH"
+	},
+
+	{
+		"head_word": "<\u00fattara>",
+		"definition": "higher, future",
+		"keyword": "HIGHER"
+	},
+
+	{
+		"head_word": "<\u221avr\u0325, vr\u0325\u1e47\u00f3ti>",
+		"definition": "contain, hinder",
+		"keyword": "HINDER"
+	},
+
+	{
+		"head_word": "<vr\u0325tr\u00e1>",
+		"definition": "hindrance, demon, Vritra",
+		"keyword": "HINDRANCE"
+	},
+
+	{
+		"head_word": "<r\u0325t\u0101<sup><font size=\"+1\">\u0301</font></sup>van>",
+		"definition": "possessed of Truth, holy",
+		"keyword": "HOLY"
+	},
+
+	{
+		"head_word": "<ukthy\u00e0>",
+		"definition": "worthy of holy song",
+		"keyword": "HOLY"
+	},
+
+	{
+		"head_word": "<ukth\u00e1>",
+		"definition": "holy song",
+		"keyword": "HOLY"
+	},
+
+	{
+		"head_word": "<vrat\u00e1>",
+		"definition": "holy law, divine commandment",
+		"keyword": "HOLY"
+	},
+
+	{
+		"head_word": "<\u221avidh>",
+		"definition": "pay homage to, honour",
+		"keyword": "HOMAGE"
+	},
+
+	{
+		"head_word": "<duro\u1e47\u00e1>",
+		"definition": "home",
+		"keyword": "HOME"
+	},
+
+	{
+		"head_word": "<k\u1e63\u00e1ya>",
+		"definition": "home",
+		"keyword": "HOME"
+	},
+
+	{
+		"head_word": "<y\u00f3ni>",
+		"definition": "home",
+		"keyword": "HOME"
+	},
+
+	{
+		"head_word": "<abhipitv\u00e1>",
+		"definition": "<i>homecoming</i>",
+		"keyword": "HOMECOMING"
+	},
+
+	{
+		"head_word": "<n\u00e1mas>",
+		"definition": "honour",
+		"keyword": "HONOUR"
+	},
+
+	{
+		"head_word": "<\u221avidh>",
+		"definition": "pay homage to, honour",
+		"keyword": "HONOUR"
+	},
+
+	{
+		"head_word": "<namasy\u00fa>",
+		"definition": "honouring",
+		"keyword": "HONOURING"
+	},
+
+	{
+		"head_word": "<a\u015bv\u00edn>",
+		"definition": "horseman, Ashvin",
+		"keyword": "HORSEMAN"
+	},
+
+	{
+		"head_word": "<p\u0155\u0325\u1e63ada\u015bva>",
+		"definition": "with white-flecked horses",
+		"keyword": "HORSES"
+	},
+
+	{
+		"head_word": "<\u221ah\u012b\u1e0d>",
+		"definition": "be hostile",
+		"keyword": "HOSTILE"
+	},
+
+	{
+		"head_word": "<gr\u0325h\u00e1>",
+		"definition": "house",
+		"keyword": "HOUSE"
+	},
+
+	{
+		"head_word": "<\u00e1str\u0325>",
+		"definition": "shooter, hunter",
+		"keyword": "HUNTER"
+	},
+
+	{
+		"head_word": "<su\u1e63\u1e6dut\u00ed>",
+		"definition": "fine hymn of praise",
+		"keyword": "HYMN"
+	},
+
+	{
+		"head_word": "<\u221amr\u0325\u1e63, m\u0155\u0325\u1e63yate>",
+		"definition": "ignore, forget",
+		"keyword": "IGNORE"
+	},
+
+	{
+		"head_word": "<am\u0155\u0325ta>",
+		"definition": "immortal, undying",
+		"keyword": "IMMORTAL"
+	},
+
+	{
+		"head_word": "<s\u016b, suv\u00e1ti>",
+		"definition": "generate, impel",
+		"keyword": "IMPEL"
+	},
+
+	{
+		"head_word": "<paridh\u00ed>",
+		"definition": "surrounder, imprisoner",
+		"keyword": "IMPRISONER"
+	},
+
+	{
+		"head_word": "<\u0101<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "from, in",
+		"keyword": "IN"
+	},
+
+	{
+		"head_word": "<aneh\u00e1s>",
+		"definition": "<i>incomparable, peerless</i>",
+		"keyword": "INCOMPARABLE"
+	},
+
+	{
+		"head_word": "<kam>",
+		"definition": "indeed",
+		"keyword": "INDEED"
+	},
+
+	{
+		"head_word": "<sma, sm\u0101>",
+		"definition": "indeed",
+		"keyword": "INDEED"
+	},
+
+	{
+		"head_word": "<\u00edt>",
+		"definition": "indeed, just",
+		"keyword": "INDEED"
+	},
+
+	{
+		"head_word": "<\u00edndra>",
+		"definition": "Indra",
+		"keyword": "INDRA"
+	},
+
+	{
+		"head_word": "<\u00e1nya>",
+		"definition": "<i>inexhaustible</i>",
+		"keyword": "INEXHAUSTIBLE"
+	},
+
+	{
+		"head_word": "<svadh\u0101<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "inherent power",
+		"keyword": "INHERENT"
+	},
+
+	{
+		"head_word": "<svadh\u0101<sup><font size=\"+1\">\u0301</font></sup>vant>",
+		"definition": "possessing inherent power, self-powerful",
+		"keyword": "INHERENT"
+	},
+
+	{
+		"head_word": "<dh\u016brt\u00ed>",
+		"definition": "injury",
+		"keyword": "INJURY"
+	},
+
+	{
+		"head_word": "<an\u0101gastv\u00e1>",
+		"definition": "guiltlessness, innocence",
+		"keyword": "INNOCENCE"
+	},
+
+	{
+		"head_word": "<somy\u00e1>",
+		"definition": "<i>inspired</i>",
+		"keyword": "INSPIRED"
+	},
+
+	{
+		"head_word": "<kr\u00e1tu>",
+		"definition": "power, intellectual ability",
+		"keyword": "INTELLECTUAL"
+	},
+
+	{
+		"head_word": "<\u0101<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "(intensifies or reverses meaning)",
+		"keyword": "INTENSIFIES"
+	},
+
+	{
+		"head_word": "<\u221ah\u016b, h\u00e1vate>",
+		"definition": "invoke, call upon",
+		"keyword": "INVOKE"
+	},
+
+	{
+		"head_word": "<puruh\u016bt\u00e1>",
+		"definition": "much invoked",
+		"keyword": "INVOKED"
+	},
+
+	{
+		"head_word": "<suh\u00e1va>",
+		"definition": "easily invoked",
+		"keyword": "INVOKED"
+	},
+
+	{
+		"head_word": "<s\u00e1s, s\u0101<sup><font size=\"+1\">\u0301</font></sup>, t\u00e1t>",
+		"definition": "that; he, she, it",
+		"keyword": "IT"
+	},
+
+	{
+		"head_word": "<s\u016bn\u0155\u0325t\u0101vant>",
+		"definition": "<i>possessing joy, joyous</i>",
+		"keyword": "JOY"
+	},
+
+	{
+		"head_word": "<s\u016bn\u0155\u0325t\u0101vant>",
+		"definition": "<i>possessing joy, joyous</i>",
+		"keyword": "JOYOUS"
+	},
+
+	{
+		"head_word": "<vid\u00e1tha>",
+		"definition": "<i>confident knowledge, wise judgement</i>",
+		"keyword": "JUDGEMENT"
+	},
+
+	{
+		"head_word": "<dh\u0101<sup><font size=\"+1\">\u0301</font></sup>man>",
+		"definition": "foundation, just law, precept",
+		"keyword": "JUST"
+	},
+
+	{
+		"head_word": "<ev\u00e1>",
+		"definition": "so, just",
+		"keyword": "JUST"
+	},
+
+	{
+		"head_word": "<\u00edt>",
+		"definition": "indeed, just",
+		"keyword": "JUST"
+	},
+
+	{
+		"head_word": "<\u221ayu, yuy\u00f3ti>",
+		"definition": "keep away",
+		"keyword": "KEEP"
+	},
+
+	{
+		"head_word": "<jan\u00fas>",
+		"definition": "descent, kind",
+		"keyword": "KIND"
+	},
+
+	{
+		"head_word": "<\u015bak\u00fani>",
+		"definition": "(a kind of bird)",
+		"keyword": "KIND"
+	},
+
+	{
+		"head_word": "<\u015bak\u00fanti>",
+		"definition": "(a kind of bird)",
+		"keyword": "KIND"
+	},
+
+	{
+		"head_word": "<r\u0101<sup><font size=\"+1\">\u0301</font></sup>jan>",
+		"definition": "king, ruler",
+		"keyword": "KING"
+	},
+
+	{
+		"head_word": "<saj\u0101ty\u00e0>",
+		"definition": "kinship",
+		"keyword": "KINSHIP"
+	},
+
+	{
+		"head_word": "<\u221avid, v\u00e9da>",
+		"definition": "know",
+		"keyword": "KNOW"
+	},
+
+	{
+		"head_word": "<vid\u00e1tha>",
+		"definition": "<i>confident knowledge, wise judgement</i>",
+		"keyword": "KNOWLEDGE"
+	},
+
+	{
+		"head_word": "<d\u012brgha\u015br\u00fattama>",
+		"definition": "most widely known, famed",
+		"keyword": "KNOWN"
+	},
+
+	{
+		"head_word": "<ku\u015bik\u00e1>",
+		"definition": "Kushika",
+		"keyword": "KUSHIKA"
+	},
+
+	{
+		"head_word": "<\u00e1mati>",
+		"definition": "<i>lack of thought</i>",
+		"keyword": "LACK"
+	},
+
+	{
+		"head_word": "<\u015b\u016b<sup><font size=\"+1\">\u0301</font></sup>na>",
+		"definition": "lack, want",
+		"keyword": "LACK"
+	},
+
+	{
+		"head_word": "<s\u016bn\u00e1r\u012b>",
+		"definition": "fair lady",
+		"keyword": "LADY"
+	},
+
+	{
+		"head_word": "<bh\u016b<sup><font size=\"+1\">\u0301</font></sup>mi>",
+		"definition": "earth, land",
+		"keyword": "LAND"
+	},
+
+	{
+		"head_word": "<dh\u0101<sup><font size=\"+1\">\u0301</font></sup>man>",
+		"definition": "foundation, just law, precept",
+		"keyword": "LAW"
+	},
+
+	{
+		"head_word": "<vrat\u00e1>",
+		"definition": "holy law, divine commandment",
+		"keyword": "LAW"
+	},
+
+	{
+		"head_word": "<\u221an\u012b, n\u00e1yati>",
+		"definition": "lead, conduct",
+		"keyword": "LEAD"
+	},
+
+	{
+		"head_word": "<\u221aric, ri\u1e47\u00e1kti>",
+		"definition": "leave",
+		"keyword": "LEAVE"
+	},
+
+	{
+		"head_word": "<\u221asr\u0325j, sr\u0325j\u00e1ti>",
+		"definition": "let go",
+		"keyword": "LET"
+	},
+
+	{
+		"head_word": "<sud\u0101<sup><font size=\"+1\">\u0301</font></sup>nu>",
+		"definition": "generous, liberal",
+		"keyword": "LIBERAL"
+	},
+
+	{
+		"head_word": "<anib\u0101dh\u00e1>",
+		"definition": "liberty",
+		"keyword": "LIBERTY"
+	},
+
+	{
+		"head_word": "<s\u00e1v\u012bman>",
+		"definition": "bringing to life",
+		"keyword": "LIFE"
+	},
+
+	{
+		"head_word": "<bh\u0101<sup><font size=\"+1\">\u0301</font></sup>svant>",
+		"definition": "possessing light, brightness",
+		"keyword": "LIGHT"
+	},
+
+	{
+		"head_word": "<jy\u00f3tis>",
+		"definition": "light",
+		"keyword": "LIGHT"
+	},
+
+	{
+		"head_word": "<m\u00e1r\u012bci>",
+		"definition": "particle of light, gleaming light",
+		"keyword": "LIGHT"
+	},
+
+	{
+		"head_word": "<rocan\u00e1>",
+		"definition": "sphere of light",
+		"keyword": "LIGHT"
+	},
+
+	{
+		"head_word": "<vidy\u00fat>",
+		"definition": "lightning flash",
+		"keyword": "LIGHTNING"
+	},
+
+	{
+		"head_word": "<iva>",
+		"definition": "like",
+		"keyword": "LIKE"
+	},
+
+	{
+		"head_word": "<n\u00e1>",
+		"definition": "like",
+		"keyword": "LIKE"
+	},
+
+	{
+		"head_word": "<j\u012bv\u00e1>",
+		"definition": "alive, living",
+		"keyword": "LIVING"
+	},
+
+	{
+		"head_word": "<br\u0325h\u00e1nt>",
+		"definition": "high, lofty",
+		"keyword": "LOFTY"
+	},
+
+	{
+		"head_word": "<br\u0325h\u00e1tsumna>",
+		"definition": "lofty-favoured",
+		"keyword": "LOFTY-FAVOURED"
+	},
+
+	{
+		"head_word": "<jy\u00f3k>",
+		"definition": "for a long time",
+		"keyword": "LONG"
+	},
+
+	{
+		"head_word": "<\u221ai\u1e63, ich\u00e1ti>",
+		"definition": "long for, desire",
+		"keyword": "LONG"
+	},
+
+	{
+		"head_word": "<k\u0101<sup><font size=\"+1\">\u0301</font></sup>ma>",
+		"definition": "longing",
+		"keyword": "LONGING"
+	},
+
+	{
+		"head_word": "<\u221ay\u0101, y\u0101<sup><font size=\"+1\">\u0301</font></sup>ti>",
+		"definition": "approach with longing, solicit",
+		"keyword": "LONGING"
+	},
+
+	{
+		"head_word": "<\u221akhy\u0101>",
+		"definition": "look upon",
+		"keyword": "LOOK"
+	},
+
+	{
+		"head_word": "<praj\u0101<sup><font size=\"+1\">\u0301</font></sup>pati>",
+		"definition": "creature-lord, lord of creatures",
+		"keyword": "LORD"
+	},
+
+	{
+		"head_word": "<p\u00e1ti>",
+		"definition": "lord",
+		"keyword": "LORD"
+	},
+
+	{
+		"head_word": "<v\u00e1nasp\u00e1ti>",
+		"definition": "forest lord, tree",
+		"keyword": "LORD"
+	},
+
+	{
+		"head_word": "<\u00e1sura>",
+		"definition": "spiritual lord",
+		"keyword": "LORD"
+	},
+
+	{
+		"head_word": "<\u221ana\u015b, n\u00e1\u015byati>",
+		"definition": "be lost",
+		"keyword": "LOST"
+	},
+
+	{
+		"head_word": "<purupriy\u00e1>",
+		"definition": "much loved",
+		"keyword": "LOVED"
+	},
+
+	{
+		"head_word": "<v\u00e1nanvant>",
+		"definition": "<i>lovely</i>",
+		"keyword": "LOVELY"
+	},
+
+	{
+		"head_word": "<sup\u0101\u1e47\u00ed>",
+		"definition": "lovely-handed",
+		"keyword": "LOVELY-HANDED"
+	},
+
+	{
+		"head_word": "<\u00e1vara>",
+		"definition": "lower, more recent",
+		"keyword": "LOWER"
+	},
+
+	{
+		"head_word": "<avam\u00e1>",
+		"definition": "lowest, most recent",
+		"keyword": "LOWEST"
+	},
+
+	{
+		"head_word": "<suma\u1e45g\u00e1la>",
+		"definition": "auspicious, bringing luck",
+		"keyword": "LUCK"
+	},
+
+	{
+		"head_word": "<p\u0101<sup><font size=\"+1\">\u0301</font></sup>jas>",
+		"definition": "<i>radiance, lustre</i>",
+		"keyword": "LUSTRE"
+	},
+
+	{
+		"head_word": "<mahitvan\u00e1>",
+		"definition": "majesty",
+		"keyword": "MAJESTY"
+	},
+
+	{
+		"head_word": "<mahitv\u00e1>",
+		"definition": "greatness, majesty",
+		"keyword": "MAJESTY"
+	},
+
+	{
+		"head_word": "<\u221akr\u0325, kr\u0325\u1e47\u00f3ti>",
+		"definition": "do, make",
+		"keyword": "MAKE"
+	},
+
+	{
+		"head_word": "<\u221amuc, mu\u00f1c\u00e1te>",
+		"definition": "make free",
+		"keyword": "MAKE"
+	},
+
+	{
+		"head_word": "<m\u00e1nu>",
+		"definition": "man, mankind",
+		"keyword": "MAN"
+	},
+
+	{
+		"head_word": "<m\u00e1rtya>",
+		"definition": "mortal man",
+		"keyword": "MAN"
+	},
+
+	{
+		"head_word": "<puru\u1e63atr\u0101<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "as a man",
+		"keyword": "MAN"
+	},
+
+	{
+		"head_word": "<v\u012br\u00e1>",
+		"definition": "hero, man, strong son",
+		"keyword": "MAN"
+	},
+
+	{
+		"head_word": "<suv\u012b<sup><font size=\"+1\">\u0301</font></sup>ra>",
+		"definition": "of good manhood",
+		"keyword": "MANHOOD"
+	},
+
+	{
+		"head_word": "<m\u00e1nu>",
+		"definition": "man, mankind",
+		"keyword": "MANKIND"
+	},
+
+	{
+		"head_word": "<v\u012bry\u00e0>",
+		"definition": "heroic deed, manly strength",
+		"keyword": "MANLY"
+	},
+
+	{
+		"head_word": "<dr\u0101p\u00ed>",
+		"definition": "<i>mantle</i>",
+		"keyword": "MANTLE"
+	},
+
+	{
+		"head_word": "<katam\u00e1s, katam\u0101<sup><font size=\"+1\">\u0301</font></sup>, katam\u00e1t>",
+		"definition": "who, which (of many)",
+		"keyword": "MANY"
+	},
+
+	{
+		"head_word": "<pur\u00fa>",
+		"definition": "much, many",
+		"keyword": "MANY"
+	},
+
+	{
+		"head_word": "<mitr\u00e1mahas>",
+		"definition": "friend-great, many-friended",
+		"keyword": "MANY-FRIENDED"
+	},
+
+	{
+		"head_word": "<mar\u00fat>",
+		"definition": "Marut, storm god",
+		"keyword": "MARUT"
+	},
+
+	{
+		"head_word": "<m\u0101<sup><font size=\"+1\">\u0301</font></sup>ruta>",
+		"definition": "of the storm gods, the Maruts'",
+		"keyword": "MARUTS"
+	},
+
+	{
+		"head_word": "<\u221a\u012b\u015b, \u012b<sup><font size=\"+1\">\u0301</font></sup>\u015be>",
+		"definition": "have mastery over",
+		"keyword": "MASTERY"
+	},
+
+	{
+		"head_word": "<a->",
+		"definition": "(reverses meaning)",
+		"keyword": "MEANING"
+	},
+
+	{
+		"head_word": "<\u0101<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "(intensifies or reverses meaning)",
+		"keyword": "MEANING"
+	},
+
+	{
+		"head_word": "<vai\u015bv\u0101nar\u00e1>",
+		"definition": "for all men, universal",
+		"keyword": "MEN"
+	},
+
+	{
+		"head_word": "<madhy\u00e1\u1e43dina>",
+		"definition": "midday, middle time",
+		"keyword": "MIDDAY"
+	},
+
+	{
+		"head_word": "<madhyam\u00e1>",
+		"definition": "middle, middle one",
+		"keyword": "MIDDLE"
+	},
+
+	{
+		"head_word": "<madhy\u00e1\u1e43dina>",
+		"definition": "midday, middle time",
+		"keyword": "MIDDLE"
+	},
+
+	{
+		"head_word": "<m\u00e1dhya>",
+		"definition": "middle",
+		"keyword": "MIDDLE"
+	},
+
+	{
+		"head_word": "<s\u00e1has>",
+		"definition": "might",
+		"keyword": "MIGHT"
+	},
+
+	{
+		"head_word": "<mah\u00e1nt>",
+		"definition": "great, mighty",
+		"keyword": "MIGHTY"
+	},
+
+	{
+		"head_word": "<s\u00e1manyu>",
+		"definition": "of the same mind",
+		"keyword": "MIND"
+	},
+
+	{
+		"head_word": "<pr\u00e1cetas>",
+		"definition": "mindful",
+		"keyword": "MINDFUL"
+	},
+
+	{
+		"head_word": "<sr\u00eddh>",
+		"definition": "failure, misfortune",
+		"keyword": "MISFORTUNE"
+	},
+
+	{
+		"head_word": "<mitr\u00e1>",
+		"definition": "friend, Mitra",
+		"keyword": "MITRA"
+	},
+
+	{
+		"head_word": "<id\u0101<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "at this moment",
+		"keyword": "MOMENT"
+	},
+
+	{
+		"head_word": "<muh\u016brt\u00e1>",
+		"definition": "moment",
+		"keyword": "MOMENT"
+	},
+
+	{
+		"head_word": "<\u00e1vara>",
+		"definition": "lower, more recent",
+		"keyword": "MORE"
+	},
+
+	{
+		"head_word": "<martabh\u00f3jana>",
+		"definition": "mortal sustenance",
+		"keyword": "MORTAL"
+	},
+
+	{
+		"head_word": "<m\u00e1rta>",
+		"definition": "mortal",
+		"keyword": "MORTAL"
+	},
+
+	{
+		"head_word": "<m\u00e1rtya>",
+		"definition": "mortal man",
+		"keyword": "MORTAL"
+	},
+
+	{
+		"head_word": "<avam\u00e1>",
+		"definition": "lowest, most recent",
+		"keyword": "MOST"
+	},
+
+	{
+		"head_word": "<d\u012brgha\u015br\u00fattama>",
+		"definition": "most widely known, famed",
+		"keyword": "MOST"
+	},
+
+	{
+		"head_word": "<m\u0101t\u0155\u0325>",
+		"definition": "mother",
+		"keyword": "MOTHER"
+	},
+
+	{
+		"head_word": "<\u221ainv, \u00ednvati>",
+		"definition": "set in motion",
+		"keyword": "MOTION"
+	},
+
+	{
+		"head_word": "<prav\u00e1t>",
+		"definition": "mountain slope, height",
+		"keyword": "MOUNTAIN"
+	},
+
+	{
+		"head_word": "<p\u00e1rvata>",
+		"definition": "mountain",
+		"keyword": "MOUNTAIN"
+	},
+
+	{
+		"head_word": "<\u221acar, c\u00e1rati>",
+		"definition": "move",
+		"keyword": "MOVE"
+	},
+
+	{
+		"head_word": "<j\u00e1gat>",
+		"definition": "moving world",
+		"keyword": "MOVING"
+	},
+
+	{
+		"head_word": "<puruh\u016bt\u00e1>",
+		"definition": "much invoked",
+		"keyword": "MUCH"
+	},
+
+	{
+		"head_word": "<puruk\u0155\u0325t>",
+		"definition": "doing much",
+		"keyword": "MUCH"
+	},
+
+	{
+		"head_word": "<purupriy\u00e1>",
+		"definition": "much loved",
+		"keyword": "MUCH"
+	},
+
+	{
+		"head_word": "<pur\u00fa>",
+		"definition": "much, many",
+		"keyword": "MUCH"
+	},
+
+	{
+		"head_word": "<y\u0101<sup><font size=\"+1\">\u0301</font></sup>t>",
+		"definition": "so far as, in as much as",
+		"keyword": "MUCH"
+	},
+
+	{
+		"head_word": "<a\u1e43h\u00fa>",
+		"definition": "narrowness, anxiety",
+		"keyword": "NARROWNESS"
+	},
+
+	{
+		"head_word": "<tm\u00e1n>",
+		"definition": "nature, self",
+		"keyword": "NATURE"
+	},
+
+	{
+		"head_word": "<n\u00e1vy\u0101\u1e43s>",
+		"definition": "newer",
+		"keyword": "NEWER"
+	},
+
+	{
+		"head_word": "<n\u00e1ktam>",
+		"definition": "by night",
+		"keyword": "NIGHT"
+	},
+
+	{
+		"head_word": "<ay\u0101<sup><font size=\"+1\">\u0301</font></sup>s>",
+		"definition": "nimble",
+		"keyword": "NIMBLE"
+	},
+
+	{
+		"head_word": "<adr\u00fah>",
+		"definition": "not betraying",
+		"keyword": "NOT"
+	},
+
+	{
+		"head_word": "<m\u0101<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "not, that not",
+		"keyword": "NOT"
+	},
+
+	{
+		"head_word": "<n\u00e1>",
+		"definition": "not",
+		"keyword": "NOT"
+	},
+
+	{
+		"head_word": "<\u00e1dvayas>",
+		"definition": "not duplicitous, trustworthy",
+		"keyword": "NOT"
+	},
+
+	{
+		"head_word": "<\u00e1d\u0101bhya>",
+		"definition": "not to be deceived",
+		"keyword": "NOT"
+	},
+
+	{
+		"head_word": "<n\u00fa>",
+		"definition": "now",
+		"keyword": "NOW"
+	},
+
+	{
+		"head_word": "<n\u016b<sup><font size=\"+1\">\u0301</font></sup>tana>",
+		"definition": "now existing",
+		"keyword": "NOW"
+	},
+
+	{
+		"head_word": "<n\u016bn\u00e1m>",
+		"definition": "now",
+		"keyword": "NOW"
+	},
+
+	{
+		"head_word": "<u>",
+		"definition": "and, now",
+		"keyword": "NOW"
+	},
+
+	{
+		"head_word": "<arit\u0155\u0325>",
+		"definition": "oarsman",
+		"keyword": "OARSMAN"
+	},
+
+	{
+		"head_word": "<\u221abudh, b\u00f3dhati>",
+		"definition": "wake, observe",
+		"keyword": "OBSERVE"
+	},
+
+	{
+		"head_word": "<\u221ak\u0101\u015b, c\u0101<sup><font size=\"+1\">\u0301</font></sup>ka\u015b\u012bti>",
+		"definition": "observe, pay attention to",
+		"keyword": "OBSERVE"
+	},
+
+	{
+		"head_word": "<t\u00fac>",
+		"definition": "offspring",
+		"keyword": "OFFSPRING"
+	},
+
+	{
+		"head_word": "<jara\u1e47\u0101<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "old age",
+		"keyword": "OLD"
+	},
+
+	{
+		"head_word": "<\u00e1pi>",
+		"definition": "on",
+		"keyword": "ON"
+	},
+
+	{
+		"head_word": "<d\u0101\u015bv\u0101<sup><font size=\"+1\">\u0301</font></sup>\u1e43s>",
+		"definition": "the one worshipping",
+		"keyword": "ONE"
+	},
+
+	{
+		"head_word": "<madhyam\u00e1>",
+		"definition": "middle, middle one",
+		"keyword": "ONE"
+	},
+
+	{
+		"head_word": "<vi\u015bv\u00e1vedas>",
+		"definition": "all-knowing one",
+		"keyword": "ONE"
+	},
+
+	{
+		"head_word": "<\u0155\u0325dhak>",
+		"definition": "separately, on one side",
+		"keyword": "ONE"
+	},
+
+	{
+		"head_word": "<\u221ayat, y\u00e1tate>",
+		"definition": "take one's place",
+		"keyword": "ONE"
+	},
+
+	{
+		"head_word": "<v\u0101>",
+		"definition": "or",
+		"keyword": "OR"
+	},
+
+	{
+		"head_word": "<dh\u00e1rman>",
+		"definition": "support, fixed order",
+		"keyword": "ORDER"
+	},
+
+	{
+		"head_word": "<s\u00e1rgatakta>",
+		"definition": "(<i>lit.</i>) outpouring-rushed",
+		"keyword": "OUTPOURING-RUSHED"
+	},
+
+	{
+		"head_word": "<\u221a\u012b\u015b, \u012b<sup><font size=\"+1\">\u0301</font></sup>\u015be>",
+		"definition": "have mastery over",
+		"keyword": "OVER"
+	},
+
+	{
+		"head_word": "<sv\u00e1>",
+		"definition": "own",
+		"keyword": "OWN"
+	},
+
+	{
+		"head_word": "<\u00fapastuti>",
+		"definition": "paean of praise",
+		"keyword": "PAEAN"
+	},
+
+	{
+		"head_word": "<m\u00e1r\u012bci>",
+		"definition": "particle of light, gleaming light",
+		"keyword": "PARTICLE"
+	},
+
+	{
+		"head_word": "<sug\u00e1>",
+		"definition": "good passage",
+		"keyword": "PASSAGE"
+	},
+
+	{
+		"head_word": "<susara\u1e47\u00e1>",
+		"definition": "good passage",
+		"keyword": "PASSAGE"
+	},
+
+	{
+		"head_word": "<\u00e1jma>",
+		"definition": "course, path",
+		"keyword": "PATH"
+	},
+
+	{
+		"head_word": "<\u221ak\u0101\u015b, c\u0101<sup><font size=\"+1\">\u0301</font></sup>ka\u015b\u012bti>",
+		"definition": "observe, pay attention to",
+		"keyword": "PAY"
+	},
+
+	{
+		"head_word": "<\u221avidh>",
+		"definition": "pay homage to, honour",
+		"keyword": "PAY"
+	},
+
+	{
+		"head_word": "<aneh\u00e1s>",
+		"definition": "<i>incomparable, peerless</i>",
+		"keyword": "PEERLESS"
+	},
+
+	{
+		"head_word": "<j\u00e1na>",
+		"definition": "person, people",
+		"keyword": "PEOPLE"
+	},
+
+	{
+		"head_word": "<j\u00e1na>",
+		"definition": "person, people",
+		"keyword": "PERSON"
+	},
+
+	{
+		"head_word": "<samudr\u00e1>",
+		"definition": "gathering place of waters, sea",
+		"keyword": "PLACE"
+	},
+
+	{
+		"head_word": "<vak\u1e63\u00e1\u1e47\u0101>",
+		"definition": "<i>fertile place</i>",
+		"keyword": "PLACE"
+	},
+
+	{
+		"head_word": "<\u221adh\u0101, d\u00e1dh\u0101ti>",
+		"definition": "place, grant",
+		"keyword": "PLACE"
+	},
+
+	{
+		"head_word": "<\u221ayat, y\u00e1tate>",
+		"definition": "take one's place",
+		"keyword": "PLACE"
+	},
+
+	{
+		"head_word": "<\u00e1jra>",
+		"definition": "plain, flatland",
+		"keyword": "PLAIN"
+	},
+
+	{
+		"head_word": "<\u00f3\u1e63adhi>",
+		"definition": "plant",
+		"keyword": "PLANT"
+	},
+
+	{
+		"head_word": "<p\u00e1yas>",
+		"definition": "<i>fruitfulness, plenty</i>",
+		"keyword": "PLENTY"
+	},
+
+	{
+		"head_word": "<v\u00edpra>",
+		"definition": "poet",
+		"keyword": "POET"
+	},
+
+	{
+		"head_word": "<r\u0325t\u0101<sup><font size=\"+1\">\u0301</font></sup>van>",
+		"definition": "possessed of Truth, holy",
+		"keyword": "POSSESSED"
+	},
+
+	{
+		"head_word": "<arciv\u00e1nt>",
+		"definition": "possessing rays, flaming",
+		"keyword": "POSSESSING"
+	},
+
+	{
+		"head_word": "<bh\u0101<sup><font size=\"+1\">\u0301</font></sup>svant>",
+		"definition": "possessing light, brightness",
+		"keyword": "POSSESSING"
+	},
+
+	{
+		"head_word": "<svadh\u0101<sup><font size=\"+1\">\u0301</font></sup>vant>",
+		"definition": "possessing inherent power, self-powerful",
+		"keyword": "POSSESSING"
+	},
+
+	{
+		"head_word": "<s\u016bn\u0155\u0325t\u0101vant>",
+		"definition": "<i>possessing joy, joyous</i>",
+		"keyword": "POSSESSING"
+	},
+
+	{
+		"head_word": "<vay\u00fanavant>",
+		"definition": "<i>possessing distinction, certainty</i>",
+		"keyword": "POSSESSING"
+	},
+
+	{
+		"head_word": "<\u00e9nasvant>",
+		"definition": "possessing sin",
+		"keyword": "POSSESSING"
+	},
+
+	{
+		"head_word": "<ray\u00ed>",
+		"definition": "possession, treasure",
+		"keyword": "POSSESSION"
+	},
+
+	{
+		"head_word": "<kr\u00e1tu>",
+		"definition": "power, intellectual ability",
+		"keyword": "POWER"
+	},
+
+	{
+		"head_word": "<svadh\u0101<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "inherent power",
+		"keyword": "POWER"
+	},
+
+	{
+		"head_word": "<svadh\u0101<sup><font size=\"+1\">\u0301</font></sup>vant>",
+		"definition": "possessing inherent power, self-powerful",
+		"keyword": "POWER"
+	},
+
+	{
+		"head_word": "<v\u0101<sup><font size=\"+1\">\u0301</font></sup>ja>",
+		"definition": "power, strength",
+		"keyword": "POWER"
+	},
+
+	{
+		"head_word": "<agh\u00e1\u015ba\u1e43sa>",
+		"definition": "of wicked praise",
+		"keyword": "PRAISE"
+	},
+
+	{
+		"head_word": "<ark\u00e1>",
+		"definition": "song of praise, eulogy",
+		"keyword": "PRAISE"
+	},
+
+	{
+		"head_word": "<su\u1e63\u1e6dut\u00ed>",
+		"definition": "fine hymn of praise",
+		"keyword": "PRAISE"
+	},
+
+	{
+		"head_word": "<\u00fapastuti>",
+		"definition": "paean of praise",
+		"keyword": "PRAISE"
+	},
+
+	{
+		"head_word": "<\u015bl\u00f3ka>",
+		"definition": "song of praise",
+		"keyword": "PRAISE"
+	},
+
+	{
+		"head_word": "<\u221aarc, \u00e1rcati>",
+		"definition": "praise",
+		"keyword": "PRAISE"
+	},
+
+	{
+		"head_word": "<\u221astu, stu\u1e63\u00e9>",
+		"definition": "praise",
+		"keyword": "PRAISE"
+	},
+
+	{
+		"head_word": "<\u221a\u015ba\u1e43s, \u015b\u00e1\u1e43sati>",
+		"definition": "praise",
+		"keyword": "PRAISE"
+	},
+
+	{
+		"head_word": "<svit>",
+		"definition": "pray?",
+		"keyword": "PRAY"
+	},
+
+	{
+		"head_word": "<br\u00e1hmav\u0101has>",
+		"definition": "brought by prayer",
+		"keyword": "PRAYER"
+	},
+
+	{
+		"head_word": "<dh\u0101<sup><font size=\"+1\">\u0301</font></sup>man>",
+		"definition": "foundation, just law, precept",
+		"keyword": "PRECEPT"
+	},
+
+	{
+		"head_word": "<v\u0101<sup><font size=\"+1\">\u0301</font></sup>rya>",
+		"definition": "choice (thing), precious gift",
+		"keyword": "PRECIOUS"
+	},
+
+	{
+		"head_word": "<p\u016b<sup><font size=\"+1\">\u0301</font></sup>rva>",
+		"definition": "former, previous",
+		"keyword": "PREVIOUS"
+	},
+
+	{
+		"head_word": "<s\u016br\u00ed>",
+		"definition": "prince",
+		"keyword": "PRINCE"
+	},
+
+	{
+		"head_word": "<\u221ajan, j\u00e1nati>",
+		"definition": "produce, create, bear",
+		"keyword": "PRODUCE"
+	},
+
+	{
+		"head_word": "<\u0101han\u00e1s>",
+		"definition": "<i>abundantly productive</i>",
+		"keyword": "PRODUCTIVE"
+	},
+
+	{
+		"head_word": "<praj\u0101<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "creature, progeny",
+		"keyword": "PROGENY"
+	},
+
+	{
+		"head_word": "<praj\u0101<sup><font size=\"+1\">\u0301</font></sup>vant>",
+		"definition": "having progeny",
+		"keyword": "PROGENY"
+	},
+
+	{
+		"head_word": "<bhadrav\u0101d\u00edn>",
+		"definition": "of fortunate pronouncement",
+		"keyword": "PRONOUNCEMENT"
+	},
+
+	{
+		"head_word": "<vasutvan\u00e1>",
+		"definition": "prosperity",
+		"keyword": "PROSPERITY"
+	},
+
+	{
+		"head_word": "<\u221ap\u0101, p\u0101<sup><font size=\"+1\">\u0301</font></sup>ti>",
+		"definition": "protect",
+		"keyword": "PROTECT"
+	},
+
+	{
+		"head_word": "<\u221arak\u1e63, r\u00e1k\u1e63ati>",
+		"definition": "protect",
+		"keyword": "PROTECT"
+	},
+
+	{
+		"head_word": "<\u221atr\u0101>",
+		"definition": "rescue, protect",
+		"keyword": "PROTECT"
+	},
+
+	{
+		"head_word": "<chard\u00eds>",
+		"definition": "protection, shield",
+		"keyword": "PROTECTION"
+	},
+
+	{
+		"head_word": "<triv\u00e1r\u016btha>",
+		"definition": "with threefold protection",
+		"keyword": "PROTECTION"
+	},
+
+	{
+		"head_word": "<su\u015bara\u1e47\u00e1>",
+		"definition": "good shelterer, good protector",
+		"keyword": "PROTECTOR"
+	},
+
+	{
+		"head_word": "<varivov\u00edd>",
+		"definition": "providers of space",
+		"keyword": "PROVIDERS"
+	},
+
+	{
+		"head_word": "<dr\u00e1vi\u1e47a>",
+		"definition": "provision",
+		"keyword": "PROVISION"
+	},
+
+	{
+		"head_word": "<arth\u00edn>",
+		"definition": "purposeful",
+		"keyword": "PURPOSEFUL"
+	},
+
+	{
+		"head_word": "<p\u0101<sup><font size=\"+1\">\u0301</font></sup>jas>",
+		"definition": "<i>radiance, lustre</i>",
+		"keyword": "RADIANCE"
+	},
+
+	{
+		"head_word": "<citr\u00e1>",
+		"definition": "bright, radiant",
+		"keyword": "RADIANT"
+	},
+
+	{
+		"head_word": "<akt\u00fa>",
+		"definition": "<i>twilight ray</i>",
+		"keyword": "RAY"
+	},
+
+	{
+		"head_word": "<ket\u00fa>",
+		"definition": "appearance, shining out, ray",
+		"keyword": "RAY"
+	},
+
+	{
+		"head_word": "<arciv\u00e1nt>",
+		"definition": "possessing rays, flaming",
+		"keyword": "RAYS"
+	},
+
+	{
+		"head_word": "<\u221aa\u1e43\u015b, a\u015bn\u00f3ti>",
+		"definition": "reach",
+		"keyword": "REACH"
+	},
+
+	{
+		"head_word": "<abh\u00ed\u1e63\u1e6di>",
+		"definition": "being at hand, ready help",
+		"keyword": "READY"
+	},
+
+	{
+		"head_word": "<avam\u00e1>",
+		"definition": "lowest, most recent",
+		"keyword": "RECENT"
+	},
+
+	{
+		"head_word": "<\u00e1vara>",
+		"definition": "lower, more recent",
+		"keyword": "RECENT"
+	},
+
+	{
+		"head_word": "<\u00ed\u1e0d>",
+		"definition": "refreshment",
+		"keyword": "REFRESHMENT"
+	},
+
+	{
+		"head_word": "<\u00ed\u1e63>",
+		"definition": "refreshment",
+		"keyword": "REFRESHMENT"
+	},
+
+	{
+		"head_word": "<\u015b\u00e1rman>",
+		"definition": "refuge, shelter",
+		"keyword": "REFUGE"
+	},
+
+	{
+		"head_word": "<prad\u00ed\u015b>",
+		"definition": "direction, region",
+		"keyword": "REGION"
+	},
+
+	{
+		"head_word": "<r\u00e1jas>",
+		"definition": "airy space, dark region",
+		"keyword": "REGION"
+	},
+
+	{
+		"head_word": "<\u00e1hn\u0101-ahn\u0101>",
+		"definition": "with repeated daylight",
+		"keyword": "REPEATED"
+	},
+
+	{
+		"head_word": "<\u221atr\u0101>",
+		"definition": "rescue, protect",
+		"keyword": "RESCUE"
+	},
+
+	{
+		"head_word": "<niv\u00e9\u015bana>",
+		"definition": "the source of rest",
+		"keyword": "REST"
+	},
+
+	{
+		"head_word": "<\u221aram, r\u00e1mate>",
+		"definition": "rest, stay",
+		"keyword": "REST"
+	},
+
+	{
+		"head_word": "<\u221avi\u015b, vi\u015b\u00e1te>",
+		"definition": "enter, come to rest",
+		"keyword": "REST"
+	},
+
+	{
+		"head_word": "<a->",
+		"definition": "(reverses meaning)",
+		"keyword": "REVERSES"
+	},
+
+	{
+		"head_word": "<\u0101<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "(intensifies or reverses meaning)",
+		"keyword": "REVERSES"
+	},
+
+	{
+		"head_word": "<udanim\u00e1nt>",
+		"definition": "rich in water",
+		"keyword": "RICH"
+	},
+
+	{
+		"head_word": "<dak\u1e63i\u1e47at\u00e1s>",
+		"definition": "from the right side",
+		"keyword": "RIGHT"
+	},
+
+	{
+		"head_word": "<\u221aruh, r\u00f3hati>",
+		"definition": "rise up",
+		"keyword": "RISE"
+	},
+
+	{
+		"head_word": "<s\u00edndhu>",
+		"definition": "river",
+		"keyword": "RIVER"
+	},
+
+	{
+		"head_word": "<\u221aru, ruv\u00e1ti>",
+		"definition": "roar",
+		"keyword": "ROAR"
+	},
+
+	{
+		"head_word": "<codayitr\u012b<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "rouser",
+		"keyword": "ROUSER"
+	},
+
+	{
+		"head_word": "<rudr\u00e1>",
+		"definition": "Rudra",
+		"keyword": "RUDRA"
+	},
+
+	{
+		"head_word": "<\u221ar\u0101j, r\u0101<sup><font size=\"+1\">\u0301</font></sup>jati>",
+		"definition": "rule, shine",
+		"keyword": "RULE"
+	},
+
+	{
+		"head_word": "<r\u0101<sup><font size=\"+1\">\u0301</font></sup>jan>",
+		"definition": "king, ruler",
+		"keyword": "RULER"
+	},
+
+	{
+		"head_word": "<priy\u00e1k\u1e63atra>",
+		"definition": "ruling benevolently",
+		"keyword": "RULING"
+	},
+
+	{
+		"head_word": "<supr\u00e1\u1e47\u012bti>",
+		"definition": "safe guidance",
+		"keyword": "SAFE"
+	},
+
+	{
+		"head_word": "<supr\u00e1\u1e47\u012bti>",
+		"definition": "guiding safely",
+		"keyword": "SAFELY"
+	},
+
+	{
+		"head_word": "<kav\u00ed>",
+		"definition": "sage",
+		"keyword": "SAGE"
+	},
+
+	{
+		"head_word": "<s\u00e1c\u0101>",
+		"definition": "at the same time",
+		"keyword": "SAME"
+	},
+
+	{
+		"head_word": "<s\u00e1manyu>",
+		"definition": "of the same mind",
+		"keyword": "SAME"
+	},
+
+	{
+		"head_word": "<savit\u0155\u0325>",
+		"definition": "enlivener, Savitar",
+		"keyword": "SAVITAR"
+	},
+
+	{
+		"head_word": "<\u221abr\u016b, br\u00e1v\u012bti>",
+		"definition": "say",
+		"keyword": "SAY"
+	},
+
+	{
+		"head_word": "<samudr\u00e1>",
+		"definition": "gathering place of waters, sea",
+		"keyword": "SEA"
+	},
+
+	{
+		"head_word": "<\u221acak\u1e63, c\u00e1\u1e63\u1e6de>",
+		"definition": "see",
+		"keyword": "SEE"
+	},
+
+	{
+		"head_word": "<\u221adr\u0325\u015b>",
+		"definition": "see, appear",
+		"keyword": "SEE"
+	},
+
+	{
+		"head_word": "<\u221apa\u015b, p\u00e1\u015byati>",
+		"definition": "see",
+		"keyword": "SEE"
+	},
+
+	{
+		"head_word": "<c\u00e1k\u1e63as>",
+		"definition": "seeing, sight",
+		"keyword": "SEEING"
+	},
+
+	{
+		"head_word": "<tm\u00e1n>",
+		"definition": "nature, self",
+		"keyword": "SELF"
+	},
+
+	{
+		"head_word": "<svadh\u0101<sup><font size=\"+1\">\u0301</font></sup>vant>",
+		"definition": "possessing inherent power, self-powerful",
+		"keyword": "SELF-POWERFUL"
+	},
+
+	{
+		"head_word": "<\u221ai\u1e63, \u00ed\u1e63yati>",
+		"definition": "send",
+		"keyword": "SEND"
+	},
+
+	{
+		"head_word": "<\u221ar\u0325, \u00edyarti>",
+		"definition": "go, send",
+		"keyword": "SEND"
+	},
+
+	{
+		"head_word": "<\u0155\u0325dhak>",
+		"definition": "separately, on one side",
+		"keyword": "SEPARATELY"
+	},
+
+	{
+		"head_word": "<\u221ainv, \u00ednvati>",
+		"definition": "set in motion",
+		"keyword": "SET"
+	},
+
+	{
+		"head_word": "<nimr\u00fac>",
+		"definition": "setting, sunset",
+		"keyword": "SETTING"
+	},
+
+	{
+		"head_word": "<v\u00ed\u015b>",
+		"definition": "settlement, folk",
+		"keyword": "SETTLEMENT"
+	},
+
+	{
+		"head_word": "<s\u00e1s, s\u0101<sup><font size=\"+1\">\u0301</font></sup>, t\u00e1t>",
+		"definition": "that; he, she, it",
+		"keyword": "SHE"
+	},
+
+	{
+		"head_word": "<su\u015b\u00e1rman>",
+		"definition": "of good shelter, tutelary",
+		"keyword": "SHELTER"
+	},
+
+	{
+		"head_word": "<\u015b\u00e1rman>",
+		"definition": "refuge, shelter",
+		"keyword": "SHELTER"
+	},
+
+	{
+		"head_word": "<su\u015bara\u1e47\u00e1>",
+		"definition": "good shelterer, good protector",
+		"keyword": "SHELTERER"
+	},
+
+	{
+		"head_word": "<chard\u00eds>",
+		"definition": "protection, shield",
+		"keyword": "SHIELD"
+	},
+
+	{
+		"head_word": "<\u221ar\u0101j, r\u0101<sup><font size=\"+1\">\u0301</font></sup>jati>",
+		"definition": "rule, shine",
+		"keyword": "SHINE"
+	},
+
+	{
+		"head_word": "<\u221avas, uch\u00e1ti>",
+		"definition": "shine",
+		"keyword": "SHINE"
+	},
+
+	{
+		"head_word": "<bh\u0101n\u00fa>",
+		"definition": "brightness, shining",
+		"keyword": "SHINING"
+	},
+
+	{
+		"head_word": "<ket\u00fa>",
+		"definition": "appearance, shining out, ray",
+		"keyword": "SHINING"
+	},
+
+	{
+		"head_word": "<abhibh\u0101<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "<i>lit.</i> shining-against",
+		"keyword": "SHINING-AGAINST"
+	},
+
+	{
+		"head_word": "<\u00e1str\u0325>",
+		"definition": "shooter, hunter",
+		"keyword": "SHOOTER"
+	},
+
+	{
+		"head_word": "<anam\u012bv\u00e1>",
+		"definition": "without sickness",
+		"keyword": "SICKNESS"
+	},
+
+	{
+		"head_word": "<arap\u00e1s>",
+		"definition": "without sickness, wholesome",
+		"keyword": "SICKNESS"
+	},
+
+	{
+		"head_word": "<r\u00e1pas>",
+		"definition": "sickness",
+		"keyword": "SICKNESS"
+	},
+
+	{
+		"head_word": "<dak\u1e63i\u1e47at\u00e1s>",
+		"definition": "from the right side",
+		"keyword": "SIDE"
+	},
+
+	{
+		"head_word": "<\u0155\u0325dhak>",
+		"definition": "separately, on one side",
+		"keyword": "SIDE"
+	},
+
+	{
+		"head_word": "<c\u00e1k\u1e63as>",
+		"definition": "seeing, sight",
+		"keyword": "SIGHT"
+	},
+
+	{
+		"head_word": "<sa\u1e43d\u0155\u0325\u015b>",
+		"definition": "sight",
+		"keyword": "SIGHT"
+	},
+
+	{
+		"head_word": "<\u00e9nas>",
+		"definition": "sin",
+		"keyword": "SIN"
+	},
+
+	{
+		"head_word": "<\u00e9nasvant>",
+		"definition": "possessing sin",
+		"keyword": "SIN"
+	},
+
+	{
+		"head_word": "<\u221agr\u0325, gr\u0325\u1e47\u0101<sup><font size=\"+1\">\u0301</font></sup>ti>",
+		"definition": "sing",
+		"keyword": "SING"
+	},
+
+	{
+		"head_word": "<jarit\u0155\u0325>",
+		"definition": "singer",
+		"keyword": "SINGER"
+	},
+
+	{
+		"head_word": "<dy\u00fa, d\u00edv>",
+		"definition": "sky, heaven, day",
+		"keyword": "SKY"
+	},
+
+	{
+		"head_word": "<\u221avadh>",
+		"definition": "slay",
+		"keyword": "SLAY"
+	},
+
+	{
+		"head_word": "<\u221asridh, sr\u00e9dhati>",
+		"definition": "slip, fail",
+		"keyword": "SLIP"
+	},
+
+	{
+		"head_word": "<ny\u00e1\u00f1cana>",
+		"definition": "<i>downward slope</i>",
+		"keyword": "SLOPE"
+	},
+
+	{
+		"head_word": "<prav\u00e1t>",
+		"definition": "mountain slope, height",
+		"keyword": "SLOPE"
+	},
+
+	{
+		"head_word": "<\u00e1hi>",
+		"definition": "snake, dragon",
+		"keyword": "SNAKE"
+	},
+
+	{
+		"head_word": "<ev\u00e1>",
+		"definition": "so, just",
+		"keyword": "SO"
+	},
+
+	{
+		"head_word": "<t\u0101<sup><font size=\"+1\">\u0301</font></sup>t>",
+		"definition": "so",
+		"keyword": "SO"
+	},
+
+	{
+		"head_word": "<y\u00e1th\u0101>",
+		"definition": "as, so that",
+		"keyword": "SO"
+	},
+
+	{
+		"head_word": "<y\u0101<sup><font size=\"+1\">\u0301</font></sup>t>",
+		"definition": "so far as, in as much as",
+		"keyword": "SO"
+	},
+
+	{
+		"head_word": "<\u221ay\u0101, y\u0101<sup><font size=\"+1\">\u0301</font></sup>ti>",
+		"definition": "approach with longing, solicit",
+		"keyword": "SOLICIT"
+	},
+
+	{
+		"head_word": "<putr\u00e1>",
+		"definition": "son",
+		"keyword": "SON"
+	},
+
+	{
+		"head_word": "<s\u016bn\u00fa>",
+		"definition": "son",
+		"keyword": "SON"
+	},
+
+	{
+		"head_word": "<vaivasvat\u00e1>",
+		"definition": "son of Vivasvat",
+		"keyword": "SON"
+	},
+
+	{
+		"head_word": "<v\u012br\u00e1>",
+		"definition": "hero, man, strong son",
+		"keyword": "SON"
+	},
+
+	{
+		"head_word": "<\u0101dity\u00e1>",
+		"definition": "of Aditi, son of Aditi",
+		"keyword": "SON"
+	},
+
+	{
+		"head_word": "<ark\u00e1>",
+		"definition": "song of praise, eulogy",
+		"keyword": "SONG"
+	},
+
+	{
+		"head_word": "<g\u00edr>",
+		"definition": "song",
+		"keyword": "SONG"
+	},
+
+	{
+		"head_word": "<g\u00edrv\u0101has>",
+		"definition": "brought by song",
+		"keyword": "SONG"
+	},
+
+	{
+		"head_word": "<ukthy\u00e0>",
+		"definition": "worthy of holy song",
+		"keyword": "SONG"
+	},
+
+	{
+		"head_word": "<ukth\u00e1>",
+		"definition": "holy song",
+		"keyword": "SONG"
+	},
+
+	{
+		"head_word": "<\u015bl\u00f3ka>",
+		"definition": "song of praise",
+		"keyword": "SONG"
+	},
+
+	{
+		"head_word": "<mak\u1e63\u016b<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "swiftly, soon",
+		"keyword": "SOON"
+	},
+
+	{
+		"head_word": "<\u221aghu\u1e63, gh\u00f3\u1e63ate>",
+		"definition": "sound",
+		"keyword": "SOUND"
+	},
+
+	{
+		"head_word": "<niv\u00e9\u015bana>",
+		"definition": "the source of rest",
+		"keyword": "SOURCE"
+	},
+
+	{
+		"head_word": "<ant\u00e1rik\u1e63a>",
+		"definition": "airy space, atmosphere",
+		"keyword": "SPACE"
+	},
+
+	{
+		"head_word": "<r\u00e1jas>",
+		"definition": "airy space, dark region",
+		"keyword": "SPACE"
+	},
+
+	{
+		"head_word": "<varivov\u00edd>",
+		"definition": "providers of space",
+		"keyword": "SPACE"
+	},
+
+	{
+		"head_word": "<uruc\u00e1kri>",
+		"definition": "(<i>lit.</i>) space-making",
+		"keyword": "SPACE-MAKING"
+	},
+
+	{
+		"head_word": "<ur\u00fa>",
+		"definition": "broad, spacious",
+		"keyword": "SPACIOUS"
+	},
+
+	{
+		"head_word": "<\u221avac>",
+		"definition": "speak",
+		"keyword": "SPEAK"
+	},
+
+	{
+		"head_word": "<\u221avad, v\u00e1dati>",
+		"definition": "speak",
+		"keyword": "SPEAK"
+	},
+
+	{
+		"head_word": "<v\u00e1cas>",
+		"definition": "word, speech",
+		"keyword": "SPEECH"
+	},
+
+	{
+		"head_word": "<v\u0101<sup><font size=\"+1\">\u0301</font></sup>c>",
+		"definition": "voice, speech",
+		"keyword": "SPEECH"
+	},
+
+	{
+		"head_word": "<rocan\u00e1>",
+		"definition": "sphere of light",
+		"keyword": "SPHERE"
+	},
+
+	{
+		"head_word": "<m\u00e1nas>",
+		"definition": "understanding, spirit",
+		"keyword": "SPIRIT"
+	},
+
+	{
+		"head_word": "<\u00e1sura>",
+		"definition": "spiritual lord",
+		"keyword": "SPIRITUAL"
+	},
+
+	{
+		"head_word": "<\u221aprath, pr\u00e1thate>",
+		"definition": "spread",
+		"keyword": "SPREAD"
+	},
+
+	{
+		"head_word": "<\u221auk\u1e63, uk\u1e63\u00e1te>",
+		"definition": "sprinkle",
+		"keyword": "SPRINKLE"
+	},
+
+	{
+		"head_word": "<\u221asth\u0101, t\u00ed\u1e63\u1e6dhati>",
+		"definition": "stand",
+		"keyword": "STAND"
+	},
+
+	{
+		"head_word": "<sth\u0101t\u0155\u0325>",
+		"definition": "stander, standing world",
+		"keyword": "STANDER"
+	},
+
+	{
+		"head_word": "<sth\u0101t\u0155\u0325>",
+		"definition": "stander, standing world",
+		"keyword": "STANDING"
+	},
+
+	{
+		"head_word": "<n\u00e1k\u1e63atra>",
+		"definition": "star",
+		"keyword": "STAR"
+	},
+
+	{
+		"head_word": "<\u221aram, r\u00e1mate>",
+		"definition": "rest, stay",
+		"keyword": "STAY"
+	},
+
+	{
+		"head_word": "<mar\u00fat>",
+		"definition": "Marut, storm god",
+		"keyword": "STORM"
+	},
+
+	{
+		"head_word": "<m\u0101<sup><font size=\"+1\">\u0301</font></sup>ruta>",
+		"definition": "of the storm gods, the Maruts'",
+		"keyword": "STORM"
+	},
+
+	{
+		"head_word": "<abdim\u00e1nt>",
+		"definition": "consisting of storm-clouds",
+		"keyword": "STORM-CLOUDS"
+	},
+
+	{
+		"head_word": "<\u016brdhv\u00e1>",
+		"definition": "upright, straight",
+		"keyword": "STRAIGHT"
+	},
+
+	{
+		"head_word": "<nad\u012b<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "stream",
+		"keyword": "STREAM"
+	},
+
+	{
+		"head_word": "<v\u0101<sup><font size=\"+1\">\u0301</font></sup>ja>",
+		"definition": "power, strength",
+		"keyword": "STRENGTH"
+	},
+
+	{
+		"head_word": "<v\u012bry\u00e0>",
+		"definition": "heroic deed, manly strength",
+		"keyword": "STRENGTH"
+	},
+
+	{
+		"head_word": "<v\u0101<sup><font size=\"+1\">\u0301</font></sup>jas\u0101ti>",
+		"definition": "<i>lit.</i> strength-winning",
+		"keyword": "STRENGTH-WINNING"
+	},
+
+	{
+		"head_word": "<yaj\u00f1\u00e1vr\u0325ddha>",
+		"definition": "strengthened by worship",
+		"keyword": "STRENGTHENED"
+	},
+
+	{
+		"head_word": "<\u221atan, tanute>",
+		"definition": "stretch, stretch out",
+		"keyword": "STRETCH"
+	},
+
+	{
+		"head_word": "<\u221ayam, y\u00e1chati>",
+		"definition": "extend, stretch out",
+		"keyword": "STRETCH"
+	},
+
+	{
+		"head_word": "<\u221ahan, h\u00e1nti>",
+		"definition": "strike, destroy",
+		"keyword": "STRIKE"
+	},
+
+	{
+		"head_word": "<v\u012br\u00e1>",
+		"definition": "hero, man, strong son",
+		"keyword": "STRONG"
+	},
+
+	{
+		"head_word": "<s\u016b<sup><font size=\"+1\">\u0301</font></sup>rya>",
+		"definition": "sun",
+		"keyword": "SUN"
+	},
+
+	{
+		"head_word": "<sv\u00e0r>",
+		"definition": "sunlight, heaven",
+		"keyword": "SUNLIGHT"
+	},
+
+	{
+		"head_word": "<nimr\u00fac>",
+		"definition": "setting, sunset",
+		"keyword": "SUNSET"
+	},
+
+	{
+		"head_word": "<dh\u00e1rman>",
+		"definition": "support, fixed order",
+		"keyword": "SUPPORT"
+	},
+
+	{
+		"head_word": "<dhart\u0155\u0325>",
+		"definition": "supporter, upholder",
+		"keyword": "SUPPORTER"
+	},
+
+	{
+		"head_word": "<s\u00fa>",
+		"definition": "well, surely",
+		"keyword": "SURELY"
+	},
+
+	{
+		"head_word": "<paridh\u00ed>",
+		"definition": "surrounder, imprisoner",
+		"keyword": "SURROUNDER"
+	},
+
+	{
+		"head_word": "<pari\u1e63\u00e1d>",
+		"definition": "surrounding thing, coil",
+		"keyword": "SURROUNDING"
+	},
+
+	{
+		"head_word": "<abhi\u015br\u012b<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "<i>sustainer</i>",
+		"keyword": "SUSTAINER"
+	},
+
+	{
+		"head_word": "<martabh\u00f3jana>",
+		"definition": "mortal sustenance",
+		"keyword": "SUSTENANCE"
+	},
+
+	{
+		"head_word": "<va\u015b\u00edn>",
+		"definition": "having sway",
+		"keyword": "SWAY"
+	},
+
+	{
+		"head_word": "<\u221ap\u012b, p\u00ednvati>",
+		"definition": "swell, yield abundantly",
+		"keyword": "SWELL"
+	},
+
+	{
+		"head_word": "<mak\u1e63\u016b<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "swiftly, soon",
+		"keyword": "SWIFTLY"
+	},
+
+	{
+		"head_word": "<\u221ayat, y\u00e1tate>",
+		"definition": "take one's place",
+		"keyword": "TAKE"
+	},
+
+	{
+		"head_word": "<m\u0101<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "not, that not",
+		"keyword": "THAT"
+	},
+
+	{
+		"head_word": "<sy\u00e1s, sy\u0101<sup><font size=\"+1\">\u0301</font></sup>, ty\u00e1t>",
+		"definition": "that",
+		"keyword": "THAT"
+	},
+
+	{
+		"head_word": "<s\u00e1s, s\u0101<sup><font size=\"+1\">\u0301</font></sup>, t\u00e1t>",
+		"definition": "that; he, she, it",
+		"keyword": "THAT"
+	},
+
+	{
+		"head_word": "<y\u00e1t>",
+		"definition": "that, when",
+		"keyword": "THAT"
+	},
+
+	{
+		"head_word": "<y\u00e1th\u0101>",
+		"definition": "as, so that",
+		"keyword": "THAT"
+	},
+
+	{
+		"head_word": "<t\u00e1t>",
+		"definition": "then",
+		"keyword": "THEN"
+	},
+
+	{
+		"head_word": "<t\u00fa>",
+		"definition": "then, but",
+		"keyword": "THEN"
+	},
+
+	{
+		"head_word": "<sten\u00e1>",
+		"definition": "thief",
+		"keyword": "THIEF"
+	},
+
+	{
+		"head_word": "<pari\u1e63\u00e1d>",
+		"definition": "surrounding thing, coil",
+		"keyword": "THING"
+	},
+
+	{
+		"head_word": "<v\u0101<sup><font size=\"+1\">\u0301</font></sup>rya>",
+		"definition": "choice (thing), precious gift",
+		"keyword": "THING"
+	},
+
+	{
+		"head_word": "<v\u0101m\u00e1>",
+		"definition": "dear, beloved thing",
+		"keyword": "THING"
+	},
+
+	{
+		"head_word": "<\u221aman, m\u00e1nyate>",
+		"definition": "think",
+		"keyword": "THINK"
+	},
+
+	{
+		"head_word": "<ady\u00e1>",
+		"definition": "on this day, today",
+		"keyword": "THIS"
+	},
+
+	{
+		"head_word": "<ay\u00e1m, iy\u00e1m, id\u00e1m>",
+		"definition": "this",
+		"keyword": "THIS"
+	},
+
+	{
+		"head_word": "<en\u0101<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "in this way",
+		"keyword": "THIS"
+	},
+
+	{
+		"head_word": "<e\u1e63\u00e1s, e\u1e63\u0101<sup><font size=\"+1\">\u0301</font></sup>, et\u00e1t>",
+		"definition": "this",
+		"keyword": "THIS"
+	},
+
+	{
+		"head_word": "<id\u0101<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "at this moment",
+		"keyword": "THIS"
+	},
+
+	{
+		"head_word": "<dh\u012b<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "thought",
+		"keyword": "THOUGHT"
+	},
+
+	{
+		"head_word": "<durmat\u00ed>",
+		"definition": "bad thought, envy",
+		"keyword": "THOUGHT"
+	},
+
+	{
+		"head_word": "<man\u012b\u1e63\u0101<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "thought, expression of thought",
+		"keyword": "THOUGHT"
+	},
+
+	{
+		"head_word": "<mat\u00ed>",
+		"definition": "thought",
+		"keyword": "THOUGHT"
+	},
+
+	{
+		"head_word": "<medh\u0101<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "wise thought",
+		"keyword": "THOUGHT"
+	},
+
+	{
+		"head_word": "<sumat\u00ed>",
+		"definition": "good thought, favour",
+		"keyword": "THOUGHT"
+	},
+
+	{
+		"head_word": "<\u00e1mati>",
+		"definition": "<i>lack of thought</i>",
+		"keyword": "THOUGHT"
+	},
+
+	{
+		"head_word": "<tis\u0155\u0325>",
+		"definition": "three",
+		"keyword": "THREE"
+	},
+
+	{
+		"head_word": "<tr\u00ed>",
+		"definition": "three",
+		"keyword": "THREE"
+	},
+
+	{
+		"head_word": "<triv\u00e1r\u016btha>",
+		"definition": "with threefold protection",
+		"keyword": "THREEFOLD"
+	},
+
+	{
+		"head_word": "<tr\u00eds>",
+		"definition": "thrice",
+		"keyword": "THRICE"
+	},
+
+	{
+		"head_word": "<\u221aedh, \u00e9dhate>",
+		"definition": "thrive",
+		"keyword": "THRIVE"
+	},
+
+	{
+		"head_word": "<\u221astan>",
+		"definition": "thunder",
+		"keyword": "THUNDER"
+	},
+
+	{
+		"head_word": "<a\u015b\u00e1ni>",
+		"definition": "thunderbolt",
+		"keyword": "THUNDERBOLT"
+	},
+
+	{
+		"head_word": "<jy\u00f3k>",
+		"definition": "for a long time",
+		"keyword": "TIME"
+	},
+
+	{
+		"head_word": "<madhy\u00e1\u1e43dina>",
+		"definition": "midday, middle time",
+		"keyword": "TIME"
+	},
+
+	{
+		"head_word": "<s\u00e1c\u0101>",
+		"definition": "at the same time",
+		"keyword": "TIME"
+	},
+
+	{
+		"head_word": "<ady\u00e1>",
+		"definition": "on this day, today",
+		"keyword": "TODAY"
+	},
+
+	{
+		"head_word": "<sm\u00e1t>",
+		"definition": "together with",
+		"keyword": "TOGETHER"
+	},
+
+	{
+		"head_word": "<s\u00e1m>",
+		"definition": "together",
+		"keyword": "TOGETHER"
+	},
+
+	{
+		"head_word": "<s\u00e1r\u0101ti>",
+		"definition": "giving together",
+		"keyword": "TOGETHER"
+	},
+
+	{
+		"head_word": "<s\u0101k\u00e1m>",
+		"definition": "together",
+		"keyword": "TOGETHER"
+	},
+
+	{
+		"head_word": "<abh\u00ed>",
+		"definition": "towards",
+		"keyword": "TOWARDS"
+	},
+
+	{
+		"head_word": "<\u00e1cha>",
+		"definition": "towards",
+		"keyword": "TOWARDS"
+	},
+
+	{
+		"head_word": "<\u221am\u012b, min\u0101<sup><font size=\"+1\">\u0301</font></sup>ti>",
+		"definition": "vary, transgress",
+		"keyword": "TRANSGRESS"
+	},
+
+	{
+		"head_word": "<\u221ay\u0101, y\u0101<sup><font size=\"+1\">\u0301</font></sup>ti>",
+		"definition": "go, travel",
+		"keyword": "TRAVEL"
+	},
+
+	{
+		"head_word": "<ratnabh\u0101<sup><font size=\"+1\">\u0301</font></sup>j>",
+		"definition": "dispensing treasure",
+		"keyword": "TREASURE"
+	},
+
+	{
+		"head_word": "<ray\u00ed>",
+		"definition": "possession, treasure",
+		"keyword": "TREASURE"
+	},
+
+	{
+		"head_word": "<r\u00e1tna>",
+		"definition": "treasure",
+		"keyword": "TREASURE"
+	},
+
+	{
+		"head_word": "<v\u00e1nasp\u00e1ti>",
+		"definition": "forest lord, tree",
+		"keyword": "TREE"
+	},
+
+	{
+		"head_word": "<\u015b\u00e1rdhas>",
+		"definition": "troop",
+		"keyword": "TROOP"
+	},
+
+	{
+		"head_word": "<\u00e1\u1e43has>",
+		"definition": "trouble",
+		"keyword": "TROUBLE"
+	},
+
+	{
+		"head_word": "<saty\u00e1>",
+		"definition": "true",
+		"keyword": "TRUE"
+	},
+
+	{
+		"head_word": "<\u00e1dvayas>",
+		"definition": "not duplicitous, trustworthy",
+		"keyword": "TRUSTWORTHY"
+	},
+
+	{
+		"head_word": "<r\u0325t\u00e1>",
+		"definition": "Truth",
+		"keyword": "TRUTH"
+	},
+
+	{
+		"head_word": "<r\u0325t\u0101<sup><font size=\"+1\">\u0301</font></sup>van>",
+		"definition": "possessed of Truth, holy",
+		"keyword": "TRUTH"
+	},
+
+	{
+		"head_word": "<\u221abhuj, bhu\u00f1j\u00e1te>",
+		"definition": "turn to account",
+		"keyword": "TURN"
+	},
+
+	{
+		"head_word": "<\u221avr\u0325t, v\u00e1rtate>",
+		"definition": "turn",
+		"keyword": "TURN"
+	},
+
+	{
+		"head_word": "<su\u015b\u00e1rman>",
+		"definition": "of good shelter, tutelary",
+		"keyword": "TUTELARY"
+	},
+
+	{
+		"head_word": "<akt\u00fa>",
+		"definition": "<i>twilight ray</i>",
+		"keyword": "TWILIGHT"
+	},
+
+	{
+		"head_word": "<yam\u00e1>",
+		"definition": "twin, Yama",
+		"keyword": "TWIN"
+	},
+
+	{
+		"head_word": "<dvip\u00e1d>",
+		"definition": "two-footed",
+		"keyword": "TWO-FOOTED"
+	},
+
+	{
+		"head_word": "<\u00e1ri\u1e63\u1e6dabharman>",
+		"definition": "(<i>lit.</i>) of unbroken-support",
+		"keyword": "UNBROKEN-SUPPORT"
+	},
+
+	{
+		"head_word": "<m\u00e1nas>",
+		"definition": "understanding, spirit",
+		"keyword": "UNDERSTANDING"
+	},
+
+	{
+		"head_word": "<am\u0155\u0325ta>",
+		"definition": "immortal, undying",
+		"keyword": "UNDYING"
+	},
+
+	{
+		"head_word": "<\u00e1ri\u1e63\u1e6da>",
+		"definition": "unharmed",
+		"keyword": "UNHARMED"
+	},
+
+	{
+		"head_word": "<vai\u015bv\u0101nar\u00e1>",
+		"definition": "for all men, universal",
+		"keyword": "UNIVERSAL"
+	},
+
+	{
+		"head_word": "<\u00fapa>",
+		"definition": "up to",
+		"keyword": "UP"
+	},
+
+	{
+		"head_word": "<\u00fat>",
+		"definition": "up",
+		"keyword": "UP"
+	},
+
+	{
+		"head_word": "<\u221aruh, r\u00f3hati>",
+		"definition": "rise up",
+		"keyword": "UP"
+	},
+
+	{
+		"head_word": "<\u221avra\u015bc, vr\u0325\u015bc\u00e1ti>",
+		"definition": "cut up",
+		"keyword": "UP"
+	},
+
+	{
+		"head_word": "<dhart\u0155\u0325>",
+		"definition": "supporter, upholder",
+		"keyword": "UPHOLDER"
+	},
+
+	{
+		"head_word": "<\u221ah\u016b, h\u00e1vate>",
+		"definition": "invoke, call upon",
+		"keyword": "UPON"
+	},
+
+	{
+		"head_word": "<\u221akhy\u0101>",
+		"definition": "look upon",
+		"keyword": "UPON"
+	},
+
+	{
+		"head_word": "<\u016brdhv\u00e1>",
+		"definition": "upright, straight",
+		"keyword": "UPRIGHT"
+	},
+
+	{
+		"head_word": "<pi\u015b\u00e1\u1e45ga>",
+		"definition": "<i>variegated</i>",
+		"keyword": "VARIEGATED"
+	},
+
+	{
+		"head_word": "<v\u00e1ru\u1e47a>",
+		"definition": "Varuna",
+		"keyword": "VARUNA"
+	},
+
+	{
+		"head_word": "<\u221am\u012b, min\u0101<sup><font size=\"+1\">\u0301</font></sup>ti>",
+		"definition": "vary, transgress",
+		"keyword": "VARY"
+	},
+
+	{
+		"head_word": "<vaivasvat\u00e1>",
+		"definition": "son of Vivasvat",
+		"keyword": "VIVASVAT"
+	},
+
+	{
+		"head_word": "<v\u0101<sup><font size=\"+1\">\u0301</font></sup>c>",
+		"definition": "voice, speech",
+		"keyword": "VOICE"
+	},
+
+	{
+		"head_word": "<vr\u0325tr\u00e1>",
+		"definition": "hindrance, demon, Vritra",
+		"keyword": "VRITRA"
+	},
+
+	{
+		"head_word": "<\u221abudh, b\u00f3dhati>",
+		"definition": "wake, observe",
+		"keyword": "WAKE"
+	},
+
+	{
+		"head_word": "<prab\u00fadh>",
+		"definition": "wakening",
+		"keyword": "WAKENING"
+	},
+
+	{
+		"head_word": "<\u015b\u016b<sup><font size=\"+1\">\u0301</font></sup>na>",
+		"definition": "lack, want",
+		"keyword": "WANT"
+	},
+
+	{
+		"head_word": "<\u221atap, t\u00e1pati>",
+		"definition": "heat, warm",
+		"keyword": "WARM"
+	},
+
+	{
+		"head_word": "<ghr\u0325\u1e47\u00e1>",
+		"definition": "warmth",
+		"keyword": "WARMTH"
+	},
+
+	{
+		"head_word": "<udanim\u00e1nt>",
+		"definition": "rich in water",
+		"keyword": "WATER"
+	},
+
+	{
+		"head_word": "<\u00e1p>",
+		"definition": "water",
+		"keyword": "WATER"
+	},
+
+	{
+		"head_word": "<samudr\u00e1>",
+		"definition": "gathering place of waters, sea",
+		"keyword": "WATERS"
+	},
+
+	{
+		"head_word": "<durg\u00e1>",
+		"definition": "hard way",
+		"keyword": "WAY"
+	},
+
+	{
+		"head_word": "<en\u0101<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "in this way",
+		"keyword": "WAY"
+	},
+
+	{
+		"head_word": "<\u00e1dhvan>",
+		"definition": "way",
+		"keyword": "WAY"
+	},
+
+	{
+		"head_word": "<vay\u00e1m>",
+		"definition": "we",
+		"keyword": "WE"
+	},
+
+	{
+		"head_word": "<v\u00e1jra>",
+		"definition": "weapon",
+		"keyword": "WEAPON"
+	},
+
+	{
+		"head_word": "<v\u00e1jrab\u0101hu>",
+		"definition": "weapon-armed",
+		"keyword": "WEAPON-ARMED"
+	},
+
+	{
+		"head_word": "<s\u00fa>",
+		"definition": "well, surely",
+		"keyword": "WELL"
+	},
+
+	{
+		"head_word": "<suvit\u00e1>",
+		"definition": "well-being",
+		"keyword": "WELL-BEING"
+	},
+
+	{
+		"head_word": "<sum\u00e1nas>",
+		"definition": "good-minded, well-disposed",
+		"keyword": "WELL-DISPOSED"
+	},
+
+	{
+		"head_word": "<suc\u00e1k\u1e63as>",
+		"definition": "well-sighted",
+		"keyword": "WELL-SIGHTED"
+	},
+
+	{
+		"head_word": "<svast\u00ed>",
+		"definition": "wellbeing",
+		"keyword": "WELLBEING"
+	},
+
+	{
+		"head_word": "<bhakt\u00e1>",
+		"definition": "<i>what is apportioned</i>",
+		"keyword": "WHAT"
+	},
+
+	{
+		"head_word": "<k\u00e1s, k\u0101<sup><font size=\"+1\">\u0301</font></sup>, k\u00e1t, k\u00edm>",
+		"definition": "who, which, what?",
+		"keyword": "WHAT"
+	},
+
+	{
+		"head_word": "<ki\u1e43y\u00fa>",
+		"definition": "what-desiring?",
+		"keyword": "WHAT-DESIRING"
+	},
+
+	{
+		"head_word": "<kad\u0101<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "when?",
+		"keyword": "WHEN"
+	},
+
+	{
+		"head_word": "<y\u00e1t>",
+		"definition": "that, when",
+		"keyword": "WHEN"
+	},
+
+	{
+		"head_word": "<k\u00faha>",
+		"definition": "where?",
+		"keyword": "WHERE"
+	},
+
+	{
+		"head_word": "<katam\u00e1s, katam\u0101<sup><font size=\"+1\">\u0301</font></sup>, katam\u00e1t>",
+		"definition": "who, which (of many)",
+		"keyword": "WHICH"
+	},
+
+	{
+		"head_word": "<k\u00e1s, k\u0101<sup><font size=\"+1\">\u0301</font></sup>, k\u00e1t, k\u00edm>",
+		"definition": "who, which, what?",
+		"keyword": "WHICH"
+	},
+
+	{
+		"head_word": "<y\u00e1s, y\u0101<sup><font size=\"+1\">\u0301</font></sup>, y\u00e1t>",
+		"definition": "who, which",
+		"keyword": "WHICH"
+	},
+
+	{
+		"head_word": "<p\u0155\u0325\u1e63ada\u015bva>",
+		"definition": "with white-flecked horses",
+		"keyword": "WHITE-FLECKED"
+	},
+
+	{
+		"head_word": "<katam\u00e1s, katam\u0101<sup><font size=\"+1\">\u0301</font></sup>, katam\u00e1t>",
+		"definition": "who, which (of many)",
+		"keyword": "WHO"
+	},
+
+	{
+		"head_word": "<k\u00e1s, k\u0101<sup><font size=\"+1\">\u0301</font></sup>, k\u00e1t, k\u00edm>",
+		"definition": "who, which, what?",
+		"keyword": "WHO"
+	},
+
+	{
+		"head_word": "<y\u00e1s, y\u0101<sup><font size=\"+1\">\u0301</font></sup>, y\u00e1t>",
+		"definition": "who, which",
+		"keyword": "WHO"
+	},
+
+	{
+		"head_word": "<s\u00e1rva>",
+		"definition": "whole, all",
+		"keyword": "WHOLE"
+	},
+
+	{
+		"head_word": "<arap\u00e1s>",
+		"definition": "without sickness, wholesome",
+		"keyword": "WHOLESOME"
+	},
+
+	{
+		"head_word": "<dhr\u0325t\u00e1vrata>",
+		"definition": "whose command is firm",
+		"keyword": "WHOSE"
+	},
+
+	{
+		"head_word": "<agh\u00e1\u015ba\u1e43sa>",
+		"definition": "of wicked praise",
+		"keyword": "WICKED"
+	},
+
+	{
+		"head_word": "<d\u012brgha\u015br\u00fattama>",
+		"definition": "most widely known, famed",
+		"keyword": "WIDELY"
+	},
+
+	{
+		"head_word": "<v\u0101<sup><font size=\"+1\">\u0301</font></sup>ta>",
+		"definition": "wind",
+		"keyword": "WIND"
+	},
+
+	{
+		"head_word": "<medh\u0101<sup><font size=\"+1\">\u0301</font></sup>>",
+		"definition": "wise thought",
+		"keyword": "WISE"
+	},
+
+	{
+		"head_word": "<vid\u00e1tha>",
+		"definition": "<i>confident knowledge, wise judgement</i>",
+		"keyword": "WISE"
+	},
+
+	{
+		"head_word": "<v\u00e1ra>",
+		"definition": "wish",
+		"keyword": "WISH"
+	},
+
+	{
+		"head_word": "<anam\u012bv\u00e1>",
+		"definition": "without sickness",
+		"keyword": "WITHOUT"
+	},
+
+	{
+		"head_word": "<arap\u00e1s>",
+		"definition": "without sickness, wholesome",
+		"keyword": "WITHOUT"
+	},
+
+	{
+		"head_word": "<avayun\u00e1>",
+		"definition": "<i>without distinction, without certainty</i>",
+		"keyword": "WITHOUT"
+	},
+
+	{
+		"head_word": "<r\u0325t\u00e9>",
+		"definition": "without",
+		"keyword": "WITHOUT"
+	},
+
+	{
+		"head_word": "<\u00e1n\u0101gas>",
+		"definition": "without guilt",
+		"keyword": "WITHOUT"
+	},
+
+	{
+		"head_word": "<purum\u0101y\u00e1>",
+		"definition": "wonderful",
+		"keyword": "WONDERFUL"
+	},
+
+	{
+		"head_word": "<v\u00e1cas>",
+		"definition": "word, speech",
+		"keyword": "WORD"
+	},
+
+	{
+		"head_word": "<j\u00e1gat>",
+		"definition": "moving world",
+		"keyword": "WORLD"
+	},
+
+	{
+		"head_word": "<r\u00f3das>",
+		"definition": "world",
+		"keyword": "WORLD"
+	},
+
+	{
+		"head_word": "<sth\u0101t\u0155\u0325>",
+		"definition": "stander, standing world",
+		"keyword": "WORLD"
+	},
+
+	{
+		"head_word": "<yaj\u00f1\u00e1>",
+		"definition": "worship",
+		"keyword": "WORSHIP"
+	},
+
+	{
+		"head_word": "<yaj\u00f1\u00e1vr\u0325ddha>",
+		"definition": "strengthened by worship",
+		"keyword": "WORSHIP"
+	},
+
+	{
+		"head_word": "<\u221ad\u0101\u015b, d\u0101<sup><font size=\"+1\">\u0301</font></sup>\u015bati>",
+		"definition": "worship",
+		"keyword": "WORSHIP"
+	},
+
+	{
+		"head_word": "<\u221ayaj, y\u00e1jati>",
+		"definition": "worship",
+		"keyword": "WORSHIP"
+	},
+
+	{
+		"head_word": "<d\u0101\u015bv\u0101<sup><font size=\"+1\">\u0301</font></sup>\u1e43s>",
+		"definition": "the one worshipping",
+		"keyword": "WORSHIPPING"
+	},
+
+	{
+		"head_word": "<ukthy\u00e0>",
+		"definition": "worthy of holy song",
+		"keyword": "WORTHY"
+	},
+
+	{
+		"head_word": "<\u015br\u00fatya>",
+		"definition": "deed worthy of fame",
+		"keyword": "WORTHY"
+	},
+
+	{
+		"head_word": "<yam\u00e1>",
+		"definition": "twin, Yama",
+		"keyword": "YAMA"
+	},
+
+	{
+		"head_word": "<\u221ap\u012b, p\u00ednvati>",
+		"definition": "swell, yield abundantly",
+		"keyword": "YIELD"
+	},
+
+	{
+		"head_word": "<tv\u00e1m>",
+		"definition": "you",
+		"keyword": "YOU"
+	},
+
+	{
+		"head_word": "<y\u016by\u00e1m>",
+		"definition": "you (pl.)",
+		"keyword": "YOU"
+	},
+
+	{
+		"head_word": "<yuvany\u00fa>",
+		"definition": "ever young",
+		"keyword": "YOUNG"
+	}
+]

@@ -180,7 +180,9 @@ for ul in uls:
                             
                             word = element.split('&lt;')[1]
                             word = word.split('&gt;')[0]
-                            word = word.split('>')[1]
+                            
+                            gt_pos = word.find('>') + 1
+                            word = word[gt_pos:]
                             word = word.split('</span')[0].strip()
                                 
                             new_head_word['word'] = '<' + word + '>'
