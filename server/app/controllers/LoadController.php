@@ -170,7 +170,7 @@ function store_lessons($series) {
 								$new_head_word = new EieolHeadWord;
 								//fix bad data
 								if ($word == '<dales, dalles, dallĂŠ>') {
-									$word = '<dales, dalles, dallé'>
+									$word = '<dales, dalles, dallé>';
 								}
 								$new_head_word->word = $word;
 								$new_head_word->definition = $definition;

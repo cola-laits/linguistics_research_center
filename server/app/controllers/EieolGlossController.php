@@ -80,6 +80,12 @@ class EieolGlossController extends BaseController {
 			'element_2_head_word_id' => 'required_with:element_2_part_of_speech',
 			'element_3_part_of_speech' => 'required_with:element_3_head_word_id',
 			'element_3_head_word_id' => 'required_with:element_3_part_of_speech',
+			'element_4_part_of_speech' => 'required_with:element_4_head_word_id',
+			'element_4_head_word_id' => 'required_with:element_4_part_of_speech',
+			'element_5_part_of_speech' => 'required_with:element_5_head_word_id',
+			'element_5_head_word_id' => 'required_with:element_5_part_of_speech',
+			'element_6_part_of_speech' => 'required_with:element_6_head_word_id',
+			'element_6_head_word_id' => 'required_with:element_6_part_of_speech',
 		);
 		$messages = array(
 				'element_1_part_of_speech.required' => 'The first Part of Speech is required',
@@ -88,6 +94,12 @@ class EieolGlossController extends BaseController {
 				'element_2_head_word_id.required_with' => 'Since you entered a Part of Speech, you must pick a Head Word',
 				'element_3_part_of_speech.required_with' => 'Since you picked a Head Word, you must enter a Part of Speech',
 				'element_3_head_word_id.required_with' => 'Since you entered a Part of Speech, you must pick a Head Word',
+				'element_4_part_of_speech.required_with' => 'Since you picked a Head Word, you must enter a Part of Speech',
+				'element_4_head_word_id.required_with' => 'Since you entered a Part of Speech, you must pick a Head Word',
+				'element_5_part_of_speech.required_with' => 'Since you picked a Head Word, you must enter a Part of Speech',
+				'element_5_head_word_id.required_with' => 'Since you entered a Part of Speech, you must pick a Head Word',
+				'element_6_part_of_speech.required_with' => 'Since you picked a Head Word, you must enter a Part of Speech',
+				'element_6_head_word_id.required_with' => 'Since you entered a Part of Speech, you must pick a Head Word',
 		);
 
 		$validator = Validator::make(Input::all(), $rules, $messages);
@@ -132,7 +144,7 @@ class EieolGlossController extends BaseController {
 				$gloss->save();
 				
 				//loop through element elements
-				for ($i = 1; $i <= 3; $i++) {
+				for ($i = 1; $i <= 6; $i++) {
 					//store elements
 					if (Input::has('element_' . $i . '_part_of_speech')){
 						$element = new EieolElement;
@@ -205,6 +217,12 @@ class EieolGlossController extends BaseController {
 				'element_2_head_word_id' => 'required_with:element_2_part_of_speech',
 				'element_3_part_of_speech' => 'required_with:element_3_head_word_id',
 				'element_3_head_word_id' => 'required_with:element_3_part_of_speech',
+				'element_4_part_of_speech' => 'required_with:element_4_head_word_id',
+				'element_4_head_word_id' => 'required_with:element_4_part_of_speech',
+				'element_5_part_of_speech' => 'required_with:element_5_head_word_id',
+				'element_5_head_word_id' => 'required_with:element_5_part_of_speech',
+				'element_6_part_of_speech' => 'required_with:element_6_head_word_id',
+				'element_6_head_word_id' => 'required_with:element_6_part_of_speech',
 		);
 		$messages = array(
 				'element_1_part_of_speech.required' => 'The first Part of Speech is required',
@@ -213,6 +231,12 @@ class EieolGlossController extends BaseController {
 				'element_2_head_word_id.required_with' => 'Since you entered a Part of Speech, you must pick a Head Word',
 				'element_3_part_of_speech.required_with' => 'Since you picked a Head Word, you must enter a Part of Speech',
 				'element_3_head_word_id.required_with' => 'Since you entered a Part of Speech, you must pick a Head Word',
+				'element_4_part_of_speech.required_with' => 'Since you picked a Head Word, you must enter a Part of Speech',
+				'element_4_head_word_id.required_with' => 'Since you entered a Part of Speech, you must pick a Head Word',
+				'element_5_part_of_speech.required_with' => 'Since you picked a Head Word, you must enter a Part of Speech',
+				'element_5_head_word_id.required_with' => 'Since you entered a Part of Speech, you must pick a Head Word',
+				'element_6_part_of_speech.required_with' => 'Since you picked a Head Word, you must enter a Part of Speech',
+				'element_6_head_word_id.required_with' => 'Since you entered a Part of Speech, you must pick a Head Word',
 		);
 		
 		$validator = Validator::make(Input::all(), $rules,$messages);
@@ -256,7 +280,7 @@ class EieolGlossController extends BaseController {
 				$gloss->save();
 				
 				//loop through element elements
-				for ($i = 1; $i <= 3; $i++) {
+				for ($i = 1; $i <= 6; $i++) {
 					if (Input::has('element_' . $i . '_part_of_speech')){
 						
 						//decide if we are storing or updating elements

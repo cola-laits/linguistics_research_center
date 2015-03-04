@@ -348,7 +348,7 @@
 		    document.getElementById("gloss_search_result").innerHTML=""; //reset result box so it's empty each time the click it
 		    $('#new_gloss_form')[0].reset(); //reset the new gloss form
 		    $(".errors", '#new_gloss_form').empty(); //reset gloss form error divs
-		    for (i=1; i<=3; i++) {
+		    for (i=1; i<=6; i++) {
 		    	$('#element_' + i + '_head_word_display', '#new_gloss_form').text(''); //reset headword text
 		    	$('#element_' + i + '_head_word_id', '#new_gloss_form').val('');//reset headword id
 		    }  
@@ -407,19 +407,19 @@
 		        success : function(data){
 		    		$('#edit_gloss_form')[0].reset();
 		    		//for some reason the reset doesn't reset all the fields
-		    		for (i=1; i<=3; i++) {
+		    		for (i=1; i<=6; i++) {
 				    	$('#element_' + i + '_head_word_id', '#edit_gloss_form').val('');
 				    }  
 				    
 			        $.each(data, function(key, value){
 					    $('[name='+key+']', '#edit_gloss_form').val(value);
 				    });
-				    for (i=1; i<=3; i++) {
+				    for (i=1; i<=6; i++) {
 				    	$('#element_' + i + '_head_word_display', '#edit_gloss_form').text(''); //we only get ones that already exist, so reset it first
 				    	$('#element_' + i + '_head_word_display', '#edit_gloss_form').html(data['element_' + i + '_head_word_display']);
 				    }    
 
-				    for (i=2; i<=3; i++) {
+				    for (i=2; i<=6; i++) {
 						if (data.hasOwnProperty('element_' + i + '_id')) {
 							$('#element_' + i).show();
 						} else {
@@ -726,7 +726,7 @@
 		    		  
 		    		{{ Form::hidden('language_id', $lesson->language_id, ['class' => 'language_id_class']) }}
 				    
-				    @for ($i = 1; $i <= 3; $i++)
+				    @for ($i = 1; $i <= 6; $i++)
 				    	<div class='row'>
 				    	@if ($i == 1)
 						    <div class='form-group col-sm-2'>
@@ -811,7 +811,7 @@
 		    	
 		    		{{ Form::hidden('language_id', $lesson->language_id, ['class' => 'language_id_class']) }}
 		    		  
-				    @for ($i = 1; $i <= 3; $i++)
+				    @for ($i = 1; $i <= 6; $i++)
 				    	<div class='row'>
 				    	@if ($i == 1)
 						    <div class='form-group col-sm-2'>
