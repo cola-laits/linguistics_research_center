@@ -168,6 +168,10 @@ function store_lessons($series) {
 								$new_element->head_word_id = $stored_head_words[$head_word_key];
 							} else {
 								$new_head_word = new EieolHeadWord;
+								//fix bad data
+								if ($word == '<dales, dalles, dallĂŠ>') {
+									$word = '<dales, dalles, dallé'>
+								}
 								$new_head_word->word = $word;
 								$new_head_word->definition = $definition;
 								$new_head_word->language_id = $temp_language_id;
@@ -427,16 +431,16 @@ class LoadController extends BaseController {
 		
 		$serieses = build_serieses();
 
-// 		foreach($serieses as $series) {
-// 			delete_series_children($series['series_id']);
-// 		}
+		foreach($serieses as $series) {
+			delete_series_children($series['series_id']);
+		}
 		
 		foreach($serieses as $series) {
 			print 'loading  ' . $series['path'] . '<br/>';
 			store_lessons($series);
 		}
 		
-		print '<hr/>done<br/>Go into PHPMyAdmin and convert head word <dales, dalles, dallĂŠ> to <dales, dalles, dallé><br/>Then run index load.';
+		print '<hr/>done<br/>Now run index_load.';
 	
 	} //end eieol_load function
 	
@@ -450,6 +454,7 @@ class LoadController extends BaseController {
 	
 		foreach($serieses as $series) {
 			print 'indexing  ' . $series['path'] . '<br/>';
+			Log::error('indexing  ' . $series['path']);
 			foreach($series['index'] as $lang => $url) {
 				//if ($lang != 1) {
 				//	continue;
@@ -463,8 +468,9 @@ class LoadController extends BaseController {
 					if ($data[$i]->definition == 'strike ...against') {
 						$data[$i]->definition = 'strike...against';
 					}
-					print $data[$i]->keyword  . ' ' . htmlentities($head_word) . ' ' . $data[$i]->definition . '<br/>';
-					//Log::error($data[$i]->keyword  . ' ' . $head_word . ' ' . $data[$i]->definition);
+					
+					//print $data[$i]->keyword  . ' ' . htmlentities($head_word) . ' ' . $data[$i]->definition . '<br/>';
+					Log::error($data[$i]->keyword  . ' ' . $head_word . ' ' . $data[$i]->definition);
 					$head_word = EieolHeadWord::where('word', '=', $head_word)
 												->where('definition', 'like',  '%' . $data[$i]->definition .  '%')
 												->where('language_id', '=', $lang)->first();
