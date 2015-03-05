@@ -13,6 +13,8 @@ Route::post('login', 'LoginController@login_action');
 Route::get('logout', 'LoginController@logout');
 
 Route::group(array('prefix'=> 'admin', 'before' => 'auth'), function() {
+	Route::get('/user/password_form/{id}', 'UserController@password_form');
+	Route::put('/user/change_password/{id}', 'UserController@change_password');
 	Route::resource('/user', 'UserController');
 	Route::resource('/eieol_series', 'EieolSeriesController');
 	Route::put('/eieol_lesson/update_translation/{id}', 'EieolLessonController@update_translation');

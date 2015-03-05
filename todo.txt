@@ -1,5 +1,4 @@
 Admin
-*	Screen for users to change their password
 	Language
 		Audit on custom keyboard to make sure it's in right format
 		Audit sorting to make sure it's in the right format.

@@ -128,6 +128,34 @@ class UserController extends BaseController {
 		Session::flash('message', 'User has been deleted');
 		return Redirect::to('/admin/user');
 	}
+	
+	public function password_form($id)
+	{
+		return View::make('user.password_form', ['id' => $id]);
+	}
+	
+	public function change_password($id)
+	{
+		$rules = array(
+				'password'   => 'required|min:8|confirmed',
+		);
+		$validator = Validator::make(Input::all(), $rules);
+	
+		if ($validator->fails()) {
+			return Redirect::to('/admin/user/password_form/' . $id)
+			->withErrors($validator->messages());
+		} else {
+			$user = User::find($id);
+				
+			$user->password   = Hash::make(Input::get('password'));
+			$user->updated_by = Auth::user()->username;
+				
+			$user->save();
+				
+			Session::flash('message', 'Password has been updated for ' . $user->getFullName());
+			return Redirect::to('/admin/user');
+		}
+	}
 
 
 }
