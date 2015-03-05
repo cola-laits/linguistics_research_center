@@ -504,4 +504,42 @@ class LoadController extends BaseController {
 	
 	} //end element_count function
 	
+	public function pos_analysis_load()
+	{
+		ini_set('memory_limit','320M');
+		ini_set('max_execution_time', 500);
+		
+		$used_pos = array();
+		$used_analysis = array();
+		$elements = EieolElement::get();
+		foreach($elements as $element) {
+			print $element->part_of_speech . ' -- ' . $element->analysis . '<br/>';
+			if (!in_array($element->part_of_speech, $used_pos)) {
+				print 'add pos<br/>';
+				$used_pos[] = $element->part_of_speech;
+				$part_of_speech = new PartOfSpeech;
+				$part_of_speech->part_of_speech = $element->part_of_speech ;
+				$part_of_speech->created_by = 'loader';
+				$part_of_speech->updated_by = 'loader';
+				$part_of_speech->save();
+			}
+			if ($element->analysis != null && !in_array($element->analysis, $used_analysis)) {
+				print 'add analysis<br/>';
+				$used_analysis[] = $element->analysis;
+				$analysis = new EieolAnalysis;
+				$analysis->analysis = $element->analysis ;
+				$analysis->created_by = 'loader';
+				$analysis->updated_by = 'loader';
+				$analysis->save();
+			}
+		}
+		print_r($used_pos);
+		print '<hr/>';
+		print_r($used_analysis);
+		print '<hr/>done';
+	
+	} //end pos_analysis_load function
+	
+	
+	
 } //end load controller

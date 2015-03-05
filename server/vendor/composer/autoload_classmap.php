@@ -50,6 +50,7 @@ return array(
     'Boris\\ReadlineClient' => $vendorDir . '/d11wtq/boris/lib/Boris/ReadlineClient.php',
     'Boris\\ShallowParser' => $vendorDir . '/d11wtq/boris/lib/Boris/ShallowParser.php',
     'Carbon\\Carbon' => $vendorDir . '/nesbot/carbon/src/Carbon/Carbon.php',
+    'ChangeAnalysisCollation' => $baseDir . '/app/database/migrations/2015_03_05_133855_change_analysis_collation.php',
     'ChangeElementUniqueness' => $baseDir . '/app/database/migrations/2015_01_14_140027_change_element_uniqueness.php',
     'ChangeGlossCommentsToLongtext' => $baseDir . '/app/database/migrations/2015_02_27_161949_change_gloss_comments_to_longtext.php',
     'ChangeGlossToPointToLanguage' => $baseDir . '/app/database/migrations/2015_01_07_094005_change_gloss_to_point_to_language.php',

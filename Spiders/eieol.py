@@ -15,7 +15,7 @@ html = urllib2.urlopen(path).read()
 page = BeautifulSoup(html)
 #print page
 
-uls = page.find_all('ul');
+uls = page.find_all('ul')
 for ul in uls:
     #we want the menu in the middle of the page
     if ul.find('li').text != 'Latin Online (precomposed Roman letters with diacritics)':
@@ -139,7 +139,7 @@ for ul in uls:
                 #print glossy
                 glossed_text_ctr = 0
                 for p in glossy.find_all('p'):
-                    glossed_text_ctr += 1;
+                    glossed_text_ctr += 1
                     glossed_text = {}
                     #take out span classes, we'll add them when we display
                     for match in p.findAll('span'):

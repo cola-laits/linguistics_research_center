@@ -33,4 +33,5 @@ Route::group(array('prefix'=> 'admin', 'before' => 'auth'), function() {
 	Route::get('eieol_load', 'LoadController@eieol_load');
 	Route::get('index_load', 'LoadController@index_load');
 	Route::get('element_count', 'LoadController@element_count');
+	Route::get('pos_analysis_load', 'LoadController@pos_analysis_load');
 });
