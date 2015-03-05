@@ -8,7 +8,7 @@ class EieolHeadWordController extends BaseController {
 		//this  is a search that returns head words that contain with the url parm "headword"
 		//since head words starts with a <, it looks for any matching chars.
 		$text = '';
-		$head_words = EieolHeadWord::where('word', 'LIKE', '%' . Input::get('head_word') . '%')
+		$head_words = EieolHeadWord::where('word', 'LIKE', '%' . Normalizer::normalize(Input::get('head_word'), Normalizer::FORM_C ) . '%')
 								->where('language_id', '=', Input::get('language') . '%')
 								->take(10)->get()->sortBy('word');
 		foreach ($head_words as $head_word) {
@@ -66,7 +66,7 @@ class EieolHeadWordController extends BaseController {
 	
 		$rules = array(
 				//have to put definition in quotes in case it has a comma in it
-			'word' => 'required|regex:/^<.*>$/|unique:eieol_head_word,word,null,id,definition,"' . Input::get('definition') . '"', 
+			'word' => 'required|regex:/^<.*>$/|unique:eieol_head_word,word,null,id,definition,"' . Normalizer::normalize(Input::get('definition'), Normalizer::FORM_C ) . '"', 
 			'definition' => 'required',
 			'keywords' => 'required',
 			'language_id' => 'required',
@@ -86,8 +86,8 @@ class EieolHeadWordController extends BaseController {
 		} else {
 			$returned_head_word = DB::transaction(function() {
 				$head_word = new EieolHeadWord;
-				$head_word->word = Input::get('word');
-				$head_word->definition = Input::get('definition');
+				$head_word->word = Normalizer::normalize(Input::get('word'), Normalizer::FORM_C );
+				$head_word->definition = Normalizer::normalize(Input::get('definition'), Normalizer::FORM_C );
 				$head_word->language_id = Input::get('language_id');
 				$head_word->created_by = Auth::user()->username;
 				$head_word->updated_by = Auth::user()->username;
@@ -129,7 +129,7 @@ class EieolHeadWordController extends BaseController {
 	{
 		$rules = array(
 				//have to put definition in quotes in case it has a comma in it
-			'word' => 'required|regex:/^<.*>$/|unique:eieol_head_word,word,' . $id . ',id,definition,"' . Input::get('definition') . '"', 
+			'word' => 'required|regex:/^<.*>$/|unique:eieol_head_word,word,' . $id . ',id,definition,"' . Normalizer::normalize(Input::get('definition'), Normalizer::FORM_C ) . '"', 
 			'definition' => 'required',
 		);
 		$messages = array(
@@ -147,8 +147,8 @@ class EieolHeadWordController extends BaseController {
 		} else {
 			$head_word = DB::transaction(function($id) use ($id) {
 				$head_word = EieolHeadWord::with('keywords')->find($id);
-				$head_word->word = Input::get('word');
-				$head_word->definition = Input::get('definition');
+				$head_word->word = Normalizer::normalize(Input::get('word'), Normalizer::FORM_C );
+				$head_word->definition = Normalizer::normalize(Input::get('definition'), Normalizer::FORM_C );
 				$head_word->updated_by = Auth::user()->username;
 			
 				$head_word->save();

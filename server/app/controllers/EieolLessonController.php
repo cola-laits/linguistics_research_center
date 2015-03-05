@@ -44,11 +44,11 @@ class EieolLessonController extends BaseController {
 		
 			$lesson = new EieolLesson;
 			
-			$lesson->title = Input::get('title');
+			$lesson->title = Normalizer::normalize(Input::get('title'), Normalizer::FORM_C );
 			$lesson->order = Input::get('order');
 			$lesson->series_id = Input::get('series_id');
 			$lesson->language_id = Input::get('language');
-			$lesson->intro_text = Input::get('intro_text');
+			$lesson->intro_text = Normalizer::normalize(Input::get('intro_text'), Normalizer::FORM_C );
 			$lesson->created_by = Auth::user()->username;
 			$lesson->updated_by = Auth::user()->username;
 			
@@ -131,9 +131,9 @@ class EieolLessonController extends BaseController {
 	 				}
 	 			}
 				
-	 			$lesson->title = Input::get('title');
+	 			$lesson->title = Normalizer::normalize(Input::get('title'), Normalizer::FORM_C );
 	 			$lesson->order = Input::get('order');
-				$lesson->intro_text = Input::get('intro_text');
+				$lesson->intro_text = Normalizer::normalize(Input::get('intro_text'), Normalizer::FORM_C );
 				$lesson->language_id = Input::get('language');
 	 			$lesson->updated_by = Auth::user()->username;
 				
@@ -162,7 +162,7 @@ class EieolLessonController extends BaseController {
 	{
 		$lesson = EieolLesson::find($id);
 			
-		$lesson->lesson_translation = Input::get('lesson_translation');
+		$lesson->lesson_translation = Normalizer::normalize(Input::get('lesson_translation'), Normalizer::FORM_C );
 		$lesson->updated_by = Auth::user()->username;
 
 		$lesson->save();

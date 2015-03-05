@@ -28,10 +28,10 @@ class EieolGrammarController extends BaseController {
 		} else {
 			$grammar = new EieolGrammar;
 				
-			$grammar->title = Input::get('title');
+			$grammar->title = Normalizer::normalize(Input::get('title'), Normalizer::FORM_C );
 			$grammar->order = Input::get('order');
 			$grammar->section_number = Input::get('section_number');
-			$grammar->grammar_text = Input::get('grammar_text');
+			$grammar->grammar_text = Normalizer::normalize(Input::get('grammar_text'), Normalizer::FORM_C );
 			$grammar->lesson_id = Input::get('lesson_id');
 			$grammar->created_by = Auth::user()->username;
 			$grammar->updated_by = Auth::user()->username;
@@ -73,10 +73,10 @@ class EieolGrammarController extends BaseController {
 		} else {
  			$grammar = EieolGrammar::find($id);
 			
- 			$grammar->title = Input::get('title');
+ 			$grammar->title = Normalizer::normalize(Input::get('title'), Normalizer::FORM_C );
  			$grammar->order = Input::get('order');
  			$grammar->section_number = Input::get('section_number');
-			$grammar->grammar_text = Input::get('grammar_text');
+			$grammar->grammar_text = Normalizer::normalize(Input::get('grammar_text'), Normalizer::FORM_C );
  			$grammar->updated_by = Auth::user()->username;
 			
  			$grammar->save();

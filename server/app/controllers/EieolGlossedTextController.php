@@ -27,7 +27,7 @@ class EieolGlossedTextController extends BaseController {
 			$glossed_text = new EieolGlossedText;
 				
 			$glossed_text->order = Input::get('order');
-			$glossed_text->glossed_text = Input::get('glossed_text');
+			$glossed_text->glossed_text = Normalizer::normalize(Input::get('glossed_text'), Normalizer::FORM_C );
 			$glossed_text->lesson_id = Input::get('lesson_id');
 			$glossed_text->created_by = Auth::user()->username;
 			$glossed_text->updated_by = Auth::user()->username;
@@ -68,7 +68,7 @@ class EieolGlossedTextController extends BaseController {
  			$glossed_text = EieolGlossedText::find($id);
 			
  			$glossed_text->order = Input::get('order');
-			$glossed_text->glossed_text = Input::get('glossed_text');
+			$glossed_text->glossed_text = Normalizer::normalize(Input::get('glossed_text'), Normalizer::FORM_C );
  			$glossed_text->updated_by = Auth::user()->username;
 			
  			$glossed_text->save();

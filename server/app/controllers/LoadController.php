@@ -214,7 +214,8 @@ function store_lessons($series) {
 				$new_grammar->title = Normalizer::normalize($grammar->title, Normalizer::FORM_C );
 				$new_grammar->order = $grammar->order * 10;
 				$new_grammar->section_number = $grammar->section_number;
-				$new_grammar->grammar_text = Normalizer::normalize($grammar->grammar_text, Normalizer::FORM_C );				$new_grammar->lesson_id = $new_lesson->id;
+				$new_grammar->grammar_text = Normalizer::normalize($grammar->grammar_text, Normalizer::FORM_C );				
+				$new_grammar->lesson_id = $new_lesson->id;
 				$new_grammar->created_by = 'loader';
 				$new_grammar->updated_by = 'loader';
 				$new_grammar->save();

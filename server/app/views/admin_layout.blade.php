@@ -7,7 +7,6 @@
  
         {{ HTML::style('//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css') }}
         {{ HTML::style('//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css') }}
-        {{ HTML::style('css/lrcstyle.css') }}
         {{ HTML::style('css/adminstyle.css') }}
         {{ HTML::style('css/jquery.tagsinput.css') }}
         {{ HTML::style('https://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css') }}

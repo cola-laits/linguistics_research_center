@@ -1,7 +1,5 @@
 Admin
-	Screen for users to change their password
-*	Before storing - run text through PHP Normalizer class to canonicalize it using NFC
-*	Elements - need more than 6 - see element_count in LoadController
+*	Screen for users to change their password
 	Language
 		Audit on custom keyboard to make sure it's in right format
 		Audit sorting to make sure it's in the right format.
@@ -58,3 +56,4 @@ Future Ideas
 	EIEOL public pages  - next and prev buttons
 	CKEditor: Add a unicode checker that will flag any unicode that doesn't have a lang tag on it.  Or check on backen in validator.
 	EIEOL editor - make glossed texts use CKEditor?
+	Export data for other purposes

@@ -6,7 +6,7 @@ class EieolGlossController extends BaseController {
 	{
 		//this is a search that returns glosses that start with the url parm "gloss"
 		$text = '';
-		$glosses = EieolGloss::with('elements.head_word')->where('surface_form', 'LIKE', Input::get('gloss') . '%')
+		$glosses = EieolGloss::with('elements.head_word')->where('surface_form', 'LIKE', Normalizer::normalize(Input::get('surface_form'), Normalizer::FORM_C ) . '%')
 												->where('language_id', '=', Input::get('language') . '%')
 												->take(15)->get()->sortBy('surface_form');
 		foreach ($glosses as $gloss) {
@@ -113,8 +113,8 @@ class EieolGlossController extends BaseController {
 			
 			
 			//let's check to make sure this doesn't exist already
-			$glosses = EieolGloss::where('surface_form', '=', Input::get('surface_form'))
-								->where('contextual_gloss', '=', Input::get('contextual_gloss'))
+			$glosses = EieolGloss::where('surface_form', '=', Normalizer::normalize(Input::get('surface_form'), Normalizer::FORM_C ))
+								->where('contextual_gloss', '=', Normalizer::normalize(Input::get('contextual_gloss'), Normalizer::FORM_C ))
 								->where('language_id', '=', Input::get('language_id'))
 								->get();
 			foreach($glosses as $gloss) {
@@ -134,10 +134,10 @@ class EieolGlossController extends BaseController {
 			$gloss_id = DB::transaction(function() {
 				$gloss = new EieolGloss;
 		
-				$gloss->surface_form = Input::get('surface_form');
-				$gloss->contextual_gloss = Input::get('contextual_gloss');
+				$gloss->surface_form = Normalizer::normalize(Input::get('surface_form'), Normalizer::FORM_C );
+				$gloss->contextual_gloss = Normalizer::normalize(Input::get('contextual_gloss'), Normalizer::FORM_C );
 				$gloss->language_id = Input::get('language_id');
-				$gloss->comments = Input::get('comments');
+				$gloss->comments = Normalizer::normalize(Input::get('comments'), Normalizer::FORM_C );
 				$gloss->created_by = Auth::user()->username;
 				$gloss->updated_by = Auth::user()->username;
 		
@@ -249,8 +249,8 @@ class EieolGlossController extends BaseController {
 		} else {
 			
 			//let's check to make sure this doesn't exist already
-			$glosses = EieolGloss::where('surface_form', '=', Input::get('surface_form'))
-						->where('contextual_gloss', '=', Input::get('contextual_gloss'))
+			$glosses = EieolGloss::where('surface_form', '=', Normalizer::normalize(Input::get('surface_form'), Normalizer::FORM_C ))
+						->where('contextual_gloss', '=', Normalizer::normalize(Input::get('contextual_gloss'), Normalizer::FORM_C ))
 						->where('language_id', '=', Input::get('language_id'))
 						->where('id', '!=', $id)
 						->get();
@@ -272,9 +272,9 @@ class EieolGlossController extends BaseController {
 			DB::transaction(function($id) use ($id) {
 				$gloss = EieolGloss::with('elements.head_word')->find($id);
 				
-				$gloss->surface_form = Input::get('surface_form');
-				$gloss->contextual_gloss = Input::get('contextual_gloss');
-				$gloss->comments = Input::get('comments');
+				$gloss->surface_form = Normalizer::normalize(Input::get('surface_form'), Normalizer::FORM_C );
+				$gloss->contextual_gloss = Normalizer::normalize(Input::get('contextual_gloss'), Normalizer::FORM_C );
+				$gloss->comments = Normalizer::normalize(Input::get('comments'), Normalizer::FORM_C );
 				$gloss->updated_by = Auth::user()->username;
 				
 				$gloss->save();
