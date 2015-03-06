@@ -13,14 +13,19 @@ class EieolHeadWord extends Eloquent {
 		return $this->hasMany('EieolElement', 'head_word_id', 'id');
 	}
 	
+	public function language()
+	{
+		return $this->belongsTo('EieolLanguage');
+	}
+	
 	public function getDisplayHeadWord()
 	{
-		//trim <> and replace with &chars
+		//return headword and definition in the format <nobr>&lt;<span lang='cu' class='Cyrillic'>ѥс-, ѥсмь, ѥси</span>&gt;</nobr> be
+		//trim <>
 		$word = $this->word;
 		$word = substr($word,1);
 		$word = substr($word,0,-1);
-		$word = "&lt;" . $word . "&gt;";
 		
-		return $word . ' ' . $this->definition;
+		return "<nobr>&lt;<span lang='" . $this->language->lang_attribute . "' class='" . $this->language->class_attribute . "'>" . $word .  "</span>&gt;</nobr> "  . $this->definition;
 	}
 }

@@ -70,14 +70,14 @@ class PublicController extends BaseController {
 		$data = get_series_info($series_id);
 	
 		if (Input::has('id')) {
-			$data['lesson'] = EieolLesson::with('grammars')
-			->with('glossed_texts.glosses.elements.head_word')
+			$data['lesson'] = EieolLesson::with('grammars','language')
+			->with('glossed_texts.glosses.language','glossed_texts.glosses.elements.head_word.language')
 			->where('id', '=', Input::get('id'))
 			->firstOrFail();
 		} else {
 			//if they didn't send an id, get the first lesson
 			$data['lesson'] = EieolLesson::with('grammars')
-			->with('glossed_texts.glosses.elements.head_word')
+			->with('glossed_texts.glosses.language','glossed_texts.glosses.elements.head_word.language')
 			->where('series_id', '=', $series_id)
 			->orderBy('order')
 			->first();
@@ -100,7 +100,7 @@ class PublicController extends BaseController {
 	{
 		$data = get_series_info($series_id);
 		$data['language'] = EieolLanguage::find($language_id);
-		$lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word')
+		$lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word.language')
 		->where('series_id', '=', $series_id)
 		->where('language_id', '=', $language_id)
 		->select(array('id','title','order'))
@@ -142,7 +142,7 @@ class PublicController extends BaseController {
 	{
 		$data = get_series_info($series_id);
 		$data['language'] = EieolLanguage::find($language_id);
-		$lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word')
+		$lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word.language')
 		->where('series_id', '=', $series_id)
 		->where('language_id', '=', $language_id)
 		->select(array('id','title','order'))
@@ -177,7 +177,7 @@ class PublicController extends BaseController {
 	{
 		$data = get_series_info($series_id);
 		$data['language'] = EieolLanguage::find($language_id);
-		$lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word.keywords')
+		$lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word.language','glossed_texts.glosses.elements.head_word.keywords')
 		->where('series_id', '=', $series_id)
 		->where('language_id', '=', $language_id)
 		->select(array('id','title','order'))

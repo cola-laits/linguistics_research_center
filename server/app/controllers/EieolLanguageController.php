@@ -35,6 +35,8 @@ class EieolLanguageController extends BaseController {
 		
 		$rules = array(
 				'language' => 'required',
+				'lang_attribute' => 'required',
+				'class_attribute' => 'required',
 		);
 		$validator = Validator::make(Input::all(), $rules);
 		
@@ -49,6 +51,8 @@ class EieolLanguageController extends BaseController {
 			$language->language = Input::get('language');
 			$language->custom_keyboard_layout = Normalizer::normalize(Input::get('custom_keyboard_layout'), Normalizer::FORM_C );
 			$language->custom_sort = Normalizer::normalize(Input::get('custom_sort'), Normalizer::FORM_C );
+			$language->lang_attribute = Input::get('lang_attribute');
+			$language->class_attribute = Input::get('class_attribute');
 			$language->created_by = Auth::user()->username;
 			$language->updated_by = Auth::user()->username;
 			
@@ -83,6 +87,8 @@ class EieolLanguageController extends BaseController {
 	{
 		$rules = array(
 				'language' => 'required',
+				'lang_attribute' => 'required',
+				'class_attribute' => 'required',
 		);
 		$validator = Validator::make(Input::all(), $rules);
 		
@@ -96,6 +102,8 @@ class EieolLanguageController extends BaseController {
 			$language->language = Input::get('language');
 			$language->custom_keyboard_layout = Normalizer::normalize(Input::get('custom_keyboard_layout'), Normalizer::FORM_C );
 			$language->custom_sort = Normalizer::normalize(Input::get('custom_sort'), Normalizer::FORM_C );
+			$language->lang_attribute = Input::get('lang_attribute');
+			$language->class_attribute = Input::get('class_attribute');
 			$language->updated_by = Auth::user()->username;
 			
 			$language->save();

@@ -13,6 +13,11 @@ class EieolGloss extends Eloquent {
 		return $this->hasMany('EieolElement', 'gloss_id', 'id')->orderBy('order');
 	}
 	
+	public function language()
+	{
+		return $this->belongsTo('EieolLanguage');
+	}
+	
 	/**
 	 * Format the gloss in the way they are accustomed
 	 *
@@ -20,7 +25,12 @@ class EieolGloss extends Eloquent {
 	 */
 	public function getDisplayGloss()
 	{
-		$string = $this->surface_form . ' -- ';
+		//this should return something in the form 
+		//<span lang='cu' class='Cyrillic'>єстъ</span> <nobr>--</nobr> verb; 3rd person singular present of <nobr>&lt;<span lang='cu' class='Cyrillic'>ѥс-, ѥсмь, ѥси</span>&gt;</nobr> be <nobr>--</nobr> <strong>is</strong>
+		//part of which is handled by the getDisplayHeadWord function in the HeadWord model
+		
+		$string = "<span lang='" . $this->language->lang_attribute . "' class='" . $this->language->class_attribute . "'>" .
+				 $this->surface_form . '</span> <nobr>--</nobr> ';
 		$i=0;
 		foreach($this->elements as $element){
 			$i++;
@@ -32,7 +42,7 @@ class EieolGloss extends Eloquent {
 						$element->analysis . ' ' .
 						$element->head_word->getDisplayHeadWord();
 		}
-		$string .= '<strong> -- ' . $this->contextual_gloss . '</strong>';
+		$string .= ' <nobr>--</nobr> <strong>' . $this->contextual_gloss . '</strong>';
 		
 		if ($this->comments) {
 			$string .= ' # ' . $this->comments;

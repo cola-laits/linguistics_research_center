@@ -20,13 +20,13 @@
 {{$lesson->intro_text}}
 
 @foreach ($lesson->glossed_texts as $glossed_text)
-	<div class="glossed_text">{{$glossed_text->glossed_text}}</div>
+	<div class="glossed_text"><span lang='{{$lesson->language->lang_attribute}}' class='{{$lesson->language->class_attribute}}'>{{$glossed_text->glossed_text}}</span></div>
 	<br/>
 	<ul>
 	@foreach ($glossed_text->glosses as $gloss)
    		<li>
    			<a name='glossed_text_gloss_{{$gloss->pivot->id}}'></a>
-    		{{$gloss->getDisplayGloss()}}<br/>
+    		{{$gloss->getDisplayGloss()}}
     	</li>
     @endforeach
     </ul>
@@ -35,7 +35,7 @@
 
 @if ($lesson_text != '')
 	<h2>Lesson Text</h2>
-	<blockquote>{{$lesson_text}}</blockquote>
+	<blockquote><span lang='{{$lesson->language->lang_attribute}}' class='{{$lesson->language->class_attribute}}'>{{$lesson_text}}</span></blockquote>
 @endif
 	      
 @if ($lesson->lesson_translation != '')	        

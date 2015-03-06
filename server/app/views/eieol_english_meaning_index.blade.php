@@ -46,7 +46,7 @@ index; unfortunately this may result in some words, in some contexts, being unfa
 <br/><br/><br/>
 
 @foreach ($keywords as $keyword)
-	<dt>{{$keyword['keyword']}} {{$keyword['head_word']}} --</dt>
+	<dt><strong>{{$keyword['keyword']}}</strong> : {{$keyword['head_word']}} --</dt>
 	<dd>
 		@foreach ($keyword['glossed_text_gloss_ids'] as $id => $lesson)
 			<a href='/eieol_lesson/{{$series->id}}?id={{$lesson->id}}#glossed_text_gloss_{{$id}}'>{{$lesson->title}}</a>

@@ -1,26 +1,20 @@
 Admin
 	Language
-		Audit on custom keyboard to make sure it's in right format
-		Audit sorting to make sure it's in the right format.
-*		Default sort to ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
-*		Store language code and class so we can tag things <span lang='code' class='blah'>
-	CKEditor
-		Add language plugin http://ckeditor.com/forums/Plugins/Language-Semantics
-			Give them a way to specify the language(s) on the Language page?
-		Turn on speel check as you go or make sure regular spell check works.
+*		Audit on custom keyboard to make sure it's in right format
+*		Audit sorting to make sure it's in the right format.
+*	CKEditor
+*		Add language plugin http://ckeditor.com/forums/Plugins/Language-Semantics
+*			Give them a way to specify the language(s) on the Language page?
+*		Turn on speel check as you go or make sure regular spell check works.
 	Maintain Lexicon
 		Add Pokorny ID to headword, add to EIEOL forms, add to load programs
 	
 Public
-	Unicode info and test (make sure page matches an images)
-	Lesson page
-*		- When building lesson text, glossed_text, add <blockquote lang='la' class>
-*		- Add <span lang="code" class="blah"> from language file to glossed texts and parts of gloss
-*		- make format of glosses same as old site
 	EIEOL
 		Dictionary - links to Pokorny
 	Lexicon
 	New EIEOL and Lexicon pages do not share same url structure.  How big of an issue is this?  What do we do when someone goes to an old bookmarked page?
+	Unicode info and test (make sure page matches an images)
 	Public pages
 		Where will they live
 		CMS?
@@ -29,6 +23,7 @@ Public
 	
 Load
 	Load Lexicon	
+**	Enter all lang codes 
 	
 Deploy
 	404 errors

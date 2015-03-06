@@ -28,7 +28,7 @@ links are provided to every appearance, in every numbered lesson, of the word/gl
 <br/><br/><br/>
 
 @foreach ($glosses as $gloss)
-	<dt>{{$gloss['surface_form']}}</dt>
+	<dt><span lang='{{$language->lang_attribute}}' class='{{$language->class_attribute}}'>{{$gloss['surface_form']}}</span></dt>
 	<dd>
 		{{$gloss['displayGlossForMasterGloss']}} --
 		@foreach ($gloss['glossed_text_gloss_ids'] as $id => $lesson)
