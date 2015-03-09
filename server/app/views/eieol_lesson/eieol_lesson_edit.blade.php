@@ -111,7 +111,7 @@
         	    		$('#grammars').find('.delete_grammar').show();
 
         	    		//attach new ckeditor
-        	    		CKEDITOR.replace(new_text_id,{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', allowedContent : true, extraPlugins : 'onchange', specialChars : [ {{$lesson->language->custom_keyboard_layout}} ] }  );
+        	    		CKEDITOR.replace(new_text_id,{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', disableNativeSpellChecker:false, allowedContent : true, extraPlugins : 'onchange,language', specialChars : [ {{$lesson->language->custom_keyboard_layout}} ] }  );
         	    		CKEDITOR.instances[new_text_id].on('change', function() {
         	    			if(this.checkDirty())
         	    				$('#'+new_form_id).css("background-color", "#EBAD99");
@@ -631,7 +631,7 @@
     		new_div.appendTo( "#grammars" );
     		new_div.show();
     		
-    		CKEDITOR.replace('new_grammar_text',{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', allowedContent : true, extraPlugins : 'onchange', specialChars : [ {{$lesson->language->custom_keyboard_layout}} ]}  );
+    		CKEDITOR.replace('new_grammar_text',{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', disableNativeSpellChecker:false, allowedContent : true, extraPlugins : 'onchange', specialChars : [ {{$lesson->language->custom_keyboard_layout}} ]}  );
     		CKEDITOR.instances['new_grammar_text'].on('change', function() {
     			if(this.checkDirty())
     				$('#new_grammar_form').css("background-color", "#EBAD99");
@@ -1514,14 +1514,14 @@
 	CKEDITOR.plugins.addExternal( 'onchange', '/js/', 'onchangeplugin.js' );
 	
 	//apply the ckeditor to the intro text
-	CKEDITOR.replace( 'intro_text',{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', allowedContent : true, extraPlugins : 'onchange', specialChars : [ {{$lesson->language->custom_keyboard_layout}} ] } );
+	CKEDITOR.replace( 'intro_text',{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', disableNativeSpellChecker:false, allowedContent : true, extraPlugins : 'onchange', specialChars : [ {{$lesson->language->custom_keyboard_layout}} ] } );
 	CKEDITOR.instances['intro_text'].on('change', function() {
 		if(this.checkDirty())
 			$('#update_form').css("background-color", "#EBAD99");
 	});
 
 	//apply the ckeditor to the translation
-	CKEDITOR.replace( 'lesson_translation',{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', allowedContent : true, extraPlugins : 'onchange', specialChars : [ {{$lesson->language->custom_keyboard_layout}} ]}  );
+	CKEDITOR.replace( 'lesson_translation',{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', disableNativeSpellChecker:false, allowedContent : true, extraPlugins : 'onchange', specialChars : [ {{$lesson->language->custom_keyboard_layout}} ]}  );
 	CKEDITOR.instances['lesson_translation'].on('change', function() {
 		if(this.checkDirty())
 			$('#update_translation_form').css("background-color", "#EBAD99"); 
@@ -1529,7 +1529,7 @@
 
 	//apply the ckeditor to each exisiting grammar
 	@foreach ($grammars as $grammar)
-		CKEDITOR.replace( 'grammar_text_{{{$grammar->id}}}',{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', allowedContent : true, extraPlugins : 'onchange', specialChars : [ {{$lesson->language->custom_keyboard_layout}} ]}  );
+		CKEDITOR.replace( 'grammar_text_{{{$grammar->id}}}',{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', disableNativeSpellChecker:false, allowedContent : true, extraPlugins : 'onchange', specialChars : [ {{$lesson->language->custom_keyboard_layout}} ]}  );
 		CKEDITOR.instances['grammar_text_{{{$grammar->id}}}'].on('change', function() {
 			if(this.checkDirty())
 				$('#grammar_form_{{{$grammar->id}}}').css("background-color", "#EBAD99");

@@ -48,7 +48,7 @@
     
     <div class='form-group @if ($errors->has('custom_keyboard_layout')) has-error @endif  '>
         {{ Form::label('custom_keyboard_layout', 'Custom Keyboard Layout') }}
-        {{ Form::textarea('custom_keyboard_layout', null, ['placeholder' => 'Custom Keyboard Layout', 'class' => 'form-control', 'size' => '150x8']) }}
+        {{ Form::textarea('custom_keyboard_layout', null, ['placeholder' => 'Custom Keyboard Layout', 'class' => 'form-control', 'size' => '150x4']) }}
         <div class="alert-warning">
         	This should be a list of characters (either in unicode code points or pasted in) <br/>
         	Example: 'µ','ā','œ','\u042f', '\u03da', '\u03db', '\u03c0'
@@ -58,9 +58,9 @@
     <div class='form-group @if ($errors->has('custom_sort')) has-error @endif  '>
         {{ Form::label('custom_sort', 'Custom Sort') }}
         @if ($action == 'Create')
-        	{{ Form::textarea('custom_sort', 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', ['placeholder' => 'Custom Sort', 'class' => 'form-control', 'size' => '150x8']) }}
+        	{{ Form::textarea('custom_sort', 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', ['placeholder' => 'Custom Sort', 'class' => 'form-control', 'size' => '150x4']) }}
         @else
-        	{{ Form::textarea('custom_sort', null, ['placeholder' => 'Custom Sort', 'class' => 'form-control', 'size' => '150x8']) }}
+        	{{ Form::textarea('custom_sort', null, ['placeholder' => 'Custom Sort', 'class' => 'form-control', 'size' => '150x4']) }}
         @endif
         <div class="alert-warning">
         	This should be a string of characters in the order the Gloss and Dictionary should be sorter.<br/>

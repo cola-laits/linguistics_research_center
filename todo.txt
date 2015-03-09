@@ -1,11 +1,6 @@
 Admin
-	Language
-*		Audit on custom keyboard to make sure it's in right format
-*		Audit sorting to make sure it's in the right format.
-*	CKEditor
-*		Add language plugin http://ckeditor.com/forums/Plugins/Language-Semantics
-*			Give them a way to specify the language(s) on the Language page?
-*		Turn on speel check as you go or make sure regular spell check works.
+
+* Grammar titles didn't load span tags
 	Maintain Lexicon
 		Add Pokorny ID to headword, add to EIEOL forms, add to load programs
 	
@@ -23,7 +18,6 @@ Public
 	
 Load
 	Load Lexicon	
-**	Enter all lang codes 
 	
 Deploy
 	404 errors
@@ -47,4 +41,5 @@ Future Ideas
 	EIEOL editor - make glossed texts use CKEditor?
 	Part of Speech editor? use FrozenNode?
 	Analysis editor? use FrozenNode?
+	CKEditor - Add language plugin http://ckeditor.com/forums/Plugins/Language-Semantics, use our lang and class attributes with it
 	Export data for other purposes

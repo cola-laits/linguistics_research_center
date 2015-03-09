@@ -1,5 +1,24 @@
 <?php
 
+Validator::extend('valid_custom_keyboard_layout', function($field,$value,$parameters){
+	$chars = explode(',',$value); //must be comma separated
+	foreach($chars as $char) {
+		$char = trim($char); //don't care about whitespace
+		//must start and end with quotes
+		if (strpos($char,"'") === false ){
+			return false;
+		}
+		if (strpos($char,"'") != 0 ){
+			return false;
+		}
+		if (strrpos($char,"'") != (strlen($char)-1) ){
+			return false;
+		}
+	}
+	return true;
+});
+
+
 class EieolLanguageController extends BaseController {	
 	
 	/**
@@ -37,7 +56,12 @@ class EieolLanguageController extends BaseController {
 				'language' => 'required',
 				'lang_attribute' => 'required',
 				'class_attribute' => 'required',
+				'custom_keyboard_layout' => 'valid_custom_keyboard_layout',
 		);
+		$messages = array(
+				'custom_keyboard_layout.valid_custom_keyboard_layout'=>'The keyboard layout must be a comma separated list with each entry quoted.'
+		);
+		
 		$validator = Validator::make(Input::all(), $rules);
 		
 		if ($validator->fails()) {
@@ -89,8 +113,13 @@ class EieolLanguageController extends BaseController {
 				'language' => 'required',
 				'lang_attribute' => 'required',
 				'class_attribute' => 'required',
+				'custom_keyboard_layout' => 'valid_custom_keyboard_layout',
 		);
-		$validator = Validator::make(Input::all(), $rules);
+		$messages = array(
+				'custom_keyboard_layout.valid_custom_keyboard_layout'=>'The keyboard layout must be a comma separated list with each entry quoted.'
+		);
+		
+		$validator = Validator::make(Input::all(), $rules,$messages);
 		
 		if ($validator->fails()) {
 			return Redirect::to('/admin/eieol_language/' . $id . '/edit')
