@@ -1,5 +1,39 @@
 <?php
 
+Validator::extend('unique_gloss', function($field,$value,$parameters){
+	//this validator attaches to the surface form
+	//parameter 0 is the $id of the gloss (can be null)
+	//parameter 1 is contextual_gloss
+	//parameter 2 is language_id	
+	//parameter 3 is the element_1_part_of_speech
+	//parameter 4 is the element_1_analysis
+	//parameter 5 is the element_1_head_word_id
+	
+	if ($parameters[0] == null) {
+		$glosses = EieolGloss::where('surface_form', '=', Normalizer::normalize($value, Normalizer::FORM_C ))
+		->where('contextual_gloss', '=', Normalizer::normalize($parameters[1], Normalizer::FORM_C ))
+		->where('language_id', '=', $parameters[2])
+		->get();
+	} else {
+		$glosses = EieolGloss::where('surface_form', '=', Normalizer::normalize($value, Normalizer::FORM_C ))
+		->where('contextual_gloss', '=', Normalizer::normalize($parameters[1], Normalizer::FORM_C ))
+		->where('language_id', '=', $parameters[2])
+		->where('id', '!=', $parameters[0])
+		->get();
+	}
+	foreach($glosses as $gloss) {
+		$count = EieolElement::where('gloss_id', '=', $gloss->id)
+		->where('part_of_speech', '=', $parameters[3])
+		->where('analysis', '=', $parameters[4])
+		->where('head_word_id', '=', $parameters[5])
+		->count();
+		if ($count > 0) {
+			return false;
+		}
+	}
+	return true;
+});
+
 class EieolGlossController extends BaseController {	
 	
 	public function filtered_list()
@@ -71,7 +105,12 @@ class EieolGlossController extends BaseController {
 	{
 	
 		$rules = array(
-			'surface_form' => 'required', 
+			'surface_form' => 'required|unique_gloss:' . null . ',' .
+														 Input::get("contextual_gloss") . ',' .
+														 Input::get("language_id") . ',' .
+														 Input::get("element_1_part_of_speech") . ',' .
+														 Input::get("element_1_analysis") . ',' .
+														 Input::get("element_1_head_word_id"),
 			'contextual_gloss' => 'required',
 			'language_id' => 'required',
 			'element_1_part_of_speech' => 'required',
@@ -88,6 +127,7 @@ class EieolGlossController extends BaseController {
 			'element_6_head_word_id' => 'required_with:element_6_part_of_speech',
 		);
 		$messages = array(
+				'surface_form.unique_gloss' => 'This Surface Form/Part of Speech/Analysis/Head Word/Contextual Gloss combination already exists',
 				'element_1_part_of_speech.required' => 'The first Part of Speech is required',
 				'element_1_head_word_id.required' => 'The first Head Word is required',
 				'element_2_part_of_speech.required_with' => 'Since you picked a Head Word, you must enter a Part of Speech',
@@ -110,27 +150,6 @@ class EieolGlossController extends BaseController {
 					'errors' => $validator->getMessageBag()->toArray()
 			));
 		} else {
-			
-			
-			//let's check to make sure this doesn't exist already
-			$glosses = EieolGloss::where('surface_form', '=', Normalizer::normalize(Input::get('surface_form'), Normalizer::FORM_C ))
-								->where('contextual_gloss', '=', Normalizer::normalize(Input::get('contextual_gloss'), Normalizer::FORM_C ))
-								->where('language_id', '=', Input::get('language_id'))
-								->get();
-			foreach($glosses as $gloss) {
-				$count = EieolElement::where('gloss_id', '=', $gloss->id)
-										->where('part_of_speech', '=', Input::get('element_1_part_of_speech'))
-										->where('analysis', '=', Input::get('element_1_analysis'))
-										->where('head_word_id', '=', Input::get('element_1_head_word_id'))
-										->count();
-				if ($count > 0) {
-					return Response::json(array(
-							'fail' => true,
-							'errors' => array('surface_form' => array(0 => 'This Surface Form/Part of Speech/Analysis/Head Word/Contextual Gloss combination already exists'))
-					));
-				}
-			}
-
 			$gloss_id = DB::transaction(function() {
 				$gloss = new EieolGloss;
 		
@@ -209,7 +228,12 @@ class EieolGlossController extends BaseController {
 	public function update($id)
 	{
 		$rules = array(
-				'surface_form' => 'required',
+				'surface_form' => 'required|unique_gloss:' . $id . ',' .
+														 	 Input::get("contextual_gloss") . ',' .
+														 	 Input::get("language_id") . ',' .
+															 Input::get("element_1_part_of_speech") . ',' .
+															 Input::get("element_1_analysis") . ',' .
+															 Input::get("element_1_head_word_id"),
 				'contextual_gloss' => 'required',
 				'element_1_part_of_speech' => 'required',
 				'element_1_head_word_id' => 'required|exists:eieol_head_word,id',
@@ -225,6 +249,7 @@ class EieolGlossController extends BaseController {
 				'element_6_head_word_id' => 'required_with:element_6_part_of_speech',
 		);
 		$messages = array(
+				'surface_form.unique_gloss' => 'This Surface Form/Part of Speech/Analysis/Head Word/Contextual Gloss combination already exists',
 				'element_1_part_of_speech.required' => 'The first Part of Speech is required',
 				'element_1_head_word_id.required' => 'The first Head Word is required',
 				'element_2_part_of_speech.required_with' => 'Since you picked a Head Word, you must enter a Part of Speech',
@@ -246,29 +271,7 @@ class EieolGlossController extends BaseController {
 					'fail' => true,
 					'errors' => $validator->getMessageBag()->toArray()
 			));
-		} else {
-			
-			//let's check to make sure this doesn't exist already
-			$glosses = EieolGloss::where('surface_form', '=', Normalizer::normalize(Input::get('surface_form'), Normalizer::FORM_C ))
-						->where('contextual_gloss', '=', Normalizer::normalize(Input::get('contextual_gloss'), Normalizer::FORM_C ))
-						->where('language_id', '=', Input::get('language_id'))
-						->where('id', '!=', $id)
-						->get();
-			foreach($glosses as $gloss) {
-				$count = EieolElement::where('gloss_id', '=', $gloss->id)
-						->where('part_of_speech', '=', Input::get('element_1_part_of_speech'))
-						->where('analysis', '=', Input::get('element_1_analysis'))
-						->where('head_word_id', '=', Input::get('element_1_head_word_id'))
-						->count();
-				if ($count > 0) {
-					return Response::json(array(
-							'fail' => true,
-							'errors' => array('surface_form' => array(0 => 'This Surface Form/Part of Speech/Analysis/Head Word/Contextual Gloss combination already exists'))
-					));
-				}
-			}
-			
-			
+		} else {	
 			DB::transaction(function($id) use ($id) {
 				$gloss = EieolGloss::with('elements.head_word')->find($id);
 				
