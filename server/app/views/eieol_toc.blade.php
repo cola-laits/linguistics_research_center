@@ -35,13 +35,11 @@
 @foreach ($lessons as $lesson)
 	@foreach($lesson->grammars as $grammar)
 		<li>
-		<!-- Add tabs each period -->
-		@for ($i = 1; $i <= substr_count($grammar->section_number, '.'); $i++) 
-			&nbsp;&nbsp;&nbsp;
-		@endfor
-		{{ HTML::link('eieol_lesson/' . $series->id . '?id=' . $lesson->id . '#grammar_' . $grammar->id,
-					  $grammar->section_number . '. ' . $grammar->title,
-					  array('title' => $grammar->title )) }}
+			<!-- Add tabs each period -->
+			@for ($i = 1; $i <= substr_count($grammar->section_number, '.'); $i++) 
+				&nbsp;&nbsp;&nbsp;
+			@endfor
+			<a href='/eieol_lesson/{{$series->id}}?id={{$lesson->id}}#grammar_{{$grammar->id}}'>{{$grammar->section_number}}. {{$grammar->title}}.</a>
 		</li>
 	@endforeach
 @endforeach

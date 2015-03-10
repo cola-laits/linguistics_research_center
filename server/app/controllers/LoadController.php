@@ -428,7 +428,7 @@ class LoadController extends BaseController {
 	public function eieol_load()
 	{
 		ini_set('memory_limit','512M');
-		ini_set('max_execution_time', 500);
+		ini_set('max_execution_time', 1000);
 		
 		$serieses = build_serieses();
 

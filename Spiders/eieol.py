@@ -53,6 +53,7 @@ for ul in uls:
         #if series_name != 'Old English Online':
         #if series_name != 'Old Church Slavonic Online':
         #if series_name != 'Albanian Online':
+        #if series_name != 'Classical Armenian Online':
         #    continue
         #endif
         #
@@ -235,7 +236,9 @@ for ul in uls:
                     grammar = {}
                     grammar['order'] = grammar_ctr
                     temp_grammar_page=BeautifulSoup(temp_grammar)
-                    temp_title = temp_grammar_page.find(next_tag).text
+#                     if temp_grammar_page.find(next_tag).text != temp_grammar_page.find(next_tag).renderContents():
+#                         print 
+                    temp_title = temp_grammar_page.find(next_tag).renderContents()
                     temp_title = temp_title
                     
                     #fix bad data

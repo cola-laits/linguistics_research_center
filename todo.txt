@@ -1,6 +1,6 @@
 Admin
 
-* Grammar titles didn't load span tags
+* Grammar titles didn't load span tags - not in json
 	Maintain Lexicon
 		Add Pokorny ID to headword, add to EIEOL forms, add to load programs
 	
