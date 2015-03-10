@@ -432,9 +432,9 @@ class LoadController extends BaseController {
 		
 		$serieses = build_serieses();
 
-		foreach($serieses as $series) {
-			delete_series_children($series['series_id']);
-		}
+// 		foreach($serieses as $series) {
+// 			delete_series_children($series['series_id']);
+// 		}
 		
 		foreach($serieses as $series) {
 			print 'loading  ' . $series['path'] . '<br/>';
