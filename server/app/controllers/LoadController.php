@@ -409,6 +409,12 @@ function build_serieses() {
 class LoadController extends BaseController {	
 	
 	
+	public function load()
+	{
+		return View::make('load.load');
+	
+	} //end load function
+	
 	public function eieol_delete()
 	{	
 		ini_set('memory_limit','512M');
@@ -487,7 +493,7 @@ class LoadController extends BaseController {
 												->where('definition', 'like',  $data[$i]->definition)
 												->where('language_id', '=', $lang)->first();
 					if ($head_word_rec == null) {
-						Log::error('trying 2nd lookup');
+						//Log::error('trying 2nd lookup');
 						$head_word_rec = EieolHeadWord::where('word', '=', $head_word)
 						->where('definition', 'like',  '%' . $data[$i]->definition .  '%')
 						->where('language_id', '=', $lang)->first();

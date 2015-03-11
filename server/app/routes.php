@@ -31,9 +31,10 @@ Route::group(array('prefix'=> 'admin', 'before' => 'auth'), function() {
 	Route::get('/eieol_analysis/filtered_list', 'EieolAnalysisController@filtered_list');
 	Route::resource('/eieol_language', 'EieolLanguageController');
 	
-	Route::get('eieol_delete', 'LoadController@eieol_delete');
-	Route::get('eieol_load', 'LoadController@eieol_load');
-	Route::get('index_load', 'LoadController@index_load');
-	Route::get('element_count', 'LoadController@element_count');
-	Route::get('pos_analysis_load', 'LoadController@pos_analysis_load');
-});
+	Route::get('load', 'LoadController@load');
+	Route::post('eieol_delete', 'LoadController@eieol_delete');
+	Route::post('eieol_load', 'LoadController@eieol_load');
+	Route::post('index_load', 'LoadController@index_load');
+	Route::post('element_count', 'LoadController@element_count');
+	Route::post('pos_analysis_load', 'LoadController@pos_analysis_load');
+});	
