@@ -410,9 +410,11 @@ class LoadController extends BaseController {
 	
 	
 	public function eieol_delete()
-	{
+	{	
 		ini_set('memory_limit','512M');
 		ini_set('max_execution_time', 500);
+		
+		Log::error('Starting eieol_delete on ' . gethostname() . ' at ' . date("D M d, Y G:i a"));
 		
 		$serieses = build_serieses();
 	
@@ -422,6 +424,8 @@ class LoadController extends BaseController {
 		}
 	
 		print '<hr/>done';
+		
+		Log::error('Finishing eieol_delete on ' . gethostname() . ' at ' . date("D M d, Y G:i a"));
 	
 	} //end eieol_delete function
 
@@ -429,6 +433,8 @@ class LoadController extends BaseController {
 	{
 		ini_set('memory_limit','512M');
 		ini_set('max_execution_time', 1000);
+		
+		Log::error('Starting eieol_load on ' . gethostname() . ' at ' . date("D M d, Y G:i a"));
 		
 		$serieses = build_serieses();
 
@@ -442,6 +448,7 @@ class LoadController extends BaseController {
 		}
 		
 		print '<hr/>done<br/>Now run index_load.';
+		Log::error('Finishing eieol_load on ' . gethostname() . ' at ' . date("D M d, Y G:i a"));
 	
 	} //end eieol_load function
 	
@@ -449,6 +456,9 @@ class LoadController extends BaseController {
 	{
 		ini_set('memory_limit','320M');
 		ini_set('max_execution_time', 500);
+		
+		Log::error('Starting index_load on ' . gethostname() . ' at ' . date("D M d, Y G:i a"));
+		
 		print 'this should only be run after the eieol_load';
 	
 		$serieses = build_serieses();
@@ -471,22 +481,37 @@ class LoadController extends BaseController {
 					}
 					
 					//print $data[$i]->keyword  . ' ' . htmlentities($head_word) . ' ' . $data[$i]->definition . '<br/>';
-					Log::error($data[$i]->keyword  . ' ' . $head_word . ' ' . $data[$i]->definition);
-					$head_word = EieolHeadWord::where('word', '=', $head_word)
-												->where('definition', 'like',  '%' . $data[$i]->definition .  '%')
+					//Log::error($data[$i]->keyword  . ' ' . $head_word . ' ' . $data[$i]->definition);
+					
+					$head_word_rec = EieolHeadWord::where('word', '=', $head_word)
+												->where('definition', 'like',  $data[$i]->definition)
 												->where('language_id', '=', $lang)->first();
+					if ($head_word_rec == null) {
+						Log::error('trying 2nd lookup');
+						$head_word_rec = EieolHeadWord::where('word', '=', $head_word)
+						->where('definition', 'like',  '%' . $data[$i]->definition .  '%')
+						->where('language_id', '=', $lang)->first();
+					} 
 					$new_head_word_keyword = new EieolHeadWordKeyword;
 					$new_head_word_keyword->keyword = $data[$i]->keyword;
-					$new_head_word_keyword->head_word_id = $head_word['id'];
+					$new_head_word_keyword->head_word_id = $head_word_rec['id'];
 					$new_head_word_keyword->language_id = $lang;
 					$new_head_word_keyword->created_by = 'loader';
 					$new_head_word_keyword->updated_by = 'loader';
-					$new_head_word_keyword->save();
+					
+					try{
+						$new_head_word_keyword->save();
+					} catch (Exception $e) {
+						echo 'Caught exception: ',  $e->getMessage(), "<br/>";
+						print 'if the exception is for Tocharian OPINION, THOUGHT or THOUSAND, you can ignore this<br/>';
+					}
 				}
 			}
 		}
 	
 		print '<hr/>done';
+		
+		Log::error('Finishing index_load on ' . gethostname() . ' at ' . date("D M d, Y G:i a"));
 	
 	} //end index_load function
 	
@@ -508,6 +533,8 @@ class LoadController extends BaseController {
 	{
 		ini_set('memory_limit','320M');
 		ini_set('max_execution_time', 500);
+		
+		Log::error('Starting pos_analysis_load on ' . gethostname() . ' at ' . date("D M d, Y G:i a"));
 		
 		$used_pos = array();
 		$used_analysis = array();
@@ -537,6 +564,7 @@ class LoadController extends BaseController {
 		print '<hr/>';
 		print_r($used_analysis);
 		print '<hr/>done';
+		Log::error('Finishing pos_analysis_load on ' . gethostname() . ' at ' . date("D M d, Y G:i a"));
 	
 	} //end pos_analysis_load function
 	
