@@ -145,7 +145,7 @@ for ul in uls:
                             element_ctr += 1
                             first_part = element.split('<nobr>')[0]
                             if first_part.find(';') == -1:
-                                print surface_form, first_part
+                                print surface_form, first_part, lesson_path + '#' + str(li.find("a")['name'])
                         #endfor element
                         
                     #endfor li

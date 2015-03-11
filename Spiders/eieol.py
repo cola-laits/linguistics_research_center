@@ -173,9 +173,13 @@ for ul in uls:
                             new_element['order'] = element_ctr
                             first_part = element.split('<nobr>')[0]
                             first_part_splits = first_part.split(';')
-                            new_element['part_of_speech'] = first_part_splits[0].strip()
+                            new_element['part_of_speech'] = first_part_splits[0].strip(' ./')
+                            while '  ' in new_element['part_of_speech']:
+                                new_element['part_of_speech'] = new_element['part_of_speech'].replace('  ', ' ')
                             if len(first_part_splits) > 1:
-                                new_element['analysis'] = first_part_splits[1].strip()
+                                new_element['analysis'] = first_part_splits[1].strip(' ./')
+                                while '  ' in new_element['analysis']:
+                                    new_element['analysis'] = new_element['analysis'].replace('  ', ' ')
                             #endif
                             new_head_word = {}
                             
