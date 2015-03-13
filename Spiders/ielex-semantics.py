@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import urllib, urllib2, cookielib
 import re
+import json
 
 categories = []
 ctr = 0
@@ -34,20 +35,23 @@ for li in lis:
         field['text'] = parts[2].strip()
         field['abbr'] = field_li['id']
         category['fields'].append(field)
-
+ 
         #we get the category abbreviation from the front of the field abbr
         if category['abbr'] == '':
             category['abbr'] = field_li['id'].split("_")[0]
         #endif
     #endfor
-    
+     
     categories.append(category)
-
-    if ctr >= 1:
-        break
-    #endif
+ 
+#     if ctr >= 1:
+#         break
+#     #endif
     
 #endfor ul
-print categories
+#print categories
 
-
+with open('../server/app/storage/data_load/lex_categories.json','w') as outfile:
+            json.dump(categories,outfile)
+            
+print 'done'

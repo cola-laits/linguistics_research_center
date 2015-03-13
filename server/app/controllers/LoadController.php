@@ -550,7 +550,7 @@ class LoadController extends BaseController {
 			if (!in_array($element->part_of_speech, $used_pos)) {
 				print 'add pos<br/>';
 				$used_pos[] = $element->part_of_speech;
-				$part_of_speech = new PartOfSpeech;
+				$part_of_speech = new EiEOLPartOfSpeech;
 				$part_of_speech->part_of_speech = $element->part_of_speech ;
 				$part_of_speech->created_by = 'loader';
 				$part_of_speech->updated_by = 'loader';

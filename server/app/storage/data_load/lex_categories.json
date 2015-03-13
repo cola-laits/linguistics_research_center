@@ -1,0 +1,6787 @@
+[
+	{
+		"text": "Physical World",
+		"number": 1,
+		"fields": 
+		[
+			{
+				"text": "World",
+				"number": "1.1",
+				"abbr": "PW_WO"
+			},
+
+			{
+				"text": "Earth, Land",
+				"number": "1.21",
+				"abbr": "PW_EL"
+			},
+
+			{
+				"text": "Ground, Soil",
+				"number": "1.212",
+				"abbr": "PW_GS"
+			},
+
+			{
+				"text": "Dust, Powder",
+				"number": "1.213",
+				"abbr": "PW_DU"
+			},
+
+			{
+				"text": "Mud, Mire",
+				"number": "1.214",
+				"abbr": "PW_MU"
+			},
+
+			{
+				"text": "Sand, Grit",
+				"number": "1.215",
+				"abbr": "PW_SA"
+			},
+
+			{
+				"text": "Hill, Mountain",
+				"number": "1.22",
+				"abbr": "PW_MH"
+			},
+
+			{
+				"text": "Plain, Field",
+				"number": "1.23",
+				"abbr": "PW_PF"
+			},
+
+			{
+				"text": "Dale, Valley",
+				"number": "1.24",
+				"abbr": "PW_VA"
+			},
+
+			{
+				"text": "Isle, Island",
+				"number": "1.25",
+				"abbr": "PW_IS"
+			},
+
+			{
+				"text": "Mainland, Continent",
+				"number": "1.26",
+				"abbr": "PW_ML"
+			},
+
+			{
+				"text": "Shore, Beach",
+				"number": "1.27",
+				"abbr": "PW_SH"
+			},
+
+			{
+				"text": "Water",
+				"number": "1.31",
+				"abbr": "PW_WA"
+			},
+
+			{
+				"text": "Sea",
+				"number": "1.32",
+				"abbr": "PW_SE"
+			},
+
+			{
+				"text": "Lake, Pond",
+				"number": "1.33",
+				"abbr": "PW_LA"
+			},
+
+			{
+				"text": "Gulf, Bay",
+				"number": "1.34",
+				"abbr": "PW_GB"
+			},
+
+			{
+				"text": "Wave, Surge",
+				"number": "1.35",
+				"abbr": "PW_WV"
+			},
+
+			{
+				"text": "Brook, Stream, River",
+				"number": "1.36",
+				"abbr": "PW_RS"
+			},
+
+			{
+				"text": "Spring, Well",
+				"number": "1.37",
+				"abbr": "PW_SW"
+			},
+
+			{
+				"text": "Woods, Forest",
+				"number": "1.41",
+				"abbr": "PW_WF"
+			},
+
+			{
+				"text": "Tree, Oak",
+				"number": "1.42",
+				"abbr": "PW_TR"
+			},
+
+			{
+				"text": "Wood, Timber",
+				"number": "1.43",
+				"abbr": "PW_WD"
+			},
+
+			{
+				"text": "Rock, Stone",
+				"number": "1.44",
+				"abbr": "PW_SR"
+			},
+
+			{
+				"text": "Sky, Heavens",
+				"number": "1.51",
+				"abbr": "PW_SK"
+			},
+
+			{
+				"text": "Sun",
+				"number": "1.52",
+				"abbr": "PW_SU"
+			},
+
+			{
+				"text": "Moon",
+				"number": "1.53",
+				"abbr": "PW_MO"
+			},
+
+			{
+				"text": "Star",
+				"number": "1.54",
+				"abbr": "PW_ST"
+			},
+
+			{
+				"text": "Flash, Lightning",
+				"number": "1.55",
+				"abbr": "PW_LI"
+			},
+
+			{
+				"text": "Noise, Thunder",
+				"number": "1.56",
+				"abbr": "PW_TH"
+			},
+
+			{
+				"text": "Thunderbolt, Lightning Strike",
+				"number": "1.57",
+				"abbr": "PW_LT"
+			},
+
+			{
+				"text": "Light",
+				"number": "1.61",
+				"abbr": "PW_LG"
+			},
+
+			{
+				"text": "Darkness",
+				"number": "1.62",
+				"abbr": "PW_DA"
+			},
+
+			{
+				"text": "Shade, Shadow",
+				"number": "1.63",
+				"abbr": "PW_SD"
+			},
+
+			{
+				"text": "Air, Ether",
+				"number": "1.71",
+				"abbr": "PW_AI"
+			},
+
+			{
+				"text": "Wind, Breeze",
+				"number": "1.72",
+				"abbr": "PW_WI"
+			},
+
+			{
+				"text": "Cloud, Mirk",
+				"number": "1.73",
+				"abbr": "PW_CL"
+			},
+
+			{
+				"text": "Mist, Fog, Haze",
+				"number": "1.74",
+				"abbr": "PW_MI"
+			},
+
+			{
+				"text": "Rain (n)",
+				"number": "1.75",
+				"abbr": "PW_RA"
+			},
+
+			{
+				"text": "Snow (n)",
+				"number": "1.76",
+				"abbr": "PW_SN"
+			},
+
+			{
+				"text": "Ice, Frost",
+				"number": "1.77",
+				"abbr": "PW_IC"
+			},
+
+			{
+				"text": "Weather",
+				"number": "1.78",
+				"abbr": "PW_WE"
+			},
+
+			{
+				"text": "Fire (n)",
+				"number": "1.81",
+				"abbr": "PW_FI"
+			},
+
+			{
+				"text": "Flame (n)",
+				"number": "1.82",
+				"abbr": "PW_FL"
+			},
+
+			{
+				"text": "Smoke (n)",
+				"number": "1.83",
+				"abbr": "PW_SM"
+			},
+
+			{
+				"text": "Ash(es)",
+				"number": "1.84",
+				"abbr": "PW_AS"
+			},
+
+			{
+				"text": "to Burn, Scorch",
+				"number": "1.85",
+				"abbr": "PW_BU"
+			},
+
+			{
+				"text": "to Light, Kindle",
+				"number": "1.86",
+				"abbr": "PW_LK"
+			},
+
+			{
+				"text": "Match, Fire Stick",
+				"number": "1.87",
+				"abbr": "PW_MT"
+			}
+		],
+
+		"abbr": "PW"
+	},
+
+	{
+		"text": "Mankind",
+		"number": 2,
+		"fields": 
+		[
+			{
+				"text": "Human Being",
+				"number": "2.1",
+				"abbr": "MK_HB"
+			},
+
+			{
+				"text": "Man",
+				"number": "2.21",
+				"abbr": "MK_MA"
+			},
+
+			{
+				"text": "Woman",
+				"number": "2.22",
+				"abbr": "MK_WO"
+			},
+
+			{
+				"text": "Male",
+				"number": "2.23",
+				"abbr": "MK_MS"
+			},
+
+			{
+				"text": "Female",
+				"number": "2.24",
+				"abbr": "MK_FS"
+			},
+
+			{
+				"text": "Sex",
+				"number": "2.242",
+				"abbr": "MK_SX"
+			},
+
+			{
+				"text": "Boy",
+				"number": "2.25",
+				"abbr": "MK_BO"
+			},
+
+			{
+				"text": "Girl",
+				"number": "2.26",
+				"abbr": "MK_GI"
+			},
+
+			{
+				"text": "Child",
+				"number": "2.27",
+				"abbr": "MK_CH"
+			},
+
+			{
+				"text": "Infant",
+				"number": "2.28",
+				"abbr": "MK_IN"
+			},
+
+			{
+				"text": "Husband",
+				"number": "2.31",
+				"abbr": "MK_HU"
+			},
+
+			{
+				"text": "Wife",
+				"number": "2.32",
+				"abbr": "MK_WI"
+			},
+
+			{
+				"text": "to Wed, Marry",
+				"number": "2.33",
+				"abbr": "MK_MR"
+			},
+
+			{
+				"text": "Wedding, Marriage",
+				"number": "2.34",
+				"abbr": "MK_MW"
+			},
+
+			{
+				"text": "Father",
+				"number": "2.35",
+				"abbr": "MK_FA"
+			},
+
+			{
+				"text": "Mother",
+				"number": "2.36",
+				"abbr": "MK_MO"
+			},
+
+			{
+				"text": "Parent(s)",
+				"number": "2.37",
+				"abbr": "MK_PA"
+			},
+
+			{
+				"text": "Son",
+				"number": "2.41",
+				"abbr": "MK_SO"
+			},
+
+			{
+				"text": "Daughter",
+				"number": "2.42",
+				"abbr": "MK_DA"
+			},
+
+			{
+				"text": "Son or Daughter",
+				"number": "2.43",
+				"abbr": "MK_SD"
+			},
+
+			{
+				"text": "Brother",
+				"number": "2.44",
+				"abbr": "MK_BR"
+			},
+
+			{
+				"text": "Sister",
+				"number": "2.45",
+				"abbr": "MK_SI"
+			},
+
+			{
+				"text": "Sibling(s)",
+				"number": "2.452",
+				"abbr": "MK_BS"
+			},
+
+			{
+				"text": "Grandfather",
+				"number": "2.46",
+				"abbr": "MK_GF"
+			},
+
+			{
+				"text": "Grandmother",
+				"number": "2.47",
+				"abbr": "MK_GM"
+			},
+
+			{
+				"text": "Grandson",
+				"number": "2.48",
+				"abbr": "MK_GS"
+			},
+
+			{
+				"text": "Granddaughter",
+				"number": "2.49",
+				"abbr": "MK_GD"
+			},
+
+			{
+				"text": "Uncle",
+				"number": "2.51",
+				"abbr": "MK_UN"
+			},
+
+			{
+				"text": "Aunt",
+				"number": "2.52",
+				"abbr": "MK_AU"
+			},
+
+			{
+				"text": "Nephew",
+				"number": "2.53",
+				"abbr": "MK_NE"
+			},
+
+			{
+				"text": "Niece",
+				"number": "2.54",
+				"abbr": "MK_NI"
+			},
+
+			{
+				"text": "Cousin",
+				"number": "2.55",
+				"abbr": "MK_CO"
+			},
+
+			{
+				"text": "Ancestor(s)",
+				"number": "2.56",
+				"abbr": "MK_AN"
+			},
+
+			{
+				"text": "Descendant(s)",
+				"number": "2.57",
+				"abbr": "MK_DE"
+			},
+
+			{
+				"text": "Father-in-Law",
+				"number": "2.61",
+				"abbr": "MK_FL"
+			},
+
+			{
+				"text": "Mother-in-Law",
+				"number": "2.62",
+				"abbr": "MK_ML"
+			},
+
+			{
+				"text": "Son-in-Law",
+				"number": "2.63",
+				"abbr": "MK_SL"
+			},
+
+			{
+				"text": "Daughter-in-Law",
+				"number": "2.64",
+				"abbr": "MK_DL"
+			},
+
+			{
+				"text": "Brother-in-Law",
+				"number": "2.65",
+				"abbr": "MK_BL"
+			},
+
+			{
+				"text": "Sister-in-Law",
+				"number": "2.66",
+				"abbr": "MK_SW"
+			},
+
+			{
+				"text": "Stepfather",
+				"number": "2.71",
+				"abbr": "MK_SF"
+			},
+
+			{
+				"text": "Stepmother",
+				"number": "2.72",
+				"abbr": "MK_SM"
+			},
+
+			{
+				"text": "Stepson",
+				"number": "2.73",
+				"abbr": "MK_SS"
+			},
+
+			{
+				"text": "Stepdaughter",
+				"number": "2.74",
+				"abbr": "MK_SR"
+			},
+
+			{
+				"text": "Orphan",
+				"number": "2.75",
+				"abbr": "MK_OR"
+			},
+
+			{
+				"text": "Widow",
+				"number": "2.76",
+				"abbr": "MK_WD"
+			},
+
+			{
+				"text": "Relative(s)",
+				"number": "2.81",
+				"abbr": "MK_RE"
+			},
+
+			{
+				"text": "Family",
+				"number": "2.82",
+				"abbr": "MK_FM"
+			}
+		],
+
+		"abbr": "MK"
+	},
+
+	{
+		"text": "Animals",
+		"number": 3,
+		"fields": 
+		[
+			{
+				"text": "Animal",
+				"number": "3.11",
+				"abbr": "AN_AN"
+			},
+
+			{
+				"text": "Male Animal",
+				"number": "3.12",
+				"abbr": "AN_MA"
+			},
+
+			{
+				"text": "Female Animal",
+				"number": "3.13",
+				"abbr": "AN_FE"
+			},
+
+			{
+				"text": "to Castrate",
+				"number": "3.14",
+				"abbr": "AN_CA"
+			},
+
+			{
+				"text": "Livestock",
+				"number": "3.15",
+				"abbr": "AN_LI"
+			},
+
+			{
+				"text": "to Pasture",
+				"number": "3.16",
+				"abbr": "AN_PV"
+			},
+
+			{
+				"text": "Pasture",
+				"number": "3.17",
+				"abbr": "AN_PS"
+			},
+
+			{
+				"text": "Herdsman",
+				"number": "3.18",
+				"abbr": "AN_HE"
+			},
+
+			{
+				"text": "Stall, Stable",
+				"number": "3.19",
+				"abbr": "AN_ST"
+			},
+
+			{
+				"text": "Cattle, Bovines",
+				"number": "3.20",
+				"abbr": "AN_CB"
+			},
+
+			{
+				"text": "Bull",
+				"number": "3.21",
+				"abbr": "AN_BU"
+			},
+
+			{
+				"text": "Ox, Steer",
+				"number": "3.22",
+				"abbr": "AN_OX"
+			},
+
+			{
+				"text": "Cow",
+				"number": "3.23",
+				"abbr": "AN_CO"
+			},
+
+			{
+				"text": "Calf",
+				"number": "3.24",
+				"abbr": "AN_CF"
+			},
+
+			{
+				"text": "Sheep",
+				"number": "3.25",
+				"abbr": "AN_SH"
+			},
+
+			{
+				"text": "Ram",
+				"number": "3.26",
+				"abbr": "AN_RA"
+			},
+
+			{
+				"text": "Wether",
+				"number": "3.27",
+				"abbr": "AN_WE"
+			},
+
+			{
+				"text": "Ewe",
+				"number": "3.28",
+				"abbr": "AN_EW"
+			},
+
+			{
+				"text": "Lamb",
+				"number": "3.29",
+				"abbr": "AN_LA"
+			},
+
+			{
+				"text": "Swine",
+				"number": "3.31",
+				"abbr": "AN_SW"
+			},
+
+			{
+				"text": "Boar",
+				"number": "3.32",
+				"abbr": "AN_BO"
+			},
+
+			{
+				"text": "Barrow",
+				"number": "3.33",
+				"abbr": "AN_BA"
+			},
+
+			{
+				"text": "Sow",
+				"number": "3.34",
+				"abbr": "AN_SO"
+			},
+
+			{
+				"text": "Pig",
+				"number": "3.35",
+				"abbr": "AN_PI"
+			},
+
+			{
+				"text": "Goat",
+				"number": "3.36",
+				"abbr": "AN_GO"
+			},
+
+			{
+				"text": "He-Goat",
+				"number": "3.37",
+				"abbr": "AN_HG"
+			},
+
+			{
+				"text": "Kid",
+				"number": "3.38",
+				"abbr": "AN_KI"
+			},
+
+			{
+				"text": "Horse (generic)",
+				"number": "3.41",
+				"abbr": "AN_HO"
+			},
+
+			{
+				"text": "Stallion",
+				"number": "3.42",
+				"abbr": "AN_SN"
+			},
+
+			{
+				"text": "Gelding",
+				"number": "3.43",
+				"abbr": "AN_GE"
+			},
+
+			{
+				"text": "Mare",
+				"number": "3.44",
+				"abbr": "AN_MR"
+			},
+
+			{
+				"text": "Foal, Colt",
+				"number": "3.45",
+				"abbr": "AN_FC"
+			},
+
+			{
+				"text": "Ass, Donkey",
+				"number": "3.46",
+				"abbr": "AN_AD"
+			},
+
+			{
+				"text": "Mule",
+				"number": "3.47",
+				"abbr": "AN_MU"
+			},
+
+			{
+				"text": "Hen, Chicken (generic)",
+				"number": "3.51",
+				"abbr": "AN_HC"
+			},
+
+			{
+				"text": "Cock, Rooster",
+				"number": "3.52",
+				"abbr": "AN_CK"
+			},
+
+			{
+				"text": "Capon",
+				"number": "3.53",
+				"abbr": "AN_CN"
+			},
+
+			{
+				"text": "Hen",
+				"number": "3.54",
+				"abbr": "AN_HN"
+			},
+
+			{
+				"text": "Chicken",
+				"number": "3.55",
+				"abbr": "AN_CH"
+			},
+
+			{
+				"text": "Goose",
+				"number": "3.56",
+				"abbr": "AN_GS"
+			},
+
+			{
+				"text": "Duck",
+				"number": "3.57",
+				"abbr": "AN_DU"
+			},
+
+			{
+				"text": "Dog",
+				"number": "3.61",
+				"abbr": "AN_DO"
+			},
+
+			{
+				"text": "Puppy",
+				"number": "3.612",
+				"abbr": "AN_PU"
+			},
+
+			{
+				"text": "Cat",
+				"number": "3.62",
+				"abbr": "AN_CT"
+			},
+
+			{
+				"text": "Mouse",
+				"number": "3.63",
+				"abbr": "AN_MO"
+			},
+
+			{
+				"text": "Bird",
+				"number": "3.64",
+				"abbr": "AN_BI"
+			},
+
+			{
+				"text": "Fish (n)",
+				"number": "3.65",
+				"abbr": "AN_FI"
+			},
+
+			{
+				"text": "Fisherman",
+				"number": "3.66",
+				"abbr": "AN_FM"
+			},
+
+			{
+				"text": "Wolf",
+				"number": "3.71",
+				"abbr": "AN_WO"
+			},
+
+			{
+				"text": "Lion",
+				"number": "3.72",
+				"abbr": "AN_LN"
+			},
+
+			{
+				"text": "Bear",
+				"number": "3.73",
+				"abbr": "AN_BR"
+			},
+
+			{
+				"text": "Fox",
+				"number": "3.74",
+				"abbr": "AN_FX"
+			},
+
+			{
+				"text": "Deer",
+				"number": "3.75",
+				"abbr": "AN_DE"
+			},
+
+			{
+				"text": "Monkey",
+				"number": "3.76",
+				"abbr": "AN_MK"
+			},
+
+			{
+				"text": "Elephant",
+				"number": "3.77",
+				"abbr": "AN_EL"
+			},
+
+			{
+				"text": "Camel",
+				"number": "3.78",
+				"abbr": "AN_CM"
+			},
+
+			{
+				"text": "to Hunt",
+				"number": "3.79",
+				"abbr": "AN_HU"
+			},
+
+			{
+				"text": "Insect",
+				"number": "3.81",
+				"abbr": "AN_IN"
+			},
+
+			{
+				"text": "Bee",
+				"number": "3.82",
+				"abbr": "AN_BE"
+			},
+
+			{
+				"text": "Fly (n)",
+				"number": "3.83",
+				"abbr": "AN_FL"
+			},
+
+			{
+				"text": "Worm",
+				"number": "3.84",
+				"abbr": "AN_WR"
+			},
+
+			{
+				"text": "Snake",
+				"number": "3.85",
+				"abbr": "AN_SK"
+			}
+		],
+
+		"abbr": "AN"
+	},
+
+	{
+		"text": "Body Parts & Functions",
+		"number": 4,
+		"fields": 
+		[
+			{
+				"text": "Body",
+				"number": "4.11",
+				"abbr": "BP_BO"
+			},
+
+			{
+				"text": "Skin, Hide",
+				"number": "4.12",
+				"abbr": "BP_SH"
+			},
+
+			{
+				"text": "Flesh",
+				"number": "4.13",
+				"abbr": "BP_FL"
+			},
+
+			{
+				"text": "Hair",
+				"number": "4.14",
+				"abbr": "BP_HA"
+			},
+
+			{
+				"text": "Beard",
+				"number": "4.142",
+				"abbr": "BP_BE"
+			},
+
+			{
+				"text": "Blood",
+				"number": "4.15",
+				"abbr": "BP_BL"
+			},
+
+			{
+				"text": "Bone",
+				"number": "4.16",
+				"abbr": "BP_BN"
+			},
+
+			{
+				"text": "Rib",
+				"number": "4.162",
+				"abbr": "BP_RI"
+			},
+
+			{
+				"text": "Horn",
+				"number": "4.17",
+				"abbr": "BP_HO"
+			},
+
+			{
+				"text": "Tail",
+				"number": "4.18",
+				"abbr": "BP_TA"
+			},
+
+			{
+				"text": "Back",
+				"number": "4.19",
+				"abbr": "BP_BA"
+			},
+
+			{
+				"text": "Head",
+				"number": "4.20",
+				"abbr": "BP_HE"
+			},
+
+			{
+				"text": "Skull",
+				"number": "4.202",
+				"abbr": "BP_SK"
+			},
+
+			{
+				"text": "Brain",
+				"number": "4.203",
+				"abbr": "BP_BR"
+			},
+
+			{
+				"text": "Face",
+				"number": "4.204",
+				"abbr": "BP_FA"
+			},
+
+			{
+				"text": "Forehead",
+				"number": "4.205",
+				"abbr": "BP_FO"
+			},
+
+			{
+				"text": "Eyebrow",
+				"number": "4.206",
+				"abbr": "BP_EB"
+			},
+
+			{
+				"text": "Jaw",
+				"number": "4.207",
+				"abbr": "BP_JW"
+			},
+
+			{
+				"text": "Cheek",
+				"number": "4.208",
+				"abbr": "BP_CK"
+			},
+
+			{
+				"text": "Chin",
+				"number": "4.209",
+				"abbr": "BP_CN"
+			},
+
+			{
+				"text": "Eye",
+				"number": "4.21",
+				"abbr": "BP_EY"
+			},
+
+			{
+				"text": "Ear",
+				"number": "4.22",
+				"abbr": "BP_EA"
+			},
+
+			{
+				"text": "Nose",
+				"number": "4.23",
+				"abbr": "BP_NO"
+			},
+
+			{
+				"text": "Mouth",
+				"number": "4.24",
+				"abbr": "BP_MO"
+			},
+
+			{
+				"text": "Lip",
+				"number": "4.25",
+				"abbr": "BP_LI"
+			},
+
+			{
+				"text": "Tongue",
+				"number": "4.26",
+				"abbr": "BP_TG"
+			},
+
+			{
+				"text": "Tooth",
+				"number": "4.27",
+				"abbr": "BP_TO"
+			},
+
+			{
+				"text": "Neck",
+				"number": "4.28",
+				"abbr": "BP_NK"
+			},
+
+			{
+				"text": "Throat",
+				"number": "4.29",
+				"abbr": "BP_TR"
+			},
+
+			{
+				"text": "Shoulder",
+				"number": "4.30",
+				"abbr": "BP_SD"
+			},
+
+			{
+				"text": "Arm",
+				"number": "4.31",
+				"abbr": "BP_AR"
+			},
+
+			{
+				"text": "Elbow",
+				"number": "4.32",
+				"abbr": "BP_EL"
+			},
+
+			{
+				"text": "Hand",
+				"number": "4.33",
+				"abbr": "BP_HN"
+			},
+
+			{
+				"text": "Finger",
+				"number": "4.34",
+				"abbr": "BP_FI"
+			},
+
+			{
+				"text": "Thumb",
+				"number": "4.342",
+				"abbr": "BP_TM"
+			},
+
+			{
+				"text": "Leg",
+				"number": "4.35",
+				"abbr": "BP_LE"
+			},
+
+			{
+				"text": "Knee",
+				"number": "4.36",
+				"abbr": "BP_KN"
+			},
+
+			{
+				"text": "Foot",
+				"number": "4.37",
+				"abbr": "BP_FT"
+			},
+
+			{
+				"text": "Toe",
+				"number": "4.38",
+				"abbr": "BP_TE"
+			},
+
+			{
+				"text": "Nail, Claw",
+				"number": "4.39",
+				"abbr": "BP_NA"
+			},
+
+			{
+				"text": "Wing",
+				"number": "4.392",
+				"abbr": "BP_WI"
+			},
+
+			{
+				"text": "Feather",
+				"number": "4.393",
+				"abbr": "BP_FE"
+			},
+
+			{
+				"text": "Front of Chest",
+				"number": "4.40",
+				"abbr": "BP_FC"
+			},
+
+			{
+				"text": "Breast of Woman",
+				"number": "4.41",
+				"abbr": "BP_BW"
+			},
+
+			{
+				"text": "Udder of Animals",
+				"number": "4.42",
+				"abbr": "BP_UA"
+			},
+
+			{
+				"text": "Navel",
+				"number": "4.43",
+				"abbr": "BP_NV"
+			},
+
+			{
+				"text": "Heart",
+				"number": "4.44",
+				"abbr": "BP_HR"
+			},
+
+			{
+				"text": "Liver",
+				"number": "4.45",
+				"abbr": "BP_LV"
+			},
+
+			{
+				"text": "Belly, Stomach",
+				"number": "4.46",
+				"abbr": "BP_BS"
+			},
+
+			{
+				"text": "Womb",
+				"number": "4.47",
+				"abbr": "BP_WO"
+			},
+
+			{
+				"text": "Egg",
+				"number": "4.48",
+				"abbr": "BP_EG"
+			},
+
+			{
+				"text": "Testicle",
+				"number": "4.49",
+				"abbr": "BP_TS"
+			},
+
+			{
+				"text": "Penis",
+				"number": "4.492",
+				"abbr": "BP_PE"
+			},
+
+			{
+				"text": "to Breathe; Breath",
+				"number": "4.51",
+				"abbr": "BP_BB"
+			},
+
+			{
+				"text": "to Gape, Yawn",
+				"number": "4.52",
+				"abbr": "BP_YG"
+			},
+
+			{
+				"text": "to Cough",
+				"number": "4.53",
+				"abbr": "BP_CO"
+			},
+
+			{
+				"text": "to Sneeze",
+				"number": "4.54",
+				"abbr": "BP_SN"
+			},
+
+			{
+				"text": "Sweat, Perspiration",
+				"number": "4.55",
+				"abbr": "BP_SW"
+			},
+
+			{
+				"text": "to Spit",
+				"number": "4.56",
+				"abbr": "BP_SP"
+			},
+
+			{
+				"text": "to Vomit",
+				"number": "4.57",
+				"abbr": "BP_VO"
+			},
+
+			{
+				"text": "to Bite",
+				"number": "4.58",
+				"abbr": "BP_BI"
+			},
+
+			{
+				"text": "to Lick",
+				"number": "4.59",
+				"abbr": "BP_LC"
+			},
+
+			{
+				"text": "to Sleep; Sleep",
+				"number": "4.61",
+				"abbr": "BP_SL"
+			},
+
+			{
+				"text": "Dream (n)",
+				"number": "4.62",
+				"abbr": "BP_DR"
+			},
+
+			{
+				"text": "to Wake",
+				"number": "4.63",
+				"abbr": "BP_WA"
+			},
+
+			{
+				"text": "to Fart, Break Wind",
+				"number": "4.64",
+				"abbr": "BP_FB"
+			},
+
+			{
+				"text": "to Urinate; Urine",
+				"number": "4.65",
+				"abbr": "BP_UU"
+			},
+
+			{
+				"text": "to Void Excrement; Dung, Excrement",
+				"number": "4.66",
+				"abbr": "BP_ED"
+			},
+
+			{
+				"text": "to have Sexual Intercourse",
+				"number": "4.67",
+				"abbr": "BP_SI"
+			},
+
+			{
+				"text": "to Beget (of Father)",
+				"number": "4.71",
+				"abbr": "BP_BP"
+			},
+
+			{
+				"text": "to Bear (of Mother)",
+				"number": "4.72",
+				"abbr": "BP_BM"
+			},
+
+			{
+				"text": "Pregnant",
+				"number": "4.73",
+				"abbr": "BP_PR"
+			},
+
+			{
+				"text": "to Conceive",
+				"number": "4.732",
+				"abbr": "BP_CC"
+			},
+
+			{
+				"text": "to Live; Living; Life",
+				"number": "4.74",
+				"abbr": "BP_LL"
+			},
+
+			{
+				"text": "to Die; Dead; Death",
+				"number": "4.75",
+				"abbr": "BP_DD"
+			},
+
+			{
+				"text": "to Kill",
+				"number": "4.76",
+				"abbr": "BP_KI"
+			},
+
+			{
+				"text": "Corpse, Body",
+				"number": "4.77",
+				"abbr": "BP_CS"
+			},
+
+			{
+				"text": "to Bury the Dead",
+				"number": "4.78",
+				"abbr": "BP_BD"
+			},
+
+			{
+				"text": "Grave, Tomb",
+				"number": "4.79",
+				"abbr": "BP_GR"
+			},
+
+			{
+				"text": "Strong, Mighty, Powerful",
+				"number": "4.81",
+				"abbr": "BP_SM"
+			},
+
+			{
+				"text": "Weak, Infirm",
+				"number": "4.82",
+				"abbr": "BP_WE"
+			},
+
+			{
+				"text": "Well; Health",
+				"number": "4.83",
+				"abbr": "BP_WH"
+			},
+
+			{
+				"text": "Sick; Sickness",
+				"number": "4.84",
+				"abbr": "BP_SS"
+			}
+		],
+
+		"abbr": "BP"
+	},
+
+	{
+		"text": "Food & Drink",
+		"number": 5,
+		"fields": 
+		[
+			{
+				"text": "to Eat",
+				"number": "5.11",
+				"abbr": "FD_EA"
+			},
+
+			{
+				"text": "Food",
+				"number": "5.12",
+				"abbr": "FD_FD"
+			},
+
+			{
+				"text": "to Drink",
+				"number": "5.13",
+				"abbr": "FD_DR"
+			},
+
+			{
+				"text": "Hunger (n)",
+				"number": "5.14",
+				"abbr": "FD_HU"
+			},
+
+			{
+				"text": "Thirst (n)",
+				"number": "5.15",
+				"abbr": "FD_TH"
+			},
+
+			{
+				"text": "to Suck, Suckle",
+				"number": "5.16",
+				"abbr": "FD_SU"
+			},
+
+			{
+				"text": "to Mix, Blend",
+				"number": "5.17",
+				"abbr": "FD_MX"
+			},
+
+			{
+				"text": "to Cook",
+				"number": "5.21",
+				"abbr": "FD_CO"
+			},
+
+			{
+				"text": "to Boil (trans",
+				"number": "5.22",
+				"abbr": "FD_BO"
+			},
+
+			{
+				"text": "to Roast, Fry",
+				"number": "5.23",
+				"abbr": "FD_RF"
+			},
+
+			{
+				"text": "to Bake",
+				"number": "5.24",
+				"abbr": "FD_BA"
+			},
+
+			{
+				"text": "Oven",
+				"number": "5.25",
+				"abbr": "FD_OV"
+			},
+
+			{
+				"text": "Pot",
+				"number": "5.26",
+				"abbr": "FD_PO"
+			},
+
+			{
+				"text": "Kettle",
+				"number": "5.27",
+				"abbr": "FD_KE"
+			},
+
+			{
+				"text": "Pan",
+				"number": "5.28",
+				"abbr": "FD_PA"
+			},
+
+			{
+				"text": "Dish",
+				"number": "5.31",
+				"abbr": "FD_DI"
+			},
+
+			{
+				"text": "Plate",
+				"number": "5.32",
+				"abbr": "FD_PL"
+			},
+
+			{
+				"text": "Bowl",
+				"number": "5.33",
+				"abbr": "FD_BW"
+			},
+
+			{
+				"text": "Jug, Pitcher",
+				"number": "5.34",
+				"abbr": "FD_PJ"
+			},
+
+			{
+				"text": "Cup",
+				"number": "5.35",
+				"abbr": "FD_CU"
+			},
+
+			{
+				"text": "Saucer",
+				"number": "5.36",
+				"abbr": "FD_SA"
+			},
+
+			{
+				"text": "Spoon",
+				"number": "5.37",
+				"abbr": "FD_SP"
+			},
+
+			{
+				"text": "Knife",
+				"number": "5.38",
+				"abbr": "FD_KN"
+			},
+
+			{
+				"text": "Fork",
+				"number": "5.39",
+				"abbr": "FD_FO"
+			},
+
+			{
+				"text": "a Meal",
+				"number": "5.41",
+				"abbr": "FD_AM"
+			},
+
+			{
+				"text": "Breakfast",
+				"number": "5.42",
+				"abbr": "FD_BR"
+			},
+
+			{
+				"text": "Lunch",
+				"number": "5.43",
+				"abbr": "FD_LU"
+			},
+
+			{
+				"text": "Dinner",
+				"number": "5.44",
+				"abbr": "FD_DN"
+			},
+
+			{
+				"text": "Supper",
+				"number": "5.45",
+				"abbr": "FD_SR"
+			},
+
+			{
+				"text": "Bread",
+				"number": "5.51",
+				"abbr": "FD_BD"
+			},
+
+			{
+				"text": "Cake",
+				"number": "5.52",
+				"abbr": "FD_CA"
+			},
+
+			{
+				"text": "Dough",
+				"number": "5.53",
+				"abbr": "FD_DO"
+			},
+
+			{
+				"text": "to Knead",
+				"number": "5.54",
+				"abbr": "FD_KD"
+			},
+
+			{
+				"text": "Meal, Flour",
+				"number": "5.55",
+				"abbr": "FD_MF"
+			},
+
+			{
+				"text": "to Grind",
+				"number": "5.56",
+				"abbr": "FD_GR"
+			},
+
+			{
+				"text": "Mill",
+				"number": "5.57",
+				"abbr": "FD_ML"
+			},
+
+			{
+				"text": "Meat",
+				"number": "5.61",
+				"abbr": "FD_ME"
+			},
+
+			{
+				"text": "Butcher (n)",
+				"number": "5.612",
+				"abbr": "FD_BU"
+			},
+
+			{
+				"text": "Beef",
+				"number": "5.62",
+				"abbr": "FD_BE"
+			},
+
+			{
+				"text": "Sausage",
+				"number": "5.63",
+				"abbr": "FD_SG"
+			},
+
+			{
+				"text": "Soup, Broth",
+				"number": "5.64",
+				"abbr": "FD_SB"
+			},
+
+			{
+				"text": "Vegetables",
+				"number": "5.65",
+				"abbr": "FD_VE"
+			},
+
+			{
+				"text": "Bean",
+				"number": "5.66",
+				"abbr": "FD_BN"
+			},
+
+			{
+				"text": "Pea",
+				"number": "5.67",
+				"abbr": "FD_PE"
+			},
+
+			{
+				"text": "Onion",
+				"number": "5.68",
+				"abbr": "FD_ON"
+			},
+
+			{
+				"text": "Cabbage",
+				"number": "5.69",
+				"abbr": "FD_CB"
+			},
+
+			{
+				"text": "Potato",
+				"number": "5.70",
+				"abbr": "FD_PT"
+			},
+
+			{
+				"text": "Fruit",
+				"number": "5.71",
+				"abbr": "FD_FR"
+			},
+
+			{
+				"text": "Apple",
+				"number": "5.72",
+				"abbr": "FD_AP"
+			},
+
+			{
+				"text": "Pear",
+				"number": "5.73",
+				"abbr": "FD_PR"
+			},
+
+			{
+				"text": "Peach",
+				"number": "5.74",
+				"abbr": "FD_PC"
+			},
+
+			{
+				"text": "Fig",
+				"number": "5.75",
+				"abbr": "FD_FI"
+			},
+
+			{
+				"text": "Grape",
+				"number": "5.76",
+				"abbr": "FD_GP"
+			},
+
+			{
+				"text": "Nut",
+				"number": "5.77",
+				"abbr": "FD_NT"
+			},
+
+			{
+				"text": "Olive",
+				"number": "5.78",
+				"abbr": "FD_OL"
+			},
+
+			{
+				"text": "Oil",
+				"number": "5.79",
+				"abbr": "FD_OI"
+			},
+
+			{
+				"text": "Berry",
+				"number": "5.80",
+				"abbr": "FD_BY"
+			},
+
+			{
+				"text": "Salt",
+				"number": "5.81",
+				"abbr": "FD_SL"
+			},
+
+			{
+				"text": "Pepper",
+				"number": "5.82",
+				"abbr": "FD_PP"
+			},
+
+			{
+				"text": "Vinegar",
+				"number": "5.83",
+				"abbr": "FD_VI"
+			},
+
+			{
+				"text": "Honey",
+				"number": "5.84",
+				"abbr": "FD_HO"
+			},
+
+			{
+				"text": "Sugar",
+				"number": "5.85",
+				"abbr": "FD_SS"
+			},
+
+			{
+				"text": "Milk",
+				"number": "5.86",
+				"abbr": "FD_MS"
+			},
+
+			{
+				"text": "to Milk",
+				"number": "5.87",
+				"abbr": "FD_MV"
+			},
+
+			{
+				"text": "Cheese",
+				"number": "5.88",
+				"abbr": "FD_CH"
+			},
+
+			{
+				"text": "Butter",
+				"number": "5.89",
+				"abbr": "FD_BT"
+			},
+
+			{
+				"text": "Mead",
+				"number": "5.91",
+				"abbr": "FD_MD"
+			},
+
+			{
+				"text": "Wine",
+				"number": "5.92",
+				"abbr": "FD_WI"
+			},
+
+			{
+				"text": "Beer",
+				"number": "5.93",
+				"abbr": "FD_BB"
+			}
+		],
+
+		"abbr": "FD"
+	},
+
+	{
+		"text": "Clothing & Adornment",
+		"number": 6,
+		"fields": 
+		[
+			{
+				"text": "to Clothe, Dress",
+				"number": "6.11",
+				"abbr": "CA_CD"
+			},
+
+			{
+				"text": "Clothes, Clothing",
+				"number": "6.12",
+				"abbr": "CA_CC"
+			},
+
+			{
+				"text": "Tailor, Seamstress",
+				"number": "6.13",
+				"abbr": "CA_TA"
+			},
+
+			{
+				"text": "Cloth",
+				"number": "6.21",
+				"abbr": "CA_CL"
+			},
+
+			{
+				"text": "Wool",
+				"number": "6.22",
+				"abbr": "CA_WO"
+			},
+
+			{
+				"text": "Flax, Linen",
+				"number": "6.23",
+				"abbr": "CA_FL"
+			},
+
+			{
+				"text": "Cotton",
+				"number": "6.24",
+				"abbr": "CA_CO"
+			},
+
+			{
+				"text": "Silk",
+				"number": "6.25",
+				"abbr": "CA_SI"
+			},
+
+			{
+				"text": "Lace",
+				"number": "6.26",
+				"abbr": "CA_LA"
+			},
+
+			{
+				"text": "Felt",
+				"number": "6.27",
+				"abbr": "CA_FE"
+			},
+
+			{
+				"text": "Fur",
+				"number": "6.28",
+				"abbr": "CA_FU"
+			},
+
+			{
+				"text": "Leather",
+				"number": "6.29",
+				"abbr": "CA_LE"
+			},
+
+			{
+				"text": "to Spin",
+				"number": "6.31",
+				"abbr": "CA_SN"
+			},
+
+			{
+				"text": "Spindle",
+				"number": "6.32",
+				"abbr": "CA_SP"
+			},
+
+			{
+				"text": "to Weave",
+				"number": "6.33",
+				"abbr": "CA_WE"
+			},
+
+			{
+				"text": "Loom",
+				"number": "6.34",
+				"abbr": "CA_LO"
+			},
+
+			{
+				"text": "to Sew",
+				"number": "6.35",
+				"abbr": "CA_SE"
+			},
+
+			{
+				"text": "Needle",
+				"number": "6.36",
+				"abbr": "CA_NE"
+			},
+
+			{
+				"text": "Awl",
+				"number": "6.37",
+				"abbr": "CA_AW"
+			},
+
+			{
+				"text": "Thread",
+				"number": "6.38",
+				"abbr": "CA_TH"
+			},
+
+			{
+				"text": "to Dye",
+				"number": "6.39",
+				"abbr": "CA_DY"
+			},
+
+			{
+				"text": "Cloak",
+				"number": "6.41",
+				"abbr": "CA_CK"
+			},
+
+			{
+				"text": "Overcoat",
+				"number": "6.412",
+				"abbr": "CA_OV"
+			},
+
+			{
+				"text": "Woman's Dress",
+				"number": "6.42",
+				"abbr": "CA_WD"
+			},
+
+			{
+				"text": "Coat",
+				"number": "6.43",
+				"abbr": "CA_CT"
+			},
+
+			{
+				"text": "Shirt",
+				"number": "6.44",
+				"abbr": "CA_SH"
+			},
+
+			{
+				"text": "Collar",
+				"number": "6.45",
+				"abbr": "CA_CR"
+			},
+
+			{
+				"text": "Skirt",
+				"number": "6.46",
+				"abbr": "CA_SK"
+			},
+
+			{
+				"text": "Apron",
+				"number": "6.47",
+				"abbr": "CA_AP"
+			},
+
+			{
+				"text": "Trousers",
+				"number": "6.48",
+				"abbr": "CA_TR"
+			},
+
+			{
+				"text": "Sock, Stocking",
+				"number": "6.49",
+				"abbr": "CA_SS"
+			},
+
+			{
+				"text": "Shoe",
+				"number": "6.51",
+				"abbr": "CA_SO"
+			},
+
+			{
+				"text": "Boot",
+				"number": "6.52",
+				"abbr": "CA_BO"
+			},
+
+			{
+				"text": "Slipper",
+				"number": "6.53",
+				"abbr": "CA_SL"
+			},
+
+			{
+				"text": "Cobbler, Shoemaker",
+				"number": "6.54",
+				"abbr": "CA_SC"
+			},
+
+			{
+				"text": "Hat, Cap",
+				"number": "6.55",
+				"abbr": "CA_HC"
+			},
+
+			{
+				"text": "Belt, Girdle",
+				"number": "6.57",
+				"abbr": "CA_BG"
+			},
+
+			{
+				"text": "Glove",
+				"number": "6.58",
+				"abbr": "CA_GL"
+			},
+
+			{
+				"text": "Veil",
+				"number": "6.59",
+				"abbr": "CA_VE"
+			},
+
+			{
+				"text": "Pocket",
+				"number": "6.61",
+				"abbr": "CA_PO"
+			},
+
+			{
+				"text": "Button",
+				"number": "6.62",
+				"abbr": "CA_BU"
+			},
+
+			{
+				"text": "Pin, Brooch",
+				"number": "6.63",
+				"abbr": "CA_PI"
+			},
+
+			{
+				"text": "Adornment (personal)",
+				"number": "6.71",
+				"abbr": "CA_AD"
+			},
+
+			{
+				"text": "Gem, Jewel",
+				"number": "6.72",
+				"abbr": "CA_JW"
+			},
+
+			{
+				"text": "Finger Ring",
+				"number": "6.73",
+				"abbr": "CA_FR"
+			},
+
+			{
+				"text": "Armband, Bracelet",
+				"number": "6.74",
+				"abbr": "CA_BR"
+			},
+
+			{
+				"text": "Necklace",
+				"number": "6.75",
+				"abbr": "CA_NC"
+			},
+
+			{
+				"text": "Handkerchief",
+				"number": "6.81",
+				"abbr": "CA_HF"
+			},
+
+			{
+				"text": "Towel",
+				"number": "6.82",
+				"abbr": "CA_TW"
+			},
+
+			{
+				"text": "Napkin",
+				"number": "6.83",
+				"abbr": "CA_NA"
+			},
+
+			{
+				"text": "Comb",
+				"number": "6.91",
+				"abbr": "CA_CB"
+			},
+
+			{
+				"text": "Brush",
+				"number": "6.92",
+				"abbr": "CA_BH"
+			},
+
+			{
+				"text": "Razor",
+				"number": "6.93",
+				"abbr": "CA_RA"
+			},
+
+			{
+				"text": "Ointment",
+				"number": "6.94",
+				"abbr": "CA_OI"
+			},
+
+			{
+				"text": "Soap",
+				"number": "6.95",
+				"abbr": "CA_SA"
+			},
+
+			{
+				"text": "Mirror",
+				"number": "6.96",
+				"abbr": "CA_MR"
+			}
+		],
+
+		"abbr": "CA"
+	},
+
+	{
+		"text": "Dwellings & Furniture",
+		"number": 7,
+		"fields": 
+		[
+			{
+				"text": "to Live, Dwell",
+				"number": "7.11",
+				"abbr": "DF_DW"
+			},
+
+			{
+				"text": "House",
+				"number": "7.12",
+				"abbr": "DF_HS"
+			},
+
+			{
+				"text": "Home",
+				"number": "7.122",
+				"abbr": "DF_HO"
+			},
+
+			{
+				"text": "Hut",
+				"number": "7.13",
+				"abbr": "DF_HU"
+			},
+
+			{
+				"text": "Tent",
+				"number": "7.14",
+				"abbr": "DF_TE"
+			},
+
+			{
+				"text": "Yard, Court",
+				"number": "7.15",
+				"abbr": "DF_YR"
+			},
+
+			{
+				"text": "Room",
+				"number": "7.21",
+				"abbr": "DF_RO"
+			},
+
+			{
+				"text": "Door, Gate",
+				"number": "7.22",
+				"abbr": "DF_DG"
+			},
+
+			{
+				"text": "Lock (n)",
+				"number": "7.23",
+				"abbr": "DF_LO"
+			},
+
+			{
+				"text": "Key",
+				"number": "7.24",
+				"abbr": "DF_KY"
+			},
+
+			{
+				"text": "Window",
+				"number": "7.25",
+				"abbr": "DF_WN"
+			},
+
+			{
+				"text": "Floor",
+				"number": "7.26",
+				"abbr": "DF_FL"
+			},
+
+			{
+				"text": "Wall",
+				"number": "7.27",
+				"abbr": "DF_WL"
+			},
+
+			{
+				"text": "Roof",
+				"number": "7.28",
+				"abbr": "DF_RF"
+			},
+
+			{
+				"text": "Hearth, Fireplace",
+				"number": "7.31",
+				"abbr": "DF_FP"
+			},
+
+			{
+				"text": "Stove",
+				"number": "7.32",
+				"abbr": "DF_ST"
+			},
+
+			{
+				"text": "Chimney",
+				"number": "7.33",
+				"abbr": "DF_CH"
+			},
+
+			{
+				"text": "Furniture",
+				"number": "7.41",
+				"abbr": "DF_FR"
+			},
+
+			{
+				"text": "Bed",
+				"number": "7.42",
+				"abbr": "DF_BD"
+			},
+
+			{
+				"text": "Chair",
+				"number": "7.43",
+				"abbr": "DF_CR"
+			},
+
+			{
+				"text": "Table",
+				"number": "7.44",
+				"abbr": "DF_TB"
+			},
+
+			{
+				"text": "Lamp",
+				"number": "7.45",
+				"abbr": "DF_LP"
+			},
+
+			{
+				"text": "Candle",
+				"number": "7.46",
+				"abbr": "DF_CL"
+			},
+
+			{
+				"text": "Glass",
+				"number": "7.74",
+				"abbr": "PA_GL"
+			}
+		],
+
+		"abbr": "DF"
+	},
+
+	{
+		"text": "Agriculture & Vegetation",
+		"number": 8,
+		"fields": 
+		[
+			{
+				"text": "Farmer",
+				"number": "8.11",
+				"abbr": "AV_FA"
+			},
+
+			{
+				"text": "Field for Cultivation",
+				"number": "8.12",
+				"abbr": "AV_FC"
+			},
+
+			{
+				"text": "Garden, Orchard",
+				"number": "8.13",
+				"abbr": "AV_GA"
+			},
+
+			{
+				"text": "Barn",
+				"number": "8.14",
+				"abbr": "AV_BA"
+			},
+
+			{
+				"text": "to Tilt, Cultivate",
+				"number": "8.15",
+				"abbr": "AV_CT"
+			},
+
+			{
+				"text": "to Plow; Plow",
+				"number": "8.21",
+				"abbr": "AV_PL"
+			},
+
+			{
+				"text": "Furrow (n)",
+				"number": "8.212",
+				"abbr": "AV_FU"
+			},
+
+			{
+				"text": "to Dig, Delve",
+				"number": "8.22",
+				"abbr": "AV_DI"
+			},
+
+			{
+				"text": "Spade (n)",
+				"number": "8.23",
+				"abbr": "AV_SP"
+			},
+
+			{
+				"text": "Shovel (n)",
+				"number": "8.24",
+				"abbr": "AV_SH"
+			},
+
+			{
+				"text": "Hoe (n)",
+				"number": "8.25",
+				"abbr": "AV_HO"
+			},
+
+			{
+				"text": "Fork (tool)",
+				"number": "8.26",
+				"abbr": "AV_FO"
+			},
+
+			{
+				"text": "Rake (n)",
+				"number": "8.27",
+				"abbr": "AV_RA"
+			},
+
+			{
+				"text": "Harrow (n)",
+				"number": "8.28",
+				"abbr": "AV_HA"
+			},
+
+			{
+				"text": "to Sow; Seed",
+				"number": "8.31",
+				"abbr": "AV_SS"
+			},
+
+			{
+				"text": "to Mow, Reap",
+				"number": "8.32",
+				"abbr": "AV_MR"
+			},
+
+			{
+				"text": "Scythe, Sickle",
+				"number": "8.33",
+				"abbr": "AV_SI"
+			},
+
+			{
+				"text": "to Thresh",
+				"number": "8.34",
+				"abbr": "AV_TH"
+			},
+
+			{
+				"text": "Threshing-Floor",
+				"number": "8.35",
+				"abbr": "AV_TF"
+			},
+
+			{
+				"text": "Crop, Harvest",
+				"number": "8.41",
+				"abbr": "AV_CH"
+			},
+
+			{
+				"text": "Grain (generic, British Corn)",
+				"number": "8.42",
+				"abbr": "AV_GG"
+			},
+
+			{
+				"text": "Wheat",
+				"number": "8.43",
+				"abbr": "AV_WH"
+			},
+
+			{
+				"text": "Barley",
+				"number": "8.44",
+				"abbr": "AV_BR"
+			},
+
+			{
+				"text": "Rye",
+				"number": "8.45",
+				"abbr": "AV_RY"
+			},
+
+			{
+				"text": "Oats",
+				"number": "8.46",
+				"abbr": "AV_OA"
+			},
+
+			{
+				"text": "Maize, Corn",
+				"number": "8.47",
+				"abbr": "AV_MA"
+			},
+
+			{
+				"text": "Rice",
+				"number": "8.48",
+				"abbr": "AV_RI"
+			},
+
+			{
+				"text": "Grass",
+				"number": "8.51",
+				"abbr": "AV_GR"
+			},
+
+			{
+				"text": "Hay",
+				"number": "8.52",
+				"abbr": "AV_HY"
+			},
+
+			{
+				"text": "Plant, Herb",
+				"number": "8.53",
+				"abbr": "AV_PN"
+			},
+
+			{
+				"text": "Root",
+				"number": "8.54",
+				"abbr": "AV_RO"
+			},
+
+			{
+				"text": "Branch",
+				"number": "8.55",
+				"abbr": "AV_BN"
+			},
+
+			{
+				"text": "Leaf",
+				"number": "8.56",
+				"abbr": "AV_LE"
+			},
+
+			{
+				"text": "Flower",
+				"number": "8.57",
+				"abbr": "AV_FL"
+			},
+
+			{
+				"text": "Rose",
+				"number": "8.58",
+				"abbr": "AV_RS"
+			},
+
+			{
+				"text": "Tree (generic)",
+				"number": "8.60",
+				"abbr": "AV_TR"
+			},
+
+			{
+				"text": "Oak",
+				"number": "8.61",
+				"abbr": "AV_OK"
+			},
+
+			{
+				"text": "Beech",
+				"number": "8.62",
+				"abbr": "AV_BE"
+			},
+
+			{
+				"text": "Birch",
+				"number": "8.63",
+				"abbr": "AV_BI"
+			},
+
+			{
+				"text": "Pine",
+				"number": "8.64",
+				"abbr": "AV_PI"
+			},
+
+			{
+				"text": "Fir",
+				"number": "8.65",
+				"abbr": "AV_FI"
+			},
+
+			{
+				"text": "Acorn",
+				"number": "8.66",
+				"abbr": "AV_AC"
+			},
+
+			{
+				"text": "Vine",
+				"number": "8.67",
+				"abbr": "AV_VI"
+			},
+
+			{
+				"text": "Tobacco",
+				"number": "8.68",
+				"abbr": "AV_TO"
+			},
+
+			{
+				"text": "Smoke (Tobacco)",
+				"number": "8.69",
+				"abbr": "AV_ST"
+			}
+		],
+
+		"abbr": "AV"
+	},
+
+	{
+		"text": "Physical Acts & Materials",
+		"number": 9,
+		"fields": 
+		[
+			{
+				"text": "to Do, Make",
+				"number": "9.11",
+				"abbr": "PA_MA"
+			},
+
+			{
+				"text": "Work, Labor",
+				"number": "9.12",
+				"abbr": "PA_WS"
+			},
+
+			{
+				"text": "to Work, Toil",
+				"number": "9.13",
+				"abbr": "PA_WV"
+			},
+
+			{
+				"text": "to Bend",
+				"number": "9.14",
+				"abbr": "PA_BN"
+			},
+
+			{
+				"text": "to Fold",
+				"number": "9.15",
+				"abbr": "PA_FO"
+			},
+
+			{
+				"text": "to Bind",
+				"number": "9.16",
+				"abbr": "PA_BI"
+			},
+
+			{
+				"text": "Bond (n)",
+				"number": "9.17",
+				"abbr": "PA_BO"
+			},
+
+			{
+				"text": "Chain (n)",
+				"number": "9.18",
+				"abbr": "PA_CH"
+			},
+
+			{
+				"text": "Rope, Cord",
+				"number": "9.19",
+				"abbr": "PA_RC"
+			},
+
+			{
+				"text": "Knot (n)",
+				"number": "9.192",
+				"abbr": "PA_KN"
+			},
+
+			{
+				"text": "to Hit, Strike, Beat",
+				"number": "9.21",
+				"abbr": "PA_SH"
+			},
+
+			{
+				"text": "to Cut",
+				"number": "9.22",
+				"abbr": "PA_CU"
+			},
+
+			{
+				"text": "Knife (tool)",
+				"number": "9.23",
+				"abbr": "PA_KF"
+			},
+
+			{
+				"text": "Shears, Scissors",
+				"number": "9.24",
+				"abbr": "PA_SS"
+			},
+
+			{
+				"text": "Ax",
+				"number": "9.25",
+				"abbr": "PA_AX"
+			},
+
+			{
+				"text": "to Break",
+				"number": "9.26",
+				"abbr": "PA_BK"
+			},
+
+			{
+				"text": "to Split",
+				"number": "9.27",
+				"abbr": "PA_SP"
+			},
+
+			{
+				"text": "to Tear",
+				"number": "9.28",
+				"abbr": "PA_TE"
+			},
+
+			{
+				"text": "to Flay, Skin",
+				"number": "9.29",
+				"abbr": "PA_FS"
+			},
+
+			{
+				"text": "to Rub",
+				"number": "9.31",
+				"abbr": "PA_RU"
+			},
+
+			{
+				"text": "to Stretch",
+				"number": "9.32",
+				"abbr": "PA_SR"
+			},
+
+			{
+				"text": "to Draw, Pull",
+				"number": "9.33",
+				"abbr": "PA_DP"
+			},
+
+			{
+				"text": "to Strew, Spread Out",
+				"number": "9.34",
+				"abbr": "PA_SO"
+			},
+
+			{
+				"text": "to Press",
+				"number": "9.342",
+				"abbr": "PA_PR"
+			},
+
+			{
+				"text": "to Pour",
+				"number": "9.35",
+				"abbr": "PA_PO"
+			},
+
+			{
+				"text": "to Wash",
+				"number": "9.36",
+				"abbr": "PA_WA"
+			},
+
+			{
+				"text": "to Sweep",
+				"number": "9.37",
+				"abbr": "PA_SW"
+			},
+
+			{
+				"text": "Broom",
+				"number": "9.38",
+				"abbr": "PA_BM"
+			},
+
+			{
+				"text": "Craft, Trade",
+				"number": "9.41",
+				"abbr": "PA_CT"
+			},
+
+			{
+				"text": "Art",
+				"number": "9.412",
+				"abbr": "PA_AR"
+			},
+
+			{
+				"text": "Artisan, Craftsman",
+				"number": "9.42",
+				"abbr": "PA_AC"
+			},
+
+			{
+				"text": "Tool",
+				"number": "9.422",
+				"abbr": "PA_TO"
+			},
+
+			{
+				"text": "to Use",
+				"number": "9.423",
+				"abbr": "PA_US"
+			},
+
+			{
+				"text": "Carpenter",
+				"number": "9.43",
+				"abbr": "PA_CA"
+			},
+
+			{
+				"text": "to Build",
+				"number": "9.44",
+				"abbr": "PA_BU"
+			},
+
+			{
+				"text": "to Hew",
+				"number": "9.45",
+				"abbr": "PA_HE"
+			},
+
+			{
+				"text": "to Bore",
+				"number": "9.46",
+				"abbr": "PA_BR"
+			},
+
+			{
+				"text": "Auger",
+				"number": "9.47",
+				"abbr": "PA_AU"
+			},
+
+			{
+				"text": "Saw (n)",
+				"number": "9.48",
+				"abbr": "PA_SA"
+			},
+
+			{
+				"text": "Hammer (n)",
+				"number": "9.49",
+				"abbr": "PA_HA"
+			},
+
+			{
+				"text": "Nail, Peg",
+				"number": "9.50",
+				"abbr": "PA_NA"
+			},
+
+			{
+				"text": "Beam",
+				"number": "9.51",
+				"abbr": "PA_BE"
+			},
+
+			{
+				"text": "Board",
+				"number": "9.52",
+				"abbr": "PA_BD"
+			},
+
+			{
+				"text": "Mason",
+				"number": "9.53",
+				"abbr": "PA_MN"
+			},
+
+			{
+				"text": "Brick",
+				"number": "9.54",
+				"abbr": "PA_BC"
+			},
+
+			{
+				"text": "Mortar",
+				"number": "9.55",
+				"abbr": "PA_MO"
+			},
+
+			{
+				"text": "Smith",
+				"number": "9.60",
+				"abbr": "PA_SM"
+			},
+
+			{
+				"text": "to Forge",
+				"number": "9.61",
+				"abbr": "PA_FG"
+			},
+
+			{
+				"text": "Anvil",
+				"number": "9.62",
+				"abbr": "PA_AN"
+			},
+
+			{
+				"text": "to Cast (metals)",
+				"number": "9.63",
+				"abbr": "PA_CM"
+			},
+
+			{
+				"text": "Gold",
+				"number": "9.64",
+				"abbr": "PA_GO"
+			},
+
+			{
+				"text": "Silver",
+				"number": "9.65",
+				"abbr": "PA_SI"
+			},
+
+			{
+				"text": "Copper, Bronze",
+				"number": "9.66",
+				"abbr": "PA_CO"
+			},
+
+			{
+				"text": "Iron",
+				"number": "9.67",
+				"abbr": "PA_IR"
+			},
+
+			{
+				"text": "Lead",
+				"number": "9.68",
+				"abbr": "PA_LE"
+			},
+
+			{
+				"text": "Tin, Tin-Plate",
+				"number": "9.69",
+				"abbr": "PA_TT"
+			},
+
+			{
+				"text": "Potter",
+				"number": "9.71",
+				"abbr": "PA_PT"
+			},
+
+			{
+				"text": "to Mold, Form",
+				"number": "9.72",
+				"abbr": "PA_MD"
+			},
+
+			{
+				"text": "Clay",
+				"number": "9.73",
+				"abbr": "PA_CL"
+			},
+
+			{
+				"text": "to Plait",
+				"number": "9.75",
+				"abbr": "PA_PL"
+			},
+
+			{
+				"text": "Basket",
+				"number": "9.76",
+				"abbr": "PA_BA"
+			},
+
+			{
+				"text": "to Carve",
+				"number": "9.81",
+				"abbr": "PA_CV"
+			},
+
+			{
+				"text": "Sculptor",
+				"number": "9.82",
+				"abbr": "PA_SC"
+			},
+
+			{
+				"text": "Statue",
+				"number": "9.83",
+				"abbr": "PA_ST"
+			},
+
+			{
+				"text": "Chisel (n)",
+				"number": "9.84",
+				"abbr": "PA_CS"
+			},
+
+			{
+				"text": "to Paint (as artist)",
+				"number": "9.85",
+				"abbr": "PA_PA"
+			}
+		],
+
+		"abbr": "PA"
+	},
+
+	{
+		"text": "Motion & Transportation",
+		"number": 10,
+		"fields": 
+		[
+			{
+				"text": "to Move",
+				"number": "10.11",
+				"abbr": "MO_MO"
+			},
+
+			{
+				"text": "to Turn",
+				"number": "10.12",
+				"abbr": "MO_TU"
+			},
+
+			{
+				"text": "to Turn Around",
+				"number": "10.13",
+				"abbr": "MO_TA"
+			},
+
+			{
+				"text": "to Wind, Wrap",
+				"number": "10.14",
+				"abbr": "MO_WW"
+			},
+
+			{
+				"text": "to Roll",
+				"number": "10.15",
+				"abbr": "MO_RO"
+			},
+
+			{
+				"text": "to Rise",
+				"number": "10.21",
+				"abbr": "MO_RI"
+			},
+
+			{
+				"text": "to Lift, Raise",
+				"number": "10.22",
+				"abbr": "MO_RL"
+			},
+
+			{
+				"text": "to Fall",
+				"number": "10.23",
+				"abbr": "MO_FA"
+			},
+
+			{
+				"text": "to Drop",
+				"number": "10.24",
+				"abbr": "MO_DR"
+			},
+
+			{
+				"text": "to Throw",
+				"number": "10.25",
+				"abbr": "MO_TH"
+			},
+
+			{
+				"text": "to Shake",
+				"number": "10.26",
+				"abbr": "MO_SH"
+			},
+
+			{
+				"text": "to Boil (intrans",
+				"number": "10.31",
+				"abbr": "MO_BO"
+			},
+
+			{
+				"text": "to Flow",
+				"number": "10.32",
+				"abbr": "MO_FL"
+			},
+
+			{
+				"text": "to Sink",
+				"number": "10.33",
+				"abbr": "MO_SI"
+			},
+
+			{
+				"text": "to Float",
+				"number": "10.34",
+				"abbr": "MO_FT"
+			},
+
+			{
+				"text": "to Swim",
+				"number": "10.35",
+				"abbr": "MO_SW"
+			},
+
+			{
+				"text": "to Sail",
+				"number": "10.36",
+				"abbr": "MO_SA"
+			},
+
+			{
+				"text": "to Fly",
+				"number": "10.37",
+				"abbr": "MO_FY"
+			},
+
+			{
+				"text": "to Blow",
+				"number": "10.38",
+				"abbr": "MO_BL"
+			},
+
+			{
+				"text": "to Creep, Crawl",
+				"number": "10.41",
+				"abbr": "MO_CC"
+			},
+
+			{
+				"text": "to Slip, Slide",
+				"number": "10.42",
+				"abbr": "MO_SS"
+			},
+
+			{
+				"text": "to Jump, Leap",
+				"number": "10.43",
+				"abbr": "MO_JL"
+			},
+
+			{
+				"text": "to Dance",
+				"number": "10.44",
+				"abbr": "MO_DA"
+			},
+
+			{
+				"text": "to Walk",
+				"number": "10.45",
+				"abbr": "MO_WA"
+			},
+
+			{
+				"text": "to Run",
+				"number": "10.46",
+				"abbr": "MO_RU"
+			},
+
+			{
+				"text": "to Go",
+				"number": "10.47",
+				"abbr": "MO_GO"
+			},
+
+			{
+				"text": "to Come",
+				"number": "10.48",
+				"abbr": "MO_CO"
+			},
+
+			{
+				"text": "to Depart, Go Away",
+				"number": "10.49",
+				"abbr": "MO_GA"
+			},
+
+			{
+				"text": "to Flee",
+				"number": "10.51",
+				"abbr": "MO_FE"
+			},
+
+			{
+				"text": "to Follow",
+				"number": "10.52",
+				"abbr": "MO_FO"
+			},
+
+			{
+				"text": "to Pursue",
+				"number": "10.53",
+				"abbr": "MO_PU"
+			},
+
+			{
+				"text": "to Overtake",
+				"number": "10.54",
+				"abbr": "MO_OV"
+			},
+
+			{
+				"text": "to Reach, Arrive",
+				"number": "10.55",
+				"abbr": "MO_AR"
+			},
+
+			{
+				"text": "to Approach",
+				"number": "10.56",
+				"abbr": "MO_AP"
+			},
+
+			{
+				"text": "to Enter",
+				"number": "10.57",
+				"abbr": "MO_EN"
+			},
+
+			{
+				"text": "to Bear, Carry",
+				"number": "10.61",
+				"abbr": "MO_CA"
+			},
+
+			{
+				"text": "to Bring",
+				"number": "10.62",
+				"abbr": "MO_BG"
+			},
+
+			{
+				"text": "to Send",
+				"number": "10.63",
+				"abbr": "MO_SE"
+			},
+
+			{
+				"text": "to Lead",
+				"number": "10.64",
+				"abbr": "MO_LE"
+			},
+
+			{
+				"text": "to Drive",
+				"number": "10.65",
+				"abbr": "MO_DV"
+			},
+
+			{
+				"text": "to Ride",
+				"number": "10.66",
+				"abbr": "MO_RD"
+			},
+
+			{
+				"text": "to Push, Shove",
+				"number": "10.67",
+				"abbr": "MO_PS"
+			},
+
+			{
+				"text": "Road",
+				"number": "10.71",
+				"abbr": "MO_RA"
+			},
+
+			{
+				"text": "Path",
+				"number": "10.72",
+				"abbr": "MO_PA"
+			},
+
+			{
+				"text": "Street",
+				"number": "10.73",
+				"abbr": "MO_ST"
+			},
+
+			{
+				"text": "Bridge",
+				"number": "10.74",
+				"abbr": "MO_BR"
+			},
+
+			{
+				"text": "Cart, Wagon, Carriage",
+				"number": "10.75",
+				"abbr": "MO_CW"
+			},
+
+			{
+				"text": "Wheel",
+				"number": "10.76",
+				"abbr": "MO_WH"
+			},
+
+			{
+				"text": "Axle",
+				"number": "10.77",
+				"abbr": "MO_AX"
+			},
+
+			{
+				"text": "Yoke",
+				"number": "10.78",
+				"abbr": "MO_YO"
+			},
+
+			{
+				"text": "Ship",
+				"number": "10.81",
+				"abbr": "MO_SP"
+			},
+
+			{
+				"text": "Sailor",
+				"number": "10.82",
+				"abbr": "MO_SR"
+			},
+
+			{
+				"text": "Boat",
+				"number": "10.83",
+				"abbr": "MO_BT"
+			},
+
+			{
+				"text": "Raft",
+				"number": "10.84",
+				"abbr": "MO_RF"
+			},
+
+			{
+				"text": "Oar",
+				"number": "10.85",
+				"abbr": "MO_OA"
+			},
+
+			{
+				"text": "to Row",
+				"number": "10.852",
+				"abbr": "MO_RW"
+			},
+
+			{
+				"text": "Rudder",
+				"number": "10.86",
+				"abbr": "MO_RR"
+			},
+
+			{
+				"text": "Mast",
+				"number": "10.87",
+				"abbr": "MO_MS"
+			},
+
+			{
+				"text": "Sail (n)",
+				"number": "10.88",
+				"abbr": "MO_SL"
+			},
+
+			{
+				"text": "Anchor (n)",
+				"number": "10.89",
+				"abbr": "MO_AN"
+			},
+
+			{
+				"text": "Port, Harbor",
+				"number": "10.90",
+				"abbr": "MO_HP"
+			}
+		],
+
+		"abbr": "MO"
+	},
+
+	{
+		"text": "Possession & Trade",
+		"number": 11,
+		"fields": 
+		[
+			{
+				"text": "to Have",
+				"number": "11.11",
+				"abbr": "PT_HA"
+			},
+
+			{
+				"text": "to Own, Possess",
+				"number": "11.12",
+				"abbr": "PT_OP"
+			},
+
+			{
+				"text": "to Take",
+				"number": "11.13",
+				"abbr": "PT_TA"
+			},
+
+			{
+				"text": "to Grasp, Seize, Take Hold of",
+				"number": "11.14",
+				"abbr": "PT_SG"
+			},
+
+			{
+				"text": "to Hold",
+				"number": "11.15",
+				"abbr": "PT_HO"
+			},
+
+			{
+				"text": "to Get, Obtain",
+				"number": "11.16",
+				"abbr": "PT_GO"
+			},
+
+			{
+				"text": "to Keep, Retain",
+				"number": "11.17",
+				"abbr": "PT_KR"
+			},
+
+			{
+				"text": "to Give",
+				"number": "11.21",
+				"abbr": "PT_GI"
+			},
+
+			{
+				"text": "to Return, Give Back",
+				"number": "11.22",
+				"abbr": "PT_GB"
+			},
+
+			{
+				"text": "to Restore",
+				"number": "11.23",
+				"abbr": "PT_RE"
+			},
+
+			{
+				"text": "to Save, Preserve, Keep Safe",
+				"number": "11.24",
+				"abbr": "PT_PR"
+			},
+
+			{
+				"text": "to Save, Rescue",
+				"number": "11.25",
+				"abbr": "PT_SR"
+			},
+
+			{
+				"text": "Safe (adj)",
+				"number": "11.26",
+				"abbr": "PT_SA"
+			},
+
+			{
+				"text": "to Destroy",
+				"number": "11.27",
+				"abbr": "PT_DE"
+			},
+
+			{
+				"text": "to Harm, Injure, Damage",
+				"number": "11.28",
+				"abbr": "PT_HI"
+			},
+
+			{
+				"text": "to Spoil",
+				"number": "11.29",
+				"abbr": "PT_SP"
+			},
+
+			{
+				"text": "to Seek",
+				"number": "11.31",
+				"abbr": "PT_SE"
+			},
+
+			{
+				"text": "to Find",
+				"number": "11.32",
+				"abbr": "PT_FI"
+			},
+
+			{
+				"text": "to Lose",
+				"number": "11.33",
+				"abbr": "PT_LO"
+			},
+
+			{
+				"text": "to Release",
+				"number": "11.34",
+				"abbr": "PT_RS"
+			},
+
+			{
+				"text": "Property",
+				"number": "11.41",
+				"abbr": "PT_PY"
+			},
+
+			{
+				"text": "Wealth, Riches",
+				"number": "11.42",
+				"abbr": "PT_WR"
+			},
+
+			{
+				"text": "Money",
+				"number": "11.43",
+				"abbr": "PT_MO"
+			},
+
+			{
+				"text": "Coin",
+				"number": "11.44",
+				"abbr": "PT_CO"
+			},
+
+			{
+				"text": "Purse",
+				"number": "11.45",
+				"abbr": "PT_PU"
+			},
+
+			{
+				"text": "Treasure",
+				"number": "11.46",
+				"abbr": "PT_TR"
+			},
+
+			{
+				"text": "Bank",
+				"number": "11.47",
+				"abbr": "PT_BA"
+			},
+
+			{
+				"text": "Heir",
+				"number": "11.48",
+				"abbr": "PT_HE"
+			},
+
+			{
+				"text": "Rich",
+				"number": "11.51",
+				"abbr": "PT_RC"
+			},
+
+			{
+				"text": "Poor",
+				"number": "11.52",
+				"abbr": "PT_PO"
+			},
+
+			{
+				"text": "Beggar",
+				"number": "11.53",
+				"abbr": "PT_BG"
+			},
+
+			{
+				"text": "Stingy, Avaricious",
+				"number": "11.54",
+				"abbr": "PT_AS"
+			},
+
+			{
+				"text": "Miser",
+				"number": "11.55",
+				"abbr": "PT_MS"
+			},
+
+			{
+				"text": "to Steal",
+				"number": "11.56",
+				"abbr": "PT_ST"
+			},
+
+			{
+				"text": "Thief",
+				"number": "11.57",
+				"abbr": "PT_TH"
+			},
+
+			{
+				"text": "to Rob; Robber",
+				"number": "11.58",
+				"abbr": "PT_RR"
+			},
+
+			{
+				"text": "to Lend",
+				"number": "11.61",
+				"abbr": "PT_LD"
+			},
+
+			{
+				"text": "to Borrow",
+				"number": "11.62",
+				"abbr": "PT_BW"
+			},
+
+			{
+				"text": "to Owe",
+				"number": "11.63",
+				"abbr": "PT_OW"
+			},
+
+			{
+				"text": "Debt",
+				"number": "11.64",
+				"abbr": "PT_DB"
+			},
+
+			{
+				"text": "to Pay",
+				"number": "11.65",
+				"abbr": "PT_PA"
+			},
+
+			{
+				"text": "Account, Reckoning",
+				"number": "11.66",
+				"abbr": "PT_AR"
+			},
+
+			{
+				"text": "Surety, Security",
+				"number": "11.67",
+				"abbr": "PT_SC"
+			},
+
+			{
+				"text": "Interest",
+				"number": "11.68",
+				"abbr": "PT_IT"
+			},
+
+			{
+				"text": "Tax (n)",
+				"number": "11.69",
+				"abbr": "PT_TX"
+			},
+
+			{
+				"text": "Income",
+				"number": "11.71",
+				"abbr": "PT_IN"
+			},
+
+			{
+				"text": "Cost, Expense",
+				"number": "11.72",
+				"abbr": "PT_EC"
+			},
+
+			{
+				"text": "Gain, Profit",
+				"number": "11.73",
+				"abbr": "PT_PF"
+			},
+
+			{
+				"text": "Loss",
+				"number": "11.74",
+				"abbr": "PT_LS"
+			},
+
+			{
+				"text": "to Lease, Rent (to another)",
+				"number": "11.75",
+				"abbr": "PT_LR"
+			},
+
+			{
+				"text": "to Rent, Lease (from another)",
+				"number": "11.76",
+				"abbr": "PT_RL"
+			},
+
+			{
+				"text": "to Hire",
+				"number": "11.77",
+				"abbr": "PT_HR"
+			},
+
+			{
+				"text": "Pay, Wages",
+				"number": "11.78",
+				"abbr": "PT_WA"
+			},
+
+			{
+				"text": "to Earn",
+				"number": "11.79",
+				"abbr": "PT_EA"
+			},
+
+			{
+				"text": "to Buy",
+				"number": "11.81",
+				"abbr": "PT_BU"
+			},
+
+			{
+				"text": "to Sell",
+				"number": "11.82",
+				"abbr": "PT_SL"
+			},
+
+			{
+				"text": "to Trade",
+				"number": "11.83",
+				"abbr": "PT_TD"
+			},
+
+			{
+				"text": "Merchant, Tradesman",
+				"number": "11.84",
+				"abbr": "PT_MT"
+			},
+
+			{
+				"text": "Market (place)",
+				"number": "11.85",
+				"abbr": "PT_MK"
+			},
+
+			{
+				"text": "Store, Shop (n)",
+				"number": "11.86",
+				"abbr": "PT_SS"
+			},
+
+			{
+				"text": "Price",
+				"number": "11.87",
+				"abbr": "PT_PC"
+			},
+
+			{
+				"text": "Dear, Expensive",
+				"number": "11.88",
+				"abbr": "PT_DR"
+			},
+
+			{
+				"text": "Cheap",
+				"number": "11.89",
+				"abbr": "PT_CH"
+			}
+		],
+
+		"abbr": "PT"
+	},
+
+	{
+		"text": "Spatial Relations",
+		"number": 12,
+		"fields": 
+		[
+			{
+				"text": "Place",
+				"number": "12.11",
+				"abbr": "SR_PL"
+			},
+
+			{
+				"text": "to Put, Place, Set, Lay",
+				"number": "12.12",
+				"abbr": "SR_PU"
+			},
+
+			{
+				"text": "to Sit",
+				"number": "12.13",
+				"abbr": "SR_SI"
+			},
+
+			{
+				"text": "to Lie, Recline",
+				"number": "12.14",
+				"abbr": "SR_LI"
+			},
+
+			{
+				"text": "to Stand",
+				"number": "12.15",
+				"abbr": "SR_ST"
+			},
+
+			{
+				"text": "to Stay, Wait, Remain",
+				"number": "12.16",
+				"abbr": "SR_RM"
+			},
+
+			{
+				"text": "to Remain, be Left Over",
+				"number": "12.17",
+				"abbr": "SR_RL"
+			},
+
+			{
+				"text": "to Leave, Relinquish",
+				"number": "12.18",
+				"abbr": "SR_LE"
+			},
+
+			{
+				"text": "Quiet (adj)",
+				"number": "12.19",
+				"abbr": "SR_QU"
+			},
+
+			{
+				"text": "to Gather, Collect",
+				"number": "12.21",
+				"abbr": "SR_CG"
+			},
+
+			{
+				"text": "to Join, Unite",
+				"number": "12.22",
+				"abbr": "SR_JU"
+			},
+
+			{
+				"text": "to Separate",
+				"number": "12.23",
+				"abbr": "SR_SE"
+			},
+
+			{
+				"text": "to Divide",
+				"number": "12.232",
+				"abbr": "SR_DI"
+			},
+
+			{
+				"text": "to Open",
+				"number": "12.24",
+				"abbr": "SR_OP"
+			},
+
+			{
+				"text": "to Shut, Close",
+				"number": "12.25",
+				"abbr": "SR_SH"
+			},
+
+			{
+				"text": "to Cover",
+				"number": "12.26",
+				"abbr": "SR_CO"
+			},
+
+			{
+				"text": "to Hide, Conceal",
+				"number": "12.27",
+				"abbr": "SR_HC"
+			},
+
+			{
+				"text": "High",
+				"number": "12.31",
+				"abbr": "SR_HI"
+			},
+
+			{
+				"text": "Low",
+				"number": "12.32",
+				"abbr": "SR_LO"
+			},
+
+			{
+				"text": "Top",
+				"number": "12.33",
+				"abbr": "SR_TO"
+			},
+
+			{
+				"text": "Bottom",
+				"number": "12.34",
+				"abbr": "SR_BO"
+			},
+
+			{
+				"text": "End",
+				"number": "12.35",
+				"abbr": "SR_EN"
+			},
+
+			{
+				"text": "Point",
+				"number": "12.352",
+				"abbr": "SR_PO"
+			},
+
+			{
+				"text": "Edge",
+				"number": "12.353",
+				"abbr": "SR_ED"
+			},
+
+			{
+				"text": "Side",
+				"number": "12.36",
+				"abbr": "SR_SD"
+			},
+
+			{
+				"text": "Middle",
+				"number": "12.37",
+				"abbr": "SR_MI"
+			},
+
+			{
+				"text": "Center",
+				"number": "12.38",
+				"abbr": "SR_CT"
+			},
+
+			{
+				"text": "Right (vs",
+				"number": "12.41",
+				"abbr": "SR_RI"
+			},
+
+			{
+				"text": "Left (vs",
+				"number": "12.42",
+				"abbr": "SR_LF"
+			},
+
+			{
+				"text": "Near (adj)",
+				"number": "12.43",
+				"abbr": "SR_NE"
+			},
+
+			{
+				"text": "Far (adj)",
+				"number": "12.44",
+				"abbr": "SR_FR"
+			},
+
+			{
+				"text": "East",
+				"number": "12.45",
+				"abbr": "SR_EA"
+			},
+
+			{
+				"text": "West",
+				"number": "12.46",
+				"abbr": "SR_WE"
+			},
+
+			{
+				"text": "North",
+				"number": "12.47",
+				"abbr": "SR_NO"
+			},
+
+			{
+				"text": "South",
+				"number": "12.48",
+				"abbr": "SR_SO"
+			},
+
+			{
+				"text": "Form, Shape (n)",
+				"number": "12.51",
+				"abbr": "SR_FS"
+			},
+
+			{
+				"text": "Size (n)",
+				"number": "12.52",
+				"abbr": "SR_SZ"
+			},
+
+			{
+				"text": "to Grow",
+				"number": "12.53",
+				"abbr": "SR_GW"
+			},
+
+			{
+				"text": "to Measure",
+				"number": "12.54",
+				"abbr": "SR_MS"
+			},
+
+			{
+				"text": "Big, Large, Great",
+				"number": "12.55",
+				"abbr": "SR_XL"
+			},
+
+			{
+				"text": "Small, Little",
+				"number": "12.56",
+				"abbr": "SR_SM"
+			},
+
+			{
+				"text": "Long",
+				"number": "12.57",
+				"abbr": "SR_LG"
+			},
+
+			{
+				"text": "Tall",
+				"number": "12.58",
+				"abbr": "SR_TL"
+			},
+
+			{
+				"text": "Short",
+				"number": "12.59",
+				"abbr": "SR_SS"
+			},
+
+			{
+				"text": "Wide, Broad",
+				"number": "12.61",
+				"abbr": "SR_WB"
+			},
+
+			{
+				"text": "Narrow",
+				"number": "12.62",
+				"abbr": "SR_NR"
+			},
+
+			{
+				"text": "Thick (in Dimension)",
+				"number": "12.63",
+				"abbr": "SR_TD"
+			},
+
+			{
+				"text": "Thick (in Density)",
+				"number": "12.64",
+				"abbr": "SR_TS"
+			},
+
+			{
+				"text": "Thin (in Dimension)",
+				"number": "12.65",
+				"abbr": "SR_ND"
+			},
+
+			{
+				"text": "Thin (in Density)",
+				"number": "12.66",
+				"abbr": "SR_NS"
+			},
+
+			{
+				"text": "Deep",
+				"number": "12.67",
+				"abbr": "SR_DP"
+			},
+
+			{
+				"text": "Shallow",
+				"number": "12.68",
+				"abbr": "SR_SW"
+			},
+
+			{
+				"text": "Flat",
+				"number": "12.71",
+				"abbr": "SR_FL"
+			},
+
+			{
+				"text": "Hollow, Concave",
+				"number": "12.72",
+				"abbr": "SR_HW"
+			},
+
+			{
+				"text": "Straight",
+				"number": "12.73",
+				"abbr": "SR_SG"
+			},
+
+			{
+				"text": "Crooked",
+				"number": "12.74",
+				"abbr": "SR_CR"
+			},
+
+			{
+				"text": "Hook, Crook",
+				"number": "12.75",
+				"abbr": "SR_HK"
+			},
+
+			{
+				"text": "Angle, Corner",
+				"number": "12.76",
+				"abbr": "SR_CN"
+			},
+
+			{
+				"text": "Cross (n)",
+				"number": "12.77",
+				"abbr": "SR_CS"
+			},
+
+			{
+				"text": "Square (n)",
+				"number": "12.78",
+				"abbr": "SR_SQ"
+			},
+
+			{
+				"text": "Round (adj)",
+				"number": "12.81",
+				"abbr": "SR_RO"
+			},
+
+			{
+				"text": "Circle",
+				"number": "12.82",
+				"abbr": "SR_CI"
+			},
+
+			{
+				"text": "Sphere",
+				"number": "12.83",
+				"abbr": "SR_SP"
+			},
+
+			{
+				"text": "Line",
+				"number": "12.84",
+				"abbr": "SR_LN"
+			},
+
+			{
+				"text": "Hole",
+				"number": "12.85",
+				"abbr": "SR_HL"
+			},
+
+			{
+				"text": "Equal, Alike",
+				"number": "12.91",
+				"abbr": "SR_EQ"
+			},
+
+			{
+				"text": "Like, Similar",
+				"number": "12.92",
+				"abbr": "SR_LS"
+			},
+
+			{
+				"text": "to Change",
+				"number": "12.93",
+				"abbr": "SR_CE"
+			},
+
+			{
+				"text": "Sign (n)",
+				"number": "12.94",
+				"abbr": "SR_SN"
+			}
+		],
+
+		"abbr": "SR"
+	},
+
+	{
+		"text": "Quantity & Number",
+		"number": 13,
+		"fields": 
+		[
+			{
+				"text": "Amount, Quantity",
+				"number": "13.11",
+				"abbr": "QN_QN"
+			},
+
+			{
+				"text": "Number",
+				"number": "13.12",
+				"abbr": "QN_NU"
+			},
+
+			{
+				"text": "Whole",
+				"number": "13.13",
+				"abbr": "QN_WH"
+			},
+
+			{
+				"text": "All, Every",
+				"number": "13.14",
+				"abbr": "QN_EA"
+			},
+
+			{
+				"text": "Much, Many",
+				"number": "13.15",
+				"abbr": "QN_MM"
+			},
+
+			{
+				"text": "More",
+				"number": "13.16",
+				"abbr": "QN_MO"
+			},
+
+			{
+				"text": "Few, Little",
+				"number": "13.17",
+				"abbr": "QN_LF"
+			},
+
+			{
+				"text": "Enough",
+				"number": "13.18",
+				"abbr": "QN_EN"
+			},
+
+			{
+				"text": "Crowd, Multitude",
+				"number": "13.19",
+				"abbr": "QN_MC"
+			},
+
+			{
+				"text": "Other Collective Words",
+				"number": "13.192",
+				"abbr": "QN_CW"
+			},
+
+			{
+				"text": "Full",
+				"number": "13.21",
+				"abbr": "QN_FU"
+			},
+
+			{
+				"text": "Empty",
+				"number": "13.22",
+				"abbr": "QN_EM"
+			},
+
+			{
+				"text": "Part (n)",
+				"number": "13.23",
+				"abbr": "QN_PR"
+			},
+
+			{
+				"text": "Half",
+				"number": "13.24",
+				"abbr": "QN_HA"
+			},
+
+			{
+				"text": "Numerals",
+				"number": "13.31",
+				"abbr": "QN_NN"
+			},
+
+			{
+				"text": "One",
+				"number": "13.32",
+				"abbr": "QN_ON"
+			},
+
+			{
+				"text": "Alone, Only",
+				"number": "13.33",
+				"abbr": "QN_AO"
+			},
+
+			{
+				"text": "First",
+				"number": "13.34",
+				"abbr": "QN_FI"
+			},
+
+			{
+				"text": "Last",
+				"number": "13.35",
+				"abbr": "QN_LS"
+			},
+
+			{
+				"text": "Three",
+				"number": "13.41",
+				"abbr": "QN_TH"
+			},
+
+			{
+				"text": "Third (ordinal)",
+				"number": "13.42",
+				"abbr": "QN_TO"
+			},
+
+			{
+				"text": "a Third (fraction)",
+				"number": "13.43",
+				"abbr": "QN_TF"
+			},
+
+			{
+				"text": "Occurring Three Times",
+				"number": "13.44",
+				"abbr": "QN_TT"
+			},
+
+			{
+				"text": "Threefold, Triple",
+				"number": "13.45",
+				"abbr": "QN_TR"
+			},
+
+			{
+				"text": "Consisting of Three Kinds",
+				"number": "13.46",
+				"abbr": "QN_TK"
+			},
+
+			{
+				"text": "Consisting of Three Together",
+				"number": "13.47",
+				"abbr": "QN_CT"
+			},
+
+			{
+				"text": "Group of Three",
+				"number": "13.48",
+				"abbr": "QN_GT"
+			},
+
+			{
+				"text": "By Threes",
+				"number": "13.51",
+				"abbr": "QN_BT"
+			},
+
+			{
+				"text": "Three Apiece",
+				"number": "13.52",
+				"abbr": "QN_TP"
+			},
+
+			{
+				"text": "Miscellaneous",
+				"number": "13.53",
+				"abbr": "QN_MI"
+			}
+		],
+
+		"abbr": "QN"
+	},
+
+	{
+		"text": "Time",
+		"number": 14,
+		"fields": 
+		[
+			{
+				"text": "Time (period)",
+				"number": "14.11",
+				"abbr": "TI_TI"
+			},
+
+			{
+				"text": "Age",
+				"number": "14.12",
+				"abbr": "TI_AG"
+			},
+
+			{
+				"text": "New",
+				"number": "14.13",
+				"abbr": "TI_NW"
+			},
+
+			{
+				"text": "Young",
+				"number": "14.14",
+				"abbr": "TI_YG"
+			},
+
+			{
+				"text": "Old",
+				"number": "14.15",
+				"abbr": "TI_OL"
+			},
+
+			{
+				"text": "Early (adv)",
+				"number": "14.16",
+				"abbr": "TI_EA"
+			},
+
+			{
+				"text": "Late (adv)",
+				"number": "14.17",
+				"abbr": "TI_LT"
+			},
+
+			{
+				"text": "Now",
+				"number": "14.18",
+				"abbr": "TI_NO"
+			},
+
+			{
+				"text": "Soon, Immediately",
+				"number": "14.19",
+				"abbr": "TI_SI"
+			},
+
+			{
+				"text": "Fast, Swift, Quick",
+				"number": "14.21",
+				"abbr": "TI_SW"
+			},
+
+			{
+				"text": "Slow (adj)",
+				"number": "14.22",
+				"abbr": "TI_SL"
+			},
+
+			{
+				"text": "to Hurry, Hasten",
+				"number": "14.23",
+				"abbr": "TI_HH"
+			},
+
+			{
+				"text": "to Delay",
+				"number": "14.24",
+				"abbr": "TI_DE"
+			},
+
+			{
+				"text": "to Begin; Beginning",
+				"number": "14.25",
+				"abbr": "TI_BB"
+			},
+
+			{
+				"text": "to Last",
+				"number": "14.252",
+				"abbr": "TI_LS"
+			},
+
+			{
+				"text": "End (n, temporal)",
+				"number": "14.26",
+				"abbr": "TI_EN"
+			},
+
+			{
+				"text": "to Finish",
+				"number": "14.27",
+				"abbr": "TI_FI"
+			},
+
+			{
+				"text": "to Cease",
+				"number": "14.28",
+				"abbr": "TI_CE"
+			},
+
+			{
+				"text": "Ready (adj)",
+				"number": "14.29",
+				"abbr": "TI_RE"
+			},
+
+			{
+				"text": "Always",
+				"number": "14.31",
+				"abbr": "TI_AL"
+			},
+
+			{
+				"text": "Often",
+				"number": "14.32",
+				"abbr": "TI_OF"
+			},
+
+			{
+				"text": "Sometimes",
+				"number": "14.33",
+				"abbr": "TI_ST"
+			},
+
+			{
+				"text": "Never",
+				"number": "14.34",
+				"abbr": "TI_NV"
+			},
+
+			{
+				"text": "Again",
+				"number": "14.35",
+				"abbr": "TI_AN"
+			},
+
+			{
+				"text": "Day",
+				"number": "14.41",
+				"abbr": "TI_DA"
+			},
+
+			{
+				"text": "Night",
+				"number": "14.42",
+				"abbr": "TI_NG"
+			},
+
+			{
+				"text": "Dawn",
+				"number": "14.43",
+				"abbr": "TI_DW"
+			},
+
+			{
+				"text": "Morning",
+				"number": "14.44",
+				"abbr": "TI_MG"
+			},
+
+			{
+				"text": "Noon",
+				"number": "14.45",
+				"abbr": "TI_NN"
+			},
+
+			{
+				"text": "Evening",
+				"number": "14.46",
+				"abbr": "TI_EV"
+			},
+
+			{
+				"text": "Today",
+				"number": "14.47",
+				"abbr": "TI_TD"
+			},
+
+			{
+				"text": "Tomorrow",
+				"number": "14.48",
+				"abbr": "TI_TM"
+			},
+
+			{
+				"text": "Yesterday",
+				"number": "14.49",
+				"abbr": "TI_YD"
+			},
+
+			{
+				"text": "Hour",
+				"number": "14.51",
+				"abbr": "TI_HR"
+			},
+
+			{
+				"text": "Minute, Second",
+				"number": "14.52",
+				"abbr": "TI_MS"
+			},
+
+			{
+				"text": "Clock, Watch",
+				"number": "14.53",
+				"abbr": "TI_CW"
+			},
+
+			{
+				"text": "Week",
+				"number": "14.61",
+				"abbr": "TI_WK"
+			},
+
+			{
+				"text": "Sunday",
+				"number": "14.62",
+				"abbr": "TI_SU"
+			},
+
+			{
+				"text": "Monday",
+				"number": "14.63",
+				"abbr": "TI_MO"
+			},
+
+			{
+				"text": "Tuesday",
+				"number": "14.64",
+				"abbr": "TI_TU"
+			},
+
+			{
+				"text": "Wednesday",
+				"number": "14.65",
+				"abbr": "TI_WE"
+			},
+
+			{
+				"text": "Thursday",
+				"number": "14.66",
+				"abbr": "TI_TH"
+			},
+
+			{
+				"text": "Friday",
+				"number": "14.67",
+				"abbr": "TI_FR"
+			},
+
+			{
+				"text": "Saturday",
+				"number": "14.68",
+				"abbr": "TI_SA"
+			},
+
+			{
+				"text": "Month",
+				"number": "14.71",
+				"abbr": "TI_MT"
+			},
+
+			{
+				"text": "Names of the Months",
+				"number": "14.72",
+				"abbr": "TI_NM"
+			},
+
+			{
+				"text": "Year",
+				"number": "14.73",
+				"abbr": "TI_YR"
+			},
+
+			{
+				"text": "Winter",
+				"number": "14.74",
+				"abbr": "TI_WI"
+			},
+
+			{
+				"text": "Spring",
+				"number": "14.75",
+				"abbr": "TI_SP"
+			},
+
+			{
+				"text": "Summer",
+				"number": "14.76",
+				"abbr": "TI_SM"
+			},
+
+			{
+				"text": "Autumn",
+				"number": "14.77",
+				"abbr": "TI_AU"
+			},
+
+			{
+				"text": "Season",
+				"number": "14.78",
+				"abbr": "TI_SN"
+			}
+		],
+
+		"abbr": "TI"
+	},
+
+	{
+		"text": "Sense Perception",
+		"number": 15,
+		"fields": 
+		[
+			{
+				"text": "to Sense, Perceive; Sense",
+				"number": "15.11",
+				"abbr": "SP_PS"
+			},
+
+			{
+				"text": "to Smell (subj)",
+				"number": "15.21",
+				"abbr": "SP_VS"
+			},
+
+			{
+				"text": "to Smell (obj)",
+				"number": "15.22",
+				"abbr": "SP_VO"
+			},
+
+			{
+				"text": "Smell (n, subj)",
+				"number": "15.23",
+				"abbr": "SP_SS"
+			},
+
+			{
+				"text": "Smell (n, obj)",
+				"number": "15.24",
+				"abbr": "SP_SB"
+			},
+
+			{
+				"text": "Fragrant, Good Smelling",
+				"number": "15.25",
+				"abbr": "SP_GS"
+			},
+
+			{
+				"text": "Stinking, Bad Smelling",
+				"number": "15.26",
+				"abbr": "SP_BD"
+			},
+
+			{
+				"text": "to Taste (subj)",
+				"number": "15.31",
+				"abbr": "SP_TJ"
+			},
+
+			{
+				"text": "to Taste (obj)",
+				"number": "15.32",
+				"abbr": "SP_TT"
+			},
+
+			{
+				"text": "Taste (n, subj)",
+				"number": "15.33",
+				"abbr": "SP_TO"
+			},
+
+			{
+				"text": "Taste (n, obj)",
+				"number": "15.34",
+				"abbr": "SP_TS"
+			},
+
+			{
+				"text": "Sweet",
+				"number": "15.35",
+				"abbr": "SP_ST"
+			},
+
+			{
+				"text": "Salty",
+				"number": "15.36",
+				"abbr": "SP_SA"
+			},
+
+			{
+				"text": "Bitter",
+				"number": "15.37",
+				"abbr": "SP_BI"
+			},
+
+			{
+				"text": "Sour, Acidic",
+				"number": "15.38",
+				"abbr": "SP_AC"
+			},
+
+			{
+				"text": "to Hear",
+				"number": "15.41",
+				"abbr": "SP_HE"
+			},
+
+			{
+				"text": "to Listen, Harken",
+				"number": "15.42",
+				"abbr": "SP_LI"
+			},
+
+			{
+				"text": "Hearing (n)",
+				"number": "15.43",
+				"abbr": "SP_HG"
+			},
+
+			{
+				"text": "Sound (n)",
+				"number": "15.44",
+				"abbr": "SP_SO"
+			},
+
+			{
+				"text": "Loud",
+				"number": "15.45",
+				"abbr": "SP_LD"
+			},
+
+			{
+				"text": "to See",
+				"number": "15.51",
+				"abbr": "SP_SE"
+			},
+
+			{
+				"text": "to Look",
+				"number": "15.52",
+				"abbr": "SP_LO"
+			},
+
+			{
+				"text": "Sight (subj)",
+				"number": "15.53",
+				"abbr": "SP_SI"
+			},
+
+			{
+				"text": "Sight (obj), Look (obj), Appearance",
+				"number": "15.54",
+				"abbr": "SP_SG"
+			},
+
+			{
+				"text": "to Show",
+				"number": "15.55",
+				"abbr": "SP_SW"
+			},
+
+			{
+				"text": "to Shine, Glisten",
+				"number": "15.56",
+				"abbr": "SP_SH"
+			},
+
+			{
+				"text": "Bright",
+				"number": "15.57",
+				"abbr": "SP_BR"
+			},
+
+			{
+				"text": "Color",
+				"number": "15.61",
+				"abbr": "SP_CO"
+			},
+
+			{
+				"text": "Light in Color",
+				"number": "15.62",
+				"abbr": "SP_LC"
+			},
+
+			{
+				"text": "Dark in Color",
+				"number": "15.63",
+				"abbr": "SP_DC"
+			},
+
+			{
+				"text": "White",
+				"number": "15.64",
+				"abbr": "SP_WH"
+			},
+
+			{
+				"text": "Black",
+				"number": "15.65",
+				"abbr": "SP_BK"
+			},
+
+			{
+				"text": "Red",
+				"number": "15.66",
+				"abbr": "SP_RD"
+			},
+
+			{
+				"text": "Blue",
+				"number": "15.67",
+				"abbr": "SP_BL"
+			},
+
+			{
+				"text": "Green",
+				"number": "15.68",
+				"abbr": "SP_GR"
+			},
+
+			{
+				"text": "Yellow",
+				"number": "15.69",
+				"abbr": "SP_YL"
+			},
+
+			{
+				"text": "to Touch",
+				"number": "15.71",
+				"abbr": "SP_TV"
+			},
+
+			{
+				"text": "to Feel of",
+				"number": "15.72",
+				"abbr": "SP_FO"
+			},
+
+			{
+				"text": "Touch (n)",
+				"number": "15.73",
+				"abbr": "SP_TC"
+			},
+
+			{
+				"text": "Hard",
+				"number": "15.74",
+				"abbr": "SP_HA"
+			},
+
+			{
+				"text": "Soft",
+				"number": "15.75",
+				"abbr": "SP_SF"
+			},
+
+			{
+				"text": "Rough",
+				"number": "15.76",
+				"abbr": "SP_RG"
+			},
+
+			{
+				"text": "Smooth",
+				"number": "15.77",
+				"abbr": "SP_SM"
+			},
+
+			{
+				"text": "Sharp",
+				"number": "15.78",
+				"abbr": "SP_SP"
+			},
+
+			{
+				"text": "Dull, Blunt",
+				"number": "15.79",
+				"abbr": "SP_LL"
+			},
+
+			{
+				"text": "Heavy, Weighty",
+				"number": "15.81",
+				"abbr": "SP_HV"
+			},
+
+			{
+				"text": "Light, Nimble",
+				"number": "15.82",
+				"abbr": "SP_LW"
+			},
+
+			{
+				"text": "Wet, Damp",
+				"number": "15.83",
+				"abbr": "SP_WD"
+			},
+
+			{
+				"text": "Dry, Arid",
+				"number": "15.84",
+				"abbr": "SP_DR"
+			},
+
+			{
+				"text": "Hot, Warm",
+				"number": "15.85",
+				"abbr": "SP_HW"
+			},
+
+			{
+				"text": "Cold, Frigid",
+				"number": "15.86",
+				"abbr": "SP_CD"
+			},
+
+			{
+				"text": "Pure, Clean",
+				"number": "15.87",
+				"abbr": "SP_CN"
+			},
+
+			{
+				"text": "Dirty, Soiled",
+				"number": "15.88",
+				"abbr": "SP_DS"
+			}
+		],
+
+		"abbr": "SP"
+	},
+
+	{
+		"text": "Emotion",
+		"number": 16,
+		"fields": 
+		[
+			{
+				"text": "Soul, Spirit",
+				"number": "16.11",
+				"abbr": "EM_SS"
+			},
+
+			{
+				"text": "Feeling, Emotion",
+				"number": "16.12",
+				"abbr": "EM_EF"
+			},
+
+			{
+				"text": "Passion",
+				"number": "16.13",
+				"abbr": "EM_PA"
+			},
+
+			{
+				"text": "Care (n)",
+				"number": "16.14",
+				"abbr": "EM_CA"
+			},
+
+			{
+				"text": "Wonder, Astonishment",
+				"number": "16.15",
+				"abbr": "EM_WA"
+			},
+
+			{
+				"text": "Surprise",
+				"number": "16.16",
+				"abbr": "EM_SU"
+			},
+
+			{
+				"text": "Fortune (Good or Bad)",
+				"number": "16.17",
+				"abbr": "EM_FO"
+			},
+
+			{
+				"text": "Good Fortune",
+				"number": "16.18",
+				"abbr": "EM_GF"
+			},
+
+			{
+				"text": "Misfortune",
+				"number": "16.19",
+				"abbr": "EM_MF"
+			},
+
+			{
+				"text": "to Please",
+				"number": "16.21",
+				"abbr": "EM_PL"
+			},
+
+			{
+				"text": "Please in Polite Phrases",
+				"number": "16.212",
+				"abbr": "EM_PP"
+			},
+
+			{
+				"text": "Joy",
+				"number": "16.22",
+				"abbr": "EM_JY"
+			},
+
+			{
+				"text": "Glad, Joyful",
+				"number": "16.23",
+				"abbr": "EM_JG"
+			},
+
+			{
+				"text": "Happy; Happiness",
+				"number": "16.24",
+				"abbr": "EM_HH"
+			},
+
+			{
+				"text": "to Laugh, Smile",
+				"number": "16.25",
+				"abbr": "EM_LS"
+			},
+
+			{
+				"text": "to Play",
+				"number": "16.26",
+				"abbr": "EM_PV"
+			},
+
+			{
+				"text": "to Love; Love",
+				"number": "16.27",
+				"abbr": "EM_LO"
+			},
+
+			{
+				"text": "Dear",
+				"number": "16.28",
+				"abbr": "EM_DR"
+			},
+
+			{
+				"text": "to Kiss",
+				"number": "16.29",
+				"abbr": "EM_KS"
+			},
+
+			{
+				"text": "Pain, Suffering",
+				"number": "16.31",
+				"abbr": "EM_PS"
+			},
+
+			{
+				"text": "Grief, Sorrow",
+				"number": "16.32",
+				"abbr": "EM_GS"
+			},
+
+			{
+				"text": "Anxiety",
+				"number": "16.33",
+				"abbr": "EM_AN"
+			},
+
+			{
+				"text": "to Regret, Repent",
+				"number": "16.34",
+				"abbr": "EM_RR"
+			},
+
+			{
+				"text": "Pity (n)",
+				"number": "16.35",
+				"abbr": "EM_PT"
+			},
+
+			{
+				"text": "Sad",
+				"number": "16.36",
+				"abbr": "EM_SA"
+			},
+
+			{
+				"text": "to Cry, Weep",
+				"number": "16.37",
+				"abbr": "EM_CW"
+			},
+
+			{
+				"text": "Tear (n)",
+				"number": "16.38",
+				"abbr": "EM_TR"
+			},
+
+			{
+				"text": "to Groan",
+				"number": "16.39",
+				"abbr": "EM_GR"
+			},
+
+			{
+				"text": "Hate (n)",
+				"number": "16.41",
+				"abbr": "EM_HT"
+			},
+
+			{
+				"text": "Anger",
+				"number": "16.42",
+				"abbr": "EM_AG"
+			},
+
+			{
+				"text": "Rage, Fury",
+				"number": "16.43",
+				"abbr": "EM_RF"
+			},
+
+			{
+				"text": "Envy, Jealousy",
+				"number": "16.44",
+				"abbr": "EM_EJ"
+			},
+
+			{
+				"text": "Shame (n)",
+				"number": "16.45",
+				"abbr": "EM_SH"
+			},
+
+			{
+				"text": "Honor (n)",
+				"number": "16.46",
+				"abbr": "EM_HO"
+			},
+
+			{
+				"text": "Fame, Glory",
+				"number": "16.47",
+				"abbr": "EM_GL"
+			},
+
+			{
+				"text": "Proud",
+				"number": "16.48",
+				"abbr": "EM_PD"
+			},
+
+			{
+				"text": "to Dare",
+				"number": "16.51",
+				"abbr": "EM_DA"
+			},
+
+			{
+				"text": "Brave, Courageous",
+				"number": "16.52",
+				"abbr": "EM_BR"
+			},
+
+			{
+				"text": "Fear, Fright",
+				"number": "16.53",
+				"abbr": "EM_FF"
+			},
+
+			{
+				"text": "Peril, Danger",
+				"number": "16.54",
+				"abbr": "EM_DG"
+			},
+
+			{
+				"text": "Timid, Cowardly",
+				"number": "16.55",
+				"abbr": "EM_TC"
+			},
+
+			{
+				"text": "to Will, Wish",
+				"number": "16.61",
+				"abbr": "EM_WW"
+			},
+
+			{
+				"text": "to Desire",
+				"number": "16.62",
+				"abbr": "EM_DE"
+			},
+
+			{
+				"text": "Hope (n)",
+				"number": "16.63",
+				"abbr": "EM_HP"
+			},
+
+			{
+				"text": "Thanks (n)",
+				"number": "16.64",
+				"abbr": "EM_TH"
+			},
+
+			{
+				"text": "Faithful",
+				"number": "16.65",
+				"abbr": "EM_FL"
+			},
+
+			{
+				"text": "True",
+				"number": "16.66",
+				"abbr": "EM_TE"
+			},
+
+			{
+				"text": "Lie, Falsehood",
+				"number": "16.67",
+				"abbr": "EM_LI"
+			},
+
+			{
+				"text": "Deceit",
+				"number": "16.68",
+				"abbr": "EM_DC"
+			},
+
+			{
+				"text": "to Forgive",
+				"number": "16.69",
+				"abbr": "EM_FG"
+			},
+
+			{
+				"text": "Good",
+				"number": "16.71",
+				"abbr": "EM_GD"
+			},
+
+			{
+				"text": "Bad",
+				"number": "16.72",
+				"abbr": "EM_BD"
+			},
+
+			{
+				"text": "Right (adj)",
+				"number": "16.73",
+				"abbr": "EM_RI"
+			},
+
+			{
+				"text": "Wrong (adj)",
+				"number": "16.74",
+				"abbr": "EM_WR"
+			},
+
+			{
+				"text": "Sin, Impiety",
+				"number": "16.75",
+				"abbr": "EM_SN"
+			},
+
+			{
+				"text": "Fault, Guilt",
+				"number": "16.76",
+				"abbr": "EM_FA"
+			},
+
+			{
+				"text": "Error, Mistake",
+				"number": "16.77",
+				"abbr": "EM_ME"
+			},
+
+			{
+				"text": "Blame (n)",
+				"number": "16.78",
+				"abbr": "EM_BL"
+			},
+
+			{
+				"text": "Praise (n)",
+				"number": "16.79",
+				"abbr": "EM_PR"
+			},
+
+			{
+				"text": "Beautiful",
+				"number": "16.81",
+				"abbr": "EM_BF"
+			},
+
+			{
+				"text": "Ugly",
+				"number": "16.82",
+				"abbr": "EM_UG"
+			}
+		],
+
+		"abbr": "EM"
+	},
+
+	{
+		"text": "Mind & Thought",
+		"number": 17,
+		"fields": 
+		[
+			{
+				"text": "Mind",
+				"number": "17.11",
+				"abbr": "MT_MI"
+			},
+
+			{
+				"text": "Reason, Intelligence",
+				"number": "17.12",
+				"abbr": "MT_IR"
+			},
+
+			{
+				"text": "to Think, Reflect",
+				"number": "17.13",
+				"abbr": "MT_TR"
+			},
+
+			{
+				"text": "to Think, be of the Opinion",
+				"number": "17.14",
+				"abbr": "MT_TO"
+			},
+
+			{
+				"text": "to Believe",
+				"number": "17.15",
+				"abbr": "MT_BE"
+			},
+
+			{
+				"text": "to Understand",
+				"number": "17.16",
+				"abbr": "MT_UN"
+			},
+
+			{
+				"text": "to Know",
+				"number": "17.17",
+				"abbr": "MT_KN"
+			},
+
+			{
+				"text": "to Seem",
+				"number": "17.18",
+				"abbr": "MT_SE"
+			},
+
+			{
+				"text": "Idea, Notion",
+				"number": "17.19",
+				"abbr": "MT_IN"
+			},
+
+			{
+				"text": "Wise",
+				"number": "17.21",
+				"abbr": "MT_WI"
+			},
+
+			{
+				"text": "Stupid, Foolish",
+				"number": "17.22",
+				"abbr": "MT_FS"
+			},
+
+			{
+				"text": "Mad, Crazy, Insane",
+				"number": "17.23",
+				"abbr": "MT_IM"
+			},
+
+			{
+				"text": "to Learn",
+				"number": "17.24",
+				"abbr": "MT_LE"
+			},
+
+			{
+				"text": "to Study",
+				"number": "17.242",
+				"abbr": "MT_ST"
+			},
+
+			{
+				"text": "to Teach",
+				"number": "17.25",
+				"abbr": "MT_TE"
+			},
+
+			{
+				"text": "Pupil",
+				"number": "17.26",
+				"abbr": "MT_PU"
+			},
+
+			{
+				"text": "Teacher",
+				"number": "17.27",
+				"abbr": "MT_TC"
+			},
+
+			{
+				"text": "School",
+				"number": "17.28",
+				"abbr": "MT_SC"
+			},
+
+			{
+				"text": "to Remember",
+				"number": "17.31",
+				"abbr": "MT_RM"
+			},
+
+			{
+				"text": "to Forget",
+				"number": "17.32",
+				"abbr": "MT_FR"
+			},
+
+			{
+				"text": "Meaning",
+				"number": "17.33",
+				"abbr": "MT_ME"
+			},
+
+			{
+				"text": "Clear, Plain (to the Mind)",
+				"number": "17.34",
+				"abbr": "MT_CP"
+			},
+
+			{
+				"text": "Obscure",
+				"number": "17.35",
+				"abbr": "MT_OB"
+			},
+
+			{
+				"text": "Secret",
+				"number": "17.36",
+				"abbr": "MT_SR"
+			},
+
+			{
+				"text": "Sure, Certain",
+				"number": "17.37",
+				"abbr": "MT_SN"
+			},
+
+			{
+				"text": "to Explain",
+				"number": "17.38",
+				"abbr": "MT_EX"
+			},
+
+			{
+				"text": "to Solve",
+				"number": "17.39",
+				"abbr": "MT_SV"
+			},
+
+			{
+				"text": "Purpose, Intention",
+				"number": "17.41",
+				"abbr": "MT_IP"
+			},
+
+			{
+				"text": "Cause, Reason",
+				"number": "17.42",
+				"abbr": "MT_CA"
+			},
+
+			{
+				"text": "Doubt (n)",
+				"number": "17.43",
+				"abbr": "MT_DB"
+			},
+
+			{
+				"text": "Suspicion",
+				"number": "17.44",
+				"abbr": "MT_SU"
+			}
+		],
+
+		"abbr": "MT"
+	},
+
+	{
+		"text": "Language & Music",
+		"number": 18,
+		"fields": 
+		[
+			{
+				"text": "Voice (n)",
+				"number": "18.11",
+				"abbr": "LM_VO"
+			},
+
+			{
+				"text": "to Sing",
+				"number": "18.12",
+				"abbr": "LM_SG"
+			},
+
+			{
+				"text": "to Shout, Cry Out",
+				"number": "18.13",
+				"abbr": "LM_SC"
+			},
+
+			{
+				"text": "Various Cries",
+				"number": "18.14",
+				"abbr": "LM_VC"
+			},
+
+			{
+				"text": "to Speak, Talk",
+				"number": "18.21",
+				"abbr": "LM_ST"
+			},
+
+			{
+				"text": "to Say",
+				"number": "18.22",
+				"abbr": "LM_SY"
+			},
+
+			{
+				"text": "to be Silent",
+				"number": "18.23",
+				"abbr": "LM_BS"
+			},
+
+			{
+				"text": "Language",
+				"number": "18.24",
+				"abbr": "LM_LG"
+			},
+
+			{
+				"text": "Dialect",
+				"number": "18.25",
+				"abbr": "LM_DC"
+			},
+
+			{
+				"text": "Word",
+				"number": "18.26",
+				"abbr": "LM_WR"
+			},
+
+			{
+				"text": "Glossary, Dictionary",
+				"number": "18.27",
+				"abbr": "LM_DI"
+			},
+
+			{
+				"text": "Name",
+				"number": "18.28",
+				"abbr": "LM_NA"
+			},
+
+			{
+				"text": "to Question, Inquire",
+				"number": "18.31",
+				"abbr": "LM_AQ"
+			},
+
+			{
+				"text": "to Answer",
+				"number": "18.32",
+				"abbr": "LM_AW"
+			},
+
+			{
+				"text": "to Admit, Confess",
+				"number": "18.33",
+				"abbr": "LM_AC"
+			},
+
+			{
+				"text": "to Deny",
+				"number": "18.34",
+				"abbr": "LM_DY"
+			},
+
+			{
+				"text": "to Ask, Request",
+				"number": "18.35",
+				"abbr": "LM_AR"
+			},
+
+			{
+				"text": "to Promise",
+				"number": "18.36",
+				"abbr": "LM_PR"
+			},
+
+			{
+				"text": "to Refuse, Forbid",
+				"number": "18.37",
+				"abbr": "LM_RF"
+			},
+
+			{
+				"text": "to Call, Summon",
+				"number": "18.41",
+				"abbr": "LM_CS"
+			},
+
+			{
+				"text": "to Call, Name",
+				"number": "18.42",
+				"abbr": "LM_CN"
+			},
+
+			{
+				"text": "to Announce",
+				"number": "18.43",
+				"abbr": "LM_AN"
+			},
+
+			{
+				"text": "to Threaten",
+				"number": "18.44",
+				"abbr": "LM_TH"
+			},
+
+			{
+				"text": "to Boast",
+				"number": "18.45",
+				"abbr": "LM_BO"
+			},
+
+			{
+				"text": "to Write",
+				"number": "18.51",
+				"abbr": "LM_WE"
+			},
+
+			{
+				"text": "to Read",
+				"number": "18.52",
+				"abbr": "LM_RD"
+			},
+
+			{
+				"text": "Letter of the Alphabet",
+				"number": "18.53",
+				"abbr": "LM_LA"
+			},
+
+			{
+				"text": "Letter, Epistle",
+				"number": "18.54",
+				"abbr": "LM_LE"
+			},
+
+			{
+				"text": "Tablet",
+				"number": "18.55",
+				"abbr": "LM_TB"
+			},
+
+			{
+				"text": "Paper",
+				"number": "18.56",
+				"abbr": "LM_PP"
+			},
+
+			{
+				"text": "Pen",
+				"number": "18.57",
+				"abbr": "LM_PN"
+			},
+
+			{
+				"text": "Ink",
+				"number": "18.58",
+				"abbr": "LM_IN"
+			},
+
+			{
+				"text": "Pencil",
+				"number": "18.59",
+				"abbr": "LM_PC"
+			},
+
+			{
+				"text": "Book",
+				"number": "18.61",
+				"abbr": "LM_BK"
+			},
+
+			{
+				"text": "Page",
+				"number": "18.62",
+				"abbr": "LM_PG"
+			},
+
+			{
+				"text": "Line (n)",
+				"number": "18.63",
+				"abbr": "LM_LI"
+			},
+
+			{
+				"text": "to Print",
+				"number": "18.64",
+				"abbr": "LM_PT"
+			},
+
+			{
+				"text": "Literature",
+				"number": "18.65",
+				"abbr": "LM_LT"
+			},
+
+			{
+				"text": "Author, Writer",
+				"number": "18.66",
+				"abbr": "LM_AU"
+			},
+
+			{
+				"text": "Poet",
+				"number": "18.67",
+				"abbr": "LM_PO"
+			}
+		],
+
+		"abbr": "LM"
+	},
+
+	{
+		"text": "Social Relations",
+		"number": 19,
+		"fields": 
+		[
+			{
+				"text": "Country (\"European\")",
+				"number": "19.11",
+				"abbr": "SO_EC"
+			},
+
+			{
+				"text": "one's Native Country",
+				"number": "19.12",
+				"abbr": "SO_NA"
+			},
+
+			{
+				"text": "Country (vs",
+				"number": "19.13",
+				"abbr": "SO_CT"
+			},
+
+			{
+				"text": "Region, Territory",
+				"number": "19.14",
+				"abbr": "SO_RT"
+			},
+
+			{
+				"text": "Town, City",
+				"number": "19.15",
+				"abbr": "SO_CI"
+			},
+
+			{
+				"text": "People, Populace",
+				"number": "19.21",
+				"abbr": "SO_PP"
+			},
+
+			{
+				"text": "a People, Nation",
+				"number": "19.22",
+				"abbr": "SO_PN"
+			},
+
+			{
+				"text": "Tribe, Clan, Family",
+				"number": "19.23",
+				"abbr": "SO_TC"
+			},
+
+			{
+				"text": "to Rule, Govern",
+				"number": "19.31",
+				"abbr": "SO_RG"
+			},
+
+			{
+				"text": "King",
+				"number": "19.32",
+				"abbr": "SO_KK"
+			},
+
+			{
+				"text": "Queen",
+				"number": "19.33",
+				"abbr": "SO_QQ"
+			},
+
+			{
+				"text": "Emperor",
+				"number": "19.34",
+				"abbr": "SO_EM"
+			},
+
+			{
+				"text": "Prince",
+				"number": "19.35",
+				"abbr": "SO_JJ"
+			},
+
+			{
+				"text": "Other Titles of Nobility",
+				"number": "19.352",
+				"abbr": "SO_NN"
+			},
+
+			{
+				"text": "Noble, Nobleman",
+				"number": "19.36",
+				"abbr": "SO_NO"
+			},
+
+			{
+				"text": "Citizen",
+				"number": "19.37",
+				"abbr": "SO_CZ"
+			},
+
+			{
+				"text": "Subject (n)",
+				"number": "19.38",
+				"abbr": "SO_SU"
+			},
+
+			{
+				"text": "Master",
+				"number": "19.41",
+				"abbr": "SO_MA"
+			},
+
+			{
+				"text": "Slave",
+				"number": "19.42",
+				"abbr": "SO_SL"
+			},
+
+			{
+				"text": "Servant",
+				"number": "19.43",
+				"abbr": "SO_ST"
+			},
+
+			{
+				"text": "Free (adj)",
+				"number": "19.44",
+				"abbr": "SO_FE"
+			},
+
+			{
+				"text": "to Order, Command",
+				"number": "19.45",
+				"abbr": "SO_CR"
+			},
+
+			{
+				"text": "to Obey",
+				"number": "19.46",
+				"abbr": "SO_OB"
+			},
+
+			{
+				"text": "to Let, Permit",
+				"number": "19.47",
+				"abbr": "SO_LT"
+			},
+
+			{
+				"text": "to Compel",
+				"number": "19.48",
+				"abbr": "SO_CO"
+			},
+
+			{
+				"text": "Friend",
+				"number": "19.51",
+				"abbr": "SO_FR"
+			},
+
+			{
+				"text": "Foe, Enemy",
+				"number": "19.52",
+				"abbr": "SO_EN"
+			},
+
+			{
+				"text": "Companion",
+				"number": "19.53",
+				"abbr": "SO_CM"
+			},
+
+			{
+				"text": "Neighbor",
+				"number": "19.54",
+				"abbr": "SO_NE"
+			},
+
+			{
+				"text": "Stranger",
+				"number": "19.55",
+				"abbr": "SO_SG"
+			},
+
+			{
+				"text": "Guest",
+				"number": "19.56",
+				"abbr": "SO_GU"
+			},
+
+			{
+				"text": "Host",
+				"number": "19.57",
+				"abbr": "SO_HO"
+			},
+
+			{
+				"text": "to Help, Aid",
+				"number": "19.58",
+				"abbr": "SO_HA"
+			},
+
+			{
+				"text": "to Hinder, Prevent",
+				"number": "19.59",
+				"abbr": "SO_HP"
+			},
+
+			{
+				"text": "Custom, Usage",
+				"number": "19.61",
+				"abbr": "SO_CU"
+			},
+
+			{
+				"text": "Strife, Quarrel",
+				"number": "19.62",
+				"abbr": "SO_SQ"
+			},
+
+			{
+				"text": "Plot, Conspiracy",
+				"number": "19.63",
+				"abbr": "SO_PL"
+			},
+
+			{
+				"text": "Common (adj)",
+				"number": "19.64",
+				"abbr": "SO_CN"
+			},
+
+			{
+				"text": "to Meet",
+				"number": "19.65",
+				"abbr": "SO_ME"
+			},
+
+			{
+				"text": "Members of a Trade or Profession",
+				"number": "19.71",
+				"abbr": "SO_NT"
+			},
+
+			{
+				"text": "Whore, Prostitute",
+				"number": "19.72",
+				"abbr": "SO_WP"
+			}
+		],
+
+		"abbr": "SO"
+	},
+
+	{
+		"text": "Warfare & Hunting",
+		"number": 20,
+		"fields": 
+		[
+			{
+				"text": "to Fight",
+				"number": "20.11",
+				"abbr": "WH_FI"
+			},
+
+			{
+				"text": "Battle (n)",
+				"number": "20.12",
+				"abbr": "WH_BT"
+			},
+
+			{
+				"text": "War",
+				"number": "20.13",
+				"abbr": "WH_WR"
+			},
+
+			{
+				"text": "Enemy (in War)",
+				"number": "20.132",
+				"abbr": "WH_EN"
+			},
+
+			{
+				"text": "Peace",
+				"number": "20.14",
+				"abbr": "WH_PC"
+			},
+
+			{
+				"text": "Army",
+				"number": "20.15",
+				"abbr": "WH_AR"
+			},
+
+			{
+				"text": "Fleet",
+				"number": "20.16",
+				"abbr": "WH_FL"
+			},
+
+			{
+				"text": "Soldier",
+				"number": "20.17",
+				"abbr": "WH_SO"
+			},
+
+			{
+				"text": "General",
+				"number": "20.18",
+				"abbr": "WH_GN"
+			},
+
+			{
+				"text": "Admiral",
+				"number": "20.19",
+				"abbr": "WH_AD"
+			},
+
+			{
+				"text": "Arms, Weapons",
+				"number": "20.21",
+				"abbr": "WH_WA"
+			},
+
+			{
+				"text": "Club",
+				"number": "20.22",
+				"abbr": "WH_CL"
+			},
+
+			{
+				"text": "Battle-Ax",
+				"number": "20.23",
+				"abbr": "WH_BA"
+			},
+
+			{
+				"text": "Bow",
+				"number": "20.24",
+				"abbr": "WH_BW"
+			},
+
+			{
+				"text": "Arrow",
+				"number": "20.25",
+				"abbr": "WH_AW"
+			},
+
+			{
+				"text": "Spear",
+				"number": "20.26",
+				"abbr": "WH_SP"
+			},
+
+			{
+				"text": "Sword",
+				"number": "20.27",
+				"abbr": "WH_SW"
+			},
+
+			{
+				"text": "Gun, Cannon",
+				"number": "20.28",
+				"abbr": "WH_GC"
+			},
+
+			{
+				"text": "Gunpowder",
+				"number": "20.29",
+				"abbr": "WH_GP"
+			},
+
+			{
+				"text": "Armor",
+				"number": "20.31",
+				"abbr": "WH_AM"
+			},
+
+			{
+				"text": "Corslet, Breastplate",
+				"number": "20.32",
+				"abbr": "WH_BC"
+			},
+
+			{
+				"text": "Helmet",
+				"number": "20.33",
+				"abbr": "WH_HM"
+			},
+
+			{
+				"text": "Shield",
+				"number": "20.34",
+				"abbr": "WH_SH"
+			},
+
+			{
+				"text": "Fortress",
+				"number": "20.35",
+				"abbr": "WH_FT"
+			},
+
+			{
+				"text": "Tower",
+				"number": "20.36",
+				"abbr": "WH_TW"
+			},
+
+			{
+				"text": "Victory",
+				"number": "20.41",
+				"abbr": "WH_VI"
+			},
+
+			{
+				"text": "Defeat (n)",
+				"number": "20.42",
+				"abbr": "WH_DF"
+			},
+
+			{
+				"text": "Attack (n)",
+				"number": "20.43",
+				"abbr": "WH_AT"
+			},
+
+			{
+				"text": "Defense",
+				"number": "20.44",
+				"abbr": "WH_DS"
+			},
+
+			{
+				"text": "Retreat (n)",
+				"number": "20.45",
+				"abbr": "WH_RT"
+			},
+
+			{
+				"text": "to Surrender",
+				"number": "20.46",
+				"abbr": "WH_SU"
+			},
+
+			{
+				"text": "Captive, Prisoner",
+				"number": "20.47",
+				"abbr": "WH_CP"
+			},
+
+			{
+				"text": "Spoils, Booty",
+				"number": "20.48",
+				"abbr": "WH_BS"
+			},
+
+			{
+				"text": "Ambush (n)",
+				"number": "20.49",
+				"abbr": "WH_AB"
+			}
+		],
+
+		"abbr": "WH"
+	},
+
+	{
+		"text": "Law & Judgment",
+		"number": 21,
+		"fields": 
+		[
+			{
+				"text": "Special Law",
+				"number": "21.11",
+				"abbr": "LJ_SL"
+			},
+
+			{
+				"text": "General Law",
+				"number": "21.12",
+				"abbr": "LJ_GL"
+			},
+
+			{
+				"text": "Lawsuit",
+				"number": "21.13",
+				"abbr": "LJ_LS"
+			},
+
+			{
+				"text": "Lawyer",
+				"number": "21.14",
+				"abbr": "LJ_LW"
+			},
+
+			{
+				"text": "Court",
+				"number": "21.15",
+				"abbr": "LJ_CO"
+			},
+
+			{
+				"text": "to Judge",
+				"number": "21.16",
+				"abbr": "LJ_JG"
+			},
+
+			{
+				"text": "to Decide",
+				"number": "21.162",
+				"abbr": "LJ_DE"
+			},
+
+			{
+				"text": "Judgment",
+				"number": "21.17",
+				"abbr": "LJ_JM"
+			},
+
+			{
+				"text": "Judge (n)",
+				"number": "21.18",
+				"abbr": "LJ_JD"
+			},
+
+			{
+				"text": "Plaintiff",
+				"number": "21.21",
+				"abbr": "LJ_PL"
+			},
+
+			{
+				"text": "Defendant",
+				"number": "21.22",
+				"abbr": "LJ_DF"
+			},
+
+			{
+				"text": "Witness (n)",
+				"number": "21.23",
+				"abbr": "LJ_WT"
+			},
+
+			{
+				"text": "to Swear",
+				"number": "21.24",
+				"abbr": "LJ_SW"
+			},
+
+			{
+				"text": "Oath",
+				"number": "21.25",
+				"abbr": "LJ_OA"
+			},
+
+			{
+				"text": "to Accuse",
+				"number": "21.31",
+				"abbr": "LJ_AC"
+			},
+
+			{
+				"text": "to Condemn",
+				"number": "21.32",
+				"abbr": "LJ_CN"
+			},
+
+			{
+				"text": "to Convict",
+				"number": "21.33",
+				"abbr": "LJ_CV"
+			},
+
+			{
+				"text": "to Acquit",
+				"number": "21.34",
+				"abbr": "LJ_AQ"
+			},
+
+			{
+				"text": "Guilty",
+				"number": "21.35",
+				"abbr": "LJ_GU"
+			},
+
+			{
+				"text": "Innocent",
+				"number": "21.36",
+				"abbr": "LJ_IN"
+			},
+
+			{
+				"text": "Penalty, Punishment",
+				"number": "21.37",
+				"abbr": "LJ_PN"
+			},
+
+			{
+				"text": "Fine, Settlement",
+				"number": "21.38",
+				"abbr": "LJ_FI"
+			},
+
+			{
+				"text": "Jail, Prison",
+				"number": "21.39",
+				"abbr": "LJ_PJ"
+			},
+
+			{
+				"text": "Crime, Misdeed",
+				"number": "21.41",
+				"abbr": "LJ_CR"
+			},
+
+			{
+				"text": "Murder, Homicide",
+				"number": "21.42",
+				"abbr": "LJ_MR"
+			},
+
+			{
+				"text": "Adultery",
+				"number": "21.43",
+				"abbr": "LJ_AD"
+			},
+
+			{
+				"text": "Rape, Violation",
+				"number": "21.44",
+				"abbr": "LJ_RP"
+			},
+
+			{
+				"text": "Theft",
+				"number": "21.45",
+				"abbr": "LJ_TH"
+			},
+
+			{
+				"text": "Arson",
+				"number": "21.46",
+				"abbr": "LJ_AR"
+			},
+
+			{
+				"text": "Perjury",
+				"number": "21.47",
+				"abbr": "LJ_PY"
+			}
+		],
+
+		"abbr": "LJ"
+	},
+
+	{
+		"text": "Religion & Beliefs",
+		"number": 22,
+		"fields": 
+		[
+			{
+				"text": "Religion",
+				"number": "22.11",
+				"abbr": "RB_RE"
+			},
+
+			{
+				"text": "God",
+				"number": "22.12",
+				"abbr": "RB_GD"
+			},
+
+			{
+				"text": "Temple",
+				"number": "22.13",
+				"abbr": "RB_TM"
+			},
+
+			{
+				"text": "Altar",
+				"number": "22.14",
+				"abbr": "RB_AL"
+			},
+
+			{
+				"text": "Sacrifice, Offering",
+				"number": "22.15",
+				"abbr": "RB_SO"
+			},
+
+			{
+				"text": "to Worship",
+				"number": "22.16",
+				"abbr": "RB_WO"
+			},
+
+			{
+				"text": "to Pray",
+				"number": "22.17",
+				"abbr": "RB_PY"
+			},
+
+			{
+				"text": "Priest",
+				"number": "22.18",
+				"abbr": "RB_PR"
+			},
+
+			{
+				"text": "Parson, Minister, Clergyman etc",
+				"number": "22.182",
+				"abbr": "RB_CL"
+			},
+
+			{
+				"text": "Monk",
+				"number": "22.183",
+				"abbr": "RB_MO"
+			},
+
+			{
+				"text": "Nun",
+				"number": "22.184",
+				"abbr": "RB_NU"
+			},
+
+			{
+				"text": "Holy, Sacred",
+				"number": "22.19",
+				"abbr": "RB_HS"
+			},
+
+			{
+				"text": "Church",
+				"number": "22.21",
+				"abbr": "RB_CH"
+			},
+
+			{
+				"text": "to Preach",
+				"number": "22.22",
+				"abbr": "RB_PC"
+			},
+
+			{
+				"text": "to Bless",
+				"number": "22.23",
+				"abbr": "RB_BL"
+			},
+
+			{
+				"text": "to Curse",
+				"number": "22.24",
+				"abbr": "RB_CU"
+			},
+
+			{
+				"text": "to Baptize",
+				"number": "22.25",
+				"abbr": "RB_BP"
+			},
+
+			{
+				"text": "to Fast",
+				"number": "22.26",
+				"abbr": "RB_FA"
+			},
+
+			{
+				"text": "Heaven",
+				"number": "22.31",
+				"abbr": "RB_HE"
+			},
+
+			{
+				"text": "Hell",
+				"number": "22.32",
+				"abbr": "RB_HL"
+			},
+
+			{
+				"text": "Angel",
+				"number": "22.33",
+				"abbr": "RB_AN"
+			},
+
+			{
+				"text": "Devil",
+				"number": "22.34",
+				"abbr": "RB_DE"
+			},
+
+			{
+				"text": "Demon, Evil Spirit",
+				"number": "22.35",
+				"abbr": "RB_DM"
+			},
+
+			{
+				"text": "Pagan, Heathen (n)",
+				"number": "22.36",
+				"abbr": "RB_PH"
+			},
+
+			{
+				"text": "Idol",
+				"number": "22.37",
+				"abbr": "RB_ID"
+			},
+
+			{
+				"text": "Superstition",
+				"number": "22.41",
+				"abbr": "RB_SS"
+			},
+
+			{
+				"text": "Magic, Witchcraft, Sorcery",
+				"number": "22.42",
+				"abbr": "RB_MW"
+			},
+
+			{
+				"text": "Witch, Sorceress",
+				"number": "22.43",
+				"abbr": "RB_WS"
+			},
+
+			{
+				"text": "Elf, Nymph, Fairy",
+				"number": "22.44",
+				"abbr": "RB_FR"
+			},
+
+			{
+				"text": "Ghost, Specter, Phantom",
+				"number": "22.45",
+				"abbr": "RB_GP"
+			},
+
+			{
+				"text": "Guardian Spirit",
+				"number": "22.46",
+				"abbr": "RB_GS"
+			},
+
+			{
+				"text": "Omen",
+				"number": "22.47",
+				"abbr": "RB_OM"
+			}
+		],
+
+		"abbr": "RB"
+	}
+]

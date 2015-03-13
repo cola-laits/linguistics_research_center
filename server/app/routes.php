@@ -27,7 +27,7 @@ Route::group(array('prefix'=> 'admin', 'before' => 'auth'), function() {
 	Route::get('/eieol_head_word/filtered_list', 'EieolHeadWordController@filtered_list');
 	Route::resource('/eieol_head_word', 'EieolHeadWordController');
 	Route::get('/eieol_head_word_keyword/filtered_list', 'EieolHeadWordKeywordController@filtered_list');
-	Route::get('/part_of_speech/filtered_list', 'PartOfSpeechController@filtered_list');
+	Route::get('/part_of_speech/filtered_list', 'EieolPartOfSpeechController@filtered_list');
 	Route::get('/eieol_analysis/filtered_list', 'EieolAnalysisController@filtered_list');
 	Route::resource('/eieol_language', 'EieolLanguageController');
 	

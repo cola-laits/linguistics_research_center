@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import urllib, urllib2, cookielib
 import re
+import json
 
 families = []
 ctr = 0
@@ -43,6 +44,7 @@ for tr in trs:
         
         else: #subfamily
             sub_family_ctr +=1
+            language_ctr = 0
             sub_family = {}
             sub_family['name'] = tds[0].text.strip().replace(u'\xa0', u' ')
             sub_family['order'] = sub_family_ctr
@@ -50,42 +52,14 @@ for tr in trs:
             family['subfamilies'].append(sub_family)
         #endif
     else:
+        language_ctr += 1
         language = {}
         language['abbr'] = tds[0].text.strip().replace('.','')
         language['name'] = tds[2].text
         language['aka'] = tds[4].text.strip()
+        language['order'] = language_ctr
         sub_family['languages'].append(language)
     #endif
-        
-
-#    category = {}
-#    category['text'] = li.text
-#    category['number'] = ctr
-#    category['abbr'] = ''
-#    category['fields'] = []
-#    
-#    fields_html = urllib2.urlopen(li.find("a")['href']).read()
-#    fields_page = BeautifulSoup(fields_html)
-#    fields_uls=fields_page.find_all("ul")
-#    fields_lis = fields_uls[1].find_all("li")
-#    for field_li in fields_lis:
-#        field = {}
-#        parts = field_li.text.split(".")
-#        field['number'] = parts[0] + '.' + parts[1]
-#        field['text'] = parts[2].strip()
-#        field['abbr'] = field_li['id']
-#        category['fields'].append(field)
-#
-#        #we get the category abbreviation from the front of the field abbr
-#        if category['abbr'] == '':
-#            category['abbr'] = field_li['id'].split("_")[0]
-#        #endif
-#    #endfor
-#    
-#
-#    if ctr >= 1:
-#        break
-#    #endif
 
 #endfor tr
 
@@ -93,4 +67,7 @@ for tr in trs:
 families.append(family) 
 print families
 
-
+with open('../server/app/storage/data_load/lex_langs.json','w') as outfile:
+    json.dump(families,outfile)
+            
+print 'done'

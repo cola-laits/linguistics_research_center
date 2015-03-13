@@ -179,8 +179,8 @@ class EieolGlossController extends BaseController {
 						$element->save();
 					
 						//add part of speech if new
-						if (PartOfSpeech::where('part_of_speech', '=', Input::get('element_' . $i . '_part_of_speech'))->count() == 0 ) {
-							$part_of_speech = new PartOfSpeech;
+						if (EieolPartOfSpeech::where('part_of_speech', '=', Input::get('element_' . $i . '_part_of_speech'))->count() == 0 ) {
+							$part_of_speech = new EieolPartOfSpeech;
 							$part_of_speech->part_of_speech = Input::get('element_' . $i . '_part_of_speech');
 							$part_of_speech->created_by = Auth::user()->username;
 							$part_of_speech->updated_by = Auth::user()->username;
@@ -311,8 +311,8 @@ class EieolGlossController extends BaseController {
 						} 
 							
 						//add part of speech if new
-						if (PartOfSpeech::where('part_of_speech', '=', Input::get('element_' . $i . '_part_of_speech'))->count() == 0 ) {
-							$part_of_speech = new PartOfSpeech;
+						if (EieolPartOfSpeech::where('part_of_speech', '=', Input::get('element_' . $i . '_part_of_speech'))->count() == 0 ) {
+							$part_of_speech = new EieolPartOfSpeech;
 							$part_of_speech->part_of_speech = Input::get('element_' . $i . '_part_of_speech');
 							$part_of_speech->created_by = Auth::user()->username;
 							$part_of_speech->updated_by = Auth::user()->username;
