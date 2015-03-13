@@ -37,8 +37,21 @@ function alphabet_sorter($a, $b) {
 		$bChar = mb_substr($b, $i, 1, 'UTF-8');
 
 		//get position in alphabet for each character
-		$aVal=mb_strpos($alphabet, $aChar, 0,'UTF-8');
-		$bVal=mb_strpos($alphabet, $bChar, 0,'UTF-8');
+		$alpha_ctr = 0;
+		$aVal = 0;
+		$bVal = 0;
+ 		foreach ($alphabet as $char) {
+ 			//log::error($char);
+ 			$alpha_ctr +=1;
+ 			if (mb_strpos($char, $aChar, 0,'UTF-8') !== False) {
+ 				$aVal = $alpha_ctr;
+ 				//log::error('a=' . $aVal);
+ 			}
+ 			if (mb_strpos($char, $bChar, 0,'UTF-8') !== False) {
+ 				$bVal = $alpha_ctr;
+ 				//log::error('b=' . $bVal);
+ 			}
+ 		}
 		//log::error($aChar . ' ' . $aVal . ' ' . $bChar . ' ' . $bVal);
 
 		//return 1 if a is bigger, else, -1
@@ -133,7 +146,8 @@ class PublicController extends BaseController {
 			}
 		}
 		global $alphabet;
-		$alphabet = $data['language']->custom_sort;
+		$alphabet = explode(',',$data['language']->custom_sort);
+		//Log::error($alphabet);
 		uksort($data['glosses'], 'alphabet_sorter');
 		return View::make('eieol_master_gloss')->with($data);
 	}
