@@ -40,9 +40,13 @@ curious about Indo-European etymology. Notice of potential error is always welco
 @foreach ($head_words as $head_word)
 	<dt>{{$head_word['display']}} --</dt>
 	<dd>
-		@foreach ($head_word['glossed_text_gloss_ids'] as $id => $lesson)
-			<a href='/eieol_lesson/{{$series->id}}?id={{$lesson->id}}#glossed_text_gloss_{{$id}}'>{{$lesson->title}}</a>
-		@endforeach
+		<ul>
+			@foreach ($head_word['glossed_text_gloss_ids'] as $id => $lesson)
+				<li>
+					<a href='/eieol_lesson/{{$series->id}}?id={{$lesson->id}}#glossed_text_gloss_{{$id}}'>{{$lesson->title}}</a>
+				</li>
+			@endforeach
+		</ul>
 	</dd>
 @endforeach
 

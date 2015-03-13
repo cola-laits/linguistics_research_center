@@ -30,10 +30,14 @@ links are provided to every appearance, in every numbered lesson, of the word/gl
 @foreach ($glosses as $gloss)
 	<dt><span lang='{{$language->lang_attribute}}' class='{{$language->class_attribute}}'>{{$gloss['surface_form']}}</span></dt>
 	<dd>
-		{{$gloss['displayGlossForMasterGloss']}} --
-		@foreach ($gloss['glossed_text_gloss_ids'] as $id => $lesson)
-			<a href='/eieol_lesson/{{$series->id}}?id={{$lesson->id}}#glossed_text_gloss_{{$id}}'>{{$lesson->title}}</a>
-		@endforeach
+		{{$gloss['displayGlossForMasterGloss']}}
+		<ul>
+			@foreach ($gloss['glossed_text_gloss_ids'] as $id => $lesson)
+				<li>
+					<a href='/eieol_lesson/{{$series->id}}?id={{$lesson->id}}#glossed_text_gloss_{{$id}}'>{{$lesson->title}}</a>
+				</li>
+			@endforeach
+		</ul>
 	</dd>
 @endforeach
 
