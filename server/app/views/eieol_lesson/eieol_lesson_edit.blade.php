@@ -323,9 +323,46 @@
 		
 		       
         //highlight form if inputs change.  If you are using ckeditor, you have to do that with its on change function
+        
+        var ctrlDown = false;
+	    var ctrlKey = 17, aKey = 65, cKey = 67;
+	
+	    $(document).keydown(function(e)
+	    {
+	        if (e.keyCode == ctrlKey) ctrlDown = true;
+	    }).keyup(function(e)
+	    {
+	        if (e.keyCode == ctrlKey) ctrlDown = false;
+	    });
+	
         $(':input').keyup(function (e) { //listen for typing
-            if(e.keyCode != 9){ //ignore tabs
-                highlight_form(this); 
+            ignore_keys = false;
+            if(e.keyCode == 9 ||
+               e.keyCode == 16 || 
+               e.keyCode == 17 ||
+               e.keyCode == 18 || 
+               e.keyCode == 20 || 
+               e.keyCode == 27 || 
+               e.keyCode == 45 || 
+               e.keyCode == 36 || 
+               e.keyCode == 35 ||
+               e.keyCode == 33 || 
+               e.keyCode == 34 ||
+               e.keyCode == 37 || 
+               e.keyCode == 38 || 
+               e.keyCode == 39 || 
+               e.keyCode == 40 || 
+               e.keyCode == 91 || 
+               e.keyCode == 92){ //ignore tab, shift, ctrl, alt, caplock, escape, insert, home, end, page up, page down,arrows,windows keys                
+                ignore_keys = true;
+            }
+
+            if (ctrlDown && (e.keyCode == aKey || e.keyCode == cKey)){ //ignore select all and copy
+                ignore_keys = true;
+            }
+
+            if (!ignore_keys) {
+            	highlight_form(this); 
             }
         });
     	$(':input').change(function () { //listen for clicking

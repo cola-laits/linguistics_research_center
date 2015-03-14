@@ -41,6 +41,5 @@ Future Ideas
 	Part of Speech editor? use FrozenNode?
 	Analysis editor? use FrozenNode?
 	CKEditor - Add language plugin http://ckeditor.com/forums/Plugins/Language-Semantics, use our lang and class attributes with it
-**Lesson editor - copying highlights a form red.  It should only be on changes.  Can we ignore ctrl?
 	Export data for other purposes
 	Warn if logon is about to expire, or show a countdown clock.
