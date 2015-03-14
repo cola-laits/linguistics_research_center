@@ -574,6 +574,134 @@ class LoadController extends BaseController {
 	
 	} //end pos_analysis_load function
 	
+	public function lex_sources_load()
+	{	
+		Log::error('Starting lex_sources_load on ' . gethostname() . ' at ' . date("D M d, Y G:i a"));
 	
+		$url = '/var/www/html/app/storage/data_load/lex_sources.json';
+		$myfile = fopen($url, "r") or die("Unable to open file!");
+		$data = json_decode(fread($myfile,filesize($url)));
+		foreach ($data as $key => $value) {
+			print $key . ' ' . $value . '<br/>';
+			$lex_part_of_speech = new LexPartOfSpeech;
+			$lex_part_of_speech->code = $key;
+			$lex_part_of_speech->display = $value;
+			$lex_part_of_speech->created_by = 'loader';
+			$lex_part_of_speech->updated_by = 'loader';
+			$lex_part_of_speech->save();
+		}
+
+		print '<hr/>done';
+		Log::error('Finishing lex_sources_load on ' . gethostname() . ' at ' . date("D M d, Y G:i a"));
+	
+	} //end lex_sources_load function
+	
+	public function lex_pos_load()
+	{
+		Log::error('Starting lex_pos_load on ' . gethostname() . ' at ' . date("D M d, Y G:i a"));
+	
+		$url = '/var/www/html/app/storage/data_load/lex_parts_of_speech.json';
+		$myfile = fopen($url, "r") or die("Unable to open file!");
+		$data = json_decode(fread($myfile,filesize($url)));
+		foreach ($data as $key => $value) {
+			print $key . ' ' . $value . '<br/>';
+			$lex_source = new LexSource;
+			$lex_source->code = $key;
+			$lex_source->display = $value;
+			$lex_source->created_by = 'loader';
+			$lex_source->updated_by = 'loader';
+			$lex_source->save();
+		}
+	
+		print '<hr/>done';
+		Log::error('Finishing lex_pos_load on ' . gethostname() . ' at ' . date("D M d, Y G:i a"));
+	
+	} //end lex_pos_load function
+	
+	public function lex_lang_load()
+	{
+		Log::error('Starting lex_lang_load on ' . gethostname() . ' at ' . date("D M d, Y G:i a"));
+	
+		$url = '/var/www/html/app/storage/data_load/lex_langs.json';
+		$myfile = fopen($url, "r") or die("Unable to open file!");
+		$data = json_decode(fread($myfile,filesize($url)));
+	
+		for($i = 0; $i<count($data); $i++) {
+			print $data[$i]->name . ' ' . $data[$i]->order . '<br/>';
+			$language_family = new LexLanguageFamily;
+			$language_family->name = $data[$i]->name;
+			$language_family->order = $data[$i]->order;
+			$language_family->created_by = 'loader';
+			$language_family->updated_by = 'loader';
+			$language_family->save();
+			
+			$subfamilies = $data[$i]->subfamilies;
+			for($j = 0; $j<count($subfamilies); $j++) {
+				print '...' . $subfamilies[$j]->name . ' ' . $subfamilies[$j]->order . '<br/>';
+				$language_sub_family = new LexLanguageSubFamily;
+				$language_sub_family->name = $subfamilies[$j]->name;
+				$language_sub_family->order = $subfamilies[$j]->order;
+				$language_sub_family->family_id = $language_family->id;
+				$language_sub_family->created_by = 'loader';
+				$language_sub_family->updated_by = 'loader';
+				$language_sub_family->save();
+				
+				$languages = $subfamilies[$j]->languages;
+				for($k = 0; $k<count($languages); $k++) {
+					print '......' . $languages[$k]->name . ' ' . $languages[$k]->order . ' ' . $languages[$k]->abbr . ' ' . $languages[$k]->aka. '<br/>';
+					$language = new LexLanguage;
+					$language->name = $languages[$k]->name;
+					$language->order = $languages[$k]->order;
+					$language->abbr = $languages[$k]->abbr;
+					$language->aka = $languages[$k]->aka;
+					$language->sub_family_id = $language_sub_family->id;
+					$language->created_by = 'loader';
+					$language->updated_by = 'loader';
+					$language->save();
+				}
+			}
+		}
+		
+		print '<hr/>done';
+		Log::error('Finishing lex_lang_load on ' . gethostname() . ' at ' . date("D M d, Y G:i a"));
+	
+	} //end lex_lang_load function
+	
+	public function lex_sem_load()
+	{
+		Log::error('Starting lex_sem_load on ' . gethostname() . ' at ' . date("D M d, Y G:i a"));
+	
+		$url = '/var/www/html/app/storage/data_load/lex_categories.json';
+		$myfile = fopen($url, "r") or die("Unable to open file!");
+		$data = json_decode(fread($myfile,filesize($url)));
+	
+		for($i = 0; $i<count($data); $i++) {
+			print $data[$i]->text . ' ' . $data[$i]->number  .' ' . $data[$i]->abbr . '<br/>';
+			$semantic_category = new LexSemanticCategory;
+			$semantic_category->text = $data[$i]->text;
+			$semantic_category->number = $data[$i]->number;
+			$semantic_category->abbr = $data[$i]->abbr;
+			$semantic_category->created_by = 'loader';
+			$semantic_category->updated_by = 'loader';
+			$semantic_category->save();
+				
+			$fields = $data[$i]->fields;
+			for($j = 0; $j<count($fields); $j++) {
+				print '...' . $fields[$j]->text . ' ' . $fields[$j]->number . ' ' . $fields[$j]->abbr . '<br/>';
+				$semantic_field = new LexSemanticField;
+				$semantic_field->text = $fields[$j]->text;
+				$semantic_field->number = $fields[$j]->number;
+				$semantic_field->abbr = $fields[$j]->abbr;
+				$semantic_field->semantic_category_id = $semantic_category->id;
+				$semantic_field->created_by = 'loader';
+				$semantic_field->updated_by = 'loader';
+				$semantic_field->save();
+			}
+		}
+	
+		print '<hr/>done';
+		Log::error('Finishing lex_sem_load on ' . gethostname() . ' at ' . date("D M d, Y G:i a"));
+	
+	} //end lex_sem_load function
 	
 } //end load controller

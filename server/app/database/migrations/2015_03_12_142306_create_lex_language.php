@@ -16,7 +16,7 @@ class CreateLexLanguage extends Migration {
 		{
 			$table->increments('id');
 			$table->string('name')->unique();
-			$table->integer('order')->unique();
+			$table->integer('order');
 			$table->string('abbr')->unique();
 			$table->string('aka');
 			$table->integer('sub_family_id')->unsigned();
@@ -26,6 +26,7 @@ class CreateLexLanguage extends Migration {
 			$table->string('updated_by');
 			
 			$table->index('order');
+			$table->unique(array('sub_family_id', 'order'));
 		});
 	}
 

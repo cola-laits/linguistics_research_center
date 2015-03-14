@@ -15,8 +15,8 @@ class CreateLexLanguageSubFamily extends Migration {
 		Schema::create('lex_language_sub_family', function($table)
 		{
 			$table->increments('id');
-			$table->string('name')->unique();
-			$table->integer('order')->unique();
+			$table->string('name');
+			$table->integer('order');
 			$table->integer('family_id')->unsigned();
 			$table->foreign('family_id')->references('id')->on('lex_language_family');
 			$table->timestamps();
