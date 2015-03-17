@@ -8,6 +8,8 @@ parts_of_speech = {}
 sources = {}
 ctr = 0
 
+print 'starting'
+
 path = "http://www.utexas.edu/cola/centers/lrc/ielex/PokornyMaster-X.html"
 html = urllib2.urlopen(path).read()
 #print html
@@ -34,6 +36,8 @@ for tr in trs:
     etyma['cross'] = []
     etyma['semantics'] = []
     etyma['reflexes'] = []
+    
+    #print etyma['old_id'], etyma['entry']
 
     tags = tds[2].find_all("a")
     for tag in tags:
@@ -87,7 +91,7 @@ for tr in trs:
                 #reflex['html_language_code'] = r_tds[2].find('span')['lang']
                 reflex['part_of_speech'] = r_tds[4].text
                 reflex['gloss'] = r_tds[6].text
-                reflex['source'] = r_tds[8].text
+                reflex['source'] = r_tds[8].text.strip()
                 etyma['reflexes'].append(reflex)
             #endfor
  
@@ -125,13 +129,19 @@ for tr in trs:
 
     etymas.append(etyma)
 
-#     if ctr >= 10:
+#     if ctr >= 1500:
 #         break
 #     #endif
     
 #endfor trs
 
-#print etymas
+#import pprint
+#pp = pprint.PrettyPrinter(indent=4)
+#pp.pprint(etymas)
+
+#import json
+#print json.dumps(etymas)
+
 print '==================================================='
 #print parts_of_speech
 print '==================================================='

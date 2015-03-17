@@ -93,7 +93,7 @@
 </div>
 
 <div id="header_navbar">LRC Links:
-	{{ HTML::link($static_site, 'Home', array('title' => 'Linguistics Research Center home page')) }}  |
+	{{ HTML::link('index', 'Home', array('title' => 'Linguistics Research Center home page')) }}  |
 	{{ HTML::link($static_site . 'about/', 'About', array('title' => 'About the Linguistics Research Center')) }}  |
 	{{ HTML::link($static_site . 'books/', 'Books Online', array('title' => 'Indo-European Languages and Historical Linguistics (books online)')) }}  |
 	{{ HTML::link('eieol', 'EIEOL', array('title' => 'Early Indo-European Online (language lessons)')) }}  |

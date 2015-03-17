@@ -3,9 +3,12 @@
 @section('title') Load @stop
  
 @section('content')
+Languages and Sessions need to be copied over using MYSQL export/imports<hr/>
+
 
 	{{ Form::open(['url' => '/admin/eieol_delete/', 'method' => 'POST']) }}
     {{ Form::submit('EIEOL Delete', ['class' => 'btn btn-danger'])}}
+    The delete function deletes all EIEOL tables except POS and Analysis.  Use if you need to reload.
     {{ Form::close() }}
     
     {{ Form::open(['url' => '/admin/eieol_load/', 'method' => 'POST']) }}
@@ -23,7 +26,8 @@
 	<hr/>
 	
 	{{ Form::open(['url' => '/admin/element_count/', 'method' => 'POST']) }}
-    {{ Form::submit('Element Count', ['class' => 'btn btn-danger'])}}
+    {{ Form::submit('Element Count', ['class' => 'btn btn-default'])}}
+    Not a load, just for reporting
     {{ Form::close() }}
     
     <hr/>
@@ -42,6 +46,14 @@
     
     {{ Form::open(['url' => '/admin/lex_sem_load/', 'method' => 'POST']) }}
     {{ Form::submit('Load Lex Semantics', ['class' => 'btn btn-danger'])}}
+    {{ Form::close() }}
+    
+    {{ Form::open(['url' => '/admin/lex_load/', 'method' => 'POST']) }}
+    {{ Form::submit('Load Lexes', ['class' => 'btn btn-danger'])}}
+    {{ Form::close() }}
+    
+    {{ Form::open(['url' => '/admin/lex_cross_load/', 'method' => 'POST']) }}
+    {{ Form::submit('Load Cross Listed Etymas', ['class' => 'btn btn-danger'])}}
     {{ Form::close() }}
  
 @stop

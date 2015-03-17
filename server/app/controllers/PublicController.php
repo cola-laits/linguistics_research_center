@@ -68,7 +68,7 @@ class PublicController extends BaseController {
 	
 	public function index()
 	{
-		return Redirect::to(Config::get('lrc_settings.static_site'));
+		return View::make('index');
 	}
 	
 	public function eieol()

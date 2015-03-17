@@ -17,10 +17,6 @@ class CreateLexReflex extends Migration {
 			$table->increments('id');
 			$table->integer('language_id')->unsigned();
 			$table->foreign('language_id')->references('id')->on('lex_language');
-			$table->integer('source_id')->unsigned();
-			$table->foreign('source_id')->references('id')->on('lex_source');
-			$table->integer('part_of_speech_id')->unsigned();
-			$table->foreign('part_of_speech_id')->references('id')->on('lex_part_of_speech');
 			$table->string('reflex');
 			$table->string('lang_attribute');
 			$table->string('class_attribute');
@@ -31,6 +27,7 @@ class CreateLexReflex extends Migration {
 			
 			$table->index('language_id');
 		});
+		DB::statement('ALTER TABLE lex_reflex convert to character set utf8 collate utf8_bin;');
 	}
 
 	/**

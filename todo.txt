@@ -1,7 +1,7 @@
 Admin
 	Maintain Lexicon
 		Add Pokorny ID to headword, add to EIEOL forms
-		Load program - Go to each dictionary, find each entry with Pokorny
+		Make sure relfexes are unique
 	
 Public
 	EIEOL
@@ -17,6 +17,7 @@ Public
 	
 Load
 	Load Lexicon	
+	Headwords - Go to each dictionary, find each entry with Pokorny
 	
 Deploy
 	404 errors

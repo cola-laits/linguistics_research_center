@@ -7,19 +7,19 @@ class LexReflex extends Eloquent {
 	{
 		return $this->belongsToMany('LexEtyma', 'LexEtymaReflex', 'reflex_id', 'etyma_id');
 	}
-	
-	public function source()
-	{
-		return $this->belongsTo('LexSource');
-	}
-	
-	public function part_of_speech()
-	{
-		return $this->belongsTo('LexPartOfSpeech');
-	}
-	
-	public function belongsTo()
+		
+	public function language()
 	{
 		return $this->belongsTo('LexLanguage');
+	}
+	
+	public function parts_of_speech()
+	{
+		return $this->belongsToMany('LexPartOfSpeech', 'LexReflexPartOfSpeech', 'reflex_id', 'part_of_speech_id');
+	}
+	
+	public function sources()
+	{
+		return $this->belongsToMany('LexSource', 'LexReflexSource', 'reflex_id', 'source_id');
 	}
 }

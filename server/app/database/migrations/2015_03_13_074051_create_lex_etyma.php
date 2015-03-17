@@ -26,6 +26,7 @@ class CreateLexEtyma extends Migration {
 			
 			$table->index('order');
 		});
+		DB::statement('ALTER TABLE lex_etyma convert to character set utf8 collate utf8_bin;');
 	}
 
 	/**

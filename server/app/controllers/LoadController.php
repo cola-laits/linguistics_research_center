@@ -583,12 +583,12 @@ class LoadController extends BaseController {
 		$data = json_decode(fread($myfile,filesize($url)));
 		foreach ($data as $key => $value) {
 			print $key . ' ' . $value . '<br/>';
-			$lex_part_of_speech = new LexPartOfSpeech;
-			$lex_part_of_speech->code = $key;
-			$lex_part_of_speech->display = $value;
-			$lex_part_of_speech->created_by = 'loader';
-			$lex_part_of_speech->updated_by = 'loader';
-			$lex_part_of_speech->save();
+			$lex_source = new LexSource;
+			$lex_source->code = $key;
+			$lex_source->display = $value;
+			$lex_source->created_by = 'loader';
+			$lex_source->updated_by = 'loader';
+			$lex_source->save();
 		}
 
 		print '<hr/>done';
@@ -605,12 +605,12 @@ class LoadController extends BaseController {
 		$data = json_decode(fread($myfile,filesize($url)));
 		foreach ($data as $key => $value) {
 			print $key . ' ' . $value . '<br/>';
-			$lex_source = new LexSource;
-			$lex_source->code = $key;
-			$lex_source->display = $value;
-			$lex_source->created_by = 'loader';
-			$lex_source->updated_by = 'loader';
-			$lex_source->save();
+			$lex_part_of_speech = new LexPartOfSpeech;
+			$lex_part_of_speech->code = $key;
+			$lex_part_of_speech->display = $value;
+			$lex_part_of_speech->created_by = 'loader';
+			$lex_part_of_speech->updated_by = 'loader';
+			$lex_part_of_speech->save();
 		}
 	
 		print '<hr/>done';
@@ -703,5 +703,184 @@ class LoadController extends BaseController {
 		Log::error('Finishing lex_sem_load on ' . gethostname() . ' at ' . date("D M d, Y G:i a"));
 	
 	} //end lex_sem_load function
+	
+	public function lex_load()
+	{
+		ini_set('memory_limit','1024M');
+		ini_set('max_execution_time', 2000);
+		
+		Log::error('Starting lex_load on ' . gethostname() . ' at ' . date("D M d, Y G:i a"));
+		
+		$sems = array();
+		$semantics = LexSemanticField::with('semantic_category')->get();
+		foreach($semantics as $semantic) {
+			$sems[$semantic->semantic_category->abbr . '/' . $semantic->abbr] = $semantic->id;
+		}
+		//print_r($sems);
+		
+		$srcs = array();
+		$sources = LexSource::all();
+		foreach($sources as $source) {
+			$srcs[$source->code] = $source->id;
+		}
+		//print_r($srcs);
+		
+		$poss = array();
+		$parts_of_speech = LexPartOfSpeech::all();
+		foreach($parts_of_speech as $part_of_speech) {
+			$poss[$part_of_speech->code] = $part_of_speech->id;
+		}
+		//print_r($poss);
+		
+		$langs = array();
+		$languages = LexLanguage::all();
+		foreach($languages as $language) {
+			$langs[$language->abbr] = $language->id;
+		}
+		//print_r($langs);
+		
+		$used_reflexes = array();
+		
+
+ 		$url = '/var/www/html/app/storage/data_load/lex_etymas.json';
+ 		$myfile = fopen($url, "r") or die("Unable to open file!");
+ 		$data = json_decode(fread($myfile,filesize($url)));
+		
+ 		for($i = 0; $i<count($data); $i++) {
+ 			print $data[$i]->old_id . ' ' . $data[$i]->entry  .' ' . $data[$i]->gloss . ' ' . $data[$i]->page_number . '<br/>';
+ 			$etyma = new LexEtyma;
+ 			$etyma->old_id = $data[$i]->old_id;
+ 			$etyma->order = $data[$i]->old_id * 10;
+ 			$etyma->page_number = $data[$i]->page_number;
+ 			$etyma->entry = Normalizer::normalize($data[$i]->entry, Normalizer::FORM_C );
+ 			$etyma->gloss = $data[$i]->gloss;
+ 			$etyma->created_by = 'loader';
+ 			$etyma->updated_by = 'loader';
+ 			$etyma->save();
+ 			
+ 			$semantics = $data[$i]->semantics;
+ 			for($j = 0; $j<count($semantics); $j++) {
+ 				$abbr =$semantics[$j];
+ 				print '...' . $abbr . '=' . $sems[$abbr] . '<br/>';
+ 				$etyma_semantic_field = new LexEtymaSemanticField;
+ 				$etyma_semantic_field->etyma_id = $etyma->id;
+ 				$etyma_semantic_field->semantic_field_id = $sems[$abbr];
+ 				$etyma_semantic_field->created_by = 'loader';
+ 				$etyma_semantic_field->updated_by = 'loader';
+ 				$etyma_semantic_field->save();
+ 			}
+ 			$reflexes = $data[$i]->reflexes;
+ 			for($j = 0; $j<count($reflexes); $j++) {
+ 				print '___' . $reflexes[$j]->reflex . ' ' . $reflexes[$j]->language . ' ' . $reflexes[$j]->gloss . ' ' . $reflexes[$j]->part_of_speech . ' ' . $reflexes[$j]->source . ' ' . $reflexes[$j]->lang_attribute . ' ' . $reflexes[$j]->class_attribute . '<br/>';
+ 				$key = $reflexes[$j]->language . '~~~' . $reflexes[$j]->reflex . '~~~' . $reflexes[$j]->part_of_speech . '~~~' . $reflexes[$j]->gloss . '~~~' . $reflexes[$j]->source;
+ 				if (array_key_exists($key, $used_reflexes)) {
+ 					print '****got it-' . $used_reflexes[$key] . '<br/>';
+ 					$hold_reflex_id = $used_reflexes[$key];
+ 				} else {
+ 					$reflex = new LexReflex;
+ 					$reflex->language_id = $langs[$reflexes[$j]->language];
+ 					$reflex->reflex = Normalizer::normalize($reflexes[$j]->reflex, Normalizer::FORM_C );
+ 					$reflex->lang_attribute = $reflexes[$j]->lang_attribute;
+ 					$reflex->class_attribute = $reflexes[$j]->class_attribute;
+ 					$reflex->gloss = $reflexes[$j]->gloss;
+ 					$reflex->created_by = 'loader';
+ 					$reflex->updated_by = 'loader';
+ 					$reflex->save();
+ 					$used_reflexes[$key] = $reflex->id;
+ 					$hold_reflex_id = $reflex->id;
+ 					
+ 					$reflexes[$j]->part_of_speech = str_replace(';', '/', $reflexes[$j]->part_of_speech);
+ 					$load_pos=explode("/",$reflexes[$j]->part_of_speech);
+ 					$pos_ctr = 0;
+ 					for($k = 0; $k<count($load_pos); $k++) {
+ 						$pos_ctr += 1;
+ 						$temp_pos = $load_pos[$k];
+ 						
+ 						if (!array_key_exists($temp_pos, $poss)) {
+ 							$lex_part_of_speech = new LexPartOfSpeech;
+ 							$lex_part_of_speech->code = $temp_pos;
+ 							$lex_part_of_speech->display = '';
+ 							$lex_part_of_speech->created_by = 'loader';
+ 							$lex_part_of_speech->updated_by = 'loader';
+ 							$lex_part_of_speech->save();
+ 							$poss[$lex_part_of_speech->code] = $lex_part_of_speech->id;
+ 						}
+ 						$reflex_part_of_speech = new LexReflexPartOfSpeech;
+ 						$reflex_part_of_speech->reflex_id = $reflex->id;
+ 						$reflex_part_of_speech->part_of_speech_id = $poss[$temp_pos];
+ 						$reflex_part_of_speech->order = $pos_ctr * 10;
+ 						$reflex_part_of_speech->created_by = 'loader';
+ 						$reflex_part_of_speech->updated_by = 'loader';
+ 						$reflex_part_of_speech->save();
+ 					}
+ 					
+ 					$load_source=explode("/",$reflexes[$j]->source);
+ 					$source_ctr = 0;
+ 					for($k = 0; $k<count($load_source); $k++) {
+ 						$source_ctr += 1;
+ 						$temp_source = $load_source[$k];
+ 						if ($temp_source == '' || $temp_source == ' ' || $temp_source == null ) {
+ 							break;
+ 						}
+ 						$reflex_source = new LexReflexSource;
+ 						$reflex_source->reflex_id = $reflex->id;
+ 						$reflex_source->source_id = $srcs[$temp_source];
+ 						$reflex_source->order = $source_ctr * 10;
+ 						$reflex_source->created_by = 'loader';
+ 						$reflex_source->updated_by = 'loader';
+ 						$reflex_source->save();
+ 					}
+ 				}
+ 				$etyma_reflex = new LexEtymaReflex;
+ 				$etyma_reflex->etyma_id = $etyma->id;
+ 				$etyma_reflex->reflex_id = $hold_reflex_id;
+ 				$etyma_reflex->created_by = 'loader';
+ 				$etyma_reflex->updated_by = 'loader';
+ 				$etyma_reflex->save();
+ 			}
+ 		}
+	
+		print '<hr/>done';
+		Log::error('Finishing lex_load on ' . gethostname() . ' at ' . date("D M d, Y G:i a"));
+	
+	} //end lex_load function
+	
+	public function lex_cross_load()
+	{
+		ini_set('memory_limit','512M');
+		ini_set('max_execution_time', 1000);
+	
+		Log::error('Starting lex_cross_load on ' . gethostname() . ' at ' . date("D M d, Y G:i a"));
+	
+		$ets = array();
+		$etymas = LexEtyma::all();
+		foreach($etymas as $etyma) {
+			$ets[$etyma->old_id] = $etyma->id;
+		}
+		//print_r($ets);	
+	
+		$url = '/var/www/html/app/storage/data_load/lex_etymas.json';
+		$myfile = fopen($url, "r") or die("Unable to open file!");
+		$data = json_decode(fread($myfile,filesize($url)));
+	
+		for($i = 0; $i<count($data); $i++) {
+			print $data[$i]->old_id . ' ' . $data[$i]->entry  . '<br/>';
+			$from_id = $data[$i]->old_id;
+			$crosses = $data[$i]->cross;
+			for($j = 0; $j<count($crosses); $j++) {
+				print '...' . $crosses[$j] . '<br/>';
+				$to_id = $crosses[$j];
+				$etyma_cross_reference = new LexEtymaCrossReference;
+				$etyma_cross_reference->from_etyma_id = $ets[$from_id];
+				$etyma_cross_reference->to_etyma_id = $ets[$to_id];
+				$etyma_cross_reference->created_by = 'loader';
+				$etyma_cross_reference->updated_by = 'loader';
+				$etyma_cross_reference->save();
+			}
+		}
+	
+		print '<hr/>done';
+		Log::error('Finishing lex_cross_load on ' . gethostname() . ' at ' . date("D M d, Y G:i a"));
+	} //end lex_cross_load function
 	
 } //end load controller

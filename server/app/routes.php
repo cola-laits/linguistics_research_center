@@ -1,6 +1,7 @@
 <?php
 
 Route::get('/', 'PublicController@index');
+Route::get('index', 'PublicController@index');
 Route::get('eieol', 'PublicController@eieol');
 Route::get('eieol_lesson/{series_id}', 'PublicController@eieol_lesson');
 Route::get('eieol_toc/{series_id}', 'PublicController@eieol_toc');
@@ -41,4 +42,6 @@ Route::group(array('prefix'=> 'admin', 'before' => 'auth'), function() {
 	Route::post('lex_pos_load', 'LoadController@lex_pos_load');
 	Route::post('lex_lang_load', 'LoadController@lex_lang_load');
 	Route::post('lex_sem_load', 'LoadController@lex_sem_load');
+	Route::post('lex_load', 'LoadController@lex_load');
+	Route::post('lex_cross_load', 'LoadController@lex_cross_load');
 });	
