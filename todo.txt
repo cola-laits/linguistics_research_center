@@ -2,21 +2,21 @@ Admin
 	Maintain Lexicon
 		Add Pokorny ID to headword, add to EIEOL forms
 		Make sure relfexes are unique
+	Maintain Lessons
+***Allow lessons to store images
+***Use box to play audio files
+***DOI - Digital Object Identifier
 	
 Public
 	EIEOL
 		Dictionary - links to Pokorny
+***Export series to PDF
 	Lexicon
-	New EIEOL and Lexicon pages do not share same url structure.  How big of an issue is this?  What do we do when someone goes to an old bookmarked page?
 	Unicode info and test (make sure page matches an images)
 	Public pages
-		Where will they live
-		CMS?
-		Which pages will be kept?
-		Links to/from static pages, share css and header?
+***Links to/from static pages, share css and header from cascade
 	
-Load
-	Load Lexicon	
+Load	
 	Headwords - Go to each dictionary, find each entry with Pokorny
 	
 Deploy
@@ -25,6 +25,7 @@ Deploy
 	make sure we don't show errors
 	hide debuger from users.  Show to me?
 	remove load controller, load views, references in routes.php and app/storage/data_load/
+	Redirects - for each subfolder in http://www.utexas.edu/cola/centers/lrc/, redirect to appropriate location on new system
 		
 Future Ideas
 	Authorization by series?

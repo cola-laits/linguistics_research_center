@@ -1,0 +1,25 @@
+1. Unless you are on a Linux box, you need to download boot2docker from http://boot2docker.io/.  
+When you launch Boot2Docker Start, note the IP address it shows you.
+	- The LAITS Docker documentation is at https://devtools.la.utexas.edu/confluence/display/TECH/Local+deployment+infrastructure+setup
+2. Instead of installing MySQL on your machine, you can run it through another docker container.  
+	docker run --name phpmyadmin-mysql -e MYSQL_ROOT_PASSWORD=password -d -p 3306 mysql
+	*use something more clever than "password".
+3. Now you should get phpmyadmin
+	docker run -d --link phpmyadmin-mysql:mysql -e MYSQL_USERNAME=root --name phpmyadmin -p 5150:80 corbinu/docker-phpmyadmin
+	Test it by pointing your browser to the ipaddress/5150.  Log in with root and the password you picked on step 2.
+	*I picked 5150 to be the ip address.  If you don't specify it, docker will pick a port for you.  You can look it up using the docker ps command.
+4. Load your local database.  You can run the seeds, but that won't give you complete data.  The more complete solution is to 
+go into LAITS' PHPMyAdmin at https://pma.la.utexas.edu/, go to database lrc-test, click Export and export the data (you can use the
+"Quick" export).  Then go into your local phpmyadmin, create a database called lrc-test, click Import and load the file you just exported.
+5. Check out the code from svn+ssh://source.la.utexas.edu/repos/lrc-site
+6. In server/app/config, create a folder called local
+7. ftp into file.laits.utexas.edu. Navigate to /mnt/projects/app-configs/lrc-site/test.  Copy all those files into your new local folder.
+8. Edit database.php.  Change the host to ipaddress/5150, user to root and password to whatever you picked.
+9. docker login docker-registry.la.utexas.edu - log on with your EID and password.  If off campus, you'll need to be on the VPN.
+10. docker run -p 8088:80 -v /your/laravel/project/folder:/var/www/html docker-registry.la.utexas.edu/base_laravel:latest
+
+
+When you commit your code, bamboo/shipyard will run a build and deploy it to lrc-test.  
+Bamboo is at https://devtools.la.utexas.edu/bamboo
+Shipyard is at http://shipyard.la.utexas.edu:8080/
+The test app is at http://lrc-test.la.utexas.edu/

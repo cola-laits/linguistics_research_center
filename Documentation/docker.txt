@@ -1,0 +1,39 @@
+After starting the linux VM
+
+
+docker build -t lrc-app /home/fmcgrath/workspace/lrc-site/
+docker run -p 8088:80 -v /home/fmcgrath/workspace/lrc-site/server:/var/www/html lrc-app
+
+To get containter id - docker ps
+To get on docker vm - docker exec -it {{container_id}} /bin/bash
+
+
+
+
+
+https://devtools.la.utexas.edu/confluence/display/TECH/Local+deployment+infrastructure+setup
+
+https://devtools.la.utexas.edu/bamboo/allPlans.action
+
+
+sudo docker run -p 8088:80 -v /home/fmcgrath/workspace/lrc-site/server:/var/www/html docker-registry.la.utexas.edu/base_laravel:latest
+
+
+To check logs cd /laravel_storage/logs
+
+
+Our repos are at
+https://docker-registry.la.utexas.edu/docker-registry-ui/#/showNamespacesRepos - enter docker-registry.la.utexas.edu
+To run a different image: docker run -e “APP-ENV=test” docker-registry.la.utexas.edu/imagename:tag
+
+
+
+Migrations  are create and run on the docker vm using the exec command
+When it creates them, you aren't authorized to edit them.  On the machine where the source code lives, go into the migrations folder and do:
+sudo chown fmcgrath:fmcgrath filename
+
+
+Shipyard credentials
+http://shipyard.la.utexas.edu:8080
+username: fmcgrath
+password: SWHPrKt949xo2pOz0Z
