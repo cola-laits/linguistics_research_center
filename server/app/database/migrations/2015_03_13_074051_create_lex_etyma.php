@@ -17,7 +17,7 @@ class CreateLexEtyma extends Migration {
 			$table->increments('id');
 			$table->string('old_id')->unique();
 			$table->integer('order')->unique();
-			$table->integer('page_number');
+			$table->string('page_number');
 			$table->string('entry')->unique();
 			$table->string('gloss');
 			$table->timestamps();

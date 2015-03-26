@@ -2,7 +2,7 @@
 When you launch Boot2Docker Start, note the IP address it shows you.
 	- The LAITS Docker documentation is at https://devtools.la.utexas.edu/confluence/display/TECH/Local+deployment+infrastructure+setup
 2. Instead of installing MySQL on your machine, you can run it through another docker container.  
-	docker run --name phpmyadmin-mysql -e MYSQL_ROOT_PASSWORD=password -d -p 3306 mysql
+	docker run --name phpmyadmin-mysql -e MYSQL_ROOT_PASSWORD=password -d -p 2112:3306 mysql
 	*use something more clever than "password".
 3. Now you should get phpmyadmin
 	docker run -d --link phpmyadmin-mysql:mysql -e MYSQL_USERNAME=root --name phpmyadmin -p 5150:80 corbinu/docker-phpmyadmin
@@ -14,9 +14,13 @@ go into LAITS' PHPMyAdmin at https://pma.la.utexas.edu/, go to database lrc-test
 5. Check out the code from svn+ssh://source.la.utexas.edu/repos/lrc-site
 6. In server/app/config, create a folder called local
 7. ftp into file.laits.utexas.edu. Navigate to /mnt/projects/app-configs/lrc-site/test.  Copy all those files into your new local folder.
-8. Edit database.php.  Change the host to ipaddress/5150, user to root and password to whatever you picked.
+8. Edit database.php.  Change the host to ipaddress/2112, user to root and password to whatever you picked.
 9. docker login docker-registry.la.utexas.edu - log on with your EID and password.  If off campus, you'll need to be on the VPN.
 10. docker run -p 8088:80 -v /your/laravel/project/folder:/var/www/html docker-registry.la.utexas.edu/base_laravel:latest
+
+
+Migrations
+You need to do a docker exec -it {{container_id}} /bin/bash.  From there you can run your migrateions
 
 
 When you commit your code, bamboo/shipyard will run a build and deploy it to lrc-test.  
