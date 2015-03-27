@@ -71,6 +71,8 @@ class PublicController extends BaseController {
 		return View::make('index');
 	}
 	
+	//--------------------------------------------------------------------------------------------------
+	
 	public function eieol()
 	{
 		$data = array();
@@ -220,5 +222,30 @@ class PublicController extends BaseController {
 		ksort($data['keywords']);
 		return View::make('eieol_english_meaning_index')->with($data);
 	}
-
+	
+	
+	//--------------------------------------------------------------------------------------------------
+	public function lex()
+	{
+		$data = array();
+		return View::make('lex');
+	}
+	
+	public function lex_pokorny()
+	{
+		$data = array();
+		return View::make('lex_pokorny');
+	}
+	
+	public function lex_language()
+	{
+		$data = array();
+		return View::make('lex_language');
+	}
+	
+	public function lex_semantic()
+	{
+		$data = array();
+		return View::make('lex_semantic');
+	}
 }
