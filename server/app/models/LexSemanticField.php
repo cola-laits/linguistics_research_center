@@ -11,6 +11,12 @@ class LexSemanticField extends Eloquent {
 	public function etymas()
 	{
 		return $this->belongsToMany('LexEtyma', 'lex_etyma_semantic_field', 'semantic_field_id', 'etyma_id');
+	}	
+	
+	public function etyma_count()
+	{
+		return $this->belongsToMany('LexEtyma', 'lex_etyma_semantic_field', 'semantic_field_id', 'etyma_id')->selectRaw('count(etyma_id) as count')->groupBy('pivot_semantic_field_id');
+	
 	}
 	
 }

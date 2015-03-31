@@ -58,9 +58,11 @@ words in later IE languages, may be added.</blockquote>
 
 <ol>
 
-
-<li><a title='Physical World and subcategories thereof' href='http://www.utexas.edu/cola/centers/lrc/iedocctr/ie-ling/ie-sem/pie-world.html'>Physical World</a></li>
-
+@foreach($cats as $cat)
+	<li>
+		{{ HTML::link('lex_semantic_category/' . $cat->id, $cat->text, array('title' => $cat->text . ' and subcategories thereof' )) }}
+	</li>
+@endforeach
 
 </ol>
     

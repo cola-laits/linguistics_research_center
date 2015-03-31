@@ -12,9 +12,11 @@ Route::get('eieol_english_meaning_index/{series_id}/{language_id}', 'PublicContr
 
 Route::get('lex', 'PublicController@lex');
 Route::get('lex_pokorny', 'PublicController@lex_pokorny');
+Route::get('lex_reflex/{etyma_id}', 'PublicController@lex_reflex');
 Route::get('lex_language', 'PublicController@lex_language');
 Route::get('lex_semantic', 'PublicController@lex_semantic');
-Route::get('lex_reflex/{etyma_id}', 'PublicController@lex_reflex');
+Route::get('lex_semantic_category/{cat_id}', 'PublicController@lex_semantic_category');
+Route::get('lex_semantic_field/{field_id}', 'PublicController@lex_semantic_field');
 
 Route::get('login', 'LoginController@login_page');
 Route::post('login', 'LoginController@login_action');

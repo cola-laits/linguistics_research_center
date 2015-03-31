@@ -238,23 +238,11 @@ class PublicController extends BaseController {
 		return View::make('lex_pokorny')->with($data);
 	}
 	
-	public function lex_language()
-	{
-		$data = array();
-		return View::make('lex_language');
-	}
-	
-	public function lex_semantic()
-	{
-		$data = array();
-		return View::make('lex_semantic');
-	}
-	
 	public function lex_reflex($etyma_id)
 	{
 		$data = array();
 		$data['etyma'] = LexEtyma::with('reflexes.language.language_sub_family.language_family','reflexes.sources','reflexes.parts_of_speech','semantic_fields.semantic_category')->find($etyma_id);
-		
+	
 		//build list of sources used by these reflexes
 		$sources = array();
 		foreach ($data['etyma']->reflexes as $reflex) {
@@ -266,8 +254,8 @@ class PublicController extends BaseController {
 		}
 		ksort($sources);
 		$data['sources'] = $sources;
-		
-		//build list of parts of speech used by these reflexes.  This is a little more complicate.  
+	
+		//build list of parts of speech used by these reflexes.  This is a little more complicate.
 		//A single pos might be made up of several.  So we buld a lookup list first.
 		//then we break up the used pos and lookup each part.
 		$all_pos = LexPartOfSpeech::all();
@@ -275,7 +263,7 @@ class PublicController extends BaseController {
 		foreach ($all_pos as $pos) {
 			$pos_lookup[$pos->code] = $pos->display;
 		}
-		
+	
 		$poses = array();
 		foreach ($data['etyma']->reflexes as $reflex) {
 			foreach($reflex->parts_of_speech as $pos) {
@@ -289,12 +277,44 @@ class PublicController extends BaseController {
 		}
 		ksort($poses);
 		$data['poses'] = $poses;
-		
+	
 		//get next and previous etyma
 		$data['prev_etyma'] = LexEtyma::where('order', '<', $data['etyma']->order)->orderBy('order', 'desc')->first();
 		$data['next_etyma'] = LexEtyma::where('order', '>', $data['etyma']->order)->orderBy('order')->first();
-		
-		
+	
+	
 		return View::make('lex_reflex')->with($data);
 	}
+	
+	public function lex_language()
+	{
+		$data = array();
+		return View::make('lex_language');
+	}
+	
+	public function lex_semantic()
+	{
+		$data = array();
+		$data['cats'] = LexSemanticCategory::get()->sortBy('number');
+		$data['alpha_cats'] = LexSemanticCategory::get()->sortBy('text');
+		return View::make('lex_semantic')->with($data);
+	}
+	
+	public function lex_semantic_category($cat_id)
+	{
+		$data = array();
+		$data['cat'] = LexSemanticCategory::find($cat_id);
+		$data['alpha_cats'] = LexSemanticCategory::get()->sortBy('text');
+		$data['fields'] = LexSemanticField::with('etyma_count')->where('semantic_category_id', '=', $cat_id)->get()->sortBy('number');
+		return View::make('lex_semantic_category')->with($data);
+	}
+	
+	public function lex_semantic_field($field_id)
+	{
+		$data = array();
+		$data['field'] = LexSemanticField::with('etymas','semantic_category')->find($field_id);
+		$data['alpha_cats'] = LexSemanticCategory::get()->sortBy('text');
+		return View::make('lex_semantic_field')->with($data);
+	}
+	
 }

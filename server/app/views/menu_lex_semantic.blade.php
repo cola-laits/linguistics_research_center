@@ -1,7 +1,10 @@
 <ul class="menu">
 	<li class="first">Semantic Fields</li>
-	<li>{{ HTML::link('lex', 'Home', array('title' => 'Home' )) }} </li>
-	<li>{{ HTML::link('Fixme', 'Fixme', array('title' => 'Fixme' )) }} </li> </li>
+	@foreach($alpha_cats as $cat)
+		<li>
+			{{ HTML::link('lex_semantic_category/' . $cat->id, $cat->text, array('title' => $cat->text . ' and subcategories thereof' )) }}
+		</li>
+	@endforeach
 	
 </ul>
 <br />
