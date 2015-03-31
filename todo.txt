@@ -1,3 +1,12 @@
+###sort order when listing Reflexes for language
+###lang reflex page splits single reflex entries up - ex: sanskrit áhar, áhan-, áhas-
+###Etymas need to load <sup>, exampe 515
+###Do reflexes have sups?
+###POS and sources need a sort order
+###Some glosses are bold.  That means they are in Pokorny
+###Some sub fams are bold and treated as families on the reflex page
+
+
 Admin
 	Maintain Lexicon
 		Add Pokorny ID to headword, add to EIEOL forms

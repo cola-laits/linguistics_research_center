@@ -51,14 +51,28 @@ page for links <i>from</i> reflexes (listed by IE language) <i>to</i> their PIE 
     <th class='left' scope='col' width='14%'>See&nbsp;also</th>
     <th class='left' scope='col' width='36%'>English gloss</th></tr>
     
-    
-    
- <tr>
-	 <td><span id='P0001' name='P0001'>1</span></td>
-	 <td><span class='Unicode' lang='ine'>ā</span></td>
-	 <td>{{ HTML::link('lex_reflex/1', 'IE', array('title' => 'RPokorny PIE etymon with Indo-European reflexes' )) }}</td>
-	 <td>(an exclamation)</td>
- </tr>
+   
+	 @foreach($etymas as $etyma)
+	        <tr>
+				 <td><span id='P{{$etyma->id}}' name='P{{$etyma->id}}'>{{$etyma->page_number}}</span></td>
+				 <td><span class='Unicode' lang='ine'>{{$etyma->entry}}</span></td>
+				 <td>
+				 	
+				 	@if (count($etyma->reflex_count) != 0)
+				 		{{ HTML::link('lex_reflex/' . $etyma->id, 'IE', array('title' => 'Pokorny PIE etymon with Indo-European reflexes' )) }}
+				 		&nbsp;&nbsp;
+				 	@endif
+				 	
+				 	@foreach($etyma->cross_references as $cross_reference)
+				 		<a title='Pokorny cross-reference' href='#P{{$cross_reference->id}}'><span class='Unicode' lang='ine'>
+				 			{{explode(":",explode(",",$cross_reference->entry)[0])[0]}}
+				 		</span></a>
+				 	@endforeach
+				 					 	
+				 </td>
+				 <td>{{$etyma->gloss}}</td>
+			 </tr>
+	 @endforeach
 
  
  

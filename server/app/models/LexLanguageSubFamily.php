@@ -10,7 +10,7 @@ class LexLanguageSubFamily extends Eloquent {
 	
 	public function language_family()
 	{
-		return $this->belongsTo('LexLanguageFamily');
+		return $this->belongsTo('LexLanguageFamily','family_id');
 	}
 	
 }

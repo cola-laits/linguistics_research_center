@@ -10,7 +10,7 @@ class LexSemanticField extends Eloquent {
 	
 	public function etymas()
 	{
-		return $this->belongsToMany('LexEtyma', 'LexEtymaSemanticField', 'semantic_field_id', 'etyma_id');
+		return $this->belongsToMany('LexEtyma', 'lex_etyma_semantic_field', 'semantic_field_id', 'etyma_id');
 	}
 	
 }

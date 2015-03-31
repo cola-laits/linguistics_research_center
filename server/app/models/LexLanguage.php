@@ -5,7 +5,7 @@ class LexLanguage extends Eloquent {
 	
 	public function language_sub_family()
 	{
-		return $this->belongsTo('LexLanguageSubFamily');
+		return $this->belongsTo('LexLanguageSubFamily','sub_family_id');
 	}
 	
 	public function reflex()

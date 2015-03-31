@@ -232,9 +232,10 @@ class PublicController extends BaseController {
 	}
 	
 	public function lex_pokorny()
-	{
+	{		
 		$data = array();
-		return View::make('lex_pokorny');
+		$data['etymas'] = LexEtyma::with('cross_references','reflex_count')->get()->sortBy('order');
+		return View::make('lex_pokorny')->with($data);
 	}
 	
 	public function lex_language()
@@ -247,5 +248,53 @@ class PublicController extends BaseController {
 	{
 		$data = array();
 		return View::make('lex_semantic');
+	}
+	
+	public function lex_reflex($etyma_id)
+	{
+		$data = array();
+		$data['etyma'] = LexEtyma::with('reflexes.language.language_sub_family.language_family','reflexes.sources','reflexes.parts_of_speech','semantic_fields.semantic_category')->find($etyma_id);
+		
+		//build list of sources used by these reflexes
+		$sources = array();
+		foreach ($data['etyma']->reflexes as $reflex) {
+			foreach($reflex->sources as $source) {
+				if (!array_key_exists($source->code,$sources)) {
+					$sources[$source->code] = $source->display;
+				}
+			}
+		}
+		ksort($sources);
+		$data['sources'] = $sources;
+		
+		//build list of parts of speech used by these reflexes.  This is a little more complicate.  
+		//A single pos might be made up of several.  So we buld a lookup list first.
+		//then we break up the used pos and lookup each part.
+		$all_pos = LexPartOfSpeech::all();
+		$pos_lookup = array();
+		foreach ($all_pos as $pos) {
+			$pos_lookup[$pos->code] = $pos->display;
+		}
+		
+		$poses = array();
+		foreach ($data['etyma']->reflexes as $reflex) {
+			foreach($reflex->parts_of_speech as $pos) {
+				$sub_poses = explode('.',$pos->code);
+				foreach($sub_poses as $sub_pos) {
+					if (!array_key_exists($sub_pos,$poses)) {
+						$poses[$sub_pos] = $pos_lookup[$sub_pos];
+					}
+				}
+			}
+		}
+		ksort($poses);
+		$data['poses'] = $poses;
+		
+		//get next and previous etyma
+		$data['prev_etyma'] = LexEtyma::where('order', '<', $data['etyma']->order)->orderBy('order', 'desc')->first();
+		$data['next_etyma'] = LexEtyma::where('order', '>', $data['etyma']->order)->orderBy('order')->first();
+		
+		
+		return View::make('lex_reflex')->with($data);
 	}
 }
