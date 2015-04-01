@@ -7,6 +7,7 @@
 ###POS and sources need a sort order
 ###Some glosses contain bolds - make sure they show up in the links on semantic_field page
 ###Some sub fams are bold and treated as families on the reflex page
+Some langs link to other langs
 
 
 Admin

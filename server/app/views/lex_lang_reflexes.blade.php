@@ -15,7 +15,7 @@
 <!-- end Standard Header for new CoLA-style design -->
 
 <h1>Indo-European Lexicon</h1>
-<h2>Old Irish Reflex Index</h2>
+<h2>{{$language->name}}  Reflex Index</h2>
 
 <p>Below we list 
 {{count($language->reflexes)}}
