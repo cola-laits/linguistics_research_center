@@ -22,7 +22,7 @@ Languages and Sessions need to be copied over using MYSQL export/imports<hr/>
     {{ Form::open(['url' => '/admin/pos_analysis_load/', 'method' => 'POST']) }}
     {{ Form::submit('POS/Analysis Load', ['class' => 'btn btn-danger'])}}
     {{ Form::close() }}
-    
+       
 	<hr/>
 	
 	{{ Form::open(['url' => '/admin/element_count/', 'method' => 'POST']) }}
@@ -54,6 +54,10 @@ Languages and Sessions need to be copied over using MYSQL export/imports<hr/>
     
     {{ Form::open(['url' => '/admin/lex_cross_load/', 'method' => 'POST']) }}
     {{ Form::submit('Load Cross Listed Etymas', ['class' => 'btn btn-danger'])}}
+    {{ Form::close() }}
+    
+    {{ Form::open(['url' => '/admin/sem_etyma_load/', 'method' => 'POST']) }}
+    {{ Form::submit('Semantic-Etyma Load', ['class' => 'btn btn-danger'])}}
     {{ Form::close() }}
  
 @stop

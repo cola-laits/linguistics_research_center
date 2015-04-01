@@ -312,7 +312,7 @@ class PublicController extends BaseController {
 	public function lex_semantic_field($field_id)
 	{
 		$data = array();
-		$data['field'] = LexSemanticField::with('etymas','semantic_category')->find($field_id);
+		$data['field'] = LexSemanticField::with('etymas.reflex_count','semantic_category')->find($field_id);
 		$data['alpha_cats'] = LexSemanticCategory::get()->sortBy('text');
 		return View::make('lex_semantic_field')->with($data);
 	}

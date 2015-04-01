@@ -573,6 +573,7 @@ class LoadController extends BaseController {
 		Log::error('Finishing pos_analysis_load on ' . gethostname() . ' at ' . date("D M d, Y G:i a"));
 	
 	} //end pos_analysis_load function
+
 	
 	public function lex_sources_load()
 	{	
@@ -882,5 +883,44 @@ class LoadController extends BaseController {
 		print '<hr/>done';
 		Log::error('Finishing lex_cross_load on ' . gethostname() . ' at ' . date("D M d, Y G:i a"));
 	} //end lex_cross_load function
+	
+	
+	public function sem_etyma_load()
+	{
+		Log::error('Starting sem_etyma_load on ' . gethostname() . ' at ' . date("D M d, Y G:i a"));
+		
+		$sems = array();
+		$semantic_fields = LexSemanticField::all();
+		foreach($semantic_fields as $semantic_field) {
+			$sems[$semantic_field->abbr] = $semantic_field->id;
+		}
+		
+		$ets = array();
+		$etymas = LexEtyma::all();
+		foreach($etymas as $etyma) {
+			$ets[$etyma->old_id] = $etyma->id;
+		}
+		
+		$url = '/var/www/html/app/storage/data_load/lex_sem_etymas.json';
+		$myfile = fopen($url, "r") or die("Unable to open file!");
+		$data = json_decode(fread($myfile,filesize($url)));
+		
+		for($i = 0; $i<count($data); $i++) {
+			$et = $data[$i]->etyma;
+			$sem = $data[$i]->sem;
+			print $sem . ' ' . $sems[$sem] . ' ' . $et  . ' ' . $ets[$et] . '<br/>';
+			
+			$etyma_semantic_field = new LexEtymaSemanticField;
+			$etyma_semantic_field->etyma_id = $ets[$et];
+			$etyma_semantic_field->semantic_field_id = $sems[$sem];
+			$etyma_semantic_field->created_by = 'loader';
+			$etyma_semantic_field->updated_by = 'loader';
+			$etyma_semantic_field->save();
+		}		
+			
+		print '<hr/>done';
+		Log::error('Finishing sem_etyma_load on ' . gethostname() . ' at ' . date("D M d, Y G:i a"));
+	
+	} //end sem_etyma_load function
 	
 } //end load controller
