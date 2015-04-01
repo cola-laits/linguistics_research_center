@@ -515,3 +515,26 @@ h2, h3, h4, h5, h6 {
 #wordmarks img {
 	position:absolute;
 }
+
+
+
+.lang_list{
+	list-style-type: none;
+}
+
+.lang_entry_1 {
+  width: 75px;
+  display: inline-block;
+  padding-top:2px;
+  padding-bottom:2px;
+}
+
+.lang_entry_2 {
+  width: 175px;
+  display: inline-block;
+}
+
+.lang_entry_3 {
+  display: inline-block;
+  width: 200px;
+}

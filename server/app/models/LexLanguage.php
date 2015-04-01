@@ -8,8 +8,13 @@ class LexLanguage extends Eloquent {
 		return $this->belongsTo('LexLanguageSubFamily','sub_family_id');
 	}
 	
-	public function reflex()
+	public function reflexes()
 	{
-		return $this->hasMany('LexReflex', 'language_id', 'id');
+		return $this->hasMany('LexReflex', 'language_id', 'id')->orderBy('reflex');
+	}
+	
+	public function reflex_count()
+	{
+		return $this->hasMany('LexReflex', 'language_id', 'id')->select(DB::raw('language_id, count(*) as count'))->groupBy('language_id');
 	}
 }

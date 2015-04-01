@@ -5,7 +5,7 @@ class LexReflex extends Eloquent {
 	
 	public function etymas()
 	{
-		return $this->belongsToMany('LexEtyma', 'lex_etyma_reflex', 'reflex_id', 'etyma_id');
+		return $this->belongsToMany('LexEtyma', 'lex_etyma_reflex', 'reflex_id', 'etyma_id')->orderBy('entry');
 	}
 		
 	public function language()

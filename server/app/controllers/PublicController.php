@@ -289,7 +289,15 @@ class PublicController extends BaseController {
 	public function lex_language()
 	{
 		$data = array();
-		return View::make('lex_language');
+		$data['language_families'] = LexLanguageFamily::with('language_sub_families.languages.reflex_count')->get()->sortBy('order');
+		return View::make('lex_language')->with($data);
+	}
+	
+	public function lex_lang_reflexes($language_id)
+	{
+		$data = array();
+		$data['language'] = LexLanguage::with('reflexes.etymas')->find($language_id);
+		return View::make('lex_lang_reflexes')->with($data);
 	}
 	
 	public function lex_semantic()

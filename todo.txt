@@ -1,6 +1,7 @@
-###read through the semantic pages and look for etymas that don't have reflexes, link those cats and etymas.  Test Semantic Field page
+###Some langs to have subfamilies.
 ###sort order when listing Reflexes for language
-###lang reflex page splits single reflex entries up - ex: sanskrit �har, �han-, �has-
+***###lang reflex page splits single reflex entries up - ex: sanskrit áhar, áhan-, áhas-  Old Irish il and hil
+			Combines etymas, ex: Old Irish ab-, aku̯ā-
 ###Etymas need to load <sup>, exampe 515
 ###Do reflexes have sups?
 ###POS and sources need a sort order
@@ -55,3 +56,4 @@ Future Ideas
 	CKEditor - Add language plugin http://ckeditor.com/forums/Plugins/Language-Semantics, use our lang and class attributes with it
 	Export data for other purposes
 	Warn if logon is about to expire, or show a countdown clock.
+	Public/lex/lang/reflex - alpha index at top of page

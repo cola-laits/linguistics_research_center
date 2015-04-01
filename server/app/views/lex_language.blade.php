@@ -27,8 +27,7 @@ may indicate synonymous language/dialect names.</p>
 
 <p>If we have prepared an alphabetic index to a particular language's 
 reflexes -- words &amp; affixes therein, derived from ancient Proto-Indo-European 
-etyma -- a link is provided to a page (available in 3 character-set 
-versions) listing those reflexes. <i>This work is <b>in progress</b>: 
+etyma -- a link is provided to a page listing those reflexes. <i>This work is <b>in progress</b>: 
 reflex indices are being added on a language-by-language basis, as 
 time goes on, for languages with 10 or more reflexes</i>.</p>
 
@@ -59,7 +58,36 @@ tentatively listed Dardic alongside Indic, next to the Nuristani languages
 by which Dardic tongues are known to be influenced. Again, no hard 
 conclusions should be drawn from this structural detail.</p>
 
-
+<ul class="lang_list">
+@foreach($language_families as $language_family)
+    <li>{{$language_family->name}}</li>
     
+    <ul class="lang_list">
+	@foreach($language_family->language_sub_families as $language_sub_family)
+	    <li>{{$language_sub_family->name}}</li>
+	    
+	    
+	    <ul class="lang_list">
+		@foreach($language_sub_family->languages as $language)
+		    <li>
+		    	<div class="lang_entry_1">{{$language->abbr}}</div> 
+			    @if ($language->reflex_count->first()['count'] > 10)
+			    	<div class="lang_entry_2">
+			    		{{ HTML::link('lex_lang_reflexes/' . $language->id, $language->name, array('title' => $language->name . ' reflex index')) }}
+			    	</div>
+			    @else
+			    	<div class="lang_entry_2">{{$language->name}}</div>
+			    @endif 
+			    <div class="lang_entry_3">{{$language->aka}}</div>
+		    </li>
+		@endforeach
+		</ul>
+	    
+	    
+	@endforeach
+	</ul>
     
+    <hr/>
+@endforeach
+</ul>
 @stop
