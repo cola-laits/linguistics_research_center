@@ -626,7 +626,19 @@ class LoadController extends BaseController {
 		$url = '/var/www/html/app/storage/data_load/lex_langs.json';
 		$myfile = fopen($url, "r") or die("Unable to open file!");
 		$data = json_decode(fread($myfile,filesize($url)));
-	
+		
+		$baltic_langs = array('Nadr','Skal','Galin','Sudo','OPrus','Curo','Sel','Zem','OLith','LLith','Lith','Latv');
+		$slavic_langs = array('OSlav','OPol','Pol','OPom','Kashub','Polab','OCz','Cz','Knaan','Slovak','OSorb','Wend','Sorb','USorb','LSorb','Lusat','OSerb','SCr','Serb','Croat','Bosn','Slovene','OCS','LCS','Bulg','MacSl','ORuss','RCS','Russ','Ruth','Belo','Ukr');
+		$albanian_langs = array('Alb','Gheg','Tosk','Arv','Arb');
+		$iranian_langs = array('OIran','MIran','Yas','Iran','OPers','Med','Pahl','MPers','Mani','Parth','NPers','Pers','Farsi','Balu','Kurd',
+							   'Par','Dari','Taj','OAv','Av','YAv','OScyth','Scyth','Sogd','Bact','Chor','Alan','OOss','Khot','Sac','Saka','Tums',
+							   'Oss',' Push','Yagn','Pamir','Shug','Sari','Yazg','Munj','Ishk','Sang','Wakh','Yidg','Wane','Pras','Bash','Ashk',
+							   'Treg','Waig','Khow','Kals','Kash','Kish','Pogu','Bat','Chil','Gow','Kalk','Kalm','Koh','Tira','Torw','Wota',
+							   'Dam','Gawar','Nang','Shum','Pash','PashNW','PashSW','PashNE','PashSE','Brok','Domk','Phal','ShinKo','Shina',
+							   'Savi','Ush');
+		$indic_langs = array('RV','Ved','Skt','Prak','Gand','Pali','Saur','OMart','Assm','Beng','Bhil','Bih','Domr','Guj','Hin','Khan','Konk',
+							 'Kum','Lahn','Mald','Mart','Nep','Ori','Pnj','Raj','Rmy','Sind','Sinh','Thar','Urdu');
+		
 		for($i = 0; $i<count($data); $i++) {
 			print $data[$i]->name . ' ' . $data[$i]->order . '<br/>';
 			$language_family = new LexLanguageFamily;
@@ -650,10 +662,29 @@ class LoadController extends BaseController {
 				$languages = $subfamilies[$j]->languages;
 				for($k = 0; $k<count($languages); $k++) {
 					print '......' . $languages[$k]->name . ' ' . $languages[$k]->order . ' ' . $languages[$k]->abbr . ' ' . $languages[$k]->aka. '<br/>';
+					
+					
 					$language = new LexLanguage;
 					$language->name = $languages[$k]->name;
 					$language->order = $languages[$k]->order;
 					$language->abbr = $languages[$k]->abbr;
+					
+					if(in_array($languages[$k]->abbr,$baltic_langs)) {
+						$language->override_family = 'Baltic';
+					}
+					if(in_array($languages[$k]->abbr,$slavic_langs)) {
+						$language->override_family = 'Slavic';
+					}
+					if(in_array($languages[$k]->abbr,$albanian_langs)) {
+						$language->override_family = 'Albanian';
+					}
+					if(in_array($languages[$k]->abbr,$iranian_langs)) {
+						$language->override_family = 'Iranian';
+					}
+					if(in_array($languages[$k]->abbr,$indic_langs)) {
+						$language->override_family = 'Indic';
+					}
+					
 					$language->aka = $languages[$k]->aka;
 					$language->sub_family_id = $language_sub_family->id;
 					$language->created_by = 'loader';
@@ -707,8 +738,8 @@ class LoadController extends BaseController {
 	
 	public function lex_load()
 	{
-		ini_set('memory_limit','1024M');
-		ini_set('max_execution_time', 2000);
+		ini_set('memory_limit','3000M');
+		ini_set('max_execution_time', 20000);
 		
 		Log::error('Starting lex_load on ' . gethostname() . ' at ' . date("D M d, Y G:i a"));
 		
@@ -772,15 +803,14 @@ class LoadController extends BaseController {
  			}
  			$reflexes = $data[$i]->reflexes;
  			for($j = 0; $j<count($reflexes); $j++) {
- 				print '___' . $reflexes[$j]->reflex . ' ' . $reflexes[$j]->language . ' ' . $reflexes[$j]->gloss . ' ' . $reflexes[$j]->part_of_speech . ' ' . $reflexes[$j]->source . ' ' . $reflexes[$j]->lang_attribute . ' ' . $reflexes[$j]->class_attribute . '<br/>';
- 				$key = $reflexes[$j]->language . '~~~' . $reflexes[$j]->reflex . '~~~' . $reflexes[$j]->part_of_speech . '~~~' . $reflexes[$j]->gloss . '~~~' . $reflexes[$j]->source;
+ 				print '___' . implode(',',$reflexes[$j]->entries) . ' ' . $reflexes[$j]->language . ' ' . $reflexes[$j]->gloss . ' ' . $reflexes[$j]->part_of_speech . ' ' . $reflexes[$j]->source . ' ' . $reflexes[$j]->lang_attribute . ' ' . $reflexes[$j]->class_attribute . '<br/>';
+ 				$key = $reflexes[$j]->language . '~~~' . implode(',',$reflexes[$j]->entries) . '~~~' . $reflexes[$j]->part_of_speech . '~~~' . $reflexes[$j]->gloss . '~~~' . $reflexes[$j]->source;
  				if (array_key_exists($key, $used_reflexes)) {
  					print '****got it-' . $used_reflexes[$key] . '<br/>';
  					$hold_reflex_id = $used_reflexes[$key];
  				} else {
  					$reflex = new LexReflex;
  					$reflex->language_id = $langs[$reflexes[$j]->language];
- 					$reflex->reflex = Normalizer::normalize($reflexes[$j]->reflex, Normalizer::FORM_C );
  					$reflex->lang_attribute = $reflexes[$j]->lang_attribute;
  					$reflex->class_attribute = $reflexes[$j]->class_attribute;
  					$reflex->gloss = $reflexes[$j]->gloss;
@@ -790,25 +820,26 @@ class LoadController extends BaseController {
  					$used_reflexes[$key] = $reflex->id;
  					$hold_reflex_id = $reflex->id;
  					
+ 					$entry_ctr = 0;
+ 					for($k = 0; $k<count($reflexes[$j]->entries); $k++) {
+ 						$entry_ctr += 1;
+ 						$reflex_entry = new LexReflexEntry;
+ 						$reflex_entry->reflex_id = $hold_reflex_id;
+ 						$reflex_entry->entry = Normalizer::normalize($reflexes[$j]->entries[$k], Normalizer::FORM_C );
+ 						$reflex_entry->order = $entry_ctr * 10;
+ 						$reflex_entry->created_by = 'loader';
+ 						$reflex_entry->updated_by = 'loader';
+ 						$reflex_entry->save();
+ 					}
+ 					
  					$reflexes[$j]->part_of_speech = str_replace(';', '/', $reflexes[$j]->part_of_speech);
  					$load_pos=explode("/",$reflexes[$j]->part_of_speech);
  					$pos_ctr = 0;
  					for($k = 0; $k<count($load_pos); $k++) {
- 						$pos_ctr += 1;
- 						$temp_pos = $load_pos[$k];
- 						
- 						if (!array_key_exists($temp_pos, $poss)) {
- 							$lex_part_of_speech = new LexPartOfSpeech;
- 							$lex_part_of_speech->code = $temp_pos;
- 							$lex_part_of_speech->display = '';
- 							$lex_part_of_speech->created_by = 'loader';
- 							$lex_part_of_speech->updated_by = 'loader';
- 							$lex_part_of_speech->save();
- 							$poss[$lex_part_of_speech->code] = $lex_part_of_speech->id;
- 						}
+ 						$pos_ctr += 1; 						
  						$reflex_part_of_speech = new LexReflexPartOfSpeech;
  						$reflex_part_of_speech->reflex_id = $reflex->id;
- 						$reflex_part_of_speech->part_of_speech_id = $poss[$temp_pos];
+ 						$reflex_part_of_speech->text = $load_pos[$k];
  						$reflex_part_of_speech->order = $pos_ctr * 10;
  						$reflex_part_of_speech->created_by = 'loader';
  						$reflex_part_of_speech->updated_by = 'loader';

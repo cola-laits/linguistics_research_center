@@ -17,7 +17,6 @@ class CreateLexReflex extends Migration {
 			$table->increments('id');
 			$table->integer('language_id')->unsigned();
 			$table->foreign('language_id')->references('id')->on('lex_language');
-			$table->string('reflex');
 			$table->string('lang_attribute');
 			$table->string('class_attribute');
 			$table->string('gloss');

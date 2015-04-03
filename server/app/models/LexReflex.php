@@ -5,8 +5,13 @@ class LexReflex extends Eloquent {
 	
 	public function etymas()
 	{
-		return $this->belongsToMany('LexEtyma', 'lex_etyma_reflex', 'reflex_id', 'etyma_id')->orderBy('entry');
+		return $this->belongsToMany('LexEtyma', 'lex_etyma_reflex', 'reflex_id', 'etyma_id');
 	}
+	
+	public function entries()
+	{
+		return $this->hasMany('LexReflexEntry', 'reflex_id', 'id')->orderBy('entry');
+	}	
 		
 	public function language()
 	{
@@ -15,12 +20,12 @@ class LexReflex extends Eloquent {
 	
 	public function parts_of_speech()
 	{
-		return $this->belongsToMany('LexPartOfSpeech', 'lex_reflex_part_of_speech', 'reflex_id', 'part_of_speech_id');
+		return $this->hasMany('LexReflexPartOfSpeech', 'reflex_id', 'id')->orderBy('order');
 	}
 	
 	public function sources()
 	{
-		return $this->belongsToMany('LexSource', 'lex_reflex_source', 'reflex_id', 'source_id');
+		return $this->belongsToMany('LexSource', 'lex_reflex_source', 'reflex_id', 'source_id')->orderBy('order');
 	}
 	
 	public function getDisplayPartsOfSpeech()
@@ -28,7 +33,7 @@ class LexReflex extends Eloquent {
 		$string = "";
 		$i=0;
 		foreach($this->parts_of_speech as $pos){
-			$string .= $pos->code;
+			$string .= $pos->text;
 			$i++;
 			if ($i != count($this->parts_of_speech)) {
 				$string .= '/';

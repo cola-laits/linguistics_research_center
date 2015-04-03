@@ -41,20 +41,33 @@ for tr in trs:
             family['name'] = tds[0].text.strip()
             family['order'] = ctr
             family['subfamilies'] = []
+            subfamily_found = False
         
         else: #subfamily
             sub_family_ctr +=1
             language_ctr = 0
             sub_family = {}
-            sub_family['name'] = tds[0].text.strip().replace(u'\xa0', u' ')
+            sub_family['name'] = tds[0].renderContents().replace(u'\xc2', u' ').strip()
             sub_family['order'] = sub_family_ctr
             sub_family['languages'] = []
             family['subfamilies'].append(sub_family)
+            subfamily_found = True
         #endif
     else:
+        if subfamily_found == False:  #some langs don't have a subfamily.  So create a blank one
+            sub_family_ctr +=1
+            language_ctr = 0
+            sub_family = {}
+            sub_family['name'] = ''
+            sub_family['order'] = sub_family_ctr
+            sub_family['languages'] = []
+            family['subfamilies'].append(sub_family)
+            subfamily_found = True
+        #end sub
+        
         language_ctr += 1
         language = {}
-        language['abbr'] = tds[0].text.strip().replace('.','')
+        language['abbr'] = tds[0].text.replace('.','').strip()
         language['name'] = tds[2].text
         language['aka'] = tds[4].text.strip()
         language['order'] = language_ctr

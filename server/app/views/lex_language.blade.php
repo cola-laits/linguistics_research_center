@@ -60,7 +60,7 @@ conclusions should be drawn from this structural detail.</p>
 
 <ul class="lang_list">
 @foreach($language_families as $language_family)
-    <li>{{$language_family->name}}</li>
+    <li><strong>{{$language_family->name}}</strong></li>
     
     <ul class="lang_list">
 	@foreach($language_family->language_sub_families as $language_sub_family)
@@ -70,7 +70,7 @@ conclusions should be drawn from this structural detail.</p>
 	    <ul class="lang_list">
 		@foreach($language_sub_family->languages as $language)
 		    <li>
-		    	<div class="lang_entry_1">{{$language->abbr}}</div> 
+		    	<div class="lang_entry_1">{{$language->abbr}}.</div> 
 			    @if ($language->reflex_count->first()['count'] > 10)
 			    	<div class="lang_entry_2">
 			    		{{ HTML::link('lex_lang_reflexes/' . $language->id, $language->name, array('title' => $language->name . ' reflex index')) }}

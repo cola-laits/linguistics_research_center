@@ -40,7 +40,7 @@ corrections may be made and/or more etyma &amp; reflexes may be added.</p>
 
 
 
-<p><b>Pokorny Etymon</b>: <span class='Unicode' lang='ine'>{{$etyma->entry}}</span> &nbsp; ({{$etyma->gloss}})</p>
+<p><b>Pokorny Etymon</b>: <span class='Unicode' lang='ine'>{{$etyma->entry}}</span> &nbsp; '{{$etyma->gloss}}'</p>
 <p><b>Semantic Field(s)</b>: 
 @foreach($etyma->semantic_fields as $index => $semantic_field)
 	{{ HTML::link('lex_semantic_field/' . $semantic_field->id, $semantic_field->text ) }}</a>@if ($index+1 != count($etyma->semantic_fields)),@endif
@@ -62,12 +62,12 @@ corrections may be made and/or more etyma &amp; reflexes may be added.</p>
 {{-- */$prev_lang='';/* --}}
 {{-- */$prev_family='';/* --}}
 @foreach($etyma->reflexes as $reflex)
-	@if ($prev_family != $reflex->language->language_sub_family->language_family->name)
+	@if ($prev_family != $reflex->display_family)
 		<tr>
-			<td><strong>{{$reflex->language->language_sub_family->language_family->name}}</strong></td>
+			<td><strong>{{$reflex->display_family}}</strong></td>
 			<td colspan='8'>&nbsp;</td>
 		</tr>
-		{{-- */$prev_family=$reflex->language->language_sub_family->language_family->name;/* --}}
+		{{-- */$prev_family=$reflex->display_family;/* --}}
 	@endif
 	
 	<tr>
@@ -77,7 +77,11 @@ corrections may be made and/or more etyma &amp; reflexes may be added.</p>
 			<td class='right' id='{{$reflex->language->abbr}}'>{{$reflex->language->name}}:</td>
 			{{-- */$prev_lang=$reflex->language->name;/* --}}
 		@endif
-		<td><span class='{{$reflex->class_attribute}}' lang='{{$reflex->lang_attribute}}'>{{$reflex->reflex}}</span></td>
+		<td>
+			@foreach($reflex->entries as $index => $entry)
+				<span class='{{$reflex->class_attribute}}' lang='{{$reflex->lang_attribute}}'>{{$entry->entry}}</span>@if ($index+1 != count($reflex->entries)),@endif
+			@endforeach
+		</td>
 		<td class='center'>{{$reflex->getDisplayPartsOfSpeech()}}</td>
 		<td>{{$reflex->gloss}}</td>
 		<td class='center'>{{$reflex->getDisplaySources()}}</td>

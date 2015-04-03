@@ -17,14 +17,13 @@ class CreateReflexPos extends Migration {
 			$table->increments('id');
 			$table->integer('reflex_id')->unsigned();
 			$table->foreign('reflex_id')->references('id')->on('lex_reflex');
-			$table->integer('part_of_speech_id')->unsigned();
-			$table->foreign('part_of_speech_id')->references('id')->on('lex_part_of_speech');
+			$table->string('text')->nullable();
 			$table->integer('order');
 			$table->timestamps();
 			$table->string('created_by');
 			$table->string('updated_by');
 			
-			$table->unique(array('reflex_id','part_of_speech_id'));
+			$table->unique(array('reflex_id','text'));
 		});
 	}
 

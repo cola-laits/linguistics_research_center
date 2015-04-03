@@ -16,7 +16,7 @@ public function up()
 		{
 			$table->increments('id');
 			$table->string('code')->unique();
-			$table->string('display')->nullable();
+			$table->string('display');
 			$table->timestamps();
 			$table->string('created_by');
 			$table->string('updated_by');

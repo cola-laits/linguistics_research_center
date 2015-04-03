@@ -10,7 +10,7 @@ class LexLanguage extends Eloquent {
 	
 	public function reflexes()
 	{
-		return $this->hasMany('LexReflex', 'language_id', 'id')->orderBy('reflex');
+		return $this->hasMany('LexReflex', 'language_id', 'id');
 	}
 	
 	public function reflex_count()

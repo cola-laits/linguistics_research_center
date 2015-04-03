@@ -241,8 +241,22 @@ class PublicController extends BaseController {
 	public function lex_reflex($etyma_id)
 	{
 		$data = array();
-		$data['etyma'] = LexEtyma::with('reflexes.language.language_sub_family.language_family','reflexes.sources','reflexes.parts_of_speech','semantic_fields.semantic_category')->find($etyma_id);
+		$data['etyma'] = LexEtyma::with('reflexes.entries',
+									    'reflexes.language.language_sub_family.language_family',
+									    'reflexes.sources',
+									    'reflexes.parts_of_speech',
+									    'semantic_fields.semantic_category')->find($etyma_id);
 	
+		//set which lang to display
+		foreach ($data['etyma']->reflexes as $reflex) {
+			if ($reflex->language->override_family != '') {
+				$reflex->display_family = $reflex->language->override_family;
+			} else {
+				$reflex->display_family = $reflex->language->language_sub_family->language_family->name;
+			}
+			
+		}
+		
 		//build list of sources used by these reflexes
 		$sources = array();
 		foreach ($data['etyma']->reflexes as $reflex) {
@@ -267,7 +281,7 @@ class PublicController extends BaseController {
 		$poses = array();
 		foreach ($data['etyma']->reflexes as $reflex) {
 			foreach($reflex->parts_of_speech as $pos) {
-				$sub_poses = explode('.',$pos->code);
+				$sub_poses = explode('.',$pos->text);
 				foreach($sub_poses as $sub_pos) {
 					if (!array_key_exists($sub_pos,$poses)) {
 						$poses[$sub_pos] = $pos_lookup[$sub_pos];
@@ -282,7 +296,6 @@ class PublicController extends BaseController {
 		$data['prev_etyma'] = LexEtyma::where('order', '<', $data['etyma']->order)->orderBy('order', 'desc')->first();
 		$data['next_etyma'] = LexEtyma::where('order', '>', $data['etyma']->order)->orderBy('order')->first();
 	
-	
 		return View::make('lex_reflex')->with($data);
 	}
 	
@@ -296,7 +309,47 @@ class PublicController extends BaseController {
 	public function lex_lang_reflexes($language_id)
 	{
 		$data = array();
-		$data['language'] = LexLanguage::with('reflexes.etymas')->find($language_id);
+		$data['language'] = LexLanguage::with('reflexes.entries','reflexes.etymas')->find($language_id)->toArray();
+		
+		$data['language']['display_reflexes'] = array();
+		foreach($data['language']['reflexes'] as $reflex) {
+			$keys=array();
+			foreach($reflex['entries'] as $entry) {
+				
+				//if a reflex contains characters in (), split into 2, ex (g)nosco = gnosco and nosco
+				$open = mb_strpos($entry['entry'],'(', 0,'UTF-8');
+				$close = mb_strpos($entry['entry'],')', 0,'UTF-8');
+				if ($open !== False && $close !== False) {
+					$first = mb_substr($entry['entry'], 0, $open, 'UTF-8');
+	
+					$len = $close - $open;//if a reflex contains characters in (), split into 2, ex (g)nosco = gnosco and nosco
+					$middle = mb_substr($entry['entry'], $open + 1, $len - 1, 'UTF-8');
+			
+					$len = mb_strlen($entry['entry'], 'UTF-8') - $close;
+					$last = mb_substr($entry['entry'], $close + 1, $len, 'UTF-8');
+			
+					$short = $first . $last;
+					$long = $first . $middle . $last;
+
+					$keys[] = $short;
+					$keys[] = $long;
+				} else {
+					$keys[] = $entry['entry'];
+				}
+			}
+			
+			//if 2 reflexes are the same, group them
+			foreach($keys as $key) {
+				if (array_key_exists($key,$data['language']['display_reflexes'])) {
+					$data['language']['display_reflexes'][$key]['etymas'] = array_merge($data['language']['display_reflexes'][$key]['etymas'],$reflex['etymas']);
+					sort($data['language']['display_reflexes'][$key]['etymas']);
+				} else {
+					$data['language']['display_reflexes'][$key] = $reflex;
+				}
+			} //foreach key
+		}
+		ksort($data['language']['display_reflexes']);
+		
 		return View::make('lex_lang_reflexes')->with($data);
 	}
 	

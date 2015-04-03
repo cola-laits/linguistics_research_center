@@ -15,12 +15,12 @@
 <!-- end Standard Header for new CoLA-style design -->
 
 <h1>Indo-European Lexicon</h1>
-<h2>{{$language->name}}  Reflex Index</h2>
+<h2>{{$language['name']}}  Reflex Index</h2>
 
 <p>Below we list 
-{{count($language->reflexes)}}
+{{count($language['display_reflexes'])}}
 unique 
-{{$language->name}} 
+{{$language['name']}} 
 reflex spellings (words and affixes) in an 
 alphabetic order suitable for the language family. Every spelling is linked to one 
 or more pages, each showing a Proto-Indo-European etymon from which the reflex is 
@@ -32,17 +32,17 @@ or <i>lie</i>, represent multiple reflexes derived from different PIE etyma.</p>
 <table border='0' summary="Old Irish reflex index">
   <tr><th scope='col'>Reflex</th><th scope='col'>Etyma</th></tr>
   
-  @foreach($language->reflexes as $reflex)
+  @foreach($language['display_reflexes'] as $key => $reflex)
   	<tr>
   		<td>
-  			<a id='{{$reflex->id}}' name='{{$reflex->id}}'></a>
-  			<span class='{{$reflex->class_attribute}}' lang='{{$reflex->lang_attribute}}'>{{$reflex->reflex}}</span>
+  			<a id='{{$reflex['id']}}' name='{{$reflex['id']}}'></a>
+  			<span class='{{$reflex['class_attribute']}}' lang='{{$reflex['lang_attribute']}}'>{{$key}}</span>
   		</td>
   		<td>
-  			@foreach($reflex->etymas as $index => $etyma)
-	  			<a title="{{$etyma->gloss}}" href='/lex_reflex/{{$etyma->id}}#{{$language->abbr}}'>
-	  				<span class='Unicode' lang='ine'>{{explode(",",$etyma->entry)[0]}}</span>
-	  			</a>@if ($index+1 != count($reflex->etymas)),@endif
+  			@foreach($reflex['etymas'] as $index => $etyma)
+	  			<a title="{{strip_tags($etyma['gloss'])}}" href='/lex_reflex/{{$etyma['id']}}#{{$language['abbr']}}'>
+	  				<span class='Unicode' lang='ine'>{{explode(",",$etyma['entry'])[0]}}</span>
+	  			</a>@if ($index+1 != count($reflex['etymas'])),@endif
   			@endforeach 
   		</td>
   	</tr>

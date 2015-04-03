@@ -45,9 +45,9 @@ of PIE etyma, in any number of IE languages, may be added at any time.</blockquo
 
 @foreach($field->etymas as $etyma)
 	<li>
-		<span class='Unicode' lang='ine'>{{$etyma->entry}}</span> 
+		<span class='Unicode' lang='ine'>{{explode(",",$etyma['entry'])[0]}}</span> 
 		&nbsp;
-		{{ HTML::link('lex_pokorny/#P' . $etyma->id, $etyma->gloss, array('title' => 'Pokorny PIE Data', 'target' => 'new' )) }}
+		<a href="/lex_pokorny/#P{{$etyma->id}}" title="Pokorny PIE Data" target="new">'{{$etyma->gloss}}'</a>
 		@if (count($etyma->reflex_count) > 0)
 			&nbsp; 
 			{{ HTML::link('lex_reflex/' . $etyma->id, 'reflex', array('title' => 'Pokorny PIE Data with reflexes' )) }}

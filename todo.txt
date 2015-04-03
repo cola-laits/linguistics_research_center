@@ -1,60 +1,52 @@
-###Some langs to have subfamilies.
+???Some langs link to other langs - Old English/Anglo-Saxon.  Gaelic and Scots Gaelic, though the existing site is kind of broken
 ###sort order when listing Reflexes for language
-***###lang reflex page splits single reflex entries up - ex: sanskrit áhar, áhan-, áhas-  Old Irish il and hil
-			Combines etymas, ex: Old Irish ab-, aku̯ā-
-###Etymas need to load <sup>, exampe 515
-###Do reflexes have sups?
-###POS and sources need a sort order
-###Some glosses contain bolds - make sure they show up in the links on semantic_field page
-###Some sub fams are bold and treated as families on the reflex page
-Some langs link to other langs
+
+Headword
+	Load  - Go to each dictionary, find each entry with Pokorny
+	Add Pokorny ID to headword, add to EIEOL forms
+	EIEOL - Dictionary - links to Pokorny
 
 
 Admin
 	Maintain Lexicon
-		Add Pokorny ID to headword, add to EIEOL forms
+		Use Frozen Node?
 		Make sure relfexes are unique
 	Maintain Lessons
 ***Allow lessons to store images
 ***Use box to play audio files
 ***DOI - Digital Object Identifier
+Part of Speech editor? use FrozenNode?
+	Analysis editor? use FrozenNode?
 	
 Public
-	EIEOL
-		Dictionary - links to Pokorny
 ***Export series to PDF
-	Lexicon
-	Unicode info and test (make sure page matches an images)
-	Public pages
 ***Links to/from static pages, share css and header from cascade
-	
-Load	
-	Headwords - Go to each dictionary, find each entry with Pokorny
+	Unicode info and test (make sure page matches an images)
+
 	
 Deploy
 	404 errors
 	htaccess file needs to send login and admin pages through https
 	make sure we don't show errors
-	hide debuger from users.  Show to me?
 	remove load controller, load views, references in routes.php and app/storage/data_load/
+	Allow Google to crawl it
+	
+Implementation
 	Redirects - for each subfolder in http://www.utexas.edu/cola/centers/lrc/, redirect to appropriate location on new system
 		
 Future Ideas
+	Export data for other purposes
 	Authorization by series?
 	When updating - warn if it has been updated since you loaded it?
-	CKEditor - can we preserve source formatting?
 	Public site search
 	Save versions of lessons like SVN
 	On lesson page, warn if they try to leave without saving something
 	Reorder things by dragging?
-	Preview lesson before publishing?
+	Save changes, and preview them without publishing
 	Delete an element from a gloss
 	EIEOL public pages  - next and prev buttons
 	CKEditor: Add a unicode checker that will flag any unicode that doesn't have a lang tag on it.  Or check on backen in validator.
 	EIEOL editor - make glossed texts use CKEditor?
-	Part of Speech editor? use FrozenNode?
-	Analysis editor? use FrozenNode?
 	CKEditor - Add language plugin http://ckeditor.com/forums/Plugins/Language-Semantics, use our lang and class attributes with it
-	Export data for other purposes
 	Warn if logon is about to expire, or show a countdown clock.
-	Public/lex/lang/reflex - alpha index at top of page
+	Public/lex/lang/reflex - alpha index at top of page or use a search

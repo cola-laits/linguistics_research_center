@@ -30,14 +30,18 @@ for tr in trs:
     ctr += 1
     etyma['old_id'] = tds[0].find("span")['id'][1:]
     etyma['page_number'] = tds[0].text
-    etyma['entry'] = tds[1].text
     
-    etyma['gloss'] = tds[3].text
+    entry = tds[1]
+    for span in entry.findAll('span'):
+        span.replaceWithChildren()
+    etyma['entry'] = entry.renderContents()
+    
+    etyma['gloss'] = tds[3].renderContents()
     etyma['cross'] = []
     etyma['semantics'] = []
     etyma['reflexes'] = []
     
-    #print etyma['old_id'], etyma['entry']
+    print etyma['old_id'], etyma['entry']
 
     tags = tds[2].find_all("a")
     for tag in tags:
@@ -83,8 +87,9 @@ for tr in trs:
                 else:
                     reflex['language'] = hold_lang_code
                 #endif
- 
-                reflex['reflex'] = r_tds[2].text
+                reflex['entries'] = r_tds[2].text
+                reflex['entries'] = reflex['entries'].replace('/',',')
+                reflex['entries'] = reflex['entries'].split(',')
                 reflex['lang_attribute'] = r_tds[2].find("span")['lang']
                 reflex['class_attribute'] = r_tds[2].find("span")['class'][0]
                  
@@ -129,7 +134,7 @@ for tr in trs:
 
     etymas.append(etyma)
 
-#     if ctr >= 1500:
+#     if ctr >= 15:
 #         break
 #     #endif
     

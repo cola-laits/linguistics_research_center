@@ -21,6 +21,7 @@ class CreateLexLanguage extends Migration {
 			$table->string('aka');
 			$table->integer('sub_family_id')->unsigned();
 			$table->foreign('sub_family_id')->references('id')->on('lex_language_sub_family');
+			$table->string('override_family')->nullable();
 			$table->timestamps();
 			$table->string('created_by');
 			$table->string('updated_by');
