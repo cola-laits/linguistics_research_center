@@ -1,22 +1,32 @@
-1. Unless you are on a Linux box, you need to download boot2docker from http://boot2docker.io/.  
+1. Check out the code from svn+ssh://source.la.utexas.edu/repos/lrc-site to C:\Users\{user}\workspace
+2. Unless you are on a Linux box, you need to download boot2docker from http://boot2docker.io/.  
 When you launch Boot2Docker Start, note the IP address it shows you.
 	- The LAITS Docker documentation is at https://devtools.la.utexas.edu/confluence/display/TECH/Local+deployment+infrastructure+setup
-2. Instead of installing MySQL on your machine, you can run it through another docker container.  
+3. Docker's Command prompt sucks.  Instead, use Putty
+	- run Puttgen
+	- Click load and load the file at C:\Users\{user}\.ssh
+	- Click "Save private key" and save it to the same place.
+	- Open up Putty and create a new Session, pointed at docker@127.0.0.1, port 2022
+		- In Connection/SSH/Auth, click Browse and load the file you just saved
+4. Instead of installing MySQL on your machine, you can run it through another docker container.  
 	docker run --name phpmyadmin-mysql -e MYSQL_ROOT_PASSWORD=password -d -p 2112:3306 mysql
 	*use something more clever than "password".
-3. Now you should get phpmyadmin
+	*I picked 2112 to be the port.  If you don't specify it, docker will pick a port for you.  You can look it up using the docker ps command.
+5. Now you should get phpmyadmin
 	docker run -d --link phpmyadmin-mysql:mysql -e MYSQL_USERNAME=root --name phpmyadmin -p 5150:80 corbinu/docker-phpmyadmin
 	Test it by pointing your browser to the ipaddress/5150.  Log in with root and the password you picked on step 2.
-	*I picked 5150 to be the ip address.  If you don't specify it, docker will pick a port for you.  You can look it up using the docker ps command.
-4. Load your local database.  You can run the seeds, but that won't give you complete data.  The more complete solution is to 
-go into LAITS' PHPMyAdmin at https://pma.la.utexas.edu/, go to database lrc-test, click Export and export the data (you can use the
-"Quick" export).  Then go into your local phpmyadmin, create a database called lrc-test, click Import and load the file you just exported.
-5. Check out the code from svn+ssh://source.la.utexas.edu/repos/lrc-site
-6. In server/app/config, create a folder called local
-7. ftp into file.laits.utexas.edu. Navigate to /mnt/projects/app-configs/lrc-site/test.  Copy all those files into your new local folder.
-8. Edit database.php.  Change the host to ipaddress/2112, user to root and password to whatever you picked.
-9. docker login docker-registry.la.utexas.edu - log on with your EID and password.  If off campus, you'll need to be on the VPN.
-10. docker run -p 8088:80 -v /your/laravel/project/folder:/var/www/html docker-registry.la.utexas.edu/base_laravel:latest
+	*I picked 5150 to be the port.  If you don't specify it, docker will pick a port for you.  You can look it up using the docker ps command.
+6. Load your local database.  You can run the seeds, but that won't give you complete data.  The more complete solution is to 
+go into LAITS' PHPMyAdmin at https://pma.la.utexas.edu/, go to database lrc-test, click Export and export the data 
+(you will probably need to 2 this in 2 batches so file size doesn't get too big.  Do one export of the EIEOL files and one of everything else.)
+Then go into your local phpmyadmin, create a database called lrc-test, click Import and load the files you just exported.
+7. In Eclipse, in server/app/config, create a folder called local
+8. ftp into file.laits.utexas.edu. Navigate to /mnt/projects/app-configs/lrc-site/test.  Copy all those files into your new local folder.
+9. Edit database.php.  Change the host to ipaddress/2112, user to root and password to whatever you picked.
+10. docker login docker-registry.la.utexas.edu - log on with your EID and password.  If off campus, you'll need to be on the VPN.
+11. docker run -p 8088:80 -v /c/Users/{user}/workspace/lrc-site/server:/var/www/html docker-registry.la.utexas.edu/base_laravel:latest
+
+Your app should be at your url:8088
 
 
 Migrations

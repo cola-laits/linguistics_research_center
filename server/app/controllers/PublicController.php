@@ -181,7 +181,7 @@ class PublicController extends BaseController {
 			}
 		}
 		global $alphabet;
-		$alphabet = explode(',',$data['language']->custom_sort);
+		
 		//Log::error($alphabet);
 		uksort($data['glosses'], 'alphabet_sorter');
 		return View::make('eieol_master_gloss')->with($data);
@@ -216,7 +216,8 @@ class PublicController extends BaseController {
 			}
 		}
 		global $alphabet;
-		$alphabet = $data['language']->custom_sort;
+		$alphabet = explode(',',$data['language']->custom_sort);
+		//Log::error($alphabet);
 		uksort($data['head_words'],'alphabet_sorter');
 		return View::make('eieol_base_form_dictionary')->with($data);
 	}
