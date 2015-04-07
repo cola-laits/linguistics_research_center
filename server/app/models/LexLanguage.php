@@ -13,6 +13,11 @@ class LexLanguage extends Eloquent {
 		return $this->hasMany('LexReflex', 'language_id', 'id');
 	}
 	
+	public function small_reflexes()
+	{
+		return $this->hasMany('LexReflex', 'language_id', 'id');
+	}
+	
 	public function reflex_count()
 	{
 		return $this->hasMany('LexReflex', 'language_id', 'id')->select(DB::raw('language_id, count(*) as count'))->groupBy('language_id');

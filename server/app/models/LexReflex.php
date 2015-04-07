@@ -7,7 +7,7 @@ class LexReflex extends Eloquent {
 	{
 		return $this->belongsToMany('LexEtyma', 'lex_etyma_reflex', 'reflex_id', 'etyma_id');
 	}
-	
+		
 	public function entries()
 	{
 		return $this->hasMany('LexReflexEntry', 'reflex_id', 'id')->orderBy('entry');

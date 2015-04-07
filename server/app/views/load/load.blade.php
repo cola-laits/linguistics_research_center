@@ -59,5 +59,12 @@ Languages and Sessions need to be copied over using MYSQL export/imports<hr/>
     {{ Form::open(['url' => '/admin/sem_etyma_load/', 'method' => 'POST']) }}
     {{ Form::submit('Semantic-Etyma Load', ['class' => 'btn btn-danger'])}}
     {{ Form::close() }}
- 
+    
+    <hr/>
+	
+	{{ Form::open(['url' => '/admin/paren_count/', 'method' => 'POST']) }}
+    {{ Form::submit('Paren Count', ['class' => 'btn btn-default'])}}
+    Not a load, just for reporting
+    {{ Form::close() }}
+    
 @stop

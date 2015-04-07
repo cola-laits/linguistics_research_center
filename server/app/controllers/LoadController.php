@@ -1,5 +1,12 @@
 <?php
 
+function mb_trim( $string )
+{
+	$string = preg_replace( "/(^\s+)|(\s+$)/us", "", $string );
+
+	return $string;
+}
+
 function print_series($series_id) {
 	print '<code><pre>';
 	$series = EieolSeries::with('lessons.grammars')
@@ -825,7 +832,7 @@ class LoadController extends BaseController {
  						$entry_ctr += 1;
  						$reflex_entry = new LexReflexEntry;
  						$reflex_entry->reflex_id = $hold_reflex_id;
- 						$reflex_entry->entry = Normalizer::normalize($reflexes[$j]->entries[$k], Normalizer::FORM_C );
+ 						$reflex_entry->entry = Normalizer::normalize(trim($reflexes[$j]->entries[$k]), Normalizer::FORM_C );
  						$reflex_entry->order = $entry_ctr * 10;
  						$reflex_entry->created_by = 'loader';
  						$reflex_entry->updated_by = 'loader';
@@ -953,5 +960,36 @@ class LoadController extends BaseController {
 		Log::error('Finishing sem_etyma_load on ' . gethostname() . ' at ' . date("D M d, Y G:i a"));
 	
 	} //end sem_etyma_load function
+	
+	public function paren_count()
+	{
+		ini_set('memory_limit','3000M');
+		ini_set('max_execution_time', 20000);
+		
+		$entries = LexReflexEntry::get();
+		foreach($entries as $entry) {
+			if (mb_strpos($entry->entry,'(', 0,'UTF-8') !== False) {
+				$parts = array();
+				$open = mb_strpos($entry->entry,'(', 0,'UTF-8');
+				$close = mb_strpos($entry->entry,')', 0,'UTF-8');
+				
+				$parts[] = mb_substr($entry->entry, 0, $open, 'UTF-8');
+	
+				$len = $close - $open;//if a reflex contains characters in (), split into 2, ex (g)nosco = gnosco and nosco
+				$parts[] = mb_substr($entry->entry, $open + 1, $len - 1, 'UTF-8');
+						
+				$len = mb_strlen($entry, 'UTF-8') - $close;
+				$parts[] = mb_substr($entry->entry, $close + 1, $len, 'UTF-8');
+				foreach($parts as $part){
+					if (mb_strpos($part,'(', 0,'UTF-8') !== False) {
+						print $entry->id . ' ' . $entry->entry . '<br/>';
+					}
+				}
+			}
+		}
+	
+		print '<hr/>done';
+	
+	} //end paren_count function
 	
 } //end load controller

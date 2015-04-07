@@ -27,3 +27,4 @@ When you commit your code, bamboo/shipyard will run a build and deploy it to lrc
 Bamboo is at https://devtools.la.utexas.edu/bamboo
 Shipyard is at http://shipyard.la.utexas.edu:8080/
 The test app is at http://lrc-test.la.utexas.edu/
+The LAITS mysql phpmyadmin is at https://pma.la.utexas.edu/
