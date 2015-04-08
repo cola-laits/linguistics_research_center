@@ -176,8 +176,8 @@ function store_lessons($series) {
 							} else {
 								$new_head_word = new EieolHeadWord;
 								//fix bad data
-								if ($word == '<dales, dalles, dallĂŠ>') {
-									$word = '<dales, dalles, dallé>';
+								if ($word == '<dales, dalles, dallÄ‚Å >') {
+									$word = '<dales, dalles, dallÃ©>';
 								}
 								$new_head_word->word = $word;
 								$new_head_word->definition = $definition;
@@ -960,6 +960,21 @@ class LoadController extends BaseController {
 		Log::error('Finishing sem_etyma_load on ' . gethostname() . ' at ' . date("D M d, Y G:i a"));
 	
 	} //end sem_etyma_load function
+	
+	public function default_alpha()
+	{
+		Log::error('Starting default_alpha on ' . gethostname() . ' at ' . date("D M d, Y G:i a"));
+		
+		$languages = LexLanguage::get();
+		foreach($languages as $language) {
+			$language->custom_sort = 'aAàǣ,ā,bB,cC,dD,eEēÉe̐,é,fF,gG,hH,iIīí,jJ,kK,lL,mM,nN,oOò,ō,ð,pP,qQ,rR,sS,tT,uUúū,vV,wW,xX,yY,zZ';
+			$language->save();
+		}
+			
+		print '<hr/>done';
+		Log::error('Finishing sem_etyma_load on ' . gethostname() . ' at ' . date("D M d, Y G:i a"));
+	
+	} //end default_alpha function
 	
 	public function paren_count()
 	{

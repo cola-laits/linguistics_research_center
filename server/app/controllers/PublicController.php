@@ -29,12 +29,39 @@ function alphabet_sorter($a, $b) {
 	$bLen = mb_strlen($b,'UTF-8');
 	$shorterLen = min($aLen, $bLen);
 
+	//these offsets are so we can ignore - and *
+	$aOffset = 0;
+	$bOffset = 0;
 	//loop through shorter length
 	for ($i=0; $i < $shorterLen; $i++) {
 
 		//get i-th character from each word
-		$aChar = mb_substr($a, $i, 1, 'UTF-8');
-		$bChar = mb_substr($b, $i, 1, 'UTF-8');
+		$retry = True;
+		while ($retry) {
+			$aChar = mb_substr($a, $i + $aOffset, 1, 'UTF-8');
+			if ($aChar == '-' || $aChar == '*') {
+				$aOffset += 1; //try again on the next char
+				if (($aOffset + $i) > $aLen) {
+					$retry = False;
+				}
+			} else {
+				$retry = False;
+			}
+		}
+		
+		$retry = True;
+		while ($retry) {
+			$bChar = mb_substr($b, $i + $bOffset, 1, 'UTF-8');
+			if ($bChar == '-' || $bChar == '*') {
+				$bOffset += 1; //try again on the next char
+				if (($bOffset + $i) > $bLen) {
+					$retry = False;
+				}
+			} else {
+				$retry = False;
+			}
+		}
+			
 
 		//get position in alphabet for each character
 		$alpha_ctr = 0;
@@ -43,13 +70,17 @@ function alphabet_sorter($a, $b) {
  		foreach ($alphabet as $char) {
  			//log::error($char);
  			$alpha_ctr +=1;
- 			if (mb_strpos($char, $aChar, 0,'UTF-8') !== False) {
- 				$aVal = $alpha_ctr;
- 				//log::error('a=' . $aVal);
+ 			if ($aChar){
+	 			if (mb_strpos($char, $aChar, 0,'UTF-8') !== False) {
+	 				$aVal = $alpha_ctr;
+	 				//log::error('a=' . $aVal);
+	 			}
  			}
- 			if (mb_strpos($char, $bChar, 0,'UTF-8') !== False) {
- 				$bVal = $alpha_ctr;
- 				//log::error('b=' . $bVal);
+ 			if ($bChar){
+ 				if (mb_strpos($char, $bChar, 0,'UTF-8') !== False) {
+	 				$bVal = $alpha_ctr;
+	 				//log::error('b=' . $bVal);
+ 				}
  			}
  		}
 		//log::error($aChar . ' ' . $aVal . ' ' . $bChar . ' ' . $bVal);
@@ -181,7 +212,7 @@ class PublicController extends BaseController {
 			}
 		}
 		global $alphabet;
-		
+		$alphabet = explode(',',$data['language']->custom_sort);
 		//Log::error($alphabet);
 		uksort($data['glosses'], 'alphabet_sorter');
 		return View::make('eieol_master_gloss')->with($data);
@@ -390,7 +421,9 @@ class PublicController extends BaseController {
 			} //foreach key
 		} //foreach reflex
 		
-		ksort($data['display_reflexes']);
+ 		global $alphabet;
+ 		$alphabet = explode(',',$data['language']->custom_sort);
+ 		uksort($data['display_reflexes'], 'alphabet_sorter');
 		
 		return View::make('lex_lang_reflexes')->with($data);
 	}

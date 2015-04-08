@@ -60,6 +60,10 @@ Languages and Sessions need to be copied over using MYSQL export/imports<hr/>
     {{ Form::submit('Semantic-Etyma Load', ['class' => 'btn btn-danger'])}}
     {{ Form::close() }}
     
+    {{ Form::open(['url' => '/admin/default_alpha/', 'method' => 'POST']) }}
+    {{ Form::submit('Set default alphabet on Language', ['class' => 'btn btn-danger'])}}
+    {{ Form::close() }}
+    
     <hr/>
 	
 	{{ Form::open(['url' => '/admin/paren_count/', 'method' => 'POST']) }}

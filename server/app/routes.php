@@ -55,5 +55,6 @@ Route::group(array('prefix'=> 'admin', 'before' => 'auth'), function() {
 	Route::post('lex_sem_load', 'LoadController@lex_sem_load');
 	Route::post('lex_load', 'LoadController@lex_load');
 	Route::post('lex_cross_load', 'LoadController@lex_cross_load');
+	Route::post('default_alpha', 'LoadController@default_alpha');
 	Route::post('paren_count', 'LoadController@paren_count');
 });	
