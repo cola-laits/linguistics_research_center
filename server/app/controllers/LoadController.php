@@ -976,6 +976,43 @@ class LoadController extends BaseController {
 	
 	} //end default_alpha function
 	
+	public function link_headword_to_eytma()
+	{
+		Log::error('Starting link_headword_to_eytma on ' . gethostname() . ' at ' . date("D M d, Y G:i a"));
+	
+		$ets = array();
+		$etymas = LexEtyma::get();
+		foreach($etymas as $etyma) {
+			$ets[$etyma->old_id] = $etyma->id;
+		}
+		//print_r($ets);
+		
+		$url = '/var/www/html/app/storage/data_load/eieol_lex_links.json';
+		$myfile = fopen($url, "r") or die("Unable to open file!");
+		$data = json_decode(fread($myfile,filesize($url)));
+		
+		for($i = 0; $i<count($data); $i++) {
+			try{
+				$head_word = EieolHeadWord::where('word', '=', '<' . Normalizer::normalize($data[$i]->word, Normalizer::FORM_C ) . '>')
+											->where('definition', 'like',  '%' . $data[$i]->definition .  '%')
+											->where('language_id', '=', $data[$i]->language_id)
+											->get()[0];
+				$head_word->etyma_id = $ets[$data[$i]->old_etyma_id];
+				$head_word->save();
+			} catch (Exception $e) {
+				echo 'Caught exception: ',  $e->getMessage(), "<br/>";
+				print_r($data[$i]);
+				print '<hr/>';
+			}
+			#print $head_word . '<br/>';		
+		}
+			
+		print '<hr/>done<hr/>';
+		print 'WARNING:  If there are anyexeptions, go add them by hand in phpmyadmin';
+		Log::error('Finishing link_headword_to_eytma on ' . gethostname() . ' at ' . date("D M d, Y G:i a"));
+	
+	} //end link_headword_to_eytma function
+	
 	public function paren_count()
 	{
 		ini_set('memory_limit','3000M');

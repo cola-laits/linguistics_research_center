@@ -56,5 +56,6 @@ Route::group(array('prefix'=> 'admin', 'before' => 'auth'), function() {
 	Route::post('lex_load', 'LoadController@lex_load');
 	Route::post('lex_cross_load', 'LoadController@lex_cross_load');
 	Route::post('default_alpha', 'LoadController@default_alpha');
+	Route::post('link_headword_to_eytma', 'LoadController@link_headword_to_eytma');
 	Route::post('paren_count', 'LoadController@paren_count');
 });	

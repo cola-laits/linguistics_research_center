@@ -58,6 +58,7 @@ return array(
     'ChangeGlossToUseElement' => $baseDir . '/app/database/migrations/2015_01_13_111707_change_gloss_to_use_element.php',
     'ChangeHeadWordCollation' => $baseDir . '/app/database/migrations/2015_02_26_091441_change_head_word_collation.php',
     'ChangeHeadWordToPointToLanguage' => $baseDir . '/app/database/migrations/2015_01_07_094018_change_head_word_to_point_to_language.php',
+    'ChangeHeadwordToAddEtymaid' => $baseDir . '/app/database/migrations/2015_04_09_100807_change_headword_to_add_etymaid.php',
     'ChangeKeywordToPointToLanguage' => $baseDir . '/app/database/migrations/2015_01_07_094025_change_keyword_to_point_to_language.php',
     'ChangeKeywordUniqueness' => $baseDir . '/app/database/migrations/2015_03_11_090233_change_keyword_uniqueness.php',
     'ChangeLanguageToAddCustomKeyboardField' => $baseDir . '/app/database/migrations/2015_01_09_092009_change_language_to_add_custom_keyboard_field.php',

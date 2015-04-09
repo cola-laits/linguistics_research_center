@@ -1,7 +1,7 @@
 ???Some langs link to other langs - Old English/Anglo-Saxon.  Gaelic and Scots Gaelic, though the existing site is kind of broken
+???sort problems with ǣ
 
 Headword
-	Load  - Go to each dictionary, find each entry with Pokorny
 	Add Pokorny ID to headword, add to EIEOL forms
 	EIEOL - Dictionary - links to Pokorny
 

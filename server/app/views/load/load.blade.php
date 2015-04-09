@@ -64,6 +64,10 @@ Languages and Sessions need to be copied over using MYSQL export/imports<hr/>
     {{ Form::submit('Set default alphabet on Language', ['class' => 'btn btn-danger'])}}
     {{ Form::close() }}
     
+    {{ Form::open(['url' => '/admin/link_headword_to_eytma/', 'method' => 'POST']) }}
+    {{ Form::submit('Link Headwords to etymas, dude', ['class' => 'btn btn-danger'])}}
+    {{ Form::close() }}
+    
     <hr/>
 	
 	{{ Form::open(['url' => '/admin/paren_count/', 'method' => 'POST']) }}
