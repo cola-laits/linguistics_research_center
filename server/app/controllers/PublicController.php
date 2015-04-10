@@ -23,45 +23,18 @@ function alphabet_sorter($a, $b) {
 
 	//because this function is passed by uksort, we pass the alphabet in a global
 	global $alphabet;
-
+	
 	//get length of each word and see which is shorter
 	$aLen = mb_strlen($a,'UTF-8');
 	$bLen = mb_strlen($b,'UTF-8');
 	$shorterLen = min($aLen, $bLen);
 
-	//these offsets are so we can ignore - and *
-	$aOffset = 0;
-	$bOffset = 0;
 	//loop through shorter length
 	for ($i=0; $i < $shorterLen; $i++) {
 
 		//get i-th character from each word
-		$retry = True;
-		while ($retry) {
-			$aChar = mb_substr($a, $i + $aOffset, 1, 'UTF-8');
-			if ($aChar == '-' || $aChar == '*') {
-				$aOffset += 1; //try again on the next char
-				if (($aOffset + $i) > $aLen) {
-					$retry = False;
-				}
-			} else {
-				$retry = False;
-			}
-		}
-		
-		$retry = True;
-		while ($retry) {
-			$bChar = mb_substr($b, $i + $bOffset, 1, 'UTF-8');
-			if ($bChar == '-' || $bChar == '*') {
-				$bOffset += 1; //try again on the next char
-				if (($bOffset + $i) > $bLen) {
-					$retry = False;
-				}
-			} else {
-				$retry = False;
-			}
-		}
-			
+		$aChar = mb_substr($a, $i, 1, 'UTF-8');
+		$bChar = mb_substr($b, $i, 1, 'UTF-8');		
 
 		//get position in alphabet for each character
 		$alpha_ctr = 0;
@@ -70,17 +43,13 @@ function alphabet_sorter($a, $b) {
  		foreach ($alphabet as $char) {
  			//log::error($char);
  			$alpha_ctr +=1;
- 			if ($aChar){
-	 			if (mb_strpos($char, $aChar, 0,'UTF-8') !== False) {
-	 				$aVal = $alpha_ctr;
-	 				//log::error('a=' . $aVal);
-	 			}
- 			}
- 			if ($bChar){
- 				if (mb_strpos($char, $bChar, 0,'UTF-8') !== False) {
-	 				$bVal = $alpha_ctr;
-	 				//log::error('b=' . $bVal);
- 				}
+	 		if (mb_strpos($char, $aChar, 0,'UTF-8') !== False) {
+	 			$aVal = $alpha_ctr;
+	 			//log::error('a=' . $aVal);
+	 		}
+ 			if (mb_strpos($char, $bChar, 0,'UTF-8') !== False) {
+	 			$bVal = $alpha_ctr;
+	 			//log::error('b=' . $bVal);
  			}
  		}
 		//log::error($aChar . ' ' . $aVal . ' ' . $bChar . ' ' . $bVal);
@@ -373,9 +342,26 @@ class PublicController extends BaseController {
 	
 	public function lex_lang_reflexes($language_id)
 	{
+		//This is the most complicate code in the whole LRC system
+		
+		//these characters will not be used when sorting the keys of the array
+		$the_unwanted = array("-", "*", "'");
+		
 		$data = array();
 		$data['language'] = LexLanguage::find($language_id);
-		
+			
+		//each language has a custom sort array.  We are going to reindex it with weights.  ie a->1, b->2
+		$alphabet = explode(',',$data['language']->custom_sort);
+		$alpha_weights = array();
+		$ctr = 0;
+		foreach($alphabet as $alpha) {
+			$ctr += 1;
+			for( $i = 0; $i <= mb_strlen($alpha, 'UTF-8'); $i++ ) {
+				$alpha_weights[mb_substr($alpha, $i, 1, 'UTF-8')] = $ctr;
+			}
+		}
+
+		//get all the reflexes.  The Eloquent ORM is too slow, so we have to write our own SQL
 		$temp_reflexes = DB::select( DB::raw("SELECT lex_reflex.id, lex_reflex.class_attribute, lex_reflex.lang_attribute, 
 													 lex_reflex_entry.entry, 
 													 lex_etyma.entry as etyma_entry, lex_etyma.id as etyma_id, lex_etyma.gloss 
@@ -386,28 +372,54 @@ class PublicController extends BaseController {
 				AND lex_etyma.id = lex_etyma_reflex.etyma_id") );
 		
 		$data['display_reflexes'] = array();
+		
+		//building the list of reflexes is complicated.
 		foreach($temp_reflexes as $reflex) {
 			$keys=array();
+			//special processing based on whether or not the entry has a ( in it
 			if (mb_strpos($reflex->entry,'(', 0,'UTF-8') === False) {
+				//regular entry
 				$keys[] = $reflex->entry;
 			} else {
 				//if a reflex contains characters in (), split into 2, ex (g)nosco = gnosco and nosco				
 				$keys = split_entries($reflex->entry);
 			}
 						
-			
+			//now build array of reflexes, combining where needed.
+			//also, convert the key reflex to a series of numbers based on the weighted alphabet array for easy sorting.
 			foreach($keys as $key) {
+				
+				//convert key to an array of numbers for easy searching
+				//break string into an array
+				$key_array = preg_split('//u',$key, -1, PREG_SPLIT_NO_EMPTY);
+
+				$new_key = '';
+				foreach($key_array as $key_char) {
+					//remove any unwanted characters to the end.  
+					if (in_array($key_char,$the_unwanted)) {
+						continue;
+					} elseif (array_key_exists($key_char,$alpha_weights)) {
+						$new_key .= str_pad($alpha_weights[$key_char], 4,'0', STR_PAD_LEFT);
+					} else {
+						$new_key .= '0000';
+					}
+				}
+				//Tack the original entry on to the end.  This way the keys remain unique but the ending isn't really used for sorting
+				$new_key .= $key;
+				//print $key . ' ' . $new_key . '<br/>';
+				
 				//if 2 reflexes are the same, group them
-				if (array_key_exists($key,$data['display_reflexes'])) {
+				if (array_key_exists($new_key,$data['display_reflexes'])) {
 					$temp_etyma = array();
 					$temp_etyma['entry'] = $reflex->etyma_entry;
 					$temp_etyma['gloss'] = $reflex->gloss;
 					$temp_etyma['id'] = $reflex->etyma_id;
-					$data['display_reflexes'][$key]['etymas'][] = $temp_etyma;
-					ksort($data['display_reflexes'][$key]['etymas']);
+					$data['display_reflexes'][$new_key]['etymas'][] = $temp_etyma;
+					ksort($data['display_reflexes'][$new_key]['etymas']);
 				} else {
 					$new_reflex = array();
 					$new_reflex['id'] = $reflex->id;
+					$new_reflex['reflex'] = $key;
 					$new_reflex['class_attribute'] = $reflex->class_attribute;
 					$new_reflex['lang_attribute'] = $reflex->lang_attribute;
 					$new_reflex['etymas'] = array();
@@ -416,14 +428,14 @@ class PublicController extends BaseController {
 					$temp_etyma['gloss'] = $reflex->gloss;
 					$temp_etyma['id'] = $reflex->etyma_id;
 					$new_reflex['etymas'][] = $temp_etyma;
-					$data['display_reflexes'][$key] = $new_reflex;
+					
+					$data['display_reflexes'][$new_key] = $new_reflex;
 				}
 			} //foreach key
 		} //foreach reflex
 		
- 		global $alphabet;
- 		$alphabet = explode(',',$data['language']->custom_sort);
- 		uksort($data['display_reflexes'], 'alphabet_sorter');
+		//we have to use a string sort or it will think these are ints and shortest entries will come first
+ 		ksort($data['display_reflexes'], $sort_flags = SORT_STRING); 
 		
 		return View::make('lex_lang_reflexes')->with($data);
 	}

@@ -33,11 +33,11 @@ or <i>lie</i>, represent multiple reflexes derived from different PIE etyma.</p>
 <table border='0' summary="{{$language->name}} reflex index">
   <tr><th scope='col'>Reflex</th><th scope='col'>Etyma</th></tr>
   
-  @foreach($display_reflexes as $key => $reflex)
+  @foreach($display_reflexes as $reflex)
   	<tr>
   		<td>
   			<a id='{{$reflex['id']}}' name='{{$reflex['id']}}'></a>
-  			<span class='{{$reflex['class_attribute']}}' lang='{{$reflex['lang_attribute']}}'>{{$key}}</span>
+  			<span class='{{$reflex['class_attribute']}}' lang='{{$reflex['lang_attribute']}}'>{{$reflex['reflex']}}</span>
   		</td>
   		<td>
   			@foreach($reflex['etymas'] as $index => $temp_etyma)

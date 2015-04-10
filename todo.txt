@@ -1,5 +1,4 @@
-???Some langs link to other langs - Old English/Anglo-Saxon.  Gaelic and Scots Gaelic, though the existing site is kind of broken
-???sort problems with ǣ
+???sort problems with ǣ and œ
 
 Headword
 	Add Pokorny ID to headword, add to EIEOL forms
