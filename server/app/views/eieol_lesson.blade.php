@@ -8,6 +8,23 @@
 @include('menu_series', array('data'=>'data'))
 @include('menu_resources', array('data'=>'data'))
 
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".glossed_text").click(function(e){
+			var s = window.getSelection();
+	        s.modify('extend','backward','word');        
+	        var b = s.toString();
+
+	        s.modify('extend','forward','word');
+	        var a = s.toString();
+	        s.modify('move','forward','character');
+	        surface_form = b+a;
+	        surface_form = surface_form.toLowerCase().replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+	        console.log(surface_form);
+	        $('#gloss_' + surface_form).slideToggle('slow')
+	     });
+	});//document ready
+</script>
 
 	</div> <!-- close menu div -->
 </div> <!-- close container for menu -->
@@ -24,7 +41,7 @@
 	<br/>
 	<ul>
 	@foreach ($glossed_text->glosses as $gloss)
-   		<li>
+   		<li id='gloss_{{strtolower($gloss->surface_form)}}' class='gloss'>
    			<a name='glossed_text_gloss_{{$gloss->pivot->id}}'></a>
     		{{$gloss->getDisplayGloss()}}
     	</li>

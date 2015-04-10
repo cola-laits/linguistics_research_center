@@ -538,3 +538,7 @@ h2, h3, h4, h5, h6 {
   display: inline-block;
   width: 200px;
 }
+
+.gloss {
+	display: none;
+}
