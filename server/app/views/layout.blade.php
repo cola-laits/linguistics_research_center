@@ -6,8 +6,16 @@
 <title>@section('title') The Linguistics Research Center @show</title>
 {{ HTML::style('css/lrcstyle.css') }}
 {{ HTML::style('https://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css') }}
+{{ HTML::style('//cdn.datatables.net/1.10.6/css/jquery.dataTables.min.css') }}
+{{ HTML::style('css/demo_table_jui.css') }}
+
+
+
+
+
         
 {{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js') }}
+{{ HTML::script('//cdn.datatables.net/1.10.6/js/jquery.dataTables.min.js') }}
 
 <!-- Dublin Core Metadata (DC) -->
 <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />

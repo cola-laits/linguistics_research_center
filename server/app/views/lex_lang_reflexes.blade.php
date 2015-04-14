@@ -6,6 +6,23 @@
 
 @include('menu_lex')
 
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('.reflexTable').DataTable({
+ 	        "bJQueryUI": true,
+ 	    	"iDisplayLength": 10,
+ 	    	"sPaginationType": "full_numbers",
+ 	    	//"sDom": '<"H"Tfr>t<"F"ipl>',
+ 	        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+ 	        "bSort" : false,
+ 	         "fnInitComplete": function(oSettings, json) {
+ 	        	$('.loading').toggle();
+ 	          	$('.reflexTable').toggle();
+ 	         }
+	    });
+	});//document ready
+</script>
+
 
     </div> <!-- close menu div -->
 </div> <!-- close container for menu -->
@@ -30,9 +47,20 @@ derived from multiple PIE etyma; or a single spelling may, like English <i>bear<
 or <i>lie</i>, represent multiple reflexes derived from different PIE etyma.</p>
 
 
-<table border='0' summary="{{$language->name}} reflex index">
-  <tr><th scope='col'>Reflex</th><th scope='col'>Etyma</th></tr>
+
+<div class="loading">
+    {{ HTML::image('images/ajax_loader_blue_512.gif', $alt="Loading", $attributes = array('border'=>0))  }}
+</div>
+
+<table border='0' summary="{{$language->name}} reflex index" class="reflexTable">
+  <thead>
+  	<tr>
+  		<th scope='col'>Reflex</th>
+  		<th scope='col'>Etyma</th>
+  	</tr>
+  </thead>
   
+  <tbody>
   @foreach($display_reflexes as $reflex)
   	<tr>
   		<td>
@@ -48,6 +76,7 @@ or <i>lie</i>, represent multiple reflexes derived from different PIE etyma.</p>
   		</td>
   	</tr>
   @endforeach
+  </tbody>
 </table>    
 
 @stop

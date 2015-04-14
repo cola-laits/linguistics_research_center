@@ -20,7 +20,6 @@
 	        s.modify('move','forward','character');
 	        surface_form = b+a;
 	        surface_form = surface_form.toLowerCase().replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()]/g,"");
-	        console.log(surface_form);
 	        $('#gloss_' + surface_form).slideToggle('slow')
 	     });
 	});//document ready

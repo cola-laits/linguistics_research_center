@@ -1,9 +1,5 @@
-???sort problems with ǣ and œ
-Export words that have Tolkien in their gloss to another language
-Add alpha links at top of language reflex page.  Or find another way to search things.  
-	- when building hash table, add each first letter to an array, then sort it the same way as the entries.  Or do it in jQuery.
-	- better yet, use datatables.
-On eieol lesson - improve and test clicking glossed texts to open glosses
+On eieol lesson - improve and test clicking glossed texts to open glosses - speed, works on every gloss?, make words look like links, expand all
+Lang-reflex page - move code to models
 
 Headword
 	Add Pokorny ID to headword, add to EIEOL forms
@@ -42,6 +38,9 @@ Implementation
 	Redirects - for each subfolder in http://www.utexas.edu/cola/centers/lrc/, redirect to appropriate location on new system
 		
 Future Ideas
+	sort problems with ǣ and œ.  Look at Unicode Collation Algorithm.  
+		Perhaps just let them map characters like ǣ = ae.  
+	Export words that have Tolkien in their gloss to another language
 	Export data for other purposes
 	Authorization by series?
 	When updating - warn if it has been updated since you loaded it?
