@@ -1,5 +1,4 @@
-On eieol lesson - improve and test clicking glossed texts to open glosses - speed, works on every gloss?, make words look like links, expand all
-Lang-reflex page - move code to models
+public controller - move code to models
 
 Headword
 	Add Pokorny ID to headword, add to EIEOL forms
@@ -15,7 +14,7 @@ Admin
 ***DOI - Digital Object Identifier
 Part of Speech editor? use FrozenNode?
 	Analysis editor? use FrozenNode?
-	
+
 Public
 ***Export series to PDF
 ***Links to/from static pages, share css and header from cascade
@@ -38,6 +37,7 @@ Implementation
 	Redirects - for each subfolder in http://www.utexas.edu/cola/centers/lrc/, redirect to appropriate location on new system
 		
 Future Ideas
+	Clickable glossed text doesn't work well in Sanskrit
 	sort problems with ǣ and œ.  Look at Unicode Collation Algorithm.  
 		Perhaps just let them map characters like ǣ = ae.  
 	Export words that have Tolkien in their gloss to another language
@@ -56,3 +56,8 @@ Future Ideas
 	CKEditor - Add language plugin http://ckeditor.com/forums/Plugins/Language-Semantics, use our lang and class attributes with it
 	Warn if logon is about to expire, or show a countdown clock.
 	Public/lex/lang/reflex - alpha index at top of page or use a search
+	When updating glossed texts and glosses, make sure they match so the clickable interface will work
+	Clickable glosses - fix errors like on http://192.168.59.103:8088/eieol_lesson/6?id=721 and sanskrit where glosses don't match the glossed text
+		- add expand all button
+		- fix linking from the glossary, dictionary and meaning index.  If an anchor is in the link, toggle it open. 
+	On lessons page, use high charts to graph 5 most used nouns and verbs

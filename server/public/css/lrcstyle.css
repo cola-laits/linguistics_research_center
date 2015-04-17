@@ -546,3 +546,26 @@ h2, h3, h4, h5, h6 {
 .reflexTable {
 	display: none;
 }
+
+.clicked {
+	color: purple;
+}
+
+.boxey {
+	border-style: solid;
+    border-width: 1px;
+    min-height: 5px;
+    margin: 5px;
+    padding: 3px;
+}
+
+.expand_all {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+}
+
+.collapse_all {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	color: purple;
+}

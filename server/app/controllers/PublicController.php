@@ -83,14 +83,13 @@ function split_entries($entry) {
 	if (mb_strpos($short,'(', 0,'UTF-8') === False) {
 		$keys[] = $short;
 	} else {
-		print_r(split_entries($short));
+		//print_r(split_entries($short));
 		$keys = array_merge($keys,split_entries($short));
 	}
 	
 	if (mb_strpos($long,'(', 0,'UTF-8') === False) {
 		$keys[] = $long;
 	} else {
-		print 'recurse long';
 		$keys = array_merge($keys,split_entries($long));
 	}
 	
@@ -130,6 +129,8 @@ class PublicController extends BaseController {
 			->orderBy('order')
 			->first();
 		}
+		
+		//build lesson_text
 		$data['lesson_text'] = '';
 		foreach ($data['lesson']->glossed_texts as $glossed_text) {
 			$data['lesson_text'] .= $glossed_text->glossed_text . ' ';

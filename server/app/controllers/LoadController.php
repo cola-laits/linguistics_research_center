@@ -81,7 +81,7 @@ function store_lessons($series) {
 		$lesson = $data[$i];
 		print $i . ' ' . $lesson->title . '<br/>';
 		$new_lesson = new EieolLesson;
-		$new_lesson->title =  Normalizer::normalize($lesson->title, Normalizer::FORM_C );
+		$new_lesson->title =  Normalizer::normalize($lesson->title, Normalizer::FORM_D );
 		$new_lesson->order = $lesson->order * 10;
 		$new_lesson->series_id = $series['series_id'];
 		if (array_key_exists('language_id',$series) ) {
@@ -90,8 +90,8 @@ function store_lessons($series) {
 			$temp_language_id = $series['language_id_' . (string) $lesson->order];
 		}
 		$new_lesson->language_id = $temp_language_id;
-		$new_lesson->intro_text = Normalizer::normalize($lesson->intro_text, Normalizer::FORM_C );
-		$new_lesson->lesson_translation =  Normalizer::normalize($lesson->lesson_translation, Normalizer::FORM_C );
+		$new_lesson->intro_text = Normalizer::normalize($lesson->intro_text, Normalizer::FORM_D );
+		$new_lesson->lesson_translation =  Normalizer::normalize($lesson->lesson_translation, Normalizer::FORM_D );
 		$new_lesson->created_by = 'loader';
 		$new_lesson->updated_by = 'loader';
 		
@@ -120,7 +120,7 @@ function store_lessons($series) {
 			foreach ($lesson->glossed_texts as $glossed_text){
 				$new_glossed_text = new EieolGlossedText;
 				$new_glossed_text->lesson_id = $new_lesson->id;
-				$new_glossed_text->glossed_text = Normalizer::normalize($glossed_text->glossed_text, Normalizer::FORM_C );
+				$new_glossed_text->glossed_text = Normalizer::normalize($glossed_text->glossed_text, Normalizer::FORM_D );
 				$new_glossed_text->order = $glossed_text->order * 10;
 				$new_glossed_text->created_by = 'loader';
 				$new_glossed_text->updated_by = 'loader';
@@ -128,9 +128,9 @@ function store_lessons($series) {
 				
 				foreach ($glossed_text->glosses as $gloss) {
 					$new_glossed_text_gloss = new EieolGlossedTextGloss;
-					$surface_form = Normalizer::normalize($gloss->surface_form, Normalizer::FORM_C );
+					$surface_form = Normalizer::normalize($gloss->surface_form, Normalizer::FORM_D );
 					$part_of_speech = $gloss->elements[0]->part_of_speech;
-					$contextual_gloss = Normalizer::normalize($gloss->contextual_gloss, Normalizer::FORM_C );
+					$contextual_gloss = Normalizer::normalize($gloss->contextual_gloss, Normalizer::FORM_D );
 					
 					if (array_key_exists('analysis',$gloss->elements[0])) {
 						$analysis = $gloss->elements[0]->analysis;
@@ -140,7 +140,7 @@ function store_lessons($series) {
 					
 					//get first headword
 					foreach ($gloss->elements as $element) {
-						$head_word = Normalizer::normalize($element->head_word->word, Normalizer::FORM_C );
+						$head_word = Normalizer::normalize($element->head_word->word, Normalizer::FORM_D );
 						break;
 					}
 					
@@ -154,7 +154,7 @@ function store_lessons($series) {
 						$new_gloss->surface_form = $surface_form;
 						$new_gloss->contextual_gloss = $contextual_gloss;
 						if (array_key_exists('comments',$gloss) ) {
-							$new_gloss->comments = Normalizer::normalize($gloss->comments, Normalizer::FORM_C );
+							$new_gloss->comments = Normalizer::normalize($gloss->comments, Normalizer::FORM_D );
 						}
 						$new_gloss->language_id = $temp_language_id;
 						$new_gloss->created_by = 'loader';
@@ -166,8 +166,8 @@ function store_lessons($series) {
 						foreach ($gloss->elements as $element) {
 							$new_element = new EieolElement;
 						
-							$word = Normalizer::normalize($element->head_word->word, Normalizer::FORM_C );
-							$definition = Normalizer::normalize($element->head_word->definition, Normalizer::FORM_C );
+							$word = Normalizer::normalize($element->head_word->word, Normalizer::FORM_D );
+							$definition = Normalizer::normalize($element->head_word->definition, Normalizer::FORM_D );
 							$head_word_key = $word . '~~~' . $definition . '~~~' . $temp_language_id;
 							//Log::error($head_word_key);
 						
@@ -218,10 +218,10 @@ function store_lessons($series) {
 			foreach ($lesson->grammars as $grammar){
 				$new_grammar = new EieolGrammar;
 				$new_grammar->lesson_id = $new_lesson->id;
-				$new_grammar->title = Normalizer::normalize($grammar->title, Normalizer::FORM_C );
+				$new_grammar->title = Normalizer::normalize($grammar->title, Normalizer::FORM_D );
 				$new_grammar->order = $grammar->order * 10;
 				$new_grammar->section_number = $grammar->section_number;
-				$new_grammar->grammar_text = Normalizer::normalize($grammar->grammar_text, Normalizer::FORM_C );				
+				$new_grammar->grammar_text = Normalizer::normalize($grammar->grammar_text, Normalizer::FORM_D );				
 				$new_grammar->lesson_id = $new_lesson->id;
 				$new_grammar->created_by = 'loader';
 				$new_grammar->updated_by = 'loader';
@@ -487,7 +487,7 @@ class LoadController extends BaseController {
 				$myfile = fopen($url, "r") or die("Unable to open file!");
 				$data = json_decode(fread($myfile,filesize($url)));
 				for($i = 0; $i<count($data); $i++) {
-					$head_word = Normalizer::normalize($data[$i]->head_word, Normalizer::FORM_C );
+					$head_word = Normalizer::normalize($data[$i]->head_word, Normalizer::FORM_D );
 					//hack to fix bad data
 					if ($data[$i]->definition == 'strike ...against') {
 						$data[$i]->definition = 'strike...against';
@@ -541,6 +541,21 @@ class LoadController extends BaseController {
 		print '<hr/>done';
 	
 	} //end element_count function
+	
+	public function gloss_sweep()
+	{
+		$glosses = EieolGloss::get();
+		foreach($glosses as $gloss) {
+			if (strpos($gloss->comments,'<font size="-1">') !== false) {
+				print $gloss->surface_form . ' ' . $gloss->language_id . ' ' . $gloss->comments  . '<br/>';
+				$gloss->comments = str_replace('<font size="-1">', '', $gloss->comments);
+				$gloss->save();
+			}
+		}
+	
+		print '<hr/>done';
+	
+	} //end gloss_sweep function
 	
 	public function pos_analysis_load()
 	{
@@ -791,7 +806,7 @@ class LoadController extends BaseController {
  			$etyma->old_id = $data[$i]->old_id;
  			$etyma->order = $data[$i]->old_id * 10;
  			$etyma->page_number = $data[$i]->page_number;
- 			$etyma->entry = Normalizer::normalize($data[$i]->entry, Normalizer::FORM_C );
+ 			$etyma->entry = Normalizer::normalize($data[$i]->entry, Normalizer::FORM_D );
  			$etyma->gloss = $data[$i]->gloss;
  			$etyma->created_by = 'loader';
  			$etyma->updated_by = 'loader';
@@ -832,7 +847,7 @@ class LoadController extends BaseController {
  						$entry_ctr += 1;
  						$reflex_entry = new LexReflexEntry;
  						$reflex_entry->reflex_id = $hold_reflex_id;
- 						$reflex_entry->entry = Normalizer::normalize(trim($reflexes[$j]->entries[$k]), Normalizer::FORM_C );
+ 						$reflex_entry->entry = Normalizer::normalize(trim($reflexes[$j]->entries[$k]), Normalizer::FORM_D );
  						$reflex_entry->order = $entry_ctr * 10;
  						$reflex_entry->created_by = 'loader';
  						$reflex_entry->updated_by = 'loader';
@@ -993,7 +1008,7 @@ class LoadController extends BaseController {
 		
 		for($i = 0; $i<count($data); $i++) {
 			try{
-				$head_word = EieolHeadWord::where('word', '=', '<' . Normalizer::normalize($data[$i]->word, Normalizer::FORM_C ) . '>')
+				$head_word = EieolHeadWord::where('word', '=', '<' . Normalizer::normalize($data[$i]->word, Normalizer::FORM_D ) . '>')
 											->where('definition', 'like',  '%' . $data[$i]->definition .  '%')
 											->where('language_id', '=', $data[$i]->language_id)
 											->get()[0];

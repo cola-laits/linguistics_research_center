@@ -204,6 +204,7 @@ for ul in uls:
                         if '#' in li.renderContents():
                             comments = li.renderContents().split('#')[1]
                             comments = comments.replace("<font size='-1'>","")
+                            comments = comments.replace('<font size="-1">','')
                             comments = comments.replace("</font>","")
                             gloss['comments'] = comments
                         #

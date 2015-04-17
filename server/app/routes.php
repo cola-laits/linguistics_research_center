@@ -48,6 +48,7 @@ Route::group(array('prefix'=> 'admin', 'before' => 'auth'), function() {
 	Route::post('index_load', 'LoadController@index_load');
 	Route::post('element_count', 'LoadController@element_count');
 	Route::post('pos_analysis_load', 'LoadController@pos_analysis_load');
+	Route::post('gloss_sweep', 'LoadController@gloss_sweep');
 	Route::post('sem_etyma_load', 'LoadController@sem_etyma_load');
 	Route::post('lex_sources_load', 'LoadController@lex_sources_load');
 	Route::post('lex_pos_load', 'LoadController@lex_pos_load');

@@ -6,6 +6,7 @@
 <title>@section('title') The Linguistics Research Center @show</title>
 {{ HTML::style('css/lrcstyle.css') }}
 {{ HTML::style('https://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css') }}
+{{ HTML::style('//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css') }}
 {{ HTML::style('//cdn.datatables.net/1.10.6/css/jquery.dataTables.min.css') }}
 {{ HTML::style('css/demo_table_jui.css') }}
 

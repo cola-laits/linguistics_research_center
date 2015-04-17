@@ -8,8 +8,10 @@ Languages and Sessions need to be copied over using MYSQL export/imports<hr/>
 
 	{{ Form::open(['url' => '/admin/eieol_delete/', 'method' => 'POST']) }}
     {{ Form::submit('EIEOL Delete', ['class' => 'btn btn-danger'])}}
-    The delete function deletes all EIEOL tables except POS and Analysis.  Use if you need to reload.
+    The delete function deletes all tables except EIOL POS, EIEOL Analysis, user, migrations and sessions.  Use if you need to reload.
     {{ Form::close() }}
+    
+    <hr/>
     
     {{ Form::open(['url' => '/admin/eieol_load/', 'method' => 'POST']) }}
     {{ Form::submit('EIEOL Load', ['class' => 'btn btn-danger'])}}
@@ -21,6 +23,10 @@ Languages and Sessions need to be copied over using MYSQL export/imports<hr/>
     
     {{ Form::open(['url' => '/admin/pos_analysis_load/', 'method' => 'POST']) }}
     {{ Form::submit('POS/Analysis Load', ['class' => 'btn btn-danger'])}}
+    {{ Form::close() }}
+    
+    {{ Form::open(['url' => '/admin/gloss_sweep/', 'method' => 'POST']) }}
+    {{ Form::submit('Gloss Sweep', ['class' => 'btn btn-danger'])}}
     {{ Form::close() }}
        
 	<hr/>
