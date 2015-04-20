@@ -1,8 +1,5 @@
 public controller - move code to models
 
-Headword
-	Add Pokorny ID to headword, add to EIEOL forms
-
 Admin
 	Maintain Lexicon
 		Use Frozen Node?
@@ -11,7 +8,7 @@ Admin
 ***Allow lessons to store images
 ***Use box to play audio files
 ***DOI - Digital Object Identifier
-Part of Speech editor? use FrozenNode?
+	Part of Speech editor? use FrozenNode?
 	Analysis editor? use FrozenNode?
 
 Public

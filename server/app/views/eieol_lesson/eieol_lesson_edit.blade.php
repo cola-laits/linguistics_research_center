@@ -960,6 +960,12 @@
 					    </div>	     
 					    
 					    <div class='form-group'>
+					        {{ Form::label('etyma_id', 'Etyma') }}
+					        {{ Form::select('etyma_id', $etymas, null, ['class' => 'form-control etyma', 'id' => 'etyma_id']) }}
+					        <div id ="etyma_id_error" class="alert-danger errors"></div>
+					    </div>	
+					    
+					    <div class='form-group'>
 					        {{ Form::label('keywords', 'Keywords') }}
 					        {{ Form::text('keywords', null, ['class' => 'form-control keywords', 'id' => 'new_keywords']) }}
 					        <div class="alert-warning">Separate with commas</div>
@@ -1006,6 +1012,12 @@
 					        {{ Form::label('definition', 'Definition') }}
 					        {{ Form::text('definition', null, ['placeholder' => 'Definition', 'class' => 'form-control', 'id' => 'definition']) }}
 					        <div id ="definition_error" class="alert-danger errors"></div>
+					    </div>	
+					    
+					    <div class='form-group'>
+					        {{ Form::label('etyma_id', 'Etyma') }}
+					        {{ Form::select('etyma_id', $etymas, null, ['class' => 'form-control etyma', 'id' => 'etyma_id']) }}
+					        <div id ="etyma_id_error" class="alert-danger errors"></div>
 					    </div>	
 					    
 					    <div class='form-group'>

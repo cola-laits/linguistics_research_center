@@ -32,7 +32,7 @@ class EieolHeadWordController extends BaseController {
 	 */
 	public function show($id)
 	{
-		$head_word = EieolHeadWord::with('keywords', 'elements')->find($id);
+		$head_word = EieolHeadWord::with('keywords', 'elements', 'etyma')->find($id);
 		$return_head_word = $head_word->toArray();	
 		
 		$glosses = array();
@@ -52,6 +52,7 @@ class EieolHeadWordController extends BaseController {
 		foreach($head_word->keywords as $keyword) {
 			$return_head_word['keywords'] .= $keyword->keyword . ',';
 		}
+		
 		return $return_head_word;
 	}
 	
@@ -88,6 +89,11 @@ class EieolHeadWordController extends BaseController {
 				$head_word = new EieolHeadWord;
 				$head_word->word = Normalizer::normalize(Input::get('word'), Normalizer::FORM_C );
 				$head_word->definition = Normalizer::normalize(Input::get('definition'), Normalizer::FORM_C );
+				if (Input::get('etyma_id') == '0') {
+					$head_word->etyma_id = null;
+				} else {
+					$head_word->etyma_id = Input::get('etyma_id');
+				}
 				$head_word->language_id = Input::get('language_id');
 				$head_word->created_by = Auth::user()->username;
 				$head_word->updated_by = Auth::user()->username;
@@ -148,6 +154,11 @@ class EieolHeadWordController extends BaseController {
 			$head_word = DB::transaction(function($id) use ($id) {
 				$head_word = EieolHeadWord::with('keywords')->find($id);
 				$head_word->word = Normalizer::normalize(Input::get('word'), Normalizer::FORM_C );
+				if (Input::get('etyma_id') == '0') {
+					$head_word->etyma_id = null;
+				} else {
+					$head_word->etyma_id = Input::get('etyma_id');
+				}
 				$head_word->definition = Normalizer::normalize(Input::get('definition'), Normalizer::FORM_C );
 				$head_word->updated_by = Auth::user()->username;
 			

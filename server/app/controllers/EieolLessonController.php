@@ -77,10 +77,16 @@ class EieolLessonController extends BaseController {
 		$languages[''] = 'Select a Language';
 		$languages += EieolLanguage::lists('language','id');
 		
+		//get etymas for pulldown
+		$etymas = array();
+		$etymas[0] = 'Select an Etyma';
+		$etymas += LexEtyma::lists('entry', 'id');
+		
 		return View::make('eieol_lesson.eieol_lesson_edit', ['lesson' => $lesson, 
 															 'grammars' => $grammars, 
 															 'glossed_texts' => $glossed_texts,
-															 'languages' => $languages]);
+															 'languages' => $languages,
+															 'etymas' => $etymas]);
 	}
 
 

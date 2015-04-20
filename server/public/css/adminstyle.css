@@ -68,3 +68,7 @@ input[type="text"] {
 textarea {
 	font-family: Times New Roman, Times, serif;
 }
+
+.etyma {
+	width: 100%;
+}
