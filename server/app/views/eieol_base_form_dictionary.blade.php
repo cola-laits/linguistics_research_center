@@ -38,7 +38,12 @@ curious about Indo-European etymology. Notice of potential error is always welco
 <br/><br/><br/>
 
 @foreach ($head_words as $head_word)
-	<dt>{{$head_word['display']}} --</dt>
+	<dt>{{$head_word['display']}} --
+		@if($head_word['etyma'] != null) 
+			[<a href="/lex_pokorny/#P{{$head_word['etyma']['id']}}">Pokorny</a>
+			<span class='Unicode' lang='ine'>{{$head_word['etyma']['entry']}} </span> <strong>::</strong> {{$head_word['etyma']['gloss']}}] &nbsp; --
+		@endif
+	</dt>
 	<dd>
 		<ul>
 			@foreach ($head_word['glossed_text_gloss_ids'] as $id => $lesson)

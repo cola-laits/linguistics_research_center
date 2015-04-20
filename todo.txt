@@ -2,7 +2,6 @@ public controller - move code to models
 
 Headword
 	Add Pokorny ID to headword, add to EIEOL forms
-	EIEOL - Dictionary - links to Pokorny
 
 Admin
 	Maintain Lexicon

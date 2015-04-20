@@ -192,7 +192,7 @@ class PublicController extends BaseController {
 	{
 		$data = get_series_info($series_id);
 		$data['language'] = EieolLanguage::find($language_id);
-		$lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word.language')
+		$lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word.language','glossed_texts.glosses.elements.head_word.etyma')
 		->where('series_id', '=', $series_id)
 		->where('language_id', '=', $language_id)
 		->select(array('id','title','order'))

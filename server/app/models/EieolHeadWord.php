@@ -18,9 +18,14 @@ class EieolHeadWord extends Eloquent {
 		return $this->belongsTo('EieolLanguage');
 	}
 	
+	public function etyma()
+	{
+		return $this->belongsTo('LexEtyma');
+	}
+	
 	public function getDisplayHeadWord()
 	{
-		//return headword and definition in the format <nobr>&lt;<span lang='cu' class='Cyrillic'>ѥс-, ѥсмь, ѥси</span>&gt;</nobr> be
+		//return headword and definition in the format <nobr>&lt;<span lang='cu' class='Cyrillic'>Ñ¥Ñ�-, Ñ¥Ñ�Ð¼ÑŒ, Ñ¥Ñ�Ð¸</span>&gt;</nobr> be
 		//trim <>
 		$word = $this->word;
 		$word = substr($word,1);

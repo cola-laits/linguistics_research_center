@@ -3,6 +3,7 @@ encoding//server/app/controllers/LoadController.php=UTF-8
 encoding//server/app/controllers/PublicController.php=UTF-8
 encoding//server/app/database/migrations/2015_04_08_131318_change_lex_language_to_add_custom_sort.php=UTF-8
 encoding//server/app/models/EieolGlossedText.php=UTF-8
+encoding//server/app/models/EieolHeadWord.php=UTF-8
 encoding//server/app/views/lex_lang_reflexes.blade.php=UTF-8
 encoding//server/app/views/lex_pokorny.blade.php=UTF-8
 encoding//server/app/views/lex_reflex.blade.php=UTF-8
