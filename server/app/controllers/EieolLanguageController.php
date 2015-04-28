@@ -65,7 +65,7 @@ class EieolLanguageController extends BaseController {
 		$validator = Validator::make(Input::all(), $rules);
 		
 		if ($validator->fails()) {
-			return Redirect::to('/admin/eieol_language/create')
+			return Redirect::to('/admin2/eieol_language/create')
 			->withErrors($validator->messages())
 			->withInput();
 		} else {
@@ -82,7 +82,7 @@ class EieolLanguageController extends BaseController {
 			
 			$language->save();
 			Session::flash('message', $language->language . ' has been created');
-			return Redirect::to('/admin/eieol_language');
+			return Redirect::to('/admin2/eieol_language/' . $language->id . '/edit');
 		}
 
 	}
@@ -122,7 +122,7 @@ class EieolLanguageController extends BaseController {
 		$validator = Validator::make(Input::all(), $rules,$messages);
 		
 		if ($validator->fails()) {
-			return Redirect::to('/admin/eieol_language/' . $id . '/edit')
+			return Redirect::to('/admin2/eieol_language/' . $id . '/edit')
 			->withErrors($validator->messages())
 			->withInput();
 		} else {
@@ -138,7 +138,7 @@ class EieolLanguageController extends BaseController {
 			$language->save();
 			
 			Session::flash('message', $language->language . ' has been updated');
-			return Redirect::to('/admin/eieol_language');
+			return Redirect::to('/admin2/eieol_language/' . $language->id . '/edit');
 		}
 	}
 

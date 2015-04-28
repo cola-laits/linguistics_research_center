@@ -20,7 +20,7 @@
  
  	{{ Form::open(['role' => 'form', 
  				   'method' => 'PUT', 
- 				   'url' => '/admin/user/change_password/' . $id]) }}
+ 				   'url' => '/admin2/user/change_password/' . $id]) }}
  
     <div class='form-group @if ($errors->has('password')) has-error @endif  '>
         {{ Form::label('password', 'Password') }}

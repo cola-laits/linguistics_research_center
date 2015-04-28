@@ -43,7 +43,7 @@ class UserController extends BaseController {
 		$validator = Validator::make(Input::all(), $rules);
 		
 		if ($validator->fails()) {
-			return Redirect::to('/admin/user/create')
+			return Redirect::to('/admin2/user/create')
 			->withErrors($validator->messages())
 			->withInput(Input::except('password'));
 		} else {
@@ -60,7 +60,7 @@ class UserController extends BaseController {
 			
 			$user->save();
 			Session::flash('message', $user->getFullName() . ' has been created');
-			return Redirect::to('/admin/user');
+			return Redirect::to('/admin2/user/' . $user->id . '/edit');
 		}
 
 	}
@@ -96,7 +96,7 @@ class UserController extends BaseController {
 		$validator = Validator::make(Input::all(), $rules);
 		
 		if ($validator->fails()) {
-			return Redirect::to('/admin/user/' . $id . '/edit')
+			return Redirect::to('/admin2/user/' . $id . '/edit')
 			->withErrors($validator->messages())
 			->withInput(Input::except('password'));
 		} else {
@@ -111,7 +111,7 @@ class UserController extends BaseController {
 			$user->save();
 			
 			Session::flash('message', $user->getFullName() . ' has been updated');
-			return Redirect::to('/admin/user');
+			return Redirect::to('/admin2/user/' . $id . '/edit');
 		}
 	}
 
@@ -126,7 +126,7 @@ class UserController extends BaseController {
 	{
 		User::destroy($id);
 		Session::flash('message', 'User has been deleted');
-		return Redirect::to('/admin/user');
+		return Redirect::to('/admin2/user');
 	}
 	
 	public function password_form($id)
@@ -142,7 +142,7 @@ class UserController extends BaseController {
 		$validator = Validator::make(Input::all(), $rules);
 	
 		if ($validator->fails()) {
-			return Redirect::to('/admin/user/password_form/' . $id)
+			return Redirect::to('/admin2/user/password_form/' . $id)
 			->withErrors($validator->messages());
 		} else {
 			$user = User::find($id);
@@ -153,7 +153,7 @@ class UserController extends BaseController {
 			$user->save();
 				
 			Session::flash('message', 'Password has been updated for ' . $user->getFullName());
-			return Redirect::to('/admin/user');
+			return Redirect::to('/admin2/user/' . $id . '/edit');
 		}
 	}
 

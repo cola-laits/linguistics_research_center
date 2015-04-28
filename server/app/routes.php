@@ -23,7 +23,7 @@ Route::get('login', 'LoginController@login_page');
 Route::post('login', 'LoginController@login_action');
 Route::get('logout', 'LoginController@logout');
 
-Route::group(array('prefix'=> 'admin', 'before' => 'auth'), function() {
+Route::group(array('prefix'=> 'admin2', 'before' => 'auth'), function() {
 	Route::get('/user/password_form/{id}', 'UserController@password_form');
 	Route::put('/user/change_password/{id}', 'UserController@change_password');
 	Route::resource('/user', 'UserController');

@@ -37,7 +37,7 @@ class EieolLessonController extends BaseController {
 		$validator = Validator::make(Input::all(), $rules);
 		
 		if ($validator->fails()) {
-			return Redirect::to('/admin/eieol_lesson/create?series_id=' . Input::get('series_id'))
+			return Redirect::to('/admin2/eieol_lesson/create?series_id=' . Input::get('series_id'))
 			->withErrors($validator->messages())
 			->withInput();
 		} else {
@@ -54,7 +54,7 @@ class EieolLessonController extends BaseController {
 			
 			$lesson->save();
 			Session::flash('message', $lesson->title . ' has been created');
-			return Redirect::to('/admin/eieol_lesson/' . $lesson->id . '/edit');
+			return Redirect::to('/admin2/eieol_lesson/' . $lesson->id . '/edit');
 		}
 
 	}

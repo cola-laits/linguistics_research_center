@@ -6,7 +6,7 @@
  
 <div class='col-lg-12'>
  
-    <h1><i class='fa fa-file-text'></i> Create Lesson for {{ HTML::link('admin/eieol_series/' . $series->id . '/edit', $series->title , array('title' => 'Return to series' )) }}</h1>
+    <h1><i class='fa fa-file-text'></i> Create Lesson for {{ HTML::link('admin2/eieol_series/' . $series->id . '/edit', $series->title , array('title' => 'Return to series' )) }}</h1>
     
     @if (Session::has('message'))
 	    <div class="alert alert-info">{{ Session::get('message') }}</div>
@@ -22,7 +22,7 @@
         </div>
     @endif
  
- 	{{ Form::open(['role' => 'form', 'url' => '/admin/eieol_lesson', 'class' => 'form']) }}
+ 	{{ Form::open(['role' => 'form', 'url' => '/admin2/eieol_lesson', 'class' => 'form']) }}
 	
 	{{ Form::hidden('series_id', $series->id) }}
 	

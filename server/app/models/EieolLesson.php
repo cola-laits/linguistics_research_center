@@ -3,6 +3,10 @@
 class EieolLesson extends Eloquent {
 	protected $table = 'eieol_lesson';
 	
+	protected $attributes = array(
+			'lesson_translation' => ' '
+	);
+	
 	public function series()
 	{
 		return $this->belongsTo('EieolSeries');

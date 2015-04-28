@@ -1,7 +1,5 @@
 @extends('admin_layout')
  
-@section('title') {{{$action}}} Series Editor @stop
- 
 @section('content')
  
 <div class='col-lg-12'>
@@ -25,9 +23,9 @@
     <div class='row'>
  
 	 	@if ($action == 'Create')
-	 		{{ Form::open(['role' => 'form', 'url' => '/admin/eieol_series', 'class' => 'form']) }}
+	 		{{ Form::open(['role' => 'form', 'url' => '/admin2/eieol_series', 'class' => 'form']) }}
 	 	@else
-	    	{{ Form::model($series, ['role' => 'form', 'url' => '/admin/eieol_series/' . $series->id, 'method' => 'PUT', 'class' => 'form']) }}
+	    	{{ Form::model($series, ['role' => 'form', 'url' => '/admin2/eieol_series/' . $series->id, 'method' => 'PUT', 'class' => 'form']) }}
 		@endif
 		<div class='form-group col-sm-1 @if ($errors->has('published')) has-error @endif  '>
 	        {{ Form::label('published', 'Published') }}
@@ -95,7 +93,7 @@
 	                    <td>{{ $lesson->language->language }}</td>
 	                    <td>{{{ $lesson->updated_at->format('m/d/Y h:ia') }}} by {{{ $lesson->updated_by }}}</td>
 	                    <td>
-	                        <a href="/admin/eieol_lesson/{{{ $lesson->id }}}/edit" class="btn btn-info pull-left" style="margin-right: 3px;">Edit</a>
+	                        <a href="/admin2/eieol_lesson/{{{ $lesson->id }}}/edit" class="btn btn-info pull-left" style="margin-right: 3px;">Edit</a>
 	                    </td>
 	                </tr>
 	                @endforeach
@@ -103,7 +101,7 @@
 	 
 	        </table>
 	    </div>
-	    <a href="/admin/eieol_lesson/create?series_id={{{ $series->id }}}" class="btn btn-success">Add New Lesson</a>
+	    <a href="/admin2/eieol_lesson/create?series_id={{{ $series->id }}}" class="btn btn-success">Add New Lesson</a>
 	@endif
     
 </div>

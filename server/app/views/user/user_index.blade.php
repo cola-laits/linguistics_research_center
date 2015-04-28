@@ -35,9 +35,9 @@
                     <td>{{{ $user->created_at->format('m/d/Y h:ia') }}} <br/> by {{{ $user->created_by }}}</td>
                     <td>{{{ $user->updated_at->format('m/d/Y h:ia') }}} <br/> by {{{ $user->updated_by }}}</td>
                     <td>
-                        <a href="/admin/user/{{{ $user->id }}}/edit" class="btn btn-primary pull-left" style="margin-right: 3px;">Edit</a>
-                        <a href="/admin/user/password_form/{{{ $user->id }}}" class="btn btn-info pull-left" style="margin-right: 3px;">Password</a>
-                        {{ Form::open(['url' => '/admin/user/' . $user->id, 'method' => 'DELETE', 'style' => 'display:inline']) }}
+                        <a href="/admin2/user/{{{ $user->id }}}/edit" class="btn btn-primary pull-left" style="margin-right: 3px;">Edit</a>
+                        <a href="/admin2/user/password_form/{{{ $user->id }}}" class="btn btn-info pull-left" style="margin-right: 3px;">Password</a>
+                        {{ Form::open(['url' => '/admin2/user/' . $user->id, 'method' => 'DELETE', 'style' => 'display:inline']) }}
                         {{ Form::submit('Delete', ['class' => 'btn btn-danger delete'])}}
                         {{ Form::close() }}
                     </td>
@@ -48,7 +48,7 @@
         </table>
     </div>
  
-    <a href="/admin/user/create" class="btn btn-success">Add User</a>
+    <a href="/admin2/user/create" class="btn btn-success">Add User</a>
  
  
 </div>

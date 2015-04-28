@@ -33,7 +33,7 @@
                     <td>{{{ $language->class_attribute }}}</td>
                     <td>{{{ $language->updated_at->format('m/d/Y h:ia') }}} <br/> by {{{ $language->updated_by }}}</td>
                     <td>
-                        <a href="/admin/eieol_language/{{{ $language->id }}}/edit" class="btn btn-info pull-left" style="margin-right: 3px;">Edit</a>
+                        <a href="/admin2/eieol_language/{{{ $language->id }}}/edit" class="btn btn-info pull-left" style="margin-right: 3px;">Edit</a>
                     </td>
                 </tr>
                 @endforeach
@@ -42,7 +42,7 @@
         </table>
     </div>
  
-    <a href="/admin/eieol_language/create" class="btn btn-success">Add Language</a>
+    <a href="/admin2/eieol_language/create" class="btn btn-success">Add Language</a>
  
  
 </div>

@@ -44,7 +44,7 @@ class EieolSeriesController extends BaseController {
 		$validator = Validator::make(Input::all(), $rules);
 		
 		if ($validator->fails()) {
-			return Redirect::to('/admin/eieol_series/create')
+			return Redirect::to('/admin2/eieol_series/create')
 			->withErrors($validator->messages())
 			->withInput();
 		} else {
@@ -62,7 +62,7 @@ class EieolSeriesController extends BaseController {
 			
 			$series->save();
 			Session::flash('message', $series->title . ' has been created');
-			return Redirect::to('/admin/eieol_series/' . $series->id . '/edit');
+			return Redirect::to('/admin2/eieol_series/' . $series->id . '/edit');
 		}
 
 	}
@@ -101,7 +101,7 @@ class EieolSeriesController extends BaseController {
 		$validator = Validator::make(Input::all(), $rules);
 		
 		if ($validator->fails()) {
-			return Redirect::to('/admin/eieol_series/' . $id . '/edit')
+			return Redirect::to('/admin2/eieol_series/' . $id . '/edit')
 			->withErrors($validator->messages())
 			->withInput();
 		} else {
@@ -117,7 +117,7 @@ class EieolSeriesController extends BaseController {
 				
 			$series->save();
 			Session::flash('message', $series->title . ' has been updated');
-			return Redirect::to('/admin/eieol_series/' . $id . '/edit');
+			return Redirect::to('/admin2/eieol_series/' . $id . '/edit');
 		}
 	}
 

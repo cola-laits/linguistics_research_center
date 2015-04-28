@@ -152,7 +152,7 @@
 		
 		$.ajax({
 			type: "POST",
-	        url:'/admin/eieol_glossed_text_gloss',
+	        url:'/admin2/eieol_glossed_text_gloss',
 	        data:mydata,
 	        dataType: "html",
 	        
@@ -166,7 +166,7 @@
 	  		    if(json['success']) { 
 	  		    	var new_div_id = "glossed_text_gloss_" + json['id'] + "_div";
 	  	    		var new_form_id = "new_glossed_text_gloss_form_" + json['id'];
-	  	    		var new_form_action = "/admin/eieol_glossed_text_gloss/" + json['id']
+	  	    		var new_form_action = "/admin2/eieol_glossed_text_gloss/" + json['id']
 	  	    		
 	  	    		var new_div = $( "#new_glossed_text_gloss_div" ).clone(true).attr("id",new_div_id);
 	  	    		new_div.appendTo( temp_div );
@@ -228,7 +228,7 @@
 			  document.getElementById("gloss_search_result").innerHTML=xmlhttp.responseText;
 		  }
 		}
-		xmlhttp.open("GET","/admin/eieol_gloss/filtered_list?gloss="+gloss+"&language="+hold_language_id,true);
+		xmlhttp.open("GET","/admin2/eieol_gloss/filtered_list?gloss="+gloss+"&language="+hold_language_id,true);
 		xmlhttp.send();
 	}
 
@@ -244,7 +244,7 @@
 			  document.getElementById("head_word_search_result").innerHTML=xmlhttp.responseText;
 		  }
 		}
-		xmlhttp.open("GET","/admin/eieol_head_word/filtered_list?head_word="+head_word+"&language="+hold_language_id,true);
+		xmlhttp.open("GET","/admin2/eieol_head_word/filtered_list?head_word="+head_word+"&language="+hold_language_id,true);
 		xmlhttp.send();
 	}
 
@@ -262,13 +262,13 @@
 			'height':'50px',
 			'width':'100%',
 			'defaultText':'',
-			'autocomplete_url':'/admin/eieol_head_word_keyword/filtered_list?language='+hold_language_id
+			'autocomplete_url':'/admin2/eieol_head_word_keyword/filtered_list?language='+hold_language_id
 		});
 		$('#edit_keywords').tagsInput({
 			'height':'50px',
 			'width':'100%',
 			'defaultText':'',
-			'autocomplete_url':'/admin/eieol_head_word_keyword/filtered_list?language='+hold_language_id
+			'autocomplete_url':'/admin2/eieol_head_word_keyword/filtered_list?language='+hold_language_id
 		});
 		  
 		//custom keyboard for text inputs
@@ -295,7 +295,7 @@
 	                    term: request.term,
 	                },
 		            type : 'GET',
-		            url: '/admin/part_of_speech/filtered_list',
+		            url: '/admin2/part_of_speech/filtered_list',
 		            success: function(data) {
 		            	response(data)
 	
@@ -312,7 +312,7 @@
 	                    term: request.term,
 	                },
 		            type : 'GET',
-		            url: '/admin/eieol_analysis/filtered_list',
+		            url: '/admin2/eieol_analysis/filtered_list',
 		            success: function(data) {
 		            	response(data)
 	
@@ -437,7 +437,7 @@
 		    //load form with data for the record they want to edit
 		    $.ajax({
 				type: "GET",
-		        url: "/admin/eieol_gloss/" + $(this).find("#gloss_id").val(),
+		        url: "/admin2/eieol_gloss/" + $(this).find("#gloss_id").val(),
 		        data: null,
 		        dataType: "json",
 		        
@@ -465,7 +465,7 @@
 				    }
 					    
 				    $("#gloss_lessons").html("<strong>This is used by the following lessons:</strong> " + data['lessons']);
-				    $("#edit_gloss_form").attr("action", "/admin/eieol_gloss/" + data['id']);
+				    $("#edit_gloss_form").attr("action", "/admin2/eieol_gloss/" + data['id']);
 				    $(".errors", "#edit_gloss_form").empty(); //reset gloss form error divs
 				    $("#edit_gloss_modal").modal("show"); 
 				    $('#edit_gloss_form').css("background-color", "#FFFFFF");
@@ -543,7 +543,7 @@
 		    //load form with data for the record they want to edit
 		    $.ajax({
 				type: "GET",
-		        url: "/admin/eieol_head_word/" + head_word_id,
+		        url: "/admin2/eieol_head_word/" + head_word_id,
 		        data: null,
 		        dataType: "json",
 		        
@@ -552,7 +552,7 @@
 					    $('[name='+key+']', '#edit_head_word_form').val(value);
 				    });
 			        $('#edit_keywords').importTags(data['keywords']); //because of the jquery tags, do this one manually
-				    $("#edit_head_word_form").attr("action", "/admin/eieol_head_word/" + data['id']);
+				    $("#edit_head_word_form").attr("action", "/admin2/eieol_head_word/" + data['id']);
 				    $("#head_word_glosses").html("<strong>This is used by the following glosses:</strong> " + data['glosses']);
 				    $(".errors", '#edit_head_word_form').empty(); //reset head word form error divs
 				    $('#edit_head_word_form').css("background-color", "#FFFFFF");
@@ -756,7 +756,7 @@
 				<h4>Or Add New Gloss</h4>
 				
 				{{ Form::open(['role' => 'form',
-		    		  'url' => '/admin/eieol_gloss/', 
+		    		  'url' => '/admin2/eieol_gloss/', 
 		    		  'class' => 'form modal_form',
 		    		  'id' => 'new_gloss_form'  
 		    	]) }}
@@ -940,7 +940,7 @@
 				<div class='row'>
 					<div class='col-sm-12'>
 						{{ Form::open(['role' => 'form',
-			    		   'url' => '/admin/eieol_head_word/', 
+			    		   'url' => '/admin2/eieol_head_word/', 
 			    		   'class' => 'form modal_form',
 			    		   'id' => 'new_head_word_form'  
 			    		  ]) }}
@@ -994,7 +994,7 @@
 				<div class='row'>
 					<div class='col-sm-12'>
 						{{ Form::open(['role' => 'form',
-			    		   'url' => '/admin/eieol_head_word/', 
+			    		   'url' => '/admin2/eieol_head_word/', 
 			    		   'method' => 'PUT',
 			    		   'class' => 'form ajax_form modal_form',
 			    		   'id' => 'edit_head_word_form'
@@ -1105,13 +1105,13 @@
 <!-- ---------------------------------------------------------------------------------------- -->  
 <div class='col-lg-12'>
  
-    <h1><i class='fa fa-file-text'></i> Edit Lesson for {{ HTML::link('admin/eieol_series/' . $lesson->series->id . '/edit', $lesson->series->title , array('title' => 'Return to series' )) }}</h1>
+    <h1><i class='fa fa-file-text'></i> Edit Lesson for {{ HTML::link('admin2/eieol_series/' . $lesson->series->id . '/edit', $lesson->series->title , array('title' => 'Return to series' )) }}</h1>
     <div class='bg-danger alert'>
     	If you change the order of items on this page, they will not appear in that order until you refresh the page.
     </div>
     
     {{ Form::model($lesson, ['role' => 'form', 
-    						 'url' => '/admin/eieol_lesson/' . $lesson->id, 
+    						 'url' => '/admin2/eieol_lesson/' . $lesson->id, 
     						 'method' => 'PUT', 
     						 'class' => 'form ajax_form',
     						 'id' => 'update_form'
@@ -1168,7 +1168,7 @@
 	    	<div id = 'glossed_text_div_{{$glossed_text->id}}'>
 	    
 	          {{ Form::model($glossed_text, ['role' => 'form',
-			    					   'url' => '/admin/eieol_glossed_text/' . $glossed_text->id, 
+			    					   'url' => '/admin2/eieol_glossed_text/' . $glossed_text->id, 
 			    					   'method' => 'PUT', 
 			    					   'class' => 'form ajax_form glossed_text_form',
 			    					   'id' => 'glossed_text_form_' . $glossed_text->id
@@ -1210,7 +1210,7 @@
 							
 							<div class='form-group col-sm-1 '>
 								{{ Form::model($gloss, ['role' => 'form',
-				    					   'url' => '/admin/eieol_glossed_text_gloss/' . $gloss->pivot->id, 
+				    					   'url' => '/admin2/eieol_glossed_text_gloss/' . $gloss->pivot->id, 
 				    					   'method' => 'PUT', 
 				    					   'class' => 'form ajax_form',
 				    					   'id' => 'glossed_text_gloss_form_' . $gloss->pivot->id
@@ -1240,7 +1240,7 @@
 			    			
 			    			<div class='form-group col-sm-1 bottom_button'>
 			    				{{ Form::open(['class' => 'delete_glossed_text_gloss_form',
-			    							   'url' => '/admin/eieol_glossed_text_gloss/' . $gloss->pivot->id]) }} 
+			    							   'url' => '/admin2/eieol_glossed_text_gloss/' . $gloss->pivot->id]) }} 
 				            		{{ Form::hidden('glossed_text_gloss_id', $gloss->pivot->id, ['id' => 'glossed_text_gloss_id']) }}
 				            		{{ Form::button('Remove', ['class' => 'btn btn-danger delete_glossed_text_gloss'])}}   
 				            	{{ Form::close() }} 
@@ -1271,7 +1271,7 @@
     <!-- This is the template for adding new glossed text.  It is not used, but cloned when we want to add a new one -->
     <div id="new_glossed_text_div" style="display: none">
 	    {{ Form::open(['role' => 'form',
-		    		   'url' => '/admin/eieol_glossed_text/', 
+		    		   'url' => '/admin2/eieol_glossed_text/', 
 		    		   'class' => 'form ajax_form glossed_text_form',
 		    		   'id' => 'new_glossed_text_form'  
 		    		  ]) }}
@@ -1339,7 +1339,7 @@
     	<!-- This is the template for adding new glossed_text_GLOSS.  It is not used, but cloned when we want to add a new one -->
     	<div id="new_glossed_text_gloss_div" style="display: none">
 	    	{{ Form::open(['role' => 'form',
-		   		   'url' => '/admin/eieol_glossed_text_gloss/', 
+		   		   'url' => '/admin2/eieol_glossed_text_gloss/', 
 		   		   'class' => 'form ajax_form',
 		   		   'id' => 'new_glossed_text_gloss_form'
 		   		  ]) }} 
@@ -1372,7 +1372,7 @@
 				    
 				    <div class='form-group col-sm-1 bottom_button'>
 				    	{{ Form::open(['class' => 'delete_glossed_text_gloss_form',
-	    							   'url' => '/admin/eieol_glossed_text_gloss/']) }} 
+	    							   'url' => '/admin2/eieol_glossed_text_gloss/']) }} 
 	    					{{ Form::hidden('glossed_text_gloss_id', null, ['id' => 'glossed_text_gloss_id']) }}
 		            		{{ Form::button('Remove', ['class' => 'btn btn-danger delete_glossed_text_gloss', 'style' => 'display: none'])}}  
 		            	{{ Form::close() }} 
@@ -1400,7 +1400,7 @@
     
     
     {{ Form::model($lesson, ['role' => 'form', 
-    						 'url' => '/admin/eieol_lesson/update_translation/' . $lesson->id, 
+    						 'url' => '/admin2/eieol_lesson/update_translation/' . $lesson->id, 
     						 'method' => 'PUT', 
     						 'class' => 'form ajax_form',
     						 'id' => 'update_translation_form'
@@ -1427,7 +1427,7 @@
     <div id ="grammars">
 	    @foreach ($grammars as $grammar)
 	          {{ Form::model($grammar, ['role' => 'form',
-			    					   'url' => '/admin/eieol_grammar/' . $grammar->id, 
+			    					   'url' => '/admin2/eieol_grammar/' . $grammar->id, 
 			    					   'method' => 'PUT', 
 			    					   'class' => 'form ajax_form grammar_form',
 			    					   'id' => 'grammar_form_' . $grammar->id
@@ -1486,7 +1486,7 @@
     <!-- This is the template for adding new grammars.  It is not used, but cloned when we want to add a new one -->
     <div id="new_grammar_div" style="display: none">
 	    {{ Form::open(['role' => 'form',
-		    		   'url' => '/admin/eieol_grammar/', 
+		    		   'url' => '/admin2/eieol_grammar/', 
 		    		   'class' => 'form ajax_form grammar_form',
 		    		   'id' => 'new_grammar_form'
 		    		  ]) }} 

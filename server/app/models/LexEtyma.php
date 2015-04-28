@@ -3,6 +3,21 @@
 class LexEtyma extends Eloquent {
 	protected $table = 'lex_etyma';
 	
+	public static function boot() {
+		parent::boot();
+	
+		// event to happen on saving
+		static::saving(function($table)  {
+			$table->created_by = Auth::user()->getUsername();
+			$table->updated_by = Auth::user()->getUsername();
+		});
+		
+		// event to happen on updating
+		static::updating(function($table)  {
+			$table->updated_by = Auth::user()->getUsername();
+		});
+	}
+		
 	public function semantic_fields()
 	{
 		return $this->belongsToMany('LexSemanticField', 'lex_etyma_semantic_field', 'etyma_id', 'semantic_field_id');

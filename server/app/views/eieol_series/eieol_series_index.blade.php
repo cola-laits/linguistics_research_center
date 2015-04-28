@@ -1,7 +1,5 @@
 @extends('admin_layout')
- 
-@section('title') Series @stop
- 
+
 @section('content')
  
 <div class='col-lg-12'>
@@ -46,7 +44,7 @@
                     <td>{{ $series->expanded_title }}</td>
                     <td>{{ $series->updated_at->format('m/d/Y h:ia') }} by {{ $series->updated_by }}</td>
                     <td>
-                        <a href="/admin/eieol_series/{{ $series->id }}/edit" class="btn btn-info pull-left" style="margin-right: 3px;">Edit</a>
+                        <a href="/admin2/eieol_series/{{ $series->id }}/edit" class="btn btn-info pull-left" style="margin-right: 3px;">Edit</a>
                     </td>
                 </tr>
                 @endforeach
@@ -55,7 +53,7 @@
         </table>
     </div>
  
-    <a href="/admin/eieol_series/create" class="btn btn-success">Add New Series</a>
+    <a href="/admin2/eieol_series/create" class="btn btn-success">Add New Series</a>
  
  
 </div>

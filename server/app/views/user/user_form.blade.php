@@ -19,9 +19,9 @@
     @endif
  
  	@if ($action == 'Create')
- 		{{ Form::open(['role' => 'form', 'url' => '/admin/user']) }}
+ 		{{ Form::open(['role' => 'form', 'url' => '/admin2/user']) }}
  	@else
-    	{{ Form::model($user, ['role' => 'form', 'url' => '/admin/user/' . $user->id, 'method' => 'PUT']) }}
+    	{{ Form::model($user, ['role' => 'form', 'url' => '/admin2/user/' . $user->id, 'method' => 'PUT']) }}
 	@endif
  
     <div class='form-group @if ($errors->has('first_name')) has-error @endif  '>
