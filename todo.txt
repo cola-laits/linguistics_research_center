@@ -1,35 +1,31 @@
-public controller - move code to models
+controllers - refactor code to models
 
-Admin
-	Maintain Lexicon
-		Use Frozen Node?
-		Make sure relfexes are unique
-	Maintain Lessons
+Maintain Lexicon
+	Use Frozen Node?
+	Make sure relfexes are unique
+Maintain Lessons
 ***Allow lessons to store images
 ***Use box to play audio files
 ***DOI - Digital Object Identifier
-	Part of Speech editor? use FrozenNode?
-	Analysis editor? use FrozenNode?
 
 Public
 ***Export series to PDF
 ***Links to/from static pages, share css and header from cascade
-	Unicode info and test (make sure page matches an images)
-
+	
 Todd's to do list
 	EIEOL Languages - set sort order
 	Lex Languages - set sort order
 	Mistakes with semi-colans in EIEOL
+	Unicode info and test (make sure page matches an images)
 
-	
 Deploy
+	https
 	404 errors
-	htaccess file needs to send login and admin pages through https
 	make sure we don't show errors
-	remove load controller, load views, references in routes.php and app/storage/data_load/
 	Allow Google to crawl it
 	
 Implementation
+	remove load controller, load views, references in routes.php and app/storage/data_load/
 	Redirects - for each subfolder in http://www.utexas.edu/cola/centers/lrc/, redirect to appropriate location on new system
 		
 Future Ideas

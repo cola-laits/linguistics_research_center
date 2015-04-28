@@ -7,7 +7,7 @@ class LexEtyma extends Eloquent {
 		parent::boot();
 	
 		// event to happen on saving
-		static::saving(function($table)  {
+		static::creating(function($table)  {
 			$table->created_by = Auth::user()->getUsername();
 			$table->updated_by = Auth::user()->getUsername();
 		});
