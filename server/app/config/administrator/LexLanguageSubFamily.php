@@ -1,30 +1,26 @@
 <?php
 
 /**
- * Lex Etyma model config
+ * Lex Language Sub Family model config
 */
 
 return array(
 
-		'title' => 'Etyma',
-		'single' => 'Etyma',
-		'model' => 'LexEtyma',
+		'title' => 'Language Sub Family',
+		'single' => 'Language Sub Family',
+		'model' => 'LexLanguageSubFamily',
 
 		'columns' => array(
-				'old_id' => array(
-						'title' => 'Old Id',
+				'name' => array(
+						'title' => 'Name',
+				),
+				'language_family' => array(
+						'title' => 'Family',
+						'relationship'=> 'language_family',
+						'select' => '(:table).name'
 				),
 				'order' => array(
 						'title' => 'Order',
-				),
-				'entry' => array(
-						'title' => 'Entry',
-				),
-				'gloss' => array(
-						'title' => 'Gloss',
-				),
-				'page_number' => array(
-						'title' => 'Page Number',
 				),
 				'updated_by' => array(
 						'title' => 'Updated By',
@@ -35,20 +31,11 @@ return array(
 		),
 		
 		'filters' => array(
-				'old_id' => array(
-						'title' => 'Old Id',
+				'name' => array(
+						'title' => 'Name',
 				),
 				'order' => array(
 						'title' => 'Order',
-				),
-				'entry' => array(
-						'title' => 'Entry',
-				),
-				'gloss' => array(
-						'title' => 'Gloss',
-				),
-				'page_number' => array(
-						'title' => 'Page Number',
 				),
 				'updated_by' => array(
 						'title' => 'Updated By',
@@ -59,32 +46,25 @@ return array(
 		),
 		
 		'sort' => array(
-				'field' => 'old_id',
+				'field' => 'name',
 				'direction' => 'asc',
 		),
 
 		'edit_fields' => array(
-				'old_id' => array(
-						'title' => 'Old Id',
-						'type' => 'number',
-						'thousands_separator' => '',
+				'name' => array(
+						'title' => 'Name',
+						'type' => 'wysiwyg',
+				),
+				'language_family' => array(
+						'title' => 'Family',
+						'type' => 'relationship',
+						'name_field' => 'family',
+						'options_sort_field' => 'name'
 				),
 				'order' => array(
 						'title' => 'Order',
 						'type' => 'number',
 						'thousands_separator' => '',
-				),
-				'entry' => array(
-						'title' => 'Entry',
-						'type' => 'wysiwyg',
-				),
-				'gloss' => array(
-						'title' => 'Gloss',
-						'type' => 'text',
-				),
-				'page_number' => array(
-						'title' => 'Page Number',
-						'type' => 'text',
 				),
 				'updated_by' => array(
 						'title' => 'Updated By',
@@ -105,11 +85,8 @@ return array(
 		),
 		
 		'rules' => array(
-				'old_id' => 'required',
+				'name' => 'required',
 				'order' => 'required',
-				'entry' => 'required',
-				'gloss' => 'required',
-				'page_number' => 'required',
 
 		),
 		

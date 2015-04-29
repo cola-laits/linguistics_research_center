@@ -55,7 +55,7 @@ return array(
 									 'Language' => 'page.eieol_language.eieol_language_wrapper',
 									 'EieolAnalysis',
 									 'EieolPartOfSpeech',),
-					'Lexicon' => array('LexEtyma'),
+					'Lexicon' => array('LexEtyma','LexLanguageFamily','LexLanguageSubFamily','LexLanguage'),
 					'Users' => 'page.user.user_wrapper'),
 
 	/**
