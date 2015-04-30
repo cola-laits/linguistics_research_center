@@ -60,7 +60,9 @@ return array(
 									   'LexSemanticField',
 									   'LexLanguageFamily',
 									   'LexLanguageSubFamily',
-									   'LexLanguage'),
+									   'LexLanguage',
+									   'LexSource',
+									   'LexPartOfSpeech',),
 					'Users' => 'page.user.user_wrapper'),
 
 	/**
