@@ -87,6 +87,11 @@ return array(
 						'type' => 'relationship',
 						'name_field' => 'text',						
 				),
+				'cross_references' => array(
+						'title' => 'Cross References',
+						'type' => 'relationship',
+						'name_field' => 'entry',
+				),
 				'page_number' => array(
 						'title' => 'Page Number',
 						'type' => 'text',
