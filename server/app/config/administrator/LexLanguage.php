@@ -125,11 +125,16 @@ return array(
 		),
 		
 		'rules' => array(
-				'name' => 'required',
+				'name' => 'required|unique:lex_language',
 				'order' => 'required',
-				'abbr' => 'required',
+				'abbr' => 'required|unique:lex_language',
 				'custom_sort' => 'required',
+				'sub_family_id' => 'required',
 
+		),
+		
+		'messages' => array(
+				'sub_family_id.required' => 'The sub family field is required.'
 		),
 		
 		'action_permissions'=> array(

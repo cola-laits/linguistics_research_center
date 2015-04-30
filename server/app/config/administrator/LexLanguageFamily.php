@@ -74,8 +74,8 @@ return array(
 		),
 		
 		'rules' => array(
-				'name' => 'required',
-				'order' => 'required',
+				'name' => 'required|unique:lex_language_family',
+				'order' => 'required|unique:lex_language_family',
 
 		),
 		

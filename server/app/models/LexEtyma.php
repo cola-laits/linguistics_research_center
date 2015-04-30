@@ -16,6 +16,7 @@ class LexEtyma extends Eloquent {
 		static::updating(function($table)  {
 			$table->updated_by = Auth::user()->getUsername();
 		});
+		
 	}
 		
 	public function semantic_fields()

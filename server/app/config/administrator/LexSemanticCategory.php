@@ -1,26 +1,24 @@
 <?php
 
 /**
- * Lex Language Sub Family model config
+ * Lex Semantic Category model config
 */
 
 return array(
 
-		'title' => 'Language Sub Family',
-		'single' => 'Language Sub Family',
-		'model' => 'LexLanguageSubFamily',
+		'title' => 'Semantic Category',
+		'single' => 'Semantic Category',
+		'model' => 'LexSemanticCategory',
 
 		'columns' => array(
-				'name' => array(
-						'title' => 'Name',
+				'number' => array(
+						'title' => 'Number',
 				),
-				'language_family' => array(
-						'title' => 'Family',
-						'relationship'=> 'language_family',
-						'select' => '(:table).name'
+				'text' => array(
+						'title' => 'Text',
 				),
-				'order' => array(
-						'title' => 'Order',
+				'abbr' => array(
+						'title' => 'Abbr',
 				),
 				'updated_by' => array(
 						'title' => 'Updated By',
@@ -31,11 +29,14 @@ return array(
 		),
 		
 		'filters' => array(
-				'name' => array(
-						'title' => 'Name',
+				'number' => array(
+						'title' => 'Number',
 				),
-				'order' => array(
-						'title' => 'Order',
+				'text' => array(
+						'title' => 'Text',
+				),				
+				'abbr' => array(
+						'title' => 'Abbr',
 				),
 				'updated_by' => array(
 						'title' => 'Updated By',
@@ -46,25 +47,22 @@ return array(
 		),
 		
 		'sort' => array(
-				'field' => 'name',
+				'field' => 'number',
 				'direction' => 'asc',
 		),
 
 		'edit_fields' => array(
-				'name' => array(
-						'title' => 'Name',
-						'type' => 'wysiwyg',
-				),
-				'language_family' => array(
-						'title' => 'Family',
-						'type' => 'relationship',
-						'name_field' => 'family',
-						'options_sort_field' => 'name'
-				),
-				'order' => array(
-						'title' => 'Order',
+				'number' => array(
+						'title' => 'Number',
 						'type' => 'number',
-						'thousands_separator' => '',
+				),
+				'text' => array(
+						'title' => 'Text',
+						'type' => 'text',
+				),
+				'abbr' => array(
+						'title' => 'Abbr',
+						'type' => 'text',
 				),
 				'updated_by' => array(
 						'title' => 'Updated By',
@@ -85,14 +83,10 @@ return array(
 		),
 		
 		'rules' => array(
-				'name' => 'required',
-				'order' => 'required',
-				'family_id' => 'required',
+				'number' => 'required|unique:lex_semantic_category',
+				'text' => 'required|unique:lex_semantic_category',
+				'abbr' => 'required|unique:lex_semantic_category',
 
-		),
-		
-		'messages' => array(
-			'family_id.required' => 'The family field is required.'
 		),
 		
 		'action_permissions'=> array(

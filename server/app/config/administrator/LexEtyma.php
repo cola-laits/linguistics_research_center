@@ -82,6 +82,11 @@ return array(
 						'title' => 'Gloss',
 						'type' => 'text',
 				),
+				'semantic_fields' => array(
+						'title' => 'Semantic Fields',
+						'type' => 'relationship',
+						'name_field' => 'text',						
+				),
 				'page_number' => array(
 						'title' => 'Page Number',
 						'type' => 'text',
@@ -105,9 +110,9 @@ return array(
 		),
 		
 		'rules' => array(
-				'old_id' => 'required',
-				'order' => 'required',
-				'entry' => 'required',
+				'old_id' => 'required|unique:lex_etyma',
+				'order' => 'required|unique:lex_etyma',
+				'entry' => 'required|unique:lex_etyma',
 				'gloss' => 'required',
 				'page_number' => 'required',
 
