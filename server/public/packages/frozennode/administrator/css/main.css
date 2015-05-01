@@ -61,12 +61,28 @@
 .clearfix:after {
   clear: both;
 }
-
+@font-face {
+  font-family: 'Oxygen';
+  src: url('fonts/Oxygen/oxygen-regular-webfont.eot');
+  src: url('fonts/Oxygen/oxygen-regular-webfont.eot?#iefix') format('embedded-opentype'), url('fonts/Oxygen/oxygen-regular-webfont.woff') format('woff'), url('fonts/Oxygen/oxygen-regular-webfont.ttf') format('truetype'), url('fonts/Oxygen/oxygen-regular-webfont.svg#oxygenregular') format('svg');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Oxygen';
+  src: url('fonts/Oxygen/oxygen-bold-webfont.eot');
+  src: url('fonts/Oxygen/oxygen-bold-webfont.eot?#iefix') format('embedded-opentype'), url('fonts/Oxygen/oxygen-bold-webfont.woff') format('woff'), url('fonts/Oxygen/oxygen-bold-webfont.ttf') format('truetype'), url('fonts/Oxygen/oxygen-bold-webfont.svg#oxygenbold') format('svg');
+  font-weight: 700;
+  font-style: normal;
+}
+.oxygen {
+  font-family: 'Oxygen', sans-serif;
+}
 .input {
   display: inline-block;
   vertical-align: middle;
   height: 18px;
-  font-family: Times New Roman, Times, serif;
+  font-family: 'Oxygen', sans-serif;
   -moz-box-shadow: inset 0px 1px 2px 1px #eee;
   -webkit-box-shadow: inset 0px 1px 2px 1px #eee;
   box-shadow: inset 0px 1px 2px 1px #eee;
@@ -577,7 +593,7 @@ a {
   text-decoration: none;
 }
 #wrapper {
-  font-family: Times New Roman, Times, serif;
+  font-family: 'Oxygen', sans-serif;
   font-size: 13px;
   line-height: 18px;
   color: #333333;
@@ -604,7 +620,7 @@ a {
   display: inline-block;
   vertical-align: middle;
   height: 18px;
-  font-family: Times New Roman, Times, serif;
+  font-family: 'Oxygen', sans-serif;
   -moz-box-shadow: inset 0px 1px 2px 1px #eee;
   -webkit-box-shadow: inset 0px 1px 2px 1px #eee;
   box-shadow: inset 0px 1px 2px 1px #eee;
