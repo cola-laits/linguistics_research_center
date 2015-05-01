@@ -37,4 +37,9 @@ class LexLanguage extends Eloquent {
 	{
 		return $this->hasMany('LexReflex', 'language_id', 'id')->select(DB::raw('language_id, count(*) as count'))->groupBy('language_id');
 	}
+	
+	public function getStrippedNameAttribute()
+	{
+		return strip_tags($this->name);
+	}
 }

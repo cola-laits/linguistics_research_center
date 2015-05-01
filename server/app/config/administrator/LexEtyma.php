@@ -96,6 +96,14 @@ return array(
 						'title' => 'Page Number',
 						'type' => 'text',
 				),
+				'reflexes' => array(
+						'title' => 'Reflexes',
+						'type' => 'relationship',
+						'name_field' => 'reflex_lister',
+						'autocomplete' => true,
+						'editable' => false,
+						'description' => 'If you need to add a new reflex, you have to go to the reflex page and add it to the Etyma',
+				),
 				'updated_by' => array(
 						'title' => 'Updated By',
 						'editable' => false
