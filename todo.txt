@@ -1,3 +1,7 @@
+Demo
+	- Frozennode
+
+
 controllers - refactor controller code to models
 
 Maintain Lessons
@@ -13,6 +17,7 @@ Todd's to do list
 	Lex Languages - set sort order
 	Mistakes with semi-colans in EIEOL
 	Unicode info and test (make sure page matches an images)
+	DOI - Digital Object Identifier
 
 Deploy
 	https
@@ -25,7 +30,6 @@ Implementation
 	Redirects - for each subfolder in http://www.utexas.edu/cola/centers/lrc/, redirect to appropriate location on new system
 		
 Future Ideas
-	DOI - Digital Object Identifier - add field to series?  Whole system? Lexicon?
 	Clickable glossed text doesn't work well in Sanskrit
 	sort problems with ǣ and œ.  Look at Unicode Collation Algorithm.  
 		Perhaps just let them map characters like ǣ = ae.  
