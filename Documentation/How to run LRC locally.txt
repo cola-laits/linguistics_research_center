@@ -25,7 +25,7 @@ Then go into your local phpmyadmin, create a database called lrc-test, click Imp
 9. Edit database.php.  Change the host to ipaddress/2112, user to root and password to whatever you picked.
 10. docker login docker-registry.la.utexas.edu - log on with your EID and password.  If off campus, you'll need to be on the VPN.
 11. docker run -p 8088:80 -v /c/Users/{user}/workspace/lrc-site/server:/var/www/html docker-registry.la.utexas.edu/base_laravel:latest
-
+DO I NEED TO RUN COMPOSER  UPDATE???
 Your app should be at your url:8088
 
 

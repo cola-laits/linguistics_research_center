@@ -1,12 +1,8 @@
-controllers - refactor code to models
+controllers - refactor controller code to models
 
-Maintain Lexicon
-	Use Frozen Node?
-	Make sure relfexes are unique
 Maintain Lessons
 ***Allow lessons to store images
 ***Use box to play audio files
-***DOI - Digital Object Identifier
 
 Public
 ***Export series to PDF
@@ -29,6 +25,7 @@ Implementation
 	Redirects - for each subfolder in http://www.utexas.edu/cola/centers/lrc/, redirect to appropriate location on new system
 		
 Future Ideas
+	DOI - Digital Object Identifier - add field to series?  Whole system? Lexicon?
 	Clickable glossed text doesn't work well in Sanskrit
 	sort problems with ǣ and œ.  Look at Unicode Collation Algorithm.  
 		Perhaps just let them map characters like ǣ = ae.  
