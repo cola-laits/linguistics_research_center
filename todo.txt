@@ -13,11 +13,10 @@ Public
 ***Links to/from static pages, share css and header from cascade
 	
 Todd's to do list
-	EIEOL Languages - set sort order
-	Lex Languages - set sort order
+	EIEOL Languages - review sort order
 	Mistakes with semi-colans in EIEOL
 	Unicode info and test (make sure page matches an images)
-	DOI - Digital Object Identifier
+	DOI - Digital Object Identifier - register
 
 Deploy
 	https
