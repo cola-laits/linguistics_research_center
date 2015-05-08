@@ -1,7 +1,6 @@
 Demo
 	- Frozennode
 
-
 controllers - refactor controller code to models
 
 Maintain Lessons

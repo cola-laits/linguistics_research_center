@@ -6,18 +6,6 @@
 
 @section('content')
 
-@include('menu_eieol')
-@include('menu_series', array('data'=>'data'))
-@include('menu_resources', array('data'=>'data'))
-
-
-	</div> <!-- close menu div -->
-</div> <!-- close container for menu -->
-
-<div id="contentmain"> <!-- open div for main content section -->
-
-<!-- end Standard Header for new CoLA-style design -->
-
 
 <h1>{{$series->title}}</h1>
 <h2>{{$language->language}}: Master Glossary</h2>
@@ -27,19 +15,35 @@ links are provided to every appearance, in every numbered lesson, of the word/gl
 "word look-up" and, in addition, study how words are used in context by clicking on their links.
 <br/><br/><br/>
 
+<div class="skinny">
 @foreach ($glosses as $gloss)
-	<dt><span lang='{{$language->lang_attribute}}' class='{{$language->class_attribute}}'>{{$gloss['surface_form']}}</span></dt>
-	<dd>
-		{{$gloss['displayGlossForMasterGloss']}}
-		<ul>
-			@foreach ($gloss['glossed_text_gloss_ids'] as $id => $lesson)
-				<li>
-					<a href='/eieol_lesson/{{$series->id}}?id={{$lesson->id}}#glossed_text_gloss_{{$id}}'>{{$lesson->title}}</a>
-				</li>
-			@endforeach
-		</ul>
-	</dd>
+	<strong><span lang='{{$language->lang_attribute}}' class='{{$language->class_attribute}}'>{{$gloss['surface_form']}}</span></strong> - 
+	{{$gloss['displayGlossForMasterGloss']}}
+	<ul>
+		@foreach ($gloss['glossed_text_gloss_ids'] as $id => $lesson)
+			<li>
+				<a href='/eieol_lesson/{{$series->id}}?id={{$lesson->id}}#glossed_text_gloss_{{$id}}'>{{$lesson->title}}</a>
+			</li>
+		@endforeach
+	</ul>
 @endforeach
+</div>
 
+<!--    
+*******************************************
+OFFICE NAVIGATION - RELATED LINKS - CONTACT
+******************************************* -->
+</div>
+</div>
+<div class="medium-3 medium-pull-9 columns content-secondary-page-navigation"><!-- Office Navigation -->
+<hr class="show-for-small-only"/>
 
+@include('menu_menu')
+@include('menu_series', array('data'=>'data'))
+@include('menu_resources', array('data'=>'data'))
+</div>
+</div>
+ 
+
+    
 @stop

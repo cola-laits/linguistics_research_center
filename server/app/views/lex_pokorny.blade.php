@@ -4,17 +4,6 @@
 
 @section('content')
 
-@include('menu_lex')
-
-
-	</div> <!-- close menu div -->
-</div> <!-- close container for menu -->
-
-<div id="contentmain"> <!-- open div for main content section -->
-
-<!-- end Standard Header for new CoLA-style design -->
-
-
     
 <h1>Indo-European Lexicon</h1>
 <h2>Pokorny Master PIE Etyma</h2>
@@ -25,14 +14,6 @@ Entry head-words are listed, with their page numbers and cross-references to oth
 (following Pokorny) plus our own English glosses; for more information, the reader is referred 
 to the book. Some misprints in Pokorny have been corrected, including repairs to diacritics and 
 missing, incorrect, or extraneous homograph numbers.</p>
-
-<blockquote>Note: this page is for systems/browsers
-with <i>Unicode</i><sup>&reg;</sup> support and fonts spanning the <i>Unicode 3</i> character set relevant to Indo-European languages.
-
-
-Versions of this page rendered in alternate character sets are available via links
-(see <i>Unicode 2</i> and <i>ISO-8859-1</i>)
-in the left margin.</blockquote>
 
 <p>In our table, cross-references under "See also" may include IE links to our own lists 
 of more modern Indo-European reflexes -- words derived from the ancient Proto-Indo-European 
@@ -45,12 +26,16 @@ See our
 page for links <i>from</i> reflexes (listed by IE language) <i>to</i> their PIE etyma.</p>
 
 
-<table border='1' cellpadding='2' cellspacing='2' style='border-collapse: collapse' summary='Pokorny head-word entries with page numbers, cross-references, and English glosses'>
-  <tr><th class='left' scope='col' width='11%'><nobr>Page(s)</nobr></th>
-    <th class='left' scope='col' width='39%'>Pokorny entry</th>
-    <th class='left' scope='col' width='14%'>See&nbsp;also</th>
-    <th class='left' scope='col' width='36%'>English gloss</th></tr>
-    
+<table summary='Pokorny head-word entries with page numbers, cross-references, and English glosses'>
+  <thead>
+  	<tr>
+  		<th scope='col'>Page(s)</th>
+	    <th scope='col'>Pokorny entry</th>
+	    <th scope='col'>See&nbsp;also</th>
+	    <th scope='col'>English gloss</th>
+	</tr>
+  </thead>
+  <tbody>  
    
 	 @foreach($etymas as $etyma)
 	        <tr>
@@ -74,9 +59,26 @@ page for links <i>from</i> reflexes (listed by IE language) <i>to</i> their PIE 
 			 </tr>
 	 @endforeach
 
- 
+ 	</tbody>
  
  </table>
     
+    
+<!--    
+*******************************************
+OFFICE NAVIGATION - RELATED LINKS - CONTACT
+******************************************* -->
+</div>
+</div>
+<div class="medium-3 medium-pull-9 columns content-secondary-page-navigation"><!-- Office Navigation -->
+<hr class="show-for-small-only"/>
+
+@include('menu_menu')
+@include('menu_lex')
+
+</div>
+</div>
+ 
+
     
 @stop

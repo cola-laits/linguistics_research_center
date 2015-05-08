@@ -4,18 +4,8 @@
 
 @section('content')
 
-@include('menu_lex')
+<div class="skinny">
 
-
-	</div> <!-- close menu div -->
-</div> <!-- close container for menu -->
-
-<div id="contentmain"> <!-- open div for main content section -->
-
-<!-- end Standard Header for new CoLA-style design -->
-
-
-    
 <h1>Indo-European Lexicon</h1>
 <h2>Language Indices</h2>
 
@@ -64,7 +54,7 @@ conclusions should be drawn from this structural detail.</p>
     
     <ul class="lang_list">
 	@foreach($language_family->language_sub_families as $language_sub_family)
-	    <li>{{$language_sub_family->name}}</li>
+	    <li><div class="lang_sub_family">{{$language_sub_family->name}}</div></li>
 	    
 	    
 	    <ul class="lang_list">
@@ -90,4 +80,23 @@ conclusions should be drawn from this structural detail.</p>
     <hr/>
 @endforeach
 </ul>
+</div>
+
+<!--    
+*******************************************
+OFFICE NAVIGATION - RELATED LINKS - CONTACT
+******************************************* -->
+</div>
+</div>
+<div class="medium-3 medium-pull-9 columns content-secondary-page-navigation"><!-- Office Navigation -->
+<hr class="show-for-small-only"/>
+
+@include('menu_menu')
+@include('menu_lex')
+
+</div>
+</div>
+ 
+
+    
 @stop

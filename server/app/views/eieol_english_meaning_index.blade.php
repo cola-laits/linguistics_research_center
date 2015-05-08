@@ -6,19 +6,6 @@
 
 @section('content')
 
-@include('menu_eieol')
-@include('menu_series', array('data'=>'data'))
-@include('menu_resources', array('data'=>'data'))
-
-
-	</div> <!-- close menu div -->
-</div> <!-- close container for menu -->
-
-<div id="contentmain"> <!-- open div for main content section -->
-
-<!-- end Standard Header for new CoLA-style design -->
-
-
 <h1>{{$series->title}}</h1>
 <h2>{{$language->language}}: English Meaning Index</h2>
 
@@ -45,6 +32,7 @@ presence of [apparently] more important words, contribute little or no useful in
 index; unfortunately this may result in some words, in some contexts, being unfairly omitted.</p>
 <br/><br/><br/>
 
+<div class="skinny">
 @foreach ($keywords as $keyword)
 	<dt><strong>{{$keyword['keyword']}}</strong> : {{$keyword['head_word']}} --</dt>
 	<dd>
@@ -57,5 +45,23 @@ index; unfortunately this may result in some words, in some contexts, being unfa
 		</ul>
 	</dd>
 @endforeach
+</div>
 
+<!--    
+*******************************************
+OFFICE NAVIGATION - RELATED LINKS - CONTACT
+******************************************* -->
+</div>
+</div>
+<div class="medium-3 medium-pull-9 columns content-secondary-page-navigation"><!-- Office Navigation -->
+<hr class="show-for-small-only"/>
+
+@include('menu_menu')
+@include('menu_series', array('data'=>'data'))
+@include('menu_resources', array('data'=>'data'))
+</div>
+</div>
+ 
+
+    
 @stop

@@ -4,7 +4,6 @@
 
 @section('content')
 
-@include('menu_lex')
 
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -23,13 +22,6 @@
 	});//document ready
 </script>
 
-
-    </div> <!-- close menu div -->
-</div> <!-- close container for menu -->
-
-<div id="contentmain"> <!-- open div for main content section -->
-
-<!-- end Standard Header for new CoLA-style design -->
 
 <h1>Indo-European Lexicon</h1>
 <h2>{{$language->name}}  Reflex Index</h2>
@@ -79,4 +71,21 @@ or <i>lie</i>, represent multiple reflexes derived from different PIE etyma.</p>
   </tbody>
 </table>    
 
+<!--    
+*******************************************
+OFFICE NAVIGATION - RELATED LINKS - CONTACT
+******************************************* -->
+</div>
+</div>
+<div class="medium-3 medium-pull-9 columns content-secondary-page-navigation"><!-- Office Navigation -->
+<hr class="show-for-small-only"/>
+
+@include('menu_menu')
+@include('menu_lex')
+
+</div>
+</div>
+ 
+
+    
 @stop

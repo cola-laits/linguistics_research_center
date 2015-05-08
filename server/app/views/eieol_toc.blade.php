@@ -6,21 +6,11 @@
 
 @section('content')
 
-@include('menu_eieol')
-@include('menu_series', array('data'=>'data'))
-@include('menu_resources', array('data'=>'data'))
-
-
-	</div> <!-- close menu div -->
-</div> <!-- close container for menu -->
-
-<div id="contentmain"> <!-- open div for main content section -->
-
-<!-- end Standard Header for new CoLA-style design -->
-
 
 <h1>{{$series->title}}</h1>
 <h2>Table of Contents</h2>
+
+<div class="skinny">
 
 <h5>Lessons</h5>
 <ol start="0">
@@ -45,4 +35,23 @@
 @endforeach
 </ul>
 
+</div>
+
+<!--    
+*******************************************
+OFFICE NAVIGATION - RELATED LINKS - CONTACT
+******************************************* -->
+</div>
+</div>
+<div class="medium-3 medium-pull-9 columns content-secondary-page-navigation"><!-- Office Navigation -->
+<hr class="show-for-small-only"/>
+
+@include('menu_menu')
+@include('menu_series', array('data'=>'data'))
+@include('menu_resources', array('data'=>'data'))
+</div>
+</div>
+ 
+
+    
 @stop

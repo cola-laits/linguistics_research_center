@@ -4,10 +4,6 @@
 
 @section('content')
 
-@include('menu_eieol')
-@include('menu_series', array('data'=>'data'))
-@include('menu_resources', array('data'=>'data'))
-
 <script type="text/javascript">
 	$(document).ready(function(){
 
@@ -33,7 +29,6 @@
 			if ($(this).attr('class') == "expand_all"){
 				$(this).html("<i class='fa fa-minus-square-o'></i> Collapse All");
 				$(this).next('ul').children('li').each(function () {
-					console.log($(this));
 				    $(this).removeClass('gloss');
 				});
 				$(this).parent().prev(".glossed_text").children(":first").children('a').each(function () {
@@ -54,13 +49,6 @@
 		
 	});//document ready
 </script>
-
-	</div> <!-- close menu div -->
-</div> <!-- close container for menu -->
-
-<div id="contentmain"> <!-- open div for main content section -->
-
-<!-- end Standard Header for new CoLA-style design -->
 
 <h1>{{$series->title}}</h1>
 {{$lesson->intro_text}}
@@ -131,4 +119,21 @@
 	 
 @endif
 
+<!--    
+*******************************************
+OFFICE NAVIGATION - RELATED LINKS - CONTACT
+******************************************* -->
+</div>
+</div>
+<div class="medium-3 medium-pull-9 columns content-secondary-page-navigation"><!-- Office Navigation -->
+<hr class="show-for-small-only"/>
+
+@include('menu_menu')
+@include('menu_series', array('data'=>'data'))
+@include('menu_resources', array('data'=>'data'))
+</div>
+</div>
+ 
+
+    
 @stop

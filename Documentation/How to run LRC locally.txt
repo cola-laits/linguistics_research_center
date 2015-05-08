@@ -3,7 +3,7 @@
 When you launch Boot2Docker Start, note the IP address it shows you.
 	- The LAITS Docker documentation is at https://devtools.la.utexas.edu/confluence/display/TECH/Local+deployment+infrastructure+setup
 3. Docker's Command prompt sucks.  Instead, use Putty
-	- run Puttgen
+	- run Puttygen
 	- Click load and load the file at C:\Users\{user}\.ssh
 	- Click "Save private key" and save it to the same place.
 	- Open up Putty and create a new Session, pointed at docker@127.0.0.1, port 2022
@@ -21,17 +21,24 @@ go into LAITS' PHPMyAdmin at https://pma.la.utexas.edu/, go to database lrc-test
 (you will probably need to 2 this in 2 batches so file size doesn't get too big.  Do one export of the EIEOL files and one of everything else.)
 Then go into your local phpmyadmin, create a database called lrc-test, click Import and load the files you just exported.
 7. In Eclipse, in server/app/config, create a folder called local
-8. ftp into file.laits.utexas.edu. Navigate to /mnt/projects/app-configs/lrc-site/test.  Copy all those files into your new local folder.
-9. Edit database.php.  Change the host to ipaddress/2112, user to root and password to whatever you picked.
+8. ftp into file.laits.utexas.edu. Navigate to /mnt/projects/app-configs/lrc-site/test.  Copy app, database and lrc_settings into your new local folder.
+	Don't copy cache or session, as these would slow your local app down to a crawl.
+9. Edit database.php.  Change the host to ipaddress:2112, user to root and password to whatever you picked.
 10. docker login docker-registry.la.utexas.edu - log on with your EID and password.  If off campus, you'll need to be on the VPN.
+  This will probably give you an error.  If so, run the following.  It will shut down your boot2docker and you'll have to restart it and restart mysql and phpmyadmin:
+  	cd ~ && echo "EXTRA_ARGS=\"--dns 8.8.8.8 --insecure-registry docker-registry.la.utexas.edu --bip 10.0.42.1/16\"" > profile && sudo mv profile /var/lib/boot2docker/ && sudo reboot
 11. docker run -p 8088:80 -v /c/Users/{user}/workspace/lrc-site/server:/var/www/html docker-registry.la.utexas.edu/base_laravel:latest
-DO I NEED TO RUN COMPOSER  UPDATE???
 Your app should be at your url:8088
+12. If your app seems slow, shut down the VM in Virtual Box and increase the CPU or memory.
 
 
 Migrations
-You need to do a docker exec -it {{container_id}} /bin/bash.  From there you can run your migrateions
+You need to do a docker exec -it {{container_id}} /bin/bash.  From there you can run your migrations
 
+Restarting your machine.
+	Each time you shut down, your docker images will shut down, but they won't lose their state.
+	Do a docker ps -a to get a list of them.
+	Do a docker restart {container id}    (do for each one)
 
 When you commit your code, bamboo/shipyard will run a build and deploy it to lrc-test.  
 Bamboo is at https://devtools.la.utexas.edu/bamboo

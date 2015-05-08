@@ -4,16 +4,6 @@
 
 @section('content')
 
-@include('menu_lex')
-
-
-	</div> <!-- close menu div -->
-</div> <!-- close container for menu -->
-
-<div id="contentmain"> <!-- open div for main content section -->
-
-<!-- end Standard Header for new CoLA-style design -->
-
 <h1>Indo-European Lexicon</h1>
 <h2>PIE Etymon and IE Reflexes</h2>
 
@@ -65,16 +55,16 @@ corrections may be made and/or more etyma &amp; reflexes may be added.</p>
 	@if ($prev_family != $reflex->display_family)
 		<tr>
 			<td><strong>{{$reflex->display_family}}</strong></td>
-			<td colspan='8'>&nbsp;</td>
+			<td colspan='4'>&nbsp;</td>
 		</tr>
 		{{-- */$prev_family=$reflex->display_family;/* --}}
 	@endif
 	
 	<tr>
 		@if ($prev_lang == $reflex->language->name)
-			<td class='right'></td>
+			<td></td>
 		@else
-			<td class='right' id='{{$reflex->language->abbr}}'>{{$reflex->language->name}}:</td>
+			<td id='{{$reflex->language->abbr}}'><span class='right'>{{$reflex->language->name}}: </span></td>
 			{{-- */$prev_lang=$reflex->language->name;/* --}}
 		@endif
 		<td>
@@ -120,5 +110,22 @@ corrections may be made and/or more etyma &amp; reflexes may be added.</p>
 		last
 	@endif
 </p>
+    
+<!--    
+*******************************************
+OFFICE NAVIGATION - RELATED LINKS - CONTACT
+******************************************* -->
+</div>
+</div>
+<div class="medium-3 medium-pull-9 columns content-secondary-page-navigation"><!-- Office Navigation -->
+<hr class="show-for-small-only"/>
+
+@include('menu_menu')
+@include('menu_lex')
+
+</div>
+</div>
+ 
+
     
 @stop

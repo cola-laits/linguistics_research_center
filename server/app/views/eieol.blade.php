@@ -4,20 +4,6 @@
 
 @section('content')
 
-@include('menu_eieol')
-@include('menu_series', array('data'=>'data'))
-@include('menu_book_links')
-@include('menu_more_info')
-
-
-	</div> <!-- close menu div -->
-</div> <!-- close container for menu -->
-
-<div id="contentmain"> <!-- open div for main content section -->
-
-<!-- end Standard Header for new CoLA-style design -->
-
-
     <h1>Early Indo-European Online</h1>
 	<h2>Introduction to the Language Lessons</h2>
 	<h3 class='AUTH'>Jonathan Slocum and Winfred P. Lehmann</h3>
@@ -213,5 +199,24 @@ the <a title="Spanish &amp; Portuguese Department website" href="http://www.utex
 <p>Our <a title="Offsite Web Links" href="http://www.utexas.edu/cola/centers/lrc/links.html">Web Links</a> page includes pointers to 
 <a title="Links to other websites with Indo-European language resources" href="http://www.utexas.edu/cola/centers/lrc/links.html#PIE">Indo-European language resources elsewhere</a>.</p>
 
+<!--    
+*******************************************
+OFFICE NAVIGATION - RELATED LINKS - CONTACT
+******************************************* -->
+</div>
+</div>
+<div class="medium-3 medium-pull-9 columns content-secondary-page-navigation"><!-- Office Navigation -->
+<hr class="show-for-small-only"/>
+
+@include('menu_menu')
+@include('menu_series', array('data'=>'data'))
+@include('menu_book_links')
+@include('menu_more_info')
+
+</div>
+</div>
+ 
+
     
 @stop
+

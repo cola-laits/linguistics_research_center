@@ -4,20 +4,27 @@
 
 @section('content')
 
-@include('menu_index')
 
 
-	</div> <!-- close menu div -->
-</div> <!-- close container for menu -->
-
-<div id="contentmain"> <!-- open div for main content section -->
-
-<!-- end Standard Header for new CoLA-style design -->
-
-
-    <h1>Welcome to the LRC</h1>
+    <h1 class="header-text">Welcome to the LRC</h1>
 	
 	
 	There will be a site here someday.
     
+    
+
+<!--    
+*******************************************
+OFFICE NAVIGATION - RELATED LINKS - CONTACT
+******************************************* -->
+</div>
+</div>
+<div class="medium-3 medium-pull-9 columns content-secondary-page-navigation"><!-- Office Navigation -->
+<hr class="show-for-small-only"/>
+
+@include('menu_menu')
+</div>
+</div>
+
+
 @stop

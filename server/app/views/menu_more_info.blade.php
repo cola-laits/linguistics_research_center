@@ -1,5 +1,5 @@
-<ul class="menu">
-	<li class="first">More Info</li>
+<ul class="side-nav">
+	<li class="office"><a href="#"><h2>More Info</h2></a></li>
 	<li><a title='Anatolian languages, including Hittite (from the Indo-European Documentation Center)' href='http://www.utexas.edu/cola/centers/lrc/general/ie-lg/Anatolian.html'>Anatolian</a></li>
 	<li><a title='Armenian language (from the Indo-European Documentation Center)' href='http://www.utexas.edu/cola/centers/lrc/general/ie-lg/Armenian.html'>Armenian</a></li>
 	<li><a title='Balkan languages, especially Albanian (from the Indo-European Documentation Center)' href='http://www.utexas.edu/cola/centers/lrc/general/ie-lg/Albanian.html'>Balkan</a></li>
@@ -11,4 +11,3 @@
 	<li><a title='Italic languages, including Latin (from the Indo-European Documentation Center)' href='http://www.utexas.edu/cola/centers/lrc/general/ie-lg/Italic.html'>Italic</a></li>
 	<li><a title='Tocharian languages (from the Indo-European Documentation Center)' href='http://www.utexas.edu/cola/centers/lrc/general/ie-lg/Tocharian.html'>Tocharian</a></li>
 </ul>
-<br/>

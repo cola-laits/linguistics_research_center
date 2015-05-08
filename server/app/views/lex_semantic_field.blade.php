@@ -4,18 +4,6 @@
 
 @section('content')
 
-<img src="http://www.utexas.edu/cola/centers/lrc/images/dieboldsm.jpg" alt="A. Richard Diebold Center for Indo-European Language and Culture" border="2" /><br /><br />
-@include('menu_lex_semantic')
-
-
-	</div> <!-- close menu div -->
-</div> <!-- close container for menu -->
-
-<div id="contentmain"> <!-- open div for main content section -->
-
-<!-- end Standard Header for new CoLA-style design -->
-
-
 
 <h1>Proto-Indo-European Etyma</h1>
 <h2>{{$field->semantic_category->number}}. {{$field->semantic_category->text}}</h2>
@@ -41,6 +29,7 @@ corrections may be made, and more links from this semantic subcategory to lexica
 entries in it, drawn from Pokorny's etyma, may be added. Finally, derived reflexes 
 of PIE etyma, in any number of IE languages, may be added at any time.</blockquote>
 
+<div class="skinny">
 <ul>
 
 @foreach($field->etymas as $etyma)
@@ -56,7 +45,23 @@ of PIE etyma, in any number of IE languages, may be added at any time.</blockquo
 @endforeach
 
 </ul>
+</div>
 
     
-    
+<!--       
+*******************************************
+OFFICE NAVIGATION - RELATED LINKS - CONTACT
+******************************************* -->
+</div>
+</div>
+<div class="medium-3 medium-pull-9 columns content-secondary-page-navigation"><!-- Office Navigation -->
+<hr class="show-for-small-only"/>
+
+@include('menu_menu')
+@include('menu_lex')
+<img src="http://www.utexas.edu/cola/centers/lrc/images/dieboldsm.jpg" alt="A. Richard Diebold Center for Indo-European Language and Culture" border="2" /><br /><br />
+@include('menu_lex_semantic')
+
+</div>
+</div>   
 @stop

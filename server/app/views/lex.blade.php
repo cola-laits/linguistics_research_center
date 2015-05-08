@@ -3,16 +3,6 @@
 @section('title') Early Indo-European Online: Introduction to the Language Lessons @stop
 
 @section('content')
-
-@include('menu_lex')
-
-
-	</div> <!-- close menu div -->
-</div> <!-- close container for menu -->
-
-<div id="contentmain"> <!-- open div for main content section -->
-
-<!-- end Standard Header for new CoLA-style design -->
     
 <h1>Indo-European Lexicon</h1>
 <h2>PIE Etyma and IE Reflexes</h2>
@@ -96,6 +86,23 @@ derived from PIE etyma as listed by Pokorny; these can be reached via links on o
 pages. At present such links are mildly limited in number; but check back from time to time for new 
 resources, as this work is proceeding swiftly.</p>
 
+
+    
+<!--    
+*******************************************
+OFFICE NAVIGATION - RELATED LINKS - CONTACT
+******************************************* -->
+</div>
+</div>
+<div class="medium-3 medium-pull-9 columns content-secondary-page-navigation"><!-- Office Navigation -->
+<hr class="show-for-small-only"/>
+
+@include('menu_menu')
+@include('menu_lex')
+
+</div>
+</div>
+ 
 
     
 @stop

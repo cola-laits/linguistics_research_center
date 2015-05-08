@@ -6,19 +6,6 @@
 
 @section('content')
 
-@include('menu_eieol')
-@include('menu_series', array('data'=>'data'))
-@include('menu_resources', array('data'=>'data'))
-
-
-	</div> <!-- close menu div -->
-</div> <!-- close container for menu -->
-
-<div id="contentmain"> <!-- open div for main content section -->
-
-<!-- end Standard Header for new CoLA-style design -->
-
-
 <h1>{{$series->title}}</h1>
 <h2>{{$language->language}}: Base Form Dictionary</h2>
 
@@ -37,6 +24,8 @@ future; however, for the time being, this information might prove interesting to
 curious about Indo-European etymology. Notice of potential error is always welcome.</p>
 <br/><br/><br/>
 
+
+<div class="skinny">
 @foreach ($head_words as $head_word)
 	<dt>{{$head_word['display']}} --
 		@if($head_word['etyma'] != null) 
@@ -54,5 +43,23 @@ curious about Indo-European etymology. Notice of potential error is always welco
 		</ul>
 	</dd>
 @endforeach
+</div>
 
+<!--    
+*******************************************
+OFFICE NAVIGATION - RELATED LINKS - CONTACT
+******************************************* -->
+</div>
+</div>
+<div class="medium-3 medium-pull-9 columns content-secondary-page-navigation"><!-- Office Navigation -->
+<hr class="show-for-small-only"/>
+
+@include('menu_menu')
+@include('menu_series', array('data'=>'data'))
+@include('menu_resources', array('data'=>'data'))
+</div>
+</div>
+ 
+
+    
 @stop

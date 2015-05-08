@@ -4,20 +4,6 @@
 
 @section('content')
 
-<img src="http://www.utexas.edu/cola/centers/lrc/images/dieboldsm.jpg" alt="A. Richard Diebold Center for Indo-European Language and Culture" border="2" /><br /><br />
-@include('menu_lex_semantic')
-
-
-	</div> <!-- close menu div -->
-</div> <!-- close container for menu -->
-
-<div id="contentmain"> <!-- open div for main content section -->
-
-<!-- end Standard Header for new CoLA-style design -->
-
-
-
-
 <h1>Semantic Fields</h1>
 <h2>{{$cat->number}}. {{$cat->text}}</h2>
 
@@ -44,6 +30,7 @@ on corrections may be made, and more links from these semantic subcategories to
 pages of lexical entries in them, drawn from Pokorny's etyma and reflexes thereof, 
 may be added.</blockquote>
 
+<div class="skinny">
 <ul>
 @foreach($fields as $field)
 	<li>
@@ -56,6 +43,22 @@ may be added.</blockquote>
 @endforeach
 
 </ul>
+</div>
     
-    
+<!--    
+*******************************************
+OFFICE NAVIGATION - RELATED LINKS - CONTACT
+******************************************* -->
+</div>
+</div>
+<div class="medium-3 medium-pull-9 columns content-secondary-page-navigation"><!-- Office Navigation -->
+<hr class="show-for-small-only"/>
+
+@include('menu_menu')
+@include('menu_lex')
+<img src="http://www.utexas.edu/cola/centers/lrc/images/dieboldsm.jpg" alt="A. Richard Diebold Center for Indo-European Language and Culture" border="2" /><br /><br />
+@include('menu_lex_semantic')
+
+</div>
+</div>   
 @stop
