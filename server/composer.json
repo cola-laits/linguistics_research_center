@@ -27,7 +27,9 @@
 		"post-update-cmd": [
 			"php artisan clear-compiled",
 			"php artisan optimize",
-			"php artisan asset:publish frozennode/administrator"
+			"php artisan asset:publish frozennode/administrator",
+			"cp public/packages/frozennode_overrides/main.css public/packages/frozennode/administrator/css/",
+			"cp public/packages/frozennode_overrides/config.js public/packages/frozennode/administrator/js/ckeditor"
 		],
 		"post-create-project-cmd": [
 			"php artisan key:generate",
