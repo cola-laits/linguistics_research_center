@@ -1,22 +1,16 @@
+set up PROD.  Don't require VPN in PROD.  Load Prod DB.
 controllers - refactor controller code to models
-
-Maintain Lessons
-***Allow lessons to store images - Use KCFinder.  Have Chris help me install it.
-***Use box to play audio files
-
-Public
-***Export series to PDF
-***Links to/from static pages, share css and header from cascade - work with Andre
+Allow lessons to store images - Use KCFinder.  Have Chris help me install it.
+Use box to play audio files
+Public site - Export series to PDF
 	
-Deploy
-***set up PROD.  Don't require VPN in PROD
-	404 errors
-	make sure we don't show errors
-	Allow Google to crawl it
+
 	
 Implementation
 	remove load controller, load views, references in routes.php and app/storage/data_load/
 	Redirects - for each subfolder in http://www.utexas.edu/cola/centers/lrc/, redirect to appropriate location on new system
+	share css and header from cascade - work with Andre
+	Review links and toolbars with users
 
 Todd's to do list
 	EIEOL Languages - review sort order

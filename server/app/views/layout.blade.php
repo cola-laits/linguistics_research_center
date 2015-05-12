@@ -23,7 +23,6 @@
 <link href="http://www.utexas.edu/cola/_internal/images/favicons/apple-touch-icon-72x72.png" rel="apple-touch-icon" sizes="72x72"/>
 <link href="http://www.utexas.edu/cola/_internal/images/favicons/apple-touch-icon-114x114.png" rel="apple-touch-icon" sizes="114x114"/>
 
-
 <title>@section('title') The Linguistics Research Center @show</title>
 
 <meta content="Thu, 07 May 2015 05:12:57 -0500" name="date"/>
@@ -99,7 +98,7 @@ PHONE NAVIGATION
 <div class="small-10 small-centered columns end">
 
           
-          <a href="http://www.utexas.edu/cola//offices/departments/index.php"><div class="small-12 panel-phone"><h4>Academic Units</h4></div></a>
+          <a href="http://www.utexas.edu/cola/offices/departments/index.php"><div class="small-12 panel-phone"><h4>Academic Units</h4></div></a>
           <a href="http://www.utexas.edu/cola/research/index.php"><div class="small-12 panel-phone"><h4>Graduate Resources</h4></div></a>
           <a href="index.php"><div class="small-12 panel-phone"><h4>Undergraduate Resources</h4></div></a>
           <a href="http://www.utexas.edu/cola/courses/index.php"><div class="small-12 panel-phone"><h4>Courses</h4></div></a>
