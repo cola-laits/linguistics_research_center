@@ -1,16 +1,15 @@
 controllers - refactor controller code to models
 
 Maintain Lessons
-***Allow lessons to store images
+***Allow lessons to store images - Use KCFinder.  Have Chris help me install it.
 ***Use box to play audio files
 
 Public
 ***Export series to PDF
-***Links to/from static pages, share css and header from cascade
+***Links to/from static pages, share css and header from cascade - work with Andre
 	
 Deploy
 ***set up PROD.  Don't require VPN in PROD
-	https
 	404 errors
 	make sure we don't show errors
 	Allow Google to crawl it

@@ -13,7 +13,15 @@
 
 App::before(function($request)
 {
-	//
+	// set the current IP (REMOTE_ADDR) as a trusted proxy
+	Request::setTrustedProxies( [ $request->getClientIp() ] );
+	
+	if( ! App::environment('local')) {
+		if( ! Request::secure())
+		{
+			return Redirect::secure(Request::path());
+		}
+	}
 });
 
 
