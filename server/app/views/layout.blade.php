@@ -6,44 +6,44 @@
 <meta content="width=device-width, initial-scale=1.0 maximum-scale=1" name="viewport"/>
 
 <!-- FAVICONS -->
-<link href="http://www.utexas.edu/cola/_internal/images/favicons/favicon.ico" rel="icon"/>
-<link href="http://www.utexas.edu/cola/_internal/images/favicons/apple-touch-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
-<link href="http://www.utexas.edu/cola/_internal/images/favicons/apple-touch-icon-152x152.png" rel="apple-touch-icon" sizes="152x152"/>
-<!--[if IE]><link rel="shortcut icon" href="http://www.utexas.edu/cola/_internal/images/favicons/favicon.ico" />
+<link href="//www.utexas.edu/cola/_internal/images/favicons/favicon.ico" rel="icon"/>
+<link href="//www.utexas.edu/cola/_internal/images/favicons/apple-touch-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="//www.utexas.edu/cola/_internal/images/favicons/apple-touch-icon-152x152.png" rel="apple-touch-icon" sizes="152x152"/>
+<!--[if IE]><link rel="shortcut icon" href="//www.utexas.edu/cola/_internal/images/favicons/favicon.ico" />
 <![endif]-->
-<meta content="http://www.utexas.edu/cola/_internal/images/favicons/apple-touch-icon-144x144.png" name="msapplication-TileImage"/> 
+<meta content="//www.utexas.edu/cola/_internal/images/favicons/apple-touch-icon-144x144.png" name="msapplication-TileImage"/> 
 <meta content="#ffffff" name="msapplication-TileColor"/>
 <meta content="UT Austin" name="apple-mobile-web-app-title"/>
-<link href="http://www.utexas.edu/cola/_internal/images/favicons/apple-touch-icon-144x144.png" rel="apple-touch-icon" sizes="144x144"/>
-<link href="http://www.utexas.edu/cola/_internal/images/favicons/apple-touch-icon-120x120.png" rel="apple-touch-icon" sizes="120x120"/>
-<link href="http://www.utexas.edu/cola/_internal/images/favicons/apple-touch-icon.png" rel="apple-touch-icon"/>
-<link href="http://www.utexas.edu/cola/_internal/images/favicons/apple-touch-icon-57x57.png" rel="apple-touch-icon" sizes="57x57"/>
-<link href="http://www.utexas.edu/cola/_internal/images/favicons/apple-touch-icon-60x60.png" rel="apple-touch-icon" sizes="60x60"/>
-<link href="http://www.utexas.edu/cola/_internal/images/favicons/apple-touch-icon-76x76.png" rel="apple-touch-icon" sizes="76x76"/>
-<link href="http://www.utexas.edu/cola/_internal/images/favicons/apple-touch-icon-72x72.png" rel="apple-touch-icon" sizes="72x72"/>
-<link href="http://www.utexas.edu/cola/_internal/images/favicons/apple-touch-icon-114x114.png" rel="apple-touch-icon" sizes="114x114"/>
+<link href="//www.utexas.edu/cola/_internal/images/favicons/apple-touch-icon-144x144.png" rel="apple-touch-icon" sizes="144x144"/>
+<link href="//www.utexas.edu/cola/_internal/images/favicons/apple-touch-icon-120x120.png" rel="apple-touch-icon" sizes="120x120"/>
+<link href="//www.utexas.edu/cola/_internal/images/favicons/apple-touch-icon.png" rel="apple-touch-icon"/>
+<link href="//www.utexas.edu/cola/_internal/images/favicons/apple-touch-icon-57x57.png" rel="apple-touch-icon" sizes="57x57"/>
+<link href="//www.utexas.edu/cola/_internal/images/favicons/apple-touch-icon-60x60.png" rel="apple-touch-icon" sizes="60x60"/>
+<link href="//www.utexas.edu/cola/_internal/images/favicons/apple-touch-icon-76x76.png" rel="apple-touch-icon" sizes="76x76"/>
+<link href="//www.utexas.edu/cola/_internal/images/favicons/apple-touch-icon-72x72.png" rel="apple-touch-icon" sizes="72x72"/>
+<link href="//www.utexas.edu/cola/_internal/images/favicons/apple-touch-icon-114x114.png" rel="apple-touch-icon" sizes="114x114"/>
 
 <title>@section('title') The Linguistics Research Center @show</title>
 
 <meta content="Thu, 07 May 2015 05:12:57 -0500" name="date"/>
 
 <!-- CSS LOADING -->
-<link href="http://www.utexas.edu/cola/_internal/css/app.css" rel="stylesheet" type="text/css"/>
-<link href="http://fonts.googleapis.com/css?family=Roboto:400,300,700,700italic,400italic|Roboto+Condensed:400,300" rel="stylesheet" type="text/css"/>
+<link href="//www.utexas.edu/cola/_internal/css/app.css" rel="stylesheet" type="text/css"/>
+<link href="//fonts.googleapis.com/css?family=Roboto:400,300,700,700italic,400italic|Roboto+Condensed:400,300" rel="stylesheet" type="text/css"/>
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 
 	{{ HTML::style('css/lrcstyle.css') }}
-	{{ HTML::style('https://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css') }}
+	{{ HTML::style('//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css') }}
 	{{ HTML::style('//cdn.datatables.net/1.10.6/css/jquery.dataTables.min.css') }}
 	{{ HTML::style('css/demo_table_jui.css') }}
 
 <!--  "Must Have in the Header" Javascript -->
-<script src="http://jwpsrv.com/library/1O4izvC8EeKppRIxOQulpA.js" type="text/javascript"></script>
-<script src="http://www.utexas.edu/cola/_internal/js/modernizr.js" type="text/javascript"></script>
+<script src="//jwpsrv.com/library/1O4izvC8EeKppRIxOQulpA.js" type="text/javascript"></script>
+<script src="//www.utexas.edu/cola/_internal/js/modernizr.js" type="text/javascript"></script>
 
 {{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js') }}
-<script src="http://www.utexas.edu/cola/_internal/js/foundation.min.js" type="text/javascript"></script>
-<script src="http://www.utexas.edu/cola/_internal/js/app.js" type="text/javascript"></script>
+<script src="//www.utexas.edu/cola/_internal/js/foundation.min.js" type="text/javascript"></script>
+<script src="//www.utexas.edu/cola/_internal/js/app.js" type="text/javascript"></script>
 {{ HTML::script('//cdn.datatables.net/1.10.6/js/jquery.dataTables.min.js') }}
 
 </head>
@@ -67,7 +67,7 @@ Orange UT Bar with Search
 <div class="row">
 <nav class="top-bar" data-topbar="">
 <ul class="title-area">
-<li class="ut-word-mark"><a href="http://www.utexas.edu/"><img alt="The University of Texas at Austin" onerror="/dean/cola/_internal/images/2015_TEXAS_wordmark_white.png" src="http://www.utexas.edu/cola/_internal/images/2015_TEXAS_wordmark_white.svg"/></a></li>
+<li class="ut-word-mark"><a href="//www.utexas.edu/"><img alt="The University of Texas at Austin" onerror="/dean/cola/_internal/images/2015_TEXAS_wordmark_white.png" src="//www.utexas.edu/cola/_internal/images/2015_TEXAS_wordmark_white.svg"/></a></li>
 <!-- Hamburger / Pancake icon on phone -->
 <li class="toggle-topbar menu-icon"><a><span></span></a></li>
 </ul>
@@ -76,7 +76,7 @@ Orange UT Bar with Search
 <ul>
 <!-- SEARCH .right show-for-medium-up div -->
 <li>
-<form action="http://www.utexas.edu/cola/search" id="search-medium-up">
+<form action="//www.utexas.edu/cola/search" id="search-medium-up">
 <input name="cx" type="hidden" value="002688418440466237416:ilehtu0wbts"/> 
 <input name="cof" type="hidden" value="FORID:10"/> 
 <input name="ie" type="hidden" value="UTF-8"/> 
@@ -113,7 +113,7 @@ PHONE NAVIGATION
 </div>
 <!-- Phone Search -->
 <div class="small-8 small-centered columns end">
-<form action="http://www.utexas.edu/cola/search/" id="search-small">
+<form action="//www.utexas.edu/cola/search/" id="search-small">
 <input name="cx" type="hidden" value="002688418440466237416:ilehtu0wbts"/> 
 <input name="cof" type="hidden" value="FORID:10"/> <input name="ie" type="hidden" value="UTF-8"/> 
 <label class="hidden-for-small-only" for="searchSmallOnlyInput">Search the College of Liberal Arts</label>
@@ -132,7 +132,7 @@ COLA Word Mark - Revisit to make better - Maybe make an H1 ????
 *************************************************************** -->
 <div id="word-mark">
 	<div class="row">
-		<a href="http://www.utexas.edu/cola/index.php"><img alt="College of Liberal Arts" onerror="/dean/cola/_internal/images/2015_cola_logo.gif" src="http://www.utexas.edu/cola/_internal/images/2015_cola_logo.svg"/></a>
+		<a href="http://www.utexas.edu/cola/index.php"><img alt="College of Liberal Arts" onerror="/dean/cola/_internal/images/2015_cola_logo.gif" src="//www.utexas.edu/cola/_internal/images/2015_cola_logo.svg"/></a>
 	</div>
 </div>
 
@@ -160,7 +160,7 @@ FOOTER
 <div class="row footer">
 <div class="small-12 medium-5 large-4 columns">
 <ul class="small-block-grid-1 logo-footer">
-<li><a data-gtm-event="nav-college-footer-cla" href="http://www.utexas.edu/cola/index.php"><img alt="The University of Texas at Austin College of Liberal Arts" height="45" onerror="/dean/cola/_internal/images/2015_colafooter_logo.png" src="http://www.utexas.edu/cola/_internal/images/2015_colafooter_logo.svg" width="280"/></a></li>
+<li><a data-gtm-event="nav-college-footer-cla" href="http://www.utexas.edu/cola/index.php"><img alt="The University of Texas at Austin College of Liberal Arts" height="45" onerror="/dean/cola/_internal/images/2015_colafooter_logo.png" src="//www.utexas.edu/cola/_internal/images/2015_colafooter_logo.svg" width="280"/></a></li>
 </ul>
 </div>
 <!-- Social Media Small -->
