@@ -52,7 +52,7 @@
 
 <h1>{{$series->title}}</h1>
 {{$lesson->intro_text}}
-
+<div class="skinny">
 @foreach ($lesson->glossed_texts as $glossed_text)
 	<div class="glossed_text"><span lang='{{$lesson->language->lang_attribute}}' class='{{$lesson->language->class_attribute}}'>{{$glossed_text->clickable_gloss_text()}}</span></div>
 	<div class="boxey">
@@ -119,6 +119,7 @@
 	 
 @endif
 
+</div>
 <!--    
 *******************************************
 OFFICE NAVIGATION - RELATED LINKS - CONTACT

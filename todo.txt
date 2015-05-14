@@ -1,7 +1,6 @@
 set up PROD.  Don't require VPN in PROD.  Load Prod DB.
 controllers - refactor controller code to models
 Allow lessons to store images - Use KCFinder.  Have Chris help me install it.
-Use box to play audio files
 Public site - Export series to PDF
 	
 
