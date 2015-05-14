@@ -54,6 +54,7 @@
 				{ name: 'insert', items : [ 'Table','HorizontalRule','SpecialChar'] },
 				{ name: 'styles', items : [ 'Format','FontSize' ] },
 				{ name: 'colors', items : [ 'TextColor','BGColor' ] },
+				{ name: 'insert', items : [ 'Image' ]  },
 				{ name: 'tools', items : [ 'Maximize'] }
 	    	];
 	    </script>

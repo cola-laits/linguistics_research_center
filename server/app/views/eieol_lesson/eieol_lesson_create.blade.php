@@ -62,7 +62,14 @@
 </div>
 
 <script>
-	CKEDITOR.replace( 'intro_text',{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', allowedContent : true} );
+	CKEDITOR.plugins.addExternal( 'onchange', '/js/', 'onchangeplugin.js' );
+	CKEDITOR.replace( 'intro_text',{toolbar : $mytoolbar, 
+									contentsCss : '/css/lrcstyle.css', 
+									disableNativeSpellChecker:false,
+									allowedContent : true, 
+									extraPlugins : 'onchange'
+									} );
+	
 </script>
  
 @stop
