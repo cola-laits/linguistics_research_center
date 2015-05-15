@@ -5,6 +5,7 @@ Route::get('index', 'PublicController@index');
 
 Route::get('eieol', 'PublicController@eieol');
 Route::get('eieol_lesson/{series_id}', 'PublicController@eieol_lesson');
+Route::get('eieol_pdf/{series_id}', 'PublicController@eieol_pdf');
 Route::get('eieol_toc/{series_id}', 'PublicController@eieol_toc');
 Route::get('eieol_master_gloss/{series_id}/{language_id}', 'PublicController@eieol_master_gloss');
 Route::get('eieol_base_form_dictionary/{series_id}/{language_id}', 'PublicController@eieol_base_form_dictionary');

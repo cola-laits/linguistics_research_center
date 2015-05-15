@@ -1,8 +1,10 @@
-@extends('layout')
+@extends($pdf ? 'pdf_layout' : 'layout')
 
 @section('title') {{strip_tags($lesson->title)}}@stop
 
 @section('content')
+
+@if (!$pdf) 
 
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -50,22 +52,38 @@
 	});//document ready
 </script>
 
+@endif
+
 <h1>{{$series->title}}</h1>
 {{$lesson->intro_text}}
 <div class="skinny">
 @foreach ($lesson->glossed_texts as $glossed_text)
-	<div class="glossed_text"><span lang='{{$lesson->language->lang_attribute}}' class='{{$lesson->language->class_attribute}}'>{{$glossed_text->clickable_gloss_text()}}</span></div>
-	<div class="boxey">
-		<a href="#" onclick="return false" class="expand_all"><i class='fa fa-plus-square-o'></i> Expand All</a>
-		<ul>
-			@foreach ($glossed_text->glosses as $gloss)
-		   		<li id='gloss_pivot_{{$gloss->pivot->id}}' class='gloss'>
-		   			<a name='glossed_text_gloss_{{$gloss->pivot->id}}'></a>
-		    		{{$gloss->getDisplayGloss()}}
-		    	</li>
-		    @endforeach
-	    </ul>
-	</div>
+	@if ($clickable)
+		<div class="glossed_text"><span lang='{{$lesson->language->lang_attribute}}' class='{{$lesson->language->class_attribute}}'>{{$glossed_text->clickable_gloss_text()}}</span></div>
+		<div class="boxey">
+			<a href="#" onclick="return false" class="expand_all"><i class='fa fa-plus-square-o'></i> Expand All</a>
+			<ul>
+				@foreach ($glossed_text->glosses as $gloss)
+			   		<li id='gloss_pivot_{{$gloss->pivot->id}}' class='gloss'>
+			   			<a name='glossed_text_gloss_{{$gloss->pivot->id}}'></a>
+			    		{{$gloss->getDisplayGloss()}}
+			    	</li>
+			    @endforeach
+		    </ul>
+		</div>
+	@else
+		<div class="glossed_text"><span lang='{{$lesson->language->lang_attribute}}' class='{{$lesson->language->class_attribute}}'>{{$glossed_text->glossed_text}}</span></div>
+		<div class="boxey">
+			<ul>
+				@foreach ($glossed_text->glosses as $gloss)
+			   		<li id='gloss_pivot_{{$gloss->pivot->id}}'>
+			   			<a name='glossed_text_gloss_{{$gloss->pivot->id}}'></a>
+			    		{{$gloss->getDisplayGloss()}}
+			    	</li>
+			    @endforeach
+		    </ul>
+		</div>
+	@endif
 	<br/>
 @endforeach
 
@@ -90,7 +108,7 @@
 
 
 <!-- If intro, display the list of lessons -->
-@if ($lesson->order == 0) 
+@if ($lesson->order == 0 and !$pdf) 
 	<h5>The {{$series->menu_name}} Lessons</h5>
 	<ol>
 	@foreach ($lessons as $lesson)
@@ -119,24 +137,29 @@
 	 
 @endif
 
-</div>
 
 
-<!--    
-*******************************************
-OFFICE NAVIGATION - RELATED LINKS - CONTACT
-******************************************* -->
-</div>
-</div>
-<div class="medium-3 medium-pull-9 columns content-secondary-page-navigation"><!-- Office Navigation -->
-<hr class="show-for-small-only"/>
 
-@include('menu_menu')
-@include('menu_series', array('data'=>'data'))
-@include('menu_resources', array('data'=>'data'))
-</div>
+@if (!$pdf) 
+
+	<!--    
+	*******************************************
+	OFFICE NAVIGATION - RELATED LINKS - CONTACT
+	******************************************* -->
+	</div>
+	</div>
+	</div>
+	<div class="medium-3 medium-pull-9 columns content-secondary-page-navigation"><!-- Office Navigation -->
+	<hr class="show-for-small-only"/>
+	
+	@include('menu_menu')
+	@include('menu_series', array('data'=>'data'))
+	@include('menu_resources', array('data'=>'data'))
+	</div>
+
+@endif
+
 </div>
  
-
     
 @stop

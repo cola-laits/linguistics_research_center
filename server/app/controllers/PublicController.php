@@ -115,6 +115,8 @@ class PublicController extends BaseController {
 	public function eieol_lesson($series_id)
 	{
 		$data = get_series_info($series_id);
+		$data['pdf'] = False;
+		$data['clickable'] = True;
 	
 		if (Input::has('id')) {
 			$data['lesson'] = EieolLesson::with('grammars','language')
@@ -138,6 +140,35 @@ class PublicController extends BaseController {
 	
 		return View::make('eieol_lesson')->with($data);
 	}
+	
+	
+	public function eieol_pdf($series_id)
+	{
+		$data = get_series_info($series_id);
+		$data['pdf'] = True;
+		$data['clickable'] = False;
+		
+		$html = View::make('pdf_header_layout');
+		
+		$lessons = EieolLesson::with('grammars')
+			->with('glossed_texts.glosses.language','glossed_texts.glosses.elements.head_word.language')
+			->where('series_id', '=', $series_id)
+			->orderBy('order')
+			->get();
+		foreach ($lessons as $lesson) {
+			$data['lesson'] = $lesson;
+			$data['lesson_text'] = '';
+			foreach ($data['lesson']->glossed_texts as $glossed_text) {
+				$data['lesson_text'] .= $glossed_text->glossed_text . ' ';
+			}
+			$html .= View::make('eieol_lesson')->with($data);
+		}
+		
+		$html .= View::make('pdf_footer_layout');
+		
+		return $html;
+	}
+	
 	
 	public function eieol_toc($series_id)
 	{
