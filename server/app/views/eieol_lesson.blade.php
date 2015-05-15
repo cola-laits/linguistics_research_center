@@ -1,10 +1,10 @@
-@extends($pdf ? 'pdf_layout' : 'layout')
+@extends($printable ? 'printable_layout' : 'layout')
 
 @section('title') {{strip_tags($lesson->title)}}@stop
 
 @section('content')
 
-@if (!$pdf) 
+@if (!$printable) 
 
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -108,7 +108,7 @@
 
 
 <!-- If intro, display the list of lessons -->
-@if ($lesson->order == 0 and !$pdf) 
+@if ($lesson->order == 0 and !$printable) 
 	<h5>The {{$series->menu_name}} Lessons</h5>
 	<ol>
 	@foreach ($lessons as $lesson)
@@ -140,7 +140,7 @@
 
 
 
-@if (!$pdf) 
+@if (!$printable) 
 
 	<!--    
 	*******************************************

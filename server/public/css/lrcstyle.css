@@ -91,3 +91,15 @@
 	margin: 0px;
 	padding: 0px 0px 0px 30px;
 }
+
+@page  
+{ 
+    size: auto;   /* auto is the initial value */ 
+
+    /* this affects the margin in the printer settings */ 
+    margin: 5mm 15mm 5mm 15mm;  
+} 
+
+.printable_footer {
+	page-break-after: always;
+}
