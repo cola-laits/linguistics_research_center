@@ -100,12 +100,6 @@ class PublicController extends BaseController {
 			->orderBy('order')
 			->first();
 		}
-		
-		//build lesson_text
-		$data['lesson_text'] = '';
-		foreach ($data['lesson']->glossed_texts as $glossed_text) {
-			$data['lesson_text'] .= $glossed_text->glossed_text . ' ';
-		}
 	
 		return View::make('eieol_lesson')->with($data);
 	}
@@ -134,10 +128,6 @@ class PublicController extends BaseController {
 			}
 			
 			$data['lesson'] = $lesson;
-			$data['lesson_text'] = '';
-			foreach ($data['lesson']->glossed_texts as $glossed_text) {
-				$data['lesson_text'] .= $glossed_text->glossed_text . ' ';
-			}
 			$html .= View::make('eieol_lesson')->with($data);
 		}
 		
@@ -157,13 +147,16 @@ class PublicController extends BaseController {
 	{
 		$data = get_series_info($series_id);
 		$data['language'] = EieolLanguage::find($language_id);
+		$data['glosses'] = array();
+		
 		$lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word.language')
 		->where('series_id', '=', $series_id)
 		->where('language_id', '=', $language_id)
 		->select(array('id','title','order'))
 		->get()
-		->sortBy('order');
-		$data['glosses'] = array();
+		->sortBy('order');		
+		
+		//loop through all the lessons, glossed texts and glosses to group like glosses
 		foreach ($lessons as $lesson) {
 			foreach ($lesson->glossed_texts as $glossed_text) {
 				foreach ($glossed_text->glosses as $gloss) {
@@ -189,10 +182,11 @@ class PublicController extends BaseController {
 				}
 			}
 		}
+		
 		global $alphabet;
 		$alphabet = explode(',',$data['language']->custom_sort);
-		//Log::error($alphabet);
 		uksort($data['glosses'], 'alphabet_sorter');
+		
 		return View::make('eieol_master_gloss')->with($data);
 	}
 	
@@ -206,7 +200,9 @@ class PublicController extends BaseController {
 		->select(array('id','title','order'))
 		->get()
 		->sortBy('order');
+		
 		$data['head_words'] = array();
+		//loop through all the lessons, glossed texts and glosses to group like head words
 		foreach ($lessons as $lesson) {
 			foreach ($lesson->glossed_texts as $glossed_text) {
 				foreach ($glossed_text->glosses as $gloss) {
@@ -224,9 +220,10 @@ class PublicController extends BaseController {
 				}
 			}
 		}
+		
 		global $alphabet;
 		$alphabet = explode(',',$data['language']->custom_sort);
-		//Log::error($alphabet);
+		
 		uksort($data['head_words'],'alphabet_sorter');
 		return View::make('eieol_base_form_dictionary')->with($data);
 	}
@@ -243,6 +240,8 @@ class PublicController extends BaseController {
 		->get()
 		->sortBy('order');
 		$data['keywords'] = array();
+		
+		//loop through all the lessons, glossed texts and glosses to group like keywords
 		foreach ($lessons as $lesson) {
 			foreach ($lesson->glossed_texts as $glossed_text) {
 				foreach ($glossed_text->glosses as $gloss) {

@@ -87,9 +87,9 @@
 	<br/>
 @endforeach
 
-@if ($lesson_text != '')
+@if ($lesson->getLessonText() != '')
 	<h2>Lesson Text</h2>
-	<blockquote><span lang='{{$lesson->language->lang_attribute}}' class='{{$lesson->language->class_attribute}}'>{{$lesson_text}}</span></blockquote>
+	<blockquote><span lang='{{$lesson->language->lang_attribute}}' class='{{$lesson->language->class_attribute}}'>{{$lesson->getLessonText()}}</span></blockquote>
 @endif
 	      
 @if ($lesson->lesson_translation != '')	        

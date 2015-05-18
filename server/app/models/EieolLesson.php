@@ -26,4 +26,13 @@ class EieolLesson extends Eloquent {
 	{
 		return $this->hasOne('EieolLanguage','id','language_id');
 	}
+	
+	public function getLessonText()
+	{
+		$lesson_text = '';
+		foreach ($this->glossed_texts as $glossed_text) {
+			$lesson_text .= $glossed_text->glossed_text . ' ';
+		}
+		return $lesson_text;
+	}
 }
