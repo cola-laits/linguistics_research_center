@@ -23,4 +23,14 @@ class LexPartOfSpeech extends Eloquent {
 	{
 		return $this->hasMany('LexReflex', 'part_of_speech_id', 'id');
 	}
+	
+	public static function posLookup()
+	{
+		$all_pos = LexPartOfSpeech::all();
+		$pos_lookup = array();
+		foreach ($all_pos as $pos) {
+			$pos_lookup[$pos->code] = $pos->display;
+		}
+		return $pos_lookup;
+	}
 }

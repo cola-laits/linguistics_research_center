@@ -9,7 +9,7 @@
     <h1 class="header-text">Welcome to the LRC</h1>
 	
 	
-	There will be a site here someday.
+	Please select an option on the left.
     
     
 

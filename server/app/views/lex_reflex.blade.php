@@ -52,12 +52,12 @@ corrections may be made and/or more etyma &amp; reflexes may be added.</p>
 {{-- */$prev_lang='';/* --}}
 {{-- */$prev_family='';/* --}}
 @foreach($etyma->reflexes as $reflex)
-	@if ($prev_family != $reflex->display_family)
+	@if ($prev_family != $reflex->language->displayFamily())
 		<tr>
-			<td><strong>{{$reflex->display_family}}</strong></td>
+			<td><strong>{{$reflex->language->displayFamily()}}</strong></td>
 			<td colspan='4'>&nbsp;</td>
 		</tr>
-		{{-- */$prev_family=$reflex->display_family;/* --}}
+		{{-- */$prev_family=$reflex->language->displayFamily();/* --}}
 	@endif
 	
 	<tr>
@@ -84,7 +84,7 @@ corrections may be made and/or more etyma &amp; reflexes may be added.</p>
 <p><b>Key to Part-of-Speech/Grammatical feature abbreviations</b>:</p>
 <table border='0' summary='part-of-speech and grammatical feature abbreviations'>
 	<tr><th scope='col'>Abbrev.</th><td>&nbsp;</td><th scope='col'>Meaning</th></tr>
-	@foreach($poses as $pos => $display)
+	@foreach($etyma->getPOSes() as $pos => $display)
 		<tr><td>{{$pos}}</td><td>=</td><td>{{$display}}</td></tr>
 	@endforeach
 </table>
@@ -92,20 +92,20 @@ corrections may be made and/or more etyma &amp; reflexes may be added.</p>
 <p><b>Key to information Source codes</b> (<i>always</i> with 'LRC' as editor):</p>
 <table border='0' summary='information source codes'>
 	<tr><th scope='col'>Code</th><td>&nbsp;</td><th scope='col'>Citation</th></tr>
-	@foreach($sources as $code => $display)
+	@foreach($etyma->getSources() as $code => $display)
 		<tr><td>{{$code}}</td><td>=</td><td>{{$display}}</td></tr>
 	@endforeach
 </table>
 
 <p class='center'>Nearby etymon: &nbsp;&nbsp; 
-	@if ($prev_etyma)
-		{{ HTML::link('lex_reflex/' . $prev_etyma->id, 'previous', array('title' => 'previous etymon with reflexes' )) }}
+	@if ($etyma->prevEtyma())
+		{{ HTML::link('lex_reflex/' . $etyma->prevEtyma()->id, 'previous', array('title' => 'previous etymon with reflexes' )) }}
 	@else
 		first
 	@endif
 	&nbsp; | &nbsp;
-	@if ($next_etyma)
-		{{ HTML::link('lex_reflex/' . $next_etyma->id, 'next', array('title' => 'next etymon with reflexes' )) }}
+	@if ($etyma->nextEtyma())
+		{{ HTML::link('lex_reflex/' . $etyma->nextEtyma()->id, 'next', array('title' => 'next etymon with reflexes' )) }}
 	@else
 		last
 	@endif

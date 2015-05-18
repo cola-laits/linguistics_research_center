@@ -1,6 +1,7 @@
 <?php
 
 function get_series_info($series_id) {
+	//used by many pages to get the series plus all the lessons and languages.
 	$data = array();
 	$data['series'] = EieolSeries::find($series_id);
 	$data['lessons'] = EieolLesson::with('grammars', 'language')->where('series_id', '=', $series_id)->get()->sortBy('order');
@@ -64,38 +65,6 @@ function alphabet_sorter($a, $b) {
 	return $shorterLen==$bLen ? 1 : -1;
 } //alphabet_sorter
 
-function split_entries($entry) {
-	$open = mb_strpos($entry,'(', 0,'UTF-8');
-	$close = mb_strpos($entry,')', 0,'UTF-8');
-	$first = mb_substr($entry, 0, $open, 'UTF-8');
-	
-	$len = $close - $open;
-	$middle = mb_substr($entry, $open + 1, $len - 1, 'UTF-8');
-	
-	$len = mb_strlen($entry, 'UTF-8') - $close;
-	$last = mb_substr($entry, $close + 1, $len, 'UTF-8');
-	
-	$short = $first . $last;
-	$long = $first . $middle . $last;
-	
-	$keys = array();
-	
-	if (mb_strpos($short,'(', 0,'UTF-8') === False) {
-		$keys[] = $short;
-	} else {
-		//print_r(split_entries($short));
-		$keys = array_merge($keys,split_entries($short));
-	}
-	
-	if (mb_strpos($long,'(', 0,'UTF-8') === False) {
-		$keys[] = $long;
-	} else {
-		$keys = array_merge($keys,split_entries($long));
-	}
-	
-	return $keys;
-} //split_entries function
-
 class PublicController extends BaseController {	
 	
 	public function index()
@@ -103,7 +72,7 @@ class PublicController extends BaseController {
 		return View::make('index');
 	}
 	
-	//--------------------------------------------------------------------------------------------------
+	//----------------------------------------EIEOL Functions--------------------------------------------
 	
 	public function eieol()
 	{
@@ -298,7 +267,9 @@ class PublicController extends BaseController {
 	}
 	
 	
-	//--------------------------------------------------------------------------------------------------
+	//--------------------------------------------Lexicon Functions-----------------------------------------------
+	
+	
 	public function lex()
 	{
 		$data = array();
@@ -320,56 +291,6 @@ class PublicController extends BaseController {
 									    'reflexes.sources',
 									    'reflexes.parts_of_speech',
 									    'semantic_fields.semantic_category')->find($etyma_id);
-	
-		//set which lang to display
-		foreach ($data['etyma']->reflexes as $reflex) {
-			if ($reflex->language->override_family != '') {
-				$reflex->display_family = $reflex->language->override_family;
-			} else {
-				$reflex->display_family = $reflex->language->language_sub_family->language_family->name;
-			}
-			
-		}
-		
-		//build list of sources used by these reflexes
-		$sources = array();
-		foreach ($data['etyma']->reflexes as $reflex) {
-			foreach($reflex->sources as $source) {
-				if (!array_key_exists($source->code,$sources)) {
-					$sources[$source->code] = $source->display;
-				}
-			}
-		}
-		ksort($sources);
-		$data['sources'] = $sources;
-	
-		//build list of parts of speech used by these reflexes.  This is a little more complicate.
-		//A single pos might be made up of several.  So we buld a lookup list first.
-		//then we break up the used pos and lookup each part.
-		$all_pos = LexPartOfSpeech::all();
-		$pos_lookup = array();
-		foreach ($all_pos as $pos) {
-			$pos_lookup[$pos->code] = $pos->display;
-		}
-	
-		$poses = array();
-		foreach ($data['etyma']->reflexes as $reflex) {
-			foreach($reflex->parts_of_speech as $pos) {
-				$sub_poses = explode('.',$pos->text);
-				foreach($sub_poses as $sub_pos) {
-					if (!array_key_exists($sub_pos,$poses)) {
-						$poses[$sub_pos] = $pos_lookup[$sub_pos];
-					}
-				}
-			}
-		}
-		ksort($poses);
-		$data['poses'] = $poses;
-	
-		//get next and previous etyma
-		$data['prev_etyma'] = LexEtyma::where('order', '<', $data['etyma']->order)->orderBy('order', 'desc')->first();
-		$data['next_etyma'] = LexEtyma::where('order', '>', $data['etyma']->order)->orderBy('order')->first();
-	
 		return View::make('lex_reflex')->with($data);
 	}
 	
@@ -383,24 +304,10 @@ class PublicController extends BaseController {
 	public function lex_lang_reflexes($language_id)
 	{
 		//This is the most complicate code in the whole LRC system
-		
-		//these characters will not be used when sorting the keys of the array
-		$the_unwanted = array("-", "*", "'");
-		
+			
 		$data = array();
 		$data['language'] = LexLanguage::find($language_id);
 			
-		//each language has a custom sort array.  We are going to reindex it with weights.  ie a->1, b->2
-		$alphabet = explode(',',$data['language']->custom_sort);
-		$alpha_weights = array();
-		$ctr = 0;
-		foreach($alphabet as $alpha) {
-			$ctr += 1;
-			for( $i = 0; $i <= mb_strlen($alpha, 'UTF-8'); $i++ ) {
-				$alpha_weights[mb_substr($alpha, $i, 1, 'UTF-8')] = $ctr;
-			}
-		}
-
 		//get all the reflexes.  The Eloquent ORM is too slow, so we have to write our own SQL
 		$temp_reflexes = DB::select( DB::raw("SELECT lex_reflex.id, lex_reflex.class_attribute, lex_reflex.lang_attribute, 
 													 lex_reflex_entry.entry, 
@@ -414,39 +321,13 @@ class PublicController extends BaseController {
 		$data['display_reflexes'] = array();
 		
 		//building the list of reflexes is complicated.
+		$alpha_weights = $data['language']->getWeights();
+		
 		foreach($temp_reflexes as $reflex) {
-			$keys=array();
-			//special processing based on whether or not the entry has a ( in it
-			if (mb_strpos($reflex->entry,'(', 0,'UTF-8') === False) {
-				//regular entry
-				$keys[] = $reflex->entry;
-			} else {
-				//if a reflex contains characters in (), split into 2, ex (g)nosco = gnosco and nosco				
-				$keys = split_entries($reflex->entry);
-			}
-						
+								
 			//now build array of reflexes, combining where needed.
-			//also, convert the key reflex to a series of numbers based on the weighted alphabet array for easy sorting.
-			foreach($keys as $key) {
-				
-				//convert key to an array of numbers for easy searching
-				//break string into an array
-				$key_array = preg_split('//u',$key, -1, PREG_SPLIT_NO_EMPTY);
-
-				$new_key = '';
-				foreach($key_array as $key_char) {
-					//remove any unwanted characters to the end.  
-					if (in_array($key_char,$the_unwanted)) {
-						continue;
-					} elseif (array_key_exists($key_char,$alpha_weights)) {
-						$new_key .= str_pad($alpha_weights[$key_char], 4,'0', STR_PAD_LEFT);
-					} else {
-						$new_key .= '0000';
-					}
-				}
-				//Tack the original entry on to the end.  This way the keys remain unique but the ending isn't really used for sorting
-				$new_key .= $key;
-				//print $key . ' ' . $new_key . '<br/>';
+			foreach(LexReflexEntry::keys($reflex->entry) as $key) {
+				$new_key = LexReflexEntry::hashKey($key, $alpha_weights);
 				
 				//if 2 reflexes are the same, group them
 				if (array_key_exists($new_key,$data['display_reflexes'])) {
@@ -455,7 +336,7 @@ class PublicController extends BaseController {
 					$temp_etyma['gloss'] = $reflex->gloss;
 					$temp_etyma['id'] = $reflex->etyma_id;
 					$data['display_reflexes'][$new_key]['etymas'][] = $temp_etyma;
-					ksort($data['display_reflexes'][$new_key]['etymas']);
+					ksort($data['display_reflexes'][$new_key]['etymas']); //sort the etymas
 				} else {
 					$new_reflex = array();
 					$new_reflex['id'] = $reflex->id;
