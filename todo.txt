@@ -1,8 +1,5 @@
 **set up PROD.  Don't require VPN in PROD.  Load Prod DB.
 **Allow lessons to store images - Use KCFinder.  Have Chris help me install it.
-Bad data in Lexicon.  Latin has blank, - and --.
-
-	
 	
 Implementation
 	remove load controller, load views, references in routes.php and app/storage/data_load/

@@ -57,6 +57,7 @@
 		  		        $("#update_confirm").modal('hide');
 		  		    }, 1000);
 	  		      	myform.css("background-color", "#FFFFFF");
+	  		      	myform.removeAttr("dirty");
 
 
 	  		    	//if they updated the language, we need to change the hidden language ids
@@ -113,8 +114,10 @@
         	    		//attach new ckeditor
         	    		CKEDITOR.replace(new_text_id,{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', disableNativeSpellChecker:false, allowedContent : true, extraPlugins : 'onchange,language', specialChars : [ {{$lesson->language->custom_keyboard_layout}} ] }  );
         	    		CKEDITOR.instances[new_text_id].on('change', function() {
-        	    			if(this.checkDirty())
+        	    			if(this.checkDirty()) {
         	    				$('#'+new_form_id).css("background-color", "#EBAD99");
+        	    				$('#'+new_form_id).attr("dirty", "dirty");
+        	    			}
         	    		});
         		    }
     		    }  
@@ -213,6 +216,14 @@
 	function highlight_form(input){
 		var my_form = $(input).closest('form');
 		my_form.css("background-color", "#EBAD99");
+		if (my_form.attr('id') == 'edit_gloss_form' || 
+			my_form.attr('id') == 'new_head_word_form' ||
+			my_form.attr('id') == 'edit_head_word_form' ||
+			my_form.attr('id') == 'new_gloss_form' ) {
+			//ignore popup's when it comes to setting dirty attribute
+		} else {
+			my_form.attr("dirty", "dirty");
+		}		
 	} //highlight form
 
 
@@ -250,6 +261,20 @@
 
 	
     $(document).ready(function(){
+
+    	//if they have unsaved changes, ask them if they want to leave
+    	window.onbeforeunload = function() {
+        	dirty_page = false;
+    		$("form").each(function() {
+    			   var attr = $(this).attr('dirty');
+    			   if (typeof attr !== typeof undefined && attr !== false) {
+    				   dirty_page = true;
+    			   }    			   
+    		});
+    		if (dirty_page) {
+	    	    return 'You have unsaved changes!';
+    		}
+    	}
 
     	//set language js variable so we can use it for the gloss, head word and keyword lookups
     	hold_language_id = {{$lesson->language_id}};
@@ -418,6 +443,7 @@
 		  		    
 		  		    if(json['success']) { 
 		  		      	$(this).css("background-color", "#FFFFFF");
+		  		        $(this).removeAttr("dirty");
 		  		        attach_gloss(json['gloss_id'], json['gloss_display']);
 		  		    } //json success
 		        }, //success
@@ -469,6 +495,7 @@
 				    $(".errors", "#edit_gloss_form").empty(); //reset gloss form error divs
 				    $("#edit_gloss_modal").modal("show"); 
 				    $('#edit_gloss_form').css("background-color", "#FFFFFF");
+				    $('#edit_gloss_form').removeAttr("dirty");
 				    $("#surface_form", "#edit_gloss_form").focus(); //put cursor in first field
 		        }, //success
 		        
@@ -595,6 +622,7 @@
 		  		    
 		  		    if(json['success']) { 
 		  		      	$(this).css("background-color", "#FFFFFF");
+		  		      	$(this).removeAttr("dirty");
 		  		        attach_head_word(json['head_word_id'], json['head_word_display']);
 		  		    } //json success
 		        }, //success
@@ -670,8 +698,10 @@
     		
     		CKEDITOR.replace('new_grammar_text',{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', disableNativeSpellChecker:false, allowedContent : true, extraPlugins : 'onchange', specialChars : [ {{$lesson->language->custom_keyboard_layout}} ]}  );
     		CKEDITOR.instances['new_grammar_text'].on('change', function() {
-    			if(this.checkDirty())
+    			if(this.checkDirty()) {
     				$('#new_grammar_form').css("background-color", "#EBAD99");
+    				$('#new_grammar_form').attr("dirty", "dirty");
+    			}
     		});
 
     		//calculate next order by finding the highest order in the form and adding 10
@@ -1232,7 +1262,8 @@
 			    			</div>   
 			    			
 			    			<div class='col-sm-1 bottom_button'>
-			    				{{ Form::open(['class' => 'edit_gloss']) }} 
+			    				{{ Form::open(['class' => 'edit_gloss', 
+			    							   'id' => 'edit_gloss_form_' . $gloss->pivot->id]) }} 
 			    					{{ Form::hidden('gloss_id', $gloss->id, ['id' => 'gloss_id']) }}
 			    					{{ Form::submit('Edit Gloss', ['class' => 'btn btn-primary']) }}
 			    				{{ Form::close() }}
@@ -1240,7 +1271,8 @@
 			    			
 			    			<div class='form-group col-sm-1 bottom_button'>
 			    				{{ Form::open(['class' => 'delete_glossed_text_gloss_form',
-			    							   'url' => '/admin2/eieol_glossed_text_gloss/' . $gloss->pivot->id]) }} 
+			    							   'url' => '/admin2/eieol_glossed_text_gloss/' . $gloss->pivot->id,
+			    							   'id' => 'delete_glossed_text_gloss_form_' . $gloss->pivot->id]) }} 
 				            		{{ Form::hidden('glossed_text_gloss_id', $gloss->pivot->id, ['id' => 'glossed_text_gloss_id']) }}
 				            		{{ Form::button('Remove', ['class' => 'btn btn-danger delete_glossed_text_gloss'])}}   
 				            	{{ Form::close() }} 
@@ -1256,7 +1288,8 @@
 			    <div class='row'>
 			   		<div class='col-sm-2'></div>
 			   		<div class='form-group col-sm-1 '> 
-			   			{{ Form::open(['class' => 'attach_gloss_form']) }} 
+			   			{{ Form::open(['class' => 'attach_gloss_form',
+			   						   'id' => 'attach_gloss_form_' . $glossed_text->id]) }} 
 			   				{{ Form::hidden('glossed_text_id', $glossed_text->id, ['id' => 'glossed_text_id']) }}
 				    		{{ Form::submit('Attach Gloss', ['class' => 'btn btn-success']) }}
 				    	{{ Form::close() }}
@@ -1372,7 +1405,8 @@
 				    
 				    <div class='form-group col-sm-1 bottom_button'>
 				    	{{ Form::open(['class' => 'delete_glossed_text_gloss_form',
-	    							   'url' => '/admin2/eieol_glossed_text_gloss/']) }} 
+	    							   'url' => '/admin2/eieol_glossed_text_gloss/', 
+	    							   'id' => 'delete_gloss']) }} 
 	    					{{ Form::hidden('glossed_text_gloss_id', null, ['id' => 'glossed_text_gloss_id']) }}
 		            		{{ Form::button('Remove', ['class' => 'btn btn-danger delete_glossed_text_gloss', 'style' => 'display: none'])}}  
 		            	{{ Form::close() }} 
@@ -1565,23 +1599,29 @@
 	//apply the ckeditor to the intro text
 	CKEDITOR.replace( 'intro_text',{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', disableNativeSpellChecker:false, allowedContent : true, extraPlugins : 'onchange', specialChars : [ {{$lesson->language->custom_keyboard_layout}} ] } );
 	CKEDITOR.instances['intro_text'].on('change', function() {
-		if(this.checkDirty())
+		if(this.checkDirty()) {
 			$('#update_form').css("background-color", "#EBAD99");
+			$('#update_form').attr("dirty", "dirty");
+		}
 	});
 
 	//apply the ckeditor to the translation
 	CKEDITOR.replace( 'lesson_translation',{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', disableNativeSpellChecker:false, allowedContent : true, extraPlugins : 'onchange', specialChars : [ {{$lesson->language->custom_keyboard_layout}} ]}  );
 	CKEDITOR.instances['lesson_translation'].on('change', function() {
-		if(this.checkDirty())
+		if(this.checkDirty()) {
 			$('#update_translation_form').css("background-color", "#EBAD99"); 
+			$('#update_translation_form').attr("dirty", "dirty");
+		}
 	});
 
 	//apply the ckeditor to each exisiting grammar
 	@foreach ($grammars as $grammar)
 		CKEDITOR.replace( 'grammar_text_{{{$grammar->id}}}',{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', disableNativeSpellChecker:false, allowedContent : true, extraPlugins : 'onchange', specialChars : [ {{$lesson->language->custom_keyboard_layout}} ]}  );
 		CKEDITOR.instances['grammar_text_{{{$grammar->id}}}'].on('change', function() {
-			if(this.checkDirty())
+			if(this.checkDirty()) {
 				$('#grammar_form_{{{$grammar->id}}}').css("background-color", "#EBAD99");
+				$('#grammar_form_{{{$grammar->id}}}').attr("dirty", "dirty");
+			}
 		});
 	@endforeach
 </script>
