@@ -23,40 +23,48 @@
     <body onload="top.scrollTo(0,0)">
 	    
 	    <script type="text/javascript">
-	    $(document).ready(function(){
-			//highlight the menu for whichever page we are on - only works for main pages, not edit or create pages
-			$('a[href$="' + this.location.pathname + '"]').parent().addClass('active');
+		    $(document).ready(function(){
+				//highlight the menu for whichever page we are on - only works for main pages, not edit or create pages
+				$('a[href$="' + this.location.pathname + '"]').parent().addClass('active');
+		
+				//generic delete confirmation
+				$(".delete").click(function(e) {
+				    e.preventDefault();
+				    var $form=$(this).closest('form');
+		
+				    $("#delete_confirm").modal('show')
+				    	.one('click', '#delete_confirmed', function (e) {
+				            $form.trigger('submit');
+				        });
+				});
+
+				$( "#reminder" ).dialog({
+				      autoOpen: false,
+				});
+							
+		    });
+		
+		    
+		
+		    $mytoolbar =
+		    	[
+		    		{ name: 'document', items : [ 'Source'] },
+					{ name: 'clipboard', items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] },
+					{ name: 'editing', items : [ 'Find','Replace','-','SelectAll','-','SpellChecker' ] },
+					{ name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
+					{ name: 'paragraph', items : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote','-',
+					                   			   'JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','BidiLtr','BidiRtl' ] },
+					{ name: 'links', items : [ 'Link','Unlink','Anchor' ] },
+					{ name: 'insert', items : [ 'Table','HorizontalRule','SpecialChar'] },
+					{ name: 'styles', items : [ 'Format','FontSize' ] },
+					{ name: 'colors', items : [ 'TextColor','BGColor' ] },
+					{ name: 'insert', items : [ 'Image' ]  },
+					{ name: 'tools', items : [ 'Maximize'] }
+		    	];
 	
-			//generic delete confirmation
-			$(".delete").click(function(e) {
-			    e.preventDefault();
-			    var $form=$(this).closest('form');
-	
-			    $("#delete_confirm").modal('show')
-			    	.one('click', '#delete_confirmed', function (e) {
-			            $form.trigger('submit');
-			        });
-			});
-						
-	    });
-	
-	    
-	
-	    $mytoolbar =
-	    	[
-	    		{ name: 'document', items : [ 'Source'] },
-				{ name: 'clipboard', items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] },
-				{ name: 'editing', items : [ 'Find','Replace','-','SelectAll','-','SpellChecker' ] },
-				{ name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
-				{ name: 'paragraph', items : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote','-',
-				                   			   'JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','BidiLtr','BidiRtl' ] },
-				{ name: 'links', items : [ 'Link','Unlink','Anchor' ] },
-				{ name: 'insert', items : [ 'Table','HorizontalRule','SpecialChar'] },
-				{ name: 'styles', items : [ 'Format','FontSize' ] },
-				{ name: 'colors', items : [ 'TextColor','BGColor' ] },
-				{ name: 'insert', items : [ 'Image' ]  },
-				{ name: 'tools', items : [ 'Maximize'] }
-	    	];
+		  	//remind them to save before they timeout.  Set to 25 minutes * 60 seconds * 1000 milliseconds = 1500000
+			setTimeout(function(){$("#reminder").dialog( "open" );},1500000);
+		
 	    </script>
 	    
 		
@@ -77,6 +85,10 @@
 		            </div>
 		        </div>
 		    </div>
+		</div>
+		
+		<div id="reminder" title="Login Timeout">
+		  <p>It has been 25 minutes since you last saved.  Any changes will be lost if you do not save within the next 5 minutes.</p>
 		</div>
 		
 	    <div class="container-fluid">		
