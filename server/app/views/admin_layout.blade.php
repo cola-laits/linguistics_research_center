@@ -37,10 +37,6 @@
 				            $form.trigger('submit');
 				        });
 				});
-
-				$( "#reminder" ).dialog({
-				      autoOpen: false,
-				});
 							
 		    });
 		
@@ -61,9 +57,6 @@
 					{ name: 'insert', items : [ 'Image' ]  },
 					{ name: 'tools', items : [ 'Maximize'] }
 		    	];
-	
-		  	//remind them to save before they timeout.  Set to 25 minutes * 60 seconds * 1000 milliseconds = 1500000
-			setTimeout(function(){$("#reminder").dialog( "open" );},1500000);
 		
 	    </script>
 	    
@@ -85,10 +78,6 @@
 		            </div>
 		        </div>
 		    </div>
-		</div>
-		
-		<div id="reminder" title="Login Timeout">
-		  <p>It has been 25 minutes since you last saved.  Any changes will be lost if you do not save within the next 5 minutes.</p>
 		</div>
 		
 	    <div class="container-fluid">		
