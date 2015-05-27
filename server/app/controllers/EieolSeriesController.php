@@ -40,6 +40,7 @@ class EieolSeriesController extends BaseController {
 				'menu_name'  => 'required',
 				'menu_order'  => 'required|integer',
 				'expanded_title'  => 'required',
+				'use_old_gloss_ui'  => 'boolean',
 		);
 		$validator = Validator::make(Input::all(), $rules);
 		
@@ -57,6 +58,7 @@ class EieolSeriesController extends BaseController {
 			$series->menu_name = Input::get('menu_name');
 			$series->menu_order = Input::get('menu_order');
 			$series->expanded_title = Input::get('expanded_title');
+			$series->use_old_gloss_ui = Input::get('use_old_gloss_ui');
 			$series->created_by = Auth::user()->username;
 			$series->updated_by = Auth::user()->username;
 			
@@ -97,6 +99,7 @@ class EieolSeriesController extends BaseController {
 				'menu_name'  => 'required',
 				'menu_order'  => 'required|integer',
 				'expanded_title'  => 'required',
+				'use_old_gloss_ui'  => 'boolean',
 		);
 		$validator = Validator::make(Input::all(), $rules);
 		
@@ -113,6 +116,7 @@ class EieolSeriesController extends BaseController {
 			$series->menu_name = Input::get('menu_name');
 			$series->menu_order = Input::get('menu_order');
 			$series->expanded_title = Input::get('expanded_title');
+			$series->use_old_gloss_ui = Input::get('use_old_gloss_ui');
 			$series->updated_by = Auth::user()->username;
 				
 			$series->save();

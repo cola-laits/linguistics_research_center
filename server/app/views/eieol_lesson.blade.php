@@ -22,9 +22,9 @@
 		
 		$(".click_gloss").click(function(e){
 			//when they click on a word in the glossed_text, this opens the corresponding gloss
+			$(this).toggleClass('clicked');
 			var temp_id = '#gloss_' + $(this).attr('id');
 			$(temp_id).toggleClass('gloss');
-			$(this).toggleClass("clicked");
 		}); //click_gloss
 
 		$(".expand_all, collapse_all").click(function(e){	

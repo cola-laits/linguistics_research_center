@@ -85,7 +85,12 @@ class PublicController extends BaseController {
 	{
 		$data = get_series_info($series_id);
 		$data['printable'] = False;
-		$data['clickable'] = True;
+		
+		if ($data['series']['use_old_gloss_ui']) {
+			$data['clickable'] = False;
+		} else {
+			$data['clickable'] = True;
+		}
 	
 		if (Input::has('id')) {
 			$data['lesson'] = EieolLesson::with('grammars','language')

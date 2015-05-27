@@ -37,7 +37,7 @@
 	        {{ Form::text('order', null, ['placeholder' => 'Order', 'class' => 'form-control']) }}
 	    </div>
 	    	
-	    <div class='form-group col-sm-3 @if ($errors->has('title')) has-error @endif  '>
+	    <div class='form-group col-sm-2 @if ($errors->has('title')) has-error @endif  '>
 	        {{ Form::label('title', 'Title') }}
 	        {{ Form::text('title', null, ['placeholder' => 'Title', 'class' => 'form-control']) }}
 	    </div>
@@ -57,6 +57,11 @@
 	        {{ Form::text('expanded_title', null, ['placeholder' => 'Expanded Title', 'class' => 'form-control']) }}
 	    </div>
 	 
+		<div class='form-group col-sm-1 @if ($errors->has('use_old_gloss_ui')) has-error @endif  '>
+	        {{ Form::label('use_old_gloss_ui', 'Use Old Gloss UI') }}
+	        {{ Form::checkbox('use_old_gloss_ui', 1, false, ['class' => 'form-control']) }}
+	    </div>
+	    
 	    <div class='form-group col-sm-1'>
 	        {{ Form::submit($action, ['class' => 'btn btn-primary']) }}
 	    </div>
