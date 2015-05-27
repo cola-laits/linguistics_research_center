@@ -111,10 +111,10 @@
 @if ($lesson->order == 0 and !$printable) 
 	<h5>The {{$series->menu_name}} Lessons</h5>
 	<ol>
-	@foreach ($lessons as $lesson)
-		@if ($lesson->order != 0)
+	@foreach ($lessons as $temp_lesson)
+		@if ($temp_lesson->order != 0)
 			<li>
-				<a href='/eieol_lesson/{{$series->id}}?id={{$lesson->id}}'>{{$lesson->title}}</a>
+				<a href='/eieol_lesson/{{$series->id}}?id={{$temp_lesson->id}}'>{{$temp_lesson->title}}</a>
 			</li>
 		@endif
 	@endforeach
@@ -141,6 +141,20 @@
 
 
 @if (!$printable) 
+	
+	<p class='center'>
+		@if ($lesson->prevLesson())
+			{{ HTML::link('eieol_lesson/' . $series->id . '?id=' . $lesson->prevLesson()->id, 'previous lesson', array('title' => 'previous lesson' )) }}
+		@else
+			first lesson
+		@endif
+		&nbsp; | &nbsp;
+		@if ($lesson->nextLesson())
+			{{ HTML::link('eieol_lesson/' . $series->id . '?id=' . $lesson->nextLesson()->id, 'next lesson', array('title' => 'next lesson' )) }}
+		@else
+			last lesson
+		@endif
+	</p>
 
 	<!--    
 	*******************************************
