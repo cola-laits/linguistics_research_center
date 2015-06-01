@@ -72,3 +72,7 @@ textarea {
 .etyma {
 	width: 100%;
 }
+
+.popover{
+        max-width:60%;
+    }

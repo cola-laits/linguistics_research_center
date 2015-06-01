@@ -763,7 +763,9 @@
 			  var content = $(this).next();
 			  $(content).slideToggle('slow');
 			  return false;
-			});
+		});
+
+		$('[data-toggle="popover"]').popover(); 
 		
     });//document ready
 
@@ -1152,6 +1154,27 @@
     <h1><i class='fa fa-file-text'></i> Edit Lesson for {{ HTML::link('admin2/eieol_series/' . $lesson->series->id . '/edit', $lesson->series->title , array('title' => 'Return to series' )) }}</h1>
     <div class='bg-danger alert'>
     	If you change the order of items on this page, they will not appear in that order until you refresh the page.
+    	<br/><br/>
+    	<a href="#" 
+    	   data-toggle="popover" 
+    	   data-trigger="focus"
+    	   title="How to add images" 
+    	   data-html ="true"
+    	   data-content="You need a FTP program like Filezilla.  New users will have to be authorized for this (contact la-help@utlists.utexas.edu.)  Set it up with the following:
+						<ol>
+							<li>Make sure you are using SFTP</li>
+							<li>The host is file.laits.utexas.edu</li>
+							<li>Logon Type is normal</li>
+							<li>User is your EID</li>
+							<li>Password is your EID password</li>
+							<li>In the Advanced Tab, set the Default remote directory to /mnt/www/la.utexas.edu/lrc.</li>
+						</ol>
+						Here you can drag images from your machine
+						<br/><br/>
+						Within the lesson editor, any field that has a tool bar has a button for an image.  It should be the 2nd to last button.  For the url, put http://www.la.utexas.edu/lrc/ followed by the name of your image.  You can further set the size, border alternate text, etc...
+    	   ">
+    		How to add images
+    	</a>
     </div>
     
     {{ Form::model($lesson, ['role' => 'form', 
