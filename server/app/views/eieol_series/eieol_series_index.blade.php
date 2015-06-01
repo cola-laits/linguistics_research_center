@@ -60,8 +60,9 @@
         </table>
     </div>
  
-    <a href="/admin2/eieol_series/create" class="btn btn-success">Add New Series</a>
- 
+ 	@if (Auth::user()->isAdmin())
+    	<a href="/admin2/eieol_series/create" class="btn btn-success">Add New Series</a>
+ 	@endif
  
 </div>
  

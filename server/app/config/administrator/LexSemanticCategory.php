@@ -90,9 +90,17 @@ return array(
 		),
 		
 		'action_permissions'=> array(
-				'delete' => function($model)
-				{
+				'delete' => function($model){
 					return false;
+				},
+				'view' => function($model){
+					return Auth::user()->isAdmin();
+				},
+				'update' => function($model){
+					return Auth::user()->isAdmin();
+				},
+				'create' => function($model){
+					return Auth::user()->isAdmin();
 				}
 		),
 );

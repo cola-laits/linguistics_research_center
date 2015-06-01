@@ -28,7 +28,22 @@ class EieolLanguageController extends BaseController {
 	 */
 	public function index()
 	{
-		$languages = EieolLanguage::all()->sortBy('language');
+		if (Auth::user()->isAdmin()) {
+			$languages = EieolLanguage::all()->sortBy('language');
+		} else {
+			$auths = Auth::user()->seriesAuthorizations();
+			$languages = array();
+			$serieses = EieolSeries::whereIn('id', $auths)->get()->sortBy('order');
+			foreach ($serieses as $series) {
+				foreach ($series->lessons as $lesson) {
+					if (!in_array($lesson->language_id,$languages)) {
+						$languages[] = $lesson->language_id;
+					} //if
+				} //for lessons
+			} //for series
+			$languages = EieolLanguage::whereIn('id', $languages)->get()->sortBy('order');
+		} //if amdin
+				
         return View::make('eieol_language.eieol_language_index', ['languages' => $languages]);
 	}
 

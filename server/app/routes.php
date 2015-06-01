@@ -25,9 +25,9 @@ Route::post('login', 'LoginController@login_action');
 Route::get('logout', 'LoginController@logout');
 
 Route::group(array('prefix'=> 'admin2', 'before' => 'auth'), function() {
-	Route::get('/user/password_form/{id}', 'UserController@password_form');
-	Route::put('/user/change_password/{id}', 'UserController@change_password');
-	Route::resource('/user', 'UserController');
+	Route::get('admin_error', function() {
+	    return View::make('admin_error');
+	});
 	Route::resource('/eieol_series', 'EieolSeriesController');
 	Route::put('/eieol_lesson/update_translation/{id}', 'EieolLessonController@update_translation');
 	Route::resource('/eieol_lesson', 'EieolLessonController');
@@ -42,7 +42,13 @@ Route::group(array('prefix'=> 'admin2', 'before' => 'auth'), function() {
 	Route::get('/part_of_speech/filtered_list', 'EieolPartOfSpeechController@filtered_list');
 	Route::get('/eieol_analysis/filtered_list', 'EieolAnalysisController@filtered_list');
 	Route::resource('/eieol_language', 'EieolLanguageController');
-	
+});	
+
+Route::group(array('prefix'=> 'admin2', 'before' => 'auth|admin'), function() {
+	Route::get('/user/password_form/{id}', 'UserController@password_form');
+	Route::put('/user/change_password/{id}', 'UserController@change_password');
+	Route::resource('/user', 'UserController');
+
 	Route::get('load', 'LoadController@load');
 	Route::post('eieol_delete', 'LoadController@eieol_delete');
 	Route::post('eieol_load', 'LoadController@eieol_load');
@@ -60,4 +66,4 @@ Route::group(array('prefix'=> 'admin2', 'before' => 'auth'), function() {
 	Route::post('default_alpha', 'LoadController@default_alpha');
 	Route::post('link_headword_to_eytma', 'LoadController@link_headword_to_eytma');
 	Route::post('paren_count', 'LoadController@paren_count');
-});	
+});

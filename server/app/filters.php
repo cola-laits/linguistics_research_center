@@ -96,3 +96,13 @@ Route::filter('csrf', function()
 		throw new Illuminate\Session\TokenMismatchException;
 	}
 });
+
+
+
+//Admin filter, only let admins in
+Route::filter('admin', function()
+{
+	if (Auth::user()->isAdmin() == False) {
+		return Redirect::to('/admin2/admin_error');
+	}
+});

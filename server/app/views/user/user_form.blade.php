@@ -55,6 +55,16 @@
 	        {{ Form::password('password_confirmation', ['placeholder' => 'Confirm Password', 'class' => 'form-control']) }}
 	    </div>
 	@endif
+	
+	<div class='form-group @if ($errors->has('permissions')) has-error @endif  '>
+		{{ Form::label('permissions', 'Permissions') }}<br/>
+		{{ Form::select('permissions[]', $roles, $selected_permissions, ['multiple' => true, 'size' => count($roles)]) }}
+		<div class="alert-warning">
+			Users with Administrator Permission can update anything.<br/>
+			Users Authorized for a series can only update that series and it's related language(s)<br/>
+			If you need to authorize a user for more than one series, use CTRL-click.
+		</div>
+	</div>
  
     <div class='form-group'>
         {{ Form::submit($action, ['class' => 'btn btn-primary']) }}

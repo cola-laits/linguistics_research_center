@@ -9,7 +9,12 @@ class EieolSeriesController extends BaseController {
 	 */
 	public function index()
 	{
-		$serieses = EieolSeries::all()->sortBy('order');
+   		if (Auth::user()->isAdmin()) {
+			$serieses = EieolSeries::all()->sortBy('order');
+   		} else {
+   			$auths = Auth::user()->seriesAuthorizations();
+   			$serieses = EieolSeries::whereIn('id', $auths)->get()->sortBy('order');
+   		}
         return View::make('eieol_series.eieol_series_index', ['serieses' => $serieses]);
 	}
 

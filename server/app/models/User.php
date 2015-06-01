@@ -33,9 +33,37 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 *
 	 * @return string
 	 */
+	
+	public function permissions()
+	{
+		return $this->hasMany('UserPermission', 'user_id', 'id');
+	}
+	
 	public function getFullName()
 	{
 		return $this->first_name . ' ' . $this->last_name;
+	}
+	
+	public function isAdmin()
+	{
+		foreach ($this->permissions as $permission) {
+			if ($permission->permission == 'ADMIN') {
+				return True;
+			}
+		}
+		return False;
+	}
+	
+	public function seriesAuthorizations()
+	{
+		$auths = array();
+		foreach ($this->permissions as $permission) {
+			if ($permission->permission == 'ADMIN') {
+				continue;
+			}
+			$auths[] = $permission->permission;
+		}
+		return $auths;
 	}
 
 }
