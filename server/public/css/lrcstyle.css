@@ -107,3 +107,50 @@ a.clicked:focus {
 .printable_footer {
 	page-break-after: always;
 }
+
+
+
+/*  Adding Donate Button  */
+
+#donate-button {
+	padding: 15px 75px 4px 75px;	
+	text-align: center;
+}
+
+#donate-button > a > h3 {
+	background-color: #3b80d0;
+	color: #FFF;
+	display: inline;
+	width: 50%;
+	padding: 5px 10px 5px 10px;
+	font-weight: normal;
+	font-size: 13pt;
+	letter-spacing: 1.2px;
+
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px; /* future proofing */
+	-khtml-border-radius: 4px; /* for old Konqueror browsers */
+}
+
+#donate-button > a > h3:hover {
+	background-color: #71251e;
+}
+
+#donate-button > a {
+	text-decoration: none;
+}
+
+#donate-button > p {
+	margin-top: 8px;
+	margin-bottom: 1px;
+}
+
+#donate-button > p > a {
+	text-decoration: none;
+	font-size: 12pt;
+}
+
+#donate-button > p > a:hover {
+	color: #71251e;
+}

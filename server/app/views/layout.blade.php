@@ -136,7 +136,10 @@ COLA Word Mark - Revisit to make better - Maybe make an H1 ????
 	</div>
 </div>
 
-
+<div id="donate-button">
+	<a href="https://utdirect.utexas.edu/apps/utgiving/online/nlogon/?menu1=LALG"><h3>Keep dead languages alive</h3></a>
+	<p><a href="https://utdirect.utexas.edu/apps/utgiving/online/nlogon/?menu1=LALG">We need your help to preserve &amp; document ancient languages. Participate today.</a></p>
+</div>
 
 <!--    
 ***************************************
