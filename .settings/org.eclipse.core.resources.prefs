@@ -3,6 +3,7 @@ encoding//server/app/config/administrator/LexLanguage.php=UTF-8
 encoding//server/app/controllers/LoadController.php=UTF-8
 encoding//server/app/controllers/PublicController.php=UTF-8
 encoding//server/app/database/migrations/2015_04_08_131318_change_lex_language_to_add_custom_sort.php=UTF-8
+encoding//server/app/models/EieolGloss.php=UTF-8
 encoding//server/app/models/EieolGlossedText.php=UTF-8
 encoding//server/app/models/EieolHeadWord.php=UTF-8
 encoding//server/app/views/eieol_language/eieol_language_form.blade.php=UTF-8

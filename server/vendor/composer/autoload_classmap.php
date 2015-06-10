@@ -9,6 +9,7 @@ return array(
     'AddCommentsToGloss' => $baseDir . '/app/database/migrations/2015_02_23_114336_add_comments_to_gloss.php',
     'AddLangAndClassTagsToLanguage' => $baseDir . '/app/database/migrations/2015_03_05_200342_add_lang_and_class_tags_to_language.php',
     'AddMenuFieldsToSeries' => $baseDir . '/app/database/migrations/2014_11_10_142958_add_menu_fields_to_series.php',
+    'AddUnderlyingFormToGloss' => $baseDir . '/app/database/migrations/2015_06_10_162517_add_underlying_form_to_gloss.php',
     'Barryvdh\\Debugbar\\Console\\ClearCommand' => $vendorDir . '/barryvdh/laravel-debugbar/src/Console/ClearCommand.php',
     'Barryvdh\\Debugbar\\Console\\PublishCommand' => $vendorDir . '/barryvdh/laravel-debugbar/src/Console/PublishCommand.php',
     'Barryvdh\\Debugbar\\Controllers\\AssetController' => $vendorDir . '/barryvdh/laravel-debugbar/src/Controllers/AssetController.php',

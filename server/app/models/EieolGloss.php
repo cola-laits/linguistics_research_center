@@ -26,7 +26,7 @@ class EieolGloss extends Eloquent {
 	public function getDisplayGloss()
 	{
 		//this should return something in the form 
-		//<span lang='cu' class='Cyrillic'>єстъ</span> <nobr>--</nobr> verb; 3rd person singular present of <nobr>&lt;<span lang='cu' class='Cyrillic'>ѥс-, ѥсмь, ѥси</span>&gt;</nobr> be <nobr>--</nobr> <strong>is</strong>
+		//<span lang='cu' class='Cyrillic'>Ñ”Ñ�Ñ‚ÑŠ</span> <nobr>--</nobr> verb; 3rd person singular present of <nobr>&lt;<span lang='cu' class='Cyrillic'>Ñ¥Ñ�-, Ñ¥Ñ�Ð¼ÑŒ, Ñ¥Ñ�Ð¸</span>&gt;</nobr> be <nobr>--</nobr> <strong>is</strong>
 		//part of which is handled by the getDisplayHeadWord function in the HeadWord model
 		
 		$string = "<span lang='" . $this->language->lang_attribute . "' class='" . $this->language->class_attribute . "'>" .
@@ -46,6 +46,10 @@ class EieolGloss extends Eloquent {
 		
 		if ($this->comments) {
 			$string .= ' # ' . $this->comments;
+		}
+		
+		if ($this->underlying_form) {
+			$string .= ' <br/> ' . $this->underlying_form;
 		}
 		
 		return $string;

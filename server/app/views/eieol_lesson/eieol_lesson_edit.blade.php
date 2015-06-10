@@ -868,6 +868,14 @@
 					        <div id ="comments_gloss_error" class="alert-danger errors"></div>
 						</div>
 					</div>
+					
+					<div class='row'>
+						<div class='form-group col-sm-12'>
+							{{ Form::label('underlying_form', 'Underlying Form') }}
+					        {{ Form::text('underlying_form', null, ['placeholder' => 'Underlying Form', 'class' => 'form-control', 'id' => 'underlying_form']) }}
+					        <div id ="underlying_form_gloss_error" class="alert-danger errors"></div>
+						</div>
+					</div>
 						
 				{{ Form::close() }}		    
             </div>
@@ -953,6 +961,14 @@
 							{{ Form::label('comments', 'Comments') }}
 					        {{ Form::text('comments', null, ['placeholder' => 'Comments', 'class' => 'form-control', 'id' => 'comments']) }}
 					        <div id ="comments_gloss_error" class="alert-danger errors"></div>
+						</div>
+					</div>
+					
+					<div class='row'>
+						<div class='form-group col-sm-12'>
+							{{ Form::label('underlying_form', 'Underlying Form') }}
+					        {{ Form::text('underlying_form', null, ['placeholder' => 'Underlying Form', 'class' => 'form-control', 'id' => 'underlying_form']) }}
+					        <div id ="underlying_form_gloss_error" class="alert-danger errors"></div>
 						</div>
 					</div>
 				     
