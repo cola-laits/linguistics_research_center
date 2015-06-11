@@ -11,4 +11,9 @@
          the_height;
          }
 </script>
-<iframe src="/admin2/eieol_series" width="100%" onLoad="calcHeight();" height="1px" id="the_iframe"></iframe>
+
+<!-- the css on the following tags is so modal popups will work correctly.  Otherwise they open at the top of the page. -->
+
+<div  style="position: fixed;top: 0px;left: 0px;right: 0px;bottom: 0px;">
+	<iframe src="/admin2/eieol_series" width="100%" onLoad="calcHeight();" height="1px" id="the_iframe" style="height: 100%; width: 100%;"></iframe>
+</div>
