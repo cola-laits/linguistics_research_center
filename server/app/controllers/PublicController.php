@@ -390,4 +390,13 @@ class PublicController extends BaseController {
 		return View::make('lex_semantic_field')->with($data);
 	}
 	
+	
+	
+	//--------------------------------------------REST functions for mobile app-----------------------------------------------
+	
+	public function rest_eieol_serieses()
+	{
+		return Response::json(EieolSeries::where('published', '=', True)->get()->sortBy('order'));
+	}
+	
 }
