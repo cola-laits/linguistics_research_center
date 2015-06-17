@@ -396,7 +396,15 @@ class PublicController extends BaseController {
 	
 	public function rest_eieol_serieses()
 	{
-		return Response::json(EieolSeries::where('published', '=', True)->get()->sortBy('order'));
+		$return_serieses = array();
+		$serieses = EieolSeries::where('published', '=', True)->get()->sortBy('order');
+		foreach($serieses as $series) {
+			$temp_dict = array();
+			$temp_dict['title'] = $series->title;
+			$temp_dict['id'] = $series->id;
+			$return_serieses[] = $temp_dict;
+		} 
+		return Response::json($return_serieses);
 	}
 	
 }
