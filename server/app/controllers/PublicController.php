@@ -407,4 +407,17 @@ class PublicController extends BaseController {
 		return Response::json($return_serieses);
 	}
 	
+	public function rest_eieol_series($series_id)
+	{
+		$return_toc = array();
+		$data = get_series_info($series_id);
+		foreach($data['lessons'] as $lesson) {
+			$temp_dict = array();
+			$temp_dict['title'] = $lesson->title;
+			$temp_dict['id'] = $lesson->id;
+			$return_toc[] = $temp_dict;
+		}
+		return Response::json($return_toc);
+	}
+	
 }
