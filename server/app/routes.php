@@ -23,6 +23,7 @@ Route::get('lex_semantic_field/{field_id}', 'PublicController@lex_semantic_field
 
 Route::get('rest/eieol_serieses', 'PublicController@rest_eieol_serieses');
 Route::get('rest/eieol_series/{series_id}', 'PublicController@rest_eieol_series');
+Route::get('rest/eieol_lesson/{lesson_id}', 'PublicController@rest_eieol_lesson');
 
 Route::get('login', 'LoginController@login_page');
 Route::post('login', 'LoginController@login_action');

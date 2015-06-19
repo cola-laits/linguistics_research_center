@@ -420,4 +420,26 @@ class PublicController extends BaseController {
 		return Response::json($return_toc);
 	}
 	
+	public function rest_eieol_lesson($lesson_id)
+	{
+		$return_lesson = array();
+		$lesson = EieolLesson::with('grammars','language')
+			->with('glossed_texts.glosses.language','glossed_texts.glosses.elements.head_word.language')
+			->where('id', '=', $lesson_id)
+			->firstOrFail();
+		$return_lesson['title'] = $lesson->title;
+		$return_lesson['intro_text'] = $lesson->intro_text;
+		$return_lesson['lesson_text'] = $lesson->getLessonText();
+		$return_lesson['lesson_translation'] = $lesson->lesson_translation;
+		$return_lesson['grammars'] = array();
+		foreach($lesson->grammars as $grammar) {
+			$return_grammar = array();
+			$return_grammar['title'] = $grammar->title;
+			$return_grammar['section_number'] = $grammar->section_number;
+			$return_grammar['grammar_text'] = $grammar->grammar_text;
+			$return_lesson['grammars'][] = $return_grammar;
+		}
+		return Response::json($return_lesson);
+	}
+	
 }
