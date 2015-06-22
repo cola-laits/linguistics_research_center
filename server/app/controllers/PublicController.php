@@ -431,6 +431,7 @@ class PublicController extends BaseController {
 		$return_lesson['intro_text'] = $lesson->intro_text;
 		$return_lesson['lesson_text'] = $lesson->getLessonText();
 		$return_lesson['lesson_translation'] = $lesson->lesson_translation;
+		
 		$return_lesson['grammars'] = array();
 		foreach($lesson->grammars as $grammar) {
 			$return_grammar = array();
@@ -438,6 +439,21 @@ class PublicController extends BaseController {
 			$return_grammar['section_number'] = $grammar->section_number;
 			$return_grammar['grammar_text'] = $grammar->grammar_text;
 			$return_lesson['grammars'][] = $return_grammar;
+		}
+		
+		$return_lesson['glossed_texts'] = array();
+		foreach($lesson->glossed_texts as $glossed_text) {
+			$return_glossed_text = array();
+			$return_glossed_text['glossed_text'] = $glossed_text->glossed_text;
+			$return_glossed_text['clickable_gloss_text'] = $glossed_text->clickable_gloss_text();
+			$return_glossed_text['glosses'] = array();
+			foreach ($glossed_text->glosses as $gloss) {
+				$return_gloss = array();
+				$return_gloss['pivot_id'] = $gloss->pivot->id;
+				$return_gloss['display_gloss'] = $gloss->getDisplayGloss();
+				$return_glossed_text['glosses'][] = $return_gloss;
+			}
+			$return_lesson['glossed_texts'][] = $return_glossed_text;
 		}
 		return Response::json($return_lesson);
 	}
