@@ -444,6 +444,7 @@ class PublicController extends BaseController {
 		$return_lesson['glossed_texts'] = array();
 		foreach($lesson->glossed_texts as $glossed_text) {
 			$return_glossed_text = array();
+			$return_glossed_text['id'] = $glossed_text->id;
 			$return_glossed_text['glossed_text'] = $glossed_text->glossed_text;
 			$return_glossed_text['clickable_gloss_text'] = $glossed_text->clickable_gloss_text();
 			$return_glossed_text['glosses'] = array();
