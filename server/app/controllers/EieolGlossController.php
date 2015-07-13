@@ -40,7 +40,7 @@ class EieolGlossController extends BaseController {
 	{
 		//this is a search that returns glosses that start with the url parm "gloss"
 		$text = '';
-		$glosses = EieolGloss::with('elements.head_word')->where('surface_form', 'LIKE', Normalizer::normalize(Input::get('surface_form'), Normalizer::FORM_C ) . '%')
+		$glosses = EieolGloss::with('elements.head_word')->where('surface_form', 'LIKE', Normalizer::normalize(Input::get('gloss'), Normalizer::FORM_C ) . '%')
 												->where('language_id', '=', Input::get('language') . '%')
 												->take(15)->get()->sortBy('surface_form');
 		foreach ($glosses as $gloss) {

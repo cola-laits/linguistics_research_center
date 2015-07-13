@@ -766,6 +766,14 @@
 		});
 
 		$('[data-toggle="popover"]').popover(); 
+
+		//This code is needed when we have one modal open another.  
+		//Without it, when you close the second modal, the first one becomes unscrollable.
+		$('.modal').on('hidden.bs.modal', function (e) {
+		    if($('.modal').hasClass('in')) {
+		    $('body').addClass('modal-open');
+		    }    
+		});
 		
     });//document ready
 
