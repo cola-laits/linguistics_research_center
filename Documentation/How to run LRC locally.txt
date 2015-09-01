@@ -32,6 +32,8 @@ Your app should be at your url:8088
 12. If your app seems slow, shut down the VM in Virtual Box and increase the CPU or memory.
 
 
+If you keep timing out from Putty, try http://neophob.com/2006/07/putty-ssh-timeouts/
+
 Migrations
 You need to do a docker exec -it {{container_id}} /bin/bash.  From there you can run your migrations
 

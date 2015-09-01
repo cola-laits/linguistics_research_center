@@ -101,7 +101,7 @@ a.clicked:focus {
     size: auto;   /* auto is the initial value */ 
 
     /* this affects the margin in the printer settings */ 
-    margin: 5mm 15mm 5mm 15mm;  
+    margin: 25mm 15mm 25mm 15mm;  
 } 
 
 .printable_footer {
