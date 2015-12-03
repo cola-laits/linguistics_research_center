@@ -86,14 +86,30 @@
         		    //if they just added a glossed text, we need to further customize the form
         		    if (json.hasOwnProperty('glossed_text_id')) {
         		    	$("#add_glossed_text").show(); //now that they've saved the glossed text, they can add another
+
+        		    	//remove old ckeditor
+        		    	CKEDITOR.instances['new_glossed_text'].destroy(true); 
+
+        		    	//rename div, form and text area
         		    	var new_form_id = 'glossed_text_form_' + json['glossed_text_id'];
         		    	var new_div_id = 'glossed_text_div_' + json['glossed_text_id'];
+        		    	var new_text_id = 'glossed_text_' + json['glossed_text_id'];
         		    	$('#new_glossed_text_div').find('#attach_gloss_form').find("#glossed_text_id").attr('value',json['glossed_text_id']);
         	    		$('#new_glossed_text_div').find('#attach_gloss_form').find("#attach_gloss_button").show();
         	    		$('#new_glossed_text_div').attr("id",new_div_id);
+        	    		$('#new_glossed_text_form').find('#new_glossed_text').attr("id",new_text_id);
         	    		$('#new_glossed_text_form').attr("id", new_form_id);
         	    		$('#new_glossed_text_glosses').attr("id",'glossed_text_' + json['glossed_text_id'] + '_glosses');
         	    		$('#' +  new_form_id).find('.delete_glossed_text').show();
+
+        	    		//attach new ckeditor
+        	    		CKEDITOR.replace(new_text_id,{height: '4em', toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', disableNativeSpellChecker:false, allowedContent : true, extraPlugins : 'onchange,language', specialChars : [ {{$lesson->language->custom_keyboard_layout}} ] }  );
+        	    		CKEDITOR.instances[new_text_id].on('change', function() {
+        	    			if(this.checkDirty()) {
+        	    				$('#'+new_form_id).css("background-color", "#EBAD99");
+        	    				$('#'+new_form_id).attr("dirty", "dirty");
+        	    			}
+        	    		});
         		    }
 
 
@@ -121,6 +137,7 @@
         	    			}
         	    		});
         		    }
+          		  
     		    }  
     		  
     		    //rebuild lesson text
@@ -646,12 +663,20 @@
 		    return false; // this keeps the form from submitting
     	});//add headword
     	
-    	//this clones the default add glossed text form 
+    	//this clones the default add glossed text form and turns on the ckeditor for it
     	$("#add_glossed_text").click(function() {	
     		var new_div = $("#new_glossed_text_div").clone(true);
     		new_div.appendTo("#glossed_texts");
     		new_div.show();
 
+    		CKEDITOR.replace('new_glossed_text',{height: '4em', toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', disableNativeSpellChecker:false, allowedContent : true, extraPlugins : 'onchange', specialChars : [ {{$lesson->language->custom_keyboard_layout}} ]}  );
+    		CKEDITOR.instances['new_glossed_text'].on('change', function() {
+    			if(this.checkDirty()) {
+    				$('#new_glossed_text_form').css("background-color", "#EBAD99");
+    				$('#new_glossed_text_form').attr("dirty", "dirty");
+    			}
+    		});
+    		
     		//calculate next order by finding the highest order in the form and adding 10
 			var next_glosssed_text_order = 0;
 			$(".glossed_text_form").each(function() { // get the value of each order
@@ -1277,7 +1302,7 @@
 					    	
 					    <div class='form-group col-sm-7'>
 					        {{ Form::label('glossed_text', 'Glossed Text') }}
-					        {{ Form::text('glossed_text', null, ['placeholder' => 'Glossed Text', 'class' => 'form-control custom-keyboard', 'id' => 'glossed_text']) }}
+					        {{ Form::textarea('glossed_text', null, ['placeholder' => 'Glossed Text', 'class' => 'form-control', 'size' => '100x10', 'id' => 'glossed_text_' . $glossed_text->id]) }}					        
 					        <div id ="glossed_text_error" class="alert-danger errors"></div>
 					    </div>	    
 					    
@@ -1384,7 +1409,7 @@
 				    
 				    <div class='form-group col-sm-7'>
 				        {{ Form::label('glossed_text', 'Glossed Text') }}
-				        {{ Form::text('glossed_text', null, ['placeholder' => 'Glossed Text', 'class' => 'form-control custom-keyboard', 'id' => 'glossed_text']) }}
+				        {{ Form::textarea('glossed_text', null, ['placeholder' => 'Glossed Text', 'class' => 'form-control','size' => '100x10', 'id' => 'new_glossed_text']) }}
 				        <div id ="glossed_text_error" class="alert-danger errors"></div>
 				    </div>	     
 				    
@@ -1667,6 +1692,17 @@
 		}
 	});
 
+	//apply the ckeditor to each exisiting glossed text
+	@foreach ($glossed_texts as $glossed_text)	
+		CKEDITOR.replace( 'glossed_text_{{{$glossed_text->id}}}',{height: '4em', toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', disableNativeSpellChecker:false, allowedContent : true, extraPlugins : 'onchange', specialChars : [ {{$lesson->language->custom_keyboard_layout}} ]}  );
+		CKEDITOR.instances['glossed_text_{{{$glossed_text->id}}}'].on('change', function() {
+			if(this.checkDirty()) {
+				$('#glossed_text_form_{{{$glossed_text->id}}}').css("background-color", "#EBAD99");
+				$('#glossed_text_form{{{$glossed_text->id}}}').attr("dirty", "dirty");
+			}
+		});
+	@endforeach
+		
 	//apply the ckeditor to the translation
 	CKEDITOR.replace( 'lesson_translation',{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', disableNativeSpellChecker:false, allowedContent : true, extraPlugins : 'onchange', specialChars : [ {{$lesson->language->custom_keyboard_layout}} ]}  );
 	CKEDITOR.instances['lesson_translation'].on('change', function() {
