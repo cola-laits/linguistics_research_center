@@ -11,7 +11,7 @@
  	        "bJQueryUI": true,
  	    	"iDisplayLength": 10,
  	    	"sPaginationType": "full_numbers",
- 	    	//"sDom": '<"H"Tfr>t<"F"ipl>',
+ 	    	"sDom": '<"H"fl>t<"F"ip>',
  	        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
  	        "bSort" : false,
  	         "fnInitComplete": function(oSettings, json) {
@@ -44,32 +44,34 @@ or <i>lie</i>, represent multiple reflexes derived from different PIE etyma.</p>
     {{ HTML::image('images/ajax_loader_blue_512.gif', $alt="Loading", $attributes = array('border'=>0))  }}
 </div>
 
-<table border='0' summary="{{$language->name}} reflex index" class="reflexTable">
-  <thead>
-  	<tr>
-  		<th scope='col'>Reflex</th>
-  		<th scope='col'>Etyma</th>
-  	</tr>
-  </thead>
-  
-  <tbody>
-  @foreach($display_reflexes as $reflex)
-  	<tr>
-  		<td>
-  			<a id='{{$reflex['id']}}' name='{{$reflex['id']}}'></a>
-  			<span class='{{$reflex['class_attribute']}}' lang='{{$reflex['lang_attribute']}}'>{{$reflex['reflex']}}</span>
-  		</td>
-  		<td>
-  			@foreach($reflex['etymas'] as $index => $temp_etyma)
-	  			<a title="{{strip_tags($temp_etyma['gloss'])}}" href='/lex_reflex/{{$temp_etyma['id']}}#{{$language['abbr']}}'>
-	  				<span class='Unicode' lang='ine'>{{explode(":",explode(",",$temp_etyma['entry'])[0])[0]}}</span>
-	  			</a>@if ($index+1 != count($reflex['etymas'])),@endif
-  			@endforeach 
-  		</td>
-  	</tr>
-  @endforeach
-  </tbody>
-</table>    
+<div class = "reflexTableContainer">
+	<table border='0' summary="{{$language->name}} reflex index" class="reflexTable">
+	  <thead>
+	  	<tr>
+	  		<th scope='col'>Reflex</th>
+	  		<th scope='col'>Etyma</th>
+	  	</tr>
+	  </thead>
+	  
+	  <tbody>
+	  @foreach($display_reflexes as $reflex)
+	  	<tr>
+	  		<td>
+	  			<a id='{{$reflex['id']}}' name='{{$reflex['id']}}'></a>
+	  			<span class='{{$reflex['class_attribute']}}' lang='{{$reflex['lang_attribute']}}'>{{$reflex['reflex']}}</span>
+	  		</td>
+	  		<td>
+	  			@foreach($reflex['etymas'] as $index => $temp_etyma)
+		  			<a title="{{strip_tags($temp_etyma['gloss'])}}" href='/lex_reflex/{{$temp_etyma['id']}}#{{$language['abbr']}}'>
+		  				<span class='Unicode' lang='ine'>{{explode(":",explode(",",$temp_etyma['entry'])[0])[0]}}</span>
+		  			</a>@if ($index+1 != count($reflex['etymas'])),@endif
+	  			@endforeach 
+	  		</td>
+	  	</tr>
+	  @endforeach
+	  </tbody>
+	</table> 
+</div>  
 
 <!--    
 *******************************************
