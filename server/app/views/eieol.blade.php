@@ -199,24 +199,12 @@ the <a title="Spanish &amp; Portuguese Department website" href="http://www.utex
 <p>Our <a title="Offsite Web Links" href="http://www.utexas.edu/cola/centers/lrc/links.html">Web Links</a> page includes pointers to 
 <a title="Links to other websites with Indo-European language resources" href="http://www.utexas.edu/cola/centers/lrc/links.html#PIE">Indo-European language resources elsewhere</a>.</p>
 </div>
-<!--    
-*******************************************
-OFFICE NAVIGATION - RELATED LINKS - CONTACT
-******************************************* -->
-</div>
-</div>
-<div class="medium-3 medium-pull-9 columns content-secondary-page-navigation"><!-- Office Navigation -->
-<hr class="show-for-small-only"/>
-
-@include('menu_menu')
-@include('menu_series', array('data'=>'data'))
-@include('menu_book_links')
-@include('menu_more_info')
-
-</div>
-</div>
- 
-
-    
 @stop
 
+
+@section('menu')
+	@include('menu_menu')
+	@include('menu_series', array('data'=>'data'))
+	@include('menu_book_links')
+	@include('menu_more_info')
+@stop

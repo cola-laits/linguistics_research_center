@@ -1,153 +1,386 @@
 @extends('layout_header')
 @section('page')
-<!--
-*************************
-Orange UT Bar with Search
-************************* -->
-<div id="portal">
-<div class="row">
-<nav class="top-bar" data-topbar="">
-<ul class="title-area">
-<li class="ut-word-mark"><a href="//www.utexas.edu/"><img alt="The University of Texas at Austin" onerror="/dean/cola/_internal/images/2015_TEXAS_wordmark_white.png" src="//www.utexas.edu/cola/_internal/images/2015_TEXAS_wordmark_white.svg"/></a></li>
-<!-- Hamburger / Pancake icon on phone -->
-<li class="toggle-topbar menu-icon"><a><span></span></a></li>
-</ul>
-<section class="top-bar-section"><!-- Right Nav Section -->
-<div class="right show-for-medium-up">
-<ul>
-<!-- SEARCH .right show-for-medium-up div -->
-<li>
-<form action="//www.utexas.edu/cola/search" id="search-medium-up">
-<input name="cx" type="hidden" value="002688418440466237416:ilehtu0wbts"/> 
-<input name="cof" type="hidden" value="FORID:10"/> 
-<input name="ie" type="hidden" value="UTF-8"/> 
-<label class="hidden-for-medium-up" for="searchMediumUpInput">Search the College of Liberal Arts</label>
-<input id="searchMediumUpInput" name="q" placeholder="Search the College of Liberal Arts..." type="search"/>
-</form>
-</li>
-<li> | </li>
-<!-- Alumni Giving Give -->
-<li class="portal-links"><a href="https://utdirect.utexas.edu/apps/utgiving/online/nlogon/?menu1=LA**&amp;source=LWE">GIVE</a></li>
-</ul>
-</div>
-<!-- 
-*************************
-PHONE NAVIGATION
-************************* -->
-<div class="row show-for-small-only small-menu">
-<!-- Phone Links -->
-<div class="small-10 small-centered columns end">
 
-          
-          <a href="http://www.utexas.edu/cola/offices/departments/index.php"><div class="small-12 panel-phone"><h4>Academic Units</h4></div></a>
-          <a href="http://www.utexas.edu/cola/research/index.php"><div class="small-12 panel-phone"><h4>Graduate Resources</h4></div></a>
-          <a href="index.php"><div class="small-12 panel-phone"><h4>Undergraduate Resources</h4></div></a>
-          <a href="http://www.utexas.edu/cola/courses/index.php"><div class="small-12 panel-phone"><h4>Courses</h4></div></a>
-          <a href="http://online-education.la.utexas.edu/"><div class="small-12 panel-phone"><h4>Online Courses</h4></div></a>
-          <hr/>
-          <a href="http://www.utexas.edu/cola/office-of-the-dean/college-leadership.php"><div class="small-12 panel-phone"><h4>Dean's Office</h4></div></a>
-          <a href="http://www.utexas.edu/cola/alumni-and-giving/index.php"><div class="small-12 panel-phone"><h4>Alumni &amp; Giving </h4></div></a>
-          <a href="http://www.utexas.edu/cola/public-affairs/resources/faculty-by-department.php"><div class="small-12 panel-phone"><h4>Faculty by Department</h4></div></a>
-          <hr/>
-          <a href="http://www.utexas.edu/cola/public-affairs/resources/index.php"><div class="small-12 panel-phone"><h4>Staff &amp; Faculty Resources</h4></div></a>
-          <a href="http://www.utexas.edu/cola/laits/index.php"><div class="small-12 panel-phone"><h4>LAITS: IT &amp; Facilities</h4></div></a>
-</div>
-<!-- Phone Search -->
-<div class="small-8 small-centered columns end">
-<form action="//www.utexas.edu/cola/search/" id="search-small">
-<input name="cx" type="hidden" value="002688418440466237416:ilehtu0wbts"/> 
-<input name="cof" type="hidden" value="FORID:10"/> <input name="ie" type="hidden" value="UTF-8"/> 
-<label class="hidden-for-small-only" for="searchSmallOnlyInput">Search the College of Liberal Arts</label>
-<input id="searchSmallOnlyInput" name="q" placeholder="Search the College of Liberal Arts..." type="search"/>
-</form>
-</div>
-</div>
-</section>
-</nav>
-</div>
-</div>
-<!-- #portal div -->
+<!-- Google Tag Manager - Removed Google Analytics Script - Now managing through GTM 'GA Page Tracker CLA' and 'GA Page Tracker UT' -->
+ 
+    <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-MWRKVL"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MWRKVL');</script>
+    
+<!-- End Google Tag Manager -->
+
 <!--    
-***************************************************************
-COLA Word Mark - Revisit to make better - Maybe make an H1 ????
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+All the content is wrapped in "off-canvas-wrap" and inner-wrap" 
+the page content is in <section class="main-section"> 
+- this makes Phone Nav Possible
 *************************************************************** -->
-<div id="word-mark">
-	<div class="row">
-		<a href="http://www.utexas.edu/cola/index.php"><img alt="College of Liberal Arts" onerror="/dean/cola/_internal/images/2015_cola_logo.gif" src="//www.utexas.edu/cola/_internal/images/2015_cola_logo.svg"/></a>
-	</div>
-</div>
 
-<div id="donate-button">
-	<a href="https://utdirect.utexas.edu/apps/utgiving/online/nlogon/?menu1=LALG"><h3>Keep dead languages alive</h3></a>
-	<p><a href="https://utdirect.utexas.edu/apps/utgiving/online/nlogon/?menu1=LALG">We need your help to preserve &amp; document ancient languages. Participate today.</a></p>
-</div>
+<div class="off-canvas-wrap" data-offcanvas="">
+    <div class="inner-wrap">
 
-<!--    
-***************************************
-BODY CONTENT - "content-secondary-page"
-*************************************** -->
+        <div id="texas-bar">
+            <div class="row">
 
-<div class="row content-secondary-page">
-<div class="medium-9 medium-push-3 columns">
-<div class="row">
+	        	<!-- Phone "Tab" Bar Navigation-->
+	
+	            <nav class="tab-bar show-for-small-only"><!-- ADD BACK show-for-small to remove from desktop -->
+	              <section class="right-small"> 
+	                <a class="right-off-canvas-toggle menu-icon"><span></span></a>
+	              </section>
+	              
+	
+	              <section class="left tab-bar-section">
+			        <a href="http://www.utexas.edu/">
+					<img alt="The University of Texas at Austin" class="texas" onerror="this.onerror=null;this.src='http://www.utexas.edu/cola/_internal/images/2015_TEXAS_wordmark_white.png'" src="http://www.utexas.edu/cola/_internal/images/2015_cola_texas3.svg"/></a>
+					<a href="http://www.utexas.edu/cola/">
+					<img alt="College of Liberal Arts - The University of Texas at Austin" class="cla" onerror="this.onerror=null;this.src='http://www.utexas.edu/cola/_internal/images/2015_TEXAS_wordmark_white.png'" src="http://www.utexas.edu/cola/_internal/images/2015_cola_logo3.svg"/></a>
+	              </section>
+	
+	            </nav>      
 
+		        <!--    
+		        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		        NOTE: Phone navigation uses TAB BAR - Tablet and higher uses TOP BAR
+		        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ -->
+		
+		        <!--    
+		        *******************************************************
+		        PHONE NAVIGATION - TAB BAR  (1 of 2 orange bars up top)
+		        ******************************************************* -->
+		
+		        <!-- Phone - off canvass navigation - the slide out navigation functionality -->
 
-        @yield('content')
+            	<aside class="right-off-canvas-menu">
+                	<ul class="off-canvas-list">
+                
+                		<!-- COLLEGE WIDE NAV - STATIC CONTENT -->
+                  		<li class="college closed">
+                    		<a class="off-canvas-submenu-call" href="#">
+                      			<img alt="The University of Texas at Austin" onerror="this.onerror=null;this.src='http://www.utexas.edu/cola/_internal/images/images/2015_cola_logo_phone.png'" src="http://www.utexas.edu/cola/_internal/images/2015_cola_logo_phone.svg"/>
+                    		</a>
+                    		<ul class="no-bullet off-canvas-submenu">
+                      			<li class="underline"><a href="http://www.utexas.edu/cola/">College of Liberal Arts</a> </li>
+                      			<li><a href="http://www.utexas.edu/">University of Texas at Austin</a> </li>
+                      			<hr/>
+                      			<li class="underline"><a href="http://www.utexas.edu/cola/offices/departments/">Departments</a> </li>
+                      			<li class="underline"> <a href="http://www.utexas.edu/cola/research/graduate-studies/prospective">Graduate Resources</a> </li>
+                      			<li class="underline"> <a href="http://www.utexas.edu/cola/student-affairs/Prospective/">Undergraduate Resources</a> </li>
+                      			<li class="underline"> <a href="http://www.utexas.edu/cola/courses/">Courses</a> </li>
+                     			<li> <a href="http://online-education.la.utexas.edu/">Online Courses</a> </li>
+                      			<hr/>
+                      			<li class="underline"> <a href="http://www.utexas.edu/cola/office-of-the-dean/college-leadership.php">Dean's Office</a> </li>
+                      			<li class="underline"> <a href="http://www.utexas.edu/cola/alumni-and-giving/">Alumni &amp; Giving </a> </li>
+                      			<li> <a href="http://www.utexas.edu/cola/public-affairs/resources/faculty-by-department.php">Faculty by Department</a> </li>
+                      			<li>
+			                        <form action="http://www.utexas.edu/cola/search/" id="search-small">
+			                          <input name="cx" type="hidden" value="002688418440466237416:ilehtu0wbts"/>
+			                          <input name="cof" type="hidden" value="FORID:10"/>
+			                          <input name="ie" type="hidden" value="UTF-8"/>
+			                          <label class="hidden-for-small-only" for="searchSmallOnlyInput">Search the College of Liberal Arts</label>
+			                          <input id="searchSmallOnlyInput" name="q" placeholder="Search the College of Liberal Arts..." type="search"/> 
+			                        </form>
+			                    </li>
+			                </ul>
+                  		</li>
+		                <!-- END COLLEGE WIDE NAV - STATIC CONTENT -->
+		                
+		                <!-- UNIT NAV - DYNAMIC -->
+                        <!-- Unit Name and Dynamic Nav -->
+                        
+                        <!-- SYSTEM-REGION NAV-SM-UNIT -->
+         				<li class="office"><h2><a href="{{$static_site}}">Linguistics Research Center</a></h2></li>
+						@yield('menu')
+                        
+                        <!-- END SYSTEM-REGION NAV-SM-UNIT -->
+                	</ul> <!-- close ul class="off-canvas-list" -->
+                	<!-- END UNIT NAV - DYNAMIC -->
+                        
+                    <!-- Office Contacts and Maps Pages -->
+                    <!-- SYSTEM-REGION NAV-SM-OFFICE -->
+                    <ul class="side-nav">
+                    	<li><label>Office</label></li>
+                    	<li><a href="http://www.utexas.edu/cola/lrctr/staff.php">Staff List</a></li>
+                    	<li><a href="http://www.utexas.edu/cola/lrctr/contact-us.php">Contact Us</a></li>
+                    </ul>
+                    <!-- END SYSTEM-REGION NAV-SM-OFFICE -->
+
+                    <!-- Address -->
+                    <ul class="side-nav">
+                    	<li>
+                    		<label>Address</label>
+                    		<span class="map-link">
+                    			<a href="http://www.utexas.edu/facilities/buildings/UTM/0559" target="_blank">
+                    				<i class="fa fa-map-marker">&#160;</i> Map
+                    			</a>
+                    		</span>
+                    	</li>
+                    	<li class="phone-address">
+                    		<h6>Linguistics Research Center</h6>
+                    		<p>
+                    			University of Texas at Austin<br/>
+                    			PCL 5.556<br/>
+                    			Mailcode S5490<br/>
+                    			Austin, Texas 78712<br/>
+                    			512-471-4566
+                    		</p>
+                    	</li>
+                    </ul>
+
+                    <!-- Unit Social Media Links -->
+                    <ul class="side-nav">
+                       	<li><label>Linguistics Research Center Social Media</label></li>
+                       	<li class="unit-social">
+                       		<a data-gtm-event="nav-phone-unit-facebook" href="https://www.facebook.com/UTLRC">
+                       			<i class="fa fa-facebook-square fa-2x">&#160;</i><span class="hide">Facebook</span>
+                       		</a>
+                       		<a data-gtm-event="nav-phone-unit-twitter" href="https://twitter.com/utlrc">
+                       			<i class="fa fa-twitter-square fa-2x">&#160;</i><span class="hide">Twitter</span>
+                       		</a>
+                       	</li>
+                    </ul>
+
+           		</aside>
+           		
+           		<!--    
+		        ***************************************
+		        END END END PHONE NAVIGATION - TAB BAR 
+		        ***************************************
+
+		        ***********************************************************************
+		        TABLET & DESKTOP ORANGE BAR LINKS - TOP BAR (2 of 2 orange bars up top)
+		        *********************************************************************** -->
+
+            	<nav class="top-bar show-for-medium-up" data-topbar="" role="navigation">
+	                <ul class="title-area">
+	                    <li class="name">
+	    					<a href="http://www.utexas.edu/">
+	    						<img alt="The University of Texas at Austin" class="texas" src="http://www.utexas.edu/cola/_internal/images/2015_cola_texas3.svg"/>
+							</a>
+	    					<a href="http://www.utexas.edu/cola">
+								<img alt="College of Liberal Arts - The University of Texas at Austin" class="cla" onerror="this.onerror=null;this.src='http://www.utexas.edu/cola/_internal/images/2015_TEXAS_wordmark_white.png'" src="http://www.utexas.edu/cola/_internal/images/2015_cola_logo3.svg"/>
+							</a>
+	                    </li>
+	                    <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+	                    <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a>
+	                    </li>
+	                </ul>
+	                
+	                <section class="top-bar-section">
+	                    <!-- Right Orange Bar Section -->
+	                    <ul class="right">
+	                        <li>
+	                            <form action="http://www.utexas.edu/cola/search" id="search-medium-up">
+	                                <input name="cx" type="hidden" value="002688418440466237416:ilehtu0wbts"/>
+	                                <input name="cof" type="hidden" value="FORID:10"/>
+	                                <input name="ie" type="hidden" value="UTF-8"/>
+	                                <label class="hidden-for-medium-up" for="searchMediumUpInput">Search the College of Liberal Arts</label>
+	                                <input id="searchMediumUpInput" name="q" placeholder="Search the College of Liberal Arts..." type="search"/>
+	                            </form>
+	                        </li>
+	                        <li class="pipe-divider">   |   </li>
+	                        <li> 
+	                        	<!-- replaced by page-level template -->
+	                        	<a class="donate-button" href="https://utdirect.utexas.edu/apps/utgiving/online/nlogon/?menu1=LALG" title="GIVE">GIVE</a>
+	                        </li>
+	                    </ul>
+	                </section>
+            	</nav>
+	            <!--    
+	            ***********************************************
+	            END DESKTOP ORANGE BAR LINKS - TOP BAR 
+	            *********************************************** -->
+            </div> <!-- Close <div class="row"> --> 
+        </div> <!-- Close <div id="texas-bar"> -->
+
+        <section class="main-section">
+        	<!--    
+            ***************************************************************
+            UNIT Word Mark -  Accomodate SVG and GIF Fallback - Load Mechanism into Cascade CMS
+            *************************************************************** -->
+            <div id="identity-bar">
+            	<div class="row">
+            		<div class="row" id="logo_row">
+
+		            	<!-- replaced by page-level template -->
+						<div class="small-12 medium-8 columns">
+							<a href="http://www.utexas.edu/cola/lrctr/index.php">
+								<img alt="" class="lockup" src="http://www.utexas.edu/cola/_internal/images/logo-formal/Centers/LinguisticsResearchCenter.png"/>
+							</a>
+						</div>
+		
+		                <!-- replaced by page-level template -->
+		
+		                <!-- Unit Identity - "informal logo" -->
+					</div>
+				</div>
+			</div>
+
+            <div class="row content-secondary-page">
+                <!--    
+                ***************************************
+                BODY CONTENT - "content-secondary-page"
+                *************************************** -->
+                <div class="medium-9 medium-push-3 columns">
+                    <div class="row">
+                    	<!-- Page Main Image -->
+
+                      	<!-- SYSTEM-REGION PAGE-MAIN-IMAGE-H1 -->
+                      	<!-- END SYSTEM-REGION PAGE-MAIN-IMAGE-H1-->
+                      	<!-- END Page Main Image -->
+
+                      	<!-- 
+                      	- - - - - - - - - -
+                      	- - - - - - - - - -
+                      	MAIN BODY CONTENT
+                      	- - - - - - - - - -
+                      	- - - - - - - - - - -->
+	
+                      	<!-- SYSTEM-REGION PAGE-BODY  -->
+						<div class="medium-12 columns">
+        			    	@yield('content')
+        			    </div>
 
      
-        
-<!--    
-*************************
-FOOTER 
-************************* -->
-<!-- Logo Social Media Row -->
-<div class="row footer">
+  					  	<!-- END SYSTEM-REGION PAGE-BODY  -->
+
+         		  	</div>  <!-- END div class="row"  -->
+            	</div>  <!-- END div class="medium-9 medium-push-3 columns" -->
+
+            	<!--    
+	            ****************
+	            END BODY CONTENT 
+	            **************** -->
+
+                <!--    
+            	***********************************************************************************
+            	OFFICE NAVIGATION = [MEDIUM UP ONLY] + RELATED LINKS + OFFICE + ADDRESS + SOC MEDIA
+            	*********************************************************************************** -->
+            
+            	<div class="hide-for-small-only medium-3 medium-pull-9 columns content-unit-page-navigation">
+                	<!-- Office Navigation -->
+                	<hr class="show-for-small-only"/>
+
+                	<!-- Unit Medium Up Navigation -->
+                	<!-- Unit Links -->
+                  	<!-- SYSTEM-REGION NAV-MD-UP-UNIT -->
+                        
+    				@yield('menu')
+
+                    <!-- Address -->
+                    <ul class="side-nav">
+                    	<li>
+                    		<label>Address</label>
+                    		<span class="map-link">
+                    			<a href="http://www.utexas.edu/facilities/buildings/UTM/0559" target="_blank">
+                    				<i class="fa fa-map-marker">&#160;</i> Map
+                    			</a>
+                    		</span>
+                    	</li>
+                    	<li class="phone-address">
+                    		<h6>Linguistics Research Center</h6>
+                    		<p>
+                    			University of Texas at Austin<br/>
+                    			PCL 5.556<br/>
+                    			Mailcode S5490<br/>
+                    			Austin, Texas 78712<br/>
+                    			512-471-4566
+                    		</p>
+                    	</li>
+                    </ul>
+
+                    <!-- Unit Social Media Links -->
+                    <ul class="side-nav">
+                    	<li>
+                    		<label>Linguistics Research Center Social Media</label>
+                    	</li>
+                    	<li class="unit-social">
+                    		<a data-gtm-event="nav-unit-facebook" href="https://www.facebook.com/UTLRC">
+                    			<i class="fa fa-facebook-square fa-2x">&#160;</i>
+                    			<span class="hide">Facebook</span>
+                    		</a>
+                    		<a data-gtm-event="nav-unit-twitter" href="https://twitter.com/utlrc">
+                    			<i class="fa fa-twitter-square fa-2x">&#160;</i>
+                    			<span class="hide">Twitter</span>
+                    		</a>
+                    	</li>
+                    </ul>
+            	</div>
+	            <!--    
+	            ***********************************************************************************
+	            END OFFICE NAVIGATION = [MEDIUM UP ONLY] + RELATED LINKS + OFFICE + ADDRESS + SOC MEDIA
+	            *********************************************************************************** -->
+
+            </div>
+            <!-- End Body Content <div class="medium-9 medium-push-3 columns"> -->
+
+            <!--    
+            *************************
+            FOOTER 
+            ************************* -->
+
+            <!-- SYSTEM-REGION FOOTER -->
+            <!-- Logo Social Media Row --><div class="row footer">
 <div class="small-12 medium-5 large-4 columns">
 <ul class="small-block-grid-1 logo-footer">
-<li><a data-gtm-event="nav-college-footer-cla" href="http://www.utexas.edu/cola/index.php"><img alt="The University of Texas at Austin College of Liberal Arts" height="45" onerror="/dean/cola/_internal/images/2015_colafooter_logo.png" src="//www.utexas.edu/cola/_internal/images/2015_colafooter_logo.svg" width="280"/></a></li>
+<li><a data-gtm-event="nav-college-footer-cla" href="http://www.utexas.edu/cola/index.php"><img alt="The University of Texas at Austin College of Liberal Arts" height="45" onerror="this.onerror=null;this.src='http://www.utexas.edu/cola/_internal/images/2015_colafooter_logo.png'" src="http://www.utexas.edu/cola/_internal/images/2015_colafooter_logo.svg" width="280"/></a></li>
 </ul>
 </div>
 <!-- Social Media Small -->
-<div class="show-for-small-only small-12 columns social-media"><hr class="show-for-small-only"/>
+<div class="show-for-small-only small-12 columns social-media">
+<hr class="show-for-small-only"/>
 <ul class="small-block-grid-1">
-<li><a class="donate-button center" data-gtm-event="nav-college-footer-giving" href="https://utdirect.utexas.edu/apps/utgiving/online/nlogon/?menu1=LA" title="Make a Gift">Make a Gift</a></li>
+<li><a class="donate-button center" data-gtm-event="nav-college-footer-giving" href="https://utdirect.utexas.edu/apps/utgiving/online/nlogon/?menu1=LALG" title="Make a Gift">Make a Gift</a></li>
 </ul>
 </div>
-<div class="show-for-small-only show small-12 small-centered columns social-media">
+<div class="show-for-small-only show small-12 columns social-media">
 <ul class="small-block-grid-5">
-<li><a data-gtm-event="nav-college-footer-twitter" href="https://twitter.com/LiberalArtsUT"><i class="fa fa-twitter-square fa-3x">&#160;</i><span class="hidden-for-small-only"> Twitter </span></a></li>
-<li><a data-gtm-event="nav-college-footer-youtube" href="http://www.youtube.com/user/LiberalArtsUT"><i class="fa fa-youtube-square fa-3x">&#160;</i><span class="hidden-for-small-only"> YouTube </span></a></li>
-<li><a data-gtm-event="nav-college-footer-flickr" href="http://www.flickr.com/photos/utliberalarts/"><i class="fa fa-flickr fa-3x">&#160;</i><span class="hidden-for-small-only"> Flickr </span></a></li>
-<li><a data-gtm-event="nav-college-footer-linkedin" href="http://www.linkedin.com/groups?home=&amp;gid=2237034"><i class="fa fa-linkedin-square fa-3x">&#160;</i><span class="hidden-for-small-only"> LinkedIn </span></a></li>
-<li><a data-gtm-event="nav-college-footer-facebook" href="https://www.facebook.com/utliberalarts"><i class="fa fa-facebook-official fa-3x">&#160;</i><span class="hidden-for-small-only"> facebook </span></a></li>
+<li><a data-gtm-event="nav-college-footer-twitter" href="https://twitter.com/LiberalArtsUT"><em class="fa fa-twitter-square fa-3x">&#160;</em> <span class="hidden-for-small-only">Twitter</span></a></li>
+<li><a data-gtm-event="nav-college-footer-youtube" href="http://www.youtube.com/user/LiberalArtsUT"><em class="fa fa-youtube-square fa-3x">&#160;</em> <span class="hidden-for-small-only">YouTube</span></a></li>
+<li><a data-gtm-event="nav-college-footer-flickr" href="http://www.flickr.com/photos/utliberalarts/"><em class="fa fa-flickr fa-3x">&#160;</em> <span class="hidden-for-small-only">Flickr</span></a></li>
+<li><a data-gtm-event="nav-college-footer-linkedin" href="http://www.linkedin.com/groups?home=&amp;gid=2237034"><em class="fa fa-linkedin-square fa-3x">&#160;</em> <span class="hidden-for-small-only">LinkedIn</span></a></li>
+<li><a data-gtm-event="nav-college-footer-facebook" href="https://www.facebook.com/utliberalarts"><em class="fa fa-facebook-official fa-3x">&#160;</em> <span class="hidden-for-small-only">facebook</span></a></li>
 </ul>
-<hr class="show-for-small-only"/></div>
-<!-- END Social Media Small --> <!-- Social Media Medium Up -->
+<hr class="show-for-small-only"/>
+</div>
+<!-- END Social Media Small --><!-- Social Media Medium Up -->
 <div class="show-for-medium-up medium-7 large-8 columns">
 <div class="row right">
-<div class="small-5 small-centered medium-12 large-12 columns social-media"><a class="donate-button center right" data-gtm-event="nav-college-footer-giving" href="https://utdirect.utexas.edu/apps/utgiving/online/nlogon/?menu1=LA" title="Make a Gift">Make a Gift</a> <br class="show-for-medium-only"/> <a data-gtm-event="nav-college-footer-twitter" href="https://twitter.com/LiberalArtsUT"><i class="fa fa-twitter-square fa-2x">&#160;</i><span class="hidden-for-medium-up"> Twitter </span></a> <a data-gtm-event="nav-college-footer-youtube" href="http://www.youtube.com/user/LiberalArtsUT"><i class="fa fa-youtube-square fa-2x">&#160;</i><span class="hidden-for-medium-up"> YouTube </span></a> <a data-gtm-event="nav-college-footer-flickr" href="http://www.flickr.com/photos/utliberalarts/"><i class="fa fa-flickr fa-2x">&#160;</i><span class="hidden-for-medium-up"> Flickr </span></a> <a data-gtm-event="nav-college-footer-linkedin" href="http://www.linkedin.com/groups?home=&amp;gid=2237034"><i class="fa fa-linkedin-square fa-2x">&#160;</i><span class="hidden-for-medium-up"> LinkedIn </span></a> <a data-gtm-event="nav-college-footer-facebook" href="https://www.facebook.com/utliberalarts"><i class="fa fa-facebook-official fa-2x">&#160;</i><span class="hidden-for-medium-up"> facebook </span></a></div>
+<div class="small-5 small-centered medium-12 large-12 columns social-media"><a class="donate-button center right" data-gtm-event="nav-college-footer-giving" href="https://utdirect.utexas.edu/apps/utgiving/online/nlogon/?menu1=LALG" title="Make a Gift">Make a Gift</a><br class="show-for-medium-only"/>
+ <a data-gtm-event="nav-college-footer-twitter" href="https://twitter.com/LiberalArtsUT"><em class="fa fa-twitter-square fa-2x">&#160;</em> <span class="hidden-for-medium-up">Twitter</span></a> <a data-gtm-event="nav-college-footer-youtube" href="http://www.youtube.com/user/LiberalArtsUT"><em class="fa fa-youtube-square fa-2x">&#160;</em> <span class="hidden-for-medium-up">YouTube</span></a> <a data-gtm-event="nav-college-footer-flickr" href="http://www.flickr.com/photos/utliberalarts/"><em class="fa fa-flickr fa-2x">&#160;</em> <span class="hidden-for-medium-up">Flickr</span></a> <a data-gtm-event="nav-college-footer-linkedin" href="http://www.linkedin.com/groups?home=&amp;gid=2237034"><em class="fa fa-linkedin-square fa-2x">&#160;</em> <span class="hidden-for-medium-up">LinkedIn</span></a> <a data-gtm-event="nav-college-footer-facebook" href="https://www.facebook.com/utliberalarts"><em class="fa fa-facebook-official fa-2x">&#160;</em> <span class="hidden-for-medium-up">facebook</span></a></div>
 </div>
 </div>
 <!-- END Social Media Medium Up --></div>
 <!-- End Logo Social Media Row -->
 <div class="row footer" data-equalizer="">
-<div class="small-6 medium-3 large-3 columns border-right " data-equalizer-watch="">
+<div class="small-6 medium-3 large-3 columns border-right" data-equalizer-watch="">
 <div class="row">
 <div class="small-11 small-offset-1 columns end">
 <ul class="no-bullet">
 <li>
 <h3>Students</h3>
 </li>
-<li><a data-gtm-event="nav-college-footer" href="Prospective/index.php">Prospective</a></li>
-<li><a data-gtm-event="nav-college-footer" href="index.php">Undergraduate</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/research/index.php">Graduate</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/student-affairs/Prospective/">Prospective</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/student-affairs/">Undergraduate</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/research/">Graduate</a></li>
 </ul>
 <ul class="no-bullet">
 <li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/maps/">Campus Map</a></li>
 </ul>
 <br class="show-for-large-only"/>
-<p class="hide-for-medium-only address" itemscope="" itemtype="http://schema.org/CollegeOrUniversity"><span itemprop="name">The College of Liberal Arts<br/> The University of Texas at Austin<br/></span> <link href="http://www.utexas.edu/cola/index.php" itemprop="sameAs"/> <span itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress"> <span itemprop="streetAddress">116 Inner Campus Dr Stop G6000</span><br/> <span itemprop="addressLocality">Austin</span>, <span itemprop="addressRegion">TX</span> <span itemprop="postalCode">78712</span> </span></p>
-<p class="hide-for-medium-only address" itemscope="" itemtype="http://schema.org/CollegeOrUniversity">General Inquiries: <br class="show-for-small-only"/><span description="General Inquiries" itemprop="telephone"><a data-gtm-event="nav-college-footer-phone-general" href="tel:512-471-4141">512-471-4141</a></span><br/><br/> Student Inquiries: <br class="show-for-small-only"/><a data-gtm-event="nav-college-footer-phone-student" href="tel:512-471-4271"><span description="Student Inquiries" itemprop="telephone">512-471-4271</span></a></p>
+<p class="hide-for-medium-only address" itemscope="" itemtype="http://schema.org/CollegeOrUniversity"><span itemprop="name">The College of Liberal Arts<br/>
+ The University of Texas at Austin<br/>
+</span> <link href="http://www.utexas.edu/cola/" itemprop="sameAs"/> <span itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress"><span itemprop="streetAddress">116 Inner Campus Dr Stop G6000</span><br/>
+ <span itemprop="addressLocality">Austin</span>, <span itemprop="addressRegion">TX</span> <span itemprop="postalCode">78712</span></span></p>
+<p class="hide-for-medium-only address" itemscope="" itemtype="http://schema.org/CollegeOrUniversity">General Inquiries:<br class="show-for-small-only"/>
+ <span description="General Inquiries" itemprop="telephone"><a data-gtm-event="nav-college-footer-phone-general" href="tel:512-471-4141">512-471-4141</a></span><br/>
+<br/>
+ Student Inquiries:<br class="show-for-small-only"/>
+ <a data-gtm-event="nav-college-footer-phone-student" href="tel:512-471-4271"><span description="Student Inquiries" itemprop="telephone">512-471-4271</span></a></p>
 </div>
 </div>
 </div>
@@ -156,20 +389,20 @@ FOOTER
 <div class="large-11 large-offset-1 show-for-large-up columns end">
 <ul class="no-bullet">
 <li>
-<h3><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/offices/departments/index.php">Departments</a></h3>
+<h3><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/offices/departments/">Departments</a></h3>
 </li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/depts/aads/">African &amp; African Diaspora Studies</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/depts/afrotc/">Air Force Science</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/depts/ams/">American Studies</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/depts/anthropology/">Anthropology</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/depts/asianstudies/">Asian Studies</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/depts/classics/">Classics</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/depts/economics/">Economics</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/depts/english/">English</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/depts/frenchitalian/">French &amp; Italian</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/depts/geography/">Geography &amp; the Environment</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/depts/germanic/">Germanic Studies</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/depts/government/">Government</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/aads/">African &amp; African Diaspora Studies</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/afrotc/">Air Force Science</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/ams/">American Studies</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/anthropology/">Anthropology</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/asianstudies/">Asian Studies</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/classics/">Classics</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/economics/">Economics</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/english/">English</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/frenchitalian/">French &amp; Italian</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/geography/">Geography &amp; the Environment</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/germanic/">Germanic Studies</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/government/">Government</a></li>
 </ul>
 </div>
 </div>
@@ -177,21 +410,21 @@ FOOTER
 <div class="show-for-medium-up medium-4 large-3 columns border-right" data-equalizer-watch="">
 <div class="row">
 <div class="medium-11 medium-offset-1 show-for-medium-only columns end">
-<ul class="no-bullet show-for-medium-only ">
+<ul class="no-bullet show-for-medium-only">
 <li>
-<h3><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/offices/departments/index.php">Departments</a></h3>
+<h3><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/offices/departments/">Departments</a></h3>
 </li>
 <li>
-<h3><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/offices/centers/index.php">Centers</a></h3>
+<h3><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/offices/centers/">Centers</a></h3>
 </li>
 <li>
-<h3><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/offices/institutes/index.php">Institutes</a></h3>
+<h3><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/offices/institutes/">Institutes</a></h3>
 </li>
 <li>
-<h3><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/offices/programs/index.php">Programs</a></h3>
+<h3><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/offices/programs/">Programs</a></h3>
 </li>
 <li>
-<h3><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/offices/initiatives/index.php">Initiatives</a></h3>
+<h3><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/offices/initiatives/">Initiatives</a></h3>
 </li>
 <li>
 <h3><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/office-of-the-dean/college-leadership.php">Administration</a></h3>
@@ -200,19 +433,19 @@ FOOTER
 </div>
 <div class="large-11 large-offset-1 show-for-large-up columns end">
 <ul class="no-bullet">
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/depts/history/">History</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/depts/linguistics/">Linguistics</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/depts/mals/">Mexican American Latina/o Studies</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/depts/mes/">Middle Eastern Studies</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/depts/arotc/">Military Science</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/depts/navymarine/">Naval Science</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/depts/philosophy/">Philosophy</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/depts/psychology/">Psychology</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/depts/rs/">Religious Studies</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/depts/rhetoric/">Rhetoric &amp; Writing</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/depts/slavic/">Slavic &amp; Eurasian Studies</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/depts/sociology/">Sociology</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/depts/spanish/">Spanish &amp; Portuguese</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/history/">History</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/linguistics/">Linguistics</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/mals/">Mexican American Latina/o Studies</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/mes/">Middle Eastern Studies</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/arotc/">Military Science</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/navymarine/">Naval Science</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/philosophy/">Philosophy</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/psychology/">Psychology</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/rs/">Religious Studies</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/rhetoric/">Rhetoric &amp; Writing</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/slavic/">Slavic &amp; Eurasian Studies</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/sociology/">Sociology</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/spanish/">Spanish &amp; Portuguese</a></li>
 </ul>
 </div>
 </div>
@@ -222,42 +455,60 @@ FOOTER
 <div class="small-11 small-offset-1 columns end">
 <ul class="no-bullet">
 <li class="show-for-small-only">
-<h3><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/offices/departments/index.php">Departments</a></h3>
+<h3><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/offices/departments/">Departments</a></h3>
 </li>
 <li class="show-for-small-only">
-<h3><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/offices/centers/index.php">Centers</a></h3>
+<h3><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/offices/centers/">Centers</a></h3>
 </li>
 <li class="show-for-small-only">
-<h3><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/offices/institutes/index.php">Institutes</a></h3>
+<h3><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/offices/institutes/">Institutes</a></h3>
 </li>
 <li class="show-for-small-only">
-<h3><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/offices/programs/index.php">Programs</a></h3>
+<h3><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/offices/programs/">Programs</a></h3>
 </li>
 <li class="show-for-small-only">
-<h3><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/offices/initiatives/index.php">Initiatives</a></h3>
+<h3><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/offices/initiatives/">Initiatives</a></h3>
 </li>
 <li class="hide-for-medium-only">
 <h3><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/office-of-the-dean/college-leadership.php">Administration</a></h3>
 </li>
-<li class="show-for-large-up"><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/office-of-the-dean/index.php">Office of the Dean</a></li>
-<li class="show-for-large-up"><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/academic-affairs/index.php">Academic Affairs</a></li>
-<li class="show-for-large-up"><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/research/index.php">Research &amp; Graduate Studies</a></li>
-<li class="show-for-large-up"><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/student-affairs/index.php">Student Affairs</a></li>
-<li class="show-for-large-up"><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/business-affairs/index.php">Business Affairs</a></li>
-<li class="show-for-large-up"><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/human-resources/index.php">Human Resources</a></li>
-<li class="show-for-large-up"><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/alumni-and-giving/index.php">Alumni &amp; Giving</a></li>
-<li class="show-for-large-up"><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/public-affairs/index.php">Public Affairs</a></li>
-<li class="show-for-large-up"><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/laits/index.php">LAITS: IT &amp; Facilities</a></li>
-<li class="show-for-medium-only address">The University of Texas at Austin<br/> 116 Inner Campus Dr Stop G6000<br/> Austin, TX 78712</li>
-<li class="show-for-medium-only address">General Inquiries: <br class="show-for-small-only"/> <a data-gtm-event="nav-college-footer-phone-general" href="tel:512-471-4141">512-471-4141</a><br/><br/> Student Inquiries: <br class="show-for-small-only"/><a data-gtm-event="nav-college-footer-phone-student" href="tel:512-471-4271">512-471-4271</a></li>
+<li class="show-for-large-up"><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/office-of-the-dean/">Office of the Dean</a></li>
+<li class="show-for-large-up"><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/academic-affairs/">Academic Affairs</a></li>
+<li class="show-for-large-up"><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/research/">Research &amp; Graduate Studies</a></li>
+<li class="show-for-large-up"><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/student-affairs/">Student Affairs</a></li>
+<li class="show-for-large-up"><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/business-affairs/">Business Affairs</a></li>
+<li class="show-for-large-up"><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/human-resources/">Human Resources</a></li>
+<li class="show-for-large-up"><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/alumni-and-giving/">Alumni &amp; Giving</a></li>
+<li class="show-for-large-up"><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/public-affairs/">Public Affairs</a></li>
+<li class="show-for-large-up"><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/laits/">LAITS: IT &amp; Facilities</a></li>
+<li class="show-for-medium-only address">The University of Texas at Austin<br/>
+ 116 Inner Campus Dr Stop G6000<br/>
+ Austin, TX 78712</li>
+<li class="show-for-medium-only address">General Inquiries:<br class="show-for-small-only"/>
+ <a data-gtm-event="nav-college-footer-phone-general" href="tel:512-471-4141">512-471-4141</a><br/>
+<br/>
+ Student Inquiries:<br class="show-for-small-only"/>
+ <a data-gtm-event="nav-college-footer-phone-student" href="tel:512-471-4271">512-471-4271</a></li>
 </ul>
-<p class="address"><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/policies/privacy/">Web Privacy Policy</a><br/> <a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/web/guidelines/accessibility.html">Web Accessibility Policy</a><br/> <a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/policies/dmca.html">&#169; Copyright</a> <span id="year">TEXT</span></p>
+<p class="address"><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cio/policies/web-privacy">Web Privacy Policy</a><br/>
+ <a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cio/policies/web-accessibility">Web Accessibility Policy</a><br/>
+ <a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/policies/dmca.html">&#169; Copyright</a> <span id="year">TEXT</span></p>
 </div>
 </div>
 </div>
 </div>
+            <!-- END SYSTEM-REGION FOOTER -->
 
+    	</section>
 
+  		<a class="exit-off-canvas"></a>
+
+  	</div>  <!-- Close <div class="inner-wrap"> -->
+</div> <!-- Close <div class="off-canvas-wrap" data-offcanvas=""> -->
+<script src="http://www.utexas.edu/cola/_internal/js/foundation.min.js" type="text/javascript"></script>
+<script src="http://www.utexas.edu/cola/_internal/js/foundation.offcanvas.js"></script>
+<script src="//cdn.jsdelivr.net/jquery.slick/1.4.1/slick.min.js" type="text/javascript"></script>
+<script src="http://www.utexas.edu/cola/_internal/js/app.js" type="text/javascript"></script>
 </body>
 </html>
 @stop

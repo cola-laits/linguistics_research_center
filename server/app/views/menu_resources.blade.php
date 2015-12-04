@@ -1,5 +1,5 @@
 <ul class="side-nav">
-	<li class="office"><a href="#"><h2>Lesson Resources</h2></a></li>
+	<li class="office"><label>Lesson Resources</label></li>
 	<li>{{ HTML::link('eieol_printable/' . $series->id, "Printable Version")}}</li>
 	<li>{{ HTML::link('eieol_toc/' . $series->id, "Contents")}}</li>
 	@foreach($languages as $language)

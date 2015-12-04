@@ -55,21 +55,11 @@ words in later IE languages, may be added.</blockquote>
 
 </ol>
 </div>
-    
-<!--    
-*******************************************
-OFFICE NAVIGATION - RELATED LINKS - CONTACT
-******************************************* -->
-</div>
-</div>
-<div class="medium-3 medium-pull-9 columns content-secondary-page-navigation"><!-- Office Navigation -->
-<hr class="show-for-small-only"/>
+@stop
 
-@include('menu_menu')
-@include('menu_lex')
-<img src="http://www.utexas.edu/cola/centers/lrc/images/dieboldsm.jpg" alt="A. Richard Diebold Center for Indo-European Language and Culture" border="2" /><br /><br />
-@include('menu_lex_semantic')
 
-</div>
-</div>   
+@section('menu')
+	@include('menu_menu')
+	@include('menu_lex')
+	@include('menu_lex_semantic')
 @stop

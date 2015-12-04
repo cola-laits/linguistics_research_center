@@ -85,24 +85,10 @@ derived from PIE etyma as listed by Pokorny; these can be reached via links on o
 {{ HTML::link('lex_semantic', 'Semantic Index', array('title' => 'Indo-European Linguistics: Semantic Fields' )) }}
 pages. At present such links are mildly limited in number; but check back from time to time for new 
 resources, as this work is proceeding swiftly.</p>
+@stop
 
 
-    
-<!--    
-*******************************************
-OFFICE NAVIGATION - RELATED LINKS - CONTACT
-******************************************* -->
-</div>
-</div>
-<div class="medium-3 medium-pull-9 columns content-secondary-page-navigation"><!-- Office Navigation -->
-<hr class="show-for-small-only"/>
-
-@include('menu_menu')
-@include('menu_lex')
-
-</div>
-</div>
- 
-
-    
+@section('menu')
+	@include('menu_menu')
+	@include('menu_lex')
 @stop

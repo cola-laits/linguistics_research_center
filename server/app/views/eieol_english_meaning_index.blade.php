@@ -46,22 +46,11 @@ index; unfortunately this may result in some words, in some contexts, being unfa
 	</dd>
 @endforeach
 </div>
+@stop
 
-<!--    
-*******************************************
-OFFICE NAVIGATION - RELATED LINKS - CONTACT
-******************************************* -->
-</div>
-</div>
-<div class="medium-3 medium-pull-9 columns content-secondary-page-navigation"><!-- Office Navigation -->
-<hr class="show-for-small-only"/>
 
-@include('menu_menu')
-@include('menu_series', array('data'=>'data'))
-@include('menu_resources', array('data'=>'data'))
-</div>
-</div>
- 
-
-    
+@section('menu')
+	@include('menu_menu')
+	@include('menu_series', array('data'=>'data'))
+	@include('menu_resources', array('data'=>'data'))   
 @stop

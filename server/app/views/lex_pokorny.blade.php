@@ -62,23 +62,10 @@ page for links <i>from</i> reflexes (listed by IE language) <i>to</i> their PIE 
  	</tbody>
  
  </table>
-    
-    
-<!--    
-*******************************************
-OFFICE NAVIGATION - RELATED LINKS - CONTACT
-******************************************* -->
-</div>
-</div>
-<div class="medium-3 medium-pull-9 columns content-secondary-page-navigation"><!-- Office Navigation -->
-<hr class="show-for-small-only"/>
+@stop
 
-@include('menu_menu')
-@include('menu_lex')
 
-</div>
-</div>
- 
-
-    
+@section('menu')
+	@include('menu_menu')
+	@include('menu_lex')
 @stop

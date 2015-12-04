@@ -110,22 +110,10 @@ corrections may be made and/or more etyma &amp; reflexes may be added.</p>
 		last
 	@endif
 </p>
-    
-<!--    
-*******************************************
-OFFICE NAVIGATION - RELATED LINKS - CONTACT
-******************************************* -->
-</div>
-</div>
-<div class="medium-3 medium-pull-9 columns content-secondary-page-navigation"><!-- Office Navigation -->
-<hr class="show-for-small-only"/>
+@stop
 
-@include('menu_menu')
-@include('menu_lex')
 
-</div>
-</div>
- 
-
-    
+@section('menu')
+	@include('menu_menu')
+	@include('menu_lex')
 @stop

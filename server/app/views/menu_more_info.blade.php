@@ -1,5 +1,5 @@
 <ul class="side-nav">
-	<li class="office"><a href="#"><h2>More Info</h2></a></li>
+	<li class="office"><label>More Info</label></li>
 	<li><a title='Anatolian languages, including Hittite (from the Indo-European Documentation Center)' href='http://www.utexas.edu/cola/centers/lrc/general/ie-lg/Anatolian.html'>Anatolian</a></li>
 	<li><a title='Armenian language (from the Indo-European Documentation Center)' href='http://www.utexas.edu/cola/centers/lrc/general/ie-lg/Armenian.html'>Armenian</a></li>
 	<li><a title='Balkan languages, especially Albanian (from the Indo-European Documentation Center)' href='http://www.utexas.edu/cola/centers/lrc/general/ie-lg/Albanian.html'>Balkan</a></li>
