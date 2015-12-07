@@ -2,18 +2,18 @@
     .right { text-align: right }
    .center { text-align: center }
 
-  .Unicode { font-family: Arial Unicode MS, ALPHABETUM Unicode, TITUS Cyberbit Basic, Gentium, Code2000, Lucida Sans Unicode, Lucida Grande, Everson Mono Unicode, Arial, Helvetica, sans-serif }
- .Cyrillic { font-family: Arial Unicode MS, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif }
- .Sanskrit { font-family: Arial Unicode MS, Gentium, ALPHABETUM Unicode, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif }
- .SanskMrv { font-family: Arial Unicode MS, Gentium, ALPHABETUM Unicode, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif; font-size: 11pt }
- .SanskPop { font-family: Arial Unicode MS, Gentium, ALPHABETUM Unicode, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif; font-size: 9pt; color: #008080 }
- .SanskDbt { font-family: Arial Unicode MS, Gentium, ALPHABETUM Unicode, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif; font-size: 9pt }
- .SanskExt { font-family: Arial Unicode MS, Gentium, ALPHABETUM Unicode, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif }
-    .Sansk { font-family: Lucida Sans Unicode, Arial Unicode MS, Gentium, ALPHABETUM Unicode, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif }
- .GreekExt { font-family: Palatino Linotype, Gentium, Arial Unicode MS, ALPHABETUM Unicode, TITUS Cyberbit Basic, Code2000, New Athena Unicode, Vusillus, Lucida Grande, Vusillus Old Face Italic, Everson Mono Unicode, sans-serif }
-    .Greek { font-family: Gentium, Arial Unicode MS, Lucida Sans Unicode, ALPHABETUM Unicode, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif }
-    .Latin { font-family: Gentium, Palatino Linotype, Lucida Sans Unicode, Arial Unicode MS, ALPHABETUM Unicode, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, Arial, Helvetica, sans-serif }
-    .Armen { font-family: Arial Unicode MS, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif }
+  .Unicode { font-family: Arial Unicode MS, ALPHABETUM Unicode, TITUS Cyberbit Basic, Gentium, Code2000, Lucida Sans Unicode, Lucida Grande, Everson Mono Unicode, Arial, Helvetica, sans-serif; font-style: italic; }
+ .Cyrillic { font-family: Arial Unicode MS, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif; font-style: italic; }
+ .Sanskrit { font-family: Arial Unicode MS, Gentium, ALPHABETUM Unicode, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif; font-style: italic; }
+ .SanskMrv { font-family: Arial Unicode MS, Gentium, ALPHABETUM Unicode, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif; font-size: 11pt; font-style: italic; }
+ .SanskPop { font-family: Arial Unicode MS, Gentium, ALPHABETUM Unicode, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif; font-size: 9pt; color: #008080; font-style: italic; }
+ .SanskDbt { font-family: Arial Unicode MS, Gentium, ALPHABETUM Unicode, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif; font-size: 9pt; font-style: italic; }
+ .SanskExt { font-family: Arial Unicode MS, Gentium, ALPHABETUM Unicode, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif; font-style: italic; }
+    .Sansk { font-family: Lucida Sans Unicode, Arial Unicode MS, Gentium, ALPHABETUM Unicode, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif; font-style: italic; }
+ .GreekExt { font-family: Palatino Linotype, Gentium, Arial Unicode MS, ALPHABETUM Unicode, TITUS Cyberbit Basic, Code2000, New Athena Unicode, Vusillus, Lucida Grande, Vusillus Old Face Italic, Everson Mono Unicode, sans-serif; font-style: italic; }
+    .Greek { font-family: Gentium, Arial Unicode MS, Lucida Sans Unicode, ALPHABETUM Unicode, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif; font-style: italic; }
+    .Latin { font-family: Gentium, Palatino Linotype, Lucida Sans Unicode, Arial Unicode MS, ALPHABETUM Unicode, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, Arial, Helvetica, sans-serif; font-style: italic; }
+    .Armen { font-family: Arial Unicode MS, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif; font-style: italic; }
     
 
 .lang_list{
