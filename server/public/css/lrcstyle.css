@@ -88,6 +88,13 @@ a.clicked:focus {
     padding: 3px;
 }
 
+.boxey ul {
+	margin: 0px;
+	padding: 0px;
+	list-style-type: none;
+	font-size: 1rem;
+}
+
 .expand_all {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 8pt;
@@ -99,10 +106,13 @@ a.clicked:focus {
 	color: purple;
 }
 
+#no_bullets ul {
+	list-style-type: none;
+}
+
 .skinny ul {
 	margin: 0px;
 	padding: 0px;
-	list-style-type: none;
 }
 
 .skinny ol {
@@ -112,8 +122,9 @@ a.clicked:focus {
 
 .skinny li {
 	margin: 0px;
-	padding: 0px 0px 0px 30px;
+	padding: 0px 0px 0px 20px;
 }
+
 
 @page  
 { 

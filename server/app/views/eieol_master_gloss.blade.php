@@ -15,7 +15,7 @@ links are provided to every appearance, in every numbered lesson, of the word/gl
 "word look-up" and, in addition, study how words are used in context by clicking on their links.
 <br/><br/><br/>
 
-<div class="skinny">
+<div class="skinny" id="no_bullets">
 @foreach ($glosses as $gloss)
 	<strong><span lang='{{$language->lang_attribute}}' class='{{$language->class_attribute}}'>{{$gloss['surface_form']}}</span></strong> - 
 	{{$gloss['displayGlossForMasterGloss']}}

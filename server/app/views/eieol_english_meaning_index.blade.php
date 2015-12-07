@@ -32,7 +32,7 @@ presence of [apparently] more important words, contribute little or no useful in
 index; unfortunately this may result in some words, in some contexts, being unfairly omitted.</p>
 <br/><br/><br/>
 
-<div class="skinny">
+<div class="skinny" id="no_bullets">
 @foreach ($keywords as $keyword)
 	<dt><strong>{{$keyword['keyword']}}</strong> : {{$keyword['head_word']}} --</dt>
 	<dd>

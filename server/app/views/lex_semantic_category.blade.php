@@ -30,7 +30,7 @@ on corrections may be made, and more links from these semantic subcategories to
 pages of lexical entries in them, drawn from Pokorny's etyma and reflexes thereof, 
 may be added.</blockquote>
 
-<div class="skinny">
+<div class="skinny" id="no_bullets">
 <ul>
 @foreach($fields as $field)
 	<li>

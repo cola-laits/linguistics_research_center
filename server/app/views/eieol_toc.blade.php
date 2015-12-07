@@ -10,7 +10,7 @@
 <h1>{{$series->title}}</h1>
 <h2>Table of Contents</h2>
 
-<div class="skinny">
+<div class="skinny" id="no_bullets">
 
 <h5>Lessons</h5>
 <ol start="0">
@@ -21,7 +21,7 @@
 
 <h5>Grammar Points</h5>
 
-<ul style="list-style: none;">
+<ul>
 @foreach ($lessons as $lesson)
 	@foreach($lesson->grammars as $grammar)
 		<li>

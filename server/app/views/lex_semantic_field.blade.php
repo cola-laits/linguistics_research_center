@@ -29,7 +29,7 @@ corrections may be made, and more links from this semantic subcategory to lexica
 entries in it, drawn from Pokorny's etyma, may be added. Finally, derived reflexes 
 of PIE etyma, in any number of IE languages, may be added at any time.</blockquote>
 
-<div class="skinny">
+<div class="skinny" id="no_bullets">
 <ul>
 
 @foreach($field->etymas as $etyma)

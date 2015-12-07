@@ -22,10 +22,10 @@ of pointers to Proto-Indo-European roots identified by Julius Pokorny in his mon
 in 1989).  Because Pokorny is becoming increasingly outdated, we may revise these links in the 
 future; however, for the time being, this information might prove interesting to those who are 
 curious about Indo-European etymology. Notice of potential error is always welcome.</p>
-<br/><br/><br/>
 
 
-<div class="skinny">
+
+<div class="skinny" id="no_bullets">
 @foreach ($head_words as $head_word)
 	<dt>{{$head_word['display']}} --
 		@if($head_word['etyma'] != null) 
