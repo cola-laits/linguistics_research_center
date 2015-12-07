@@ -5,11 +5,15 @@ function get_series_info($series_id) {
 	$data = array();
 	$data['series'] = EieolSeries::find($series_id);
 	$data['lessons'] = EieolLesson::with('grammars', 'language')->where('series_id', '=', $series_id)->get()->sortBy('order');
-
+	
 	$data['languages'] = array();
+	$data['bibliography_id'] = '';
 	foreach($data['lessons'] as $lesson) {
 		if (!in_array($lesson->language, $data['languages'])) {
 			$data['languages'][] = $lesson->language;
+		}
+		if (strpos($lesson->title,'Bibliography') != false) {
+			$data['bibliography_id'] = $lesson->id;
 		}
 	}
 
