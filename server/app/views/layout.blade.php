@@ -36,9 +36,9 @@ the page content is in <section class="main-section">
 	
 	              <section class="left tab-bar-section">
 			        <a href="http://www.utexas.edu/">
-					<img alt="The University of Texas at Austin" class="texas" onerror="this.onerror=null;this.src='http://www.utexas.edu/cola/_internal/images/2015_TEXAS_wordmark_white.png'" src="http://www.utexas.edu/cola/_internal/images/2015_cola_texas3.svg"/></a>
+					<img alt="The University of Texas at Austin" class="texas" onerror="this.onerror=null;this.src='https://www.utexas.edu/cola/_internal/images/2015_TEXAS_wordmark_white.png'" src="https://www.utexas.edu/cola/_internal/images/2015_cola_texas3.svg"/></a>
 					<a href="http://www.utexas.edu/cola/">
-					<img alt="College of Liberal Arts - The University of Texas at Austin" class="cla" onerror="this.onerror=null;this.src='http://www.utexas.edu/cola/_internal/images/2015_TEXAS_wordmark_white.png'" src="http://www.utexas.edu/cola/_internal/images/2015_cola_logo3.svg"/></a>
+					<img alt="College of Liberal Arts - The University of Texas at Austin" class="cla" onerror="this.onerror=null;this.src='https://www.utexas.edu/cola/_internal/images/2015_TEXAS_wordmark_white.png'" src="https://www.utexas.edu/cola/_internal/images/2015_cola_logo3.svg"/></a>
 	              </section>
 	
 	            </nav>      
@@ -61,7 +61,7 @@ the page content is in <section class="main-section">
                 		<!-- COLLEGE WIDE NAV - STATIC CONTENT -->
                   		<li class="college closed">
                     		<a class="off-canvas-submenu-call" href="#">
-                      			<img alt="The University of Texas at Austin" onerror="this.onerror=null;this.src='http://www.utexas.edu/cola/_internal/images/images/2015_cola_logo_phone.png'" src="http://www.utexas.edu/cola/_internal/images/2015_cola_logo_phone.svg"/>
+                      			<img alt="The University of Texas at Austin" onerror="this.onerror=null;this.src='https://www.utexas.edu/cola/_internal/images/images/2015_cola_logo_phone.png'" src="https://www.utexas.edu/cola/_internal/images/2015_cola_logo_phone.svg"/>
                     		</a>
                     		<ul class="no-bullet off-canvas-submenu">
                       			<li class="underline"><a href="http://www.utexas.edu/cola/">College of Liberal Arts</a> </li>
@@ -77,7 +77,7 @@ the page content is in <section class="main-section">
                       			<li class="underline"> <a href="http://www.utexas.edu/cola/alumni-and-giving/">Alumni &amp; Giving </a> </li>
                       			<li> <a href="http://www.utexas.edu/cola/public-affairs/resources/faculty-by-department.php">Faculty by Department</a> </li>
                       			<li>
-			                        <form action="http://www.utexas.edu/cola/search/" id="search-small">
+			                        <form action="https://www.utexas.edu/cola/search/" id="search-small">
 			                          <input name="cx" type="hidden" value="002688418440466237416:ilehtu0wbts"/>
 			                          <input name="cof" type="hidden" value="FORID:10"/>
 			                          <input name="ie" type="hidden" value="UTF-8"/>
@@ -159,10 +159,10 @@ the page content is in <section class="main-section">
 	                <ul class="title-area">
 	                    <li class="name">
 	    					<a href="http://www.utexas.edu/">
-	    						<img alt="The University of Texas at Austin" class="texas" src="http://www.utexas.edu/cola/_internal/images/2015_cola_texas3.svg"/>
+	    						<img alt="The University of Texas at Austin" class="texas" src="https://www.utexas.edu/cola/_internal/images/2015_cola_texas3.svg"/>
 							</a>
 	    					<a href="http://www.utexas.edu/cola">
-								<img alt="College of Liberal Arts - The University of Texas at Austin" class="cla" onerror="this.onerror=null;this.src='http://www.utexas.edu/cola/_internal/images/2015_TEXAS_wordmark_white.png'" src="http://www.utexas.edu/cola/_internal/images/2015_cola_logo3.svg"/>
+								<img alt="College of Liberal Arts - The University of Texas at Austin" class="cla" onerror="this.onerror=null;this.src='https://www.utexas.edu/cola/_internal/images/2015_TEXAS_wordmark_white.png'" src="https://www.utexas.edu/cola/_internal/images/2015_cola_logo3.svg"/>
 							</a>
 	                    </li>
 	                    <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
@@ -174,7 +174,7 @@ the page content is in <section class="main-section">
 	                    <!-- Right Orange Bar Section -->
 	                    <ul class="right">
 	                        <li>
-	                            <form action="http://www.utexas.edu/cola/search" id="search-medium-up">
+	                            <form action="https://www.utexas.edu/cola/search" id="search-medium-up">
 	                                <input name="cx" type="hidden" value="002688418440466237416:ilehtu0wbts"/>
 	                                <input name="cof" type="hidden" value="FORID:10"/>
 	                                <input name="ie" type="hidden" value="UTF-8"/>
@@ -209,7 +209,7 @@ the page content is in <section class="main-section">
 		            	<!-- replaced by page-level template -->
 						<div class="small-12 medium-8 columns">
 							<a href="http://www.utexas.edu/cola/lrctr/index.php">
-								<img alt="" class="lockup" src="http://www.utexas.edu/cola/_internal/images/logo-formal/Centers/LinguisticsResearchCenter.png"/>
+								<img alt="" class="lockup" src="https://www.utexas.edu/cola/_internal/images/logo-formal/Centers/LinguisticsResearchCenter.png"/>
 							</a>
 						</div>
 		
@@ -327,7 +327,7 @@ the page content is in <section class="main-section">
             <!-- Logo Social Media Row --><div class="row footer">
 <div class="small-12 medium-5 large-4 columns">
 <ul class="small-block-grid-1 logo-footer">
-<li><a data-gtm-event="nav-college-footer-cla" href="http://www.utexas.edu/cola/index.php"><img alt="The University of Texas at Austin College of Liberal Arts" height="45" onerror="this.onerror=null;this.src='http://www.utexas.edu/cola/_internal/images/2015_colafooter_logo.png'" src="http://www.utexas.edu/cola/_internal/images/2015_colafooter_logo.svg" width="280"/></a></li>
+<li><a data-gtm-event="nav-college-footer-cla" href="http://www.utexas.edu/cola/index.php"><img alt="The University of Texas at Austin College of Liberal Arts" height="45" onerror="this.onerror=null;this.src='https://www.utexas.edu/cola/_internal/images/2015_colafooter_logo.png'" src="https://www.utexas.edu/cola/_internal/images/2015_colafooter_logo.svg" width="280"/></a></li>
 </ul>
 </div>
 <!-- Social Media Small -->
@@ -505,10 +505,10 @@ the page content is in <section class="main-section">
 
   	</div>  <!-- Close <div class="inner-wrap"> -->
 </div> <!-- Close <div class="off-canvas-wrap" data-offcanvas=""> -->
-<script src="http://www.utexas.edu/cola/_internal/js/foundation.min.js" type="text/javascript"></script>
-<script src="http://www.utexas.edu/cola/_internal/js/foundation.offcanvas.js"></script>
+<script src="https://www.utexas.edu/cola/_internal/js/foundation.min.js" type="text/javascript"></script>
+<script src="https://www.utexas.edu/cola/_internal/js/foundation.offcanvas.js"></script>
 <script src="//cdn.jsdelivr.net/jquery.slick/1.4.1/slick.min.js" type="text/javascript"></script>
-<script src="http://www.utexas.edu/cola/_internal/js/app.js" type="text/javascript"></script>
+<script src="https://www.utexas.edu/cola/_internal/js/app.js" type="text/javascript"></script>
 </body>
 </html>
 @stop
