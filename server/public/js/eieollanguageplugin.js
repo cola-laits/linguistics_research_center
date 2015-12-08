@@ -4,7 +4,7 @@
 //Usage:
 //  1. Add CKEDITOR.plugins.addExternal( 'eieol_language', '/js/', 'eieollanguageplugin.js' ); to your js
 //  2. When defining your ckeditor, use something like the following:
-//      		CKEDITOR.replace( 'text_area_name',{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', extraPlugins : 'eieol_language', language_class:'Unicode', language_lang:'non');
+//      		CKEDITOR.replace( 'text_area_name',{toolbar : $mytoolbar, extraPlugins : 'eieol_language', language_class:'Unicode', language_lang:'non');
 //  3. Add to your button list, something like this:
 //       $mytoolbar = [{ name: 'document', items : [ 'Language'] }];
 
@@ -30,7 +30,7 @@ CKEDITOR.plugins.add( 'eieol_language', {
         } );
         
         // This will add button to the toolbar.
-        editor.ui.addButton('Language',
+        editor.ui.addButton('EieolLanguage',
             {
                 label: 'Insert Language Span',
                 command: 'eieol_language',
