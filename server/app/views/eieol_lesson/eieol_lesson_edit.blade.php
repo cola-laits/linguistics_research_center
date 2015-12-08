@@ -103,7 +103,7 @@
         	    		$('#' +  new_form_id).find('.delete_glossed_text').show();
 
         	    		//attach new ckeditor
-        	    		CKEDITOR.replace(new_text_id,{height: '4em', toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', disableNativeSpellChecker:false, allowedContent : true, extraPlugins : 'onchange,language', specialChars : [ {{$lesson->language->custom_keyboard_layout}} ] }  );
+        	    		CKEDITOR.replace(new_text_id,glossed_text_ckeditor_parms);
         	    		CKEDITOR.instances[new_text_id].on('change', function() {
         	    			if(this.checkDirty()) {
         	    				$('#'+new_form_id).css("background-color", "#EBAD99");
@@ -129,7 +129,7 @@
         	    		$('#grammars').find('.delete_grammar').show();
 
         	    		//attach new ckeditor
-        	    		CKEDITOR.replace(new_text_id,{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', disableNativeSpellChecker:false, allowedContent : true, extraPlugins : 'onchange,language', specialChars : [ {{$lesson->language->custom_keyboard_layout}} ] }  );
+        	    		CKEDITOR.replace(new_text_id,ckeditor_parms);
         	    		CKEDITOR.instances[new_text_id].on('change', function() {
         	    			if(this.checkDirty()) {
         	    				$('#'+new_form_id).css("background-color", "#EBAD99");
@@ -279,6 +279,9 @@
 
 	//remind them to save before they timeout.  Set to 25 minutes * 60 seconds * 1000 milliseconds = 1500000
     setTimeout(function(){$("#reminder").dialog( "open" );},1500000);
+
+
+	// --------------------------------document ready-------------------------------------
     
     $(document).ready(function(){
 
@@ -669,7 +672,7 @@
     		new_div.appendTo("#glossed_texts");
     		new_div.show();
 
-    		CKEDITOR.replace('new_glossed_text',{height: '4em', toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', disableNativeSpellChecker:false, allowedContent : true, extraPlugins : 'onchange', specialChars : [ {{$lesson->language->custom_keyboard_layout}} ]}  );
+    		CKEDITOR.replace('new_glossed_text',glossed_text_ckeditor_parms);
     		CKEDITOR.instances['new_glossed_text'].on('change', function() {
     			if(this.checkDirty()) {
     				$('#new_glossed_text_form').css("background-color", "#EBAD99");
@@ -731,7 +734,7 @@
     		new_div.appendTo( "#grammars" );
     		new_div.show();
     		
-    		CKEDITOR.replace('new_grammar_text',{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', disableNativeSpellChecker:false, allowedContent : true, extraPlugins : 'onchange', specialChars : [ {{$lesson->language->custom_keyboard_layout}} ]}  );
+    		CKEDITOR.replace('new_grammar_text',ckeditor_parms);
     		CKEDITOR.instances['new_grammar_text'].on('change', function() {
     			if(this.checkDirty()) {
     				$('#new_grammar_form').css("background-color", "#EBAD99");
@@ -1680,11 +1683,26 @@
 
 <!-- ---------------------------------------------------------------------------------------- -->
 
-<script>
+<script>	
+	//ckeditor defaults
 	CKEDITOR.plugins.addExternal( 'onchange', '/js/', 'onchangeplugin.js' );
-	
+	CKEDITOR.plugins.addExternal( 'eieol_language', '/js/', 'eieollanguageplugin.js' );
+	ckeditor_parms = {
+			  toolbar : $mytoolbar, 
+			  contentsCss : '/css/lrcstyle.css', 
+			  disableNativeSpellChecker : false, 
+			  allowedContent : true, 
+			  extraPlugins : 'onchange,eieol_language', 
+			  language_class : '{{$lesson->language->class_attribute}}',
+			  language_lang : '{{$lesson->language->lang_attribute}}',
+			  specialChars : [ {{$lesson->language->custom_keyboard_layout}} ]
+			};
+	glossed_text_ckeditor_parms = jQuery.extend(true, {}, ckeditor_parms); //deep copy
+	glossed_text_ckeditor_parms['height'] = '4em';
+
+
 	//apply the ckeditor to the intro text
-	CKEDITOR.replace( 'intro_text',{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', disableNativeSpellChecker:false, allowedContent : true, extraPlugins : 'onchange', specialChars : [ {{$lesson->language->custom_keyboard_layout}} ] } );
+	CKEDITOR.replace('intro_text',ckeditor_parms);
 	CKEDITOR.instances['intro_text'].on('change', function() {
 		if(this.checkDirty()) {
 			$('#update_form').css("background-color", "#EBAD99");
@@ -1694,7 +1712,7 @@
 
 	//apply the ckeditor to each exisiting glossed text
 	@foreach ($glossed_texts as $glossed_text)	
-		CKEDITOR.replace( 'glossed_text_{{{$glossed_text->id}}}',{height: '4em', toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', disableNativeSpellChecker:false, allowedContent : true, extraPlugins : 'onchange', specialChars : [ {{$lesson->language->custom_keyboard_layout}} ]}  );
+		CKEDITOR.replace('glossed_text_{{{$glossed_text->id}}}',glossed_text_ckeditor_parms);
 		CKEDITOR.instances['glossed_text_{{{$glossed_text->id}}}'].on('change', function() {
 			if(this.checkDirty()) {
 				$('#glossed_text_form_{{{$glossed_text->id}}}').css("background-color", "#EBAD99");
@@ -1704,7 +1722,7 @@
 	@endforeach
 		
 	//apply the ckeditor to the translation
-	CKEDITOR.replace( 'lesson_translation',{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', disableNativeSpellChecker:false, allowedContent : true, extraPlugins : 'onchange', specialChars : [ {{$lesson->language->custom_keyboard_layout}} ]}  );
+	CKEDITOR.replace('lesson_translation',ckeditor_parms);
 	CKEDITOR.instances['lesson_translation'].on('change', function() {
 		if(this.checkDirty()) {
 			$('#update_translation_form').css("background-color", "#EBAD99"); 
@@ -1714,7 +1732,7 @@
 
 	//apply the ckeditor to each exisiting grammar
 	@foreach ($grammars as $grammar)
-		CKEDITOR.replace( 'grammar_text_{{{$grammar->id}}}',{toolbar : $mytoolbar, contentsCss : '/css/lrcstyle.css', disableNativeSpellChecker:false, allowedContent : true, extraPlugins : 'onchange', specialChars : [ {{$lesson->language->custom_keyboard_layout}} ]}  );
+		CKEDITOR.replace('grammar_text_{{{$grammar->id}}}', ckeditor_parms);
 		CKEDITOR.instances['grammar_text_{{{$grammar->id}}}'].on('change', function() {
 			if(this.checkDirty()) {
 				$('#grammar_form_{{{$grammar->id}}}').css("background-color", "#EBAD99");
