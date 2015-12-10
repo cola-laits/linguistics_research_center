@@ -207,16 +207,22 @@ the page content is in <section class="main-section">
             		<div class="row" id="logo_row">
 
 		            	<!-- replaced by page-level template -->
-						<div class="small-6 columns">
+						<div class="small-6 columns hide-for-small-only">
 							<a href="http://www.utexas.edu/cola/lrctr/index.php">
 								<img alt="" class="lockup" src="https://www.utexas.edu/cola/_internal/images/logo-formal/Centers/LinguisticsResearchCenter.png"/>
 							</a>
 						</div>
 						
-						<div class="small-6 columns">
+						<div class="small-12 columns hide-for-medium-up">
+							<a href="http://www.utexas.edu/cola/lrctr/index.php">
+								<img alt="" class="lockup" src="https://www.utexas.edu/cola/_internal/images/logo-formal/Centers/LinguisticsResearchCenter.png"/>
+							</a>
+						</div>
+						
+						<div class="small-6 columns hide-for-small-only">
 							<div id="donate-button">
 								<a href="https://utdirect.utexas.edu/apps/utgiving/online/nlogon/?menu1=LALG"><h3>Keep dead languages alive</h3></a>
-								<p><a href="https://utdirect.utexas.edu/apps/utgiving/online/nlogon/?menu1=LALG">We need your help to preserve &amp; document ancient languages. Participate today.</a></p>
+								<p class="hide-for-medium-down"><a href="https://utdirect.utexas.edu/apps/utgiving/online/nlogon/?menu1=LALG">We need your help to preserve &amp; document ancient languages. Participate today.</a></p>
 							</div>
 						</div>
 		
