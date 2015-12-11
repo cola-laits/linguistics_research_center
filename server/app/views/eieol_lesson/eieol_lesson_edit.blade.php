@@ -17,6 +17,18 @@
 		$('#lesson_text').html(lesson_text); //replace div with new text
 	} //generate_lesson_text
 
+
+	function set_comment_button_color() {
+		//loop through each comment button.  If either author or admin comment are filled in, set icon to red.  Else normal.
+		$('.comment_button').each(function(i,obj) {
+			if ($(obj).closest('form').find(".author_comments").val() || $(obj).closest('form').find(".admin_comments").val()) {
+				$(obj).html('<div style="color:red"><i class="fa fa-comment"></i></div>');
+			} else {
+				$(obj).html('<i class="fa fa-comment-o"></i>');
+			}
+		});
+	} //set_comment_button_color
+
 	function ajax_submit(myform) { 
 		//generic ajax function.   This will prevent the regular submission and send it by ajax instead.
 
@@ -59,7 +71,6 @@
 	  		      	myform.css("background-color", "#FFFFFF");
 	  		      	myform.removeAttr("dirty");
 	  		        setTimeout(function(){$("#reminder").dialog( "open" );},1500000); //reset warning for 25 minutes
-
 
 	  		    	//if they updated the language, we need to change the hidden language ids
 	  		      	if(json.hasOwnProperty('language_id')) {
@@ -113,7 +124,7 @@
         		    }
 
 
-        		  //if they just added a grammar, we need to further customize the form
+        		    //if they just added a grammar, we need to further customize the form
         		    if (json.hasOwnProperty('grammar_id')) {
         		    	$("#add_grammar").show(); //now that they've saved the grammar, they can add another
 
@@ -136,11 +147,10 @@
         	    				$('#'+new_form_id).attr("dirty", "dirty");
         	    			}
         	    		});
-        		    }
-          		  
+        		    }    
     		    }  
-    		  
-    		    //rebuild lesson text
+
+    		    set_comment_button_color();
     			generate_lesson_text();
 
     			$(".spinner").hide(); 
@@ -211,6 +221,8 @@
 		  		    setTimeout(function(){
 		  		        $("#update_confirm").modal('hide');
 		  		    }, 1000);
+		  		    
+		  		    set_comment_button_color();
 	  		    } //json success
     
 	        }, //success
@@ -473,6 +485,7 @@
 		  		        $(this).removeAttr("dirty");
 		  		        setTimeout(function(){$("#reminder").dialog( "open" );},1500000); //reset warning for 25 minutes
 		  		        attach_gloss(json['gloss_id'], json['gloss_display']);
+
 		  		    } //json success
 		        }, //success
 		        
@@ -526,6 +539,7 @@
 				    $('#edit_gloss_form').removeAttr("dirty");
 				    setTimeout(function(){$("#reminder").dialog( "open" );},1500000); //reset warning for 25 minutes
 				    $("#surface_form", "#edit_gloss_form").focus(); //put cursor in first field
+
 		        }, //success
 		        
 		        error : function(xml_http_request, text_status, error_thrown) {
@@ -561,6 +575,7 @@
 				  		    setTimeout(function(){
 				  		        $("#update_confirm").modal('hide');
 				  		    }, 1000);
+
 				        }, //success
 				        
 				        error : function(xml_http_request, text_status, error_thrown) {
@@ -614,6 +629,8 @@
 				    $('#edit_head_word_form').css("background-color", "#FFFFFF");
 				    $("#edit_head_word_modal").modal('show');
 				    $("#word", "#edit_head_word_form").focus(); //put cursor in first field
+
+				    set_comment_button_color();
 		        }, //success
 		        
 		        error : function(xml_http_request, text_status, error_thrown) {
@@ -787,11 +804,22 @@
 		        });
 		}); //delete grammar
 
+		//show element
 		$('.show_element').click(function() {
 			  var content = $(this).next();
 			  $(content).slideToggle('slow');
 			  return false;
 		});
+
+		//show comments
+		$('.comment_button').click(function() {
+			  var content = $(this).closest('form').find(".comment_rows");
+			  $(content).slideToggle(50);
+			  return false;
+		});
+
+		// call function to mark if comments are filled in and change button.
+		set_comment_button_color();
 
 		$('[data-toggle="popover"]').popover(); 
 
@@ -807,7 +835,8 @@
 
     
 </script>
- 
+
+<!-- ---------------------------------------------------------------------------------------- -->
 
 <div class="spinner">
   {{ HTML::image('images/ajax_loader_red_350.gif', $alt="Loading", $attributes = array('border'=>0, 'width'=>150, 'height'=>150))  }}<br/>Please Wait...
@@ -1200,7 +1229,9 @@
     </div>
 </div>
 
+
 <!-- ---------------------------------------------------------------------------------------- -->  
+
 <div class='col-lg-12'>
  
     <h1><i class='fa fa-file-text'></i> Edit Lesson for {{ HTML::link('admin2/eieol_series/' . $lesson->series->id . '/edit', $lesson->series->title , array('title' => 'Return to series' )) }}</h1>
@@ -1260,8 +1291,29 @@
 		        <div id ="language_error" class="alert-danger errors"></div>
 		    </div>
 		    
+		    <div class='form-group col-sm-2 comment_button'>
+		    	<i class="fa fa-comment-o"></i>
+		    </div>
+		    
 		    <br/>
 		    
+		    <div class="comment_rows">
+			    <div class='form-group col-sm-10 col-sm-offset-1'>
+			    	{{ Form::label('author_comments', 'Author Comments') }}
+				    {{ Form::textarea('author_comments', null, ['class' => 'form-control comment_textarea author_comments', 'size' => '100x2']) }}
+				</div>
+			 
+				<div class='form-group col-sm-10 col-sm-offset-1'>
+				 	{{ Form::label('admin_comment', 'Admin Comments') }}	  
+				 	@if (Auth::user()->isAdmin())
+				    	{{ Form::textarea('admin_comments', null, ['class' => 'form-control comment_textarea admin_comments', 'size' => '100x2']) }}
+				    @else
+				    	{{ Form::textarea('admin_comments', null, ['readonly', 'class' => 'form-control comment_textarea', 'size' => '100x2']) }}
+				    @endif
+				</div>
+			</div>
+			    	
+			    	
 		    <div class='form-group col-sm-10 col-sm-offset-1'>
 		        {{ Form::label('intro_text', 'Intro Text') }}
 		        {{ Form::textarea('intro_text', null, ['placeholder' => 'Intro Text', 'class' => 'form-control', 'size' => '100x10']) }}

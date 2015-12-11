@@ -74,5 +74,13 @@ textarea {
 }
 
 .popover{
-        max-width:60%;
-    }
+    max-width:60%;
+}
+
+.comment_rows {
+    display:none;
+}
+
+.comment_textarea{
+	background-color: #f0f0f4;
+}

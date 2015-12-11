@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'AddCommentsToGloss' => $baseDir . '/app/database/migrations/2015_02_23_114336_add_comments_to_gloss.php',
+    'AddCommentsToLesson' => $baseDir . '/app/database/migrations/2015_12_11_105609_add_comments_to_lesson.php',
     'AddLangAndClassTagsToLanguage' => $baseDir . '/app/database/migrations/2015_03_05_200342_add_lang_and_class_tags_to_language.php',
     'AddMenuFieldsToSeries' => $baseDir . '/app/database/migrations/2014_11_10_142958_add_menu_fields_to_series.php',
     'AddUnderlyingFormToGloss' => $baseDir . '/app/database/migrations/2015_06_10_162517_add_underlying_form_to_gloss.php',
