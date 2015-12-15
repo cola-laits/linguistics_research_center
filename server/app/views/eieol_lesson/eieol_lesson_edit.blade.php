@@ -357,6 +357,7 @@
 		            dataType: "json",
 		            data: {
 	                    term: request.term,
+	                    language_id: {{$lesson->language_id}},
 	                },
 		            type : 'GET',
 		            url: '/admin2/part_of_speech/filtered_list',
@@ -374,6 +375,7 @@
 		            dataType: "json",
 		            data: {
 	                    term: request.term,
+	                    language_id: {{$lesson->language_id}},
 	                },
 		            type : 'GET',
 		            url: '/admin2/eieol_analysis/filtered_list',

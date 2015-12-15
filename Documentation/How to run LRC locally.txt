@@ -18,7 +18,7 @@ When you launch Boot2Docker Start, note the IP address it shows you.
 	*I picked 5150 to be the port.  If you don't specify it, docker will pick a port for you.  You can look it up using the docker ps command.
 6. Load your local database.  You can run the seeds, but that won't give you complete data.  The more complete solution is to 
 go into LAITS' PHPMyAdmin at https://pma.la.utexas.edu/, go to database lrc-test, click Export and export the data 
-(you will probably need to 2 this in 2 batches so file size doesn't get too big.  Do one export of the EIEOL files and one of everything else.)
+(you will probably need to di this in 2 batches so file size doesn't get too big.  Do one export of the EIEOL files and one of everything else.)
 Then go into your local phpmyadmin, create a database called lrc-test, click Import and load the files you just exported.
 7. In Eclipse, in server/app/config, create a folder called local
 8. ftp into file.laits.utexas.edu. Navigate to /mnt/projects/app-configs/lrc-site/test.  Copy app, database and lrc_settings into your new local folder.

@@ -180,9 +180,12 @@ class EieolGlossController extends BaseController {
 						$element->save();
 					
 						//add part of speech if new
-						if (EieolPartOfSpeech::where('part_of_speech', '=', Input::get('element_' . $i . '_part_of_speech'))->count() == 0 ) {
+						if (EieolPartOfSpeech::where('part_of_speech', '=', Input::get('element_' . $i . '_part_of_speech'))
+											 ->where('language_id', '=', Input::get('language_id'))
+											 ->count() == 0 ) {
 							$part_of_speech = new EieolPartOfSpeech;
 							$part_of_speech->part_of_speech = Input::get('element_' . $i . '_part_of_speech');
+							$part_of_speech->language_id = Input::get('language_id');
 							$part_of_speech->created_by = Auth::user()->username;
 							$part_of_speech->updated_by = Auth::user()->username;
 							$part_of_speech->save();
@@ -190,9 +193,12 @@ class EieolGlossController extends BaseController {
 							
 						//add analysis if new
 						if (Input::has('element_' . $i . '_analysis')) {
-							if (EieolAnalysis::where('analysis', '=', Input::get('element_' . $i . '_analysis'))->count() == 0 ) {
+							if (EieolAnalysis::where('analysis', '=', Input::get('element_' . $i . '_analysis'))
+											 ->where('language_id', '=', Input::get('language_id'))
+											 ->count() == 0 ) {
 								$analysis = new EieolAnalysis;
 								$analysis->analysis = Input::get('element_' . $i . '_analysis');
+								$analysis->language_id = Input::get('language_id');
 								$analysis->created_by = Auth::user()->username;
 								$analysis->updated_by = Auth::user()->username;
 								$analysis->save();
@@ -313,9 +319,12 @@ class EieolGlossController extends BaseController {
 						} 
 							
 						//add part of speech if new
-						if (EieolPartOfSpeech::where('part_of_speech', '=', Input::get('element_' . $i . '_part_of_speech'))->count() == 0 ) {
+						if (EieolPartOfSpeech::where('part_of_speech', '=', Input::get('element_' . $i . '_part_of_speech'))
+											 ->where('language_id', '=', Input::get('language_id'))
+								    		 ->count() == 0 ) {
 							$part_of_speech = new EieolPartOfSpeech;
 							$part_of_speech->part_of_speech = Input::get('element_' . $i . '_part_of_speech');
+							$part_of_speech->language_id = Input::get('language_id');
 							$part_of_speech->created_by = Auth::user()->username;
 							$part_of_speech->updated_by = Auth::user()->username;
 							$part_of_speech->save();
@@ -323,9 +332,12 @@ class EieolGlossController extends BaseController {
 							
 						//add analysis if new
 						if (Input::has('element_' . $i . '_analysis')) {
-							if (EieolAnalysis::where('analysis', '=', Input::get('element_' . $i . '_analysis'))->count() == 0 ) {
+							if (EieolAnalysis::where('analysis', '=', Input::get('element_' . $i . '_analysis'))
+											 ->where('language_id', '=', Input::get('language_id'))
+									 		 ->count() == 0 ) {
 								$analysis = new EieolAnalysis;
 								$analysis->analysis = Input::get('element_' . $i . '_analysis');
+								$analysis->language_id = Input::get('language_id');
 								$analysis->created_by = Auth::user()->username;
 								$analysis->updated_by = Auth::user()->username;
 								$analysis->save();

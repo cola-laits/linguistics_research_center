@@ -71,4 +71,6 @@ Route::group(array('prefix'=> 'admin2', 'before' => 'auth|admin'), function() {
 	Route::post('default_alpha', 'LoadController@default_alpha');
 	Route::post('link_headword_to_eytma', 'LoadController@link_headword_to_eytma');
 	Route::post('paren_count', 'LoadController@paren_count');
+	Route::post('sweep_anal_and_pos', 'LoadController@sweep_anal_and_pos');
+	Route::post('delete_langless_anal_and_pos', 'LoadController@delete_langless_anal_and_pos');
 });

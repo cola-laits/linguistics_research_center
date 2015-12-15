@@ -1059,4 +1059,56 @@ class LoadController extends BaseController {
 	
 	} //end paren_count function
 	
+	
+	public function sweep_anal_and_pos()
+	{
+		ini_set('memory_limit','3000M');
+		ini_set('max_execution_time', 20000);
+		
+		$used_anal = array();
+		$used_pos = array();
+		
+		$elements = EieolElement::get();
+		foreach($elements as $element) {
+			print $element->id . ' / ' . $element->part_of_speech . ' / ' . $element->analysis . ' / ' . $element->gloss->language_id . '<br/>';
+			if ($element->analysis != '') {
+				$anal_key = $element->gloss->language_id . '--' . $element->analysis;
+		
+				if (!in_array($anal_key,$used_anal)) {
+					$used_anal[] = $anal_key;
+					$analysis = new EieolAnalysis;
+					$analysis->analysis = $element->analysis;
+					$analysis->language_id = $element->gloss->language_id;
+					$analysis->created_by = 'loader';
+					$analysis->updated_by = 'loader';
+					$analysis->save();
+				}
+			}
+			
+			$pos_key = $element->gloss->language_id . '--' . $element->part_of_speech;
+			if (!in_array($pos_key,$used_pos)) {
+				$used_pos[] = $pos_key;
+				
+				$part_of_speech = new EiEOLPartOfSpeech;
+				$part_of_speech->part_of_speech = $element->part_of_speech ;
+				$part_of_speech->language_id = $element->gloss->language_id ;
+				$part_of_speech->created_by = 'loader';
+				$part_of_speech->updated_by = 'loader';
+				$part_of_speech->save();
+			}
+			
+		}
+		print '<hr/>done';
+	
+	} //end sweep_anal_and_pos function
+	
+	
+	public function delete_langless_anal_and_pos()
+	{
+		DB::table('eieol_analysis')->whereNull('language_id')->delete();
+		DB::table('eieol_part_of_speech')->whereNull('language_id')->delete();
+		print 'done';
+	} //delete_langless_anal_and_pos
+
+	
 } //end load controller
