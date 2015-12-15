@@ -1089,7 +1089,7 @@ class LoadController extends BaseController {
 			if (!in_array($pos_key,$used_pos)) {
 				$used_pos[] = $pos_key;
 				
-				$part_of_speech = new EiEOLPartOfSpeech;
+				$part_of_speech = new EieolPartOfSpeech;
 				$part_of_speech->part_of_speech = $element->part_of_speech ;
 				$part_of_speech->language_id = $element->gloss->language_id ;
 				$part_of_speech->created_by = 'loader';
