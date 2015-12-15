@@ -52,9 +52,7 @@ return array(
 	 *	)
 	 */
 	'menu' => array('EIEOL' => array('Series' => 'page.eieol_series.eieol_series_wrapper',
-									 'Language' => 'page.eieol_language.eieol_language_wrapper',
-									 'EieolAnalysis',
-									 'EieolPartOfSpeech',),
+									 'Language' => 'page.eieol_language.eieol_language_wrapper',),
 					'Lexicon' => array('LexEtyma',
 									   'LexReflex',
 									   'LexReflexEntry',
