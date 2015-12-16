@@ -20,8 +20,10 @@
 
 	function set_comment_button_color() {
 		//loop through each comment button.  If either author or admin comment are filled in, set icon to red.  Else normal.
-		$('.comment_button').each(function(i,obj) {
-			if ($(obj).closest('form').find(".author_comments").val() || $(obj).closest('form').find(".admin_comments").val()) {
+		$('.comment_button').each(function(i,obj) {			
+			if ($(obj).closest('form').find(".author_comments").val() || 
+				$(obj).closest('form').find(".admin_comments").val()  ||
+				$(obj).closest('form').find(".well").text() ) {
 				$(obj).html('<div style="color:red"><i class="fa fa-comment"></i></div>');
 			} else {
 				$(obj).html('<i class="fa fa-comment-o"></i>');
@@ -1310,7 +1312,8 @@
 				 	@if (Auth::user()->isAdmin())
 				    	{{ Form::textarea('admin_comments', null, ['class' => 'form-control comment_textarea admin_comments', 'size' => '100x2']) }}
 				    @else
-				    	{{ Form::textarea('admin_comments', null, ['readonly', 'class' => 'form-control comment_textarea', 'size' => '100x2']) }}
+				    	{{ Form::hidden('admin_comments', null, ['class' => 'form-control comment_textarea', 'size' => '100x2']) }}
+				    	<div class="well">{{$lesson->admin_comments}}</div>
 				    @endif
 				</div>
 			</div>
