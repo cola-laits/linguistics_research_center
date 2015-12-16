@@ -79,7 +79,7 @@ class EieolLessonController extends BaseController {
 		
 		//get etymas for pulldown
 		$etymas = array();
-		$etymas[0] = 'Select an Etyma';
+		$etymas[0] = 'Select an Etymon';
 		$etymas += LexEtyma::lists('entry', 'id');
 		
 		return View::make('eieol_lesson.eieol_lesson_edit', ['lesson' => $lesson, 

@@ -9,11 +9,11 @@
 	function generate_lesson_text() {
 		//every time they update the glossed text, we calculate the full text and display it below
 		var lesson_text = '';
-		$("form", "#glossed_texts").each(function() {
-			if ($('#glossed_text', this).val() != null) { //without this, it will try to include edit gloss forms
-				lesson_text += $('#glossed_text', this).val() + ' ';
-			}
-		});
+		$(".glossed_text_area").each(function() {
+			temp_text = CKEDITOR.instances[this.id].getData();
+			temp_text = temp_text.replace('<p>', '').replace('</p>', '');
+			lesson_text +=  temp_text + ' ';
+		});	
 		$('#lesson_text').html(lesson_text); //replace div with new text
 	} //generate_lesson_text
 
@@ -1359,7 +1359,7 @@
 					    	
 					    <div class='form-group col-sm-7'>
 					        {{ Form::label('glossed_text', 'Glossed Text') }}
-					        {{ Form::textarea('glossed_text', null, ['placeholder' => 'Glossed Text', 'class' => 'form-control', 'size' => '100x10', 'id' => 'glossed_text_' . $glossed_text->id]) }}					        
+					        {{ Form::textarea('glossed_text', null, ['placeholder' => 'Glossed Text', 'class' => 'form-control glossed_text_area', 'size' => '100x10', 'id' => 'glossed_text_' . $glossed_text->id]) }}					        
 					        <div id ="glossed_text_error" class="alert-danger errors"></div>
 					    </div>	    
 					    
@@ -1749,7 +1749,8 @@
 			  extraPlugins : 'onchange,eieol_language', 
 			  language_class : '{{$lesson->language->class_attribute}}',
 			  language_lang : '{{$lesson->language->lang_attribute}}',
-			  specialChars : [ {{$lesson->language->custom_keyboard_layout}} ]
+			  specialChars : [ {{$lesson->language->custom_keyboard_layout}}],
+			  enterMode : 'CKEDITOR.ENTER_BR'
 			};
 	glossed_text_ckeditor_parms = jQuery.extend(true, {}, ckeditor_parms); //deep copy
 	glossed_text_ckeditor_parms['height'] = '4em';
