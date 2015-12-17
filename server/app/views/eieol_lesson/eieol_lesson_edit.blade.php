@@ -21,7 +21,9 @@
 	function set_comment_button_color() {
 		//loop through each comment button.  If either author or admin comment are filled in, set icon to red.  Else normal.
 		$('.comment_button').each(function(i,obj) {			
-			if ($(obj).closest('form').find(".author_comments").val() || 
+			if ($(obj).closest('form').find(".author_done").is(':checked')) {
+				$(obj).html('<div style="color:green"><i class="fa fa-comment"></i></div>');
+			} else if ($(obj).closest('form').find(".author_comments").val() || 
 				$(obj).closest('form').find(".admin_comments").val()  ||
 				$(obj).closest('form').find(".well").text() ) {
 				$(obj).html('<div style="color:red"><i class="fa fa-comment"></i></div>');
@@ -822,6 +824,15 @@
 			  return false;
 		});
 
+		//delete comments
+		$('.comment_delete').click(function() {
+			  $(this).closest('form').find(".author_comments").val('');
+			  $(this).closest('form').find(".admin_comments").val('');
+			  $(this).closest('form').find(".author_done").removeAttr('checked');
+			  highlight_form($(this).closest('form'));
+			  return false;
+		});
+
 		// call function to mark if comments are filled in and change button.
 		set_comment_button_color();
 
@@ -834,6 +845,7 @@
 		    $('body').addClass('modal-open');
 		    }    
 		});
+
 		
     });//document ready
 
@@ -1302,20 +1314,32 @@
 		    <br/>
 		    
 		    <div class="comment_rows">
-			    <div class='form-group col-sm-10 col-sm-offset-1'>
+			    <div class='form-group col-sm-9 col-sm-offset-1'>
 			    	{{ Form::label('author_comments', 'Author Comments') }}
 				    {{ Form::textarea('author_comments', null, ['class' => 'form-control comment_textarea author_comments', 'size' => '100x2']) }}
 				</div>
-			 
-				<div class='form-group col-sm-10 col-sm-offset-1'>
-				 	{{ Form::label('admin_comment', 'Admin Comments') }}	  
-				 	@if (Auth::user()->isAdmin())
-				    	{{ Form::textarea('admin_comments', null, ['class' => 'form-control comment_textarea admin_comments', 'size' => '100x2']) }}
-				    @else
-				    	{{ Form::hidden('admin_comments', null, ['class' => 'form-control comment_textarea', 'size' => '100x2']) }}
-				    	<div class="well">{{$lesson->admin_comments}}</div>
-				    @endif
+				
+				<div class='form-group col-sm-1'>
+			    	{{ Form::label('author_done', 'Done') }}
+				    {{ Form::checkbox('author_done', 1, false, ['class' => 'form-control author_done']) }}
 				</div>
+			 
+				@if (Auth::user()->isAdmin())
+					<div class='form-group col-sm-9 col-sm-offset-1'>
+				 		{{ Form::label('admin_comment', 'Admin Comments') }}	  
+				    	{{ Form::textarea('admin_comments', null, ['class' => 'form-control comment_textarea admin_comments', 'size' => '100x2']) }}
+				    </div>
+				    
+				    <div class='form-group col-sm-1'>
+			    		{{ Form::submit('Delete', ['class' => 'btn btn-warning comment_delete']) }}
+				    </div>
+				</div>
+			    @else
+				    <div class='form-group col-sm-9 col-sm-offset-1'>
+				    	{{ Form::hidden('admin_comments', null, ['class' => 'form-control']) }}
+				    	<div class="well">{{$lesson->admin_comments}}</div>
+				    </div>
+				@endif
 			</div>
 			    	
 			    	

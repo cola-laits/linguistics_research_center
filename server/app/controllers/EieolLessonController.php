@@ -142,6 +142,7 @@ class EieolLessonController extends BaseController {
 				$lesson->intro_text = Normalizer::normalize(Input::get('intro_text'), Normalizer::FORM_C );
 				$lesson->language_id = Input::get('language');
 				$lesson->author_comments = Normalizer::normalize(Input::get('author_comments'), Normalizer::FORM_C );
+				$lesson->author_done = Input::get('author_done');
 				$lesson->admin_comments = Normalizer::normalize(Input::get('admin_comments'), Normalizer::FORM_C );
 	 			$lesson->updated_by = Auth::user()->username;
 	 			$lesson->save();
