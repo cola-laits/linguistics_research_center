@@ -824,8 +824,8 @@
 			  return false;
 		});
 
-		//delete comments
-		$('.comment_delete').click(function() {
+		//clear comments
+		$('.comment_clear').click(function() {
 			  $(this).closest('form').find(".author_comments").val('');
 			  $(this).closest('form').find(".admin_comments").val('');
 			  $(this).closest('form').find(".author_done").removeAttr('checked');
@@ -1331,7 +1331,7 @@
 				    </div>
 				    
 				    <div class='form-group col-sm-1'>
-			    		{{ Form::submit('Delete', ['class' => 'btn btn-warning comment_delete']) }}
+			    		{{ Form::submit('Clear', ['class' => 'btn btn-warning comment_clear']) }}
 				    </div>
 				</div>
 			    @else

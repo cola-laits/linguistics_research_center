@@ -11,4 +11,7 @@
          the_height;
          }
 </script>
-<iframe src="/admin2/user" width="100%" onLoad="calcHeight();" height="1px" id="the_iframe"></iframe>
+
+<div  style="position: fixed;top: 0px;left: 0px;right: 0px;bottom: 0px;">
+	<iframe src="/admin2/user" width="100%" onLoad="calcHeight();" height="1px" id="the_iframe" style="height: 100%; width: 100%;"></iframe>
+</div>
