@@ -1336,6 +1336,7 @@
 				</div>
 			    @else
 				    <div class='form-group col-sm-9 col-sm-offset-1'>
+				        {{ Form::label('admin_comment', 'Admin Comments') }}	
 				    	{{ Form::hidden('admin_comments', null, ['class' => 'form-control']) }}
 				    	<div class="well">{{$lesson->admin_comments}}</div>
 				    </div>
