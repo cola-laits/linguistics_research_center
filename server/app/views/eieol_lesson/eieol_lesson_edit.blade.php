@@ -1314,15 +1314,18 @@
 		    <br/>
 		    
 		    <div class="comment_rows">
-			    <div class='form-group col-sm-9 col-sm-offset-1'>
-			    	{{ Form::label('author_comments', 'Author Comments') }}
-				    {{ Form::textarea('author_comments', null, ['class' => 'form-control comment_textarea author_comments', 'size' => '100x2']) }}
-				</div>
-				
-				<div class='form-group col-sm-1'>
-			    	{{ Form::label('author_done', 'Done') }}
-				    {{ Form::checkbox('author_done', 1, false, ['class' => 'form-control author_done']) }}
-				</div>
+		    	@if (!Auth::user()->isAdmin() || $lesson->author_comments || $lesson->author_done)
+		    		<!-- only show if you are not an admin, or if they were filled in. -->
+				    <div class='form-group col-sm-9 col-sm-offset-1'>
+				    	{{ Form::label('author_comments', 'Author Comments') }}
+					    {{ Form::textarea('author_comments', null, ['class' => 'form-control comment_textarea author_comments', 'size' => '100x2']) }}
+					</div>
+					
+					<div class='form-group col-sm-1'>
+				    	{{ Form::label('author_done', 'Done') }}
+					    {{ Form::checkbox('author_done', 1, false, ['class' => 'form-control author_done']) }}
+					</div>
+				@endif
 			 
 				@if (Auth::user()->isAdmin())
 					<div class='form-group col-sm-9 col-sm-offset-1'>
@@ -1335,11 +1338,14 @@
 				    </div>
 				</div>
 			    @else
-				    <div class='form-group col-sm-9 col-sm-offset-1'>
-				        {{ Form::label('admin_comment', 'Admin Comments') }}	
-				    	{{ Form::hidden('admin_comments', null, ['class' => 'form-control']) }}
-				    	<div class="well">{{$lesson->admin_comments}}</div>
-				    </div>
+			    	@if ($lesson->admin_comments)
+			    		<!-- Only show admin comments to authors if they exist -->
+					    <div class='form-group col-sm-9 col-sm-offset-1'>
+					        {{ Form::label('admin_comment', 'Admin Comments') }}	
+					    	{{ Form::hidden('admin_comments', null, ['class' => 'form-control']) }}
+					    	<div class="well">{{$lesson->admin_comments}}</div>
+					    </div>
+					@endif
 				@endif
 			</div>
 			    	
