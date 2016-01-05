@@ -820,7 +820,7 @@
 		//show comments
 		$('.comment_button').click(function() {
 			  var content = $(this).closest('form').find(".comment_rows");
-			  $(content).slideToggle(50);
+			  $(content).slideToggle(250);
 			  return false;
 		});
 
@@ -1311,53 +1311,52 @@
 		    	<i class="fa fa-comment-o"></i>
 		    </div>
 		    
-		    <br/>
+		 </div>
 		    
-		    <div class="comment_rows">
-		    	@if (!Auth::user()->isAdmin() || $lesson->author_comments || $lesson->author_done)
-		    		<!-- only show if you are not an admin, or if they were filled in. -->
-				    <div class='form-group col-sm-9 col-sm-offset-1'>
-				    	{{ Form::label('author_comments', 'Author Comments') }}
-					    {{ Form::textarea('author_comments', null, ['class' => 'form-control comment_textarea author_comments', 'size' => '100x2']) }}
-					</div>
-					
-					<div class='form-group col-sm-1'>
-				    	{{ Form::label('author_done', 'Done') }}
-					    {{ Form::checkbox('author_done', 1, false, ['class' => 'form-control author_done']) }}
-					</div>
-				@endif
-			 
-				@if (Auth::user()->isAdmin())
-					<div class='form-group col-sm-9 col-sm-offset-1'>
-				 		{{ Form::label('admin_comment', 'Admin Comments') }}	  
-				    	{{ Form::textarea('admin_comments', null, ['class' => 'form-control comment_textarea admin_comments', 'size' => '100x2']) }}
-				    </div>
-				    
-				    <div class='form-group col-sm-1'>
-			    		{{ Form::submit('Clear', ['class' => 'btn btn-warning comment_clear']) }}
-				    </div>
+	    <div class="row comment_rows">
+	    	@if (!Auth::user()->isAdmin() || $lesson->author_comments || $lesson->author_done)
+	    		<!-- only show if you are not an admin, or if they were filled in. -->
+			    <div class='form-group col-sm-9 col-sm-offset-1'>
+			    	{{ Form::label('author_comments', 'Author Comments') }}
+				    {{ Form::textarea('author_comments', null, ['class' => 'form-control comment_textarea author_comments', 'size' => '100x2']) }}
 				</div>
-			    @else
-			    	@if ($lesson->admin_comments)
-			    		<!-- Only show admin comments to authors if they exist -->
-					    <div class='form-group col-sm-9 col-sm-offset-1'>
-					        {{ Form::label('admin_comment', 'Admin Comments') }}	
-					    	{{ Form::hidden('admin_comments', null, ['class' => 'form-control']) }}
-					    	<div class="well" style="white-space: pre-wrap" >{{$lesson->admin_comments}}</div>
-					    </div>
-					@endif
+				
+				<div class='form-group col-sm-1'>
+			    	{{ Form::label('author_done', 'Done') }}
+				    {{ Form::checkbox('author_done', 1, false, ['class' => 'form-control author_done']) }}
+				</div>
+			@endif
+		 
+			@if (Auth::user()->isAdmin())
+				<div class='form-group col-sm-9 col-sm-offset-1'>
+			 		{{ Form::label('admin_comment', 'Admin Comments') }}	  
+			    	{{ Form::textarea('admin_comments', null, ['class' => 'form-control comment_textarea admin_comments', 'size' => '100x2']) }}
+			    </div>
+			    
+			    <div class='form-group col-sm-1'>
+		    		{{ Form::submit('Clear', ['class' => 'btn btn-warning comment_clear']) }}
+			    </div>
+		    @else
+		    	@if ($lesson->admin_comments)
+		    		<!-- Only show admin comments to authors if they exist -->
+				    <div class='form-group col-sm-9 col-sm-offset-1'>
+				        {{ Form::label('admin_comment', 'Admin Comments') }}	
+				    	{{ Form::hidden('admin_comments', null, ['class' => 'form-control']) }}
+				    	<div class="well" style="white-space: pre-wrap" >{{$lesson->admin_comments}}</div>
+				    </div>
 				@endif
-			</div>
+			@endif
+		</div>
 			    	
-			    	
+		<div class='row'>	    	
 		    <div class='form-group col-sm-10 col-sm-offset-1'>
 		        {{ Form::label('intro_text', 'Intro Text') }}
 		        {{ Form::textarea('intro_text', null, ['placeholder' => 'Intro Text', 'class' => 'form-control', 'size' => '100x10']) }}
 		        <div id ="intro_text_error" class="alert-danger errors"></div>
 		        {{ Form::submit('Edit', ['class' => 'btn btn-primary']) }}
-		    </div>		    
+		    </div>
+		</div>		    
 
-	    </div>
     
     {{ Form::close() }}
     
@@ -1397,6 +1396,10 @@
 					        <div id ="glossed_text_error" class="alert-danger errors"></div>
 					    </div>	    
 					    
+					    <div class='form-group col-sm-1 comment_button'>
+							<i class="fa fa-comment-o"></i>
+						</div>
+					    
 					    <div class='form-group col-sm-1 bottom_button'>
 						    {{ Form::submit('Edit', ['class' => 'btn btn-primary']) }}
 						</div>
@@ -1406,6 +1409,42 @@
 						</div>
 	
 				    </div>
+				    
+				    
+				    <div class="row comment_rows">
+				    	@if (!Auth::user()->isAdmin() || $glossed_text->author_comments || $glossed_text->author_done)
+				    		<!-- only show if you are not an admin, or if they were filled in. -->
+						    <div class='form-group col-sm-9 col-sm-offset-1'>
+						    	{{ Form::label('author_comments', 'Author Comments') }}
+							    {{ Form::textarea('author_comments', null, ['class' => 'form-control comment_textarea author_comments', 'size' => '100x2']) }}
+							</div>
+							
+							<div class='form-group col-sm-1'>
+						    	{{ Form::label('author_done', 'Done') }}
+							    {{ Form::checkbox('author_done', 1, false, ['class' => 'form-control author_done']) }}
+							</div>
+						@endif
+					 
+						@if (Auth::user()->isAdmin())
+							<div class='form-group col-sm-9 col-sm-offset-1'>
+						 		{{ Form::label('admin_comment', 'Admin Comments') }}	  
+						    	{{ Form::textarea('admin_comments', null, ['class' => 'form-control comment_textarea admin_comments', 'size' => '100x2']) }}
+						    </div>
+						    
+						    <div class='form-group col-sm-1'>
+					    		{{ Form::submit('Clear', ['class' => 'btn btn-warning comment_clear']) }}
+						    </div>
+					    @else
+					    	@if ($glossed_text->admin_comments)
+					    		<!-- Only show admin comments to authors if they exist -->
+							    <div class='form-group col-sm-9 col-sm-offset-1'>
+							        {{ Form::label('admin_comment', 'Admin Comments') }}	
+							    	{{ Form::hidden('admin_comments', null, ['class' => 'form-control']) }}
+							    	<div class="well" style="white-space: pre-wrap" >{{$glossed_text->admin_comments}}</div>
+							    </div>
+							@endif
+						@endif
+					</div>
 			    
 			    {{ Form::close() }}
 			    
@@ -1504,6 +1543,10 @@
 				        <div id ="glossed_text_error" class="alert-danger errors"></div>
 				    </div>	     
 				    
+				    <div class='form-group col-sm-1 comment_button'>
+						<i class="fa fa-comment-o"></i>
+					</div>
+				    
 				    <div class='form-group col-sm-1 bottom_button'> 
 				    	{{ Form::submit('Add', ['class' => 'btn btn-success']) }}
 				    </div>
@@ -1512,6 +1555,34 @@
 		            	{{ Form::button('Delete', ['class' => 'btn btn-danger delete_glossed_text', 'style' => 'display: none'])}}    
 					</div>
 			    </div>
+			    
+			    <div class="row comment_rows">
+			    	@if (!Auth::user()->isAdmin())
+			    		<!-- only show if you are not an admin, or if they were filled in. -->
+					    <div class='form-group col-sm-9 col-sm-offset-1'>
+					    	{{ Form::label('author_comments', 'Author Comments') }}
+						    {{ Form::textarea('author_comments', null, ['class' => 'form-control comment_textarea author_comments', 'size' => '100x2']) }}
+						</div>
+						
+						<div class='form-group col-sm-1'>
+					    	{{ Form::label('author_done', 'Done') }}
+						    {{ Form::checkbox('author_done', 1, false, ['class' => 'form-control author_done']) }}
+						</div>
+					@endif
+				 
+					@if (Auth::user()->isAdmin())
+						<div class='form-group col-sm-9 col-sm-offset-1'>
+					 		{{ Form::label('admin_comment', 'Admin Comments') }}	  
+					    	{{ Form::textarea('admin_comments', null, ['class' => 'form-control comment_textarea admin_comments', 'size' => '100x2']) }}
+					    </div>
+					    
+					    <div class='form-group col-sm-1'>
+				    		{{ Form::submit('Clear', ['class' => 'btn btn-warning comment_clear']) }}
+					    </div>
+					@endif
+				</div>
+			    
+			    
 		    
 		    {{ Form::close() }}
 		    
@@ -1666,7 +1737,47 @@
 					        <div id ="title_error" class="alert-danger errors"></div>
 					    </div>
 					    
+						<div class='form-group col-sm-1 comment_button'>
+					    	<i class="fa fa-comment-o"></i>
+					    </div>
+				    
+				   </div>
+				    
+				    <div class="row comment_rows">
+				    	@if (!Auth::user()->isAdmin() || $grammar->author_comments || $grammar->author_done)
+				    		<!-- only show if you are not an admin, or if they were filled in. -->
+						    <div class='form-group col-sm-9 col-sm-offset-1'>
+						    	{{ Form::label('author_comments', 'Author Comments') }}
+							    {{ Form::textarea('author_comments', null, ['class' => 'form-control comment_textarea author_comments', 'size' => '100x2']) }}
+							</div>
+							
+							<div class='form-group col-sm-1'>
+						    	{{ Form::label('author_done', 'Done') }}
+							    {{ Form::checkbox('author_done', 1, false, ['class' => 'form-control author_done']) }}
+							</div>
+						@endif
+					 
+						@if (Auth::user()->isAdmin())
+							<div class='form-group col-sm-9 col-sm-offset-1'>
+						 		{{ Form::label('admin_comment', 'Admin Comments') }}	  
+						    	{{ Form::textarea('admin_comments', null, ['class' => 'form-control comment_textarea admin_comments', 'size' => '100x2']) }}
+						    </div>
+						    
+						    <div class='form-group col-sm-1'>
+					    		{{ Form::submit('Clear', ['class' => 'btn btn-warning comment_clear']) }}
+						    </div>
+					    @else
+					    	@if ($grammar->admin_comments)
+					    		<!-- Only show admin comments to authors if they exist -->
+							    <div class='form-group col-sm-9 col-sm-offset-1'>
+							        {{ Form::label('admin_comment', 'Admin Comments') }}	
+							    	{{ Form::hidden('admin_comments', null, ['class' => 'form-control']) }}
+							    	<div class="well" style="white-space: pre-wrap" >{{$grammar->admin_comments}}</div>
+							    </div>
+							@endif
+						@endif
 					</div>
+					
 					
 					<div class='row'>    
 					    <div class='form-group col-sm-10 col-sm-offset-1'>
@@ -1726,8 +1837,38 @@
 				        <div id ="title_error" class="alert-danger errors"></div>
 				    </div>
 				    
+					<div class='form-group col-sm-1 comment_button'>
+				    	<i class="fa fa-comment-o"></i>
+				    </div>
+			    
+			   </div>
+			    
+			    <div class="row comment_rows">
+			    	@if (!Auth::user()->isAdmin())
+			    		<!-- only show if you are not an admin, or if they were filled in. -->
+					    <div class='form-group col-sm-9 col-sm-offset-1'>
+					    	{{ Form::label('author_comments', 'Author Comments') }}
+						    {{ Form::textarea('author_comments', null, ['class' => 'form-control comment_textarea author_comments', 'size' => '100x2']) }}
+						</div>
+						
+						<div class='form-group col-sm-1'>
+					    	{{ Form::label('author_done', 'Done') }}
+						    {{ Form::checkbox('author_done', 1, false, ['class' => 'form-control author_done']) }}
+						</div>
+					@endif
+				 
+					@if (Auth::user()->isAdmin())
+						<div class='form-group col-sm-9 col-sm-offset-1'>
+					 		{{ Form::label('admin_comment', 'Admin Comments') }}	  
+					    	{{ Form::textarea('admin_comments', null, ['class' => 'form-control comment_textarea admin_comments', 'size' => '100x2']) }}
+					    </div>
+					    
+					    <div class='form-group col-sm-1'>
+				    		{{ Form::submit('Clear', ['class' => 'btn btn-warning comment_clear']) }}
+					    </div>
+					@endif
 				</div>
-				
+			
 				<div class='row'>
 				    
 				    <div class='form-group col-sm-10 col-sm-offset-1'>

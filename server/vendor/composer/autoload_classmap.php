@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'AddAuthorDone' => $baseDir . '/app/database/migrations/2015_12_16_180549_add_author_done.php',
+    'AddCommentFieldsEverywhereElse' => $baseDir . '/app/database/migrations/2015_12_18_124852_add_comment_fields_everywhere_else.php',
     'AddCommentsToGloss' => $baseDir . '/app/database/migrations/2015_02_23_114336_add_comments_to_gloss.php',
     'AddCommentsToLesson' => $baseDir . '/app/database/migrations/2015_12_11_105609_add_comments_to_lesson.php',
     'AddLangAndClassTagsToLanguage' => $baseDir . '/app/database/migrations/2015_03_05_200342_add_lang_and_class_tags_to_language.php',

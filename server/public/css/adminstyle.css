@@ -79,6 +79,12 @@ textarea {
 
 .comment_rows {
     display:none;
+    border: 1px groove #4C4646;
+    background: #D1D0CE;
+    padding-top: 5px;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-bottom: 5px;
 }
 
 .comment_textarea{

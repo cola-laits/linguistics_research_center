@@ -171,6 +171,10 @@ class EieolLessonController extends BaseController {
 		$lesson = EieolLesson::find($id);
 			
 		$lesson->lesson_translation = Normalizer::normalize(Input::get('lesson_translation'), Normalizer::FORM_C );
+		$lesson->translation_author_comments = Normalizer::normalize(Input::get('translation_author_comments'), Normalizer::FORM_C );
+		$lesson->translation_author_done = Input::get('translation_author_done');
+		$lesson->translation_admin_comments = Normalizer::normalize(Input::get('translation_admin_comments'), Normalizer::FORM_C );
+		$lesson->updated_by = Auth::user()->username;
 		$lesson->updated_by = Auth::user()->username;
 
 		$lesson->save();

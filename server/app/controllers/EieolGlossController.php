@@ -158,6 +158,9 @@ class EieolGlossController extends BaseController {
 				$gloss->language_id = Input::get('language_id');
 				$gloss->comments = Normalizer::normalize(Input::get('comments'), Normalizer::FORM_C );
 				$gloss->underlying_form = Normalizer::normalize(Input::get('underlying_form'), Normalizer::FORM_C );
+				$gloss->author_comments = Normalizer::normalize(Input::get('author_comments'), Normalizer::FORM_C );
+				$gloss->author_done = Input::get('author_done');
+				$gloss->admin_comments = Normalizer::normalize(Input::get('admin_comments'), Normalizer::FORM_C );
 				$gloss->created_by = Auth::user()->username;
 				$gloss->updated_by = Auth::user()->username;
 		
@@ -286,6 +289,10 @@ class EieolGlossController extends BaseController {
 				$gloss->contextual_gloss = Normalizer::normalize(Input::get('contextual_gloss'), Normalizer::FORM_C );
 				$gloss->comments = Normalizer::normalize(Input::get('comments'), Normalizer::FORM_C );
 				$gloss->underlying_form = Normalizer::normalize(Input::get('underlying_form'), Normalizer::FORM_C );
+				$gloss->author_comments = Normalizer::normalize(Input::get('author_comments'), Normalizer::FORM_C );
+				$gloss->author_done = Input::get('author_done');
+				$gloss->admin_comments = Normalizer::normalize(Input::get('admin_comments'), Normalizer::FORM_C );
+				
 				$gloss->updated_by = Auth::user()->username;
 				
 				$gloss->save();

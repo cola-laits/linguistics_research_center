@@ -29,6 +29,9 @@ class EieolGlossedTextController extends BaseController {
 			$glossed_text->order = Input::get('order');
 			$glossed_text->glossed_text = Normalizer::normalize(Input::get('glossed_text'), Normalizer::FORM_C );
 			$glossed_text->lesson_id = Input::get('lesson_id');
+			$glossed_text->author_comments = Normalizer::normalize(Input::get('author_comments'), Normalizer::FORM_C );
+			$glossed_text->author_done = Input::get('author_done');
+			$glossed_text->admin_comments = Normalizer::normalize(Input::get('admin_comments'), Normalizer::FORM_C );
 			$glossed_text->created_by = Auth::user()->username;
 			$glossed_text->updated_by = Auth::user()->username;
 				
@@ -69,6 +72,9 @@ class EieolGlossedTextController extends BaseController {
 			
  			$glossed_text->order = Input::get('order');
 			$glossed_text->glossed_text = Normalizer::normalize(Input::get('glossed_text'), Normalizer::FORM_C );
+			$glossed_text->author_comments = Normalizer::normalize(Input::get('author_comments'), Normalizer::FORM_C );
+			$glossed_text->author_done = Input::get('author_done');
+			$glossed_text->admin_comments = Normalizer::normalize(Input::get('admin_comments'), Normalizer::FORM_C );
  			$glossed_text->updated_by = Auth::user()->username;
 			
  			$glossed_text->save();

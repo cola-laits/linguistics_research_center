@@ -33,6 +33,9 @@ class EieolGrammarController extends BaseController {
 			$grammar->section_number = Input::get('section_number');
 			$grammar->grammar_text = Normalizer::normalize(Input::get('grammar_text'), Normalizer::FORM_C );
 			$grammar->lesson_id = Input::get('lesson_id');
+			$grammar->author_comments = Normalizer::normalize(Input::get('author_comments'), Normalizer::FORM_C );
+			$grammar->author_done = Input::get('author_done');
+			$grammar->admin_comments = Normalizer::normalize(Input::get('admin_comments'), Normalizer::FORM_C );
 			$grammar->created_by = Auth::user()->username;
 			$grammar->updated_by = Auth::user()->username;
 				
@@ -77,6 +80,9 @@ class EieolGrammarController extends BaseController {
  			$grammar->order = Input::get('order');
  			$grammar->section_number = Input::get('section_number');
 			$grammar->grammar_text = Normalizer::normalize(Input::get('grammar_text'), Normalizer::FORM_C );
+			$grammar->author_comments = Normalizer::normalize(Input::get('author_comments'), Normalizer::FORM_C );
+			$grammar->author_done = Input::get('author_done');
+			$grammar->admin_comments = Normalizer::normalize(Input::get('admin_comments'), Normalizer::FORM_C );
  			$grammar->updated_by = Auth::user()->username;
 			
  			$grammar->save();
