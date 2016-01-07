@@ -1189,6 +1189,7 @@ return array(
     'Psr\\Log\\LoggerTrait' => $vendorDir . '/psr/log/Psr/Log/LoggerTrait.php',
     'Psr\\Log\\NullLogger' => $vendorDir . '/psr/log/Psr/Log/NullLogger.php',
     'PublicController' => $baseDir . '/app/controllers/PublicController.php',
+    'RemoveNullablesAnalPos' => $baseDir . '/app/database/migrations/2016_01_07_160614_remove_nullables_anal_pos.php',
     'RenamePartOfSpeech' => $baseDir . '/app/database/migrations/2015_03_12_185648_rename_part_of_speech.php',
     'SessionHandlerInterface' => $vendorDir . '/symfony/http-foundation/Symfony/Component/HttpFoundation/Resources/stubs/SessionHandlerInterface.php',
     'Stack\\Builder' => $vendorDir . '/stack/builder/src/Stack/Builder.php',
