@@ -33,6 +33,80 @@
 		});
 	} //set_comment_button_color
 
+
+	//highlight forms if they are changed
+	function highlight_form(input){
+		var my_form = $(input).closest('form');
+		my_form.css("background-color", "#EBAD99");
+		if (my_form.attr('id') == 'edit_gloss_form' || 
+			my_form.attr('id') == 'new_head_word_form' ||
+			my_form.attr('id') == 'edit_head_word_form' ||
+			my_form.attr('id') == 'new_gloss_form' ) {
+			//ignore popup's when it comes to setting dirty attribute
+		} else {
+			my_form.attr("dirty", "dirty");
+		}		
+	} //highlight form
+
+
+	//listen to form inputs for change.  If you are using ckeditor, you have to do that with its on change function
+	function listen_to_forms() {
+        var ctrlDown = false;
+	    var ctrlKey = 17, aKey = 65, cKey = 67;
+	
+	    $(document).keydown(function(e)
+	    {
+	        if (e.keyCode == ctrlKey) ctrlDown = true;
+	    }).keyup(function(e)
+	    {
+	        if (e.keyCode == ctrlKey) ctrlDown = false;
+	    });
+	
+        $(':input').keyup(function (e) { //listen for typing
+            ignore_keys = false;
+            if(e.keyCode == 9 ||
+               e.keyCode == 16 || 
+               e.keyCode == 17 ||
+               e.keyCode == 18 || 
+               e.keyCode == 20 || 
+               e.keyCode == 27 || 
+               e.keyCode == 45 || 
+               e.keyCode == 36 || 
+               e.keyCode == 35 ||
+               e.keyCode == 33 || 
+               e.keyCode == 34 ||
+               e.keyCode == 37 || 
+               e.keyCode == 38 || 
+               e.keyCode == 39 || 
+               e.keyCode == 40 || 
+               e.keyCode == 91 || 
+               e.keyCode == 92){ //ignore tab, shift, ctrl, alt, caplock, escape, insert, home, end, page up, page down,arrows,windows keys                
+                ignore_keys = true;
+            }
+
+            if (ctrlDown && (e.keyCode == aKey || e.keyCode == cKey)){ //ignore select all and copy
+                ignore_keys = true;
+            }
+
+            if (!ignore_keys) {
+            	highlight_form(this); 
+            }
+        });
+    	$(':input').change(function () { //listen for clicking
+            highlight_form(this); 
+        });
+	} //listen_to_forms
+
+	function listen_for_clear_comments(){
+		$('.comment_clear').click(function() {
+			  $(this).closest('form').find(".author_comments").val('');
+			  $(this).closest('form').find(".admin_comments").val('');
+			  $(this).closest('form').find(".author_done").removeAttr('checked');
+			  highlight_form($(this).closest('form'));
+			  return false;
+		});
+	} //listen_for_clear_comments
+
 	function ajax_submit(myform) { 
 		//generic ajax function.   This will prevent the regular submission and send it by ajax instead.
 
@@ -88,6 +162,15 @@
 	  		      	if(json.hasOwnProperty('gloss_id')) {
 						$(".gloss_" + json['gloss_id']).each(function() {
 							$(this).html(json['gloss_display']);
+
+							if (json['author_done']) {
+								$(this).next('.gloss_comment_indicator').html('<div style="color:green"><i class="fa fa-comments"></i></div>');
+							} else if (json['author_comments'] || json['admin_comments']) {
+								$(this).next('.gloss_comment_indicator').html('<div style="color:red"><i class="fa fa-comments"></i></div>');
+							} else {
+								$(this).next('.gloss_comment_indicator').html('');
+							}								
+
 						});
 	  		      	}
 	  		    } //json success
@@ -246,21 +329,6 @@
 		$("#attach_head_word_modal").modal('hide'); 
 	} //attach head word
 
-	//highlight forms if they are changed
-	function highlight_form(input){
-		var my_form = $(input).closest('form');
-		my_form.css("background-color", "#EBAD99");
-		if (my_form.attr('id') == 'edit_gloss_form' || 
-			my_form.attr('id') == 'new_head_word_form' ||
-			my_form.attr('id') == 'edit_head_word_form' ||
-			my_form.attr('id') == 'new_gloss_form' ) {
-			//ignore popup's when it comes to setting dirty attribute
-		} else {
-			my_form.attr("dirty", "dirty");
-		}		
-	} //highlight form
-
-
 	//ajax search for glosses
 	function searchGlosses(gloss) {
 		if (gloss.length==0) { //if the search is blank, reset the result box
@@ -392,52 +460,8 @@
 		}); //analysis autocomplete
 		
 		       
-        //highlight form if inputs change.  If you are using ckeditor, you have to do that with its on change function
+        listen_to_forms();
         
-        var ctrlDown = false;
-	    var ctrlKey = 17, aKey = 65, cKey = 67;
-	
-	    $(document).keydown(function(e)
-	    {
-	        if (e.keyCode == ctrlKey) ctrlDown = true;
-	    }).keyup(function(e)
-	    {
-	        if (e.keyCode == ctrlKey) ctrlDown = false;
-	    });
-	
-        $(':input').keyup(function (e) { //listen for typing
-            ignore_keys = false;
-            if(e.keyCode == 9 ||
-               e.keyCode == 16 || 
-               e.keyCode == 17 ||
-               e.keyCode == 18 || 
-               e.keyCode == 20 || 
-               e.keyCode == 27 || 
-               e.keyCode == 45 || 
-               e.keyCode == 36 || 
-               e.keyCode == 35 ||
-               e.keyCode == 33 || 
-               e.keyCode == 34 ||
-               e.keyCode == 37 || 
-               e.keyCode == 38 || 
-               e.keyCode == 39 || 
-               e.keyCode == 40 || 
-               e.keyCode == 91 || 
-               e.keyCode == 92){ //ignore tab, shift, ctrl, alt, caplock, escape, insert, home, end, page up, page down,arrows,windows keys                
-                ignore_keys = true;
-            }
-
-            if (ctrlDown && (e.keyCode == aKey || e.keyCode == cKey)){ //ignore select all and copy
-                ignore_keys = true;
-            }
-
-            if (!ignore_keys) {
-            	highlight_form(this); 
-            }
-        });
-    	$(':input').change(function () { //listen for clicking
-            highlight_form(this); 
-        });
 
     	//bind all ajax forms to our ajax function
     	$('.ajax_form').submit(function(){
@@ -515,15 +539,66 @@
 		        dataType: "json",
 		        
 		        success : function(data){
+			        //clear old values out
 		    		$('#edit_gloss_form')[0].reset();
 		    		//for some reason the reset doesn't reset all the fields
 		    		for (i=1; i<=6; i++) {
 				    	$('#element_' + i + '_head_word_id', '#edit_gloss_form').val('');
 				    }  
-				    
+
+		    		//deal with author and admin comments - have to do this first so the loading values will work below
+				    @if (Auth::user()->isAdmin())
+				    	isAdmin = true;
+				    @else
+				    	isAdmin = false;
+				    @endif
+
+				    //clear comment divs out
+				    $("#gloss_author_comments").html('');
+				    $("#gloss_admin_comments").html('');
+
+				    if (!isAdmin || data['author_comments'] || data['author_done']) {
+				    	//only show if you are not an admin, or if they were filled in.
+				    	$("#gloss_author_comments").html('<div class="form-group col-sm-9 col-sm-offset-1">\
+						    {{ Form::label("author_comments", "Author Comments") }}\
+						    {{ Form::textarea("author_comments", null, ["class" => "form-control comment_textarea author_comments", "size" => "100x2"]) }}\
+						</div>\
+						<div class="form-group col-sm-1">\
+						    {{ Form::label("author_done", "Done") }}\
+						    {{ Form::checkbox("author_done", 1, false, ["class" => "form-control author_done", "id" => "gloss_author_done"]) }}\
+						</div>');
+				    }
+
+				    if (isAdmin) {
+				    	$("#gloss_admin_comments").html('<div class="form-group col-sm-9 col-sm-offset-1">\
+							    {{ Form::label("admin_comment", "Admin Comments") }}\
+					    		{{ Form::textarea("admin_comments", null, ["class" => "form-control comment_textarea admin_comments", "size" => "100x2"]) }}\
+							</div>\
+							<div class="form-group col-sm-1">\
+						        {{ Form::submit("Clear", ["class" => "btn btn-warning comment_clear"]) }}\
+							</div>');
+				    } else {
+						if (data['admin_comments']) {
+							//Only show admin comments to authors if they exist
+							$("#gloss_admin_comments").html('<div class="form-group col-sm-9 col-sm-offset-1">\
+								{{ Form::label("admin_comment", "Admin Comments") }}\
+								{{ Form::hidden("admin_comments", null, ["class" => "form-control"]) }}\
+								<div class="well" style="white-space: pre-wrap" >' + data['admin_comments'] + '</div>\
+							</div>');
+						}
+				    }
+
+				    //load form
 			        $.each(data, function(key, value){
-					    $('[name='+key+']', '#edit_gloss_form').val(value);
+			        	if (key == 'author_done') { //checkboxes behave differently
+							if (value == 1) {
+								$("#gloss_author_done").prop('checked', true);
+							}
+					    } else {
+						    $('[name='+key+']', '#edit_gloss_form').val(value);
+					    }
 				    });
+				    
 				    for (i=1; i<=6; i++) {
 				    	$('#element_' + i + '_head_word_display', '#edit_gloss_form').text(''); //we only get ones that already exist, so reset it first
 				    	$('#element_' + i + '_head_word_display', '#edit_gloss_form').html(data['element_' + i + '_head_word_display']);
@@ -545,6 +620,11 @@
 				    $('#edit_gloss_form').removeAttr("dirty");
 				    setTimeout(function(){$("#reminder").dialog( "open" );},1500000); //reset warning for 25 minutes
 				    $("#surface_form", "#edit_gloss_form").focus(); //put cursor in first field
+
+				    set_comment_button_color();
+				    listen_to_forms();
+				    listen_for_clear_comments();
+				    $("#gloss_comments").hide(); //close comments box in case they left it open on previous editing
 
 		        }, //success
 		        
@@ -824,14 +904,7 @@
 			  return false;
 		});
 
-		//clear comments
-		$('.comment_clear').click(function() {
-			  $(this).closest('form').find(".author_comments").val('');
-			  $(this).closest('form').find(".admin_comments").val('');
-			  $(this).closest('form').find(".author_done").removeAttr('checked');
-			  highlight_form($(this).closest('form'));
-			  return false;
-		});
+		listen_for_clear_comments();
 
 		// call function to mark if comments are filled in and change button.
 		set_comment_button_color();
@@ -1027,6 +1100,11 @@
 						    </div>	     
 						    
 						    <div class='form-group col-sm-1 bottom_button'> 
+						    	<div class='form-group col-sm-1 comment_button'>
+									<i class="fa fa-comment-o"></i>
+								</div>
+								&nbsp;&nbsp;
+						
 						    	{{ Form::submit('Edit', ['class' => 'btn btn-primary']) }}
 						    </div>
 						@else
@@ -1051,6 +1129,11 @@
 					        {{ Form::text('underlying_form', null, ['placeholder' => 'Underlying Form', 'class' => 'form-control', 'id' => 'underlying_form']) }}
 					        <div id ="underlying_form_gloss_error" class="alert-danger errors"></div>
 						</div>
+					</div>
+					
+					<div class="row comment_rows" id="gloss_comments">
+						<div id="gloss_author_comments"></div>
+						<div id="gloss_admin_comments"></div>
 					</div>
 				     
 				{{ Form::close() }}
@@ -1478,6 +1561,14 @@
 						    	{{$gloss->getDisplayGloss()}} 
 			    			</div>   
 			    			
+			    			<div class='col-sm-1 bottom_button gloss_comment_indicator'>
+			    				@if ($gloss->author_done)
+			    					<div style="color:green"><i class="fa fa-comments"></i></div>
+			    				@elseif ($gloss->author_comments || $gloss->admin_comments)
+			    					<div style="color:red"><i class="fa fa-comments"></i></div>
+			    				@endif
+			    			</div>
+			    			
 			    			<div class='col-sm-1 bottom_button'>
 			    				{{ Form::open(['class' => 'edit_gloss', 
 			    							   'id' => 'edit_gloss_form_' . $gloss->pivot->id]) }} 
@@ -1643,6 +1734,9 @@
 					</div>
 				    	
 				    <div class='col-sm-4 gloss_text'>
+		   			</div>
+		   			
+		   			<div class='col-sm-1 bottom_button gloss_comment_indicator'>
 		   			</div>   
 		   			
 		   			<div class='col-sm-1 bottom_button'>
@@ -1694,9 +1788,50 @@
 		        {{ Form::label('lesson_translation', 'Lesson Translation') }}
 		        {{ Form::textarea('lesson_translation', null, ['placeholder' => 'Lesson Translation', 'class' => 'form-control', 'size' => '100x10']) }}
 		        <div id ="lesson_translation_error" class="alert-danger errors"></div>
-		        {{ Form::submit('Edit Translation', ['class' => 'btn btn-primary']) }}
 		    </div>
-		    <br/>
+		    <div class='form-group col-sm-1 comment_button'>
+				<i class="fa fa-comment-o"></i>
+			</div>
+	    </div>
+	    <div class="row comment_rows">
+	    	@if (!Auth::user()->isAdmin() || $lesson->translation_author_comments || $lesson->translation_author_done)
+	    		<!-- only show if you are not an admin, or if they were filled in. -->
+			    <div class='form-group col-sm-9 col-sm-offset-1'>
+			    	{{ Form::label('translation_author_comments', 'Author Comments') }}
+				    {{ Form::textarea('translation_author_comments', null, ['class' => 'form-control comment_textarea author_comments', 'size' => '100x2']) }}
+				</div>
+				
+				<div class='form-group col-sm-1'>
+			    	{{ Form::label('translation_author_done', 'Done') }}
+				    {{ Form::checkbox('translation_author_done', 1, false, ['class' => 'form-control author_done']) }}
+				</div>
+			@endif
+		 
+			@if (Auth::user()->isAdmin())
+				<div class='form-group col-sm-9 col-sm-offset-1'>
+			 		{{ Form::label('translation_admin_comment', 'Admin Comments') }}	  
+			    	{{ Form::textarea('translation_admin_comments', null, ['class' => 'form-control comment_textarea admin_comments', 'size' => '100x2']) }}
+			    </div>
+			    
+			    <div class='form-group col-sm-1'>
+		    		{{ Form::submit('Clear', ['class' => 'btn btn-warning comment_clear']) }}
+			    </div>
+		    @else
+		    	@if ($lesson->translation_admin_comments)
+		    		<!-- Only show admin comments to authors if they exist -->
+				    <div class='form-group col-sm-9 col-sm-offset-1'>
+				        {{ Form::label('translation_admin_comment', 'Admin Comments') }}	
+				    	{{ Form::hidden('translation_admin_comments', null, ['class' => 'form-control']) }}
+				    	<div class="well" style="white-space: pre-wrap" >{{$lesson->translation_admin_comments}}</div>
+				    </div>
+				@endif
+			@endif
+		</div>
+					
+	    <div class='row'>
+	    	<div class='form-group col-sm-1 col-sm-offset-1'>
+	    		{{ Form::submit('Edit Translation', ['class' => 'btn btn-primary']) }}
+	    	</div>
 	    </div>
 	    
 	{{ Form::close() }}

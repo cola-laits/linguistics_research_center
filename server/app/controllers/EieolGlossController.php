@@ -222,7 +222,10 @@ class EieolGlossController extends BaseController {
 					'added' => true,
 					'gloss_id' => $gloss->id,
 					'gloss_display' => $gloss->getDisplayGloss(),
-					'message' => 'Gloss was successfully added.'
+					'message' => 'Gloss was successfully added.',
+					'author_comments' => $gloss->author_comments,
+					'author_done' => $gloss->author_done,
+					'admin_comments' => $gloss->admin_comments
 			));
 	
 		}
@@ -363,6 +366,9 @@ class EieolGlossController extends BaseController {
 					'message' => 'Gloss was successfully updated.',
 					'gloss_id' => $gloss->id,
 					'gloss_display' => '<br>' . $gloss->getDisplayGloss(),
+					'author_comments' => $gloss->author_comments,
+					'author_done' => $gloss->author_done,
+					'admin_comments' => $gloss->admin_comments
 			));
 	
 		}

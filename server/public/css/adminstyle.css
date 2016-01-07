@@ -90,3 +90,8 @@ textarea {
 .comment_textarea{
 	background-color: #f0f0f4;
 }
+
+.modal-lg 
+{
+    width: 1500px; 
+} 
