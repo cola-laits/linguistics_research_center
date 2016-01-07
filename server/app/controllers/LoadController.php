@@ -1098,7 +1098,6 @@ class LoadController extends BaseController {
 			}
 			
 			ob_flush();
-			flush();
 			
 		}
 		print '<hr/>done';
