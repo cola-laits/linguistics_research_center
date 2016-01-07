@@ -1097,7 +1097,7 @@ class LoadController extends BaseController {
 				$part_of_speech->save();
 			}
 			
-			ob_flush();
+			flush();
 			
 		}
 		print '<hr/>done';
