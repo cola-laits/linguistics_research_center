@@ -11,6 +11,10 @@ Route::get('eieol_master_gloss/{series_id}/{language_id}', 'PublicController@eie
 Route::get('eieol_base_form_dictionary/{series_id}/{language_id}', 'PublicController@eieol_base_form_dictionary');
 Route::get('eieol_english_meaning_index/{series_id}/{language_id}', 'PublicController@eieol_english_meaning_index');
 
+Route::get('eieol_text_list', 'PublicController@eieol_text_list');
+Route::get('eieol_text_toc/{series_id}', 'PublicController@eieol_text_toc');
+Route::get('eieol_text/{series_id}', 'PublicController@eieol_text');
+
 Route::get('lex', 'PublicController@lex');
 Route::get('lex_pokorny', 'PublicController@lex_pokorny');
 Route::get('lex_reflex/{etyma_id}', 'PublicController@lex_reflex');

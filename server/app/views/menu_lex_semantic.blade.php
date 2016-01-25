@@ -1,7 +1,7 @@
 <ul class="side-nav">
 	<li>
 		<label>
-			<img src="http://www.utexas.edu/cola/centers/lrc/images/dieboldsm.jpg" alt="A. Richard Diebold Center for Indo-European Language and Culture" border="2" />
+			<img src="images/dieboldsm.jpg" alt="A. Richard Diebold Center for Indo-European Language and Culture" border="2" />
 		</label>
 	</li>
 </ul>

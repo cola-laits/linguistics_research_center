@@ -275,6 +275,33 @@ class PublicController extends BaseController {
 	}
 	
 	
+	public function eieol_text_list()
+	{
+		$data = array();
+		$data['serieses'] = EieolSeries::where('published', '=', True)->get()->sortBy('order');
+		return View::make('eieol_text_list')->with($data);
+	}
+	
+	
+	public function eieol_text_toc($series_id)
+	{
+		$data = get_series_info($series_id);
+		return View::make('eieol_text_toc')->with($data);
+	}
+	
+	
+	public function eieol_text($series_id)
+	{
+		$data = get_series_info($series_id);	
+		$data['lesson'] = EieolLesson::with('language')
+			->with('glossed_texts.glosses.language','glossed_texts.glosses.elements.head_word.language')
+			->where('id', '=', Input::get('id'))
+			->firstOrFail();
+		
+		return View::make('eieol_text')->with($data);
+	}
+
+	
 	//--------------------------------------------Lexicon Functions-----------------------------------------------
 	
 	

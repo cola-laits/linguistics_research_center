@@ -50,8 +50,7 @@ as our project proceeds.</p>
 
 <h4>IE Reflex Pages</h4>
 
-<p>Each IE {{ HTML::link('lex_reflex/1', 'reflex page', array('title' => 'Reflex Data' )) }},
-shows a single PIE etymon with reflexes in IE languages/dialects. Each 
+<p>Each IE reflex page, shows a single PIE etymon with reflexes in IE languages/dialects. Each 
 reflex is annotated with: part-of-speech and/or other grammatical feature(s); a short gloss 
 which, especially for modern English reflexes, may be confined to the oldest sense; and one 
 or more source citation(s). Again there are three versions of each etymon-with-reflexes page; 
