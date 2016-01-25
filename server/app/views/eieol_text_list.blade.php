@@ -9,8 +9,12 @@
 <div class="skinny">
 
     <ul>
-    @foreach($serieses as $series)
-        <li>{{ HTML::link('eieol_text_toc/' . $series->id, $series->title, array('title' => $series->expanded_title )) }} </li>
+    @foreach($text_list as $text)
+    	@if ($text['language_id'] == 0) 
+    		<li><a href='/eieol_text_toc/{{$text['id']}}'>{{$text['title']}}</a></li>
+    	@else
+	        <li><a href='/eieol_text_toc/{{$text['id']}}?language_id={{$text['language_id']}}'>{{$text['title']}}</a></li>
+	    @endif
     @endforeach
   	</ul>
   	
@@ -20,7 +24,4 @@
 
 @section('menu')
 	@include('menu_menu')
-	@include('menu_series', array('data'=>'data'))
-	@include('menu_book_links')
-	@include('menu_more_info')
 @stop

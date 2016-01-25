@@ -278,14 +278,43 @@ class PublicController extends BaseController {
 	public function eieol_text_list()
 	{
 		$data = array();
-		$data['serieses'] = EieolSeries::where('published', '=', True)->get()->sortBy('order');
+		$data['text_list'] = array();
+		
+		$serieses = EieolSeries::where('published', '=', True)->get()->sortBy('order');		
+		foreach ($serieses as $series) {
+			$text = array();
+			$text['id'] = $series['id'];
+			
+			
+			$languages = get_series_info($series->id)['languages'];
+			if (count($languages) > 1){
+				foreach ($languages as $language) {
+					$text['title'] = $series['title'] . ' (' . $language['language'] . ')';
+					$text['language_id'] = $language['id'];
+					$data['text_list'][] = $text;
+				}
+			} else {
+				$text['title'] = $series['title'];
+				$text['language_id'] = 0;
+				$data['text_list'][] = $text;
+			}
+		}
 		return View::make('eieol_text_list')->with($data);
 	}
 	
 	
 	public function eieol_text_toc($series_id)
 	{
-		$data = get_series_info($series_id);
+		$data['series'] = EieolSeries::find($series_id);
+		if (Input::has('language_id')) {
+			$language = EieolLanguage::find(Input::get('language_id'));
+			$data['language_id'] = Input::get('language_id');
+			$data['series']['title'] .= ' (' . $language['language'] . ')';
+			$data['lessons'] = EieolLesson::with('grammars', 'language')->where('series_id', '=', $series_id)->where('language_id', '=', Input::get('language_id'))->get()->sortBy('order');
+		} else {
+			$data['language_id'] = 0;
+			$data['lessons'] = EieolLesson::with('grammars', 'language')->where('series_id', '=', $series_id)->get()->sortBy('order');
+		}
 		return View::make('eieol_text_toc')->with($data);
 	}
 	
@@ -293,6 +322,10 @@ class PublicController extends BaseController {
 	public function eieol_text($series_id)
 	{
 		$data = get_series_info($series_id);	
+		if (Input::get('language_id') != 0) {
+			$language = EieolLanguage::find(Input::get('language_id'));
+			$data['series']['title'] .= ' (' . $language['language'] . ')';
+		}
 		$data['lesson'] = EieolLesson::with('language')
 			->with('glossed_texts.glosses.language','glossed_texts.glosses.elements.head_word.language')
 			->where('id', '=', Input::get('id'))

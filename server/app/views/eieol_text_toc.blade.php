@@ -14,8 +14,10 @@
 
 <ol>
 @foreach ($lessons as $lesson)
-	@if ($lesson->order != 0)
-		<a href='/eieol_text/{{$series->id}}?id={{$lesson->id}}'><li>{{$lesson->title}}</li></a>
+	@if ($lesson->order == 0 || strstr($lesson->title, 'Bibliography') == true || strstr($lesson->title, 'Appendix') == true)
+	
+	@else
+		<a href='/eieol_text/{{$series->id}}?id={{$lesson->id}}&language_id={{$language_id}}'><li>{{$lesson->title}}</li></a>
 	@endif
 @endforeach
 </ol>
@@ -26,6 +28,4 @@
 
 @section('menu')
 	@include('menu_menu')
-	@include('menu_series', array('data'=>'data'))
-	@include('menu_resources', array('data'=>'data'))
 @stop
