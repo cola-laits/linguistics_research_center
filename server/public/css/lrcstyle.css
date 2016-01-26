@@ -184,3 +184,18 @@ a.clicked:focus {
 #donate-button > p > a:hover {
 	color: #71251e;
 }
+
+
+/* for pretty printing */
+@media print
+{
+  table { page-break-after:auto }
+  tr    { page-break-inside:avoid; page-break-after:auto }
+  td    { page-break-inside:avoid; page-break-after:auto }
+  thead { display:table-header-group }
+  tfoot { display:table-footer-group }
+  h1, h2, h3, h4, h5 { page-break-after: avoid }
+  .glossed_text { page-break-inside: avoid}
+  .boxey { page-break-inside: avoid}
+  .unbreakable { page-break-inside: avoid}
+}

@@ -88,12 +88,20 @@
 
 @if ($lesson->getLessonText() != '')
 	<h2>Lesson Text</h2>
-	<blockquote><span lang='{{$lesson->language->lang_attribute}}' class='{{$lesson->language->class_attribute}}'>{{$lesson->getLessonText()}}</span></blockquote>
+	<div class='unbreakable'>
+		<blockquote>
+			<span lang='{{$lesson->language->lang_attribute}}' class='{{$lesson->language->class_attribute}}'>
+				{{$lesson->getLessonText()}}
+			</span>
+		</blockquote>
+	</div>
 @endif
 	      
 @if ($lesson->lesson_translation != '')	        
 	<h2>Translation</h2>
-	{{$lesson->lesson_translation}}
+	<div class='unbreakable'>
+		{{$lesson->lesson_translation}}
+	</div>
 @endif
 
 @if (count($lesson->grammars) != 0)
