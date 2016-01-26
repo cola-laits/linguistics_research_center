@@ -39,11 +39,12 @@ or <i>lie</i>, represent multiple reflexes derived from different PIE etyma.</p>
 
 
 <div class="loading">
-    {{ HTML::image('images/ajax_loader_blue_512.gif', $alt="Loading", $attributes = array('border'=>0))  }}
+    {{ HTML::image('images/ajax_loader_blue_512.gif', $alt="Loading")  }}
 </div>
 
 <div class = "reflexTableContainer">
-	<table border='0' summary="{{$language->name}} reflex index" class="reflexTable">
+	<table class="reflexTable">
+		<caption>{{$language->name}} reflex index</caption>
 	  <thead>
 	  	<tr>
 	  		<th scope='col'>Reflex</th>
@@ -55,7 +56,6 @@ or <i>lie</i>, represent multiple reflexes derived from different PIE etyma.</p>
 	  @foreach($display_reflexes as $reflex)
 	  	<tr>
 	  		<td>
-	  			<a id='{{$reflex['id']}}' name='{{$reflex['id']}}'></a>
 	  			<span class='{{$reflex['class_attribute']}}' lang='{{$reflex['lang_attribute']}}'>{{$reflex['reflex']}}</span>
 	  		</td>
 	  		<td>

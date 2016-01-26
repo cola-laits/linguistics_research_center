@@ -66,13 +66,13 @@ the page content is in <section class="main-section">
                     		<ul class="no-bullet off-canvas-submenu">
                       			<li class="underline"><a href="http://www.utexas.edu/cola/">College of Liberal Arts</a> </li>
                       			<li><a href="http://www.utexas.edu/">University of Texas at Austin</a> </li>
-                      			<hr/>
+                      			<li><hr/></li>
                       			<li class="underline"><a href="http://www.utexas.edu/cola/offices/departments/">Departments</a> </li>
                       			<li class="underline"> <a href="http://www.utexas.edu/cola/research/graduate-studies/prospective">Graduate Resources</a> </li>
                       			<li class="underline"> <a href="http://www.utexas.edu/cola/student-affairs/Prospective/">Undergraduate Resources</a> </li>
                       			<li class="underline"> <a href="http://www.utexas.edu/cola/courses/">Courses</a> </li>
                      			<li> <a href="http://online-education.la.utexas.edu/">Online Courses</a> </li>
-                      			<hr/>
+                      			<li><hr/></li>
                       			<li class="underline"> <a href="http://www.utexas.edu/cola/office-of-the-dean/college-leadership.php">Dean's Office</a> </li>
                       			<li class="underline"> <a href="http://www.utexas.edu/cola/alumni-and-giving/">Alumni &amp; Giving </a> </li>
                       			<li> <a href="http://www.utexas.edu/cola/public-affairs/resources/faculty-by-department.php">Faculty by Department</a> </li>
@@ -94,7 +94,6 @@ the page content is in <section class="main-section">
                         
                         <!-- SYSTEM-REGION NAV-SM-UNIT -->
          				<li class="office"><h2><a href="{{$static_site}}">Linguistics Research Center</a></h2></li>
-						@yield('menu')
                         
                         <!-- END SYSTEM-REGION NAV-SM-UNIT -->
                 	</ul> <!-- close ul class="off-canvas-list" -->
@@ -102,6 +101,10 @@ the page content is in <section class="main-section">
                         
                     <!-- Office Contacts and Maps Pages -->
                     <!-- SYSTEM-REGION NAV-SM-OFFICE -->
+                    
+                    @yield('menu')
+                    
+                    
                     <ul class="side-nav">
                     	<li><label>Office</label></li>
                     	<li><a href="http://www.utexas.edu/cola/lrctr/staff.php">Staff List</a></li>
@@ -390,10 +393,10 @@ the page content is in <section class="main-section">
 </span> <link href="http://www.utexas.edu/cola/" itemprop="sameAs"/> <span itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress"><span itemprop="streetAddress">116 Inner Campus Dr Stop G6000</span><br/>
  <span itemprop="addressLocality">Austin</span>, <span itemprop="addressRegion">TX</span> <span itemprop="postalCode">78712</span></span></p>
 <p class="hide-for-medium-only address" itemscope="" itemtype="http://schema.org/CollegeOrUniversity">General Inquiries:<br class="show-for-small-only"/>
- <span description="General Inquiries" itemprop="telephone"><a data-gtm-event="nav-college-footer-phone-general" href="tel:512-471-4141">512-471-4141</a></span><br/>
+ <span itemprop="telephone"><a data-gtm-event="nav-college-footer-phone-general" href="tel:512-471-4141">512-471-4141</a></span><br/>
 <br/>
  Student Inquiries:<br class="show-for-small-only"/>
- <a data-gtm-event="nav-college-footer-phone-student" href="tel:512-471-4271"><span description="Student Inquiries" itemprop="telephone">512-471-4271</span></a></p>
+ <a data-gtm-event="nav-college-footer-phone-student" href="tel:512-471-4271"><span itemprop="telephone">512-471-4271</span></a></p>
 </div>
 </div>
 </div>

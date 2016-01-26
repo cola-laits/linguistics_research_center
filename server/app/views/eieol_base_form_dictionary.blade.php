@@ -27,21 +27,20 @@ curious about Indo-European etymology. Notice of potential error is always welco
 
 <div class="skinny" id="no_bullets">
 @foreach ($head_words as $head_word)
-	<dt>{{$head_word['display']}} --
-		@if($head_word['etyma'] != null) 
-			[<a href="/lex_pokorny/#P{{$head_word['etyma']['id']}}">Pokorny</a>
-			<span class='Unicode' lang='ine'>{{$head_word['etyma']['entry']}} </span> <strong>::</strong> {{$head_word['etyma']['gloss']}}] &nbsp; --
-		@endif
-	</dt>
-	<dd>
-		<ul>
-			@foreach ($head_word['glossed_text_gloss_ids'] as $id => $lesson)
-				<li>
-					<a href='/eieol_lesson/{{$series->id}}?id={{$lesson->id}}#glossed_text_gloss_{{$id}}'>{{$lesson->title}}</a>
-				</li>
-			@endforeach
-		</ul>
-	</dd>
+	{{$head_word['display']}} --
+	@if($head_word['etyma'] != null) 
+		[<a href="/lex_pokorny/#P{{$head_word['etyma']['id']}}">Pokorny</a>
+		<span class='Unicode' lang='ine'>{{$head_word['etyma']['entry']}} </span> <strong>::</strong> {{$head_word['etyma']['gloss']}}] &nbsp; --
+	@endif
+
+	<ul>
+		@foreach ($head_word['glossed_text_gloss_ids'] as $id => $lesson)
+			<li>
+				<a href='/eieol_lesson/{{$series->id}}?id={{$lesson->id}}#glossed_text_gloss_{{$id}}'>{{$lesson->title}}</a>
+			</li>
+		@endforeach
+	</ul>
+
 @endforeach
 </div>
 @stop

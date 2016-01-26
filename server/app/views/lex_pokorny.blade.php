@@ -26,7 +26,8 @@ See our
 page for links <i>from</i> reflexes (listed by IE language) <i>to</i> their PIE etyma.</p>
 
 
-<table summary='Pokorny head-word entries with page numbers, cross-references, and English glosses'>
+<table>
+	<caption>Pokorny head-word entries with page numbers, cross-references, and English glosses</caption>
   <thead>
   	<tr>
   		<th scope='col'>Page(s)</th>
@@ -39,8 +40,8 @@ page for links <i>from</i> reflexes (listed by IE language) <i>to</i> their PIE 
    
 	 @foreach($etymas as $etyma)
 	        <tr>
-				 <td><span id='P{{$etyma->id}}' name='P{{$etyma->id}}'>{{$etyma->page_number}}</span></td>
-				 <td><span class='Unicode' lang='ine'>{{$etyma->entry}}</span></td>
+				 <td><span id='P{{$etyma->id}}'>{{$etyma->page_number}}</span></td>
+				 <td class='Unicode' lang='ine'>{{$etyma->entry}}</td>
 				 <td>
 				 	
 				 	@if (count($etyma->reflex_count) != 0)

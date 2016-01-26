@@ -25,12 +25,12 @@ class EieolHeadWord extends Eloquent {
 	
 	public function getDisplayHeadWord()
 	{
-		//return headword and definition in the format <nobr>&lt;<span lang='cu' class='Cyrillic'>Ñ¥Ñ�-, Ñ¥Ñ�Ð¼ÑŒ, Ñ¥Ñ�Ð¸</span>&gt;</nobr> be
+		//return headword and definition in the format <span style="white-space: nowrap" lang='cu' class='Cyrillic'>&lt; Ñ¥Ñ�-, Ñ¥Ñ�Ð¼ÑŒ, Ñ¥Ñ�Ð¸&gt;</span> be
 		//trim <>
 		$word = $this->word;
 		$word = substr($word,1);
 		$word = substr($word,0,-1);
 		
-		return "<nobr>&lt;<span lang='" . $this->language->lang_attribute . "' class='" . $this->language->class_attribute . "'>" . $word .  "</span>&gt;</nobr> "  . $this->definition;
+		return "<span style='white-space: nowrap' lang='" . $this->language->lang_attribute . "' class='" . $this->language->class_attribute . "'> &lt;" . $word .  "&gt;</span> "  . $this->definition;
 	}
 }

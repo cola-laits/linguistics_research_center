@@ -15,7 +15,7 @@
 <h5>Lessons</h5>
 <ol start="0">
 @foreach ($lessons as $lesson)
-	<a href='/eieol_lesson/{{$series->id}}?id={{$lesson->id}}'><li>{{$lesson->title}}</li></a>
+	<li><a href='/eieol_lesson/{{$series->id}}?id={{$lesson->id}}'>{{$lesson->title}}</a></li>
 @endforeach
 </ol>
 

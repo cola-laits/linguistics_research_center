@@ -20,7 +20,7 @@ those of Buck: in our scheme they are brief but globally unique, parentheses may
 enclose clues (such as part of speech) to interpreting a label, and verb infinitives 
 are introduced by 'to'.</p>
 
-Links to PIE etyma will lead into a monolithic tabular listing of same, which opens in a new 
+<p>Links to PIE etyma will lead into a monolithic tabular listing of same, which opens in a new 
 window; if available, links are given to separate pages showing etyma and more modern 
 Indo-European <b>reflexes</b> thereof (i.e. derived words, glossed in English).</p>
 

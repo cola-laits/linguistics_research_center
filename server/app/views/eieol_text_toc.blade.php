@@ -17,7 +17,7 @@
 	@if ($lesson->order == 0 || strstr($lesson->title, 'Bibliography') == true || strstr($lesson->title, 'Appendix') == true)
 	
 	@else
-		<a href='/eieol_text/{{$series->id}}?id={{$lesson->id}}&language_id={{$language_id}}'><li>{{$lesson->title}}</li></a>
+		<li><a href='/eieol_text/{{$series->id}}?id={{$lesson->id}}&language_id={{$language_id}}'>{{$lesson->title}}</a></li>
 	@endif
 @endforeach
 </ol>

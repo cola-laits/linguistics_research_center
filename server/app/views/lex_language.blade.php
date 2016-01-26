@@ -52,32 +52,34 @@ conclusions should be drawn from this structural detail.</p>
 @foreach($language_families as $language_family)
     <li><strong>{{$language_family->name}}</strong></li>
     
-    <ul class="lang_list">
-	@foreach($language_family->language_sub_families as $language_sub_family)
-	    <li><div class="lang_sub_family">{{$language_sub_family->name}}</div></li>
-	    
-	    
+    <li>
 	    <ul class="lang_list">
-		@foreach($language_sub_family->languages as $language)
+		@foreach($language_family->language_sub_families as $language_sub_family)
+		    <li><div class="lang_sub_family">{{$language_sub_family->name}}</div></li>
+		    
 		    <li>
-		    	<div class="lang_entry_1">{{$language->abbr}}.</div> 
-			    @if ($language->reflex_count->first()['count'] > 10)
-			    	<div class="lang_entry_2">
-			    		{{ HTML::link('lex_lang_reflexes/' . $language->id, $language->name, array('title' => $language->name . ' reflex index')) }}
-			    	</div>
-			    @else
-			    	<div class="lang_entry_2">{{$language->name}}</div>
-			    @endif 
-			    <div class="lang_entry_3">{{$language->aka}}</div>
+			    <ul class="lang_list">
+				@foreach($language_sub_family->languages as $language)
+				    <li>
+				    	<div class="lang_entry_1">{{$language->abbr}}.</div> 
+					    @if ($language->reflex_count->first()['count'] > 10)
+					    	<div class="lang_entry_2">
+					    		{{ HTML::link('lex_lang_reflexes/' . $language->id, $language->name, array('title' => $language->name . ' reflex index')) }}
+					    	</div>
+					    @else
+					    	<div class="lang_entry_2">{{$language->name}}</div>
+					    @endif 
+					    <div class="lang_entry_3">{{$language->aka}}</div>
+				    </li>
+				@endforeach
+				</ul>
 		    </li>
+		    
 		@endforeach
 		</ul>
-	    
-	    
-	@endforeach
-	</ul>
+	</li>
     
-    <hr/>
+    <li><hr/></li>
 @endforeach
 </ul>
 </div>

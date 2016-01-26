@@ -34,16 +34,14 @@ index; unfortunately this may result in some words, in some contexts, being unfa
 
 <div class="skinny" id="no_bullets">
 @foreach ($keywords as $keyword)
-	<dt><strong>{{$keyword['keyword']}}</strong> : {{$keyword['head_word']}} --</dt>
-	<dd>
-		<ul>
-			@foreach ($keyword['glossed_text_gloss_ids'] as $id => $lesson)
-				<li>
-					<a href='/eieol_lesson/{{$series->id}}?id={{$lesson->id}}#glossed_text_gloss_{{$id}}'>{{$lesson->title}}</a>
-				</li>
-			@endforeach
-		</ul>
-	</dd>
+	<strong>{{$keyword['keyword']}}</strong> : {{$keyword['head_word']}} --
+	<ul>
+		@foreach ($keyword['glossed_text_gloss_ids'] as $id => $lesson)
+			<li>
+				<a href='/eieol_lesson/{{$series->id}}?id={{$lesson->id}}#glossed_text_gloss_{{$id}}'>{{$lesson->title}}</a>
+			</li>
+		@endforeach
+	</ul>
 @endforeach
 </div>
 @stop
