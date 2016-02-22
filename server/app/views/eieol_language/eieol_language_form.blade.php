@@ -66,8 +66,11 @@
         	This should be a comma separated list of characters in the order the Gloss and Dictionary should be sorter.<br/>
         	Do not use unicode code points, just paste in unicode characters.<br/>
         	Example: A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,π,q,r,s,t,u,v,w,x,y,z<br/>
-        	If character aren't separated by a comma, they are considered equal. In the next example, p,P and π are considered the same.<br/>
-        	Example: aAÄ,bB,cC,dD,eE,fF,gG,hH,iI,Jj,Kk,Ll,Mm,Nn,Oo,Ppπ,Qq,Rr,Ss,Tt,Uu,Vv,Ww,Xx,Yy,Zz
+        	If two characters should be considered equal, place an equal sign between them.<br/>
+        	In the next example, "a" and "A" are considered the same, "b" and "B" are considered the same, etc.  
+        	Also "p","P" and "π" are considered the same.  
+        	Further, "L", "l" and "ll" are the same.  In other words, "ll" is treated as a single character.<br/>
+        	Example: a=A,b=B,c=C,d=D,e=E,f=F,g=G,h=H,i=I,J=j,K=k,L=l=ll,M=m,N=n,O=o,P=p=π,Q=q,R=r,S=s,T=t,U=u,V=v,W=w,X=x,Y=y,Z=z
         </div>
     </div>
  

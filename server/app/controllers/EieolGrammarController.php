@@ -28,14 +28,14 @@ class EieolGrammarController extends BaseController {
 		} else {
 			$grammar = new EieolGrammar;
 				
-			$grammar->title = Normalizer::normalize(Input::get('title'), Normalizer::FORM_C );
+			$grammar->title = Normalizer::normalize(Input::get('title'), Normalizer::FORM_D );
 			$grammar->order = Input::get('order');
 			$grammar->section_number = Input::get('section_number');
-			$grammar->grammar_text = Normalizer::normalize(Input::get('grammar_text'), Normalizer::FORM_C );
+			$grammar->grammar_text = Normalizer::normalize(Input::get('grammar_text'), Normalizer::FORM_D );
 			$grammar->lesson_id = Input::get('lesson_id');
-			$grammar->author_comments = Normalizer::normalize(Input::get('author_comments'), Normalizer::FORM_C );
+			$grammar->author_comments = Normalizer::normalize(Input::get('author_comments'), Normalizer::FORM_D );
 			$grammar->author_done = Input::get('author_done');
-			$grammar->admin_comments = Normalizer::normalize(Input::get('admin_comments'), Normalizer::FORM_C );
+			$grammar->admin_comments = Normalizer::normalize(Input::get('admin_comments'), Normalizer::FORM_D );
 			$grammar->created_by = Auth::user()->username;
 			$grammar->updated_by = Auth::user()->username;
 				
@@ -76,13 +76,13 @@ class EieolGrammarController extends BaseController {
 		} else {
  			$grammar = EieolGrammar::find($id);
 			
- 			$grammar->title = Normalizer::normalize(Input::get('title'), Normalizer::FORM_C );
+ 			$grammar->title = Normalizer::normalize(Input::get('title'), Normalizer::FORM_D );
  			$grammar->order = Input::get('order');
  			$grammar->section_number = Input::get('section_number');
-			$grammar->grammar_text = Normalizer::normalize(Input::get('grammar_text'), Normalizer::FORM_C );
-			$grammar->author_comments = Normalizer::normalize(Input::get('author_comments'), Normalizer::FORM_C );
+			$grammar->grammar_text = Normalizer::normalize(Input::get('grammar_text'), Normalizer::FORM_D );
+			$grammar->author_comments = Normalizer::normalize(Input::get('author_comments'), Normalizer::FORM_D );
 			$grammar->author_done = Input::get('author_done');
-			$grammar->admin_comments = Normalizer::normalize(Input::get('admin_comments'), Normalizer::FORM_C );
+			$grammar->admin_comments = Normalizer::normalize(Input::get('admin_comments'), Normalizer::FORM_D );
  			$grammar->updated_by = Auth::user()->username;
 			
  			$grammar->save();

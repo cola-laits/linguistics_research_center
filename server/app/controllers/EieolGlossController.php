@@ -10,13 +10,13 @@ Validator::extend('unique_gloss', function($field,$value,$parameters){
 	//parameter 5 is the element_1_head_word_id
 	
 	if ($parameters[0] == null) {
-		$glosses = EieolGloss::where('surface_form', '=', Normalizer::normalize($value, Normalizer::FORM_C ))
-		->where('contextual_gloss', '=', Normalizer::normalize($parameters[1], Normalizer::FORM_C ))
+		$glosses = EieolGloss::where('surface_form', '=', Normalizer::normalize($value, Normalizer::FORM_D ))
+		->where('contextual_gloss', '=', Normalizer::normalize($parameters[1], Normalizer::FORM_D ))
 		->where('language_id', '=', $parameters[2])
 		->get();
 	} else {
-		$glosses = EieolGloss::where('surface_form', '=', Normalizer::normalize($value, Normalizer::FORM_C ))
-		->where('contextual_gloss', '=', Normalizer::normalize($parameters[1], Normalizer::FORM_C ))
+		$glosses = EieolGloss::where('surface_form', '=', Normalizer::normalize($value, Normalizer::FORM_D ))
+		->where('contextual_gloss', '=', Normalizer::normalize($parameters[1], Normalizer::FORM_D ))
 		->where('language_id', '=', $parameters[2])
 		->where('id', '!=', $parameters[0])
 		->get();
@@ -40,7 +40,7 @@ class EieolGlossController extends BaseController {
 	{
 		//this is a search that returns glosses that start with the url parm "gloss"
 		$text = '';
-		$glosses = EieolGloss::with('elements.head_word')->where('surface_form', 'LIKE', Normalizer::normalize(Input::get('gloss'), Normalizer::FORM_C ) . '%')
+		$glosses = EieolGloss::with('elements.head_word')->where('surface_form', 'LIKE', Normalizer::normalize(Input::get('gloss'), Normalizer::FORM_D ) . '%')
 												->where('language_id', '=', Input::get('language') . '%')
 												->take(15)->get()->sortBy('surface_form');
 		foreach ($glosses as $gloss) {
@@ -153,14 +153,14 @@ class EieolGlossController extends BaseController {
 			$gloss_id = DB::transaction(function() {
 				$gloss = new EieolGloss;
 		
-				$gloss->surface_form = Normalizer::normalize(Input::get('surface_form'), Normalizer::FORM_C );
-				$gloss->contextual_gloss = Normalizer::normalize(Input::get('contextual_gloss'), Normalizer::FORM_C );
+				$gloss->surface_form = Normalizer::normalize(Input::get('surface_form'), Normalizer::FORM_D );
+				$gloss->contextual_gloss = Normalizer::normalize(Input::get('contextual_gloss'), Normalizer::FORM_D );
 				$gloss->language_id = Input::get('language_id');
-				$gloss->comments = Normalizer::normalize(Input::get('comments'), Normalizer::FORM_C );
-				$gloss->underlying_form = Normalizer::normalize(Input::get('underlying_form'), Normalizer::FORM_C );
-				$gloss->author_comments = Normalizer::normalize(Input::get('author_comments'), Normalizer::FORM_C );
+				$gloss->comments = Normalizer::normalize(Input::get('comments'), Normalizer::FORM_D );
+				$gloss->underlying_form = Normalizer::normalize(Input::get('underlying_form'), Normalizer::FORM_D );
+				$gloss->author_comments = Normalizer::normalize(Input::get('author_comments'), Normalizer::FORM_D );
 				$gloss->author_done = Input::get('author_done');
-				$gloss->admin_comments = Normalizer::normalize(Input::get('admin_comments'), Normalizer::FORM_C );
+				$gloss->admin_comments = Normalizer::normalize(Input::get('admin_comments'), Normalizer::FORM_D );
 				$gloss->created_by = Auth::user()->username;
 				$gloss->updated_by = Auth::user()->username;
 		
@@ -288,13 +288,13 @@ class EieolGlossController extends BaseController {
 			DB::transaction(function($id) use ($id) {
 				$gloss = EieolGloss::with('elements.head_word')->find($id);
 				
-				$gloss->surface_form = Normalizer::normalize(Input::get('surface_form'), Normalizer::FORM_C );
-				$gloss->contextual_gloss = Normalizer::normalize(Input::get('contextual_gloss'), Normalizer::FORM_C );
-				$gloss->comments = Normalizer::normalize(Input::get('comments'), Normalizer::FORM_C );
-				$gloss->underlying_form = Normalizer::normalize(Input::get('underlying_form'), Normalizer::FORM_C );
-				$gloss->author_comments = Normalizer::normalize(Input::get('author_comments'), Normalizer::FORM_C );
+				$gloss->surface_form = Normalizer::normalize(Input::get('surface_form'), Normalizer::FORM_D );
+				$gloss->contextual_gloss = Normalizer::normalize(Input::get('contextual_gloss'), Normalizer::FORM_D );
+				$gloss->comments = Normalizer::normalize(Input::get('comments'), Normalizer::FORM_D );
+				$gloss->underlying_form = Normalizer::normalize(Input::get('underlying_form'), Normalizer::FORM_D );
+				$gloss->author_comments = Normalizer::normalize(Input::get('author_comments'), Normalizer::FORM_D );
 				$gloss->author_done = Input::get('author_done');
-				$gloss->admin_comments = Normalizer::normalize(Input::get('admin_comments'), Normalizer::FORM_C );
+				$gloss->admin_comments = Normalizer::normalize(Input::get('admin_comments'), Normalizer::FORM_D );
 				
 				$gloss->updated_by = Auth::user()->username;
 				

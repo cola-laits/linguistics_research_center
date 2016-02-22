@@ -88,8 +88,8 @@ class EieolLanguageController extends BaseController {
 			$language = new EieolLanguage;
 			
 			$language->language = Input::get('language');
-			$language->custom_keyboard_layout = Normalizer::normalize(Input::get('custom_keyboard_layout'), Normalizer::FORM_C );
-			$language->custom_sort = Normalizer::normalize(Input::get('custom_sort'), Normalizer::FORM_C );
+			$language->custom_keyboard_layout = Normalizer::normalize(Input::get('custom_keyboard_layout'), Normalizer::FORM_D );
+			$language->custom_sort = Normalizer::normalize(Input::get('custom_sort'), Normalizer::FORM_D );
 			$language->lang_attribute = Input::get('lang_attribute');
 			$language->class_attribute = Input::get('class_attribute');
 			$language->created_by = Auth::user()->username;
@@ -144,8 +144,8 @@ class EieolLanguageController extends BaseController {
 			$language = EieolLanguage::find($id);
 			
 			$language->language = Input::get('language');
-			$language->custom_keyboard_layout = Normalizer::normalize(Input::get('custom_keyboard_layout'), Normalizer::FORM_C );
-			$language->custom_sort = Normalizer::normalize(Input::get('custom_sort'), Normalizer::FORM_C );
+			$language->custom_keyboard_layout = Normalizer::normalize(Input::get('custom_keyboard_layout'), Normalizer::FORM_D );
+			$language->custom_sort = Normalizer::normalize(Input::get('custom_sort'), Normalizer::FORM_D );
 			$language->lang_attribute = Input::get('lang_attribute');
 			$language->class_attribute = Input::get('class_attribute');
 			$language->updated_by = Auth::user()->username;

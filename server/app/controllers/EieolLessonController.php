@@ -44,11 +44,11 @@ class EieolLessonController extends BaseController {
 		
 			$lesson = new EieolLesson;
 			
-			$lesson->title = Normalizer::normalize(Input::get('title'), Normalizer::FORM_C );
+			$lesson->title = Normalizer::normalize(Input::get('title'), Normalizer::FORM_D );
 			$lesson->order = Input::get('order');
 			$lesson->series_id = Input::get('series_id');
 			$lesson->language_id = Input::get('language');
-			$lesson->intro_text = Normalizer::normalize(Input::get('intro_text'), Normalizer::FORM_C );
+			$lesson->intro_text = Normalizer::normalize(Input::get('intro_text'), Normalizer::FORM_D );
 			$lesson->created_by = Auth::user()->username;
 			$lesson->updated_by = Auth::user()->username;
 			
@@ -137,13 +137,13 @@ class EieolLessonController extends BaseController {
 	 				}
 	 			}
 				
-	 			$lesson->title = Normalizer::normalize(Input::get('title'), Normalizer::FORM_C );
+	 			$lesson->title = Normalizer::normalize(Input::get('title'), Normalizer::FORM_D );
 	 			$lesson->order = Input::get('order');
-				$lesson->intro_text = Normalizer::normalize(Input::get('intro_text'), Normalizer::FORM_C );
+				$lesson->intro_text = Normalizer::normalize(Input::get('intro_text'), Normalizer::FORM_D );
 				$lesson->language_id = Input::get('language');
-				$lesson->author_comments = Normalizer::normalize(Input::get('author_comments'), Normalizer::FORM_C );
+				$lesson->author_comments = Normalizer::normalize(Input::get('author_comments'), Normalizer::FORM_D );
 				$lesson->author_done = Input::get('author_done');
-				$lesson->admin_comments = Normalizer::normalize(Input::get('admin_comments'), Normalizer::FORM_C );
+				$lesson->admin_comments = Normalizer::normalize(Input::get('admin_comments'), Normalizer::FORM_D );
 	 			$lesson->updated_by = Auth::user()->username;
 	 			$lesson->save();
 	 			
@@ -170,10 +170,10 @@ class EieolLessonController extends BaseController {
 	{
 		$lesson = EieolLesson::find($id);
 			
-		$lesson->lesson_translation = Normalizer::normalize(Input::get('lesson_translation'), Normalizer::FORM_C );
-		$lesson->translation_author_comments = Normalizer::normalize(Input::get('translation_author_comments'), Normalizer::FORM_C );
+		$lesson->lesson_translation = Normalizer::normalize(Input::get('lesson_translation'), Normalizer::FORM_D );
+		$lesson->translation_author_comments = Normalizer::normalize(Input::get('translation_author_comments'), Normalizer::FORM_D );
 		$lesson->translation_author_done = Input::get('translation_author_done');
-		$lesson->translation_admin_comments = Normalizer::normalize(Input::get('translation_admin_comments'), Normalizer::FORM_C );
+		$lesson->translation_admin_comments = Normalizer::normalize(Input::get('translation_admin_comments'), Normalizer::FORM_D );
 		$lesson->updated_by = Auth::user()->username;
 		$lesson->updated_by = Auth::user()->username;
 
