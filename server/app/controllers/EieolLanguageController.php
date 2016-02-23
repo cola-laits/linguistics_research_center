@@ -112,7 +112,76 @@ class EieolLanguageController extends BaseController {
 	public function edit($id)
 	{
 		$language = EieolLanguage::find($id);
-		return View::make('eieol_language.eieol_language_form', [ 'language' => $language, 'action' => 'Edit' ]);
+		
+		//build list of all chars used by this language
+		$chars = array();
+		
+		//get all glosses and headwords
+		$lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word')
+		->where('language_id', '=', $id)
+		->select(array('id'))
+		->get();
+		
+		//loop through all the lessons, glossed texts, glosses and headwords to build list of used chars
+		foreach ($lessons as $lesson) {
+			foreach ($lesson->glossed_texts as $glossed_text) {
+				foreach ($glossed_text->glosses as $gloss) {
+					
+					//clean up surface_form
+					$surface_form = strip_tags($gloss->surface_form); //remove any tags like sup or sub
+					$surface_form = str_replace(' ', '', $surface_form); //replace any whitespace
+					$surface_form = str_replace(',', '', $surface_form); //remove any commas
+					//print '<xmp>' . $surface_form. '</xmp>';
+					
+					$hold_char = '';
+					$len = mb_strlen($surface_form,'UTF-8') - 1;
+					for ($i = $len; $i >=0;  $i-- ) { //loop through each code point backwards
+						$code_point = mb_substr($surface_form, $i, 1,'UTF-8');
+						if (mb_detect_encoding($code_point, 'ASCII', true)) { //regular char
+							//print json_encode($hold_char) . '.';
+							$hold_char = $code_point . $hold_char; //add it to whatever we had before
+							if (!in_array($hold_char, $chars)) { // if we don't already have it, add it to array
+								$chars[] = $hold_char;
+							}
+							$hold_char = ''; //reset to start over
+						} else { //it's a combining mark, save it to add to preceding char
+							$hold_char = $code_point . $hold_char;
+						} //if regular char
+					} // loop through surface form's code points
+					
+					//loop through elements to get headwords
+ 					foreach ($gloss->elements as $element) {
+ 						//clean up headword
+ 						$word = $element->head_word->word;
+ 						$len = mb_strlen($word,'UTF-8') -1;
+ 						$word = mb_substr($word,1,$len-1,'UTF-8'); //remove first and last characters, '<' and '>'
+ 						$word = strip_tags($word); //remove any tags like sup or sub
+ 						$word = str_replace(' ', '', $word); //replace any whitespace
+ 						$word = str_replace(',', '', $word); //remove any commas
+ 						//print '<xmp>    ' . $word. '</xmp>';
+ 						
+ 						$hold_char = '';
+ 						$len = mb_strlen($word,'UTF-8') -1;
+ 						for ($i = $len; $i >=0;  $i-- ) { //loop through each code point backwards
+ 							$code_point = mb_substr($word, $i, 1,'UTF-8');
+ 							if (mb_detect_encoding($code_point, 'ASCII', true)) { //regular char
+ 								//print json_encode($hold_char) . '.';
+ 								$hold_char = $code_point . $hold_char; //add it to whatever we had before
+ 								if (!in_array($hold_char, $chars)) { // if we don't already have it, add it to array
+ 									$chars[] = $hold_char;
+ 								}
+ 								$hold_char = ''; //reset to start over
+ 							} else { //it's a combining mark, save it to add to preceding char
+ 								$hold_char = $code_point . $hold_char;
+ 							} // if regular char
+ 						} //loop through word's code points
+ 					} //loop through elements
+				} //loop through glosses
+			} //loop through glossed texts
+		} //loop through lessons
+					
+		asort($chars);
+		return View::make('eieol_language.eieol_language_form', [ 'language' => $language, 'action' => 'Edit', 'chars' => $chars ]);
 	}
 
 
