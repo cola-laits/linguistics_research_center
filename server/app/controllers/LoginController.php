@@ -14,7 +14,7 @@ class LoginController extends BaseController {
 		
 		if (Auth::attempt(['username' => $username, 'password' => $password]))
 		{
-			return Redirect::intended('admin/eieol_series');
+			return Redirect::intended('admin');
 		}
 		
 		return Redirect::back()
