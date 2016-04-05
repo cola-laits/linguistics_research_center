@@ -20,164 +20,174 @@ function get_series_info($series_id) {
 	return $data;
 } //get_series_info
 
-function blowItUp($custom_sort) {
+
+function length_compare($a, $b){
+	//key_compare_func for uksort of arrayify_customsort.  We want longer strings first
+	if (mb_strlen($a,'UTF-8') >= mb_strlen($b,'UTF-8')) {
+		return -1;
+	} else {
+		return 1;
+	}
+} //length_compare
+
+
+function arrayify_customsort($custom_sort) {
+	//Converts the custom sort into an array where each key is a character and each value is it's sort order.
+	//It gets sorted by character length because each entry can be more than one character long, and we want longest first.
+	//That way when we replace them in the sorter, we get the longest ones first, so Ž is not equal to Z and ll is not l.
 	$alphabet = array();
 	
 	//create an arrary where each letter has a value equal to its comma separated position in the string
 	$alphabet_groups = explode(',',$custom_sort);
 	foreach ($alphabet_groups as $key => $group) {
+		//print $key . ' ' . $group . ' ' . mb_strlen($group,'UTF-8') . '<br/>';
 		$values = explode('=',$group);
 		foreach ($values as $value) {
 			$alphabet[$value] = str_pad(($key+1), 3, '0', STR_PAD_LEFT); //pad with zeros
 		}
 	}
+	
+print_r($alphabet);
+print '<hr/>';
+	
+	//Now sort the array by length. 	
+	uksort($alphabet, 'length_compare');
 
-	//Now sort the array by length. Each entry can be more than one character long, and we want longest first.
-	//That way when we replace them in the sorter, we get the longest ones first, so Ž is not equal to Z and ll is not l.
-	$keys = array_map('mb_strlen', array_keys($alphabet));
-	array_multisort($keys, SORT_DESC, $alphabet);
-	//print_r($alphabet);
+print_r($alphabet);
+print '<hr/>';
+	
 	return $alphabet;
-}
+} //arrayify_customsort
+
+
+function arrayify_substitutions($substitutions) {
+	//convert substitutions into an array
+	$substitutions_array = array();
+	
+	if ($substitutions == '') {
+		return $substitutions_array;
+	}
+	
+	$substitutions_groups = explode(',',$substitutions);	
+	foreach ($substitutions_groups as $key => $group) {
+		//print $key . ' ' . $group . ' ' . mb_strlen($group,'UTF-8') . '<br/>';
+		$values = explode('>',$group);
+		$substitutions_array[$values[0]] = $values[1];
+	}
+	
+	//Now sort the array by length.
+	uksort($substitutions_array, 'length_compare');
+	
+	print_r($substitutions_array);
+	print '<hr/>';
+	
+	return $substitutions_array;	
+} //arrayify_substitutions
+
+
+function sub_it($string,$substitutions) {
+	//substitue any chars they may have defined.
+	foreach ($substitutions as $key => $value) {
+		$string = str_replace($key, $value, $string);
+	
+	}
+	return $string;
+} //subit
+
+
+
+function get_first_character($string) {	
+	//Used by alphabet_sort to get first character and remainder of a string.
+	//It uses mb functions and adds combining marks
+	
+	$hold_char = '';
+	$len = mb_strlen($string,'UTF-8');
+	for ($i = 0; $i < $len;  $i++ ) { 
+  		$code_point = mb_substr($string, $i, 1,'UTF-8');
+  		if ($i == 0) { //grab first char
+  			$hold_char = $code_point;
+  		} else {
+  			if (preg_match('/\p{Mn}/u', $code_point)) { //following char is a combining mark
+ 				$hold_char .= $code_point;
+  			} else { //following char is NOT a combining mark, take what we have and get out
+  				//print $hold_char . ' ' . mb_substr($string,$i,Null,'UTF-8') . '<br/>';
+  				return array('first' => $hold_char, 'remainder' => mb_substr($string,$i,Null,'UTF-8'));
+  			}
+  		}
+	} // loop through string
+	
+	//if you get here, you are at the end
+	return array('first' => $hold_char, 'remainder' => '');
+} //get_first_character
+
+
+function get_character_value($character) {
+	//Used by alphabet_sort to take a character and return its sort value from $alphabet.  
+	//We do treat some chars as spaces.
+	//Blow up if not found.
+	
+	//because this function is passed by uasort, we pass the alphabet in a global
+	global $alphabet;
+	
+	//$treat_as_blank = array(' ', ',', '-', '<', '>', ';'); //these are used as part of the formatting
+	$treat_as_blank = array(' ', ',', '>'); //the > is at the end of head words
+	if (in_array($character,$treat_as_blank)) { 
+		return '000';
+	}
+	
+	if (array_key_exists($character,$alphabet)){
+		return $alphabet[$character];
+	} else {
+		print 'unknown sort character of ' . $character;
+		exit(); //die!  We want to break the page
+	}
+	
+} //get_character_value
+
 
 function alphabet_sorter($a, $b) {
-	//key_compare_func for uksort.
+	//key_compare_func for uasort of gloss and dictionary.
 	//because we expect unicode, we use multibyte string functions
-	
-	//because this function is passed by uksort, we pass the alphabet and sort type in a global
-	global $alphabet;
-	global $sort_type;
-	//print '<xmp>' . $a . ' <> ' . $b . '</xmp>';
-	
-	if ($sort_type == 'master_gloss') {
-		//only include what's in front of ' -- '
-		$a = mb_substr($a, 0, mb_strpos($a, ' -- ', 0, 'UTF-8'),'UTF-8');
-		$b = mb_substr($b, 0, mb_strpos($b, ' -- ', 0, 'UTF-8'),'UTF-8');
-	} elseif ($sort_type == 'dictionary') {
-		//only include what's in front of '> --'
-		$a = mb_split('> --',$a)[0];
-		$b = mb_split('> --',$b)[0];
-		//remove first character, because it's a '<'
-		$a = mb_substr($a,1,Null,'UTF-8');
-		$b = mb_substr($b,1,Null,'UTF-8');
-	} else {
-		print 'unknown sort type of ' . $sort_type;
-		exit();
+	if (is_array($a)) {
+		$a = $a['sortable_key'];
 	}
-	
-	//remove any tags like sup or sub
-	$a = strip_tags($a);
-	$b = strip_tags($b);
-	
-	//make a copy of input for messages
-	$for_message_a = $a;
-	$for_message_b = $b;
-	
-	///replace any whitespace
-	$a = str_replace(' ', '000', $a);
-	$b = str_replace(' ', '000', $b);
-	
-	//remove any commas
-	$a = str_replace(',', '000', $a);
-	$b = str_replace(',', '000', $b);
-	
-	//print '<xmp>' . $a . ' <> ' . $b . '</xmp>';
-	
-	//loop through the alphabet and replace each character with the three digit number of it's position.
-	//Remember that we sorted the alphabet by length, so Ž is not equal to Z and ll is not l.
-	foreach($alphabet as $letter => $value) {
-		$a = str_replace($letter, $value, $a);
-		$b = str_replace($letter, $value, $b);
+	if (is_array($b)) {
+		$b = $b['sortable_key'];
 	}
-	//print '<xmp>' . $a . ' <> ' . $b . '</xmp>';
 
-	//warn if anything is left.  It needs to be added to the sort order list.
-	$astrlen = mb_strlen($a,'UTF-8');
-	for( $i = 0; $i < $astrlen; $i++ ) {
-		$char = mb_substr($a, $i, 1,'UTF-8');
-		if (!is_numeric($char)) {
-			//$a = str_replace($char, '', $a);
-			print 'unknown sort character of ' . $char . ' at byte ' . ($i/3+1) . ' in <xmp> "' . $for_message_a .'"</xmp>';
-			exit();
-		}
+	//print '<xmp>' . $a . ' ' . mb_strlen($a,'UTF-8') . '<> ' . $b . ' ' . mb_strlen($b,'UTF-8') . '</xmp>';
+	if ($a == '') {
+		return -1;
 	}
-	$bstrlen = mb_strlen($b,'UTF-8');
-	for( $i = 0; $i < $bstrlen; $i++ ) {
-		$char = mb_substr($b, $i, 1,'UTF-8');
-		if (!is_numeric($char)) {
-			//$b = str_replace($char, '', $b);
-			print 'unknown sort character of ' . $char . ' at byte ' . ($i/3+1) . ' in <xmp> "' . $for_message_b . '"</xmp>';
-			exit();
-		}
+	if ($b == '') {
+		return 1;
 	}
+
+	$a_split = get_first_character($a);
+	$b_split = get_first_character($b);
+// print_r($a_split);
+// print '<br/>';
+// print_r($b_split);
+// print '<br/>';
+
+	$a_val = get_character_value($a_split['first']);
+	$b_val = get_character_value($b_split['first']);
+//	print $a_val . ' ' . $b_val . '<br/>';
 	
-	//pad the shorter one because we're now comparing numbers and the shorter one would always be smaller, which is not what we want.
-	if ($astrlen > $bstrlen) {
-		$b = str_pad($b, $astrlen, '0', STR_PAD_RIGHT);
-	} else {
-		$a = str_pad($a, $bstrlen, '0', STR_PAD_RIGHT);
+	if ($a_val > $b_val) {
+		return 1;
 	}
-	
-	//print '<xmp>' . $a . ' <> ' . $b . '</xmp>';
-	//print ($a > $b ? 1 : -1) . "<br/>";
-	
-	//return 1 if a is bigger, else, -1
-	return $a > $b ? 1 : -1;
-}
-
-function zalphabet_sorter($a, $b) {
-	//key_compare_func for uksort.
-	//because we expect unicode, we use multibyte string functions
-	//log::error($a . ' ' . $b);
-	print ($a . ' <> ' . $b  ."<br/>");
-
-	//because this function is passed by uksort, we pass the alphabet in a global
-	global $alphabet;
-	
-	//get length of each word and see which is shorter
-	$aLen = mb_strlen($a,'UTF-8');
-	$bLen = mb_strlen($b,'UTF-8');
-	$shorterLen = min($aLen, $bLen);
-
-	//loop through shorter length
-	for ($i=0; $i < $shorterLen; $i++) {
-		print $i . ': ';
-		//get i-th character from each word
-		$aChar = mb_substr($a, $i, 1, 'UTF-8');
-		$bChar = mb_substr($b, $i, 1, 'UTF-8');		
-		print ($aChar . '<>' . $bChar ."<br/>");
-		//get position in alphabet for each character
-		$alpha_ctr = 0;
-		$aVal = 0;
-		$bVal = 0;
- 		foreach ($alphabet as $char) {
- 			//log::error($char);
- 			$alpha_ctr +=1;
-	 		if (mb_strpos($char, $aChar, 0,'UTF-8') !== False) {
-	 			$aVal = $alpha_ctr;
-	 			//log::error('a=' . $aVal);
-	 			//print ($aChar . '=' . $aVal ."<br/>");
-	 		}
- 			if (mb_strpos($char, $bChar, 0,'UTF-8') !== False) {
-	 			$bVal = $alpha_ctr;
-	 			//log::error('b=' . $bVal);
-	 			//print ($bChar . '=' . $bVal ."<br/>");
- 			}
- 		}
- 		print ('      ' . $aVal . '<>' . $bVal . ' === ');
- 		print ($aVal > $bVal ? 1 : -1);
- 		print "<br/>";
-		//log::error($aChar . ' ' . $aVal . ' ' . $bChar . ' ' . $bVal);
-
-		//return 1 if a is bigger, else, -1
-		if ($aVal!=$bVal) {
-			return $aVal > $bVal ? 1 : -1;
-		}
+	if ($b_val > $a_val) {
+		return -1;
 	}
-	//if you get here, the shorter is the same as the longer.
-	//so if the shorter is b, return 1
-	return $shorterLen==$bLen ? 1 : -1;
+	//if you get here, they are equal, recurse
+	return alphabet_sorter($a_split['remainder'],$b_split['remainder']);
 } //alphabet_sorter
+
+
+
+
+
 
 class PublicController extends BaseController {	
 	
@@ -266,6 +276,7 @@ class PublicController extends BaseController {
 	{	
 		$data = get_series_info($series_id);
 		$data['language'] = EieolLanguage::find($language_id);
+		$substitutions = arrayify_substitutions($data['language']->substitutions);
 		$data['glosses'] = array();
 		
 		$lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word.language')
@@ -279,6 +290,7 @@ class PublicController extends BaseController {
 		foreach ($lessons as $lesson) {
 			foreach ($lesson->glossed_texts as $glossed_text) {
 				foreach ($glossed_text->glosses as $gloss) {
+					//unique key is the surface form with all pos and analysis
 					$key = $gloss->surface_form . ' -- ';
 					$i = 0;
 					foreach($gloss->elements as $element){
@@ -289,24 +301,33 @@ class PublicController extends BaseController {
 						$key .= ' ' .
 								$element->part_of_speech . '; ' .
 								$element->analysis . ' ';
+					} //foreach element
+					//remove any tags like sup or sub
+					$key = strip_tags($key);
+					
+					//build sort key
+					$sort_key = strip_tags($gloss->surface_form);
+					//if there are substitutions, apply them
+					if (count($substitutions) > 0){
+						$sort_key = sub_it($sort_key,$substitutions);
 					}
+					
 					if (!key_exists($key, $data['glosses'])) {
 						$data['glosses'][$key] = $gloss->toArray();
 						$data['glosses'][$key]['displayGlossForMasterGloss'] = $gloss->getDisplayGlossForMasterGloss();
 						$data['glosses'][$key]['glossed_text_gloss_ids'] = array();
 						$data['glosses'][$key]['glossed_text_gloss_ids'][$gloss->pivot->id] = $lesson;
+						$data['glosses'][$key]['sortable_key'] = $sort_key;
 					} else {
 						$data['glosses'][$key]['glossed_text_gloss_ids'][$gloss->pivot->id] = $lesson;
 					}
-				}
-			}
-		}
-		
+				} //foreach gloss
+			} //foreach glossed text
+		} //foreach lesson
+			
 		global $alphabet;
-		$alphabet = blowItUp($data['language']->custom_sort);
-		global $sort_type;
-		$sort_type = 'master_gloss';
-		uksort($data['glosses'], 'alphabet_sorter');
+		$alphabet = arrayify_customsort($data['language']->custom_sort);
+		uasort($data['glosses'], 'alphabet_sorter');
 		return View::make('eieol_master_gloss')->with($data);
 	}
 	
@@ -327,12 +348,25 @@ class PublicController extends BaseController {
 			foreach ($lesson->glossed_texts as $glossed_text) {
 				foreach ($glossed_text->glosses as $gloss) {
 					foreach ($gloss->elements as $element) {
+						//unique key is head word plus definition
 						$key = $element->head_word->word . ' -- ' . $element->head_word->definition;
+ 						//remove first character, because it's a '<'
+ 						$key = mb_substr($key,1,Null,'UTF-8');
+						//remove any tags like sup or sub
+						$key = strip_tags($key);
+						
 						if (!key_exists($key, $data['head_words'])) {
 							$data['head_words'][$key] = $element->head_word->toArray();
 							$data['head_words'][$key]['display'] = $element->head_word->getDisplayHeadWord();
 							$data['head_words'][$key]['glossed_text_gloss_ids'] = array();
 							$data['head_words'][$key]['glossed_text_gloss_ids'][$gloss->pivot->id] = $lesson;
+							
+							//build sortable key
+							//remove first character, because it's a '<
+							$sortable_key = mb_substr($element->head_word->word,1,Null,'UTF-8');
+							//remove any tags like sup or sub
+							$sortable_key = strip_tags($sortable_key);
+							$data['head_words'][$key]['sortable_key'] = $sortable_key;
 						} else {
 							$data['head_words'][$key]['glossed_text_gloss_ids'][$gloss->pivot->id] = $lesson;
 						}
@@ -342,10 +376,8 @@ class PublicController extends BaseController {
 		}
 		
 		global $alphabet;
-		$alphabet = blowItUp($data['language']->custom_sort);
-		global $sort_type;
-		$sort_type = 'dictionary';
-		uksort($data['head_words'],'alphabet_sorter');
+		$alphabet = arrayify_customsort($data['language']->custom_sort);
+		uasort($data['head_words'],'alphabet_sorter');
 		return View::make('eieol_base_form_dictionary')->with($data);
 	}
 	

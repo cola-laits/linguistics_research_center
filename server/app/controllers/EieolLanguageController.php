@@ -90,6 +90,7 @@ class EieolLanguageController extends BaseController {
 			$language->language = Input::get('language');
 			$language->custom_keyboard_layout = Normalizer::normalize(Input::get('custom_keyboard_layout'), Normalizer::FORM_D );
 			$language->custom_sort = Normalizer::normalize(Input::get('custom_sort'), Normalizer::FORM_D );
+			$language->substitutions = Normalizer::normalize(Input::get('substitutions'), Normalizer::FORM_D );
 			$language->lang_attribute = Input::get('lang_attribute');
 			$language->class_attribute = Input::get('class_attribute');
 			$language->created_by = Auth::user()->username;
@@ -131,22 +132,23 @@ class EieolLanguageController extends BaseController {
 					$surface_form = strip_tags($gloss->surface_form); //remove any tags like sup or sub
 					$surface_form = str_replace(' ', '', $surface_form); //replace any whitespace
 					$surface_form = str_replace(',', '', $surface_form); //remove any commas
-					//print '<xmp>' . $surface_form. '</xmp>';
+					//print '<xmp>' . $surface_form . '</xmp>';
 					
 					$hold_char = '';
 					$len = mb_strlen($surface_form,'UTF-8') - 1;
 					for ($i = $len; $i >=0;  $i-- ) { //loop through each code point backwards
 						$code_point = mb_substr($surface_form, $i, 1,'UTF-8');
-						if (mb_detect_encoding($code_point, 'ASCII', true)) { //regular char
+						//print '<xmp>' . $i . ' ' . $code_point . ' ' . preg_match('/\p{Mn}/u', $code_point) . '</xmp>';
+						if (preg_match('/\p{Mn}/u', $code_point)) { //it's a combining mark, save it to add to preceding char 
+							$hold_char = $code_point . $hold_char;
+						} else { //regular char
 							//print json_encode($hold_char) . '.';
 							$hold_char = $code_point . $hold_char; //add it to whatever we had before
 							if (!in_array($hold_char, $chars)) { // if we don't already have it, add it to array
 								$chars[] = $hold_char;
 							}
 							$hold_char = ''; //reset to start over
-						} else { //it's a combining mark, save it to add to preceding char
-							$hold_char = $code_point . $hold_char;
-						} //if regular char
+						} //if combining mark
 					} // loop through surface form's code points
 					
 					//loop through elements to get headwords
@@ -164,16 +166,17 @@ class EieolLanguageController extends BaseController {
  						$len = mb_strlen($word,'UTF-8') -1;
  						for ($i = $len; $i >=0;  $i-- ) { //loop through each code point backwards
  							$code_point = mb_substr($word, $i, 1,'UTF-8');
- 							if (mb_detect_encoding($code_point, 'ASCII', true)) { //regular char
+ 							if (preg_match('/\p{Mn}/u', $code_point)) { //it's a combining mark, save it to add to preceding char
+ 								$hold_char = $code_point . $hold_char;
+ 							} else { //regular char
  								//print json_encode($hold_char) . '.';
  								$hold_char = $code_point . $hold_char; //add it to whatever we had before
  								if (!in_array($hold_char, $chars)) { // if we don't already have it, add it to array
  									$chars[] = $hold_char;
  								}
  								$hold_char = ''; //reset to start over
- 							} else { //it's a combining mark, save it to add to preceding char
- 								$hold_char = $code_point . $hold_char;
- 							} // if regular char
+ 							} //if combining mark							
+ 							
  						} //loop through word's code points
  					} //loop through elements
 				} //loop through glosses
@@ -215,6 +218,7 @@ class EieolLanguageController extends BaseController {
 			$language->language = Input::get('language');
 			$language->custom_keyboard_layout = Normalizer::normalize(Input::get('custom_keyboard_layout'), Normalizer::FORM_D );
 			$language->custom_sort = Normalizer::normalize(Input::get('custom_sort'), Normalizer::FORM_D );
+			$language->substitutions = Normalizer::normalize(Input::get('substitutions'), Normalizer::FORM_D );
 			$language->lang_attribute = Input::get('lang_attribute');
 			$language->class_attribute = Input::get('class_attribute');
 			$language->updated_by = Auth::user()->username;

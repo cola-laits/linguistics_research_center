@@ -45,13 +45,25 @@
         </div>
     </div>
 
-    
     <div class='form-group @if ($errors->has('custom_keyboard_layout')) has-error @endif  '>
         {{ Form::label('custom_keyboard_layout', 'Custom Keyboard Layout') }}
         {{ Form::textarea('custom_keyboard_layout', null, ['placeholder' => 'Custom Keyboard Layout', 'class' => 'form-control', 'size' => '150x4']) }}
         <div class="alert-warning">
         	This should be a list of characters (either in unicode code points or pasted in) <br/>
         	Example: 'Â','Ä','Å','\u042f', '\u03da', '\u03db', '\u03c0'
+        </div>
+    </div>
+    
+    <div class='form-group @if ($errors->has('substitutions')) has-error @endif  '>
+        {{ Form::label('substitutions', 'Substitutions') }}
+        {{ Form::textarea('substitutions', null, ['placeholder' => 'Substitutions', 'class' => 'form-control', 'size' => '150x4']) }}
+        <div class="alert-warning timesy">
+        	This is used for sorting.  
+        	If there are characters that should be treated differently when sorting, enter them here.<br/>
+        	Separate substituions by commas.  Use x>y notation.<br/>
+        	Example: If you enter Ѽ>Отъ, the every occurrence of Ѽ will be replaced with Отъ before sorting.
+        	<br/>
+        	Do not use unicode code points, just paste in unicode characters.<br/>
         </div>
     </div>
     
@@ -74,7 +86,7 @@
         	<hr/>
         	To help you out, here is a list of all the characters used in surface forms and head words within lessons that use this language.<br/>
         </div>
-        <div class="alert-info">
+        <div class="alert-info timesy">
         	@foreach ($chars as $char)
         		{{$char}}
         	@endforeach
