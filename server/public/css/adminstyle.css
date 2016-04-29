@@ -91,10 +91,10 @@ textarea {
 	background-color: #f0f0f4;
 }
 
-.modal-lg 
-{
-    width: 1500px; 
-} 
+.modal-edit-gloss {
+    width: 100%;
+    margin-left: 7px;
+}
 
 .timesy {
 	font-family: Times New Roman, Times, serif;

@@ -177,7 +177,7 @@
 
     		    if(json['added']) { //if we just performed an add, we need to change the form to an update form
         		    $(formDiv).find(":submit").attr('value','Edit');
-        		    $(formDiv).find(":submit").attr('class', 'btn btn-primary');
+        		    $(formDiv).find(":submit").attr('class', 'btn btn-xs btn-primary');
         		    $(formDiv).attr("action", json['action']);
         		    $('<input>').attr({type: 'hidden', value: 'PUT', name: '_method'}).appendTo(formDiv);
 
@@ -575,7 +575,7 @@
 					    		{{ Form::textarea("admin_comments", null, ["class" => "form-control comment_textarea admin_comments", "size" => "100x2"]) }}\
 							</div>\
 							<div class="form-group col-sm-1">\
-						        {{ Form::submit("Clear", ["class" => "btn btn-warning comment_clear"]) }}\
+						        {{ Form::submit("Clear", ["class" => "btn btn-xs btn-warning comment_clear"]) }}\
 							</div>');
 				    } else {
 						if (data['admin_comments']) {
@@ -993,7 +993,7 @@
 					        {{ Form::label('element_' . $i . '_head_word_id', 'Head Word') }}
 					        {{ Form::hidden('element_' . $i . '_head_word_id', null, ['id' => 'element_' . $i . '_head_word_id']) }}
 					        <div id="element_{{$i}}_head_word_display"></div>
-					        {{ Form::button('Pick Head Word', ['class' => 'btn btn-primary btn-sm pick_head_word_button', 'onclick' => 'element_id =' . $i]) }}
+					        {{ Form::button('Pick Head Word', ['class' => 'btn btn-primary btn-xs pick_head_word_button', 'onclick' => 'element_id =' . $i]) }}
 					        <div id ="element_{{$i}}_head_word_id_error" class="alert-danger errors"></div>
 					    </div>	   
 					    
@@ -1005,7 +1005,7 @@
 						    </div>	     
 						    
 						    <div class='form-group col-sm-1 bottom_button'> 
-						    	{{ Form::submit('Add', ['class' => 'btn btn-success']) }}
+						    	{{ Form::submit('Add', ['class' => 'btn btn-xs btn-success']) }}
 						    </div>
 						@else
 							</div>
@@ -1039,7 +1039,7 @@
 
 
 <div id="edit_gloss_modal" class="modal">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-edit-gloss">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -1087,8 +1087,8 @@
 					        {{ Form::label('element_' . $i . '_head_word_id', 'Head Word') }}
 					        {{ Form::hidden('element_' . $i . '_head_word_id', null, ['id' => 'element_' . $i . '_head_word_id']) }}
 					        <div id="element_{{$i}}_head_word_display"></div>
-					        {{ Form::button('Pick Head Word', ['class' => 'btn btn-primary btn-sm pick_head_word_button', 'onclick' => 'element_id =' . $i]) }}
-					        {{ Form::button('Edit Head Word', ['class' => 'btn btn-primary btn-sm edit_head_word_button', 'onclick' => 'element_id =' . $i]) }}
+					        {{ Form::button('Pick Head Word', ['class' => 'btn btn-primary btn-xs pick_head_word_button', 'onclick' => 'element_id =' . $i]) }}
+					        {{ Form::button('Edit Head Word', ['class' => 'btn btn-primary btn-xs edit_head_word_button', 'onclick' => 'element_id =' . $i]) }}
 					        <div id ="element_{{$i}}_head_word_id_error" class="alert-danger errors"></div>
 					    </div>	   
 					    
@@ -1105,7 +1105,7 @@
 								</div>
 								&nbsp;&nbsp;
 						
-						    	{{ Form::submit('Edit', ['class' => 'btn btn-primary']) }}
+						    	{{ Form::submit('Edit', ['class' => 'btn btn-xs btn-primary']) }}
 						    </div>
 						@else
 							</div>
@@ -1199,7 +1199,7 @@
 					    </div>	 
 	
 					    <div class='form-group bottom_button'> 
-					    	{{ Form::submit('Add', ['class' => 'btn btn-success']) }}
+					    	{{ Form::submit('Add', ['class' => 'btn btn-xs btn-success']) }}
 					    </div>
 					    {{ Form::close() }}
 					</div>
@@ -1254,7 +1254,7 @@
 					    </div>	
 	
 					    <div class='form-group bottom_button'> 
-					    	{{ Form::submit('Edit', ['class' => 'btn btn-primary']) }}
+					    	{{ Form::submit('Edit', ['class' => 'btn btn-xs btn-primary']) }}
 					    </div>
 					    
 					    {{ Form::close() }}
@@ -1282,8 +1282,8 @@
                 All attached glosses will be unattached, though they will still be on file and possibly used by other glossed texts.</small></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="delete_confirmed">Delete</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-xs btn-danger" id="delete_confirmed">Delete</button>
+                <button type="button" class="btn btn-xs btn-default" data-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
@@ -1302,8 +1302,8 @@
                 The gloss will still be on file and possibly used by other glossed texts.</small></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="delete_confirmed">Remove</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-xs btn-danger" id="delete_confirmed">Remove</button>
+                <button type="button" class="btn btn-xs btn-default" data-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
@@ -1321,8 +1321,8 @@
                 <p class="text-warning"><small>This action can not be undone later.  The contents of this grammar will be deleted.</small></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="delete_confirmed">Delete</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-xs btn-danger" id="delete_confirmed">Delete</button>
+                <button type="button" class="btn btn-xs btn-default" data-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
@@ -1417,7 +1417,7 @@
 			    </div>
 			    
 			    <div class='form-group col-sm-1'>
-		    		{{ Form::submit('Clear', ['class' => 'btn btn-warning comment_clear']) }}
+		    		{{ Form::submit('Clear', ['class' => 'btn btn-xs btn-warning comment_clear']) }}
 			    </div>
 		    @else
 		    	@if ($lesson->admin_comments)
@@ -1436,7 +1436,7 @@
 		        {{ Form::label('intro_text', 'Intro Text') }}
 		        {{ Form::textarea('intro_text', null, ['placeholder' => 'Intro Text', 'class' => 'form-control', 'size' => '100x10']) }}
 		        <div id ="intro_text_error" class="alert-danger errors"></div>
-		        {{ Form::submit('Edit', ['class' => 'btn btn-primary']) }}
+		        {{ Form::submit('Edit', ['class' => 'btn btn-xs btn-primary']) }}
 		    </div>
 		</div>		    
 
@@ -1484,11 +1484,11 @@
 						</div>
 					    
 					    <div class='form-group col-sm-1 bottom_button'>
-						    {{ Form::submit('Edit', ['class' => 'btn btn-primary']) }}
+						    {{ Form::submit('Edit', ['class' => 'btn btn-xs btn-primary']) }}
 						</div>
 					
 			    		<div class='form-group col-sm-1 bottom_button'>
-			            	{{ Form::button('Delete', ['class' => 'btn btn-danger delete_glossed_text'])}}    
+			            	{{ Form::button('Delete', ['class' => 'btn btn-xs btn-danger delete_glossed_text'])}}    
 						</div>
 	
 				    </div>
@@ -1515,7 +1515,7 @@
 						    </div>
 						    
 						    <div class='form-group col-sm-1'>
-					    		{{ Form::submit('Clear', ['class' => 'btn btn-warning comment_clear']) }}
+					    		{{ Form::submit('Clear', ['class' => 'btn btn-xs btn-warning comment_clear']) }}
 						    </div>
 					    @else
 					    	@if ($glossed_text->admin_comments)
@@ -1552,7 +1552,7 @@
 						    </div>
 						    
 						    <div class='form-group col-sm-1 bottom_button'>
-							    {{ Form::submit('Edit Order', ['class' => 'btn btn-primary']) }}
+							    {{ Form::submit('Edit Order', ['class' => 'btn btn-xs btn-primary']) }}
 							    {{ Form::close() }}
 							</div>
 						    	
@@ -1573,7 +1573,7 @@
 			    				{{ Form::open(['class' => 'edit_gloss', 
 			    							   'id' => 'edit_gloss_form_' . $gloss->pivot->id]) }} 
 			    					{{ Form::hidden('gloss_id', $gloss->id, ['id' => 'gloss_id']) }}
-			    					{{ Form::submit('Edit Gloss', ['class' => 'btn btn-primary']) }}
+			    					{{ Form::submit('Edit Gloss', ['class' => 'btn btn-xs btn-primary']) }}
 			    				{{ Form::close() }}
 			    			</div>
 			    			
@@ -1582,7 +1582,7 @@
 			    							   'url' => '/admin2/eieol_glossed_text_gloss/' . $gloss->pivot->id,
 			    							   'id' => 'delete_glossed_text_gloss_form_' . $gloss->pivot->id]) }} 
 				            		{{ Form::hidden('glossed_text_gloss_id', $gloss->pivot->id, ['id' => 'glossed_text_gloss_id']) }}
-				            		{{ Form::button('Remove', ['class' => 'btn btn-danger delete_glossed_text_gloss'])}}   
+				            		{{ Form::button('Remove', ['class' => 'btn btn-xs btn-danger delete_glossed_text_gloss'])}}   
 				            	{{ Form::close() }} 
 							</div>
 						      
@@ -1599,7 +1599,7 @@
 			   			{{ Form::open(['class' => 'attach_gloss_form',
 			   						   'id' => 'attach_gloss_form_' . $glossed_text->id]) }} 
 			   				{{ Form::hidden('glossed_text_id', $glossed_text->id, ['id' => 'glossed_text_id']) }}
-				    		{{ Form::submit('Attach Gloss', ['class' => 'btn btn-success']) }}
+				    		{{ Form::submit('Attach Gloss', ['class' => 'btn btn-xs btn-success']) }}
 				    	{{ Form::close() }}
 				    </div>
 				</div>
@@ -1639,11 +1639,11 @@
 					</div>
 				    
 				    <div class='form-group col-sm-1 bottom_button'> 
-				    	{{ Form::submit('Add', ['class' => 'btn btn-success']) }}
+				    	{{ Form::submit('Add', ['class' => 'btn btn-xs btn-success']) }}
 				    </div>
 				    
 				    <div class='form-group col-sm-1 bottom_button'>
-		            	{{ Form::button('Delete', ['class' => 'btn btn-danger delete_glossed_text', 'style' => 'display: none'])}}    
+		            	{{ Form::button('Delete', ['class' => 'btn btn-xs btn-danger delete_glossed_text', 'style' => 'display: none'])}}    
 					</div>
 			    </div>
 			    
@@ -1668,7 +1668,7 @@
 					    </div>
 					    
 					    <div class='form-group col-sm-1'>
-				    		{{ Form::submit('Clear', ['class' => 'btn btn-warning comment_clear']) }}
+				    		{{ Form::submit('Clear', ['class' => 'btn btn-xs btn-warning comment_clear']) }}
 					    </div>
 					@endif
 				</div>
@@ -1686,7 +1686,7 @@
 		   		<div class='form-group col-sm-1 '> 
 		   			{{ Form::open(['class' => 'attach_gloss_form', 'id' => 'attach_gloss_form']) }} 
 		   				{{ Form::hidden('glossed_text_id', 0, ['id' => 'glossed_text_id']) }} 
-			    		{{ Form::submit('Attach Gloss', ['class' => 'btn btn-success', 'id' => 'attach_gloss_button', 'style' => 'display: none']) }}
+			    		{{ Form::submit('Attach Gloss', ['class' => 'btn btn-xs btn-success', 'id' => 'attach_gloss_button', 'style' => 'display: none']) }}
 			    	{{ Form::close() }}
 			    </div>
 			</div>
@@ -1701,7 +1701,7 @@
 	  <div class='row'>
 	  	<div class='col-sm-1'></div>
 	  	<div class="col-sm-1">
-	  		<a class="btn btn-success" id="add_glossed_text">Create New Glossed Text</a>
+	  		<a class="btn btn-xs btn-success" id="add_glossed_text">Create New Glossed Text</a>
 	  	</div>
 	  </div>
 	  
@@ -1729,7 +1729,7 @@
 				    </div>
 				    
 				    <div class='form-group col-sm-1 bottom_button'>
-					    {{ Form::submit('Edit Order', ['class' => 'btn btn-primary']) }}
+					    {{ Form::submit('Edit Order', ['class' => 'btn btn-xs btn-primary']) }}
 					    {{ Form::close() }}
 					</div>
 				    	
@@ -1742,7 +1742,7 @@
 		   			<div class='col-sm-1 bottom_button'>
 	    				{{ Form::open(['class' => 'edit_gloss', 'id' => 'edit_gloss']) }} 
 	    					{{ Form::hidden('gloss_id', null, ['id' => 'gloss_id']) }}
-	    					{{ Form::submit('Edit Gloss', ['class' => 'btn btn-primary']) }}
+	    					{{ Form::submit('Edit Gloss', ['class' => 'btn btn-xs btn-primary']) }}
 	    				{{ Form::close() }}
 	    			</div>
 				    
@@ -1751,7 +1751,7 @@
 	    							   'url' => '/admin2/eieol_glossed_text_gloss/', 
 	    							   'id' => 'delete_gloss']) }} 
 	    					{{ Form::hidden('glossed_text_gloss_id', null, ['id' => 'glossed_text_gloss_id']) }}
-		            		{{ Form::button('Remove', ['class' => 'btn btn-danger delete_glossed_text_gloss', 'style' => 'display: none'])}}  
+		            		{{ Form::button('Remove', ['class' => 'btn btn-xs btn-danger delete_glossed_text_gloss', 'style' => 'display: none'])}}  
 		            	{{ Form::close() }} 
 					</div>
 					  
@@ -1814,7 +1814,7 @@
 			    </div>
 			    
 			    <div class='form-group col-sm-1'>
-		    		{{ Form::submit('Clear', ['class' => 'btn btn-warning comment_clear']) }}
+		    		{{ Form::submit('Clear', ['class' => 'btn btn-xs btn-warning comment_clear']) }}
 			    </div>
 		    @else
 		    	@if ($lesson->translation_admin_comments)
@@ -1830,7 +1830,7 @@
 					
 	    <div class='row'>
 	    	<div class='form-group col-sm-1 col-sm-offset-1'>
-	    		{{ Form::submit('Edit Translation', ['class' => 'btn btn-primary']) }}
+	    		{{ Form::submit('Edit Translation', ['class' => 'btn btn-xs btn-primary']) }}
 	    	</div>
 	    </div>
 	    
@@ -1899,7 +1899,7 @@
 						    </div>
 						    
 						    <div class='form-group col-sm-1'>
-					    		{{ Form::submit('Clear', ['class' => 'btn btn-warning comment_clear']) }}
+					    		{{ Form::submit('Clear', ['class' => 'btn btn-xs btn-warning comment_clear']) }}
 						    </div>
 					    @else
 					    	@if ($grammar->admin_comments)
@@ -1926,13 +1926,13 @@
 					<div class='row'>
 			    		<div class='form-group col-sm-1 '></div>
 			    		<div class='form-group col-sm-1 '>
-			    			{{ Form::submit('Edit', ['class' => 'btn btn-primary']) }}
+			    			{{ Form::submit('Edit', ['class' => 'btn btn-xs btn-primary']) }}
 					        
 			    		</div>
 			    		
 			    		<div class='form-group col-sm-8 '></div>
 			    		<div class='form-group col-sm-1 '>
-			            	{{ Form::button('Delete', ['class' => 'btn btn-danger delete_grammar'])}}    
+			            	{{ Form::button('Delete', ['class' => 'btn btn-xs btn-danger delete_grammar'])}}    
 						</div>
 				    </div>
 			    {{ Form::close() }}
@@ -1999,7 +1999,7 @@
 					    </div>
 					    
 					    <div class='form-group col-sm-1'>
-				    		{{ Form::submit('Clear', ['class' => 'btn btn-warning comment_clear']) }}
+				    		{{ Form::submit('Clear', ['class' => 'btn btn-xs btn-warning comment_clear']) }}
 					    </div>
 					@endif
 				</div>
@@ -2018,13 +2018,13 @@
 			    <div class='row'>
 		    		<div class='form-group col-sm-1 '></div>
 		    		<div class='form-group col-sm-1 '>
-		    			{{ Form::submit('Add', ['class' => 'btn btn-success']) }}
+		    			{{ Form::submit('Add', ['class' => 'btn btn-xs btn-success']) }}
 				        
 		    		</div>
 		    		
 		    		<div class='form-group col-sm-8 '></div>
 		    		<div class='form-group col-sm-1 '>
-		            	{{ Form::button('Delete', ['class' => 'btn btn-danger delete_grammar', 'style' => 'display: none'])}}    
+		            	{{ Form::button('Delete', ['class' => 'btn btn-xs btn-danger delete_grammar', 'style' => 'display: none'])}}    
 					</div>
 			    </div>
 		    
@@ -2038,7 +2038,7 @@
 	  <div class='row'>
 	  	<div class='col-sm-1'></div>
 	  	<div class="col-sm-1">
-	  		<a class="btn btn-success" id="add_grammar">Create New Grammar</a>
+	  		<a class="btn btn-xs btn-success" id="add_grammar">Create New Grammar</a>
 	  	</div>
 	  </div>
     
