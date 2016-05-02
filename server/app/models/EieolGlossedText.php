@@ -22,6 +22,9 @@ class EieolGlossedText extends Eloquent {
 		$new_str = '';
 		
 		foreach($this->glosses as $gloss){
+			$gloss->surface_form = str_replace("<br/>", " ", $gloss->surface_form);
+			$gloss->surface_form = str_replace("<br />", " ", $gloss->surface_form);
+			$gloss->surface_form = str_replace("<br>", " ", $gloss->surface_form);
 			$start = mb_stripos($read_str, $gloss->surface_form, 0, 'UTF-8');
 			$len = mb_strlen($gloss->surface_form, 'UTF-8');
 			
