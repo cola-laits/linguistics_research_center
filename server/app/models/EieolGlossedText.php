@@ -19,12 +19,14 @@ class EieolGlossedText extends Eloquent {
 		//this makes a new version of the glossed text with span tags for each gloss.  
 		//Then you can make them clickable so they toggle the gloss.
 		$read_str = $this->glossed_text;
+		$read_str = str_replace("<br/>", "<br/> ", $read_str);
+		$read_str = str_replace("<br />", "<br /> ", $read_str);
+		$read_str = str_replace("<br>", "<br> ", $read_str);
+		
 		$new_str = '';
 		
 		foreach($this->glosses as $gloss){
-			$gloss->surface_form = str_replace("<br/>", " ", $gloss->surface_form);
-			$gloss->surface_form = str_replace("<br />", " ", $gloss->surface_form);
-			$gloss->surface_form = str_replace("<br>", " ", $gloss->surface_form);
+
 			$start = mb_stripos($read_str, $gloss->surface_form, 0, 'UTF-8');
 			$len = mb_strlen($gloss->surface_form, 'UTF-8');
 			
