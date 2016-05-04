@@ -23,9 +23,7 @@ class EieolGlossedText extends Eloquent {
 		$read_str = str_replace("<br />", "<br /> ", $read_str);
 		$read_str = str_replace("<br>", "<br> ", $read_str);
 		
-		$punctuation = array(",",".","!","?",":",";","(",")");
-		$read_str = str_replace($punctuation, "", $read_str);
-		
+		$punctuation = array(",",".","!","?",":",";","(",")");		
 		$new_str = '';
 		
 		foreach($this->glosses as $gloss){
@@ -45,24 +43,30 @@ class EieolGlossedText extends Eloquent {
 				$num_spaces = substr_count(strip_tags(trim($gloss->surface_form)), ' ');
 				
 				for ($i=0; $i < mb_strlen($read_str,'UTF-8'); $i++) {
+					$char = mb_substr($read_str, $i, 1, 'UTF-8');
 					//if we are in an html tag, skip until we get out
 					if ($in_tag) {
-						if (mb_substr($read_str, $i, 1, 'UTF-8') == '>') {
+						if ($char == '>') {
 							$in_tag = false;
 						}
 						continue;
 					}
-					if (mb_substr($read_str, $i, 1, 'UTF-8') == '<') {
+					if ($char == '<') {
 						$in_tag = true;
 						continue;
 					}
 					
+					//skip punctuation
+					if (in_array($char, $punctuation)){
+						continue;
+					}
+					
 					//set the start as the first non blank character
-					if ($start === false && mb_substr($read_str, $i, 1, 'UTF-8') != ' ') {
+					if ($start === false && $char != ' ') {
 						$start = $i;
 					}
 					//the end is the first space after the start, unless we have some to skip
-					if ($start !== false && mb_substr($read_str, $i, 1, 'UTF-8') == ' ') {
+					if ($start !== false && $char == ' ') {
 						if ($num_spaces > 0) {
 							$num_spaces -= 1;
 							continue;
