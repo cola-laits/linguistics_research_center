@@ -23,6 +23,9 @@ class EieolGlossedText extends Eloquent {
 		$read_str = str_replace("<br />", "<br /> ", $read_str);
 		$read_str = str_replace("<br>", "<br> ", $read_str);
 		
+		$punctuation = array(",",".","!","?",":",";","(",")");
+		$read_str = str_replace($punctuation, "", $read_str);
+		
 		$new_str = '';
 		
 		foreach($this->glosses as $gloss){
@@ -30,10 +33,14 @@ class EieolGlossedText extends Eloquent {
 			$start = mb_stripos($read_str, $gloss->surface_form, 0, 'UTF-8');
 			$len = mb_strlen($gloss->surface_form, 'UTF-8');
 			
+			#print $gloss->surface_form . ' ' . $start . ' ' . $len . '<br/>';
+			
 			//if you get here, the gloss didn't exactly match the glossed text.  Let's try to guess.
 			if ($start === false) {
-// 				print 'alert ';
 				$in_tag = false;
+				
+				#print '____alert<br/>';
+				
 				//the gloss might contain space.  If so we'll skip that many spaces.
 				$num_spaces = substr_count(strip_tags(trim($gloss->surface_form)), ' ');
 				
@@ -64,6 +71,7 @@ class EieolGlossedText extends Eloquent {
 						break;
 					}
 				}
+				
 			}
 			
 // 			print $read_str . '<br/>' .
