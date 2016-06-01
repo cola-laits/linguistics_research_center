@@ -67,7 +67,7 @@ class EieolHeadWordController extends BaseController {
 	
 		$rules = array(
 				//have to put definition in quotes in case it has a comma in it
-			'word' => 'required|regex:/^<.*>$/|unique:eieol_head_word,word,null,id,definition,"' . Normalizer::normalize(Input::get('definition'), Normalizer::FORM_D ) . '"', 
+			'word' => 'required|regex:/^<.*>$/|unique:eieol_head_word,word,null,id,definition,"' . Normalizer::normalize(Input::get('definition'), Normalizer::FORM_D ) . '",language_id,'. Input::get('language_id'), 
 			'definition' => 'required',
 			'keywords' => 'required',
 			'language_id' => 'required',
@@ -135,7 +135,7 @@ class EieolHeadWordController extends BaseController {
 	{
 		$rules = array(
 				//have to put definition in quotes in case it has a comma in it
-			'word' => 'required|regex:/^<.*>$/|unique:eieol_head_word,word,' . $id . ',id,definition,"' . Normalizer::normalize(Input::get('definition'), Normalizer::FORM_D ) . '"', 
+			'word' => 'required|regex:/^<.*>$/|unique:eieol_head_word,word,' . $id . ',id,definition,"' . Normalizer::normalize(Input::get('definition'), Normalizer::FORM_D ) . '",language_id,'. Input::get('language_id'), 
 			'definition' => 'required',
 		);
 		$messages = array(
