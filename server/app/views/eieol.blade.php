@@ -128,7 +128,7 @@ bibliography appears at the end of the Series Introduction.</p>
 <p><b>Ancient Sanskrit Online</b> [2006] is a 10-lesson series with texts from the <i>Rigveda</i>, dating perhaps from 
 the beginning of the 2nd millennium B.C.  A separate tabular index to Rigvedic passages covered in the series is included 
 (see link at bottom of Series Introduction page). After this series was completed, an online version of the full
-<a title="The Rigveda: Metrically Restored Text" href="http://www.utexas.edu/cola/centers/lrc/RV/">metrically restored Rigveda text</a>
+<a title="The Rigveda: Metrically Restored Text" href="https://liberalarts.utexas.edu/lrctr/resources/early-indo-european-texts/indic/complete-rigveda/index.php">metrically restored Rigveda text</a>
 was prepared; it is transcribed in Unicode.</p>
 
 <p><b>Gothic Online</b> [2006] is a 10-lesson series with texts from the Gothic <i>New Testament</i> and from 
@@ -196,8 +196,8 @@ the <a title="Spanish &amp; Portuguese Department website" href="http://www.utex
 
 <h4>Indo-European Language Resources Elsewhere</h4>
 
-<p>Our <a title="Offsite Web Links" href="http://www.utexas.edu/cola/centers/lrc/links.html">Web Links</a> page includes pointers to 
-<a title="Links to other websites with Indo-European language resources" href="http://www.utexas.edu/cola/centers/lrc/links.html#PIE">Indo-European language resources elsewhere</a>.</p>
+<p>Our <a title="Offsite Web Links" href="http://liberalarts.utexas.edu/lrctr/links.php">Web Links</a> page includes pointers to 
+<a title="Links to other websites with Indo-European language resources" href="http://liberalarts.utexas.edu/lrctr/links.php#PIE">Indo-European language resources elsewhere</a>.</p>
 </div>
 @stop
 
@@ -206,5 +206,4 @@ the <a title="Spanish &amp; Portuguese Department website" href="http://www.utex
 	@include('menu_menu')
 	@include('menu_series', array('data'=>'data'))
 	@include('menu_book_links')
-	@include('menu_more_info')
 @stop

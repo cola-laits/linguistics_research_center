@@ -24,7 +24,7 @@ W&ouml;rterbuch</i> (IEW), along with our own glosses of their meanings and chai
 derived from IEW. Our project's next step required, among other things, human editing of massive 
 content assembled via software from electronic sources; additional content is now being acquired 
 from selected print &amp; online sources. For those who are interested, an 
-<a title="Building an Indo-European Lexicon" href="http://www.utexas.edu/cola/centers/lrc/papers/IElex.html">online paper</a> 
+<a title="Building an Indo-European Lexicon" href="https://liberalarts.utexas.edu/lrctr/resources/indo-european-lexicon.php">online paper</a> 
 outlines the nature of our early work in this project.</p>
 
 <p>Work on our IE Lexicon has become our primary focus. For most of our 
