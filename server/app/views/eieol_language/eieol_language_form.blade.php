@@ -84,13 +84,19 @@
         	Further, "L", "l" and "ll" are the same.  In other words, "ll" is treated as a single character.<br/>
         	Example: a=A,b=B,c=C,d=D,e=E,f=F,g=G,h=H,i=I,J=j,K=k,L=l=ll,M=m,N=n,O=o,P=p=π,Q=q,R=r,S=s,T=t,U=u,V=v,W=w,X=x,Y=y,Z=z
         	<hr/>
-        	To help you out, here is a list of all the characters used in surface forms and head words within lessons that use this language.<br/>
+        	
         </div>
-        <div class="alert-info timesy">
-        	@foreach ($chars as $char)
-        		{{$char}}
-        	@endforeach
-        </div>
+        
+        @if ($action != 'Create')
+        	<div class="alert-warning">
+        		To help you out, here is a list of all the characters used in surface forms and head words within lessons that use this language.<br/>
+        	</div>
+	        <div class="alert-info timesy">
+	        	@foreach ($chars as $char)
+	        		{{$char}}
+	        	@endforeach
+	        </div>
+	    @endif
     </div>
  
     <div class='form-group'>
