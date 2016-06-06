@@ -57,24 +57,4 @@ Route::group(array('prefix'=> 'admin2', 'before' => 'auth|admin'), function() {
 	Route::get('/user/password_form/{id}', 'UserController@password_form');
 	Route::put('/user/change_password/{id}', 'UserController@change_password');
 	Route::resource('/user', 'UserController');
-
-	Route::get('load', 'LoadController@load');
-	Route::post('eieol_delete', 'LoadController@eieol_delete');
-	Route::post('eieol_load', 'LoadController@eieol_load');
-	Route::post('index_load', 'LoadController@index_load');
-	Route::post('element_count', 'LoadController@element_count');
-	Route::post('pos_analysis_load', 'LoadController@pos_analysis_load');
-	Route::post('gloss_sweep', 'LoadController@gloss_sweep');
-	Route::post('sem_etyma_load', 'LoadController@sem_etyma_load');
-	Route::post('lex_sources_load', 'LoadController@lex_sources_load');
-	Route::post('lex_pos_load', 'LoadController@lex_pos_load');
-	Route::post('lex_lang_load', 'LoadController@lex_lang_load');
-	Route::post('lex_sem_load', 'LoadController@lex_sem_load');
-	Route::post('lex_load', 'LoadController@lex_load');
-	Route::post('lex_cross_load', 'LoadController@lex_cross_load');
-	Route::post('default_alpha', 'LoadController@default_alpha');
-	Route::post('link_headword_to_eytma', 'LoadController@link_headword_to_eytma');
-	Route::post('paren_count', 'LoadController@paren_count');
-	Route::post('sweep_anal_and_pos', 'LoadController@sweep_anal_and_pos');
-	Route::post('delete_langless_anal_and_pos', 'LoadController@delete_langless_anal_and_pos');
 });
