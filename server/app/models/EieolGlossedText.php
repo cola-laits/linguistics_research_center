@@ -22,27 +22,28 @@ class EieolGlossedText extends Eloquent {
 		$read_str = str_replace("<br/>", "<br/> ", $read_str);
 		$read_str = str_replace("<br />", "<br /> ", $read_str);
 		$read_str = str_replace("<br>", "<br> ", $read_str);
+		$read_str = str_replace("</p>", "</p> ", $read_str);
 		
-		$punctuation = array(",",".","!","?",":",";","(",")");		
+		$punctuation = array(",",".","!","?",":","(",")");		
 		$new_str = '';
 		
 		foreach($this->glosses as $gloss){
 
 			$start = mb_stripos($read_str, $gloss->surface_form, 0, 'UTF-8');
 			$len = mb_strlen($gloss->surface_form, 'UTF-8');
-			
-			#print $gloss->surface_form . ' ' . $start . ' ' . $len . '<br/>';
+			//print $gloss->surface_form . ' ' . $start . ' ' . $len . '<br/>';
 			
 			//if you get here, the gloss didn't exactly match the glossed text.  Let's try to guess.
 			if ($start === false) {
 				$in_tag = false;
 				
-				#print '____alert<br/>';
+				//print '____alert<br/>';
 				
 				//the gloss might contain space.  If so we'll skip that many spaces.
 				$num_spaces = substr_count(strip_tags(trim($gloss->surface_form)), ' ');
 				
 				for ($i=0; $i < mb_strlen($read_str,'UTF-8'); $i++) {
+					
 					$char = mb_substr($read_str, $i, 1, 'UTF-8');
 					//if we are in an html tag, skip until we get out
 					if ($in_tag) {
