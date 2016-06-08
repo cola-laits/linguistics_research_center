@@ -36,9 +36,9 @@ the page content is in <section class="main-section">
 	
 	              <section class="left tab-bar-section">
 			        <a href="http://www.utexas.edu/">
-					<img alt="The University of Texas at Austin" class="texas" onerror="this.onerror=null;this.src='https://www.utexas.edu/cola/_internal/images/2015_TEXAS_wordmark_white.png'" src="https://www.utexas.edu/cola/_internal/images/2015_cola_texas3.svg"/></a>
-					<a href="http://www.utexas.edu/cola/">
-					<img alt="College of Liberal Arts - The University of Texas at Austin" class="cla" onerror="this.onerror=null;this.src='https://www.utexas.edu/cola/_internal/images/2015_TEXAS_wordmark_white.png'" src="https://www.utexas.edu/cola/_internal/images/2015_cola_logo3.svg"/></a>
+					<img alt="The University of Texas at Austin" class="texas" onerror="this.onerror=null;this.src='https://liberalarts.utexas.edu/_internal/images/2015_TEXAS_wordmark_white.png'" src="https://liberalarts.utexas.edu/_internal/images/2015_cola_texas3.svg"/></a>
+					<a href="http://liberalarts.utexas.edu/">
+					<img alt="College of Liberal Arts - The University of Texas at Austin" class="cla" onerror="this.onerror=null;this.src='https://liberalarts.utexas.edu/_internal/images/2015_TEXAS_wordmark_white.png'" src="https://liberalarts.utexas.edu/_internal/images/2015_cola_logo3.svg"/></a>
 	              </section>
 	
 	            </nav>      
@@ -61,23 +61,23 @@ the page content is in <section class="main-section">
                 		<!-- COLLEGE WIDE NAV - STATIC CONTENT -->
                   		<li class="college closed">
                     		<a class="off-canvas-submenu-call" href="#">
-                      			<img alt="The University of Texas at Austin" onerror="this.onerror=null;this.src='https://www.utexas.edu/cola/_internal/images/images/2015_cola_logo_phone.png'" src="https://www.utexas.edu/cola/_internal/images/2015_cola_logo_phone.svg"/>
+                      			<img alt="The University of Texas at Austin" onerror="this.onerror=null;this.src='https://liberalarts.utexas.edu/_internal/images/images/2015_cola_logo_phone.png'" src="https://liberalarts.utexas.edu/_internal/images/2015_cola_logo_phone.svg"/>
                     		</a>
                     		<ul class="no-bullet off-canvas-submenu">
-                      			<li class="underline"><a href="http://www.utexas.edu/cola/">College of Liberal Arts</a> </li>
+                      			<li class="underline"><a href="http://liberalarts.utexas.edu/">College of Liberal Arts</a> </li>
                       			<li><a href="http://www.utexas.edu/">University of Texas at Austin</a> </li>
                       			<li><hr/></li>
-                      			<li class="underline"><a href="http://www.utexas.edu/cola/offices/departments/">Departments</a> </li>
-                      			<li class="underline"> <a href="http://www.utexas.edu/cola/research/graduate-studies/prospective">Graduate Resources</a> </li>
-                      			<li class="underline"> <a href="http://www.utexas.edu/cola/student-affairs/Prospective/">Undergraduate Resources</a> </li>
-                      			<li class="underline"> <a href="http://www.utexas.edu/cola/courses/">Courses</a> </li>
+                      			<li class="underline"><a href="http://liberalarts.utexas.edu/offices/departments/">Departments</a> </li>
+                      			<li class="underline"> <a href="http://liberalarts.utexas.edu/research/graduate-studies/prospective">Graduate Resources</a> </li>
+                      			<li class="underline"> <a href="http://liberalarts.utexas.edu/student-affairs/Prospective/">Undergraduate Resources</a> </li>
+                      			<li class="underline"> <a href="http://liberalarts.utexas.edu/courses/">Courses</a> </li>
                      			<li> <a href="http://online-education.la.utexas.edu/">Online Courses</a> </li>
                       			<li><hr/></li>
-                      			<li class="underline"> <a href="http://www.utexas.edu/cola/office-of-the-dean/college-leadership.php">Dean's Office</a> </li>
-                      			<li class="underline"> <a href="http://www.utexas.edu/cola/alumni-and-giving/">Alumni &amp; Giving </a> </li>
-                      			<li> <a href="http://www.utexas.edu/cola/public-affairs/resources/faculty-by-department.php">Faculty by Department</a> </li>
+                      			<li class="underline"> <a href="http://liberalarts.utexas.edu/office-of-the-dean/college-leadership.php">Dean's Office</a> </li>
+                      			<li class="underline"> <a href="http://liberalarts.utexas.edu/alumni-and-giving/">Alumni &amp; Giving </a> </li>
+                      			<li> <a href="http://liberalarts.utexas.edu/public-affairs/resources/faculty-by-department.php">Faculty by Department</a> </li>
                       			<li>
-			                        <form action="https://www.utexas.edu/cola/search/" id="search-small">
+			                        <form action="https://liberalarts.utexas.edu/search/" id="search-small">
 			                          <input name="cx" type="hidden" value="002688418440466237416:ilehtu0wbts"/>
 			                          <input name="cof" type="hidden" value="FORID:10"/>
 			                          <input name="ie" type="hidden" value="UTF-8"/>
@@ -107,8 +107,8 @@ the page content is in <section class="main-section">
                     
                     <ul class="side-nav">
                     	<li><label>Office</label></li>
-                    	<li><a href="http://www.utexas.edu/cola/lrctr/staff.php">Staff List</a></li>
-                    	<li><a href="http://www.utexas.edu/cola/lrctr/contact-us.php">Contact Us</a></li>
+                    	<li><a href="http://liberalarts.utexas.edu/lrctr/staff.php">Staff List</a></li>
+                    	<li><a href="http://liberalarts.utexas.edu/lrctr/contact-us.php">Contact Us</a></li>
                     </ul>
                     <!-- END SYSTEM-REGION NAV-SM-OFFICE -->
 
@@ -162,10 +162,10 @@ the page content is in <section class="main-section">
 	                <ul class="title-area">
 	                    <li class="name">
 	    					<a href="http://www.utexas.edu/">
-	    						<img alt="The University of Texas at Austin" class="texas" src="https://www.utexas.edu/cola/_internal/images/2015_cola_texas3.svg"/>
+	    						<img alt="The University of Texas at Austin" class="texas" src="https://liberalarts.utexas.edu/_internal/images/2015_cola_texas3.svg"/>
 							</a>
-	    					<a href="http://www.utexas.edu/cola">
-								<img alt="College of Liberal Arts - The University of Texas at Austin" class="cla" onerror="this.onerror=null;this.src='https://www.utexas.edu/cola/_internal/images/2015_TEXAS_wordmark_white.png'" src="https://www.utexas.edu/cola/_internal/images/2015_cola_logo3.svg"/>
+	    					<a href="http://liberalarts.utexas.edu">
+								<img alt="College of Liberal Arts - The University of Texas at Austin" class="cla" onerror="this.onerror=null;this.src='https://liberalarts.utexas.edu/_internal/images/2015_TEXAS_wordmark_white.png'" src="https://liberalarts.utexas.edu/_internal/images/2015_cola_logo3.svg"/>
 							</a>
 	                    </li>
 	                    <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
@@ -177,7 +177,7 @@ the page content is in <section class="main-section">
 	                    <!-- Right Orange Bar Section -->
 	                    <ul class="right">
 	                        <li>
-	                            <form action="https://www.utexas.edu/cola/search" id="search-medium-up">
+	                            <form action="https://liberalarts.utexas.edu/search" id="search-medium-up">
 	                                <input name="cx" type="hidden" value="002688418440466237416:ilehtu0wbts"/>
 	                                <input name="cof" type="hidden" value="FORID:10"/>
 	                                <input name="ie" type="hidden" value="UTF-8"/>
@@ -211,14 +211,14 @@ the page content is in <section class="main-section">
 
 		            	<!-- replaced by page-level template -->
 						<div class="small-6 columns hide-for-small-only">
-							<a href="http://www.utexas.edu/cola/lrctr/index.php">
-								<img alt="" class="lockup" src="https://www.utexas.edu/cola/_internal/images/logo-formal/Centers/LinguisticsResearchCenter.png"/>
+							<a href="http://liberalarts.utexas.edu/lrctr/index.php">
+								<img alt="" class="lockup" src="https://liberalarts.utexas.edu/_internal/images/logo-formal/Centers/LinguisticsResearchCenter.png"/>
 							</a>
 						</div>
 						
 						<div class="small-12 columns hide-for-medium-up">
-							<a href="http://www.utexas.edu/cola/lrctr/index.php">
-								<img alt="" class="lockup" src="https://www.utexas.edu/cola/_internal/images/logo-formal/Centers/LinguisticsResearchCenter.png"/>
+							<a href="http://liberalarts.utexas.edu/lrctr/index.php">
+								<img alt="" class="lockup" src="https://liberalarts.utexas.edu/_internal/images/logo-formal/Centers/LinguisticsResearchCenter.png"/>
 							</a>
 						</div>
 						
@@ -343,7 +343,7 @@ the page content is in <section class="main-section">
             <!-- Logo Social Media Row --><div class="row footer">
 <div class="small-12 medium-5 large-4 columns">
 <ul class="small-block-grid-1 logo-footer">
-<li><a data-gtm-event="nav-college-footer-cla" href="http://www.utexas.edu/cola/index.php"><img alt="The University of Texas at Austin College of Liberal Arts" height="45" onerror="this.onerror=null;this.src='https://www.utexas.edu/cola/_internal/images/2015_colafooter_logo.png'" src="https://www.utexas.edu/cola/_internal/images/2015_colafooter_logo.svg" width="280"/></a></li>
+<li><a data-gtm-event="nav-college-footer-cla" href="http://liberalarts.utexas.edu/index.php"><img alt="The University of Texas at Austin College of Liberal Arts" height="45" onerror="this.onerror=null;this.src='https://liberalarts.utexas.edu/_internal/images/2015_colafooter_logo.png'" src="https://liberalarts.utexas.edu/_internal/images/2015_colafooter_logo.svg" width="280"/></a></li>
 </ul>
 </div>
 <!-- Social Media Small -->
@@ -380,9 +380,9 @@ the page content is in <section class="main-section">
 <li>
 <h3>Students</h3>
 </li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/student-affairs/Prospective/">Prospective</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/student-affairs/">Undergraduate</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/research/">Graduate</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/student-affairs/Prospective/">Prospective</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/student-affairs/">Undergraduate</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/research/">Graduate</a></li>
 </ul>
 <ul class="no-bullet">
 <li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/maps/">Campus Map</a></li>
@@ -390,7 +390,7 @@ the page content is in <section class="main-section">
 <br class="show-for-large-only"/>
 <p class="hide-for-medium-only address" itemscope="" itemtype="http://schema.org/CollegeOrUniversity"><span itemprop="name">The College of Liberal Arts<br/>
  The University of Texas at Austin<br/>
-</span> <link href="http://www.utexas.edu/cola/" itemprop="sameAs"/> <span itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress"><span itemprop="streetAddress">116 Inner Campus Dr Stop G6000</span><br/>
+</span> <link href="http://liberalarts.utexas.edu/" itemprop="sameAs"/> <span itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress"><span itemprop="streetAddress">116 Inner Campus Dr Stop G6000</span><br/>
  <span itemprop="addressLocality">Austin</span>, <span itemprop="addressRegion">TX</span> <span itemprop="postalCode">78712</span></span></p>
 <p class="hide-for-medium-only address" itemscope="" itemtype="http://schema.org/CollegeOrUniversity">General Inquiries:<br class="show-for-small-only"/>
  <span itemprop="telephone"><a data-gtm-event="nav-college-footer-phone-general" href="tel:512-471-4141">512-471-4141</a></span><br/>
@@ -405,20 +405,20 @@ the page content is in <section class="main-section">
 <div class="large-11 large-offset-1 show-for-large-up columns end">
 <ul class="no-bullet">
 <li>
-<h3><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/offices/departments/">Departments</a></h3>
+<h3><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/offices/departments/">Departments</a></h3>
 </li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/aads/">African &amp; African Diaspora Studies</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/afrotc/">Air Force Science</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/ams/">American Studies</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/anthropology/">Anthropology</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/asianstudies/">Asian Studies</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/classics/">Classics</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/economics/">Economics</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/english/">English</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/frenchitalian/">French &amp; Italian</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/geography/">Geography &amp; the Environment</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/germanic/">Germanic Studies</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/government/">Government</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/aads/">African &amp; African Diaspora Studies</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/afrotc/">Air Force Science</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/ams/">American Studies</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/anthropology/">Anthropology</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/asianstudies/">Asian Studies</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/classics/">Classics</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/economics/">Economics</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/english/">English</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/frenchitalian/">French &amp; Italian</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/geography/">Geography &amp; the Environment</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/germanic/">Germanic Studies</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/government/">Government</a></li>
 </ul>
 </div>
 </div>
@@ -428,40 +428,40 @@ the page content is in <section class="main-section">
 <div class="medium-11 medium-offset-1 show-for-medium-only columns end">
 <ul class="no-bullet show-for-medium-only">
 <li>
-<h3><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/offices/departments/">Departments</a></h3>
+<h3><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/offices/departments/">Departments</a></h3>
 </li>
 <li>
-<h3><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/offices/centers/">Centers</a></h3>
+<h3><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/offices/centers/">Centers</a></h3>
 </li>
 <li>
-<h3><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/offices/institutes/">Institutes</a></h3>
+<h3><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/offices/institutes/">Institutes</a></h3>
 </li>
 <li>
-<h3><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/offices/programs/">Programs</a></h3>
+<h3><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/offices/programs/">Programs</a></h3>
 </li>
 <li>
-<h3><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/offices/initiatives/">Initiatives</a></h3>
+<h3><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/offices/initiatives/">Initiatives</a></h3>
 </li>
 <li>
-<h3><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/office-of-the-dean/college-leadership.php">Administration</a></h3>
+<h3><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/office-of-the-dean/college-leadership.php">Administration</a></h3>
 </li>
 </ul>
 </div>
 <div class="large-11 large-offset-1 show-for-large-up columns end">
 <ul class="no-bullet">
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/history/">History</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/linguistics/">Linguistics</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/mals/">Mexican American Latina/o Studies</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/mes/">Middle Eastern Studies</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/arotc/">Military Science</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/navymarine/">Naval Science</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/philosophy/">Philosophy</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/psychology/">Psychology</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/rs/">Religious Studies</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/rhetoric/">Rhetoric &amp; Writing</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/slavic/">Slavic &amp; Eurasian Studies</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/sociology/">Sociology</a></li>
-<li><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/spanish/">Spanish &amp; Portuguese</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/history/">History</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/linguistics/">Linguistics</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/mals/">Mexican American Latina/o Studies</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/mes/">Middle Eastern Studies</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/arotc/">Military Science</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/navymarine/">Naval Science</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/philosophy/">Philosophy</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/psychology/">Psychology</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/rs/">Religious Studies</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/rhetoric/">Rhetoric &amp; Writing</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/slavic/">Slavic &amp; Eurasian Studies</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/sociology/">Sociology</a></li>
+<li><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/spanish/">Spanish &amp; Portuguese</a></li>
 </ul>
 </div>
 </div>
@@ -471,32 +471,32 @@ the page content is in <section class="main-section">
 <div class="small-11 small-offset-1 columns end">
 <ul class="no-bullet">
 <li class="show-for-small-only">
-<h3><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/offices/departments/">Departments</a></h3>
+<h3><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/offices/departments/">Departments</a></h3>
 </li>
 <li class="show-for-small-only">
-<h3><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/offices/centers/">Centers</a></h3>
+<h3><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/offices/centers/">Centers</a></h3>
 </li>
 <li class="show-for-small-only">
-<h3><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/offices/institutes/">Institutes</a></h3>
+<h3><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/offices/institutes/">Institutes</a></h3>
 </li>
 <li class="show-for-small-only">
-<h3><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/offices/programs/">Programs</a></h3>
+<h3><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/offices/programs/">Programs</a></h3>
 </li>
 <li class="show-for-small-only">
-<h3><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/offices/initiatives/">Initiatives</a></h3>
+<h3><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/offices/initiatives/">Initiatives</a></h3>
 </li>
 <li class="hide-for-medium-only">
-<h3><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/office-of-the-dean/college-leadership.php">Administration</a></h3>
+<h3><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/office-of-the-dean/college-leadership.php">Administration</a></h3>
 </li>
-<li class="show-for-large-up"><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/office-of-the-dean/">Office of the Dean</a></li>
-<li class="show-for-large-up"><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/academic-affairs/">Academic Affairs</a></li>
-<li class="show-for-large-up"><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/research/">Research &amp; Graduate Studies</a></li>
-<li class="show-for-large-up"><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/student-affairs/">Student Affairs</a></li>
-<li class="show-for-large-up"><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/business-affairs/">Business Affairs</a></li>
-<li class="show-for-large-up"><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/human-resources/">Human Resources</a></li>
-<li class="show-for-large-up"><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/alumni-and-giving/">Alumni &amp; Giving</a></li>
-<li class="show-for-large-up"><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/public-affairs/">Public Affairs</a></li>
-<li class="show-for-large-up"><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cola/laits/">LAITS: IT &amp; Facilities</a></li>
+<li class="show-for-large-up"><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/office-of-the-dean/">Office of the Dean</a></li>
+<li class="show-for-large-up"><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/academic-affairs/">Academic Affairs</a></li>
+<li class="show-for-large-up"><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/research/">Research &amp; Graduate Studies</a></li>
+<li class="show-for-large-up"><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/student-affairs/">Student Affairs</a></li>
+<li class="show-for-large-up"><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/business-affairs/">Business Affairs</a></li>
+<li class="show-for-large-up"><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/human-resources/">Human Resources</a></li>
+<li class="show-for-large-up"><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/alumni-and-giving/">Alumni &amp; Giving</a></li>
+<li class="show-for-large-up"><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/public-affairs/">Public Affairs</a></li>
+<li class="show-for-large-up"><a data-gtm-event="nav-college-footer" href="http://liberalarts.utexas.edu/laits/">LAITS: IT &amp; Facilities</a></li>
 <li class="show-for-medium-only address">The University of Texas at Austin<br/>
  116 Inner Campus Dr Stop G6000<br/>
  Austin, TX 78712</li>
@@ -521,10 +521,10 @@ the page content is in <section class="main-section">
 
   	</div>  <!-- Close <div class="inner-wrap"> -->
 </div> <!-- Close <div class="off-canvas-wrap" data-offcanvas=""> -->
-<script src="https://www.utexas.edu/cola/_internal/js/foundation.min.js" type="text/javascript"></script>
-<script src="https://www.utexas.edu/cola/_internal/js/foundation.offcanvas.js"></script>
+<script src="https://liberalarts.utexas.edu/_internal/js/foundation.min.js" type="text/javascript"></script>
+<script src="https://liberalarts.utexas.edu/_internal/js/foundation.offcanvas.js"></script>
 <script src="//cdn.jsdelivr.net/jquery.slick/1.4.1/slick.min.js" type="text/javascript"></script>
-<script src="https://www.utexas.edu/cola/_internal/js/app.js" type="text/javascript"></script>
+<script src="https://liberalarts.utexas.edu/_internal/js/app.js" type="text/javascript"></script>
 </body>
 </html>
 @stop

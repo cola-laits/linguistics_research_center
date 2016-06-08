@@ -172,20 +172,20 @@ leaving this one intact.</p>
 
 <ul>
 <li>Courses in Latin and ancient Greek are taught in the 
-<a title="Classics Department website" href="http://www.utexas.edu/cola/depts/classics/" target='new'>Department of Classics</a>;</li>
+<a title="Classics Department website" href="http://liberalarts.utexas.edu/depts/classics/" target='new'>Department of Classics</a>;</li>
 <li>Slavic language courses are taught in the 
-<a title="Slavic &amp; Eurasian Studies Department website" href="http://www.utexas.edu/cola/depts/slavic/" target='new'>Department of Slavic &amp; Eurasian Studies</a>;</li>
+<a title="Slavic &amp; Eurasian Studies Department website" href="http://liberalarts.utexas.edu/depts/slavic/" target='new'>Department of Slavic &amp; Eurasian Studies</a>;</li>
 <li>Iranian language courses are taught in the 
-<a title="Middle Eastern Studies Department website" href="http://www.utexas.edu/cola/depts/mes/" target='new'>Department of Middle Eastern Studies</a>;</li>
+<a title="Middle Eastern Studies Department website" href="http://liberalarts.utexas.edu/depts/mes/" target='new'>Department of Middle Eastern Studies</a>;</li>
 <li>Germanic language courses are taught in the 
-<a title="Germanic Studies Department website" href="http://www.utexas.edu/cola/depts/germanic/" target='new'>Department of Germanic Studies</a>,<br />
+<a title="Germanic Studies Department website" href="http://liberalarts.utexas.edu/depts/germanic/" target='new'>Department of Germanic Studies</a>,<br />
 with the exception of English which is taught in the 
-<a title="English Department website" href="http://www.utexas.edu/cola/depts/english/" target='new'>Department of English</a>;</li>
+<a title="English Department website" href="http://liberalarts.utexas.edu/depts/english/" target='new'>Department of English</a>;</li>
 <li>Indic language courses, including Sanskrit, are taught in the 
-<a title="Asian Studies Department website" href="http://www.utexas.edu/cola/depts/asianstudies/" target='new'>Department of Asian Studies</a>;</li>
+<a title="Asian Studies Department website" href="http://liberalarts.utexas.edu/depts/asianstudies/" target='new'>Department of Asian Studies</a>;</li>
 <li>Romance (post-Latin) language courses are taught in the 
-<a title="French &amp; Italian Department website" href="http://www.utexas.edu/cola/depts/frenchitalian/" target='new'>Department of French &amp; Italian</a><br />and 
-the <a title="Spanish &amp; Portuguese Department website" href="http://www.utexas.edu/cola/depts/spanish/" target='new'>Department of Spanish &amp; Portuguese</a>.</li>
+<a title="French &amp; Italian Department website" href="http://liberalarts.utexas.edu/depts/frenchitalian/" target='new'>Department of French &amp; Italian</a><br />and 
+the <a title="Spanish &amp; Portuguese Department website" href="http://liberalarts.utexas.edu/depts/spanish/" target='new'>Department of Spanish &amp; Portuguese</a>.</li>
 </ul>
     
     
