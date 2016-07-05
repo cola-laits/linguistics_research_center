@@ -38,7 +38,7 @@ index; unfortunately this may result in some words, in some contexts, being unfa
 	<ul>
 		@foreach ($keyword['glossed_text_gloss_ids'] as $id => $lesson)
 			<li>
-				<a href='/eieol_lesson/{{$series->id}}?id={{$lesson->id}}#glossed_text_gloss_{{$id}}'>{{$lesson->title}}</a>
+				<a href='/eieol/{{$series->slug}}/{{$lesson->order}}#glossed_text_gloss_{{$id}}'>{{$lesson->title}}</a>
 			</li>
 		@endforeach
 	</ul>

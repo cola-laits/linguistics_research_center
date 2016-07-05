@@ -151,13 +151,13 @@
 	
 	<p class='center'>
 		@if ($lesson->prevLesson())
-			{{ HTML::link('eieol_lesson/' . $series->id . '?id=' . $lesson->prevLesson()->id, 'previous lesson', array('title' => 'previous lesson' )) }}
+			{{ HTML::link('eieol/' . $series->slug . '/' . $lesson->prevLesson()->order, 'previous lesson', array('title' => 'previous lesson' )) }}
 		@else
 			first lesson
 		@endif
 		&nbsp; | &nbsp;
 		@if ($lesson->nextLesson())
-			{{ HTML::link('eieol_lesson/' . $series->id . '?id=' . $lesson->nextLesson()->id, 'next lesson', array('title' => 'next lesson' )) }}
+			{{ HTML::link('eieol/' . $series->slug . '/' . $lesson->nextLesson()->order, 'next lesson', array('title' => 'next lesson' )) }}
 		@else
 			last lesson
 		@endif

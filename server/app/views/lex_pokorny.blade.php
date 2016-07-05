@@ -45,7 +45,7 @@ page for links <i>from</i> reflexes (listed by IE language) <i>to</i> their PIE 
 				 <td>
 				 	
 				 	@if (count($etyma->reflex_count) != 0)
-				 		{{ HTML::link('lex_reflex/' . $etyma->id, 'IE', array('title' => 'Pokorny PIE etymon with Indo-European reflexes' )) }}
+				 		{{ HTML::link('lex/' . $etyma->old_id, 'IE', array('title' => 'Pokorny PIE etymon with Indo-European reflexes' )) }}
 				 		&nbsp;&nbsp;
 				 	@endif
 				 	

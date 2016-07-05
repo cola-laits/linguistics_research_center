@@ -15,7 +15,7 @@
 <h5>Lessons</h5>
 <ol start="0">
 @foreach ($lessons as $lesson)
-	<li><a href='/eieol_lesson/{{$series->id}}?id={{$lesson->id}}'>{{$lesson->title}}</a></li>
+	<li><a href='/eieol/{{$series->slug}}/{{$lesson->order}}'>{{$lesson->title}}</a></li>
 @endforeach
 </ol>
 
@@ -29,7 +29,7 @@
 			@for ($i = 1; $i <= substr_count($grammar->section_number, '.'); $i++) 
 				&nbsp;&nbsp;&nbsp;
 			@endfor
-			<a href='/eieol_lesson/{{$series->id}}?id={{$lesson->id}}#grammar_{{$grammar->id}}'>{{$grammar->section_number}}. {{$grammar->title}}.</a>
+			<a href='/eieol/{{$series->slug}}/{{$lesson->order}}#grammar_{{$grammar->id}}'>{{$grammar->section_number}}. {{$grammar->title}}.</a>
 		</li>
 	@endforeach
 @endforeach

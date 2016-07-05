@@ -99,13 +99,13 @@ corrections may be made and/or more etyma &amp; reflexes may be added.</p>
 
 <p class='center'>Nearby etymon: &nbsp;&nbsp; 
 	@if ($etyma->prevEtyma())
-		{{ HTML::link('lex_reflex/' . $etyma->prevEtyma()->id, 'previous', array('title' => 'previous etymon with reflexes' )) }}
+		{{ HTML::link('lex/' . $etyma->prevEtyma()->old_id, 'previous', array('title' => 'previous etymon with reflexes' )) }}
 	@else
 		first
 	@endif
 	&nbsp; | &nbsp;
 	@if ($etyma->nextEtyma())
-		{{ HTML::link('lex_reflex/' . $etyma->nextEtyma()->id, 'next', array('title' => 'next etymon with reflexes' )) }}
+		{{ HTML::link('lex/' . $etyma->nextEtyma()->old_id, 'next', array('title' => 'next etymon with reflexes' )) }}
 	@else
 		last
 	@endif

@@ -60,7 +60,7 @@ or <i>lie</i>, represent multiple reflexes derived from different PIE etyma.</p>
 	  		</td>
 	  		<td>
 	  			@foreach($reflex['etymas'] as $index => $temp_etyma)
-		  			<a title="{{strip_tags($temp_etyma['gloss'])}}" href='/lex_reflex/{{$temp_etyma['id']}}#{{$language['abbr']}}'>
+		  			<a title="{{strip_tags($temp_etyma['gloss'])}}" href='/lex/{{$temp_etyma['id']}}#{{$language['abbr']}}'>
 		  				<span class='Unicode' lang='ine'>{{explode(":",explode(",",$temp_etyma['entry'])[0])[0]}}</span>
 		  			</a>@if ($index+1 != count($reflex['etymas'])),@endif
 	  			@endforeach 

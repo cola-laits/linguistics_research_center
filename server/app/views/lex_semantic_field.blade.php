@@ -39,7 +39,7 @@ of PIE etyma, in any number of IE languages, may be added at any time.</blockquo
 		<a href="/lex_pokorny/#P{{$etyma->id}}" title="Pokorny PIE Data" target="new">'{{$etyma->gloss}}'</a>
 		@if (count($etyma->reflex_count) > 0)
 			&nbsp; 
-			{{ HTML::link('lex_reflex/' . $etyma->id, 'reflex', array('title' => 'Pokorny PIE Data with reflexes' )) }}
+			{{ HTML::link('lex/' . $etyma->old_id, 'reflex', array('title' => 'Pokorny PIE Data with reflexes' )) }}
 		@endif
 	</li>
 @endforeach

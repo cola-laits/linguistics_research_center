@@ -5,6 +5,10 @@ Route::get('index', 'PublicController@index');
 
 Route::get('eieol', 'PublicController@eieol');
 Route::get('eieol_lesson/{series_id}', 'PublicController@eieol_lesson');
+
+Route::get('eieol/{series_name}', 'PublicController@eieol_first_lesson_by_name');
+Route::get('eieol/{series_name}/{lesson_order}', 'PublicController@eieol_lesson_by_name');
+
 Route::get('eieol_printable/{series_id}', 'PublicController@eieol_printable');
 Route::get('eieol_toc/{series_id}', 'PublicController@eieol_toc');
 Route::get('eieol_master_gloss/{series_id}/{language_id}', 'PublicController@eieol_master_gloss');
@@ -18,6 +22,9 @@ Route::get('eieol_text/{series_id}', 'PublicController@eieol_text');
 Route::get('lex', 'PublicController@lex');
 Route::get('lex_pokorny', 'PublicController@lex_pokorny');
 Route::get('lex_reflex/{etyma_id}', 'PublicController@lex_reflex');
+
+Route::get('lex/{etyma_id}', 'PublicController@lex_reflex_by_pokorny_number');
+
 Route::get('lex_language', 'PublicController@lex_language');
 Route::get('lex_lang_reflexes/{language_id}', 'PublicController@lex_lang_reflexes');
 Route::get('lex_semantic', 'PublicController@lex_semantic');
@@ -51,6 +58,7 @@ Route::group(array('prefix'=> 'admin2', 'before' => 'auth'), function() {
 	Route::get('/part_of_speech/filtered_list', 'EieolPartOfSpeechController@filtered_list');
 	Route::get('/eieol_analysis/filtered_list', 'EieolAnalysisController@filtered_list');
 	Route::resource('/eieol_language', 'EieolLanguageController');
+
 });	
 
 Route::group(array('prefix'=> 'admin2', 'before' => 'auth|admin'), function() {
