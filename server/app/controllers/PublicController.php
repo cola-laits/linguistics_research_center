@@ -490,7 +490,7 @@ class PublicController extends BaseController {
 		global $alphabet;
 		$alphabet = arrayify_customsort($data['language']->custom_sort);
 
-		//uasort($data['glosses'], 'alphabet_sorter');
+		uasort($data['glosses'], 'alphabet_sorter');
 
 		return View::make('eieol_master_gloss')->with($data);
 
@@ -575,7 +575,7 @@ class PublicController extends BaseController {
 		global $alphabet;
 		$alphabet = arrayify_customsort($data['language']->custom_sort);
 
-		//uasort($data['head_words'],'alphabet_sorter');
+		uasort($data['head_words'],'alphabet_sorter');
 
 		return View::make('eieol_base_form_dictionary')->with($data);
 

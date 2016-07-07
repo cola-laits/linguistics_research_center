@@ -121,7 +121,7 @@
 	@foreach ($lessons as $temp_lesson)
 		@if ($temp_lesson->order != 0)
 			<li>
-				<a href='/eieol_lesson/{{$series->id}}?id={{$temp_lesson->id}}'>{{$temp_lesson->title}}</a>
+				<a href='/eieol_lesson/{{$series->slug}}/{{$temp_lesson->order}}'>{{$temp_lesson->title}}</a>
 			</li>
 		@endif
 	@endforeach
@@ -130,15 +130,15 @@
 	<h6>Options:</h6>
 
 	<ul>
-		<li>Show full {{ HTML::link('eieol_toc/' . $series->id, "Table of Contents")}} with Grammar Points index</li>
+		<li>Show full {{ HTML::link('eieol_toc/' . $series->slug, "Table of Contents")}} with Grammar Points index</li>
 		@foreach($languages as $language)
-			<li>Open a {{ HTML::link('eieol_master_gloss/' . $series->id . '/' . $language->id, "Master Glossary window")}} for these {{$language->language}} texts</li>
+			<li>Open a {{ HTML::link('eieol_master_gloss/' . $series->slug . '/' . $language->id, "Master Glossary window")}} for these {{$language->language}} texts</li>
 		@endforeach
 		@foreach($languages as $language)
-			<li>Open a {{ HTML::link('eieol_base_form_dictionary/' . $series->id . '/' . $language->id, "Base Form Dictionary window")}} for these {{$language->language}} texts</li>
+			<li>Open a {{ HTML::link('eieol_base_form_dictionary/' . $series->slug . '/' . $language->id, "Base Form Dictionary window")}} for these {{$language->language}} texts</li>
 		@endforeach
 		@foreach($languages as $language)
-			<li>Open an {{ HTML::link('eieol_english_meaning_index/' . $series->id . '/' . $language->id, "English Meaning Index window")}} for these {{$language->language}} texts</li>
+			<li>Open an {{ HTML::link('eieol_english_meaning_index/' . $series->slug . '/' . $language->id, "English Meaning Index window")}} for these {{$language->language}} texts</li>
 		@endforeach
 	</ul>
 	 
