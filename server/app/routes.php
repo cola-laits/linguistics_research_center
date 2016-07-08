@@ -20,17 +20,29 @@ Route::get('eieol_text_toc/{series_id}', 'PublicController@eieol_text_toc');
 Route::get('eieol_text/{series_id}', 'PublicController@eieol_text');
 
 Route::get('lex', 'PublicController@lex');
-Route::get('lex_pokorny', 'PublicController@lex_pokorny');
-Route::get('lex_reflex/{etyma_id}', 'PublicController@lex_reflex');
 
-Route::get('lex/{etyma_id}', 'PublicController@lex_reflex_by_pokorny_number');
+Route::get('lex_pokorny', 'PublicController@lex_pokorny');
+Route::get('lex/master', 'PublicController@lex_pokorny');
+
+Route::get('lex_reflex/{etyma_id}', 'PublicController@lex_reflex');
+Route::get('lex/master/{etyma_id}', 'PublicController@lex_reflex_by_pokorny_number');
 
 Route::get('lex_language', 'PublicController@lex_language');
-Route::get('lex_lang_reflexes/{language_id}', 'PublicController@lex_lang_reflexes');
-Route::get('lex_semantic', 'PublicController@lex_semantic');
-Route::get('lex_semantic_category/{cat_id}', 'PublicController@lex_semantic_category');
-Route::get('lex_semantic_field/{field_id}', 'PublicController@lex_semantic_field');
+Route::get('lex/languages', 'PublicController@lex_language');
 
+Route::get('lex_lang_reflexes/{language_id}', 'PublicController@lex_lang_reflexes');
+Route::get('lex/languages/{language_id}', 'PublicController@lex_lang_reflexes');
+
+Route::get('lex_semantic', 'PublicController@lex_semantic');
+Route::get('lex/semantic', 'PublicController@lex_semantic');
+
+Route::get('lex_semantic_category/{cat_id}', 'PublicController@lex_semantic_category');
+Route::get('lex/semantic/category/{cat_id}', 'PublicController@lex_semantic_category');
+
+Route::get('lex_semantic_field/{field_id}', 'PublicController@lex_semantic_field');
+Route::get('lex/semantic/field/{field_id}', 'PublicController@lex_semantic_field');
+
+//Route::get('lex/{etyma_id}', 'PublicController@lex_reflex_by_pokorny_number');
 
 Route::get('rest/eieol_serieses', 'PublicController@rest_eieol_serieses');
 Route::get('rest/eieol_series/{series_id}', 'PublicController@rest_eieol_series');

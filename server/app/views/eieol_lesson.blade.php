@@ -121,7 +121,7 @@
 	@foreach ($lessons as $temp_lesson)
 		@if ($temp_lesson->order != 0)
 			<li>
-				<a href='/eieol_lesson/{{$series->slug}}/{{$temp_lesson->order}}'>{{$temp_lesson->title}}</a>
+				<a href='/eieol/{{$series->slug}}/{{$temp_lesson->order}}'>{{$temp_lesson->title}}</a>
 			</li>
 		@endif
 	@endforeach

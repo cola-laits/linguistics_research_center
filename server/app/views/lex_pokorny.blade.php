@@ -22,7 +22,7 @@ etyma. IE reflex lists are <i>under active construction</i> (see our
 
 home page): they are subject to change at any time, and might possibly exhibit errors not yet corrected. 
 See our 
-{{ HTML::link('lex_language', 'Language Index', array('title' => 'Indo-European Lexicon: IE Language Index' )) }}
+{{ HTML::link('lex/languages', 'Language Index', array('title' => 'Indo-European Lexicon: IE Language Index' )) }}
 page for links <i>from</i> reflexes (listed by IE language) <i>to</i> their PIE etyma.</p>
 
 
@@ -45,7 +45,7 @@ page for links <i>from</i> reflexes (listed by IE language) <i>to</i> their PIE 
 				 <td>
 				 	
 				 	@if (count($etyma->reflex_count) != 0)
-				 		{{ HTML::link('lex/' . $etyma->old_id, 'IE', array('title' => 'Pokorny PIE etymon with Indo-European reflexes' )) }}
+				 		{{ HTML::link('lex/master/' . $etyma->old_id, 'IE', array('title' => 'Pokorny PIE etymon with Indo-European reflexes' )) }}
 				 		&nbsp;&nbsp;
 				 	@endif
 				 	

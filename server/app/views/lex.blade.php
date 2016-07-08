@@ -41,7 +41,7 @@ of which may be located alphabetically via our <b>Language Index</b> pages. Our 
 <h4>Pokorny Master Collection</h4>
 
 <p>As our current set of 
-{{ HTML::link('lex_pokorny', 'PIE etyma', array('title' => 'Pokorny PIE Data' )) }},
+{{ HTML::link('lex/master', 'PIE etyma', array('title' => 'Pokorny PIE Data' )) }},
 we have selected 2,222 main entries from Pokorny's IEW; 
 these are listed in a single large table in their IEW "alphabetic" order. 
 Each entry that corresponds to a page listing IE reflexes thereof is linked to that page. At 
@@ -59,7 +59,7 @@ reflex page in IEW order) --</p>
 
 <h4>Language Index</h4>
 
-<p>Our IE {{ HTML::link('lex_language', 'Language Index', array('title' => 'Indo-European Lexicon: IE Language Index' )) }}
+<p>Our IE {{ HTML::link('lex/languages', 'Language Index', array('title' => 'Indo-European Lexicon: IE Language Index' )) }}
 page lists many (though not all) individual Indo-European languages by family, from west to east; families 
 are divided into groups, by age and/or geographic area (again, generally from west to east). For each IE 
 "daughter language" that is represented by a sufficient number of reflex words derived from PIE etyma, a 
@@ -75,13 +75,13 @@ language (e.g. English <i>brown</i>, <i>bruin</i>, <i>bear</i> 'animal') may der
 <h4>Semantic Field Index</h4>
 
 <p>Another feature of our collection is a 
-{{ HTML::link('lex_semantic', 'Semantic Index', array('title' => 'Indo-European Linguistics: Semantic Fields' )) }}
+{{ HTML::link('lex/semantic', 'Semantic Index', array('title' => 'Indo-European Linguistics: Semantic Fields' )) }}
 to the Proto-Indo-European etyma listed in Pokorny, using a scheme developed by Carl Darling Buck 
 (cf. <i>A Dictionary of Selected Synonyms in the Principal Indo-European Languages</i>, 1949). This 
 semantic indexing scheme has been used by others and, while not perfect, seems adequate for our needs. 
 We are in the process of making substantial additions to our lexical collection, adding "reflex" words 
 derived from PIE etyma as listed by Pokorny; these can be reached via links on our lower-level 
-{{ HTML::link('lex_semantic', 'Semantic Index', array('title' => 'Indo-European Linguistics: Semantic Fields' )) }}
+{{ HTML::link('lex/semantic', 'Semantic Index', array('title' => 'Indo-European Linguistics: Semantic Fields' )) }}
 pages. At present such links are mildly limited in number; but check back from time to time for new 
 resources, as this work is proceeding swiftly.</p>
 @stop

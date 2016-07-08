@@ -8,7 +8,7 @@
 <h2>{{$cat->number}}. {{$cat->text}}</h2>
 
 <p>This page lists subcategories for the 
-{{ HTML::link('lex_semantic', 'semantic field', array('title' => 'Semantic Fields' )) }}
+{{ HTML::link('lex/semantic', 'semantic field', array('title' => 'Semantic Fields' )) }}
 <b>{{$cat->text}}</b>.
  
 Category numbers are as defined by Carl Darling Buck (cf. <i>A Dictionary of 
@@ -35,7 +35,7 @@ may be added.</blockquote>
 @foreach($fields as $field)
 	<li>
 		@if (count($field->etyma_count) > 0)
-			{{ HTML::link('lex_semantic_field/' . $field->id, $field->number . '. ' . $field->text, array('title' => 'PIE etyma in semantic subcategory ' . $field->text )) }}
+			{{ HTML::link('lex/semantic/field/' . $field->id, $field->number . '. ' . $field->text, array('title' => 'PIE etyma in semantic subcategory ' . $field->text )) }}
 		@else
 			{{$field->number}}. {{$field->text}}
 		@endif 
