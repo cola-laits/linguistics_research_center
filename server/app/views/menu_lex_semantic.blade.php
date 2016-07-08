@@ -10,7 +10,7 @@
 	<li class="office"><label>Semantic Fields</label></li>
 	@foreach($alpha_cats as $cat)
 		<li>
-			{{ HTML::link('lex/semantic/category/' . $cat->id, $cat->text, array('title' => $cat->text . ' and subcategories thereof' )) }}
+			{{ HTML::link('lex/semantic/category/' . $cat->abbr, $cat->text, array('title' => $cat->text . ' and subcategories thereof' )) }}
 		</li>
 	@endforeach
 </ul>

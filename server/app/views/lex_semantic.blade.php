@@ -49,7 +49,7 @@ words in later IE languages, may be added.</blockquote>
 
 @foreach($cats as $cat)
 	<li>
-		{{ HTML::link('lex/semantic/category/' . $cat->id, $cat->text, array('title' => $cat->text . ' and subcategories thereof' )) }}
+		{{ HTML::link('lex/semantic/category/' . $cat->abbr, $cat->text, array('title' => $cat->text . ' and subcategories thereof' )) }}
 	</li>
 @endforeach
 

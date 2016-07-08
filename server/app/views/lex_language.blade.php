@@ -64,7 +64,7 @@ conclusions should be drawn from this structural detail.</p>
 				    	<div class="lang_entry_1">{{$language->abbr}}.</div> 
 					    @if ($language->reflex_count->first()['count'] > 10)
 					    	<div class="lang_entry_2">
-					    		{{ HTML::link('lex/languages/' . $language->id, $language->name, array('title' => $language->name . ' reflex index')) }}
+					    		{{ HTML::link('lex/languages/' . $language->abbr, $language->name, array('title' => $language->name . ' reflex index')) }}
 					    	</div>
 					    @else
 					    	<div class="lang_entry_2">{{$language->name}}</div>

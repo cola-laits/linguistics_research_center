@@ -765,8 +765,20 @@ class PublicController extends BaseController {
 		//This is the most complicate code in the whole LRC system
 			
 		$data = array();
-		$data['language'] = LexLanguage::find($language_id);
-			
+		
+        if (is_numeric($language_id)) { // find language the old way by pk
+    
+            $data['language'] = LexLanguage::find($language_id);
+    
+        } else { // find series info by name (abbr) instead of id
+        
+            $data['language'] = LexLanguage::whereRaw("abbr = ?", array($language_id))->get();
+            $data['language'] = $data['language'][0];
+            $language_id =  $data['language']->id;
+        
+        }
+		
+		
 		//get all the reflexes.  The Eloquent ORM is too slow, so we have to write our own SQL
 		$temp_reflexes = DB::select( DB::raw("SELECT lex_reflex.id, lex_reflex.class_attribute, lex_reflex.lang_attribute, 
 													 lex_reflex_entry.entry, 
@@ -831,7 +843,20 @@ class PublicController extends BaseController {
 	public function lex_semantic_category($cat_id)
 	{
 		$data = array();
-		$data['cat'] = LexSemanticCategory::find($cat_id);
+		
+		if (is_numeric($cat_id)) { // find category the old way by pk
+    
+            $data['cat'] = LexSemanticCategory::find($cat_id);
+    
+        } else { // find category info by name (abbr) instead of id
+        
+            $data['cat'] = LexSemanticCategory::whereRaw("abbr = ?", array($cat_id))->get();
+            $data['cat'] = $data['cat'][0];
+            $cat_id =  $data['cat']->id;
+        
+        }
+		
+		
 		$data['alpha_cats'] = LexSemanticCategory::get()->sortBy('text');
 		$data['fields'] = LexSemanticField::with('etyma_count')->where('semantic_category_id', '=', $cat_id)->get()->sortBy('number');
 		return View::make('lex_semantic_category')->with($data);
@@ -840,7 +865,18 @@ class PublicController extends BaseController {
 	public function lex_semantic_field($field_id)
 	{
 		$data = array();
-		$data['field'] = LexSemanticField::with('etymas.reflex_count','semantic_category')->find($field_id);
+		
+		if (is_numeric($field_id)) { // find field the old way by pk
+    
+            $data['field'] = LexSemanticField::with('etymas.reflex_count','semantic_category')->find($field_id);
+    
+        } else { // find field info by name (abbr) instead of id
+        
+            $data['field'] = LexSemanticField::with('etymas.reflex_count','semantic_category')->whereRaw("abbr = ?", array($field_id))->get();
+            $data['field'] = $data['field'][0];
+        
+        }
+		
 		$data['alpha_cats'] = LexSemanticCategory::get()->sortBy('text');
 		return View::make('lex_semantic_field')->with($data);
 	}

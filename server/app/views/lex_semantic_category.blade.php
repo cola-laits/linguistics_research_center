@@ -35,7 +35,7 @@ may be added.</blockquote>
 @foreach($fields as $field)
 	<li>
 		@if (count($field->etyma_count) > 0)
-			{{ HTML::link('lex/semantic/field/' . $field->id, $field->number . '. ' . $field->text, array('title' => 'PIE etyma in semantic subcategory ' . $field->text )) }}
+			{{ HTML::link('lex/semantic/field/' . $field->abbr, $field->number . '. ' . $field->text, array('title' => 'PIE etyma in semantic subcategory ' . $field->text )) }}
 		@else
 			{{$field->number}}. {{$field->text}}
 		@endif 
