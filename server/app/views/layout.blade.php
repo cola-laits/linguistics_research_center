@@ -107,8 +107,8 @@ the page content is in <section class="main-section">
                     
                     <ul class="side-nav">
                     	<li><label>Office</label></li>
-                    	<li><a href="http://liberalarts.utexas.edu/lrctr/staff.php">Staff List</a></li>
-                    	<li><a href="http://liberalarts.utexas.edu/lrctr/contact-us.php">Contact Us</a></li>
+                    	<li><a href="http://liberalarts.utexas.edu/lrc/staff.php">Staff List</a></li>
+                    	<li><a href="http://liberalarts.utexas.edu/lrc/contact-us.php">Contact Us</a></li>
                     </ul>
                     <!-- END SYSTEM-REGION NAV-SM-OFFICE -->
 
@@ -211,13 +211,13 @@ the page content is in <section class="main-section">
 
 		            	<!-- replaced by page-level template -->
 						<div class="small-6 columns hide-for-small-only">
-							<a href="http://liberalarts.utexas.edu/lrctr/index.php">
+							<a href="http://liberalarts.utexas.edu/lrc/index.php">
 								<img alt="" class="lockup" src="https://liberalarts.utexas.edu/_internal/images/logo-formal/Centers/LinguisticsResearchCenter.png"/>
 							</a>
 						</div>
 						
 						<div class="small-12 columns hide-for-medium-up">
-							<a href="http://liberalarts.utexas.edu/lrctr/index.php">
+							<a href="http://liberalarts.utexas.edu/lrc/index.php">
 								<img alt="" class="lockup" src="https://liberalarts.utexas.edu/_internal/images/logo-formal/Centers/LinguisticsResearchCenter.png"/>
 							</a>
 						</div>
