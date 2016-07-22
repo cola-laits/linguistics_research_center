@@ -4,7 +4,7 @@ Route::get('/', 'PublicController@index');
 Route::get('index', 'PublicController@index');
 
 Route::get('eieol', 'PublicController@eieol');
-Route::get('eieol_lesson/{series_id}', 'PublicController@eieol_lesson');
+//Route::get('eieol_lesson/{series_id}', 'PublicController@eieol_lesson');
 
 Route::get('eieol/{series_name}', 'PublicController@eieol_first_lesson_by_name');
 Route::get('eieol/{series_name}/{lesson_order}', 'PublicController@eieol_lesson_by_name');
@@ -46,7 +46,7 @@ Route::get('lex/semantic/field/{field_id}', 'PublicController@lex_semantic_field
 
 Route::get('rest/eieol_serieses', 'PublicController@rest_eieol_serieses');
 Route::get('rest/eieol_series/{series_id}', 'PublicController@rest_eieol_series');
-//Route::get('rest/eieol_lesson/{lesson_id}', 'PublicController@rest_eieol_lesson');
+Route::get('rest/eieol_lesson/{lesson_id}', 'PublicController@rest_eieol_lesson');
 
 Route::get('login', 'LoginController@login_page');
 Route::post('login', 'LoginController@login_action');
