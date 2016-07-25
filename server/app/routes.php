@@ -30,16 +30,16 @@ Route::get('lex/master/{pokorny_number}', 'PublicController@lex_reflex');
 Route::get('lex_language', 'PublicController@lex_language_redirect');
 Route::get('lex/languages', 'PublicController@lex_language');
 
-Route::get('lex_lang_reflexes/{language_id}', 'PublicController@lex_lang_reflexes_redirect');
+Route::get('lex_lang_reflexes/{language_id}', array('as' => 'reflexes_redirect', 'uses' =>'PublicController@lex_lang_reflexes_redirect'));
 Route::get('lex/languages/{language_abbr}', 'PublicController@lex_lang_reflexes');
 
 Route::get('lex_semantic', 'PublicController@lex_semantic_redirect');
 Route::get('lex/semantic', 'PublicController@lex_semantic');
 
-Route::get('lex_semantic_category/{cat_id}', 'PublicController@lex_semantic_category_redirect');
+Route::get('lex_semantic_category/{cat_id}', array('as' => 'category_redirect', 'uses' =>'PublicController@lex_semantic_category_redirect'));
 Route::get('lex/semantic/category/{cat_abbr}', 'PublicController@lex_semantic_category');
 
-Route::get('lex_semantic_field/{field_id}', 'PublicController@lex_semantic_field_redirect');
+Route::get('lex_semantic_field/{field_id}', array('as' => 'field_redirect', 'uses' =>'PublicController@lex_semantic_field_redirect'));
 Route::get('lex/semantic/field/{field_abbr}', 'PublicController@lex_semantic_field');
 
 Route::get('rest/eieol_serieses', 'PublicController@rest_eieol_serieses');

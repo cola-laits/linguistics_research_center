@@ -677,9 +677,8 @@ class PublicController extends BaseController {
 	
 	    // safety check for deprecated URL routes, can be removed when search results stabilize
 		if (is_numeric($language_abbr)) { 
-		    return Redirect::to()->action('PublicController@lex_lang_reflexes_redirect', $language_abbr);
+		    return Redirect::route('reflexes_redirect', $language_abbr);
         }
-	    
 	    
 		//This is the most complicate code in the whole LRC system
 			
@@ -764,9 +763,9 @@ class PublicController extends BaseController {
 	{
 		$data = array();
 		
-		// safety check for deprecated URL routes, can be removed when search results stabilize
-		if (is_numeric($cat_abbr)) { 
-		    return Redirect::to()->action('PublicController@lex_semantic_category_redirect', $cat_abbr);
+		// safety check for deprecated URL routes, can be removed when search results stabilize        
+        if (is_numeric($cat_abbr)) { 
+		    return Redirect::route('category_redirect', $cat_abbr);
         }
         
         $data['cat'] = LexSemanticCategory::whereRaw("abbr = ?", array($cat_abbr))->get();
@@ -790,10 +789,10 @@ class PublicController extends BaseController {
 		
 		// safety check for deprecated URL routes, can be removed when search results stabilize
 		if (is_numeric($field_abbr)) { 
-		    return Redirect::to()->action('PublicController@lex_semantic_field_redirect', $field_abbr);
+		    return Redirect::route('field_redirect', $field_abbr);
         }
         
-        $data['field'] = LexSemanticField::with('etymas.reflex_count','semantic_category')->whereRaw("abbr = ?", array($field_id))->get();
+        $data['field'] = LexSemanticField::with('etymas.reflex_count','semantic_category')->whereRaw("abbr = ?", array($field_abbr))->get();
         $data['field'] = $data['field'][0];
         
 		
