@@ -42,37 +42,6 @@ function get_series_info($series_id) {
 
 } //get_series_info
 
-/*
-function get_series_info_by_name($series_name) {
-    
-	$data = array();
-	
-	$data['series'] = EieolSeries::whereRaw("slug = ?", array($series_name))->get();
-	$data['series'] = $data['series'][0];
-		
-	$data['lessons'] = EieolLesson::with('grammars', 'language')->where('id', '=', $data['series']->id)->get()->sortBy('order');
-
-	$data['languages'] = array();
-	$data['bibliography_id'] = '';
-
-	foreach($data['lessons'] as $lesson) {
-
-		if (!in_array($lesson->language, $data['languages'])) {
-
-			$data['languages'][] = $lesson->language;
-
-		}
-		if (strpos($lesson->title,'Bibliography') != false) {
-			$data['bibliography_id'] = $lesson->id;
-		}
-
-	}
-	
-	return $data;
-
-} //get_series_info_by_name
-*/
-
 function length_compare($a, $b){
 	//key_compare_func for uksort of arrayify_customsort.  We want longer strings first
 	if (mb_strlen($a,'UTF-8') >= mb_strlen($b,'UTF-8')) {
@@ -81,7 +50,6 @@ function length_compare($a, $b){
 		return 1;
 	}
 } //length_compare
-
 
 function arrayify_customsort($custom_sort) {
 	//Converts the custom sort into an array where each key is a character and each value is it's sort order.
@@ -110,7 +78,6 @@ function arrayify_customsort($custom_sort) {
 	return $alphabet;
 } //arrayify_customsort
 
-
 function arrayify_substitutions($substitutions) {
 	//convert substitutions into an array
 	$substitutions_array = array();
@@ -134,7 +101,6 @@ function arrayify_substitutions($substitutions) {
 	return $substitutions_array;	
 } //arrayify_substitutions
 
-
 function sub_it($string,$substitutions) {
 	//substitue any chars they may have defined.
 	foreach ($substitutions as $key => $value) {
@@ -143,7 +109,6 @@ function sub_it($string,$substitutions) {
 	}
 	return $string;
 } //sub_it
-
 
 function get_first_character_value($string) {
 	//Used by alphabet_sort to get first character/sort value and remainder of a string.
@@ -173,7 +138,6 @@ function get_first_character_value($string) {
 	print "couldn't find a character in " . $string;
 	exit();
 } //get_first_character_value
-
 
 function alphabet_sorter($a, $b) {
 	//key_compare_func for uasort of gloss and dictionary.
@@ -212,15 +176,9 @@ function alphabet_sorter($a, $b) {
 	return alphabet_sorter($a_split['remainder'],$b_split['remainder']);
 } //alphabet_sorter
 
-
-
-
-
-
 class PublicController extends BaseController {	
 	
 	public function index()
-
 	{
 
 		return View::make('index');
@@ -229,10 +187,7 @@ class PublicController extends BaseController {
 	
 	//----------------------------------------EIEOL Functions--------------------------------------------
 
-	
-
 	public function eieol()
-
 	{
 
 		$data = array();
@@ -243,54 +198,25 @@ class PublicController extends BaseController {
 
 	}
 
-	
-
-	public function eieol_lesson($series_id)
-
+	public function eieol_lesson_redirect($series_id)
 	{
-
-		$data = get_series_info($series_id);
-		$data['printable'] = False;		
-		
-		if ($data['series']['use_old_gloss_ui']) {
-			$data['clickable'] = False;
-		} else {
-			$data['clickable'] = True;
-		}
-
-		if (Input::has('id')) {
-
-			$data['lesson'] = EieolLesson::with('grammars','language')
-
-			->with('glossed_texts.glosses.language','glossed_texts.glosses.elements.head_word.language')
-
-			->where('id', '=', Input::get('id'))
-
-			->firstOrFail();
-
-		} else {
-
-			//if they didn't send an id, get the first lesson
-
-			$data['lesson'] = EieolLesson::with('grammars')
-
-			->with('glossed_texts.glosses.language','glossed_texts.glosses.elements.head_word.language')
-
-			->where('series_id', '=', $series_id)
-
-			->orderBy('order')
-
-			->first();
-
-		}
-
-	
-		return View::make('eieol_lesson')->with($data);
+        
+        $series = EieolSeries::find($series_id);
+        
+        if (Input::has('id')) {
+            
+            $lesson = EieolLesson::find(Input::get('id'));
+            return Redirect::to('eieol/'.$series->slug.'/'.$lesson->order);
+        
+        } else {
+        
+	        return Redirect::to('eieol/'.$series->slug);
+        
+        }
 
 	}
     
-    
-    public function eieol_first_lesson_by_name($series_name)
+    public function eieol_first_lesson($series_name)
 	{
 
 		$data = get_series_info($series_name);
@@ -301,8 +227,6 @@ class PublicController extends BaseController {
 		} else {
 			$data['clickable'] = True;
 		}
-
-        //if they didn't send an id, get the first lesson
 
         $data['lesson'] = EieolLesson::with('grammars')
 
@@ -318,8 +242,7 @@ class PublicController extends BaseController {
 
 	}
     
-    
-    public function eieol_lesson_by_name($series_name,$lesson_order)
+    public function eieol_lesson($series_name,$lesson_order)
 	{
 
 		$data = get_series_info($series_name);
@@ -345,18 +268,9 @@ class PublicController extends BaseController {
 
 	}
     
-	
 	public function eieol_printable($series_id)
-	
 	{
 		$data = get_series_info($series_id);
-		
-		/*
-		echo "<pre>";
-	    print_r($data);
-		echo "</pre>";
-		die();
-		*/
 		
 		$data['printable'] = True;
 		$data['clickable'] = False;
@@ -386,9 +300,7 @@ class PublicController extends BaseController {
 		return $html;
 	}
 	
-
 	public function eieol_toc($series_id)
-
 	{
 
 		$data = get_series_info($series_id);
@@ -397,9 +309,7 @@ class PublicController extends BaseController {
 
 	}
 	
-
 	public function eieol_master_gloss($series_id, $language_id)
-
 	{	
 
 		$data = get_series_info($series_id);
@@ -496,9 +406,7 @@ class PublicController extends BaseController {
 
 	}
 
-	
 	public function eieol_base_form_dictionary($series_id, $language_id)
-
 	{
 
 		$data = get_series_info($series_id);
@@ -582,75 +490,73 @@ class PublicController extends BaseController {
 	}
 
 	public function eieol_english_meaning_index($series_id, $language_id)
+    {
 
-	{
+            $data = get_series_info($series_id);
 
-		$data = get_series_info($series_id);
+            $data['language'] = EieolLanguage::find($language_id);
 
-		$data['language'] = EieolLanguage::find($language_id);
+            $lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word.language','glossed_texts.glosses.elements.head_word.keywords')
 
-		$lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word.language','glossed_texts.glosses.elements.head_word.keywords')
+            ->where('series_id', '=', $data['series']->id)
 
-		->where('series_id', '=', $data['series']->id)
+            ->where('language_id', '=', $language_id)
 
-		->where('language_id', '=', $language_id)
+            ->select(array('id','title','order'))
 
-		->select(array('id','title','order'))
+            ->get()
 
-		->get()
+            ->sortBy('order');
 
-		->sortBy('order');
+            $data['keywords'] = array();
+        
+            //loop through all the lessons, glossed texts and glosses to group like keywords
 
-		$data['keywords'] = array();
-		
-		//loop through all the lessons, glossed texts and glosses to group like keywords
+            foreach ($lessons as $lesson) {
 
-		foreach ($lessons as $lesson) {
+                foreach ($lesson->glossed_texts as $glossed_text) {
 
-			foreach ($lesson->glossed_texts as $glossed_text) {
+                    foreach ($glossed_text->glosses as $gloss) {
 
-				foreach ($glossed_text->glosses as $gloss) {
+                        foreach ($gloss->elements as $element) {
 
-					foreach ($gloss->elements as $element) {
+                            foreach ($element->head_word->keywords as $keyword) {
 
-						foreach ($element->head_word->keywords as $keyword) {
+                                $key = $keyword->keyword . ' -- ' . $element->head_word->word . ' -- ' . $element->head_word->definition;
 
-							$key = $keyword->keyword . ' -- ' . $element->head_word->word . ' -- ' . $element->head_word->definition;
+                                if (!key_exists($key, $data['keywords'])) {
 
-							if (!key_exists($key, $data['keywords'])) {
+                                    $data['keywords'][$key] = $keyword->toArray();
 
-								$data['keywords'][$key] = $keyword->toArray();
+                                    $data['keywords'][$key]['head_word'] =  $element->head_word->getDisplayHeadWord();
 
-								$data['keywords'][$key]['head_word'] =  $element->head_word->getDisplayHeadWord();
+                                    $data['keywords'][$key]['glossed_text_gloss_ids'] = array();
 
-								$data['keywords'][$key]['glossed_text_gloss_ids'] = array();
+                                    $data['keywords'][$key]['glossed_text_gloss_ids'][$gloss->pivot->id] = $lesson;
 
-								$data['keywords'][$key]['glossed_text_gloss_ids'][$gloss->pivot->id] = $lesson;
+                                } else {
 
-							} else {
+                                    $data['keywords'][$key]['glossed_text_gloss_ids'][$gloss->pivot->id] = $lesson;
 
-								$data['keywords'][$key]['glossed_text_gloss_ids'][$gloss->pivot->id] = $lesson;
+                                }
 
-							}
+                            }
 
-						}
+                        }
 
-					}
+                    }
 
-				}
+                }
 
-			}
+            }
 
-		}
+            ksort($data['keywords']);
 
-		ksort($data['keywords']);
+            return View::make('eieol_english_meaning_index')->with($data);
 
-		return View::make('eieol_english_meaning_index')->with($data);
-
-	}
+        }
 	
 	public function eieol_text_list()
-	
 	{
 		$data = array();
 		$data['text_list'] = array();
@@ -678,7 +584,6 @@ class PublicController extends BaseController {
 	}
 	
 	public function eieol_text_toc($series_id)
-	
 	{
 		$data['series'] = EieolSeries::find($series_id);
 		if (Input::has('language_id')) {
@@ -693,9 +598,7 @@ class PublicController extends BaseController {
 		return View::make('eieol_text_toc')->with($data);
 	}
 	
-	
 	public function eieol_text($series_id)
-	
 	{
 		$data = get_series_info($series_id);	
 		if (Input::get('language_id') != 0) {
@@ -720,6 +623,11 @@ class PublicController extends BaseController {
 		return View::make('lex');
 	}
 	
+	public function lex_pokorny_redirect()
+	{		
+		return Redirect::to('lex/master');
+	}
+	
 	public function lex_pokorny()
 	{		
 		$data = array();
@@ -727,31 +635,28 @@ class PublicController extends BaseController {
 		return View::make('lex_pokorny')->with($data);
 	}
 	
-	public function lex_reflex($etyma_id)
-	{
-		$data = array();
-		$data['etyma'] = LexEtyma::with('reflexes.entries',
-									    'reflexes.language.language_sub_family.language_family',
-									    'reflexes.sources',
-									    'reflexes.parts_of_speech',
-									    'semantic_fields.semantic_category')->find($etyma_id);
-		return View::make('lex_reflex')->with($data);
+	public function lex_reflex_redirect($etyma_id)
+	{   
+	    $etyma = LexEtyma::find($etyma_id);
+	    return Redirect::to('lex/master/'.$etyma->old_id);//pokorny number is stored in db column 'old_id'
 	}
 	
-	
-	public function lex_reflex_by_pokorny_number($etyma_id)
+	public function lex_reflex($pokorny_number)
 	{
 		$data = array();
 		$data['etyma'] = LexEtyma::with('reflexes.entries',
 									    'reflexes.language.language_sub_family.language_family',
 									    'reflexes.sources',
 									    'reflexes.parts_of_speech',
-									    'semantic_fields.semantic_category')->where('old_id', '=', $etyma_id)->firstOrFail();
+									    'semantic_fields.semantic_category')->where('old_id', '=', $pokorny_number)->firstOrFail();
 									    
 		return View::make('lex_reflex')->with($data);
 	}
 	
-	
+	public function lex_language_redirect()
+	{   
+	    return Redirect::to('lex/languages/');
+	}
 	
 	public function lex_language()
 	{
@@ -760,24 +665,20 @@ class PublicController extends BaseController {
 		return View::make('lex_language')->with($data);
 	}
 	
-	public function lex_lang_reflexes($language_id)
+	public function lex_lang_reflexes_redirect($language_id)
+	{   
+	    $language = LexLanguage::find($language_id);
+	    return Redirect::to('lex/languages/'.$language->abbr);
+	}
+	
+	public function lex_lang_reflexes($language_abbr)
 	{
 		//This is the most complicate code in the whole LRC system
 			
-		$data = array();
-		
-        if (is_numeric($language_id)) { // find language the old way by pk
-    
-            $data['language'] = LexLanguage::find($language_id);
-    
-        } else { // find series info by name (abbr) instead of id
-        
-            $data['language'] = LexLanguage::whereRaw("abbr = ?", array($language_id))->get();
-            $data['language'] = $data['language'][0];
-            $language_id =  $data['language']->id;
-        
-        }
-		
+		$data = array();        
+        $data['language'] = LexLanguage::whereRaw("abbr = ?", array($language_abbr))->get();
+        $data['language'] = $data['language'][0];
+        $language_id =  $data['language']->id;
 		
 		//get all the reflexes.  The Eloquent ORM is too slow, so we have to write our own SQL
 		$temp_reflexes = DB::select( DB::raw("SELECT lex_reflex.id, lex_reflex.class_attribute, lex_reflex.lang_attribute, 
@@ -832,6 +733,11 @@ class PublicController extends BaseController {
 		return View::make('lex_lang_reflexes')->with($data);
 	}
 	
+	public function lex_semantic_redirect() 
+	{
+	    return Redirect::to('lex/semantic/'); 
+	}
+	
 	public function lex_semantic()
 	{
 		$data = array();
@@ -840,42 +746,35 @@ class PublicController extends BaseController {
 		return View::make('lex_semantic')->with($data);
 	}
 	
-	public function lex_semantic_category($cat_id)
+	public function lex_semantic_category_redirect($cat_id) 
+	{    
+	    $category = LexSemanticCategory::find($cat_id);
+	    return Redirect::to('lex/semantic/category/'.$category->abbr);   
+	}
+	
+	public function lex_semantic_category($cat_abbr)
 	{
-		$data = array();
-		
-		if (is_numeric($cat_id)) { // find category the old way by pk
-    
-            $data['cat'] = LexSemanticCategory::find($cat_id);
-    
-        } else { // find category info by name (abbr) instead of id
-        
-            $data['cat'] = LexSemanticCategory::whereRaw("abbr = ?", array($cat_id))->get();
-            $data['cat'] = $data['cat'][0];
-            $cat_id =  $data['cat']->id;
-        
-        }
-		
+		$data = array();		
+        $data['cat'] = LexSemanticCategory::whereRaw("abbr = ?", array($cat_abbr))->get();
+        $data['cat'] = $data['cat'][0];
+        $cat_id =  $data['cat']->id;
 		
 		$data['alpha_cats'] = LexSemanticCategory::get()->sortBy('text');
 		$data['fields'] = LexSemanticField::with('etyma_count')->where('semantic_category_id', '=', $cat_id)->get()->sortBy('number');
 		return View::make('lex_semantic_category')->with($data);
 	}
 	
-	public function lex_semantic_field($field_id)
+	public function lex_semantic_field_redirect($field_id) 
+	{    
+	    $field = LexSemanticField::find($field_id);
+	    return Redirect::to('lex/semantic/field/'.$field->abbr);   
+	}
+	
+	public function lex_semantic_field($field_abbr)
 	{
 		$data = array();
-		
-		if (is_numeric($field_id)) { // find field the old way by pk
-    
-            $data['field'] = LexSemanticField::with('etymas.reflex_count','semantic_category')->find($field_id);
-    
-        } else { // find field info by name (abbr) instead of id
-        
-            $data['field'] = LexSemanticField::with('etymas.reflex_count','semantic_category')->whereRaw("abbr = ?", array($field_id))->get();
-            $data['field'] = $data['field'][0];
-        
-        }
+        $data['field'] = LexSemanticField::with('etymas.reflex_count','semantic_category')->whereRaw("abbr = ?", array($field_abbr))->get();
+        $data['field'] = $data['field'][0];
 		
 		$data['alpha_cats'] = LexSemanticCategory::get()->sortBy('text');
 		return View::make('lex_semantic_field')->with($data);

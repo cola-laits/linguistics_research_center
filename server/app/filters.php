@@ -106,3 +106,10 @@ Route::filter('admin', function()
 		return Redirect::to('/admin2/admin_error');
 	}
 });
+
+App::missing(function($exception)
+{
+    return Response::view('missing', array(), 404);
+    
+});
+

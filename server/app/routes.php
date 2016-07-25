@@ -4,10 +4,10 @@ Route::get('/', 'PublicController@index');
 Route::get('index', 'PublicController@index');
 
 Route::get('eieol', 'PublicController@eieol');
-//Route::get('eieol_lesson/{series_id}', 'PublicController@eieol_lesson');
 
-Route::get('eieol/{series_name}', 'PublicController@eieol_first_lesson_by_name');
-Route::get('eieol/{series_name}/{lesson_order}', 'PublicController@eieol_lesson_by_name');
+Route::get('eieol_lesson/{series_id}', 'PublicController@eieol_lesson_redirect');
+Route::get('eieol/{series_name}', 'PublicController@eieol_first_lesson');
+Route::get('eieol/{series_name}/{lesson_order}', 'PublicController@eieol_lesson');
 
 Route::get('eieol_printable/{series_id}', 'PublicController@eieol_printable');
 Route::get('eieol_toc/{series_id}', 'PublicController@eieol_toc');
@@ -21,28 +21,26 @@ Route::get('eieol_text/{series_id}', 'PublicController@eieol_text');
 
 Route::get('lex', 'PublicController@lex');
 
-Route::get('lex_pokorny', 'PublicController@lex_pokorny');
+Route::get('lex_pokorny', 'PublicController@lex_pokorny_redirect');
 Route::get('lex/master', 'PublicController@lex_pokorny');
 
-Route::get('lex_reflex/{etyma_id}', 'PublicController@lex_reflex');
-Route::get('lex/master/{etyma_id}', 'PublicController@lex_reflex_by_pokorny_number');
+Route::get('lex_reflex/{etyma_id}', 'PublicController@lex_reflex_redirect');
+Route::get('lex/master/{pokorny_number}', 'PublicController@lex_reflex');
 
-Route::get('lex_language', 'PublicController@lex_language');
+Route::get('lex_language', 'PublicController@lex_language_redirect');
 Route::get('lex/languages', 'PublicController@lex_language');
 
-Route::get('lex_lang_reflexes/{language_id}', 'PublicController@lex_lang_reflexes');
-Route::get('lex/languages/{language_id}', 'PublicController@lex_lang_reflexes');
+Route::get('lex_lang_reflexes/{language_id}', 'PublicController@lex_lang_reflexes_redirect');
+Route::get('lex/languages/{language_abbr}', 'PublicController@lex_lang_reflexes');
 
-Route::get('lex_semantic', 'PublicController@lex_semantic');
+Route::get('lex_semantic', 'PublicController@lex_semantic_redirect');
 Route::get('lex/semantic', 'PublicController@lex_semantic');
 
-Route::get('lex_semantic_category/{cat_id}', 'PublicController@lex_semantic_category');
-Route::get('lex/semantic/category/{cat_id}', 'PublicController@lex_semantic_category');
+Route::get('lex_semantic_category/{cat_id}', 'PublicController@lex_semantic_category_redirect');
+Route::get('lex/semantic/category/{cat_abbr}', 'PublicController@lex_semantic_category');
 
-Route::get('lex_semantic_field/{field_id}', 'PublicController@lex_semantic_field');
-Route::get('lex/semantic/field/{field_id}', 'PublicController@lex_semantic_field');
-
-//Route::get('lex/{etyma_id}', 'PublicController@lex_reflex_by_pokorny_number');
+Route::get('lex_semantic_field/{field_id}', 'PublicController@lex_semantic_field_redirect');
+Route::get('lex/semantic/field/{field_abbr}', 'PublicController@lex_semantic_field');
 
 Route::get('rest/eieol_serieses', 'PublicController@rest_eieol_serieses');
 Route::get('rest/eieol_series/{series_id}', 'PublicController@rest_eieol_series');
