@@ -642,7 +642,8 @@ class PublicController extends BaseController {
 	}
 	
 	public function lex_reflex($pokorny_number)
-	{
+	{   
+	
 		$data = array();
 		$data['etyma'] = LexEtyma::with('reflexes.entries',
 									    'reflexes.language.language_sub_family.language_family',
@@ -672,7 +673,14 @@ class PublicController extends BaseController {
 	}
 	
 	public function lex_lang_reflexes($language_abbr)
-	{
+	{   
+	
+	    // safety check for deprecated URL routes, can be removed when search results stabilize
+		if (is_numeric($language_abbr)) { 
+		    return redirect()->action('PublicController@lex_lang_reflexes_redirect', $language_abbr);
+        }
+	    
+	    
 		//This is the most complicate code in the whole LRC system
 			
 		$data = array();        
@@ -754,7 +762,13 @@ class PublicController extends BaseController {
 	
 	public function lex_semantic_category($cat_abbr)
 	{
-		$data = array();		
+		$data = array();
+		
+		// safety check for deprecated URL routes, can be removed when search results stabilize
+		if (is_numeric($cat_abbr)) { 
+		    return redirect()->action('PublicController@lex_semantic_category_redirect', $cat_abbr);
+        }
+        
         $data['cat'] = LexSemanticCategory::whereRaw("abbr = ?", array($cat_abbr))->get();
         $data['cat'] = $data['cat'][0];
         $cat_id =  $data['cat']->id;
@@ -773,8 +787,15 @@ class PublicController extends BaseController {
 	public function lex_semantic_field($field_abbr)
 	{
 		$data = array();
-        $data['field'] = LexSemanticField::with('etymas.reflex_count','semantic_category')->whereRaw("abbr = ?", array($field_abbr))->get();
+		
+		// safety check for deprecated URL routes, can be removed when search results stabilize
+		if (is_numeric($field_abbr)) { 
+		    return redirect()->action('PublicController@lex_semantic_field_redirect', $field_abbr);
+        }
+        
+        $data['field'] = LexSemanticField::with('etymas.reflex_count','semantic_category')->whereRaw("abbr = ?", array($field_id))->get();
         $data['field'] = $data['field'][0];
+        
 		
 		$data['alpha_cats'] = LexSemanticCategory::get()->sortBy('text');
 		return View::make('lex_semantic_field')->with($data);
