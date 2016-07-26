@@ -206,11 +206,11 @@ class PublicController extends BaseController {
         if (Input::has('id')) {
             
             $lesson = EieolLesson::find(Input::get('id'));
-            return Redirect::to('eieol/'.$series->slug.'/'.$lesson->order);
+            return Redirect::to('eieol/'.$series->slug.'/'.$lesson->order, 301);
         
         } else {
         
-	        return Redirect::to('eieol/'.$series->slug);
+	        return Redirect::to('eieol/'.$series->slug, 301);
         
         }
 
@@ -625,7 +625,7 @@ class PublicController extends BaseController {
 	
 	public function lex_pokorny_redirect()
 	{		
-		return Redirect::to('lex/master');
+		return Redirect::to('lex/master', 301);
 	}
 	
 	public function lex_pokorny()
@@ -638,7 +638,7 @@ class PublicController extends BaseController {
 	public function lex_reflex_redirect($etyma_id)
 	{   
 	    $etyma = LexEtyma::find($etyma_id);
-	    return Redirect::to('lex/master/'.$etyma->old_id);//pokorny number is stored in db column 'old_id'
+	    return Redirect::to('lex/master/'.$etyma->old_id, 301);//pokorny number is stored in db column 'old_id'
 	}
 	
 	public function lex_reflex($pokorny_number)
@@ -656,7 +656,7 @@ class PublicController extends BaseController {
 	
 	public function lex_language_redirect()
 	{   
-	    return Redirect::to('lex/languages/');
+	    return Redirect::to('lex/languages/', 301);
 	}
 	
 	public function lex_language()
@@ -669,7 +669,7 @@ class PublicController extends BaseController {
 	public function lex_lang_reflexes_redirect($language_id)
 	{   
 	    $language = LexLanguage::find($language_id);
-	    return Redirect::to('lex/languages/'.$language->abbr);
+	    return Redirect::to('lex/languages/'.$language->abbr, 301);
 	}
 	
 	public function lex_lang_reflexes($language_abbr)
@@ -742,7 +742,7 @@ class PublicController extends BaseController {
 	
 	public function lex_semantic_redirect() 
 	{
-	    return Redirect::to('lex/semantic/'); 
+	    return Redirect::to('lex/semantic/', 301); 
 	}
 	
 	public function lex_semantic()
@@ -756,18 +756,18 @@ class PublicController extends BaseController {
 	public function lex_semantic_category_redirect($cat_id) 
 	{    
 	    $category = LexSemanticCategory::find($cat_id);
-	    return Redirect::to('lex/semantic/category/'.$category->abbr);   
+	    return Redirect::to('lex/semantic/category/'.$category->abbr, 301);   
 	}
 	
 	public function lex_semantic_category($cat_abbr)
 	{
-		$data = array();
 		
 		// safety check for deprecated URL routes, can be removed when search results stabilize        
         if (is_numeric($cat_abbr)) { 
 		    return Redirect::route('category_redirect', $cat_abbr);
         }
         
+        $data = array();   
         $data['cat'] = LexSemanticCategory::whereRaw("abbr = ?", array($cat_abbr))->get();
         $data['cat'] = $data['cat'][0];
         $cat_id =  $data['cat']->id;
@@ -780,22 +780,21 @@ class PublicController extends BaseController {
 	public function lex_semantic_field_redirect($field_id) 
 	{    
 	    $field = LexSemanticField::find($field_id);
-	    return Redirect::to('lex/semantic/field/'.$field->abbr);   
+	    return Redirect::to('lex/semantic/field/'.$field->abbr, 301);   
 	}
 	
 	public function lex_semantic_field($field_abbr)
 	{
-		$data = array();
-		
+	
 		// safety check for deprecated URL routes, can be removed when search results stabilize
 		if (is_numeric($field_abbr)) { 
 		    return Redirect::route('field_redirect', $field_abbr);
         }
         
+        $data = array();
         $data['field'] = LexSemanticField::with('etymas.reflex_count','semantic_category')->whereRaw("abbr = ?", array($field_abbr))->get();
         $data['field'] = $data['field'][0];
         
-		
 		$data['alpha_cats'] = LexSemanticCategory::get()->sortBy('text');
 		return View::make('lex_semantic_field')->with($data);
 	}
