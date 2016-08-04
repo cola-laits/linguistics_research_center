@@ -61,6 +61,11 @@
 	        {{ Form::label('use_old_gloss_ui', 'Use Old Gloss UI') }}
 	        {{ Form::checkbox('use_old_gloss_ui', 1, false, ['class' => 'form-control']) }}
 	    </div>
+
+		<div class='form-group col-sm-1 @if ($errors->has('meta_tags')) has-error @endif  '>
+			{{ Form::label('meta_tags', 'HTML Meta Tags') }}
+			{{ Form::text('meta_tags', null, ['placeholder' => 'Meta Tags', 'class' => 'form-control']) }}
+		</div>
 	    
 	    <div class='form-group col-sm-1'>
 	        {{ Form::submit($action, ['class' => 'btn btn-primary']) }}

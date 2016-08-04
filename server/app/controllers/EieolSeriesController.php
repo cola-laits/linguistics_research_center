@@ -64,6 +64,7 @@ class EieolSeriesController extends BaseController {
 			$series->menu_order = Input::get('menu_order');
 			$series->expanded_title = Input::get('expanded_title');
 			$series->use_old_gloss_ui = Input::get('use_old_gloss_ui');
+            $series->meta_tags = Input::get('meta_tags');
 			$series->created_by = Auth::user()->username;
 			$series->updated_by = Auth::user()->username;
 			
@@ -122,6 +123,7 @@ class EieolSeriesController extends BaseController {
 			$series->menu_order = Input::get('menu_order');
 			$series->expanded_title = Input::get('expanded_title');
 			$series->use_old_gloss_ui = Input::get('use_old_gloss_ui');
+            $series->meta_tags = Input::get('meta_tags');
 			$series->updated_by = Auth::user()->username;
 				
 			$series->save();

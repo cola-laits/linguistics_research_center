@@ -16,6 +16,7 @@ but also used to make printable lessons in the public controller -->
     <meta content="https://liberalarts.utexas.edu/_internal/images/faviacons/apple-touch-icon-144x144.png" name="msapplication-TileImage"/>
     <meta content="#ffffff" name="msapplication-TileColor"/>
     <meta content="UT Austin" name="apple-mobile-web-app-title"/>
+    @section('meta') @show
     <link href="https://liberalarts.utexas.edu/_internal/images/favicons/apple-touch-icon-144x144.png" rel="apple-touch-icon" sizes="144x144"/>
     <link href="https://liberalarts.utexas.edu/_internal/images/favicons/apple-touch-icon-120x120.png" rel="apple-touch-icon" sizes="120x120"/>
     <link href="https://liberalarts.utexas.edu/_internal/images/favicons/apple-touch-icon.png" rel="apple-touch-icon"/>
