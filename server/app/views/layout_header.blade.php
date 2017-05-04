@@ -49,9 +49,9 @@ but also used to make printable lessons in the public controller -->
 	{{ HTML::script('//cdn.datatables.net/1.10.6/js/jquery.dataTables.min.js') }}
 	
 	<!-- QUALTRICS survey popup - Feb 27 2017 -->
-	<script language="JavaScript" src="http://liberalarts.utexas.edu/lrc/_files/scripts/survey.js" type="text/javascript">// <![CDATA[ // ]]></script>
+	<script language="JavaScript" src="https://liberalarts.utexas.edu/lrc/_files/scripts/survey.js" type="text/javascript">// <![CDATA[ // ]]></script>
 
-	<noscript>Take <a href="http://liberalarts.utexas.edu/lrc/_files/scripts/survey" title="LRC Visitor Survey">our survey</a></noscript>
+	<noscript>Take <a href="https://liberalarts.utexas.edu/lrc/_files/scripts/survey" title="LRC Visitor Survey">our survey</a></noscript>
 	<!-- End QUALTRICS survey popup -->
 <!-- END "Must Have in the Header" Javascript -->
 
