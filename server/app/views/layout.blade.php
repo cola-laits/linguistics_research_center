@@ -332,6 +332,13 @@ the page content is in <section class="main-section">
                     		</a>
                     	</li>
                     </ul>
+		    <!-- Webmaster -->
+		    <ul class="side-nav">
+		    
+		    	<li><label>E-mail Us!</label></li>
+			<li class="phone-address">For comments and inquiries, or to report issues, please contact the Web Master at <a href="mailto:UTLRC@utexas.edu">UTLRC@utexas.edu</a></li>
+		    
+		    </ul>
             	</div>
 	            <!--    
 	            ***********************************************************************************
