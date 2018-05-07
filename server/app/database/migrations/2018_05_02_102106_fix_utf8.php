@@ -18,9 +18,9 @@ class FixUtf8 extends Migration
     {   
         $charset = "utf8mb4";
         $collate = $charset."_bin";
-        //$dbName = Config::get('database.connections.'.Config::get('database.default').'.database');
-        //$query = "ALTER SCHEMA `$dbName` DEFAULT CHARACTER SET $charset DEFAULT COLLATE $collate;\n"; 
-        //DB::connection()->getPdo()->exec($query);
+        $dbName = Config::get('database.connections.'.Config::get('database.default').'.database');
+        $query = "ALTER SCHEMA `$dbName` DEFAULT CHARACTER SET $charset DEFAULT COLLATE $collate;\n"; 
+        DB::connection()->getPdo()->exec($query);
 
         $dbName = Config::get('database.connections.'.Config::get('database.default').'.database');
         $result = DB::select(DB::raw('show tables'));
@@ -51,7 +51,6 @@ class FixUtf8 extends Migration
             echo $query;
             DB::connection()->getPdo()->exec($query);
         }
-        
 
         $result = DB::select(DB::raw('show tables'));
         foreach($result as $r)
@@ -75,9 +74,9 @@ class FixUtf8 extends Migration
     {
         $charset = "utf8";
         $collate = $charset."_bin";
-      //  $dbName = Config::get('database.connections.'.Config::get('database.default').'.database');
-      //  $query = "ALTER SCHEMA `$dbName` DEFAULT CHARACTER SET $charset DEFAULT COLLATE $collate;\n"; 
-      //  DB::connection()->getPdo()->exec($query);
+        $dbName = Config::get('database.connections.'.Config::get('database.default').'.database');
+        $query = "ALTER SCHEMA `$dbName` DEFAULT CHARACTER SET $charset DEFAULT COLLATE $collate;\n"; 
+        DB::connection()->getPdo()->exec($query);
         
         $dbName = Config::get('database.connections.'.Config::get('database.default').'.database');
         $result = DB::select(DB::raw('show tables'));
