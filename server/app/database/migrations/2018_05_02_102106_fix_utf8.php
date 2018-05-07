@@ -76,7 +76,7 @@ class FixUtf8 extends Migration
         $charset = "utf8";
         $collate = $charset."_bin";
         $dbName = Config::get('database.connections.'.Config::get('database.default').'.database');
-        $query = "ALTER SCHEMA $dbName DEFAULT CHARACTER SET $charset DEFAULT COLLATE $collate;\n"; 
+        $query = "ALTER SCHEMA `$dbName` DEFAULT CHARACTER SET $charset DEFAULT COLLATE $collate;\n"; 
         DB::connection()->getPdo()->exec($query);
         
         $dbName = Config::get('database.connections.'.Config::get('database.default').'.database');
