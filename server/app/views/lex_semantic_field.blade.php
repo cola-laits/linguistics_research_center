@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title') Early Indo-European Online: Introduction to the Language Lessons @stop
+@section('title') Proto-Indo-European Etyma: {{$field->semantic_category->number}}. {{$field->semantic_category->text}} @stop
 
 @section('content')
 

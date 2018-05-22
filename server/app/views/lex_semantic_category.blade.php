@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title') Early Indo-European Online: Introduction to the Language Lessons @stop
+@section('title') Semantic Fields: {{$cat->number}}. {{$cat->text}} @stop
 
 @section('content')
 
