@@ -184,5 +184,20 @@ class EieolLessonController extends BaseController {
 				'message' => 'Translation was udated successfully'
 		));
 	}
+	
+	public function all_languages()
+	{
+		$return_languages = array();
+		$languages = IsoLanguage::whereIn('Language_Type', array('E','A','H','C'))->orWhere('Part1', '!=', '')->orWhere('Part2B', '!=', '')->orWhere('Part2T', '!=', '')->get()->sortBy('Ref_Name');
+		foreach($languages as $language) {
+			$temp_dict = array();
+			$temp_dict['text'] = $language->Ref_Name;
+			$temp_dict['value'] = $language->id;
+			if (substr($temp_dict['text'],0,1) != "/" && substr($temp_dict['text'],0,1) != "#") {
+			  $return_languages[] = $temp_dict;
+			}
+		} 
+		return Response::json($return_languages);
+	}
 
 }

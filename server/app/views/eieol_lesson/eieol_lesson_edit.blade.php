@@ -2050,48 +2050,43 @@
 <script>	
 	//ckeditor defaults
 	
+	
 CKEDITOR.stylesSet.add( 'my_styles', [
 
     {   
-        name: 'Afrikaans',
+        name: 'Abipon',
 				element : 'span',
-				attributes : { 'lang' : 'af', 'class' : 'Unicode' }				
+				attributes : { 'lang' : 'axb', 'class' : 'Unicode' }				
 		},
 		
 		{   
-        name: 'Baangi',
+        name: 'Bosnian',
 				element : 'span',
-				attributes : { 'lang' : 'bqx', 'class' : 'Unicode' }				
+				attributes : { 'lang' : 'bos', 'class' : 'Unicode' }				
 		},
 		
 		{   
-        name: 'Chachapoyas Quechua',
+        name: 'Grebo',
 				element : 'span',
-				attributes : { 'lang' : 'quk', 'class' : 'Unicode' }				
+				attributes : { 'lang' : 'grb', 'class' : 'Unicode' }				
 		},
 		
 		{   
-        name: 'Defaka',
+        name: 'Igbo',
 				element : 'span',
-				attributes : { 'lang' : 'afn', 'class' : 'Unicode' }				
+				attributes : { 'lang' : 'ibo', 'class' : 'Unicode' }				
 		},
 
 		{   
-        name: 'Extremaduran',
+        name: 'Kenaboi',
 				element : 'span',
-				attributes : { 'lang' : 'ext', 'class' : 'Unicode' }				
+				attributes : { 'lang' : 'xbn', 'class' : 'Unicode' }				
 		},
-		
+				
 		{   
-        name: 'French Sign Language',
+        name: 'Luxembourgish',
 				element : 'span',
-				attributes : { 'lang' : 'fsl', 'class' : 'Unicode' }				
-		},
-		
-		{   
-        name: 'Georgian',
-				element : 'span',
-				attributes : { 'lang' : 'ka', 'class' : 'Unicode' }				
+				attributes : { 'lang' : 'ltz', 'class' : 'Unicode' }				
 		},
     
     

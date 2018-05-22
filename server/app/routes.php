@@ -69,7 +69,7 @@ Route::group(array('prefix'=> 'admin2', 'before' => 'auth'), function() {
 	Route::get('/eieol_analysis/filtered_list', 'EieolAnalysisController@filtered_list');
 	Route::resource('/eieol_language', 'EieolLanguageController');
 	
-	Route::get('all_languages', 'EieolSeriesController@all_languages');
+	Route::get('all_languages', 'EieolLessonController@all_languages');
 	
 
 });	

@@ -111,7 +111,7 @@ var removeByAttr = function(arr, attr, value) {
 		      
           <ul>
 
-          <li v-for="language in languages">
+          <li v-for="language in languages" :id="language.value">
           {# language['text'] #}
           &nbsp;<a v-on:click.prevent="removeLanguage(language)" href="#">remove</a>
           </li>
