@@ -2049,14 +2049,77 @@
 
 <script>	
 	//ckeditor defaults
+	
+CKEDITOR.stylesSet.add( 'my_styles', [
+
+    {   
+        name: 'Afrikaans',
+				element : 'span',
+				attributes : { 'lang' : 'af', 'class' : 'Unicode' }				
+		},
+		
+		{   
+        name: 'Baangi',
+				element : 'span',
+				attributes : { 'lang' : 'bqx', 'class' : 'Unicode' }				
+		},
+		
+		{   
+        name: 'Chachapoyas Quechua',
+				element : 'span',
+				attributes : { 'lang' : 'quk', 'class' : 'Unicode' }				
+		},
+		
+		{   
+        name: 'Defaka',
+				element : 'span',
+				attributes : { 'lang' : 'afn', 'class' : 'Unicode' }				
+		},
+
+		{   
+        name: 'Extremaduran',
+				element : 'span',
+				attributes : { 'lang' : 'ext', 'class' : 'Unicode' }				
+		},
+		
+		{   
+        name: 'French Sign Language',
+				element : 'span',
+				attributes : { 'lang' : 'fsl', 'class' : 'Unicode' }				
+		},
+		
+		{   
+        name: 'Georgian',
+				element : 'span',
+				attributes : { 'lang' : 'ka', 'class' : 'Unicode' }				
+		},
+    
+    
+]);
+  
+	
+	CKEDITOR.on('instanceReady', function() { 
+	
+	  $( "span.cke_combo__styles a span.cke_combo_text" ).text("Languages");
+	  
+	});
+	
+	/*
+	CKEDITOR.attachStyleStateChange( style, function( state ) {
+      $( "#cke_14_label" ).text("NewText");  
+  } );
+	*/
+	
 	CKEDITOR.plugins.addExternal( 'onchange', '/js/', 'onchangeplugin.js' );
-	CKEDITOR.plugins.addExternal( 'eieol_language', '/js/', 'eieollanguageplugin.js' );
+//	CKEDITOR.plugins.addExternal( 'eieol_language', '/js/', 'eieollanguageplugin.js' );
 	ckeditor_parms = {
-			  toolbar : $mytoolbar, 
+			  toolbar : $mytoolbar,
+			  stylesSet: 'my_styles',
 			  contentsCss : '/css/lrcstyle.css', 
 			  disableNativeSpellChecker : false, 
 			  allowedContent : true, 
-			  extraPlugins : 'onchange,eieol_language', 
+			  extraPlugins : 'onchange', 
+			 // extraPlugins : 'onchange,eieol_language', 
 			  language_class : '{{$lesson->language->class_attribute}}',
 			  language_lang : '{{$lesson->language->lang_attribute}}',
 			  specialChars : [ {{$lesson->language->custom_keyboard_layout}}],
@@ -2064,6 +2127,8 @@
 			};
 	glossed_text_ckeditor_parms = jQuery.extend(true, {}, ckeditor_parms); //deep copy
 	glossed_text_ckeditor_parms['height'] = '4em';
+
+
 
 
 	//apply the ckeditor to the intro text

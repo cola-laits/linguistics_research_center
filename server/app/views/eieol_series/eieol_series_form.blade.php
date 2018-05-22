@@ -1,6 +1,29 @@
 @extends('admin_layout')
  
 @section('content')
+
+<script src="https://unpkg.com/vue"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>	
+<script src="https://unpkg.com/vue-search-select"></script>
+<script src="/js/related_languages.js"></script>
+
+<script>
+
+var removeByAttr = function(arr, attr, value) {
+    var i = arr.length;
+    while(i--){
+       if( arr[i] 
+           && arr[i].hasOwnProperty(attr) 
+           && (arguments.length > 2 && arr[i][attr] === value ) ){ 
+
+           arr.splice(i,1);
+
+       }
+    }
+    return arr;
+}
+
+</script>
  
 <div class='col-lg-12'>
  
@@ -80,6 +103,41 @@
 	    Updated {{{ $series->updated_at->format('m/d/Y h:ia') }}} by {{{ $series->updated_by }}}</i>
 	 
 	 	<hr/>
+	 	
+	 	<div id="related_languages" class='row'>
+		  	    	
+		    <div class='form-group col-sm-4'>
+		    <h2>Related Languages</h2>
+		      
+          <ul>
+
+          <li v-for="language in languages">
+          {# language['text'] #}
+          &nbsp;<a v-on:click.prevent="removeLanguage(language)" href="#">remove</a>
+          </li>
+
+          </ul>
+		      
+          <p>
+  
+          <basic-select :options="language_options"
+                        :selected-option="language_selected"
+                        placeholder="choose language"
+                        @select="onSelectLanguage">
+          </basic-select>
+  
+          </p>
+  
+          <div>
+          
+          <button v-on:click.prevent="addLanguage(language_selected)" :disabled="language_selected.value == ''" class="btn btn-xs btn-primary">Attach</button>
+  
+          </div>
+		    
+		    </div>
+		
+		</div>	
+	 	
 	 	<h2>Lessons</h2>
 	 	
 	 	<div class="table-responsive">

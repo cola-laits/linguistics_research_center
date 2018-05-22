@@ -131,5 +131,18 @@ class EieolSeriesController extends BaseController {
 			return Redirect::to('/admin2/eieol_series/' . $id . '/edit');
 		}
 	}
+	
+	public function all_languages()
+	{
+		$return_languages = array();
+		$languages = IsoLanguage::where('Ref_Name', 'not like', '/%')->where('Ref_Name', 'not like', '!%')->get()->sortBy('Ref_Name');
+		foreach($languages as $language) {
+			$temp_dict = array();
+			$temp_dict['text'] = $language->Ref_Name;
+			$temp_dict['value'] = $language->id;
+			$return_languages[] = $temp_dict;
+		} 
+		return Response::json($return_languages);
+	}
 
 }

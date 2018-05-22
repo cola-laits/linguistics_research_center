@@ -42,7 +42,9 @@
 		
 		    $mytoolbar =
 		    	[
-		    		{ name: 'document', items : [ 'Source','EieolLanguage'] },
+		    	{ name: 'document', items : [ 'Source','Styles'] },
+		    		
+		    		
 					{ name: 'clipboard', items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] },
 					{ name: 'editing', items : [ 'Find','Replace','-','SelectAll','-','SpellChecker' ] },
 					{ name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
