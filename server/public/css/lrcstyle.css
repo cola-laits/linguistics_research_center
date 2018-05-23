@@ -2,6 +2,7 @@
     .right { text-align: right }
    .center { text-align: center }
 
+/*
   .Unicode { font-family: Arial Unicode MS, ALPHABETUM Unicode, TITUS Cyberbit Basic, Gentium, Code2000, Lucida Sans Unicode, Lucida Grande, Everson Mono Unicode, Arial, Helvetica, sans-serif;}
  .Cyrillic { font-family: Arial Unicode MS, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif; font-style: italic; }
  .Sanskrit { font-family: Arial Unicode MS, Gentium, ALPHABETUM Unicode, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif; font-style: italic; }
@@ -14,6 +15,21 @@
     .Greek { font-family: Gentium, Arial Unicode MS, Lucida Sans Unicode, ALPHABETUM Unicode, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif; font-style: italic; }
     .Latin { font-family: Gentium, Palatino Linotype, Lucida Sans Unicode, Arial Unicode MS, ALPHABETUM Unicode, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, Arial, Helvetica, sans-serif; font-style: italic; }
     .Armen { font-family: Arial Unicode MS, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif; font-style: italic; }
+*/
+
+
+ .Unicode { font-style: italic; }
+ .Cyrillic {  }
+ .Sanskrit {  }
+ .SanskMrv {  }
+ .SanskPop {  }
+ .SanskDbt {  }
+ .SanskExt {  }
+ .Sansk {  }
+ .GreekExt {  }
+ .Greek {  }
+ .Latin {  }
+ .Armen {  }
     
 
 .lang_list{
