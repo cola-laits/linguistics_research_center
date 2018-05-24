@@ -18,7 +18,7 @@
 */
 
 
- .Unicode { font-style: italic; }
+ .Unicode { /*font-style: italic;*/ }
  .Cyrillic {  }
  .Sanskrit {  }
  .SanskMrv {  }
@@ -28,7 +28,7 @@
  .Sansk {  }
  .GreekExt {  }
  .Greek {  }
- .Latin { font-style: italic; }
+ .Latin {  }
  .Armen {  }
     
 
