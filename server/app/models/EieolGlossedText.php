@@ -21,8 +21,18 @@ class EieolGlossedText extends Eloquent {
 	
 		//this makes a new version of the glossed text with span tags for each gloss.  
 		//Then you can make them clickable so they toggle the gloss.
-
-    $clickable_text = $this->makeClickable($this->glossed_text, "surface_form");
+    
+    $text = $this->removeFormatting($this->glossed_text);
+    
+    $text = str_replace("\r", " ", $text);
+    $text = str_replace("\n", " ", $text);
+    $text = str_replace("<br/>", " <br/> ", $text);
+		$text = str_replace("<br />", " <br /> ", $text);
+		$text = str_replace("<br>", " <br> ", $text);
+		$text = str_replace("<p>", " <p> ", $text);
+		$text = str_replace("</p>", " </p> ", $text);
+    
+    $clickable_text = $this->makeClickable($text, "surface_form");
     $clickable_text = $this->makeClickable($clickable_text, "underlying_form");
     
 		return $clickable_text;
@@ -46,14 +56,17 @@ class EieolGlossedText extends Eloquent {
     } );
     
 		foreach($glosses as $gloss) {
-
+      
+      $form = $this->removeFormatting($gloss['form']);
+      
 	  	// spaces between html tag attributes don't delineate words - tokenize them
-		 /* $tokenized = preg_replace("/<.*?(\s).*?>/","@@@",$gloss['form']);*/
-		  $tokenized = str_replace(" size=","@@@size=",$gloss['form']);
-		  $words = explode(" ", $tokenized);
+		 /* $tokenized = preg_replace("/<.*?(\s).*?>/","@@@",$form);*/
+		 // $tokenized = str_replace(" size=","@@@size=",$form);
+		 
+		  $words = explode(" ", $form);
 		  
-		  foreach ($words as $word) {
-		    $word = str_replace("@@@"," ",$word); // de-tokenize
+		  foreach ($words as $word) {	
+		    // $word = str_replace("@@@"," ",$word); // de-tokenize	    
         $str = $this->attachClicks($str, $word, $gloss['id']);
         $str = $this->attachClicks($str, ucfirst($word), $gloss['id']);
       }
@@ -66,19 +79,25 @@ class EieolGlossedText extends Eloquent {
 	
 	private function attachClicks($str,$g,$id) 
 	{
-	    $punctuation = array(",",".","!","?",":","(",")","։","՝","յ");	  
+	    $punctuation = array(",",".","!","?",":","(",")","։","՝","յ","`");	  
 	    
 	    $a = '<a href="#" onclick="return false;" class="click_gloss" id="pivot_' . $id . '">';
 	    
 	    foreach ($punctuation as $p) {
+	    
         $str = $this->mbReplace(' '.$g.$p, ' '.$a.$g.$p.'</a> ', $str);
         $str = $this->mbReplace($p.$g.' ', $p.$a.$g.'</a> ', $str);
+ 
       }
       
       $str = $this->mbReplace(' '.$g.' ', ' '.$a.$g.'</a> ', $str);
       
       if ($this->startsWith($str, $g)) {
         $str = $a.mb_substr($str, 0, mb_strlen($g)).'</a>'.mb_substr($str, mb_strlen($g));
+      }
+      
+      if ($this->startsWith($str, '"'.$g)) {
+        $str = '"'.$a.mb_substr($str, 1, mb_strlen($g)).'</a>'.mb_substr($str, mb_strlen($g) + 1);
       }
       
       if ($this->endsWith($str, $g)) {
@@ -119,7 +138,7 @@ class EieolGlossedText extends Eloquent {
             $search_len = mb_strlen($search, $encoding);
 
             $sb = [];
-            while(($offset = mb_strpos($subject, $search, 0, $encoding)) !== false) {
+            while(($offset = mb_stripos($subject, $search, 0, $encoding)) !== false) {
                 $sb[] = mb_substr($subject, 0, $offset, $encoding);
                 $subject = mb_substr($subject, $offset + $search_len, null, $encoding);
                 ++$count;
@@ -134,6 +153,17 @@ class EieolGlossedText extends Eloquent {
     }
     return $subject;
     
+  }
+  
+  private function removeFormatting($str)
+  {
+    
+    $str = preg_replace('/(<font[^>]*>)|(<\/font>)/', '', $str);
+   // $str = str_replace('<sup>', '', $str);
+   // $str = str_replace('</sup>', '', $str);
+    
+    return $str;
+  
   }
 
 }
