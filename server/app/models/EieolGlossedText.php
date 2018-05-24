@@ -22,9 +22,10 @@ class EieolGlossedText extends Eloquent {
 		//this makes a new version of the glossed text with span tags for each gloss.  
 		//Then you can make them clickable so they toggle the gloss.
 
-    $retval = $this->makeClickable($this->glossed_text, "surface_form");
+    $clickable_text = $this->makeClickable($this->glossed_text, "surface_form");
+    $clickable_text = $this->makeClickable($clickable_text, "underlying_form");
     
-		return $retval;
+		return $clickable_text;
 		
 	} 
 	
@@ -47,7 +48,8 @@ class EieolGlossedText extends Eloquent {
 		foreach($glosses as $gloss) {
 
 	  	// spaces between html tag attributes don't delineate words - tokenize them
-		  $tokenized = preg_replace("/<.*?(\s).*?>/","@@@",$gloss['form']);
+		 /* $tokenized = preg_replace("/<.*?(\s).*?>/","@@@",$gloss['form']);*/
+		  $tokenized = str_replace(" size=","@@@size=",$gloss['form']);
 		  $words = explode(" ", $tokenized);
 		  
 		  foreach ($words as $word) {
