@@ -31,6 +31,7 @@ class EieolGlossedText extends Eloquent {
 		$text = str_replace("<br>", " <br> ", $text);
 		$text = str_replace("<p>", " <p> ", $text);
 		$text = str_replace("</p>", " </p> ", $text);
+    //$text = str_replace("</sup>", "</sup> ", $text);
     
     $clickable_text = $this->makeClickable($text, "surface_form");
     $clickable_text = $this->makeClickable($clickable_text, "underlying_form");
@@ -68,7 +69,7 @@ class EieolGlossedText extends Eloquent {
 		  foreach ($words as $word) {	
 		    // $word = str_replace("@@@"," ",$word); // de-tokenize	    
         $str = $this->attachClicks($str, $word, $gloss['id']);
-        $str = $this->attachClicks($str, ucfirst($word), $gloss['id']);
+        $str = $this->attachClicks($str, ucfirst($word), $gloss['id'],True);
       }
       
     }
@@ -77,32 +78,41 @@ class EieolGlossedText extends Eloquent {
 	  
 	}
 	
-	private function attachClicks($str,$g,$id) 
+	private function attachClicks($str,$g,$id,$i=False) 
 	{
-	    $punctuation = array(",",".","!","?",":","(",")","։","՝","յ","`");	  
-	    
+	       
 	    $a = '<a href="#" onclick="return false;" class="click_gloss" id="pivot_' . $id . '">';
 	    
-	    foreach ($punctuation as $p) {
-	    
-        $str = $this->mbReplace(' '.$g.$p, ' '.$a.$g.$p.'</a> ', $str);
-        $str = $this->mbReplace($p.$g.' ', $p.$a.$g.'</a> ', $str);
- 
-      }
-      
       $str = $this->mbReplace(' '.$g.' ', ' '.$a.$g.'</a> ', $str);
       
       if ($this->startsWith($str, $g)) {
         $str = $a.mb_substr($str, 0, mb_strlen($g)).'</a>'.mb_substr($str, mb_strlen($g));
       }
-      
-      if ($this->startsWith($str, '"'.$g)) {
-        $str = '"'.$a.mb_substr($str, 1, mb_strlen($g)).'</a>'.mb_substr($str, mb_strlen($g) + 1);
-      }
-      
+
       if ($this->endsWith($str, $g)) {
         $str = mb_substr($str, 0, mb_strlen($str) - mb_strlen($g)).$a.$g.'</a>';
       }
+      
+      $punctuation = array(",",".","!","?",":","(",")","։","՝","յ","`",'"',";","·","̃");	
+      
+      foreach ($punctuation as $p) {
+	    
+        $str = $this->mbReplace(' '.$g.$p, ' '.$a.$g.'</a>'.$p.' ', $str);
+        $str = $this->mbReplace($p.$g.' ', $p.$a.$g.'</a> ', $str);
+        
+        if ($this->startsWith($str, $p.$g)) {
+          $str = $p.$a.mb_substr($str, 1, mb_strlen($g)).'</a>'.mb_substr($str, mb_strlen($g) + 1);
+        }
+        
+        if ($this->endsWith($str, $g.$p)) {
+          $str = mb_substr($str, 0, mb_strlen($str) - 1 - mb_strlen($g)).$a.$g.'</a>'.$p;
+        }
+         
+      }
+      
+      $str = $this->mbReplace(','.$g.'.', ','.$a.$g.'</a>.', $str); // hack for numbers in russian
+       
+      if ($i) $str = $this->mbiReplace(' '.$g.' ', ' '.$a.$g.'</a> ', $str);
       
       return $str;
 	}
@@ -129,28 +139,47 @@ class EieolGlossedText extends Eloquent {
   private function mbReplace($search, $replace, $subject, $encoding = 'UTF-8', &$count=0) 
   {
   
-    if(!is_array($subject)) {
-        $searches = is_array($search) ? array_values($search) : [$search];
-        $replacements = is_array($replace) ? array_values($replace) : [$replace];
-        $replacements = array_pad($replacements, count($searches), '');
-        foreach($searches as $key => $search) {
-            $replace = $replacements[$key];
-            $search_len = mb_strlen($search, $encoding);
+    $searches = is_array($search) ? array_values($search) : [$search];
+    $replacements = is_array($replace) ? array_values($replace) : [$replace];
+    $replacements = array_pad($replacements, count($searches), '');
+    foreach($searches as $key => $search) {
+        $replace = $replacements[$key];
+        $search_len = mb_strlen($search, $encoding);
 
-            $sb = [];
-            while(($offset = mb_stripos($subject, $search, 0, $encoding)) !== false) {
-                $sb[] = mb_substr($subject, 0, $offset, $encoding);
-                $subject = mb_substr($subject, $offset + $search_len, null, $encoding);
-                ++$count;
-            }
-            $sb[] = $subject;
-            $subject = implode($replace, $sb);
+        $sb = [];
+        while(($offset = mb_strpos($subject, $search, 0, $encoding)) !== false) {
+            $sb[] = mb_substr($subject, 0, $offset, $encoding);
+            $subject = mb_substr($subject, $offset + $search_len, null, $encoding);
+            ++$count;
         }
-    } else {
-        foreach($subject as $key => $value) {
-            $subject[$key] = self::mbReplace($search, $replace, $value, $encoding, $count);
-        }
+        $sb[] = $subject;
+        $subject = implode($replace, $sb);
     }
+    
+    return $subject;
+    
+  }
+  
+  private function mbiReplace($search, $replace, $subject, $encoding = 'UTF-8', &$count=0) 
+  {
+    
+    $searches = is_array($search) ? array_values($search) : [$search];
+    $replacements = is_array($replace) ? array_values($replace) : [$replace];
+    $replacements = array_pad($replacements, count($searches), '');
+    foreach($searches as $key => $search) {
+        $replace = $replacements[$key];
+        $search_len = mb_strlen($search, $encoding);
+
+        $sb = [];
+        while(($offset = mb_stripos($subject, $search, 0, $encoding)) !== false) {
+            $sb[] = mb_substr($subject, 0, $offset, $encoding);
+            $subject = mb_substr($subject, $offset + $search_len, null, $encoding);
+            ++$count;
+        }
+        $sb[] = $subject;
+        $subject = implode($replace, $sb);
+    }
+    
     return $subject;
     
   }
