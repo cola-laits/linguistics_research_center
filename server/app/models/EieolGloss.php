@@ -50,7 +50,7 @@ class EieolGloss extends Eloquent {
 		}
 		
 		if ($this->underlying_form) {
-			$string .= ' <br/> ' . $this->underlying_form;
+			$string .= ' <br/> (' . $this->underlying_form . ')';
 		}
 		
 		return $string;
