@@ -33,7 +33,7 @@ class EieolLesson extends Eloquent {
 		foreach ($this->glossed_texts as $glossed_text) {
 			$lesson_text .= $glossed_text->glossed_text . ' ';
 		}
-		return $lesson_text;
+		return $this->removeFormatting($lesson_text);
 	}
 	
 	public function prevLesson()
@@ -45,4 +45,16 @@ class EieolLesson extends Eloquent {
 	{
 		return EieolLesson::where('order', '>', $this->order)->where('series_id', '=', $this->series_id)->orderBy('order')->first();
 	}
+	
+  private function removeFormatting($str)
+  {
+    
+    $str = preg_replace('/(<font[^>]*>)|(<\/font>)/', '', $str);
+   // $str = str_replace('<sup>', '', $str);
+   // $str = str_replace('</sup>', '', $str);
+    
+    return $str;
+  
+  }
+	
 }

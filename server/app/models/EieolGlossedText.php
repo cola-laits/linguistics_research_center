@@ -93,7 +93,7 @@ class EieolGlossedText extends Eloquent {
         $str = mb_substr($str, 0, mb_strlen($str) - mb_strlen($g)).$a.$g.'</a>';
       }
       
-      $punctuation = array(",",".","!","?",":","(",")","։","՝","յ","`",'"',";","·","̃");	
+      $punctuation = array(",",".","!","?",":","(",")","։","՝","յ","`",'"',";","·","̃","[","]");	
       
       foreach ($punctuation as $p) {
 	    
@@ -104,13 +104,19 @@ class EieolGlossedText extends Eloquent {
           $str = $p.$a.mb_substr($str, 1, mb_strlen($g)).'</a>'.mb_substr($str, mb_strlen($g) + 1);
         }
         
+        if ($this->startsWith($str, $g.$p)) {
+          $str = $a.mb_substr($str, 0, mb_strlen($g)).'</a>'.$p.mb_substr($str, mb_strlen($g) + 1);
+        }
+        
         if ($this->endsWith($str, $g.$p)) {
           $str = mb_substr($str, 0, mb_strlen($str) - 1 - mb_strlen($g)).$a.$g.'</a>'.$p;
         }
          
       }
       
-      $str = $this->mbReplace(','.$g.'.', ','.$a.$g.'</a>.', $str); // hack for numbers in russian
+      // hacks for russian
+      $str = $this->mbReplace(','.$g.'.', ','.$a.$g.'</a>.', $str); 
+      $str = $this->mbReplace('.'.$g.'.', '.'.$a.$g.'</a>.', $str); 
        
       if ($i) $str = $this->mbiReplace(' '.$g.' ', ' '.$a.$g.'</a> ', $str);
       
@@ -119,7 +125,7 @@ class EieolGlossedText extends Eloquent {
 	
   private function startsWith($haystack, $needle)
   {
-       preg_match('/'.preg_quote($needle,'/').'/ui', $haystack, $matches, PREG_OFFSET_CAPTURE);
+       preg_match('/'.preg_quote($needle.' ','/').'/ui', $haystack, $matches, PREG_OFFSET_CAPTURE);
        
        foreach ($matches as $m) {
           if ($m[1] == 0) return true;
@@ -130,10 +136,10 @@ class EieolGlossedText extends Eloquent {
 
   private function endsWith($haystack, $needle)
   {
-      $length = mb_strlen($needle);
+      $length = mb_strlen(' '.$needle);
 
       return $length === 0 || 
-      (mb_substr($haystack, - $length) === $needle);
+      (mb_substr($haystack, - $length) === ' '.$needle);
   }
   
   private function mbReplace($search, $replace, $subject, $encoding = 'UTF-8', &$count=0) 
