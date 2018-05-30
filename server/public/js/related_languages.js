@@ -18,7 +18,8 @@ data: {
 },
 
 created() {
-    
+  
+  this.fetchlanguages();
   this.fetchlanguageOptions();
 
 },
@@ -35,6 +36,19 @@ methods: {
         }).catch(function(error){console.log(error);});
  
     },
+    
+    
+    fetchlanguages() {
+        
+        const self = this;
+        axios.get('/admin2/attached_languages/1').then(function(response){
+            
+            self.languages = response.data
+
+        }).catch(function(error){console.log(error);});
+ 
+    },
+    
     
     onSelectLanguage(item) {
 
