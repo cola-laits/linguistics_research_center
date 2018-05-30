@@ -2050,8 +2050,8 @@
 <script>	
 	//ckeditor defaults
 	
-	
-CKEDITOR.stylesSet.add( 'my_styles', [
+	/*
+  CKEDITOR.stylesSet.add( 'my_styles', [
 
     {   
         name: 'Abipon',
@@ -2099,18 +2099,25 @@ CKEDITOR.stylesSet.add( 'my_styles', [
 	  
 	});
 	
+	*/
+	
 	/*
 	CKEDITOR.attachStyleStateChange( style, function( state ) {
       $( "#cke_14_label" ).text("NewText");  
   } );
 	*/
 	
-	CKEDITOR.plugins.addExternal( 'onchange', '/js/', 'onchangeplugin.js' );
+		CKEDITOR.plugins.addExternal( 'onchange', '/js/', 'onchangeplugin.js' );
 //	CKEDITOR.plugins.addExternal( 'eieol_language', '/js/', 'eieollanguageplugin.js' );
 	ckeditor_parms = {
 			  toolbar : $mytoolbar,
-			  stylesSet: 'my_styles',
-			  contentsCss : '/css/lrcstyle.css', 
+			  language_list :
+        [
+            @foreach ($lesson_languages as $lesson_language)	
+            '{{$lesson_language}}',
+            @endforeach
+        ],
+			  contentsCss : '/css/lrcstyle.css',
 			  disableNativeSpellChecker : false, 
 			  allowedContent : true, 
 			  extraPlugins : 'onchange', 

@@ -14,6 +14,7 @@
         {{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js') }}
         {{ HTML::script('//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js') }}
         {{ HTML::script('//cdn.ckeditor.com/4.4.5.1/full/ckeditor.js') }}
+        {{-- HTML::script('js/ckeditor/ckeditor.js') --}}
         {{ HTML::script('js/jquery.tagsinput.js') }}
         {{ HTML::script('//code.jquery.com/ui/1.11.2/jquery-ui.min.js') }}
         {{ HTML::script('js/specialedit.jquery.js') }}
@@ -42,7 +43,7 @@
 		
 		    $mytoolbar =
 		    	[
-		    	{ name: 'document', items : [ 'Source','Styles'] },
+		    	{ name: 'document', items : [ 'Source','Language'] },
 		    		
 		    		
 					{ name: 'clipboard', items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] },

@@ -86,7 +86,8 @@ class EieolLessonController extends BaseController {
 															 'grammars' => $grammars, 
 															 'glossed_texts' => $glossed_texts,
 															 'languages' => $languages,
-															 'etymas' => $etymas]);
+															 'etymas' => $etymas,
+															 'lesson_languages'=>array('en:English', 'da:Danish', 'nl:Dutch')]);
 	}
 
 
@@ -199,5 +200,7 @@ class EieolLessonController extends BaseController {
 		} 
 		return Response::json($return_languages);
 	}
+	
+
 
 }
