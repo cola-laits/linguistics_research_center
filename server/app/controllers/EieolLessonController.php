@@ -72,6 +72,13 @@ class EieolLessonController extends BaseController {
 		$grammars = EieolGrammar::where('lesson_id', '=', $id)->get()->sortBy('order');
 		$glossed_texts = EieolGlossedText::with('glosses.language','glosses.elements.head_word.language')->where('lesson_id', '=', $id)->get()->sortBy('order');
 		
+		$series = EieolSeries::with('languages')->find($lesson->series_id);
+		
+		$series_languages = array();
+		foreach ($series->languages as $l) {
+		  $series_languages[] = $l->lang.':'.$l->display;
+		}
+		
 		//get languages for pulldown
 		$languages = array();
 		$languages[''] = 'Select a Language';
@@ -87,7 +94,7 @@ class EieolLessonController extends BaseController {
 															 'glossed_texts' => $glossed_texts,
 															 'languages' => $languages,
 															 'etymas' => $etymas,
-															 'lesson_languages'=>array('en:English', 'da:Danish', 'nl:Dutch')]);
+															 'series_languages'=>$series_languages]);
 	}
 
 

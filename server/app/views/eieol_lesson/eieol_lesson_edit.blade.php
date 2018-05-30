@@ -2113,8 +2113,8 @@
 			  toolbar : $mytoolbar,
 			  language_list :
         [
-            @foreach ($lesson_languages as $lesson_language)	
-            '{{$lesson_language}}',
+            @foreach ($series_languages as $series_language)	
+            '{{$series_language}}',
             @endforeach
         ],
 			  contentsCss : '/css/lrcstyle.css',
