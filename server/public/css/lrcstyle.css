@@ -23,7 +23,7 @@ span[lang]
 }
 
 
-div.glossed_text span[lang], blockquote span[lang]
+div.glossed_text span[lang], div.boxey span[lang], blockquote span[lang]
 {
    font-style: normal;
 }
