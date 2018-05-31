@@ -22,6 +22,12 @@ span[lang]
    font-style: italic;
 }
 
+
+glossed_text span[lang], blockquote span[lang]
+{
+   font-style: normal;
+}
+
   .Unicode { font-family: Arial Unicode MS, ALPHABETUM Unicode, TITUS Cyberbit Basic, Gentium, Code2000, Lucida Sans Unicode, Lucida Grande, Everson Mono Unicode, Arial, Helvetica, sans-serif;}
  .Cyrillic { font-family: Arial Unicode MS, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif; }
  .Sanskrit { font-family: Arial Unicode MS, Gentium, ALPHABETUM Unicode, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif; }
