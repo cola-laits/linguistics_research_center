@@ -135,18 +135,22 @@ class EieolSeriesController extends BaseController {
 	public function all_languages()
 	{
 		$return_languages = array();
-		$languages = IsoLanguage::whereIn('Language_Type', array('E','A','H','C'))->orWhere('Part1', '!=', '')->orWhere('Part2B', '!=', '')->orWhere('Part2T', '!=', '')->get()->sortBy('Ref_Name');
+		$languages = IsoLanguage::whereIn('Language_Type', array('E','A','H'))->orWhere('Part1', '!=', '')->orWhere('Part2B', '!=', '')->orWhere('Part2T', '!=', '')->get()->sortBy('Ref_Name');
 		foreach($languages as $language) {
 			$temp_dict = array();
 			$temp_dict['text'] = $language->Ref_Name;
-			$temp_dict['value'] = $language->id;
-			if (substr($temp_dict['text'],0,1) != "/" && substr($temp_dict['text'],0,1) != "#") {
+			$temp_dict['value'] = strlen($language->Part1) == 2 ? $language->Part1 : $language->id;
+			if (
+        substr($temp_dict['text'],0,1) != "/" && 
+        substr($temp_dict['text'],0,1) != "#" &&
+        $language->Language_Type != 'S' &&
+        $language->Language_Type != 'C'
+			) {
 			  $return_languages[] = $temp_dict;
 			}
 		} 
 		return Response::json($return_languages);
 	}
-	
 	
 	public function attached_languages($series_id)
 	{
@@ -191,5 +195,4 @@ class EieolSeriesController extends BaseController {
 	  
 	}
 	
-
 }
