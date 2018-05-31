@@ -75,6 +75,9 @@ class EieolLessonController extends BaseController {
 		$series = EieolSeries::with('languages')->find($lesson->series_id);
 		
 		$series_languages = array();
+		
+		$series_languages[] = $lesson->language->lang_attribute.':'.$lesson->language->language;
+		
 		foreach ($series->languages as $l) {
 		  $series_languages[] = $l->lang.':'.$l->display;
 		}
