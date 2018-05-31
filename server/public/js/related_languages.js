@@ -10,7 +10,7 @@ el: '#related_languages',
 
 data: {
         
-    id: 1,
+    id: seriesId,
     languages:[],
     language_options: [],
     language_selected: {value:'',text:''},
@@ -29,7 +29,7 @@ methods: {
     fetchlanguageOptions() {
         
         const self = this;
-        axios.get('/admin2/all_languages').then(function(response){
+        axios.get('/admin2/eieol_series/all_languages').then(function(response){
             
             self.language_options = response.data
 
@@ -41,7 +41,7 @@ methods: {
     fetchlanguages() {
         
         const self = this;
-        axios.get('/admin2/attached_languages/1').then(function(response){
+        axios.get('/admin2/eieol_series/attached_languages/' + self.id).then(function(response){
             
             self.languages = response.data
 
@@ -56,39 +56,37 @@ methods: {
 
     },
     
-    addLanguage(l) {
-        /*
-        language = p.value;
+    addLanguage() {
         
-        const self = this;
-        axios.post('/api/order/' + self.id + '/attach/' + language.id).then(function(response){
-            
-            self.languages.push(language);
-            self.language_selected = {value:'',text:''};
-            self.fetchlanguageOptions();
+        if (this.language_selected.value != '') {
         
-        }).catch(function(error){console.log(error);});
-        */
+          var postData = {
+            'id':this.id,
+            'lang':this.language_selected.value,
+            'display':this.language_selected.text
+          };
         
-        this.languages.push(l);
-        this.language_selected = {value:'',text:''};
+          const self = this;
+          axios.post('/admin2/eieol_series/attach_language', postData).then(function(response){
+                          
+              self.language_selected = {value:'',text:''};
+              self.fetchlanguages();
+        
+          }).catch(function(error){console.log(error);});
+        
+        }
         
     },
     
     removeLanguage(l) {
-        
-        /*
+
         const self = this;
-        axios.post('/api/order/' + self.id + '/detach/' + p.id).then(function(response){
-            
-            removeByAttr(self.languages, 'id', p.id);
-            self.fetchlanguageOptions();
+        axios.post('/admin2/eieol_series/' + self.id + '/detach_language/' + l.value).then(function(response){
+                        
+            self.fetchlanguages();
         
         }).catch(function(error){console.log(error);});
-        */
-        
-        removeByAttr(this.languages, 'value', l.value);
-    
+
     },
     
 }

@@ -5,9 +5,10 @@
 <script src="https://unpkg.com/vue"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>	
 <script src="https://unpkg.com/vue-search-select"></script>
-<script src="/js/related_languages.js"></script>
 
 <script>
+
+var seriesId = {{$series->id}};
 
 var removeByAttr = function(arr, attr, value) {
     var i = arr.length;
@@ -25,6 +26,8 @@ var removeByAttr = function(arr, attr, value) {
 
 </script>
  
+<script src="/js/related_languages.js"></script>
+
 <div class='col-lg-12'>
  
     <h1><i class='fa fa-book'></i> {{{$action}}} Series</h1>
@@ -106,7 +109,7 @@ var removeByAttr = function(arr, attr, value) {
 	 	
 	 	<div id="related_languages" class='row'>
 		  	    	
-		    <div class='form-group col-sm-4'>
+		    <div class='form-group col-sm-4' ng-cloak>
 		    <h2>Related Languages</h2>
 		      
           <ul>
@@ -130,7 +133,7 @@ var removeByAttr = function(arr, attr, value) {
   
           <div>
           
-          <button v-on:click.prevent="addLanguage(language_selected)" :disabled="language_selected.value == ''" class="btn btn-xs btn-primary">Attach</button>
+          <button v-on:click.prevent="addLanguage()" :disabled="language_selected.value == ''" class="btn btn-xs btn-primary">Attach</button>
   
           </div>
 		    

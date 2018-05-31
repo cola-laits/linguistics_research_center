@@ -147,11 +147,12 @@ class EieolSeriesController extends BaseController {
 		return Response::json($return_languages);
 	}
 	
-	public function attached_languages($id)
+	
+	public function attached_languages($series_id)
 	{
 	  
 	  $return_languages = array();
-	  $series = EieolSeries::with('languages')->find($id);
+	  $series = EieolSeries::with('languages')->find($series_id);
 	  $languages = $series->languages;
 	  foreach($languages as $language) {
 			$temp_dict = array();
@@ -162,5 +163,33 @@ class EieolSeriesController extends BaseController {
 		return Response::json($return_languages);
 	  
 	}
+	
+	public function attach_language()
+	{
+	  
+	  $language = new EieolSeriesLanguage;
+	  $language->series_id = Input::get('id');
+	  $language->lang = Input::get('lang');
+	  $language->display = Input::get('display'); 
+	  $language->save();
+	  
+	  $arr_lang = array('text'=>$language->display,'value'=>$language->lang);
+	  
+		return Response::json($arr_lang);
+	  
+	}
+	
+	public function detach_language($series_id,$language_id)
+	{
+	  
+	  $language = EieolSeriesLanguage::where('series_id','=',$series_id)->where('lang','=',$language_id)->first();
+	  $arr_lang = array('text'=>$language->display,'value'=>$language->lang);
+	  
+	  $language->delete();
+	  
+		return Response::json($arr_lang);
+	  
+	}
+	
 
 }
