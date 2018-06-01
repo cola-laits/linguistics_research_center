@@ -22,7 +22,7 @@
                     <th>Menu Name</th>
                     <th>Menu Order</th>
                     <th>Expanded Title</th>
-                    <th>Use Old Gloss UI</th>
+                    <th>Clickable Glosses</th>
                     <th>Updated</th>
                     <th></th>
                 </tr>
@@ -45,9 +45,9 @@
                     <td>{{ $series->expanded_title }}</td>
                     <td>
                     	@if ($series->use_old_gloss_ui == True)
-                    		<i class="fa fa-check" style="color:green"></i>
-                    	@else
                     		<i class="fa fa-times" style="color:red"></i>
+                    	@else
+                    	  &nbsp;
                     	@endif
                     </td>
                     <td>{{ $series->updated_at->format('m/d/Y h:ia') }} by {{ $series->updated_by }}</td>
