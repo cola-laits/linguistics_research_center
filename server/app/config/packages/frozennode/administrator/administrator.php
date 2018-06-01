@@ -51,20 +51,31 @@ return array(
 	 * 		'Analytics' => array('E-Commerce' => 'page.ecommerce.analytics'),
 	 *	)
 	 */
-	'menu' => array('EIEOL' => array('Series' => 'page.eieol_series.eieol_series_wrapper',
-									 'Language' => 'page.eieol_language.eieol_language_wrapper',),
-					'Lexicon' => array('LexEtyma',
-									   'LexReflex',
-									   'LexReflexEntry',
-									   'LexReflexPartOfSpeech',
-									   'LexSemanticCategory',
-									   'LexSemanticField',
-									   'LexLanguageFamily',
-									   'LexLanguageSubFamily',
-									   'LexLanguage',
-									   'LexSource',
-									   'LexPartOfSpeech',),
-					'Users' => 'page.user.user_wrapper'),
+	'menu' => array(  
+	                    
+	                  'EIEOL' => array(
+                      'Series' => 'page.eieol_series.eieol_series_wrapper',
+                      'Language' => 'page.eieol_language.eieol_language_wrapper',
+								    ),
+								    
+					          'Lexicon' => array(
+                      'LexEtyma',
+                      'LexReflex',
+                      'LexReflexEntry',
+                      'LexReflexPartOfSpeech',
+                      'LexSemanticCategory',
+                      'LexSemanticField',
+                      'LexLanguageFamily',
+                      'LexLanguageSubFamily',
+                      'LexLanguage',
+                      'LexSource',
+                      'LexPartOfSpeech',
+									   ),
+									   
+					           'Users' => 'page.user.user_wrapper',
+					           
+					           'Pages' => 'page.page.page_wrapper',
+					  ),
 
 	/**
 	 * The permission option is the highest-level authentication check that lets you define a closure that should return true if the current user
