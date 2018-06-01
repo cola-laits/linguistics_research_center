@@ -1334,7 +1334,8 @@
 <div class='col-lg-12'>
  
     <h1><i class='fa fa-file-text'></i> Edit Lesson for {{ HTML::link('admin2/eieol_series/' . $lesson->series->id . '/edit', $lesson->series->title , array('title' => 'Return to series' )) }}</h1>
-    <a href="../../../eieol_lesson/{{$lesson->series->id}}?id={{$lesson->id}}" target="_blank">Preview</a>
+    <p><a href="/guides/eieol_author" target=_new>Author Guide</a></p>
+    <p><a href="../../../eieol_lesson/{{$lesson->series->id}}?id={{$lesson->id}}" target="_blank">Preview</a></p>
     <div class='bg-danger alert'>
     	If you change the order of items on this page, they will not appear in that order until you refresh the page.
     	<br/><br/>

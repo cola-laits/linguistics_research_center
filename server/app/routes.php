@@ -3,6 +3,10 @@
 Route::get('/', 'PublicController@index');
 Route::get('index', 'PublicController@index');
 
+Route::get('guides/eieol_author', 'PublicController@guide_ea');
+Route::get('guides/eieol_user', 'PublicController@guide_eu');
+Route::get('guides/lex_user', 'PublicController@guide_lu');
+
 Route::get('eieol', 'PublicController@eieol');
 
 Route::get('eieol_lesson/{series_id}', 'PublicController@eieol_lesson_redirect');

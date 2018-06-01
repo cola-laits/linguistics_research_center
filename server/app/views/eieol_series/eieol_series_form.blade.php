@@ -31,6 +31,7 @@ var removeByAttr = function(arr, attr, value) {
 <div class='col-lg-12'>
  
     <h1><i class='fa fa-book'></i> {{{$action}}} Series</h1>
+    <p><a href="/guides/eieol_author" target=_new>Author Guide</a></p>
     
     @if (Session::has('message'))
 	    <div class="alert alert-info">{{ Session::get('message') }}</div>

@@ -25,11 +25,11 @@
 	@endif
     
     <div class='form-group @if ($errors->has('slug')) has-error @endif  '>
-        {{ Form::label('slug', 'Slug') }}
         @if ($action == 'Create')
+        {{ Form::label('slug', 'Slug') }}
         {{ Form::text('slug', null, ['placeholder' => 'Slug', 'class' => 'form-control']) }}
         @else
-        {{{$slug}}}
+        <!--<h2>{{{$slug}}}</h2>-->
         @endif
     </div>
     
@@ -40,7 +40,7 @@
     
     <div class='form-group @if ($errors->has('content')) has-error @endif  '>
         {{ Form::label('last_name', 'Content') }}
-        {{ Form::textarea('content', null, ['placeholder' => 'Page content', 'class' => 'form-control', 'size' => '100x10', 'id' => 'new_page_content']) }}
+        {{ Form::textarea('content', null, ['placeholder' => 'Page content', 'class' => 'form-control', 'size' => '100x10', 'id' => 'page_content']) }}
     </div>
  
     <div class='form-group'>
@@ -49,6 +49,38 @@
  
     {{ Form::close() }}
  
+     <script>
+     
+      var toolbar =
+      [
+        { name: 'document', items : [ 'Source'] },
+        { name: 'clipboard', items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] },
+        { name: 'editing', items : [ 'Find','Replace','-','SelectAll','-','SpellChecker' ] },
+        { name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
+        { name: 'paragraph', items : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote','-',
+                                 'JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','BidiLtr','BidiRtl' ] },
+        { name: 'links', items : [ 'Link','Unlink','Anchor' ] },
+        { name: 'insert', items : [ 'Table','HorizontalRule','SpecialChar'] },
+        { name: 'styles', items : [ 'Format','FontSize' ] },
+        { name: 'colors', items : [ 'TextColor','BGColor' ] },
+        { name: 'insert', items : [ 'Image' ]  },
+        { name: 'tools', items : [ 'Maximize'] }
+      ];
+     
+     
+      var ckeditor_parms = {
+        toolbar : toolbar,
+        contentsCss : '/css/lrcstyle.css',
+        disableNativeSpellChecker : false, 
+        allowedContent : true,
+        enterMode : 'CKEDITOR.ENTER_BR'
+      };
+
+      CKEDITOR.replace( 'page_content', ckeditor_parms);
+          
+                
+    </script>
+    
 </div>
  
 @stop

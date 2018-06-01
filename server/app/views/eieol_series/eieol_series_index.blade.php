@@ -5,6 +5,7 @@
 <div class='col-lg-12'>
  
     <h1><i class="fa fa-book"></i> Series Administration</h1>
+    <p><a href="/guides/eieol_author" target=_new>Author Guide</a></p>
     
     @if (Session::has('message'))
 	    <div class="alert alert-info">{{ Session::get('message') }}</div>

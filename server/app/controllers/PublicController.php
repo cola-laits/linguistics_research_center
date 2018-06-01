@@ -185,6 +185,37 @@ class PublicController extends BaseController {
 
 	}
 	
+	public function guide_ea()
+	{
+		$data = array();
+		
+		$page = Page::whereSlug('guides/eieol_author')->first();
+    $data['content'] = $page->content;
+		
+		return View::make('guide_ea',$data);
+	}
+	
+	public function guide_eu()
+	{
+		$data = array();
+		
+		$page = Page::whereSlug('guides/eieol_user')->first();
+    $data['content'] = $page->content;
+		
+		return View::make('guide_eu',$data);
+	}
+	
+	public function guide_lu()
+	{
+		$data = array();
+		
+		$page = Page::whereSlug('guides/lex_user')->first();
+    $data['content'] = $page->content;
+		
+		return View::make('guide_lu',$data);
+	}
+	
+	
 	//----------------------------------------EIEOL Functions--------------------------------------------
 
 	public function eieol()
@@ -193,7 +224,10 @@ class PublicController extends BaseController {
 		$data = array();
 
 		$data['serieses'] = EieolSeries::where('published', '=', True)->get()->sortBy('order');
-
+		
+    $page = Page::whereSlug('eieol')->first();
+    $data['content'] = $page->content;
+    
 		return View::make('eieol')->with($data);
 
 	}
@@ -620,7 +654,11 @@ class PublicController extends BaseController {
 	public function lex()
 	{
 		$data = array();
-		return View::make('lex');
+		
+		$page = Page::whereSlug('lex')->first();
+    $data['content'] = $page->content;
+		
+		return View::make('lex',$data);
 	}
 	
 	public function lex_pokorny_redirect()

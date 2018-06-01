@@ -7,6 +7,7 @@
 <div class='col-lg-12'>
  
     <h1><i class='fa fa-file-text'></i> Create Lesson for {{ HTML::link('admin2/eieol_series/' . $series->id . '/edit', $series->title , array('title' => 'Return to series' )) }}</h1>
+    <p><a href="/guides/eieol_author" target=_new>Author Guide</a></p>
     
     @if (Session::has('message'))
 	    <div class="alert alert-info">{{ Session::get('message') }}</div>
