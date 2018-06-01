@@ -82,4 +82,5 @@ Route::group(array('prefix'=> 'admin2', 'before' => 'auth|admin'), function() {
 	Route::get('/user/password_form/{id}', 'UserController@password_form');
 	Route::put('/user/change_password/{id}', 'UserController@change_password');
 	Route::resource('/user', 'UserController');
+	Route::resource('/page', 'PageController');
 });
