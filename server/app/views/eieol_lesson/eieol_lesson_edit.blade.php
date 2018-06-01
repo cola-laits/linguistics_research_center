@@ -368,10 +368,18 @@
 	// --------------------------------document ready-------------------------------------
     
     $(document).ready(function(){
+    
+      $("div.lotsagloss").hide();
+      
+      $( "button.togglegloss" ).click(function() {
+        
+        $(this).closest('div.row').parent().next('div.lotsagloss').toggle();
+        
+      });
 
     	$( "#reminder" ).dialog({
 		      autoOpen: false,
-		});
+		  });
 
     	//if they have unsaved changes, ask them if they want to leave
     	window.onbeforeunload = function() {
@@ -1532,10 +1540,20 @@
 			    
 			    {{ Form::close() }}
 			    
+			    <div class="row">
+			    <div class='col-sm-2'></div>
+			    <button class="togglegloss btn btn-xs btn-default">Toggle glosses</button>
+			    </div>
+			    </div>
+			    
+			    <div class='lotsagloss'>
+			    
+			    <p/>
 			    <div id="glossed_text_{{$glossed_text->id}}_glosses">
 			    
 				    @foreach ($glossed_text->glosses as $gloss)
-					  <div id="glossed_text_gloss_{{$gloss->pivot->id}}_div">  
+					  <div id="glossed_text_gloss_{{$gloss->pivot->id}}_div">
+					  
 						<div class='row'>
 							<div class='col-sm-2'></div>
 							
@@ -1604,6 +1622,8 @@
 				    	{{ Form::close() }}
 				    </div>
 				</div>
+				
+				  </div>
 
 			    <hr/>
 			</div>
