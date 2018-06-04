@@ -50,7 +50,7 @@ class EieolGloss extends Eloquent {
 		}
 		
 		if ($this->underlying_form) {
-			$string .= ' <br/> (' . $this->underlying_form . ')';
+			$string .= ' <br/><span lang="' . $this->language->lang_attribute . '" class="' . $this->language->class_attribute . '" style="margin-left:10px;">(' . $this->underlying_form . ')</span>';
 		}
 		
 		return $string;

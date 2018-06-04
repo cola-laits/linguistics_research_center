@@ -180,8 +180,13 @@ class PublicController extends BaseController {
 	
 	public function index()
 	{
-
-		return View::make('index');
+    
+    $data = array();
+    
+    $page = Page::whereSlug('index')->first();
+    $data['content'] = $page->content;
+    
+		return View::make('index',$data);
 
 	}
 	
