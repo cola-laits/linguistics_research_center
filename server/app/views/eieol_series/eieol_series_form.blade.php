@@ -2,9 +2,9 @@
  
 @section('content')
 
-<script src="https://unpkg.com/vue"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>	
-<script src="https://unpkg.com/vue-search-select"></script>
+{{ HTML::script('js/vue.js') }}
+{{ HTML::script('js/axios.min.js') }}
+{{ HTML::script('js/vue-search-select.js') }}
 
 <script>
 
