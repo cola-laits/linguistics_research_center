@@ -1,98 +1,94 @@
 window.onload = function () {
 
-Vue.component('basic-select', VueSearchSelect.BasicSelect);
+  Vue.component('basic-select', VueSearchSelect.BasicSelect);
 
-var vooo = new Vue({
-
-delimiters: ['{#', '#}'],
-
-el: '#related_languages',
-
-data: {
-        
-    id: seriesId,
-    languages:[],
-    language_options: [],
-    language_selected: {value:'',text:''},
+  var related_languages = new Vue({
     
-},
-
-created() {
+    el: '#related_languages',
+    
+    data: {
+        
+        id: seriesId,
+        languages:[],
+        dropdown_options: [],
+        dropdown_selected: {value:'',text:''},
+    
+    },
+    
+    created() {
   
-  this.fetchlanguages();
-  this.fetchlanguageOptions();
-
-},
-
-methods: {
+      this.fetchlanguages();
+      this.fetchdropdownOptions();
+      
+    },
     
-    fetchlanguageOptions() {
+    methods: {
         
-        const self = this;
-        axios.get('/admin2/eieol_series/all_languages').then(function(response){
+        fetchdropdownOptions() {
+        
+            const self = this;
+            axios.get('/admin2/eieol_series/all_languages').then(function(response){
             
-            self.language_options = response.data
+                self.dropdown_options = response.data
 
-        }).catch(function(error){console.log(error);});
+            }).catch(function(error){console.log(error);});
  
-    },
+        },
     
-    
-    fetchlanguages() {
-        
-        const self = this;
-        axios.get('/admin2/eieol_series/attached_languages/' + self.id).then(function(response){
-            
-            self.languages = response.data
+        selectLanguage(item) {
 
-        }).catch(function(error){console.log(error);});
- 
-    },
-    
-    
-    onSelectLanguage(item) {
+            this.dropdown_selected = item;
 
-        this.language_selected = item;
-
-    },
-    
-    addLanguage() {
+        },
+      
+        addLanguage() {
         
-        if (this.language_selected.value != '') {
+            if (this.dropdown_selected.value != '') {
         
-          var postData = {
-            'id':this.id,
-            'lang':this.language_selected.value,
-            'display':this.language_selected.text
-          };
+              var postData = {
+                'id':this.id,
+                'lang':this.dropdown_selected.value,
+                'display':this.dropdown_selected.text
+              };
         
-          const self = this;
-          axios.post('/admin2/eieol_series/attach_language', postData).then(function(response){
+              const self = this;
+              axios.post('/admin2/eieol_series/attach_language', postData).then(function(response){
                           
-              self.language_selected = {value:'',text:''};
-              self.fetchlanguages();
+                  self.dropdown_selected = {value:'',text:''};
+                  self.fetchlanguages();
         
-          }).catch(function(error){console.log(error);});
+              }).catch(function(error){console.log(error);});
         
-        }
+            }
         
-    },
+        },
     
-    removeLanguage(l) {
+        removeLanguage(l) {
 
-        const self = this;
-        axios.post('/admin2/eieol_series/' + self.id + '/detach_language/' + l.value).then(function(response){
+            const self = this;
+            axios.post('/admin2/eieol_series/' + self.id + '/detach_language/' + l.value).then(function(response){
                         
-            self.fetchlanguages();
+                self.fetchlanguages();
         
-        }).catch(function(error){console.log(error);});
+            }).catch(function(error){console.log(error);});
 
+        },
+        
+        fetchlanguages() {
+        
+            const self = this;
+            axios.get('/admin2/eieol_series/attached_languages/' + self.id).then(function(response){
+            
+                self.languages = response.data
+
+            }).catch(function(error){console.log(error);});
+ 
+        },
+    
     },
     
-}
+    delimiters: ['{#', '#}'],
 
-
-});
-
+  });
 
 }
