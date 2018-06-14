@@ -59,12 +59,6 @@ Route::group(array('prefix'=> 'admin2', 'before' => 'auth'), function() {
 	    return View::make('admin_error');
 	});
 	
-	Route::get('/eieol_series/all_languages', 'EieolSeriesController@all_languages');
-	Route::get('/eieol_series/attached_languages/{series_id}', 'EieolSeriesController@attached_languages');
-	
-	Route::post('/eieol_series/attach_language', 'EieolSeriesController@attach_language');
-	Route::post('/eieol_series/{series_id}/detach_language/{language_id}', 'EieolSeriesController@detach_language');
-	
 	Route::resource('/eieol_series', 'EieolSeriesController');
 	Route::put('/eieol_lesson/update_translation/{id}', 'EieolLessonController@update_translation');
 	Route::resource('/eieol_lesson', 'EieolLessonController');
@@ -79,6 +73,12 @@ Route::group(array('prefix'=> 'admin2', 'before' => 'auth'), function() {
 	Route::get('/part_of_speech/filtered_list', 'EieolPartOfSpeechController@filtered_list');
 	Route::get('/eieol_analysis/filtered_list', 'EieolAnalysisController@filtered_list');
 	Route::resource('/eieol_language', 'EieolLanguageController');
+	
+	Route::get('/related_languages/all_languages', 'EieolSeriesController@all_languages');
+	Route::get('/related_languages/attached_languages/{series_id}', 'EieolSeriesController@attached_languages');
+	Route::post('/related_languages/attach_language', 'EieolSeriesController@attach_language');
+	Route::post('/related_languages/{series_id}/detach_language/{language_id}', 'EieolSeriesController@detach_language');
+	
 
 });	
 

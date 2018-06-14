@@ -2,17 +2,22 @@
  
 @section('content')
 
+@if ($action != 'Create')
+
 {{ HTML::script('js/vue.js') }}
 {{ HTML::script('js/vue-search-select.js') }}
 {{ HTML::script('js/axios.min.js') }}
 
 <script>
 
-var seriesId = {{$series->id}};
+  var seriesId = {{$series->id}};
 
-</script>
+  </script>
  
 <script src="/js/related_languages.js"></script>
+
+@endif
+
 
 <div class='col-lg-12'>
  
@@ -40,46 +45,52 @@ var seriesId = {{$series->id}};
     @else
         {{ Form::model($series, ['role' => 'form', 'url' => '/admin2/eieol_series/' . $series->id, 'method' => 'PUT', 'class' => 'form']) }}
     @endif
+    
     <div class='form-group col-sm-1 @if ($errors->has('published')) has-error @endif  '>
           {{ Form::label('published', 'Published') }}
           {{ Form::checkbox('published', 1, false, ['class' => 'form-control']) }}
-      </div>
-      
+    </div>
+    
+    <div class='form-group col-sm-1 @if ($errors->has('use_old_gloss_ui')) has-error @endif  '>
+          {{ Form::label('use_old_gloss_ui', 'Old Gloss UI') }}
+          {{ Form::checkbox('use_old_gloss_ui', 1, false, ['class' => 'form-control']) }}
+    </div>
+    
     <div class='form-group col-sm-1 @if ($errors->has('order')) has-error @endif  '>
           {{ Form::label('order', 'Order') }}
-          {{ Form::text('order', null, ['placeholder' => 'Order', 'class' => 'form-control']) }}
+          {{ Form::text('order', null, ['placeholder' => '', 'class' => 'form-control']) }}
       </div>
         
       <div class='form-group col-sm-2 @if ($errors->has('title')) has-error @endif  '>
           {{ Form::label('title', 'Title') }}
-          {{ Form::text('title', null, ['placeholder' => 'Title', 'class' => 'form-control']) }}
+          {{ Form::text('title', null, ['placeholder' => '', 'class' => 'form-control']) }}
       </div>
       
-      <div class='form-group col-sm-2 @if ($errors->has('menu_name')) has-error @endif  '>
+      <div class='form-group col-sm-1 @if ($errors->has('menu_name')) has-error @endif  '>
           {{ Form::label('menu_name', 'Menu Name') }}
-          {{ Form::text('menu_name', null, ['placeholder' => 'Menu Name', 'class' => 'form-control']) }}
+          {{ Form::text('menu_name', null, ['placeholder' => '', 'class' => 'form-control']) }}
       </div>
       
       <div class='form-group col-sm-1 @if ($errors->has('menu_order')) has-error @endif  '>
           {{ Form::label('menu_order', 'Menu Order') }}
-          {{ Form::text('menu_order', null, ['placeholder' => 'Menu Order', 'class' => 'form-control']) }}
+          {{ Form::text('menu_order', null, ['placeholder' => '', 'class' => 'form-control']) }}
       </div>
       
-      <div class='form-group col-sm-3 @if ($errors->has('expanded_title')) has-error @endif  '>
+      <div class='form-group col-sm-2 @if ($errors->has('expanded_title')) has-error @endif  '>
           {{ Form::label('expanded_title', 'Expanded Title') }}
-          {{ Form::text('expanded_title', null, ['placeholder' => 'Expanded Title', 'class' => 'form-control']) }}
-      </div>
-   
-    <div class='form-group col-sm-1 @if ($errors->has('use_old_gloss_ui')) has-error @endif  '>
-          {{ Form::label('use_old_gloss_ui', 'Use Old Gloss UI') }}
-          {{ Form::checkbox('use_old_gloss_ui', 1, false, ['class' => 'form-control']) }}
+          {{ Form::text('expanded_title', null, ['placeholder' => '', 'class' => 'form-control']) }}
       </div>
 
-    <div class='form-group col-sm-1 @if ($errors->has('meta_tags')) has-error @endif  '>
-      {{ Form::label('meta_tags', 'HTML Meta Tags') }}
-      {{ Form::text('meta_tags', null, ['placeholder' => 'Meta Tags', 'class' => 'form-control']) }}
-    </div>
-      
+      <div class='form-group col-sm-1 @if ($errors->has('slug')) has-error @endif  '>
+        {{ Form::label('slug', 'Slug') }}
+        {{ Form::text('slug', null, ['placeholder' => '', 'class' => 'form-control']) }}
+      </div>  
+
+      <div class='form-group col-sm-1 @if ($errors->has('meta_tags')) has-error @endif  '>
+        {{ Form::label('meta_tags', 'Meta Tags') }}
+        {{ Form::text('meta_tags', null, ['placeholder' => '', 'class' => 'form-control']) }}
+      </div>  
+    
       <div class='form-group col-sm-1'>
           {{ Form::submit($action, ['class' => 'btn btn-primary']) }}
       </div>

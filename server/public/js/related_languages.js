@@ -27,7 +27,7 @@ window.onload = function () {
         fetchdropdownOptions() {
         
             const self = this;
-            axios.get('/admin2/eieol_series/all_languages').then(function(response){
+            axios.get('/admin2/related_languages/all_languages').then(function(response){
             
                 self.dropdown_options = response.data
 
@@ -52,7 +52,7 @@ window.onload = function () {
               };
         
               const self = this;
-              axios.post('/admin2/eieol_series/attach_language', postData).then(function(response){
+              axios.post('/admin2/related_languages/attach_language', postData).then(function(response){
                           
                   self.dropdown_selected = {value:'',text:''};
                   self.fetchlanguages();
@@ -66,7 +66,7 @@ window.onload = function () {
         removeLanguage(l) {
 
             const self = this;
-            axios.post('/admin2/eieol_series/' + self.id + '/detach_language/' + l.value).then(function(response){
+            axios.post('/admin2/related_languages/' + self.id + '/detach_language/' + l.value).then(function(response){
                         
                 self.fetchlanguages();
         
@@ -77,7 +77,7 @@ window.onload = function () {
         fetchlanguages() {
         
             const self = this;
-            axios.get('/admin2/eieol_series/attached_languages/' + self.id).then(function(response){
+            axios.get('/admin2/related_languages/attached_languages/' + self.id).then(function(response){
             
                 self.languages = response.data
 
