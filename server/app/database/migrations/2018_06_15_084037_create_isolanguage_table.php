@@ -13,7 +13,7 @@ class CreateIsolanguageTable extends Migration {
 	public function up()
 	{
  		
-		DB::unprepared(file_get_contents(__DIR__ .'/2018_06_15_084037_create_isolanguage_table.php'));
+		DB::unprepared(file_get_contents(__DIR__ .'/2018_06_15_084037_create_isolanguage_table.sql'));
 			
 	}
 
