@@ -112,15 +112,15 @@
         
             <h2>Related Languages</h2>
           
-            <basic-select :options="dropdown_options"
-                          :selected-option="dropdown_selected"
+            <basic-select v-bind:options="dropdown_options"
+                          v-bind:selected-option="dropdown_selected"
                           placeholder="choose language"
-                          @select="selectLanguage">
+                          v-on:select="selectLanguage">
             </basic-select>
           
             <br/>
           
-            <button v-on:click.prevent="addLanguage()" :disabled="dropdown_selected.value == ''" class="btn btn-xs btn-primary">Attach</button>
+            <button v-on:click.prevent="addLanguage()" v-bind:disabled="dropdown_selected.value == ''" class="btn btn-xs btn-primary">Attach</button>
         
       </div>
         
