@@ -108,7 +108,7 @@
     
     <div id="related_languages" class='row'>
               
-      <div class='form-group col-sm-4 ng-cloak'>
+      <div class='form-group col-sm-4 v-cloak'>
         
             <h2>Related Languages</h2>
           
@@ -124,7 +124,7 @@
         
       </div>
         
-      <div class='col-sm-4 ng-cloak'>
+      <div class='col-sm-4 v-cloak'>
         
             <ul>
 
