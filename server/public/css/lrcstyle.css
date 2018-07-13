@@ -209,6 +209,9 @@ a.clicked:focus {
 	color: #71251e;
 }
 
+pre {
+white-space: pre-wrap;
+}
 
 /* for pretty printing */
 @media print
