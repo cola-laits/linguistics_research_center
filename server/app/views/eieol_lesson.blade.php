@@ -77,7 +77,7 @@
 		<div class="boxey">
 			<ul>
 				@foreach ($glossed_text->glosses as $gloss)
-			   		<li id='gloss_pivot_{{$gloss->pivot->id}}'>
+			   		<li id='old_gloss_pivot_{{$gloss->pivot->id}}'>
 			   			<a name='glossed_text_gloss_{{$gloss->pivot->id}}'></a>
 			    		{{$gloss->getDisplayGloss()}}
 			    	</li>
