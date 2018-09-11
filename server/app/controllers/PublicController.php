@@ -380,7 +380,7 @@ class PublicController extends BaseController {
 				foreach ($glossed_text->glosses as $gloss) {
 					//unique key is the surface form with all pos and analysis
 
-					$key = $gloss->surface_form . ' -- ';
+					$key = $gloss->id . ' -- ';
 
 					$i = 0;
 
