@@ -2147,7 +2147,7 @@
 			  language_lang : '{{$lesson->language->lang_attribute}}',
 			  specialChars : [ {{$lesson->language->custom_keyboard_layout}}],
 			  enterMode : 'CKEDITOR.ENTER_BR',
-			  htmlEncodeOutput : false,
+			  htmlEncodeOutput : true,
 			  entities : false
 			};
 	glossed_text_ckeditor_parms = jQuery.extend(true, {}, ckeditor_parms); //deep copy
