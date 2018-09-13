@@ -362,7 +362,7 @@
 	}
 
 	//remind them to save before they timeout.  Set to 25 minutes * 60 seconds * 1000 milliseconds = 1500000
-    setTimeout(function(){$("#reminder").dialog( "open" );},1500000);
+  //  setTimeout(function(){$("#reminder").dialog( "open" );},1500000);
 
 
 	// --------------------------------document ready-------------------------------------
