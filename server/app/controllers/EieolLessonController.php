@@ -70,7 +70,10 @@ class EieolLessonController extends BaseController {
 	{
 		$lesson = EieolLesson::with('series', 'language')->find($id);
 		$grammars = EieolGrammar::where('lesson_id', '=', $id)->get()->sortBy('order');
-		$glossed_texts = EieolGlossedText::with('glosses.language','glosses.elements.head_word.language')->where('lesson_id', '=', $id)->get()->sortBy('order');
+		$glossed_texts = EieolGlossedText::with('glosses.language','glosses.elements.head_word.language')->where('lesson_id', '=', $id)->get()->sortBy('order');		
+		foreach ($glossed_texts as $g) {
+		  $g->glossed_text = htmlentities($g->glossed_text);
+		}
 		
 		$series = EieolSeries::with('languages')->find($lesson->series_id);
 		

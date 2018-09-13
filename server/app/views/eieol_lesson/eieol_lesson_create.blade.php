@@ -68,7 +68,9 @@
 									contentsCss : '/css/lrcstyle.css', 
 									disableNativeSpellChecker:false,
 									allowedContent : true, 
-									extraPlugins : 'onchange'
+									extraPlugins : 'onchange',
+									enterMode : 'CKEDITOR.ENTER_BR',
+                  entities : false
 									} );
 	
 </script>

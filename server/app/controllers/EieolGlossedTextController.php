@@ -27,7 +27,8 @@ class EieolGlossedTextController extends BaseController {
 			$glossed_text = new EieolGlossedText;
 				
 			$glossed_text->order = Input::get('order');
-			$glossed_text->glossed_text = Normalizer::normalize(Input::get('glossed_text'), Normalizer::FORM_D );
+			$text = Normalizer::normalize(Input::get('glossed_text'), Normalizer::FORM_D );	
+			$glossed_text->glossed_text = preg_replace('/^<p>(.+?)<\/p>/is','$1',$text); // remove dumb ckeditor paragraph tags			
 			$glossed_text->lesson_id = Input::get('lesson_id');
 			$glossed_text->author_comments = Normalizer::normalize(Input::get('author_comments'), Normalizer::FORM_D );
 			$glossed_text->author_done = Input::get('author_done');
