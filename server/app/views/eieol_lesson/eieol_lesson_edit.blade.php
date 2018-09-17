@@ -148,7 +148,7 @@
 		  		    }, 1000);
 	  		      	myform.css("background-color", "#FFFFFF");
 	  		      	myform.removeAttr("dirty");
-	  		        setTimeout(function(){$("#reminder").dialog( "open" );},1500000); //reset warning for 25 minutes
+	  		      //  setTimeout(function(){$("#reminder").dialog( "open" );},1500000); //reset warning for 25 minutes
 
 	  		    	//if they updated the language, we need to change the hidden language ids
 	  		      	if(json.hasOwnProperty('language_id')) {
@@ -521,7 +521,7 @@
 		  		    if(json['success']) { 
 		  		      	$(this).css("background-color", "#FFFFFF");
 		  		        $(this).removeAttr("dirty");
-		  		        setTimeout(function(){$("#reminder").dialog( "open" );},1500000); //reset warning for 25 minutes
+		  		       // setTimeout(function(){$("#reminder").dialog( "open" );},1500000); //reset warning for 25 minutes
 		  		        attach_gloss(json['gloss_id'], json['gloss_display']);
 
 		  		    } //json success
@@ -626,7 +626,7 @@
 				    $("#edit_gloss_modal").modal("show"); 
 				    $('#edit_gloss_form').css("background-color", "#FFFFFF");
 				    $('#edit_gloss_form').removeAttr("dirty");
-				    setTimeout(function(){$("#reminder").dialog( "open" );},1500000); //reset warning for 25 minutes
+				 //   setTimeout(function(){$("#reminder").dialog( "open" );},1500000); //reset warning for 25 minutes
 				    $("#surface_form", "#edit_gloss_form").focus(); //put cursor in first field
 
 				    set_comment_button_color();
@@ -763,7 +763,7 @@
 		  		    if(json['success']) { 
 		  		      	$(this).css("background-color", "#FFFFFF");
 		  		      	$(this).removeAttr("dirty");
-		  		        setTimeout(function(){$("#reminder").dialog( "open" );},1500000); //reset warning for 25 minutes
+		  		      //  setTimeout(function(){$("#reminder").dialog( "open" );},1500000); //reset warning for 25 minutes
 		  		        attach_head_word(json['head_word_id'], json['head_word_display']);
 		  		    } //json success
 		        }, //success
