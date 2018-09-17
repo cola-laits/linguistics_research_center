@@ -64,7 +64,7 @@ class EieolGlossedText extends Eloquent {
 		 /* $tokenized = preg_replace("/<.*?(\s).*?>/","@@@",$form);*/
 		 // $tokenized = str_replace(" size=","@@@size=",$form);
 		 
-		  $words = explode(" ", $form);
+		  $words = explode(" ", trim($form));
 		  
 		  foreach ($words as $word) {	
 		    // $word = str_replace("@@@"," ",$word); // de-tokenize	    
