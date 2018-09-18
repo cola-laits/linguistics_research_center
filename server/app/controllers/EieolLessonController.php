@@ -69,7 +69,14 @@ class EieolLessonController extends BaseController {
 	public function edit($id)
 	{
 		$lesson = EieolLesson::with('series', 'language')->find($id);
+		$lesson->intro_text = htmlentities($lesson->intro_text);
+		$lesson->lesson_translation = htmlentities($lesson->lesson_translation);		
+		
 		$grammars = EieolGrammar::where('lesson_id', '=', $id)->get()->sortBy('order');
+		foreach ($grammars as $g) {
+		  $g->grammar_text = htmlentities($g->grammar_text);
+		}
+		
 		$glossed_texts = EieolGlossedText::with('glosses.language','glosses.elements.head_word.language')->where('lesson_id', '=', $id)->get()->sortBy('order');		
 		foreach ($glossed_texts as $g) {
 		  $g->glossed_text = htmlentities($g->glossed_text);
