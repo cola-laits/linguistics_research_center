@@ -1556,11 +1556,11 @@
 					  
 						<div class='row'>
 							<div class='col-sm-2'></div>
-							
+
 							<div class='form-group col-sm-1 '>
 								{{ Form::model($gloss, ['role' => 'form',
-				    					   'url' => '/admin2/eieol_glossed_text_gloss/' . $gloss->pivot->id, 
-				    					   'method' => 'PUT', 
+				    					   'url' => '/admin2/eieol_glossed_text_gloss/' . $gloss->pivot->id,
+				    					   'method' => 'PUT',
 				    					   'class' => 'form ajax_form',
 				    					   'id' => 'glossed_text_gloss_form_' . $gloss->pivot->id
 				    					  ]) }}
@@ -1574,7 +1574,7 @@
 							    {{ Form::submit('Edit Order', ['class' => 'btn btn-xs btn-primary']) }}
 							    {{ Form::close() }}
 							</div>
-						    	
+
 						    <div class='col-sm-4 gloss_{{$gloss->id}}'>
 						    	<br/>
 						    	{{$gloss->getDisplayGloss()}} 
@@ -1843,7 +1843,7 @@
 				    <div class='form-group col-sm-9 col-sm-offset-1'>
 				        {{ Form::label('translation_admin_comment', 'Admin Comments') }}	
 				    	{{ Form::hidden('translation_admin_comments', null, ['class' => 'form-control']) }}
-				    	<div class="well" style="white-space: pre-wrap" >{{$lesson->translation_admin_comments}}</div>
+				    	<div class="well" style="white-space: pre-wrap" >{{{$lesson->translation_admin_comments}}}</div>
 				    </div>
 				@endif
 			@endif
