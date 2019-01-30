@@ -17,9 +17,17 @@ function a(
 array(
     0: Stmt_Function(
         byRef: false
+        name: Identifier(
+            name: a
+        )
         params: array(
             0: Param(
-                name: b
+                type: null
+                byRef: false
+                variadic: false
+                var: Expr_Variable(
+                    name: b
+                )
                 default: Expr_ConstFetch(
                     name: Name(
                         parts: array(
@@ -27,70 +35,93 @@ array(
                         )
                     )
                 )
-                type: null
-                byRef: false
             )
             1: Param(
-                name: c
+                type: null
+                byRef: false
+                variadic: false
+                var: Expr_Variable(
+                    name: c
+                )
                 default: Scalar_String(
                     value: foo
                 )
-                type: null
-                byRef: false
             )
             2: Param(
-                name: d
+                type: null
+                byRef: false
+                variadic: false
+                var: Expr_Variable(
+                    name: d
+                )
                 default: Expr_ClassConstFetch(
                     class: Name(
                         parts: array(
                             0: A
                         )
                     )
-                    name: B
+                    name: Identifier(
+                        name: B
+                    )
                 )
-                type: null
-                byRef: false
             )
             3: Param(
-                name: f
+                type: null
+                byRef: false
+                variadic: false
+                var: Expr_Variable(
+                    name: f
+                )
                 default: Expr_UnaryPlus(
                     expr: Scalar_LNumber(
                         value: 1
                     )
                 )
-                type: null
-                byRef: false
             )
             4: Param(
-                name: g
+                type: null
+                byRef: false
+                variadic: false
+                var: Expr_Variable(
+                    name: g
+                )
                 default: Expr_UnaryMinus(
                     expr: Scalar_DNumber(
                         value: 1
                     )
                 )
-                type: null
-                byRef: false
             )
             5: Param(
-                name: h
+                type: null
+                byRef: false
+                variadic: false
+                var: Expr_Variable(
+                    name: h
+                )
                 default: Expr_Array(
                     items: array(
                     )
                 )
-                type: null
-                byRef: false
             )
             6: Param(
-                name: i
+                type: null
+                byRef: false
+                variadic: false
+                var: Expr_Variable(
+                    name: i
+                )
                 default: Expr_Array(
                     items: array(
                     )
                 )
-                type: null
-                byRef: false
             )
             7: Param(
-                name: j
+                type: null
+                byRef: false
+                variadic: false
+                var: Expr_Variable(
+                    name: j
+                )
                 default: Expr_Array(
                     items: array(
                         0: Expr_ArrayItem(
@@ -102,11 +133,14 @@ array(
                         )
                     )
                 )
-                type: null
-                byRef: false
             )
             8: Param(
-                name: k
+                type: null
+                byRef: false
+                variadic: false
+                var: Expr_Variable(
+                    name: k
+                )
                 default: Expr_Array(
                     items: array(
                         0: Expr_ArrayItem(
@@ -127,12 +161,10 @@ array(
                         )
                     )
                 )
-                type: null
-                byRef: false
             )
         )
+        returnType: null
         stmts: array(
         )
-        name: a
     )
 )

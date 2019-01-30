@@ -1,0 +1,16 @@
+<html>
+<head>
+<title>Page not found</title>
+</head>
+
+<body>
+
+<div>
+
+<h1>404 - no page here</h1>
+
+</div>
+
+</body>
+
+</html>

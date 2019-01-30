@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<phpunit backupGlobals="false"
-         backupStaticAttributes="false"
-         colors="false"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         processIsolation="false"
-         stopOnFailure="false"
-         syntaxCheck="false"
-         bootstrap="./lib/bootstrap.php">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         backupGlobals="false"
+         colors="true"
+         beStrictAboutTestsThatDoNotTestAnything="false"
+         bootstrap="./test/bootstrap.php">
     <testsuites>
         <testsuite name="PHPParser Test Suite">
             <directory>./test/</directory>
@@ -18,7 +14,7 @@
 
     <filter>
         <whitelist>
-            <directory suffix=".php">./lib/PHPParser/</directory>
+            <directory suffix=".php">./lib/PhpParser/</directory>
         </whitelist>
     </filter>
 </phpunit>

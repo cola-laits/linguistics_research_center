@@ -70,19 +70,25 @@ class PdoCaster
             }
 
             try {
-                $attr[$k] = 'ERRMODE' === $k ? $errmode : $c->getAttribute(constant('PDO::ATTR_'.$k));
+                $attr[$k] = 'ERRMODE' === $k ? $errmode : $c->getAttribute(\constant('PDO::ATTR_'.$k));
                 if ($v && isset($v[$attr[$k]])) {
                     $attr[$k] = new ConstStub($v[$attr[$k]], $attr[$k]);
                 }
             } catch (\Exception $e) {
             }
         }
+        if (isset($attr[$k = 'STATEMENT_CLASS'][1])) {
+            if ($attr[$k][1]) {
+                $attr[$k][1] = new ArgsStub($attr[$k][1], '__construct', $attr[$k][0]);
+            }
+            $attr[$k][0] = new ClassStub($attr[$k][0]);
+        }
 
         $prefix = Caster::PREFIX_VIRTUAL;
         $a += array(
             $prefix.'inTransaction' => method_exists($c, 'inTransaction'),
             $prefix.'errorInfo' => $c->errorInfo(),
-            $prefix.'attributes' => $attr,
+            $prefix.'attributes' => new EnumStub($attr),
         );
 
         if ($a[$prefix.'inTransaction']) {

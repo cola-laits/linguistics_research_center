@@ -1,78 +1,225 @@
 PHP Parser
 ==========
 
-This is a PHP 5.5 (and older) parser written in PHP. It's purpose is to simplify static code analysis and
+[![Build Status](https://travis-ci.org/nikic/PHP-Parser.svg?branch=master)](https://travis-ci.org/nikic/PHP-Parser) [![Coverage Status](https://coveralls.io/repos/github/nikic/PHP-Parser/badge.svg?branch=master)](https://coveralls.io/github/nikic/PHP-Parser?branch=master)
+
+This is a PHP 5.2 to PHP 7.3 parser written in PHP. Its purpose is to simplify static code analysis and
 manipulation.
 
-Documentation can be found in the [`doc/`][1] directory.
+[**Documentation for version 4.x**][doc_master] (stable; for running on PHP >= 7.0; for parsing PHP 5.2 to PHP 7.3).
 
-***Note: This project is experimental, so the API is subject to change.***
+[Documentation for version 3.x][doc_3_x] (unsupported; for running on PHP >= 5.5; for parsing PHP 5.2 to PHP 7.2).
 
-In a Nutshell
--------------
+Features
+--------
 
-Basically, the parser does nothing more than turn some PHP code into an abstract syntax tree. ("nothing
-more" is kind of sarcastic here as PHP has a ... uhm, let's just say "not nice" ... grammar, which makes
-parsing PHP very hard.)
+The main features provided by this library are:
 
-For example, if you stick this code in the parser:
+ * Parsing PHP 5 and PHP 7 code into an abstract syntax tree (AST).
+   * Invalid code can be parsed into a partial AST.
+   * The AST contains accurate location information.
+ * Dumping the AST in human-readable form.
+ * Converting an AST back to PHP code.
+   * Experimental: Formatting can be preserved for partially changed ASTs.
+ * Infrastructure to traverse and modify ASTs.
+ * Resolution of namespaced names.
+ * Evaluation of constant expressions.
+ * Builders to simplify AST construction for code generation.
+ * Converting an AST into JSON and back.
+
+Quick Start
+-----------
+
+Install the library using [composer](https://getcomposer.org):
+
+    php composer.phar require nikic/php-parser
+
+Parse some PHP code into an AST and dump the result in human-readable form:
 
 ```php
 <?php
-echo 'Hi', 'World';
-hello\world('foo', 'bar' . 'baz');
+use PhpParser\Error;
+use PhpParser\NodeDumper;
+use PhpParser\ParserFactory;
+
+$code = <<<'CODE'
+<?php
+
+function test($foo)
+{
+    var_dump($foo);
+}
+CODE;
+
+$parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
+try {
+    $ast = $parser->parse($code);
+} catch (Error $error) {
+    echo "Parse error: {$error->getMessage()}\n";
+    return;
+}
+
+$dumper = new NodeDumper;
+echo $dumper->dump($ast) . "\n";
 ```
 
-You'll get a syntax tree looking roughly like this:
+This dumps an AST looking something like this:
 
 ```
 array(
-    0: Stmt_Echo(
-        exprs: array(
-            0: Scalar_String(
-                value: Hi
-            )
-            1: Scalar_String(
-                value: World
+    0: Stmt_Function(
+        byRef: false
+        name: Identifier(
+            name: test
+        )
+        params: array(
+            0: Param(
+                type: null
+                byRef: false
+                variadic: false
+                var: Expr_Variable(
+                    name: foo
+                )
+                default: null
             )
         )
-    )
-    1: Expr_FuncCall(
-        name: Name(
-            parts: array(
-                0: hello
-                1: world
-            )
-        )
-        args: array(
-            0: Arg(
-                value: Scalar_String(
-                    value: foo
-                )
-                byRef: false
-            )
-            1: Arg(
-                value: Expr_Concat(
-                    left: Scalar_String(
-                        value: bar
+        returnType: null
+        stmts: array(
+            0: Stmt_Expression(
+                expr: Expr_FuncCall(
+                    name: Name(
+                        parts: array(
+                            0: var_dump
+                        )
                     )
-                    right: Scalar_String(
-                        value: baz
+                    args: array(
+                        0: Arg(
+                            value: Expr_Variable(
+                                name: foo
+                            )
+                            byRef: false
+                            unpack: false
+                        )
                     )
                 )
-                byRef: false
             )
         )
     )
 )
 ```
 
-You can then work with this syntax tree, for example to statically analyze the code (e.g. to find
-programming errors or security issues).
+Let's traverse the AST and perform some kind of modification. For example, drop all function bodies:
 
-Additionally, you can convert a syntax tree back to PHP code. This allows you to do code preprocessing
-(like automatedly porting code to older PHP versions).
+```php
+use PhpParser\Node;
+use PhpParser\Node\Stmt\Function_;
+use PhpParser\NodeTraverser;
+use PhpParser\NodeVisitorAbstract;
 
-So, that's it, in a nutshell. You can find everything else in the [docs][1].
+$traverser = new NodeTraverser();
+$traverser->addVisitor(new class extends NodeVisitorAbstract {
+    public function enterNode(Node $node) {
+        if ($node instanceof Function_) {
+            // Clean out the function body
+            $node->stmts = [];
+        }
+    }
+});
 
- [1]: https://github.com/nikic/PHP-Parser/tree/master/doc
+$ast = $traverser->traverse($ast);
+echo $dumper->dump($ast) . "\n";
+```
+
+This gives us an AST where the `Function_::$stmts` are empty:
+
+```
+array(
+    0: Stmt_Function(
+        byRef: false
+        name: Identifier(
+            name: test
+        )
+        params: array(
+            0: Param(
+                type: null
+                byRef: false
+                variadic: false
+                var: Expr_Variable(
+                    name: foo
+                )
+                default: null
+            )
+        )
+        returnType: null
+        stmts: array(
+        )
+    )
+)
+```
+
+Finally, we can convert the new AST back to PHP code:
+
+```php
+use PhpParser\PrettyPrinter;
+
+$prettyPrinter = new PrettyPrinter\Standard;
+echo $prettyPrinter->prettyPrintFile($ast);
+```
+
+This gives us our original code, minus the `var_dump()` call inside the function:
+
+```php
+<?php
+
+function test($foo)
+{
+}
+```
+
+For a more comprehensive introduction, see the documentation.
+
+Documentation
+-------------
+
+ 1. [Introduction](doc/0_Introduction.markdown)
+ 2. [Usage of basic components](doc/2_Usage_of_basic_components.markdown)
+
+Component documentation:
+
+ * [Walking the AST](doc/component/Walking_the_AST.markdown)
+   * Node visitors
+   * Modifying the AST from a visitor
+   * Short-circuiting traversals
+   * Interleaved visitors
+   * Simple node finding API
+   * Parent and sibling references
+ * [Name resolution](doc/component/Name_resolution.markdown)
+   * Name resolver options
+   * Name resolution context
+ * [Pretty printing](doc/component/Pretty_printing.markdown)
+   * Converting AST back to PHP code
+   * Customizing formatting
+   * Formatting-preserving code transformations
+ * [AST builders](doc/component/AST_builders.markdown)
+   * Fluent builders for AST nodes
+ * [Lexer](doc/component/Lexer.markdown)
+   * Lexer options
+   * Token and file positions for nodes
+   * Custom attributes
+ * [Error handling](doc/component/Error_handling.markdown)
+   * Column information for errors
+   * Error recovery (parsing of syntactically incorrect code)
+ * [Constant expression evaluation](doc/component/Constant_expression_evaluation.markdown)
+   * Evaluating constant/property/etc initializers
+   * Handling errors and unsupported expressions
+ * [JSON representation](doc/component/JSON_representation.markdown)
+   * JSON encoding and decoding of ASTs
+ * [Performance](doc/component/Performance.markdown)
+   * Disabling XDebug
+   * Reusing objects
+   * Garbage collection impact
+ * [Frequently asked questions](doc/component/FAQ.markdown)
+   * Parent and sibling references
+
+ [doc_3_x]: https://github.com/nikic/PHP-Parser/tree/3.x/doc
+ [doc_master]: https://github.com/nikic/PHP-Parser/tree/master/doc
