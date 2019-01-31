@@ -24,7 +24,7 @@ span[lang=ru], span[lang=orv], span[lang=cu], span[lang=grc], span[lang=xcl], sp
 }
 
   .Unicode { font-family: Arial Unicode MS, ALPHABETUM Unicode, TITUS Cyberbit Basic, GentiumPlusW, Code2000, Lucida Sans Unicode, Lucida Grande, Everson Mono Unicode, Arial, Helvetica, sans-serif;}
- .Cyrillic { font-family: Arial Unicode MS, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif; }
+ .Cyrillic { font-family: GentiumPlusW, Arial Unicode MS, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif; }
  .Sanskrit { font-family: GentiumPlusW, Arial Unicode MS, ALPHABETUM Unicode, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif; }
  .SanskMrv { font-family: GentiumPlusW, Arial Unicode MS, ALPHABETUM Unicode, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif; font-size: 11pt;  }
  .SanskPop { font-family: GentiumPlusW, Arial Unicode MS, ALPHABETUM Unicode, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif; font-size: 9pt; color: #008080;  }
