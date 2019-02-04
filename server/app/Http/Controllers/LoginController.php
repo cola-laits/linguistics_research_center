@@ -11,8 +11,8 @@ class LoginController extends Controller {
 	
 	public function login_action()
 	{
-		$username = Input::get('username');
-		$password = Input::get('password');
+		$username = $request->get('username');
+		$password = $request->get('password');
 		
 		if (Auth::attempt(['username' => $username, 'password' => $password]))
 		{

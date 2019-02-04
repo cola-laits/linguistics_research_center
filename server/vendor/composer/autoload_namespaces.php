@@ -10,4 +10,5 @@ return array(
     'Parsedown' => array($vendorDir . '/erusev/parsedown'),
     'Mockery' => array($vendorDir . '/mockery/mockery/library'),
     'Doctrine\\Common\\Lexer\\' => array($vendorDir . '/doctrine/lexer/lib'),
+    'Barryvdh' => array($vendorDir . '/barryvdh/reflection-docblock/src'),
 );

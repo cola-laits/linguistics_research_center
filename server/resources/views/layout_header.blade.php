@@ -49,8 +49,8 @@ but also used to make printable lessons in the public controller -->
 <!--  "Must Have in the Header" Javascript -->
     <script src="//jwpsrv.com/library/1O4izvC8EeKppRIxOQulpA.js" type="text/javascript"></script> <!-- JW PLAYER -->
     <script src="https://liberalarts.utexas.edu/_internal/js/modernizr.js" type="text/javascript"></script>
-    {{ Html::script('//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js') }}
-    {{ Html::script('//cdn.datatables.net/1.10.6/js/jquery.dataTables.min.js') }}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" type="text/javascript"></script>
+    <script src="//cdn.datatables.net/1.10.6/js/jquery.dataTables.min.js" type="text/javascript"></script>
 
     <!-- QUALTRICS survey popup - Feb 27 2017 -->
     <script language="JavaScript" src="https://liberalarts.utexas.edu/lrc/_files/scripts/survey.js" type="text/javascript">// <![CDATA[ // ]]></script>

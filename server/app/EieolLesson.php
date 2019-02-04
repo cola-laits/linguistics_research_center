@@ -4,6 +4,52 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\EieolLesson
+ *
+ * @property int $id
+ * @property int $series_id
+ * @property string|null $title
+ * @property int $order
+ * @property int $language_id
+ * @property string|null $intro_text
+ * @property string|null $lesson_translation
+ * @property string|null $author_comments
+ * @property int|null $author_done
+ * @property string|null $admin_comments
+ * @property string|null $translation_author_comments
+ * @property int|null $translation_author_done
+ * @property string|null $translation_admin_comments
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property \Illuminate\Support\Carbon $updated_at
+ * @property string|null $created_by
+ * @property string|null $updated_by
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\EieolGlossedText[] $glossed_texts
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\EieolGrammar[] $grammars
+ * @property-read \App\EieolLanguage $language
+ * @property-read \App\EieolSeries $series
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolLesson newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolLesson newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolLesson query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolLesson whereAdminComments($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolLesson whereAuthorComments($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolLesson whereAuthorDone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolLesson whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolLesson whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolLesson whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolLesson whereIntroText($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolLesson whereLanguageId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolLesson whereLessonTranslation($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolLesson whereOrder($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolLesson whereSeriesId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolLesson whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolLesson whereTranslationAdminComments($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolLesson whereTranslationAuthorComments($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolLesson whereTranslationAuthorDone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolLesson whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolLesson whereUpdatedBy($value)
+ * @mixin \Eloquent
+ */
 class EieolLesson extends Model {
 	protected $table = 'eieol_lesson';
 	

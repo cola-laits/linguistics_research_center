@@ -3,7 +3,33 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
+/**
+ * App\LexReflexEntry
+ *
+ * @property int $id
+ * @property int $reflex_id
+ * @property string|null $entry
+ * @property int $order
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property \Illuminate\Support\Carbon $updated_at
+ * @property string|null $created_by
+ * @property string|null $updated_by
+ * @property-read \App\LexReflex $reflex
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\LexReflexEntry newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\LexReflexEntry newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\LexReflexEntry query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\LexReflexEntry whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\LexReflexEntry whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\LexReflexEntry whereEntry($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\LexReflexEntry whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\LexReflexEntry whereOrder($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\LexReflexEntry whereReflexId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\LexReflexEntry whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\LexReflexEntry whereUpdatedBy($value)
+ * @mixin \Eloquent
+ */
 class LexReflexEntry extends Model {
 	protected $table = 'lex_reflex_entry';
 	
@@ -12,13 +38,13 @@ class LexReflexEntry extends Model {
 	
 		// event to happen on saving
 		static::creating(function($table)  {
-			$table->created_by = Auth::user()->getUsername();
-			$table->updated_by = Auth::user()->getUsername();
+			$table->created_by = Auth::user()->username;
+			$table->updated_by = Auth::user()->username;
 		});
 	
 		// event to happen on updating
 		static::updating(function($table)  {
-			$table->updated_by = Auth::user()->getUsername();
+			$table->updated_by = Auth::user()->username;
 		});
 	
 	}

@@ -13,7 +13,7 @@
 	    <div class="alert alert-info">{{ Session::get('message') }}</div>
 	@endif
     
-    @if ($errors->has())
+    @if (count($errors)>0)
     	<div class='bg-danger alert'>
     		<ul>
 	        @foreach ($errors->all() as $error)
@@ -40,7 +40,7 @@
 	    
 	    <div class='form-group col-sm-2 @if ($errors->has('language')) has-error @endif  '>
 	        {{ Form::label('language', 'Language') }}<br/>
-	        {{ Form::select('language', $languages, null, ['class' => 'form-control']) }}
+	        {{ Form::select('language', $languages, null, ['placeholder'=>'Select a Language','class' => 'form-control']) }}
 	    </div>
     
     </div>

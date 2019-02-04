@@ -2,112 +2,54 @@
 
 namespace App\Http\Controllers;
 
-class PageController extends Controller {
-	
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
-		$pages = Page::all();
-        return View::make('page.page_index', ['pages' => $pages]);
-	}
+use App\Page;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
+class PageController extends Controller
+{
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		return View::make('page.page_form', ['action' => 'Create',]);
-	}
+    public function index() {
+        return view('page.page_index', ['pages' => Page::all()]);
+    }
 
+    public function create() {
+        return view('page.page_form', ['action' => 'Create']);
+    }
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
+    public function store(Request $request) {
+        $page = new Page;
+        $page->slug = $request->get('slug');
+        $page->name = $request->get('name');
+        $page->content = $request->get('content');
+        $page->save();
 
-    $returned_page = DB::transaction(function() {
-  
-            $page = new Page;
-            $page->slug = Input::get('slug');
-            $page->name = Input::get('name');
-            $page->content  = Input::get('content');
-            //$page->created_by = Auth::page()->pagename;
-            //$page->updated_by = Auth::page()->pagename;
-            $page->save();    
-            return $page;
-            
-    }); //end transaction
-            
-    Session::flash('message', "'".$returned_page->slug . '" has been created');
-    return redirect('/admin2/page/' . $returned_page->id . '/edit');
-    
-  
-  }
+        $request->session()->flash('message', "Page has been created");
+        return redirect('/admin2/page');
+    }
 
+    public function edit($id) {
+        $page = Page::find($id);
+        return view('page.page_form', ['page' => $page,
+            'action' => 'Edit', 'slug' => $page->slug]);
+    }
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		$page = Page::find($id);
-		return View::make('page.page_form', [ 'page' => $page, 
-											  'action' => 'Edit','slug'=> $page->slug]);
-	}
+    public function update(Request $request, $id) {
+        $page = Page::find($id);
+        //$page->slug = $request->get('slug');
+        $page->name = $request->get('name');
+        $page->content = $request->get('content');
+        $page->save();
 
+        $request->session()->flash('message', 'Page has been updated');
+        return redirect('/admin2/page');
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
+    }
 
- 		  $returned_page = DB::transaction(function($id) use ($id) {
- 		  
-				$page = Page::find($id);
-				//$page->slug = Input::get('slug');
-				$page->name = Input::get('name');
-				$page->content  = Input::get('content');			
-				$page->save();
-				
-				return $page;
-			}); //end transaction
-			
-			Session::flash('message', '"'.$returned_page->slug. '" has been updated');
-			return redirect('/admin2/page/' . $id . '/edit');
-
-	}
-
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		$page = Page::find($id);
-		
-		Page::destroy($id);
-		Session::flash('message', 'Page has been deleted');
-		return redirect('/admin2/page');
-	}
+    public function destroy(Request $request, $id) {
+        Page::destroy($id);
+        $request->session()->flash('message', 'Page has been deleted');
+        return redirect('/admin2/page');
+    }
 
 }

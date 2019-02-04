@@ -54,6 +54,8 @@ Route::get('login', 'LoginController@login_page');
 Route::post('login', 'LoginController@login_action');
 Route::get('logout', 'LoginController@logout');
 
+Route::get('/admin', 'AdminController@index');
+
 Route::group(array('prefix'=> 'admin2', 'middleware' => 'auth'), function() {
     Route::get('admin_error', function() {
         return View::make('admin_error');
@@ -88,3 +90,7 @@ Route::group(array('prefix'=> 'admin2', 'before' => 'auth|admin'), function() {
     Route::resource('/user', 'UserController');
     Route::resource('/page', 'PageController');
 });
+
+Auth::routes();
+
+Route::get('/home', 'AdminController@index')->name('home');

@@ -3,7 +3,39 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
+/**
+ * App\LexEtyma
+ *
+ * @property int $id
+ * @property string|null $old_id
+ * @property int $order
+ * @property string|null $page_number
+ * @property string|null $entry
+ * @property string|null $gloss
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property \Illuminate\Support\Carbon $updated_at
+ * @property string|null $created_by
+ * @property string|null $updated_by
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\LexEtyma[] $cross_references
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\LexReflex[] $reflexes
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\LexSemanticField[] $semantic_fields
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\LexEtyma newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\LexEtyma newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\LexEtyma query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\LexEtyma whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\LexEtyma whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\LexEtyma whereEntry($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\LexEtyma whereGloss($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\LexEtyma whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\LexEtyma whereOldId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\LexEtyma whereOrder($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\LexEtyma wherePageNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\LexEtyma whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\LexEtyma whereUpdatedBy($value)
+ * @mixin \Eloquent
+ */
 class LexEtyma extends Model {
 	protected $table = 'lex_etyma';
 	
@@ -12,13 +44,13 @@ class LexEtyma extends Model {
 	
 		// event to happen on saving
 		static::creating(function($table)  {
-			$table->created_by = Auth::user()->getUsername();
-			$table->updated_by = Auth::user()->getUsername();
+			$table->created_by = Auth::user()->username;
+			$table->updated_by = Auth::user()->username;
 		});
 		
 		// event to happen on updating
 		static::updating(function($table)  {
-			$table->updated_by = Auth::user()->getUsername();
+			$table->updated_by = Auth::user()->username;
 		});
 		
 	}

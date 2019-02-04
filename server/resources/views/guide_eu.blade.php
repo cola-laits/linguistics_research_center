@@ -8,7 +8,7 @@
 <h2>User Guide</h2>
 <div class="skinny">
 
-{{ $content }}  
+{!! $content !!}
 
 </div>  
 

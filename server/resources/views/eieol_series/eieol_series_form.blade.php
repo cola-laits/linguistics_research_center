@@ -4,9 +4,9 @@
 
 @if ($action != 'Create')
 
-{{ Html::script('js/vue.js') }}
-{{ Html::script('js/vue-search-select.js') }}
-{{ Html::script('js/axios.min.js') }}
+<script src="/js/vue.js"></script>
+<script src="/js/vue-search-select.js"></script>
+<script src="/js/axios.min.js"></script>
 
 <script>
 
@@ -28,7 +28,7 @@
       <div class="alert alert-info">{{ Session::get('message') }}</div>
     @endif
     
-    @if ($errors->has())
+    @if (count($errors)>0))
       <div class='bg-danger alert'>
         <ul>
           @foreach ($errors->all() as $error)
@@ -48,12 +48,14 @@
     
     <div class='form-group col-sm-1 @if ($errors->has('published')) has-error @endif  '>
           {{ Form::label('published', 'Published') }}
-          {{ Form::checkbox('published', 1, false, ['class' => 'form-control']) }}
+        <input type="checkbox" id="published" name="published" class="form-control" value="1"
+            @if (isset($series) && $series->published) checked="checked" @endif>
     </div>
     
     <div class='form-group col-sm-1 @if ($errors->has('use_old_gloss_ui')) has-error @endif  '>
           {{ Form::label('use_old_gloss_ui', 'Old Gloss UI') }}
-          {{ Form::checkbox('use_old_gloss_ui', 1, false, ['class' => 'form-control']) }}
+        <input type="checkbox" id="use_old_gloss_ui" name="use_old_gloss_ui" class="form-control" value="1"
+               @if (isset($series) && $series->use_old_gloss_ui) checked="checked" @endif>
     </div>
     
     <div class='form-group col-sm-1 @if ($errors->has('order')) has-error @endif  '>
@@ -111,7 +113,7 @@
       <div class='form-group col-sm-4 v-cloak'>
         
             <h2>Related Languages</h2>
-          
+
             <basic-select v-bind:options="dropdown_options"
                           v-bind:selected-option="dropdown_selected"
                           placeholder="choose language"

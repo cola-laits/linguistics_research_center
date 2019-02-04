@@ -50,7 +50,7 @@ corrections may be made and/or more etyma &amp; reflexes may be added.</p>
 </tr>
 
 @php $prev_lang='';
-$prev_family=''; /* FIXME dead code? remove */ @endphp
+$prev_family=''; @endphp
 @foreach($etyma->reflexes as $reflex)
     @if ($prev_family != $reflex->language->displayFamily())
         <tr>

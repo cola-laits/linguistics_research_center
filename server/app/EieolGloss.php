@@ -4,6 +4,43 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\EieolGloss
+ *
+ * @property int $id
+ * @property string|null $surface_form
+ * @property string|null $contextual_gloss
+ * @property string|null $comments
+ * @property string|null $underlying_form
+ * @property int $language_id
+ * @property string|null $author_comments
+ * @property int|null $author_done
+ * @property string|null $admin_comments
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property \Illuminate\Support\Carbon $updated_at
+ * @property string|null $created_by
+ * @property string|null $updated_by
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\EieolElement[] $elements
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\EieolGlossedText[] $glossed_texts
+ * @property-read \App\EieolLanguage $language
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGloss newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGloss newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGloss query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGloss whereAdminComments($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGloss whereAuthorComments($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGloss whereAuthorDone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGloss whereComments($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGloss whereContextualGloss($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGloss whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGloss whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGloss whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGloss whereLanguageId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGloss whereSurfaceForm($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGloss whereUnderlyingForm($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGloss whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGloss whereUpdatedBy($value)
+ * @mixin \Eloquent
+ */
 class EieolGloss extends Model {
 	protected $table = 'eieol_gloss';
 	

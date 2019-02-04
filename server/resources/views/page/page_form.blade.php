@@ -8,7 +8,7 @@
  
     <h1><i class='fa fa-user'></i> {{{$action}}} Page</h1>
     
-    @if ($errors->has())
+    @if (count($errors)>0)
     	<div class='bg-danger alert'>
     		<ul>
 	        @foreach ($errors->all() as $error)

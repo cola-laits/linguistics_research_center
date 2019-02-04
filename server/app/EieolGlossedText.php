@@ -4,6 +4,38 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\EieolGlossedText
+ *
+ * @property int $id
+ * @property int $lesson_id
+ * @property string|null $glossed_text
+ * @property int $order
+ * @property string|null $author_comments
+ * @property int|null $author_done
+ * @property string|null $admin_comments
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property \Illuminate\Support\Carbon $updated_at
+ * @property string|null $created_by
+ * @property string|null $updated_by
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\EieolGloss[] $glosses
+ * @property-read \App\EieolLesson $lesson
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGlossedText newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGlossedText newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGlossedText query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGlossedText whereAdminComments($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGlossedText whereAuthorComments($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGlossedText whereAuthorDone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGlossedText whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGlossedText whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGlossedText whereGlossedText($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGlossedText whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGlossedText whereLessonId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGlossedText whereOrder($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGlossedText whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGlossedText whereUpdatedBy($value)
+ * @mixin \Eloquent
+ */
 class EieolGlossedText extends Model {
 
 	protected $table = 'eieol_glossed_text';

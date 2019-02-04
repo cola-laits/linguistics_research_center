@@ -416,7 +416,7 @@
 		});
 		  
 		//custom keyboard for text inputs
-		$('.custom-keyboard').specialedit([ {{$lesson->language->custom_keyboard_layout}} ]); 
+		$('.custom-keyboard').specialedit([ {!! $lesson->language->custom_keyboard_layout !!} ]);
 
 		//these two functions prevent users from tabbing out of the keywords fields.  We want them to stay and enter a comma after each word
 		$('#new_keywords_tag').keypress(function (e) { //listen for typing
@@ -936,7 +936,8 @@
 <!-- ---------------------------------------------------------------------------------------- -->
 
 <div class="spinner">
-  {{ Html::image('images/ajax_loader_red_350.gif', $alt="Loading", $attributes = array('border'=>0, 'width'=>150, 'height'=>150))  }}<br/>Please Wait...
+    <img src="/images/ajax_loader_red_350.gif" alt="Loading" width="150" height="150" border="0">
+    <br/>Please Wait...
 </div>
 
 <div id="reminder" title="Login Timeout">
@@ -1195,7 +1196,7 @@
 					    
 					    <div class='form-group'>
 					        {{ Form::label('etyma_id', 'Etyma') }}
-					        {{ Form::select('etyma_id', $etymas, null, ['class' => 'form-control etyma', 'id' => 'etyma_id']) }}
+					        {{ Form::select('etyma_id', $etymas, null, ['class' => 'form-control etyma', 'id' => 'etyma_id', 'placeholder'=>'Select an etymon']) }}
 					        <div id ="etyma_id_error" class="alert-danger errors"></div>
 					    </div>	
 					    
@@ -1395,7 +1396,7 @@
 		    
 		    <div class='form-group col-sm-2'>
 		        {{ Form::label('language', 'Language') }}<br/>
-		        {{ Form::select('language', $languages, $lesson->language_id, ['class' => 'form-control']) }}
+		        {{ Form::select('language', $languages, $lesson->language_id, ['class' => 'form-control', 'placeholder'=>'Select a language']) }}
 		        <div id ="language_error" class="alert-danger errors"></div>
 		    </div>
 		    
@@ -2145,7 +2146,7 @@
 			 // extraPlugins : 'onchange,eieol_language', 
 			  language_class : '{{$lesson->language->class_attribute}}',
 			  language_lang : '{{$lesson->language->lang_attribute}}',
-			  specialChars : [ {{$lesson->language->custom_keyboard_layout}}],
+			  specialChars : [ {!! $lesson->language->custom_keyboard_layout !!}],
 			  enterMode : 'CKEDITOR.ENTER_BR',
 			  entities : false
 			};
