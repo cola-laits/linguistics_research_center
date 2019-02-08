@@ -35,7 +35,9 @@ use Illuminate\Support\Facades\Auth;
  */
 class LexSemanticField extends Model {
 	protected $table = 'lex_semantic_field';
-	
+
+	protected $fillable = ['text','number','abbr','semantic_category_id'];
+
 	public static function boot() {
 		parent::boot();
 	

@@ -44,7 +44,9 @@ use Illuminate\Support\Facades\Auth;
  */
 class LexLanguage extends Model {
 	protected $table = 'lex_language';
-	
+
+	protected $fillable = ['name', 'language_sub_family_id', 'order', 'abbr', 'aka', 'override_family', 'custom_sort'];
+
 	public static function boot() {
 		parent::boot();
 	

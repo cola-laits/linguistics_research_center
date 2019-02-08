@@ -30,7 +30,9 @@ use Illuminate\Support\Facades\Auth;
  */
 class LexSource extends Model {
 	protected $table = 'lex_source';
-	
+
+	protected $fillable = ['code','display'];
+
 	public static function boot() {
 		parent::boot();
 	

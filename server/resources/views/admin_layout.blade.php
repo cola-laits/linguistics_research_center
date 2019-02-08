@@ -21,6 +21,13 @@
         <script src="/js/specialedit.jquery.js"></script>
         <script src="/js/google_analytics.js"></script>
 
+        <style>
+            body {
+                font-family: Times New Roman, Times, serif;
+            }
+        </style>
+
+        @yield('head_extra')
     </head>
     <body onload="top.scrollTo(0,0)">
 
@@ -41,17 +48,17 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Lexicon <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/admin2/FIXME">Etyma</a></li>
-                            <li><a href="/admin2/FIXME">Reflex</a></li>
-                            <li><a href="/admin2/FIXME">Reflex -> Entry</a></li>
-                            <li><a href="/admin2/FIXME">Reflex -> Part of Speech</a></li>
-                            <li><a href="/admin2/FIXME">Semantic Category</a></li>
-                            <li><a href="/admin2/FIXME">Semantic Field</a></li>
-                            <li><a href="/admin2/FIXME">Language Family</a></li>
-                            <li><a href="/admin2/FIXME">Language Sub Family</a></li>
-                            <li><a href="/admin2/FIXME">Language</a></li>
-                            <li><a href="/admin2/FIXME">Source</a></li>
-                            <li><a href="/admin2/FIXME">Part of Speech</a></li>
+                            <li><a href="/admin2/lexicon#/etyma">Etyma</a></li>
+                            <li><a href="/admin2/lexicon#/reflex">Reflex</a></li>
+                            <li><a href="/admin2/lexicon#/reflex_entry">Reflex → Entry</a></li>
+                            <li><a href="/admin2/lexicon#/reflex_pos">Reflex → Part of Speech</a></li>
+                            <li><a href="/admin2/lexicon#/sem_cat">Semantic Category</a></li>
+                            <li><a href="/admin2/lexicon#/sem_field">Semantic Field</a></li>
+                            <li><a href="/admin2/lexicon#/lang_fam">Language Family</a></li>
+                            <li><a href="/admin2/lexicon#/lang_subfam">Language Sub Family</a></li>
+                            <li><a href="/admin2/lexicon#/lang">Language</a></li>
+                            <li><a href="/admin2/lexicon#/source">Source</a></li>
+                            <li><a href="/admin2/lexicon#/pos">Part of Speech</a></li>
                         </ul>
                     </li>
                 <li><a href="/admin2/user">Users</a></li>
@@ -132,7 +139,8 @@
         <div class="container-fluid">
             @yield('content')
         </div>
- 
+
+        <br><br>
     </body>
 </html>	
 

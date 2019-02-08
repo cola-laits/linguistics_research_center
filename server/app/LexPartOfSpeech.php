@@ -30,6 +30,8 @@ use Illuminate\Support\Facades\Auth;
  */
 class LexPartOfSpeech extends Model {
 	protected $table = 'lex_part_of_speech';
+
+	protected $fillable = ['code','display'];
 	
 	public static function boot() {
 		parent::boot();

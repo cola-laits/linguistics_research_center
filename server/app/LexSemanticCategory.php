@@ -32,7 +32,9 @@ use Illuminate\Support\Facades\Auth;
  */
 class LexSemanticCategory extends Model {
 	protected $table = 'lex_semantic_category';
-	
+
+	protected $fillable = ['number','text','abbr'];
+
 	public static function boot() {
 		parent::boot();
 	

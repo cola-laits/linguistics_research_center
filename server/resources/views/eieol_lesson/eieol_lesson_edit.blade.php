@@ -1578,8 +1578,8 @@
 
 						    <div class='col-sm-4 gloss_{{$gloss->id}}'>
 						    	<br/>
-						    	{{$gloss->getDisplayGloss()}} 
-			    			</div>   
+						    	{!! $gloss->getDisplayGloss() !!}
+			    			</div>
 			    			
 			    			<div class='col-sm-1 bottom_button gloss_comment_indicator'>
 			    				@if ($gloss->author_done)

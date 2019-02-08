@@ -1,0 +1,58 @@
+[v-cloak] {
+    display: none;
+}
+.vuetable th.sortable:hover {
+    color: #2185d0;
+    cursor: pointer;
+}
+.vuetable-body-wrapper {
+    position:relative;
+    overflow-y:auto;
+}
+.vuetable-head-wrapper {
+    overflow-x: hidden;
+}
+.vuetable-actions {
+    width: 15%;
+    padding: 12px 0px;
+    text-align: center;
+}
+.vuetable-pagination {
+    font-size:150%;
+}
+.vuetable-pagination-info {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.vuetable-pagination-right {
+    float:right;
+}
+.vuetable-pagination-item {
+    border:solid 1px darkgray;
+    padding:10px;
+    margin:5px;
+}
+.vuetable-pagination-active {
+    background: #c4ffc4;
+}
+.vuetable-empty-result {
+    text-align: center;
+}
+.vuetable-clip-text {
+    white-space: pre-wrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: block;
+}
+.vuetable-semantic-no-top {
+    border-top:none !important;
+    margin-top:0 !important;
+}
+.vuetable-fixed-layout {
+    table-layout: fixed;
+}
+.vuetable-gutter-col {
+    padding: 0 !important;
+    border-left: none  !important;
+    border-right: none  !important;
+}
