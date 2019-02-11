@@ -18,7 +18,7 @@ class EieolHeadWordController extends Controller
         //this  is a search that returns head words that contain with the url parm "headword"
         //since head words starts with a <, it looks for any matching chars.
         $text = '';
-        $head_words = EieolHeadWord::where('word', 'LIKE', '%' . Normalizer::normalize($request->get('head_word'), Normalizer::FORM_D) . '%')
+        $head_words = EieolHeadWord::where('word', 'LIKE', '%' . Normalizer::normalize($request->get('head_word'), Normalizer::FORM_C) . '%')
             ->where('language_id', '=', $request->get('language') . '%')
             ->take(10)->get()->sortBy('word');
         foreach ($head_words as $head_word) {
@@ -63,7 +63,7 @@ class EieolHeadWordController extends Controller
 
         $rules = array(
             //have to put definition in quotes in case it has a comma in it
-            'word' => 'required|regex:/^<.*>$/|unique:eieol_head_word,word,null,id,definition,"' . Normalizer::normalize($request->get('definition'), Normalizer::FORM_D) . '",language_id,' . $request->get('language_id'),
+            'word' => 'required|regex:/^<.*>$/|unique:eieol_head_word,word,null,id,definition,"' . Normalizer::normalize($request->get('definition'), Normalizer::FORM_C) . '",language_id,' . $request->get('language_id'),
             'definition' => 'required',
             'keywords' => 'required',
             'language_id' => 'required',
@@ -84,8 +84,8 @@ class EieolHeadWordController extends Controller
 
         $returned_head_word = DB::transaction(function () use ($request) {
             $head_word = new EieolHeadWord;
-            $head_word->word = Normalizer::normalize($request->get('word'), Normalizer::FORM_D);
-            $head_word->definition = Normalizer::normalize($request->get('definition'), Normalizer::FORM_D);
+            $head_word->word = Normalizer::normalize($request->get('word'), Normalizer::FORM_C);
+            $head_word->definition = Normalizer::normalize($request->get('definition'), Normalizer::FORM_C);
             if ($request->get('etyma_id') == '0') {
                 $head_word->etyma_id = null;
             } else {
@@ -124,7 +124,7 @@ class EieolHeadWordController extends Controller
     public function update(Request $request, $id) {
         $rules = array(
             //have to put definition in quotes in case it has a comma in it
-            'word' => 'required|regex:/^<.*>$/|unique:eieol_head_word,word,' . $id . ',id,definition,"' . Normalizer::normalize($request->get('definition'), Normalizer::FORM_D) . '",language_id,' . $request->get('language_id'),
+            'word' => 'required|regex:/^<.*>$/|unique:eieol_head_word,word,' . $id . ',id,definition,"' . Normalizer::normalize($request->get('definition'), Normalizer::FORM_C) . '",language_id,' . $request->get('language_id'),
             'definition' => 'required',
         );
         $messages = array(
@@ -143,13 +143,13 @@ class EieolHeadWordController extends Controller
 
         DB::transaction(function () use ($id, $request) {
             $head_word = EieolHeadWord::with('keywords')->find($id);
-            $head_word->word = Normalizer::normalize($request->get('word'), Normalizer::FORM_D);
+            $head_word->word = Normalizer::normalize($request->get('word'), Normalizer::FORM_C);
             if ($request->get('etyma_id') == '0') {
                 $head_word->etyma_id = null;
             } else {
                 $head_word->etyma_id = $request->get('etyma_id');
             }
-            $head_word->definition = Normalizer::normalize($request->get('definition'), Normalizer::FORM_D);
+            $head_word->definition = Normalizer::normalize($request->get('definition'), Normalizer::FORM_C);
             $head_word->updated_by = Auth::user()->username;
 
             $head_word->save();

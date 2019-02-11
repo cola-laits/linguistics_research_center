@@ -47,11 +47,11 @@ class EieolLessonController extends Controller
 
         $lesson = new EieolLesson;
 
-        $lesson->title = \Normalizer::normalize($request->get('title'), Normalizer::FORM_D);
+        $lesson->title = \Normalizer::normalize($request->get('title'), Normalizer::FORM_C);
         $lesson->order = $request->get('order');
         $lesson->series_id = $request->get('series_id');
         $lesson->language_id = $request->get('language');
-        $lesson->intro_text = \Normalizer::normalize($request->get('intro_text'), Normalizer::FORM_D);
+        $lesson->intro_text = \Normalizer::normalize($request->get('intro_text'), Normalizer::FORM_C);
         $lesson->created_by = Auth::user()->username;
         $lesson->updated_by = Auth::user()->username;
 
@@ -147,13 +147,13 @@ class EieolLessonController extends Controller
                 }
             }
 
-            $lesson->title = Normalizer::normalize($request->get('title'), Normalizer::FORM_D);
+            $lesson->title = Normalizer::normalize($request->get('title'), Normalizer::FORM_C);
             $lesson->order = $request->get('order');
-            $lesson->intro_text = Normalizer::normalize($request->get('intro_text'), Normalizer::FORM_D);
+            $lesson->intro_text = Normalizer::normalize($request->get('intro_text'), Normalizer::FORM_C);
             $lesson->language_id = $request->get('language');
-            $lesson->author_comments = Normalizer::normalize($request->get('author_comments'), Normalizer::FORM_D);
+            $lesson->author_comments = Normalizer::normalize($request->get('author_comments'), Normalizer::FORM_C);
             $lesson->author_done = $request->get('author_done');
-            $lesson->admin_comments = Normalizer::normalize($request->get('admin_comments'), Normalizer::FORM_D);
+            $lesson->admin_comments = Normalizer::normalize($request->get('admin_comments'), Normalizer::FORM_C);
             $lesson->updated_by = Auth::user()->username;
             $lesson->save();
         });
@@ -171,10 +171,10 @@ class EieolLessonController extends Controller
     public function update_translation(Request $request, $id) {
         $lesson = EieolLesson::find($id);
 
-        $lesson->lesson_translation = Normalizer::normalize($request->get('lesson_translation'), Normalizer::FORM_D);
-        $lesson->translation_author_comments = Normalizer::normalize($request->get('translation_author_comments'), Normalizer::FORM_D);
+        $lesson->lesson_translation = Normalizer::normalize($request->get('lesson_translation'), Normalizer::FORM_C);
+        $lesson->translation_author_comments = Normalizer::normalize($request->get('translation_author_comments'), Normalizer::FORM_C);
         $lesson->translation_author_done = $request->get('translation_author_done');
-        $lesson->translation_admin_comments = Normalizer::normalize($request->get('translation_admin_comments'), Normalizer::FORM_D);
+        $lesson->translation_admin_comments = Normalizer::normalize($request->get('translation_admin_comments'), Normalizer::FORM_C);
         $lesson->updated_by = Auth::user()->username;
 
         $lesson->save();

@@ -86,8 +86,7 @@ class AlphabetSorter {
         }
 
         //if you get here, you didn't match
-        print "couldn't find a character in " . $string;
-        exit();
+        throw new \Exception("couldn't find a character in " . $string);
     } //get_first_character_value
 
     public function alphabet_sorter($a, $b) {

@@ -243,7 +243,7 @@ class PublicController extends Controller
 
                         //build sort key
                         $sort_key = strip_tags($gloss->surface_form);
-                        $data['glosses'][$key]['sortable_key'] = $sort_key;
+                        $data['glosses'][$key]['sortable_key'] = \Normalizer::normalize($sort_key, \Normalizer::FORM_D);
 
                     } else {
 
@@ -311,7 +311,7 @@ class PublicController extends Controller
                             $sort_key = mb_substr($element->head_word->word, 1, Null, 'UTF-8');
                             //remove any tags like sup or sub
                             $sort_key = strip_tags($sort_key);
-                            $data['head_words'][$key]['sortable_key'] = $sort_key;
+                            $data['head_words'][$key]['sortable_key'] = \Normalizer::normalize($sort_key, \Normalizer::FORM_D);
                         } else {
 
                             $data['head_words'][$key]['glossed_text_gloss_ids'][$gloss->pivot->id] = $lesson;

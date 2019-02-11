@@ -31,12 +31,12 @@ class EieolGlossedTextController extends Controller
         $glossed_text = new EieolGlossedText;
 
         $glossed_text->order = $request->get('order');
-        $text = Normalizer::normalize($request->get('glossed_text'), Normalizer::FORM_D);
+        $text = Normalizer::normalize($request->get('glossed_text'), Normalizer::FORM_C);
         $glossed_text->glossed_text = preg_replace('/^<p>(.+?)<\/p>/is', '$1', $text); // remove dumb ckeditor paragraph tags
         $glossed_text->lesson_id = $request->get('lesson_id');
-        $glossed_text->author_comments = Normalizer::normalize($request->get('author_comments'), Normalizer::FORM_D);
+        $glossed_text->author_comments = Normalizer::normalize($request->get('author_comments'), Normalizer::FORM_C);
         $glossed_text->author_done = $request->get('author_done');
-        $glossed_text->admin_comments = Normalizer::normalize($request->get('admin_comments'), Normalizer::FORM_D);
+        $glossed_text->admin_comments = Normalizer::normalize($request->get('admin_comments'), Normalizer::FORM_C);
         $glossed_text->created_by = Auth::user()->username;
         $glossed_text->updated_by = Auth::user()->username;
 
@@ -69,11 +69,11 @@ class EieolGlossedTextController extends Controller
         $glossed_text = EieolGlossedText::find($id);
 
         $glossed_text->order = $request->get('order');
-        $text = Normalizer::normalize($request->get('glossed_text'), Normalizer::FORM_D);
+        $text = Normalizer::normalize($request->get('glossed_text'), Normalizer::FORM_C);
         $glossed_text->glossed_text = preg_replace('/^<p>(.+?)<\/p>/is', '$1', $text); // remove dumb ckeditor paragraph tags
-        $glossed_text->author_comments = Normalizer::normalize($request->get('author_comments'), Normalizer::FORM_D);
+        $glossed_text->author_comments = Normalizer::normalize($request->get('author_comments'), Normalizer::FORM_C);
         $glossed_text->author_done = $request->get('author_done');
-        $glossed_text->admin_comments = Normalizer::normalize($request->get('admin_comments'), Normalizer::FORM_D);
+        $glossed_text->admin_comments = Normalizer::normalize($request->get('admin_comments'), Normalizer::FORM_C);
         $glossed_text->updated_by = Auth::user()->username;
 
         $glossed_text->save();
