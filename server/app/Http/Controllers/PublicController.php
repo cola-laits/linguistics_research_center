@@ -24,16 +24,7 @@ class PublicController extends Controller
 
         $data = array();
 
-        if (is_numeric($series_id)) { // find series the old way by pk
-
-            $data['series'] = EieolSeries::find($series_id);
-
-        } else { // find series info by name (slug) instead of id
-
-            $data['series'] = EieolSeries::whereRaw("slug = ?", array($series_id))->get();
-            $data['series'] = $data['series'][0];
-
-        }
+        $data['series'] = EieolSeries::findByIdOrSlug($series_id);
 
         $data['lessons'] = EieolLesson::with('grammars', 'language')->where('series_id', '=', $data['series']->id)->get()->sortBy('order');
 
@@ -393,16 +384,17 @@ class PublicController extends Controller
     }
 
     public function eieol_text_list() {
-        $data = array();
-        $data['text_list'] = array();
+        $data = [
+            'text_list'=>[]
+        ];
 
         $serieses = EieolSeries::where('published', '=', True)->get()->sortBy('order');
         foreach ($serieses as $series) {
-            $text = array();
-            $text['id'] = $series['id'];
+            $text = [
+                'id' => $series['id']
+            ];
 
-
-            $languages = $this->get_series_info($series->id)['languages'];
+            $languages = $series->lesson_languages->unique(function($lang) {return $lang->id;});
             if (count($languages) > 1) {
                 foreach ($languages as $language) {
                     $text['title'] = $series['title'] . ' (' . $language['language'] . ')';
@@ -419,7 +411,9 @@ class PublicController extends Controller
     }
 
     public function eieol_text_toc(Request $request, $series_id) {
-        $data['series'] = EieolSeries::find($series_id);
+        $data = [
+            'series' => EieolSeries::findByIdOrSlug($series_id)
+        ];
         if ($request->has('language_id')) {
             $language = EieolLanguage::find($request->get('language_id'));
             $data['language_id'] = $request->get('language_id');
@@ -433,7 +427,9 @@ class PublicController extends Controller
     }
 
     public function eieol_text(Request $request, $series_id) {
-        $data = $this->get_series_info($series_id);
+        $data = [
+            'series' => EieolSeries::findByIdOrSlug($series_id)
+        ];
         if ($request->get('language_id') != 0) {
             $language = EieolLanguage::find($request->get('language_id'));
             $data['series']['title'] .= ' (' . $language['language'] . ')';
