@@ -12,14 +12,14 @@
 namespace Symfony\Component\Filesystem\Exception;
 
 /**
- * Exception class thrown when a file couldn't be found
+ * Exception class thrown when a file couldn't be found.
  *
  * @author Fabien Potencier <fabien@symfony.com>
  * @author Christian Gärtner <christiangaertner.film@googlemail.com>
  */
 class FileNotFoundException extends IOException
 {
-    public function __construct($message = null, $code = 0, \Exception $previous = null, $path = null)
+    public function __construct(string $message = null, int $code = 0, \Exception $previous = null, string $path = null)
     {
         if (null === $message) {
             if (null === $path) {
