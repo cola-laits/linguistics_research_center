@@ -573,7 +573,9 @@
 						</div>\
 						<div class="form-group col-sm-1">\
 						    {{ Form::label("author_done", "Done") }}\
-						    {{ Form::checkbox("author_done", 1, false, ["class" => "form-control author_done", "id" => "gloss_author_done"]) }}\
+						    \<input class="form-control author_done" id="gloss_author_done" \
+						        name="author_done" type="checkbox" value="1"\
+						        checked='+(data.author_done?'checked':'')+'>\
 						</div>');
 				    }
 
@@ -1416,7 +1418,9 @@
 				
 				<div class='form-group col-sm-1'>
 			    	{{ Form::label('author_done', 'Done') }}
-				    {{ Form::checkbox('author_done', 1, false, ['class' => 'form-control author_done']) }}
+                    <input class="form-control author_done" name="author_done"
+                           type="checkbox" value="1" id="author_done"
+                           checked="{{$lesson->author_done?'checked':''}}">
 				</div>
 			@endif
 		 
@@ -1514,7 +1518,9 @@
 							
 							<div class='form-group col-sm-1'>
 						    	{{ Form::label('author_done', 'Done') }}
-							    {{ Form::checkbox('author_done', 1, false, ['class' => 'form-control author_done']) }}
+                                <input class="form-control author_done" name="author_done"
+                                       type="checkbox" value="1" id="author_done"
+                                       checked="{{$glossed_text->author_done?'checked':''}}">
 							</div>
 						@endif
 					 
@@ -1679,7 +1685,8 @@
 						
 						<div class='form-group col-sm-1'>
 					    	{{ Form::label('author_done', 'Done') }}
-						    {{ Form::checkbox('author_done', 1, false, ['class' => 'form-control author_done']) }}
+                            <input class="form-control author_done" name="author_done"
+                                   type="checkbox" value="1" id="author_done">
 						</div>
 					@endif
 				 
@@ -1825,7 +1832,9 @@
 				
 				<div class='form-group col-sm-1'>
 			    	{{ Form::label('translation_author_done', 'Done') }}
-				    {{ Form::checkbox('translation_author_done', 1, false, ['class' => 'form-control author_done']) }}
+                    <input class="form-control author_done" name="translation_author_done"
+                           type="checkbox" value="1" id="translation_author_done"
+                           checked="{{$lesson->translation_author_done?'checked':''}}">
 				</div>
 			@endif
 		 
@@ -1910,7 +1919,9 @@
 							
 							<div class='form-group col-sm-1'>
 						    	{{ Form::label('author_done', 'Done') }}
-							    {{ Form::checkbox('author_done', 1, false, ['class' => 'form-control author_done']) }}
+                                <input class="form-control author_done" name="author_done" type="checkbox"
+                                       value="1" id="author_done"
+                                       checked="{{$grammar->author_done?'checked':''}}">
 							</div>
 						@endif
 					 
@@ -2010,7 +2021,8 @@
 						
 						<div class='form-group col-sm-1'>
 					    	{{ Form::label('author_done', 'Done') }}
-						    {{ Form::checkbox('author_done', 1, false, ['class' => 'form-control author_done']) }}
+                            <input class="form-control author_done" name="author_done" type="checkbox"
+                                   value="1" id="author_done">
 						</div>
 					@endif
 				 
