@@ -23,18 +23,18 @@ span[lang=ru], span[lang=orv], span[lang=cu], span[lang=grc], span[lang=xcl], sp
    font-style: normal;
 }
 
-  .Unicode { font-family: Arial Unicode MS, ALPHABETUM Unicode, TITUS Cyberbit Basic, GentiumPlusW, Code2000, Lucida Sans Unicode, Lucida Grande, Everson Mono Unicode, Arial, Helvetica, sans-serif;}
- .Cyrillic { font-family: GentiumPlusW, Arial Unicode MS, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif; }
+  .Unicode, [lang] { font-family: Arial Unicode MS, ALPHABETUM Unicode, TITUS Cyberbit Basic, GentiumPlusW, Code2000, Lucida Sans Unicode, Lucida Grande, Everson Mono Unicode, Arial, Helvetica, sans-serif;}
+ .Cyrillic, [lang=cu] { font-family: GentiumPlusW, Arial Unicode MS, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif; }
  .Sanskrit { font-family: GentiumPlusW, Arial Unicode MS, ALPHABETUM Unicode, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif; }
  .SanskMrv { font-family: GentiumPlusW, Arial Unicode MS, ALPHABETUM Unicode, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif; font-size: 11pt;  }
  .SanskPop { font-family: GentiumPlusW, Arial Unicode MS, ALPHABETUM Unicode, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif; font-size: 9pt; color: #008080;  }
  .SanskDbt { font-family: GentiumPlusW, Arial Unicode MS, ALPHABETUM Unicode, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif; font-size: 9pt;  }
- .SanskExt { font-family: GentiumPlusW, Arial Unicode MS, ALPHABETUM Unicode, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif; }
+ .SanskExt, [lang=sa] { font-family: GentiumPlusW, Arial Unicode MS, ALPHABETUM Unicode, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif; }
     .Sansk { font-family: GentiumPlusW, Lucida Sans Unicode, Arial Unicode MS, ALPHABETUM Unicode, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif;  }
- .GreekExt { font-family: GentiumPlusW, Palatino Linotype, Arial Unicode MS, ALPHABETUM Unicode, TITUS Cyberbit Basic, Code2000, New Athena Unicode, Vusillus, Lucida Grande, Vusillus Old Face Italic, Everson Mono Unicode, sans-serif;  }
+ .GreekExt, [lang=grc] { font-family: GentiumPlusW, Palatino Linotype, Arial Unicode MS, ALPHABETUM Unicode, TITUS Cyberbit Basic, Code2000, New Athena Unicode, Vusillus, Lucida Grande, Vusillus Old Face Italic, Everson Mono Unicode, sans-serif;  }
     .Greek { font-family: GentiumPlusW, Arial Unicode MS, Lucida Sans Unicode, ALPHABETUM Unicode, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif;  }
-    .Latin { font-family: GentiumPlusW, Palatino Linotype, Lucida Sans Unicode, Arial Unicode MS, ALPHABETUM Unicode, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, Arial, Helvetica, sans-serif;  }
-    .Armen { font-family: Arial Unicode MS, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif;  } 
+    .Latin, [lang=la] { font-family: GentiumPlusW, Palatino Linotype, Lucida Sans Unicode, Arial Unicode MS, ALPHABETUM Unicode, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, Arial, Helvetica, sans-serif;  }
+    .Armen, [lang=xcl] { font-family: Arial Unicode MS, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif;  } 
 
 .lang_list{
 	list-style-type: none;
