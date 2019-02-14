@@ -10,7 +10,7 @@
 		//every time they update the glossed text, we calculate the full text and display it below
 		var lesson_text = '';
 		$(".glossed_text_area").each(function() {
-			temp_text = CKEDITOR.instances[this.id].getData();
+			temp_text = $('#'+this.id).val();
 			temp_text = temp_text.replace('<p>', '').replace('</p>', '');
 			lesson_text +=  temp_text + ' ';
 		});	
@@ -368,7 +368,7 @@
 	// --------------------------------document ready-------------------------------------
     
     $(document).ready(function(){
-    
+
       $("div.lotsagloss").hide();
       
       $( "button.togglegloss" ).click(function() {
@@ -1489,7 +1489,7 @@
 					    	
 					    <div class='form-group col-sm-7'>
 					        {{ Form::label('glossed_text', 'Glossed Text') }}
-					        {{ Form::textarea('glossed_text', null, ['placeholder' => 'Glossed Text', 'class' => 'form-control glossed_text_area', 'size' => '100x10', 'id' => 'glossed_text_' . $glossed_text->id]) }}					        
+					        {{ Form::textarea('glossed_text', null, ['placeholder' => 'Glossed Text', 'class' => 'form-control glossed_text_area custom-keyboard', 'size' => '100x3', 'id' => 'glossed_text_' . $glossed_text->id, 'lang'=>$lesson->language->lang_attribute]) }}
 					        <div id ="glossed_text_error" class="alert-danger errors"></div>
 					    </div>	    
 					    
@@ -2156,7 +2156,6 @@
 			  allowedContent : true, 
 			  extraPlugins : 'onchange', 
 			 // extraPlugins : 'onchange,eieol_language', 
-			  language_class : '{{$lesson->language->class_attribute}}',
 			  language_lang : '{{$lesson->language->lang_attribute}}',
 			  specialChars : [ {!! $lesson->language->custom_keyboard_layout !!}],
 			  enterMode : 'CKEDITOR.ENTER_BR',
@@ -2176,17 +2175,6 @@
 			$('#update_form').attr("dirty", "dirty");
 		}
 	});
-
-	//apply the ckeditor to each exisiting glossed text
-	@foreach ($glossed_texts as $glossed_text)	
-		CKEDITOR.replace('glossed_text_{{{$glossed_text->id}}}',glossed_text_ckeditor_parms);
-		CKEDITOR.instances['glossed_text_{{{$glossed_text->id}}}'].on('change', function() {
-			if(this.checkDirty()) {
-				$('#glossed_text_form_{{{$glossed_text->id}}}').css("background-color", "#EBAD99");
-				$('#glossed_text_form{{{$glossed_text->id}}}').attr("dirty", "dirty");
-			}
-		});
-	@endforeach
 		
 	//apply the ckeditor to the translation
 	CKEDITOR.replace('lesson_translation',ckeditor_parms);
