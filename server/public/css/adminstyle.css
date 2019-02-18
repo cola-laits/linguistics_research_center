@@ -1,4 +1,12 @@
 
+/* Note that this is replicated in lrcstyle.css */
+[lang] { font-family: Arial Unicode MS, ALPHABETUM Unicode, TITUS Cyberbit Basic, GentiumPlusW, Code2000, Lucida Sans Unicode, Lucida Grande, Everson Mono Unicode, Arial, Helvetica, sans-serif;}
+[lang=cu] { font-family: GentiumPlusW, sans-serif; }
+[lang=sa] { font-family: GentiumPlusW, sans-serif; }
+[lang=grc] { font-family: GentiumPlusW, sans-serif;  }
+[lang=la] { font-family: GentiumPlusW, sans-serif;  }
+[lang=xcl] { font-family: Arial Unicode MS, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif;  }
+
 .spinner { 
 	display:none; 
 	text-align: center;
@@ -95,4 +103,8 @@ textarea {
 
 .timesy {
 	font-family: Times New Roman, Times, serif;
+}
+
+.cke_button__eieollanguage_icon {
+    background-image:url(/ckeditor-plugins/eieol_language/icons/language.png) !important;
 }

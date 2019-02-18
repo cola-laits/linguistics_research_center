@@ -19,7 +19,6 @@
                 <tr>
                     <th>Language</th>
                     <th>Lang</th>
-                    <th>Class</th>
                     <th>Updated</th>
                     <th></th>
                 </tr>
@@ -30,7 +29,6 @@
                 <tr>
                     <td>{{{ $language->language }}}</td>
                     <td>{{{ $language->lang_attribute }}}</td>
-                    <td>{{{ $language->class_attribute }}}</td>
                     <td>{{{ $language->updated_at->format('m/d/Y h:ia') }}} <br/> by {{{ $language->updated_by }}}</td>
                     <td>
                         <a href="/admin2/eieol_language/{{{ $language->id }}}/edit" class="btn btn-info pull-left" style="margin-right: 3px;">Edit</a>

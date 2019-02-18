@@ -2142,7 +2142,7 @@
 	*/
 	
 		CKEDITOR.plugins.addExternal( 'onchange', '/js/', 'onchangeplugin.js' );
-//	CKEDITOR.plugins.addExternal( 'eieol_language', '/js/', 'eieollanguageplugin.js' );
+	CKEDITOR.plugins.addExternal( 'eieol_language', '/ckeditor-plugins/eieol_language/');
 	ckeditor_parms = {
 			  toolbar : $mytoolbar,
 			  language_list :
@@ -2154,8 +2154,7 @@
 			  contentsCss : '/css/lrcstyle.css',
 			  disableNativeSpellChecker : false, 
 			  allowedContent : true, 
-			  extraPlugins : 'onchange', 
-			 // extraPlugins : 'onchange,eieol_language', 
+			  extraPlugins : 'onchange,eieol_language',
 			  language_lang : '{{$lesson->language->lang_attribute}}',
 			  specialChars : [ {!! $lesson->language->custom_keyboard_layout !!}],
 			  enterMode : 'CKEDITOR.ENTER_BR',
@@ -2163,9 +2162,6 @@
 			};
 	glossed_text_ckeditor_parms = jQuery.extend(true, {}, ckeditor_parms); //deep copy
 	glossed_text_ckeditor_parms['height'] = '4em';
-
-
-
 
 	//apply the ckeditor to the intro text
 	CKEDITOR.replace('intro_text',ckeditor_parms);
@@ -2175,7 +2171,7 @@
 			$('#update_form').attr("dirty", "dirty");
 		}
 	});
-		
+
 	//apply the ckeditor to the translation
 	CKEDITOR.replace('lesson_translation',ckeditor_parms);
 	CKEDITOR.instances['lesson_translation'].on('change', function() {

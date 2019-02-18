@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $substitutions
  * @property string|null $custom_sort
  * @property string|null $lang_attribute
- * @property string|null $class_attribute
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon $updated_at
  * @property string|null $created_by
@@ -21,7 +20,6 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolLanguage newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolLanguage newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolLanguage query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolLanguage whereClassAttribute($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolLanguage whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolLanguage whereCreatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolLanguage whereCustomKeyboardLayout($value)

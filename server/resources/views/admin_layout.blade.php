@@ -98,7 +98,7 @@
 
             $mytoolbar =
                 [
-                { name: 'document', items : [ 'Source','Language'] },
+                { name: 'document', items : [ 'Source','EieolLanguage'] },
 
 
                     { name: 'clipboard', items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] },

@@ -12,7 +12,7 @@
 
 <div class="skinny">
 
-    <blockquote><span lang='{{$lesson->language->lang_attribute}}' class='{{$lesson->language->class_attribute}}'>{!! $lesson->getLessonText() !!}</span></blockquote>
+    <blockquote><span lang='{{$lesson->language->lang_attribute}}'>{!! $lesson->getLessonText() !!}</span></blockquote>
      
     <h3>Translation</h3>
     {!! $lesson->lesson_translation !!}

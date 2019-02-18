@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Validator;
 use Normalizer;
 
 Validator::extend('valid_custom_keyboard_layout', function ($field, $value, $parameters) {
+    if ($value=='') {
+        return true;
+    }
     $chars = explode(',', $value); //must be comma separated
     foreach ($chars as $char) {
         $char = trim($char); //don't care about whitespace
@@ -62,7 +65,6 @@ class EieolLanguageController extends Controller
         $rules = array(
             'language' => 'required',
             'lang_attribute' => 'required',
-            'class_attribute' => 'required',
             'custom_keyboard_layout' => 'valid_custom_keyboard_layout',
         );
         $messages = array(
@@ -84,7 +86,6 @@ class EieolLanguageController extends Controller
         $language->custom_sort = Normalizer::normalize($request->get('custom_sort'), Normalizer::FORM_D);
         $language->substitutions = Normalizer::normalize($request->get('substitutions'), Normalizer::FORM_D);
         $language->lang_attribute = $request->get('lang_attribute');
-        $language->class_attribute = $request->get('class_attribute');
         $language->created_by = Auth::user()->username;
         $language->updated_by = Auth::user()->username;
 
@@ -178,7 +179,6 @@ class EieolLanguageController extends Controller
         $rules = array(
             'language' => 'required',
             'lang_attribute' => 'required',
-            'class_attribute' => 'required',
             'custom_keyboard_layout' => 'valid_custom_keyboard_layout',
         );
         $messages = array(
@@ -200,7 +200,6 @@ class EieolLanguageController extends Controller
         $language->custom_sort = Normalizer::normalize($request->get('custom_sort'), Normalizer::FORM_D);
         $language->substitutions = Normalizer::normalize($request->get('substitutions'), Normalizer::FORM_D);
         $language->lang_attribute = $request->get('lang_attribute');
-        $language->class_attribute = $request->get('class_attribute');
         $language->updated_by = Auth::user()->username;
 
         $language->save();

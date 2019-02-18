@@ -36,14 +36,6 @@
             This will be added to all span tags in lessons that use this language - &lt;span lang='xxx' class='yyy'&gt;
         </div>
     </div>
-    
-    <div class='form-group @if ($errors->has('class_attribute')) has-error @endif  '>
-        {{ Form::label('class_attribute', 'Class Attribute') }}
-        {{ Form::text('class_attribute', null, ['placeholder' => 'Class Attribute', 'class' => 'form-control']) }}
-        <div class="alert-warning">
-            This will be added to all span tags in lessons that use this language - &lt;span lang='xxx' class='yyy'&gt;
-        </div>
-    </div>
 
     <div class='form-group @if ($errors->has('custom_keyboard_layout')) has-error @endif  '>
         {{ Form::label('custom_keyboard_layout', 'Custom Keyboard Layout') }}

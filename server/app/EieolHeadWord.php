@@ -65,6 +65,6 @@ class EieolHeadWord extends Model {
 		$word = substr($word,1);
 		$word = substr($word,0,-1);
 		
-		return "<span style='white-space: nowrap' lang='" . $this->language->lang_attribute . "' class='" . $this->language->class_attribute . "'> &lt;" . $word .  "&gt;</span> "  . $this->definition;
+		return "<span style='white-space: nowrap' lang='" . $this->language->lang_attribute . "'> &lt;" . $word .  "&gt;</span> "  . $this->definition;
 	}
 }

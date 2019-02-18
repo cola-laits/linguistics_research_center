@@ -70,7 +70,7 @@ class EieolGloss extends Model {
 		//<span lang='cu' class='Cyrillic'>Ñ”Ñ�Ñ‚ÑŠ</span> <span style="white-space: nowrap">--</span> verb; 3rd person singular present of <nobr>&lt;<span lang='cu' class='Cyrillic'>Ñ¥Ñ�-, Ñ¥Ñ�Ð¼ÑŒ, Ñ¥Ñ�Ð¸</span>&gt;</nobr> be <nobr>--</nobr> <strong>is</strong>
 		//part of which is handled by the getDisplayHeadWord function in the HeadWord model
 		
-		$string = "<span lang='" . $this->language->lang_attribute . "' class='" . $this->language->class_attribute . "'>" .
+		$string = "<span lang='" . $this->language->lang_attribute . "'>" .
 				 $this->surface_form . '</span> <span style="white-space: nowrap">--</span> ';
 		$i=0;
 		foreach($this->elements as $element){
@@ -91,7 +91,7 @@ class EieolGloss extends Model {
 		}
 		
 		if ($this->underlying_form) {
-			$string .= ' <br/><span lang="' . $this->language->lang_attribute . '" class="' . $this->language->class_attribute . '" style="margin-left:10px;">(' . $this->underlying_form . ')</span>';
+			$string .= ' <br/><span lang="' . $this->language->lang_attribute . '" style="margin-left:10px;">(' . $this->underlying_form . ')</span>';
 		}
 		
 		return $string;

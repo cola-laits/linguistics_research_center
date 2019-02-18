@@ -60,7 +60,7 @@
 <div class="skinny">
 @foreach ($lesson->glossed_texts as $glossed_text)
     @if ($clickable)
-        <div class="glossed_text"><span lang='{{$lesson->language->lang_attribute}}' class='{{$lesson->language->class_attribute}}'>{!! $glossed_text->clickable_gloss_text() !!}</span></div>
+        <div class="glossed_text"><span lang='{{$lesson->language->lang_attribute}}'>{!! $glossed_text->clickable_gloss_text() !!}</span></div>
         <div class="boxey">
             <a href="#" onclick="return false" class="expand_all"><i class='fa fa-plus-square-o'></i> Expand All</a>
             <ul>
@@ -73,7 +73,7 @@
             </ul>
         </div>
     @else
-        <div class="glossed_text"><span lang='{{$lesson->language->lang_attribute}}' class='{{$lesson->language->class_attribute}}'>{!! $glossed_text->glossed_text !!}</span></div>
+        <div class="glossed_text"><span lang='{{$lesson->language->lang_attribute}}'>{!! $glossed_text->glossed_text !!}</span></div>
         <div class="boxey">
             <ul>
                 @foreach ($glossed_text->glosses as $gloss)
@@ -92,7 +92,7 @@
     <h2>Lesson Text</h2>
     <div class='unbreakable'>
         <blockquote>
-            <span lang='{{$lesson->language->lang_attribute}}' class='{{$lesson->language->class_attribute}}'>
+            <span lang='{{$lesson->language->lang_attribute}}'>
                 {!! $lesson->getLessonText() !!}
             </span>
         </blockquote>
