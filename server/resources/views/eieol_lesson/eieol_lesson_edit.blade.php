@@ -361,6 +361,13 @@
 		xmlhttp.send();
 	}
 
+	function previewText(ckeditor_inst) {
+	    var text = CKEDITOR.instances[ckeditor_inst].getData();
+        $("#preview_modal #preview_modal_body").html(text);
+	    $('#preview_modal').modal({});
+
+    }
+
 	//remind them to save before they timeout.  Set to 25 minutes * 60 seconds * 1000 milliseconds = 1500000
   //  setTimeout(function(){$("#reminder").dialog( "open" );},1500000);
 
@@ -1451,6 +1458,7 @@
 		        {{ Form::textarea('intro_text', null, ['placeholder' => 'Intro Text', 'class' => 'form-control', 'size' => '100x10']) }}
 		        <div id ="intro_text_error" class="alert-danger errors"></div>
 		        {{ Form::submit('Edit', ['class' => 'btn btn-xs btn-primary']) }}
+                <button type="button" class="btn btn-xs" onclick="previewText('intro_text')">Preview</button>
 		    </div>
 		</div>		    
 
@@ -1860,9 +1868,10 @@
 		</div>
 					
 	    <div class='row'>
-	    	<div class='form-group col-sm-1 col-sm-offset-1'>
+	    	<div class='form-group col-sm-2 col-sm-offset-1'>
 	    		{{ Form::submit('Edit Translation', ['class' => 'btn btn-xs btn-primary']) }}
-	    	</div>
+                <button type="button" class="btn btn-xs" onclick="previewText('lesson_translation')">Preview</button>
+            </div>
 	    </div>
 	    
 	{{ Form::close() }}
@@ -1958,10 +1967,11 @@
 					
 					<div class='row'>
 			    		<div class='form-group col-sm-1 '></div>
-			    		<div class='form-group col-sm-1 '>
+			    		<div class='form-group col-sm-2 '>
 			    			{{ Form::submit('Edit', ['class' => 'btn btn-xs btn-primary']) }}
-					        
-			    		</div>
+                            <button type="button" class="btn btn-xs" onclick="previewText('grammar_text_{{$grammar->id}}')">Preview</button>
+
+                        </div>
 			    		
 			    		<div class='form-group col-sm-8 '></div>
 			    		<div class='form-group col-sm-1 '>
@@ -2203,6 +2213,23 @@
             </div>
             <div class="modal-body" id="success_message">
                 Update was successful
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="preview_modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Preview</h4>
+            </div>
+            <div class="modal-body">
+                <p id="preview_modal_body"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
