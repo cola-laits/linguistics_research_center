@@ -7,6 +7,8 @@
 [lang=la] { font-family: GentiumPlusW, sans-serif;  }
 [lang=xcl] { font-family: Arial Unicode MS, TITUS Cyberbit Basic, Code2000, Lucida Grande, Everson Mono Unicode, sans-serif;  }
 
+span[lang] {background-color: #DDDDDD;}
+
 .spinner { 
 	display:none; 
 	text-align: center;
