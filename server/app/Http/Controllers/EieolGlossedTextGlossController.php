@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\EieolGloss;
 use App\EieolGlossedTextGloss;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -73,6 +74,20 @@ class EieolGlossedTextGlossController extends Controller
 
     public function destroy($id) {
         EieolGlossedTextGloss::destroy($id);
+    }
+
+    public function postCopyGloss(Request $request) {
+        $gloss = EieolGloss::findOrFail($request->get('existing_gloss_id'));
+        $new_gloss_id = $gloss->deepCopy();
+        $gtg = new EieolGlossedTextGloss();
+        $gtg->gloss_id = $new_gloss_id;
+        $gtg->glossed_text_id = $request->get('glossed_text_id');
+        $gtg->order = $request->get('order');
+        $gtg->save();
+        return [
+            'success'=>true,
+            'id'=>$gtg->id
+        ];
     }
 
 }

@@ -58,6 +58,7 @@ Route::group(array('prefix'=> 'admin2', 'middleware' => 'auth'), function() {
     Route::resource('/eieol_lesson', 'EieolLessonController');
     Route::resource('/eieol_grammar', 'EieolGrammarController');
     Route::resource('/eieol_glossed_text_gloss', 'EieolGlossedTextGlossController');
+    Route::post('/eieol_glossed_text_gloss/copy_gloss', 'EieolGlossedTextGlossController@postCopyGloss');
     Route::resource('/eieol_glossed_text', 'EieolGlossedTextController');
     Route::get('/eieol_gloss/filtered_list', 'EieolGlossController@filtered_list');
     Route::resource('/eieol_gloss', 'EieolGlossController');

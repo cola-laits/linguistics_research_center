@@ -263,14 +263,14 @@
 		next_gloss_order += 10;
 
 		var mydata = {};
-		mydata['gloss_id'] = gloss_id;
+		mydata['existing_gloss_id'] = gloss_id;
 		mydata['glossed_text_id'] = glossed_text_id; //set when displaying attach modal
 		mydata['order'] = next_gloss_order;
 		mydata['token'] = '{{csrf_token()}}';
 		
 		$.ajax({
 			type: "POST",
-	        url:'/admin2/eieol_glossed_text_gloss',
+	        url:'/admin2/eieol_glossed_text_gloss/copy_gloss',
 	        data:mydata,
 	        dataType: "html",
 	        
@@ -1297,7 +1297,7 @@
             <div class="modal-body">
                 Are you sure you want to delete this Glossed Text?  <br/><br/>
                 <p class="text-warning"><small>This action can not be undone later.  The contents of this glossed text will be deleted.<br/>
-                All attached glosses will be unattached, though they will still be on file and possibly used by other glossed texts.</small></p>
+                All attached glosses will be unattached, though they will still be on file.</small></p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-xs btn-danger" id="delete_confirmed">Delete</button>
@@ -1317,7 +1317,7 @@
             <div class="modal-body">
                 Are you sure you want to remove this gloss?  <br/><br/>
                 <p class="text-warning"><small>This action can not be undone later.  The contents of this gloss will be unattached from this glossed text.<br/><br/>
-                The gloss will still be on file and possibly used by other glossed texts.</small></p>
+                The gloss will still be on file.</small></p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-xs btn-danger" id="delete_confirmed">Remove</button>

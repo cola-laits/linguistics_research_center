@@ -131,5 +131,39 @@ class EieolGloss extends Model {
     return $dom->saveHTML();
 	  
 	}
-	
+
+	/** Deep copy a gloss and its elements. */
+	public function deepCopy() {
+	    // clunky; refactor later
+        $gloss = \DB::select('SELECT * FROM eieol_gloss WHERE id=?', [$this->id])[0];
+        \DB::insert('INSERT INTO eieol_gloss '.
+            '(surface_form, contextual_gloss,comments,underlying_form,language_id,author_comments,author_done,admin_comments,created_at,updated_at,created_by,updated_by) '.
+            ' VALUES (?,?,?,?,?,?,?,?,?,?,?,?)', [
+            $gloss->surface_form,
+            $gloss->contextual_gloss,
+            $gloss->comments,
+            $gloss->underlying_form,
+            $gloss->language_id,
+            $gloss->author_comments,
+            $gloss->author_done,
+            $gloss->admin_comments,
+            $gloss->created_at,$gloss->updated_at,$gloss->created_by,$gloss->updated_by
+        ]);
+        $new_gloss_id = \DB::getPdo()->lastInsertId();
+
+        $elements = \DB::select('SELECT * FROM eieol_element WHERE gloss_id=?', [$this->id]);
+        foreach ($elements as $element) {
+            \DB::insert('INSERT INTO eieol_element (gloss_id,part_of_speech,analysis,head_word_id,`order`,created_at,updated_at,created_by,updated_by) '.
+                'VALUES (?,?,?,?,?,?,?,?,?)', [
+                $new_gloss_id,
+                $element->part_of_speech,
+                $element->analysis,
+                $element->head_word_id,
+                $element->order,
+                $element->created_at,$element->updated_at,$element->created_by,$element->updated_by
+            ]);
+        }
+
+        return $new_gloss_id;
+    }
 }
