@@ -34,6 +34,11 @@ return [
     */
 
     'channels' => [
+        'server' => [
+            'driver' => 'stack',
+            'channels' => ['errorlog', 'slack'],
+        ],
+
         'stack' => [
             'driver' => 'stack',
             'channels' => ['daily'],
@@ -55,9 +60,11 @@ return [
         'slack' => [
             'driver' => 'slack',
             'url' => env('LOG_SLACK_WEBHOOK_URL'),
-            'username' => 'Laravel Log',
-            'emoji' => ':boom:',
-            'level' => 'critical',
+            'channel' => env('LOG_SLACK_CHANNEL', '#fire-alarms-lrc'),
+            'username' => env("APP_NAME") . ' - ' . env("APP_ENV"),
+            'emoji' => ':fire:',
+            'level' => 'error',
+            'attachment' => false,
         ],
 
         'papertrail' => [

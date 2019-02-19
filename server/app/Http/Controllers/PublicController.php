@@ -499,13 +499,6 @@ class PublicController extends Controller
     }
 
     public function lex_lang_reflexes($language_abbr) {
-        // safety check for deprecated URL routes, can be removed when search results stabilize
-        if (is_numeric($language_abbr)) {
-            return Redirect::route('reflexes_redirect', $language_abbr);
-        }
-
-        //This is the most complicate code in the whole LRC system
-
         $data = array();
         $data['language'] = LexLanguage::whereRaw("abbr = ?", array($language_abbr))->get();
         $data['language'] = $data['language'][0];
