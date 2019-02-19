@@ -197,7 +197,7 @@ class PublicController extends Controller
                 foreach ($glossed_text->glosses as $gloss) {
                     //unique key is the surface form with all pos and analysis
 
-                    $key = $gloss->id . ' -- ';
+                    $key = $gloss->surface_form . ' -- ';
 
                     $i = 0;
 
@@ -220,7 +220,6 @@ class PublicController extends Controller
                     } //foreach element
                     //remove any tags like sup or sub
                     $key = strip_tags($key);
-
 
                     if (!array_key_exists($key, $data['glosses'])) {
 

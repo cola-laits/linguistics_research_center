@@ -16,7 +16,6 @@ class RemoveEieolGlossedTextGloss extends Migration
         $gloss_ids_seen = [];
         $gtgs = DB::select('SELECT * FROM eieol_glossed_text_gloss');
         foreach ($gtgs as $gtg) {
-            \Log::info($gtg->id);
             if (!in_array($gtg->gloss_id, $gloss_ids_seen)) {
                 $gloss_ids_seen []= $gtg->gloss_id;
             } else {
