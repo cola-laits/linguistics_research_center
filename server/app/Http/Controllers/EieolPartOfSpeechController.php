@@ -2,23 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\EieolPartOfSpeech;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EieolPartOfSpeechController extends Controller {
-	
-	public function filtered_list(Request $request): array {
-		//this returns an array of all parts of speech for use by autocomplete
-		$array = array();
-		$parts_of_speech = EieolPartOfSpeech::where('part_of_speech', 'LIKE', '%' . $request->get('term') . '%')
-										    ->where('language_id', '=', $request->get('language_id'))
-											->take(25)
-											->groupby('part_of_speech')
-											->get(['part_of_speech']);
-		foreach ($parts_of_speech as $part_of_speech) {
-			$array[] = $part_of_speech->part_of_speech;		
-		}
-		return $array;
-	}
-	
+
+    public function filtered_list(Request $request) {
+        $data = DB::select("SELECT DISTINCT(part_of_speech) as part_of_speech FROM eieol_element, eieol_gloss"
+            . " WHERE eieol_element.gloss_id=eieol_gloss.id"
+            . " AND eieol_gloss.language_id = ?"
+            . " AND eieol_element.part_of_speech LIKE ?"
+            . " ORDER BY part_of_speech LIMIT 25", [
+                $request->get('language_id'),
+                '%' . $request->get('term') . '%'
+        ]);
+        return array_map(function($pos) {return $pos->part_of_speech;}, $data);
+    }
+
 }

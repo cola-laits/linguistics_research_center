@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\EieolAnalysis;
 use App\EieolElement;
 use App\EieolGloss;
-use App\EieolPartOfSpeech;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -179,18 +178,6 @@ class EieolGlossController extends Controller
 
                     $element->save();
 
-                    //add part of speech if new
-                    if (EieolPartOfSpeech::where('part_of_speech', '=', $request->get('element_' . $i . '_part_of_speech'))
-                            ->where('language_id', '=', $request->get('language_id'))
-                            ->count() == 0) {
-                        $part_of_speech = new EieolPartOfSpeech;
-                        $part_of_speech->part_of_speech = $request->get('element_' . $i . '_part_of_speech');
-                        $part_of_speech->language_id = $request->get('language_id');
-                        $part_of_speech->created_by = Auth::user()->username;
-                        $part_of_speech->updated_by = Auth::user()->username;
-                        $part_of_speech->save();
-                    }
-
                     //add analysis if new
                     if ($request->has('element_' . $i . '_analysis')) {
                         if (EieolAnalysis::where('analysis', '=', $request->get('element_' . $i . '_analysis'))
@@ -316,18 +303,6 @@ class EieolGlossController extends Controller
                         $element->updated_by = Auth::user()->username;
 
                         $element->save();
-                    }
-
-                    //add part of speech if new
-                    if (EieolPartOfSpeech::where('part_of_speech', '=', $request->get('element_' . $i . '_part_of_speech'))
-                            ->where('language_id', '=', $request->get('language_id'))
-                            ->count() == 0) {
-                        $part_of_speech = new EieolPartOfSpeech;
-                        $part_of_speech->part_of_speech = $request->get('element_' . $i . '_part_of_speech');
-                        $part_of_speech->language_id = $request->get('language_id');
-                        $part_of_speech->created_by = Auth::user()->username;
-                        $part_of_speech->updated_by = Auth::user()->username;
-                        $part_of_speech->save();
                     }
 
                     //add analysis if new
