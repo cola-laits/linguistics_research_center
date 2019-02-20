@@ -177,19 +177,16 @@ class PublicController extends Controller
         $data = $this->get_series_info($series_id);
 
         $data['language'] = EieolLanguage::find($language_id);
-        $data['glosses'] = array();
-
+        $data['glosses'] = [];
 
         $lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word.language')
             ->where('series_id', '=', $data['series']->id)
             ->where('language_id', '=', $language_id)
-            ->select(array('id', 'title', 'order'))
+            ->select(['id', 'title', 'order'])
             ->get()
             ->sortBy('order');
 
-
         //loop through all the lessons, glossed texts and glosses to group like glosses
-
         foreach ($lessons as $lesson) {
 
             foreach ($lesson->glossed_texts as $glossed_text) {
@@ -197,35 +194,22 @@ class PublicController extends Controller
                 foreach ($glossed_text->glosses as $gloss) {
                     //unique key is the surface form with all pos and analysis
 
-                    $key = $gloss->surface_form . ' -- ';
-                    $key_parts = [];
-                    foreach ($gloss->elements as $element) {
-                        $key_parts[] = $element->part_of_speech . '; ' . $element->analysis;
-                    }
-                    $key .= implode(' + ', $key_parts);
+                    $key = $gloss->surface_form . ' -- '
+                         . $gloss->elements->map(function($element) {
+                            return $element->part_of_speech . '; ' . $element->analysis;
+                        })->implode(' + ');
 
                     //remove any tags like sup or sub
                     $key = strip_tags($key);
 
                     if (!array_key_exists($key, $data['glosses'])) {
-
                         $data['glosses'][$key] = $gloss->toArray();
-
+                        $data['glosses'][$key]['surface_form'] = strip_tags($gloss->surface_form);
                         $data['glosses'][$key]['displayGlossForMasterGloss'] = $gloss->getDisplayGlossForMasterGloss();
-
-                        $data['glosses'][$key]['glossed_text_gloss_ids'] = array();
-
-                        $data['glosses'][$key]['glossed_text_gloss_ids'][$gloss->pivot->id] = $lesson;
-
-                        //build sort key
-                        $sort_key = strip_tags($gloss->surface_form);
-                        $data['glosses'][$key]['sortable_key'] = \Normalizer::normalize($sort_key, \Normalizer::FORM_D);
-
-                    } else {
-
-                        $data['glosses'][$key]['glossed_text_gloss_ids'][$gloss->pivot->id] = $lesson;
-
+                        $data['glosses'][$key]['glossed_text_gloss_ids'] = [];
                     }
+
+                    $data['glosses'][$key]['glossed_text_gloss_ids'][$gloss->pivot->id] = $lesson;
 
                 } //foreach gloss
 
@@ -233,9 +217,11 @@ class PublicController extends Controller
 
         } //foreach lesson
 
-
+        foreach ($data['glosses'] as $key=>&$value) {
+            $value['sortable_key'] = \Normalizer::normalize($value['surface_form'], \Normalizer::FORM_D);
+        }
+        unset($value);
         $sorter = new AlphabetSorter($data['language']->substitutions, $data['language']->custom_sort);
-
         uasort($data['glosses'], [$sorter, 'alphabet_sorter']);
 
         return view('eieol_master_gloss')->with($data);
