@@ -14,9 +14,8 @@ class AlphabetSorter {
         //key_compare_func for uksort of arrayify_customsort.  We want longer strings first
         if (mb_strlen($a,'UTF-8') >= mb_strlen($b,'UTF-8')) {
             return -1;
-        } else {
-            return 1;
         }
+        return 1;
     }
 
     protected function arrayify_customsort($custom_sort) {
@@ -66,30 +65,28 @@ class AlphabetSorter {
     protected function get_first_character_value($string) {
         //Used by alphabet_sort to get first character/sort value and remainder of a string.
         //It uses mb functions
-        //because this function is passed by uasort, we pass the alphabet in a global
+
         //check for blank, comma or >
         $treat_as_blank = array(' ', ',', '>'); //the > is at the end of head words
         foreach($treat_as_blank as $letter) {
             if (mb_strpos($string, $letter,0,'UTF-8') === 0) {
                 $letter_length = mb_strlen($letter,'UTF-8');
-                return array('first' => 0, 'remainder' => mb_substr($string,$letter_length,Null,'UTF-8'));
+                return ['first' => 0, 'remainder' => mb_substr($string,$letter_length,Null,'UTF-8')];
             }
         }
 
         foreach($this->alphabet as $letter => $value) {
-            //print $letter . '/' . mb_strpos($string, $letter,0,'UTF-8') . ' ';
             if (mb_strpos($string, $letter,0,'UTF-8') === 0) {
                 $letter_length = mb_strlen($letter,'UTF-8');
-                //print $letter . ' ' . $value . ' ' . $letter_length  . ' ' . mb_substr($string,$letter_length,Null,'UTF-8') . '<br/>';
-                return array('first' => $value, 'remainder' => mb_substr($string,$letter_length,Null,'UTF-8'));
+                return ['first' => $value, 'remainder' => mb_substr($string,$letter_length,Null,'UTF-8')];
             }
         }
 
         //if you get here, you didn't match
-        throw new \Exception("couldn't find a character in " . $string);
+        throw new \RuntimeException("couldn't find a character in " . $string);
     } //get_first_character_value
 
-    public function alphabet_sorter($a, $b) {
+    public function alphabet_sorter($a, $b): int {
         //key_compare_func for uasort of gloss and dictionary.
         //because we expect unicode, we use multibyte string functions
 
@@ -104,11 +101,10 @@ class AlphabetSorter {
         return $this->actual_sorter($a,$b);
     } //alphabet_sorter
 
-    protected function actual_sorter($a, $b) {
+    protected function actual_sorter($a, $b): int {
         //key_compare_func for uasort of gloss and dictionary.
         //because we expect unicode, we use multibyte string functions
 
-        //print '<xmp>' . $a . ' ' . mb_strlen($a,'UTF-8') . '<> ' . $b . ' ' . mb_strlen($b,'UTF-8') . '</xmp>';
         if ($b == '') {
             return 1;
         }
@@ -128,24 +124,4 @@ class AlphabetSorter {
         //if you get here, they are equal, recurse
         return $this->actual_sorter($a_split['remainder'],$b_split['remainder']);
     } //alphabet_sorter
-
-    public static function test() {
-        $sorter = new AlphabetSorter("'>,->,´>,¨>,`>,῀>,᾽>,῾>,῎>,῍>,῞>,῝>,῏>,῟>,΅>,ι>,ᾼ>Α,ᾈ>Α,ᾉ>Α,ᾊ>Α,ᾋ>Α,ᾌ>Α,ᾍ>Α,ᾎ>Α,ᾏ>Α,ᾳ>α,ᾲ>α,ᾴ>α,ᾷ>α,ᾀ>α,ᾁ>α,ᾂ>α,ᾃ>α,ᾄ>α,ᾅ>α,ᾆ>α,ᾇ>α,Ά>Α,Ἀ>Α,Ἁ>Α,Ὰ>Α,Ᾰ>Α,Ᾱ>Α,Ἂ>Α,Ἃ>Α,Ἄ>Α,Ἅ>Α,Ἆ>Α,Ἇ>Α,ά>α,ἀ>α,ἁ>α,ὰ>α,ᾰ>α,ᾱ>α,ᾶ>α,ἂ>α,ἃ>α,ἄ>α,ἅ>α,ἆ>α,ἇ>α,ῌ>Η,ᾘ>Η,ᾙ>Η,ᾚ>Η,ᾛ>Η,ᾜ>Η,ᾝ>Η,ᾞ>Η,ᾟ>Η,ῃ>η,ᾐ>η,ᾑ>η,ῂ>η,ῄ>η,ῇ>η,ᾒ>η,ᾓ>η,ᾔ>η,ᾕ>η,ᾖ>η,ᾗ>η,Ή>Η,Ἠ>Η,Ἡ>Η,Ὴ>Η,Ἢ>Η,Ἣ>Η,Ἤ>Η,Ἥ>Η,Ἦ>Η,Ἧ>Η,ή>η,ἠ>η,ἡ>η,ὴ>η,ῆ>η,ἢ>η,ἣ>η,ἤ>η,ἥ>η,ἦ>η,ἧ>η,ῆ́>η,ῼ>Ω,ᾨ>Ω,ᾩ>Ω,ᾪ>Ω,ᾫ>Ω,ᾬ>Ω,ᾭ>Ω,ᾮ>Ω,ᾯ>Ω,ῳ>ω,ᾠ>ω,ᾡ>ω,ῲ>ω,ῴ>ω,ῷ>ω,ᾢ>ω,ᾣ>ω,ᾤ>ω,ᾥ>ω,ᾦ>ω,ᾧ>ω,Ώ>Ω,Ὠ>Ω,Ὡ>Ω,Ὼ>Ω,Ὢ>Ω,Ὣ>Ω,Ὤ>Ω,Ὥ>Ω,Ὦ>Ω,Ὧ>Ω,ώ>ω,ὠ>ω,ὡ>ω,ὼ>ω,ῶ>ω,ὢ>ω,ὣ>ω,ὤ>ω,ὥ>ω,ὦ>ω,ὧ>ω,Έ>Ε,Ἐ>Ε,Ἑ>Ε,Ὲ>Ε,Ἒ>Ε,Ἓ>Ε,Ἔ>Ε,Ἕ>Ε,έ>ε,ἐ>ε,ἑ>ε,ὲ>ε,ἒ>ε,ἓ>ε,ἔ>ε,ἕ>ε,Ί>Ι,Ἰ>Ι,Ἱ>Ι,Ὶ>Ι,Ῐ>Ι,Ῑ>Ι,Ϊ>Ι,Ἲ>Ι,Ἳ>Ι,Ἴ>Ι,Ἵ>Ι,Ἶ>Ι,Ἷ>Ι,ί>ι,ἰ>ι,ἱ>ι,ὶ>ι,ῐ>ι,ῑ>ι,ῖ>ι,ϊ>ι,ΐ>ι,ἲ>ι,ἳ>ι,ἴ>ι,ἵ>ι,ἶ>ι,ἷ>ι,ῒ>ι,ΐ>ι,Ό>Ο,Ὀ>Ο,Ὁ>Ο,Ὸ>Ο,Ὂ>Ο,Ὃ>Ο,Ὄ>Ο,Ὅ>Ο,ό>ο,ὀ>ο,ὁ>ο,ὸ>ο,ὂ>ο,ὃ>ο,ὄ>ο,ὅ>ο,Ύ>Υ,Ϋ>Υ,Ὑ>Υ,Ὺ>Υ,Ῠ>Υ,Ῡ>Υ,Ὓ>Υ,Ὕ>Υ,Ὗ>Υ,ύ>υ,ὐ>υ,ὑ>υ,ὺ>υ,ῠ>υ,ῡ>υ,ῦ>υ,ϋ>υ,ΰ>υ,ὒ>υ,ὓ>υ,ὔ>υ,ὕ>υ,ὖ>υ,ὗ>υ,ῢ>υ,ΰ>υ,ῧ>υ,Ῥ>Ρ,ῤ>ρ,ῥ>ρ,ϱ>ρ,ϵ>ε,ϑ>θ,ϰ>κ,ϗ>και,ϖ>π,ς>σ,Ϲ>Σ,ϲ>σ,τ́>τ,ϒ>Υ,ϓ>Υ,ϔ>Υ,ϕ>φ",
-                    "Α=α,Β=β,Γ=γ,Δ=δ,Ε=ε,Ϝ=ϝ=Ͷ=ͷ=Ϛ=ϛ,Ζ=ζ,Η=η,Θ=θ,Ι=ι,Κ=κ,Λ=λ,Μ=μ,Ν=ν,Ξ=ξ,Ο=ο,Π=π,Ϻ=ϻ,Ϙ=Ϟ=ϙ=ϟ,Ρ=ρ,Σ=σ,Τ=τ,Υ=υ,Φ=φ,Χ=χ,Ψ=ψ,Ω=ω,Ϡ=ϡ=Ͳ=ͳ");
-        $words = [
-            ['sortable_key'=>"ᾴ"],
-            ['sortable_key'=>"β"],
-            ['sortable_key'=>"ἅ"],
-            ['sortable_key'=>"αἱ"],
-            ['sortable_key'=>"αἱ"],
-            ['sortable_key'=>"ἃ"],
-            ['sortable_key'=>"ἀγαλλιᾶσθε"]
-            ];
-        uasort($words,[$sorter, 'alphabet_sorter']);
-
-        foreach ($words as $key=>$val) {
-            print $val['sortable_key'] . "<br>";
-        }
-        print json_encode($words);
-    }
 }
