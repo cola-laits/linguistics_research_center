@@ -7,7 +7,6 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
-    'App\\EieolAnalysis' => $baseDir . '/app/EieolAnalysis.php',
     'App\\EieolElement' => $baseDir . '/app/EieolElement.php',
     'App\\EieolGloss' => $baseDir . '/app/EieolGloss.php',
     'App\\EieolGlossedText' => $baseDir . '/app/EieolGlossedText.php',

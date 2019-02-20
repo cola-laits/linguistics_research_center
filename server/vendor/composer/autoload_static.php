@@ -499,7 +499,6 @@ class ComposerStaticInitbf8f82c12904b6193cb097f5089e0e52
 
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
-        'App\\EieolAnalysis' => __DIR__ . '/../..' . '/app/EieolAnalysis.php',
         'App\\EieolElement' => __DIR__ . '/../..' . '/app/EieolElement.php',
         'App\\EieolGloss' => __DIR__ . '/../..' . '/app/EieolGloss.php',
         'App\\EieolGlossedText' => __DIR__ . '/../..' . '/app/EieolGlossedText.php',

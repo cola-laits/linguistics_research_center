@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\EieolAnalysis;
 use App\EieolElement;
 use App\EieolGloss;
 use Illuminate\Http\Request;
@@ -177,20 +176,6 @@ class EieolGlossController extends Controller
                     $element->updated_by = Auth::user()->username;
 
                     $element->save();
-
-                    //add analysis if new
-                    if ($request->has('element_' . $i . '_analysis')) {
-                        if (EieolAnalysis::where('analysis', '=', $request->get('element_' . $i . '_analysis'))
-                                ->where('language_id', '=', $request->get('language_id'))
-                                ->count() == 0) {
-                            $analysis = new EieolAnalysis;
-                            $analysis->analysis = $request->get('element_' . $i . '_analysis');
-                            $analysis->language_id = $request->get('language_id');
-                            $analysis->created_by = Auth::user()->username;
-                            $analysis->updated_by = Auth::user()->username;
-                            $analysis->save();
-                        }
-                    }
                 }
             }//endfor
 
@@ -303,20 +288,6 @@ class EieolGlossController extends Controller
                         $element->updated_by = Auth::user()->username;
 
                         $element->save();
-                    }
-
-                    //add analysis if new
-                    if ($request->has('element_' . $i . '_analysis')) {
-                        if (EieolAnalysis::where('analysis', '=', $request->get('element_' . $i . '_analysis'))
-                                ->where('language_id', '=', $request->get('language_id'))
-                                ->count() == 0) {
-                            $analysis = new EieolAnalysis;
-                            $analysis->analysis = $request->get('element_' . $i . '_analysis');
-                            $analysis->language_id = $request->get('language_id');
-                            $analysis->created_by = Auth::user()->username;
-                            $analysis->updated_by = Auth::user()->username;
-                            $analysis->save();
-                        }
                     }
                 }
             }//endfor
