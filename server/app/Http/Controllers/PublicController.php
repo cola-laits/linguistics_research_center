@@ -198,26 +198,12 @@ class PublicController extends Controller
                     //unique key is the surface form with all pos and analysis
 
                     $key = $gloss->surface_form . ' -- ';
-
-                    $i = 0;
-
+                    $key_parts = [];
                     foreach ($gloss->elements as $element) {
+                        $key_parts[] = $element->part_of_speech . '; ' . $element->analysis;
+                    }
+                    $key .= implode(' + ', $key_parts);
 
-                        $i++;
-
-                        if ($i !== 1) {
-
-                            $key .= ' + ';
-
-                        }
-
-                        $key .= ' ' .
-
-                            $element->part_of_speech . '; ' .
-
-                            $element->analysis . ' ';
-
-                    } //foreach element
                     //remove any tags like sup or sub
                     $key = strip_tags($key);
 
