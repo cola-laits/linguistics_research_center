@@ -455,36 +455,41 @@ class PublicController extends Controller
     }
 
     public function lex_pokorny() {
+        $etymas = LexEtyma::with('cross_references')->withCount('reflexes')->get()->sortBy('order');
         $data = [
-            'etymas' => LexEtyma::with('cross_references')->withCount('reflexes')->get()->sortBy('order')
+            'etymas' => $etymas
         ];
         return view('lex_pokorny')->with($data);
     }
 
     public function lex_reflex($pokorny_number) {
-        $data = [
-            'etyma' => LexEtyma::with('reflexes.entries',
+        $etyma = LexEtyma::with('reflexes.entries',
             'reflexes.language.language_sub_family.language_family',
             'reflexes.sources',
             'reflexes.parts_of_speech',
-            'semantic_fields.semantic_category')->where('old_id', '=', $pokorny_number)->firstOrFail()
+            'semantic_fields.semantic_category')->where('old_id', '=', $pokorny_number)->firstOrFail();
+        $data = [
+            'etyma' => $etyma
         ];
 
         return view('lex_reflex')->with($data);
     }
 
     public function lex_language() {
+        $language_families = LexLanguageFamily::with('language_sub_families.languages.reflex_count')->get()->sortBy('order');
         $data = [
-            'language_families' => LexLanguageFamily::with('language_sub_families.languages.reflex_count')->get()->sortBy('order')
+            'language_families' => $language_families
         ];
         return view('lex_language')->with($data);
     }
 
     public function lex_lang_reflexes($language_abbr) {
-        $data = array();
-        $data['language'] = LexLanguage::whereRaw("abbr = ?", array($language_abbr))->get();
-        $data['language'] = $data['language'][0];
-        $language_id = $data['language']->id;
+        $language = LexLanguage::where("abbr", $language_abbr)->firstOrFail();
+        $data = [
+            'language' => $language,
+            'display_reflexes' => []
+        ];
+        $language_id = $language->id;
 
         //get all the reflexes.  The Eloquent ORM is too slow, so we have to write our own SQL
         $temp_reflexes = \DB::select(\DB::raw("SELECT lex_reflex.id, lex_reflex.class_attribute, lex_reflex.lang_attribute, 
@@ -496,10 +501,8 @@ class PublicController extends Controller
 				AND lex_etyma_reflex.reflex_id = lex_reflex.id 
 				AND lex_etyma.id = lex_etyma_reflex.etyma_id"));
 
-        $data['display_reflexes'] = array();
-
         //building the list of reflexes is complicated.
-        $alpha_weights = $data['language']->getWeights();
+        $alpha_weights = $language->getWeights();
 
         foreach ($temp_reflexes as $reflex) {
 
@@ -509,23 +512,26 @@ class PublicController extends Controller
 
                 //if 2 reflexes are the same, group them
                 if (array_key_exists($new_key, $data['display_reflexes'])) {
-                    $temp_etyma = array();
-                    $temp_etyma['entry'] = $reflex->etyma_entry;
-                    $temp_etyma['gloss'] = $reflex->gloss;
-                    $temp_etyma['id'] = $reflex->etyma_id;
+                    $temp_etyma = [
+                        'entry' => $reflex->etyma_entry,
+                        'gloss' => $reflex->gloss,
+                        'id' => $reflex->etyma_id
+                    ];
                     $data['display_reflexes'][$new_key]['etymas'][] = $temp_etyma;
                     ksort($data['display_reflexes'][$new_key]['etymas']); //sort the etymas
                 } else {
-                    $new_reflex = array();
-                    $new_reflex['id'] = $reflex->id;
-                    $new_reflex['reflex'] = $key;
-                    $new_reflex['class_attribute'] = $reflex->class_attribute;
-                    $new_reflex['lang_attribute'] = $reflex->lang_attribute;
-                    $new_reflex['etymas'] = array();
-                    $temp_etyma = array();
-                    $temp_etyma['entry'] = $reflex->etyma_entry;
-                    $temp_etyma['gloss'] = $reflex->gloss;
-                    $temp_etyma['id'] = $reflex->etyma_id;
+                    $new_reflex = [
+                        'id' => $reflex->id,
+                        'reflex' => $key,
+                        'class_attribute' => $reflex->class_attribute,
+                        'lang_attribute' => $reflex->lang_attribute,
+                        'etymas' => []
+                    ];
+                    $temp_etyma = [
+                        'entry' => $reflex->etyma_entry,
+                        'gloss' => $reflex->gloss,
+                        'id' => $reflex->etyma_id
+                    ];
                     $new_reflex['etymas'][] = $temp_etyma;
 
                     $data['display_reflexes'][$new_key] = $new_reflex;
@@ -548,24 +554,30 @@ class PublicController extends Controller
     }
 
     public function lex_semantic_category($cat_abbr) {
-        $data = [];
-        $data['cat'] = LexSemanticCategory::whereAbbr($cat_abbr)->first();
-        $cat_id = $data['cat']->id;
-
-        $data['alpha_cats'] = LexSemanticCategory::get()->sortBy('text');
-        $data['fields'] = LexSemanticField::withCount('etymas')
-            ->where('semantic_category_id', '=', $cat_id)
+        $category = LexSemanticCategory::whereAbbr($cat_abbr)->first();
+        $alpha_cats = LexSemanticCategory::get()->sortBy('text');
+        $fields = LexSemanticField::withCount('etymas')
+            ->where('semantic_category_id', '=', $category->id)
             ->get()
             ->sortBy('number');
+        $data = [
+            'cat'=>$category,
+            'alpha_cats'=>$alpha_cats,
+            'fields'=>$fields
+        ];
+
         return view('lex_semantic_category')->with($data);
     }
 
     public function lex_semantic_field($field_abbr) {
-        $data = array();
-        $data['field'] = LexSemanticField::with('etymas', 'semantic_category')
-            ->whereRaw("abbr = ?", array($field_abbr))->get()[0];
+        $field = LexSemanticField::with('etymas', 'semantic_category')
+            ->where("abbr", $field_abbr)->first();
+        $alpha_cats = LexSemanticCategory::get()->sortBy('text');
 
-        $data['alpha_cats'] = LexSemanticCategory::get()->sortBy('text');
+        $data = [
+            'field'=>$field,
+            'alpha_cats' => $alpha_cats
+        ];
         return view('lex_semantic_field')->with($data);
     }
 
