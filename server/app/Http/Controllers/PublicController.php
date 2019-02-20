@@ -454,20 +454,11 @@ class PublicController extends Controller
         return view('lex', $data);
     }
 
-    public function lex_pokorny_redirect() {
-        return redirect('lex/master', 301);
-    }
-
     public function lex_pokorny() {
         $data = [
             'etymas' => LexEtyma::with('cross_references')->withCount('reflexes')->get()->sortBy('order')
         ];
         return view('lex_pokorny')->with($data);
-    }
-
-    public function lex_reflex_redirect($etyma_id) {
-        $etyma = LexEtyma::find($etyma_id);
-        return redirect('lex/master/' . $etyma->old_id, 301);//pokorny number is stored in db column 'old_id'
     }
 
     public function lex_reflex($pokorny_number) {
@@ -482,20 +473,11 @@ class PublicController extends Controller
         return view('lex_reflex')->with($data);
     }
 
-    public function lex_language_redirect() {
-        return redirect('lex/languages/', 301);
-    }
-
     public function lex_language() {
         $data = [
             'language_families' => LexLanguageFamily::with('language_sub_families.languages.reflex_count')->get()->sortBy('order')
         ];
         return view('lex_language')->with($data);
-    }
-
-    public function lex_lang_reflexes_redirect($language_id) {
-        $language = LexLanguage::find($language_id);
-        return redirect('lex/languages/' . $language->abbr, 301);
     }
 
     public function lex_lang_reflexes($language_abbr) {
@@ -557,10 +539,6 @@ class PublicController extends Controller
         return view('lex_lang_reflexes')->with($data);
     }
 
-    public function lex_semantic_redirect() {
-        return redirect('lex/semantic/', 301);
-    }
-
     public function lex_semantic() {
         $data = [
             'cats' => LexSemanticCategory::get()->sortBy('number'),
@@ -569,17 +547,7 @@ class PublicController extends Controller
         return view('lex_semantic')->with($data);
     }
 
-    public function lex_semantic_category_redirect($cat_id) {
-        $category = LexSemanticCategory::find($cat_id);
-        return redirect('lex/semantic/category/' . $category->abbr, 301);
-    }
-
     public function lex_semantic_category($cat_abbr) {
-        // safety check for deprecated URL routes, can be removed when search results stabilize
-        if (is_numeric($cat_abbr)) {
-            return Redirect::route('category_redirect', $cat_abbr);
-        }
-
         $data = [];
         $data['cat'] = LexSemanticCategory::whereAbbr($cat_abbr)->first();
         $cat_id = $data['cat']->id;
@@ -592,22 +560,28 @@ class PublicController extends Controller
         return view('lex_semantic_category')->with($data);
     }
 
-    public function lex_semantic_field_redirect($field_id) {
-        $field = LexSemanticField::find($field_id);
-        return redirect('lex/semantic/field/' . $field->abbr, 301);
-    }
-
     public function lex_semantic_field($field_abbr) {
-        // safety check for deprecated URL routes, can be removed when search results stabilize
-        if (is_numeric($field_abbr)) {
-            return Redirect::route('field_redirect', $field_abbr);
-        }
-
         $data = array();
         $data['field'] = LexSemanticField::with('etymas', 'semantic_category')
             ->whereRaw("abbr = ?", array($field_abbr))->get()[0];
 
         $data['alpha_cats'] = LexSemanticCategory::get()->sortBy('text');
         return view('lex_semantic_field')->with($data);
+    }
+
+    // ** redirections for old lex routes
+    public function lex_lang_reflexes_redirect($language_id) {
+        $language = LexLanguage::find($language_id);
+        return redirect('lex/languages/' . $language->abbr, 301);
+    }
+
+    public function lex_semantic_field_redirect($field_id) {
+        $field = LexSemanticField::find($field_id);
+        return redirect('lex/semantic/field/' . $field->abbr, 301);
+    }
+
+    public function lex_reflex_redirect($etyma_id) {
+        $etyma = LexEtyma::find($etyma_id);
+        return redirect('lex/master/' . $etyma->old_id, 301);//pokorny number is stored in db column 'old_id'
     }
 }
