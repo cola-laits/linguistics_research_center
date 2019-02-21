@@ -86,7 +86,8 @@ class EieolGlossedTextGlossController extends Controller
         $gtg->save();
         return [
             'success'=>true,
-            'id'=>$gtg->id
+            'gtg_id'=>$gtg->id,
+            'gloss_id'=>$new_gloss_id
         ];
     }
 

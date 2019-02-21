@@ -253,7 +253,7 @@
 	function attach_gloss(gloss_id, gloss_text) {
 		//calculate next order by finding the highest order in the form and adding 10
 		var next_gloss_order = 0;
-		temp_div = '#glossed_text_' + glossed_text_id + '_glosses'; //get div that surrouds glosses for given glossed text
+		var temp_div = '#glossed_text_' + glossed_text_id + '_glosses'; //get div that surrouds glosses for given glossed text
 		$("form", temp_div).each(function() { // get the value of each order
 			order = parseInt($('#order', this).val());
 			if(order > next_gloss_order) {
@@ -282,9 +282,9 @@
 	  		    }  //json fail
 	  		    
 	  		    if(json['success']) { 
-	  		    	var new_div_id = "glossed_text_gloss_" + json['id'] + "_div";
-	  	    		var new_form_id = "new_glossed_text_gloss_form_" + json['id'];
-	  	    		var new_form_action = "/admin2/eieol_glossed_text_gloss/" + json['id']
+	  		    	var new_div_id = "glossed_text_gloss_" + json['gtg_id'] + "_div";
+	  	    		var new_form_id = "new_glossed_text_gloss_form_" + json['gtg_id'];
+	  	    		var new_form_action = "/admin2/eieol_glossed_text_gloss/" + json['gtg_id']
 	  	    		
 	  	    		var new_div = $( "#new_glossed_text_gloss_div" ).clone(true).attr("id",new_div_id);
 	  	    		new_div.appendTo( temp_div );
@@ -293,14 +293,14 @@
 	  	    		$('#new_glossed_text_gloss_form', '#'+new_div_id).find("#order").attr('value',next_gloss_order);
 	  	    		$('#new_glossed_text_gloss_form', '#'+new_div_id).find("#glossed_text_id").attr('value',glossed_text_id);
 	  	    		$('#new_glossed_text_gloss_form', '#'+new_div_id).find(".gloss_text").html('<br/>' + gloss_text);
-	  	    		$('#new_glossed_text_gloss_form', '#'+new_div_id).find(".gloss_text").addClass('gloss_' + gloss_id);
+	  	    		$('#new_glossed_text_gloss_form', '#'+new_div_id).find(".gloss_text").addClass('gloss_' + json['gloss_id']);
 	  	    		$('#new_glossed_text_gloss_form', '#'+new_div_id).attr("action",new_form_action);
 	  	    		$('#new_glossed_text_gloss_form', '#'+new_div_id).attr("id",new_form_id);
 	  	    		$('.delete_glossed_text_gloss', '#' + new_div_id).show();
 	  	    		$('.delete_glossed_text_gloss_form', '#'+new_div_id).attr("action",new_form_action);
-	  	    		$('#glossed_text_gloss_id', '#'+new_div_id).val(json['id']);
+	  	    		$('#glossed_text_gloss_id', '#'+new_div_id).val(json['gtg_id']);
 
-	  	    		$('#edit_gloss', '#'+new_div_id).find("#gloss_id").attr('value',gloss_id);
+	  	    		$('#edit_gloss', '#'+new_div_id).find("#gloss_id").attr('value',json['gloss_id']);
 
 	  		    	$("#attach_gloss_modal").modal('hide'); 
 	  		    	$('#success_message').html('Gloss successfully added.');
@@ -326,7 +326,7 @@
 		$(gloss_form).find("#element_" + element_id + "_head_word_id").attr('value', head_word_id);
 		$(gloss_form).find("#element_" + element_id + "_head_word_display").html(head_word_display);
 		highlight_form($(gloss_form));
-		$("#attach_head_word_modal").modal('hide'); 
+		$("#attach_head_word_modal").modal('hide');
 	} //attach head word
 
 	//ajax search for glosses
@@ -2091,67 +2091,8 @@
 
 <!-- ---------------------------------------------------------------------------------------- -->
 
-<script>	
-	//ckeditor defaults
-	
-	/*
-  CKEDITOR.stylesSet.add( 'my_styles', [
-
-    {   
-        name: 'Abipon',
-				element : 'span',
-				attributes : { 'lang' : 'axb', 'class' : 'Unicode' }				
-		},
-		
-		{   
-        name: 'Bosnian',
-				element : 'span',
-				attributes : { 'lang' : 'bos', 'class' : 'Unicode' }				
-		},
-		
-		{   
-        name: 'Grebo',
-				element : 'span',
-				attributes : { 'lang' : 'grb', 'class' : 'Unicode' }				
-		},
-		
-		{   
-        name: 'Igbo',
-				element : 'span',
-				attributes : { 'lang' : 'ibo', 'class' : 'Unicode' }				
-		},
-
-		{   
-        name: 'Kenaboi',
-				element : 'span',
-				attributes : { 'lang' : 'xbn', 'class' : 'Unicode' }				
-		},
-				
-		{   
-        name: 'Luxembourgish',
-				element : 'span',
-				attributes : { 'lang' : 'ltz', 'class' : 'Unicode' }				
-		},
-    
-    
-]);
-  
-	
-	CKEDITOR.on('instanceReady', function() { 
-	
-	  $( "span.cke_combo__styles a span.cke_combo_text" ).text("Languages");
-	  
-	});
-	
-	*/
-	
-	/*
-	CKEDITOR.attachStyleStateChange( style, function( state ) {
-      $( "#cke_14_label" ).text("NewText");  
-  } );
-	*/
-	
-		CKEDITOR.plugins.addExternal( 'onchange', '/js/', 'onchangeplugin.js' );
+<script>
+	CKEDITOR.plugins.addExternal( 'onchange', '/js/', 'onchangeplugin.js' );
 	CKEDITOR.plugins.addExternal( 'eieol_language', '/ckeditor-plugins/eieol_language/');
 	ckeditor_parms = {
 			  toolbar : $mytoolbar,
