@@ -26,6 +26,7 @@ span[lang] {background-color: #DDDDDD;}
 
 #gloss_search_result {
 	height:450px;
+    overflow:scroll;
 	border: 1px solid #A5ACB2;
 }
 
