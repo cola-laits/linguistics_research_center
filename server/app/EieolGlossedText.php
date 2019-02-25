@@ -125,6 +125,9 @@ class EieolGlossedText extends Model
             $str = mb_substr($str, 0, mb_strlen($str) - mb_strlen($g)) . $a . $g . '</a>';
         }
 
+        // Special-case handling - see issue #51
+        $str = $this->mbReplace('(' . $g . ')', '(' . $a . $g . '</a>' . ') ', $str);
+
         $punctuation = array(",", ".", "!", "?", ":", "(", ")", "։", "՝", "յ", "`", '"', ";", "·", "̃", "[", "]");
 
         foreach ($punctuation as $p) {
