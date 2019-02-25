@@ -1,3 +1,16 @@
+@font-face {
+    font-family: GentiumPlusW;
+    src: url(/fonts/GentiumPlus-R.woff);
+}
+@font-face {
+    font-family: GentiumPlusW;
+    font-style: italic;
+    src: url(/fonts/GentiumPlus-I.woff);
+}
+@font-face {
+    font-family: Miklosic2;
+    src: url(/fonts/miklosic2-webfont.woff)
+}
 
 /* Note that this is replicated in lrcstyle.css */
 [lang] { font-family: Arial Unicode MS, ALPHABETUM Unicode, TITUS Cyberbit Basic, GentiumPlusW, Code2000, Lucida Sans Unicode, Lucida Grande, Everson Mono Unicode, Arial, Helvetica, sans-serif;}
