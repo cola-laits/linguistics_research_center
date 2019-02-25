@@ -67,6 +67,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/">Back to Site</a></li>
+                <li><form class="navbar-form" method="POST" action="/logout">@csrf<button type="submit" class="btn btn-default">Log Out</button></form></li>
             </ul>
         </div>
         </div>
