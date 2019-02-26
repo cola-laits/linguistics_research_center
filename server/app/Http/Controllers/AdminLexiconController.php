@@ -26,8 +26,13 @@ class AdminLexiconController extends Controller
     }
 
     public function getReflexes(Request $request) {
+        ini_set('memory_limit','512M');
+        $data = LexReflex::with('language')->orderBy('gloss');
+        if ($request->get('skip_pagination')) {
+            return ['data'=>$data->get()];
+        }
         $page = $request->has('page') ? $request->get('page') : 1;
-        $data = LexReflex::with('language')->orderBy('language_id')->take(50)->skip(($page-1)*50)->get();
+        $data = $data->take(50)->skip(($page-1)*50)->get();
         $data_count = LexReflex::count();
         return [
             'links'=>['pagination'=>[
@@ -41,8 +46,13 @@ class AdminLexiconController extends Controller
     }
 
     public function getReflexEntries(Request $request) {
+        ini_set('memory_limit','512M');
+        $data = LexReflexEntry::with('reflex','reflex.language')->orderBy('entry')->orderBy('order');
+        if ($request->get('skip_pagination')) {
+            return ['data'=>$data->get()];
+        }
         $page = $request->has('page') ? $request->get('page') : 1;
-        $data = LexReflexEntry::orderBy('reflex_id')->take(50)->skip(($page-1)*50)->get();
+        $data = $data->take(50)->skip(($page-1)*50)->get();
         $data_count = LexReflex::count();
         return [
             'links'=>['pagination'=>[
@@ -56,8 +66,13 @@ class AdminLexiconController extends Controller
     }
 
     public function getReflexPOSes(Request $request) {
+        ini_set('memory_limit','512M');
+        $data = LexReflexPartOfSpeech::with('reflex','reflex.language')->orderBy('text')->orderBy('order');
+        if ($request->get('skip_pagination')) {
+            return ['data'=>$data->get()];
+        }
         $page = $request->has('page') ? $request->get('page') : 1;
-        $data = LexReflexPartOfSpeech::orderBy('reflex_id')->take(50)->skip(($page-1)*50)->get();
+        $data = $data->take(50)->skip(($page-1)*50)->get();
         $data_count = LexReflexPartOfSpeech::count();
         return [
             'links'=>['pagination'=>[
@@ -137,13 +152,30 @@ class AdminLexiconController extends Controller
         throw new \Exception("Unknown class: ".$name);
     }
 
+    protected function getWithClauseForName($name) {
+        if ($name==='reflex') {
+            return ['sources','etymas'];
+        }
+        if ($name==='etyma') {
+            return ['semantic_fields','reflexes','reflexes.language','reflexes.entries','cross_references'];
+        }
+        return null;
+    }
+
     public function getItem(Request $request) {
         $class = $this->getClassForName($request->type);
 
         if ($request->id==='new') {
             return ['item'=>new \stdClass()];
         }
-        return ['item'=>$class::findOrFail($request->id)];
+
+        $with_clause = $this->getWithClauseForName($request->type);
+        if ($with_clause) {
+            $item = $class::with($with_clause)->findOrFail($request->id);
+        } else {
+            $item = $class::findOrFail($request->id);
+        }
+        return ['item'=>$item];
     }
 
     public function postEditItem(Request $request) {

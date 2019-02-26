@@ -13,24 +13,6 @@
 
 @section('content')
     <div id="vue-app">
-        <h4>TODO</h4>
-        <ul>
-            <li>Add support for picking related tables from a list instead of typing their IDs</li>
-            <li>Write Etyma editor</li>
-            <li>Etyma editor:            // FIXME multi-tag-picker for semantic fields</li>
-            <li>Etyma editor:     // FIXME multi-tag-picker for cross-references</li>
-            <li>Etyma editor: // FIXME list reflexes read-only 'If you need to add a new reflex, you have to go to the reflex page and add it to the Etyma'</li>
-            <li>Write Reflex, Reflex->POS, Reflex->Entry editors</li>
-            <li>    Reflex editor: // FIXME multi-tag-picker for etymas</li>
-            <li>Reflex editor: // FIXME pulldown for language</li>
-            <li>Reflex editor: // FIXME multi-tag-picker for sources</li>
-            <li>Reflex entry viewer: // FIXME reflex_id displayed as 'Latin -> drink, potion'</li>
-            <li>Reflex entry editor: // FIXME reflex as pulldown 'Latin: Potio'</li>
-            <li>Reflex POS viewer: // FIXME reflex displayed as 'Middle English -> (I/he) wot(s), know(s)</li>
-            <li>Reflex POS editor: // FIXME reflex as pulldown 'Middle English: wot'</li>
-            <li>Reflex POS editor: // FIXME note on Text: This must match entries in Lexicon Parts of Speech. You can join multiple ones together with a period. Test the public page after you update this. If this doesn't match the Parts of Speech, you'll get an error.</li>
-
-        </ul>
         <router-view></router-view>
     </div>
     <br><br><br>
@@ -60,11 +42,15 @@
                     </div>
 
                     <div slot="language_sub_family_name" slot-scope="props">
-                        <div>{{props.rowData.language_sub_family.name}} -> {{props.rowData.language_sub_family.language_family.name}}</div>
+                        <div>{{props.rowData.language_sub_family.name}} → {{props.rowData.language_sub_family.language_family.name}}</div>
                     </div>
 
                     <div slot="semantic_category_text" slot-scope="props">
                         <div>{{props.rowData.semantic_category.text}}</div>
+                    </div>
+
+                    <div slot="reflex_languagename_gloss" slot-scope="props">
+                        <div>{{props.rowData.reflex.language.name}} → {{props.rowData.reflex.gloss}}</div>
                     </div>
                 </vuetable>
                 <vuetable-pagination v-show="enable_pagination"
@@ -91,7 +77,17 @@
                                     <input type="text" style="width:75%" :name="field.name" v-model="item[field.name]">
                                 </div>
                                 <div v-if="field.type=='relation'">
-                                    <input type="text" style="width:75%" :name="field.name" v-model="item[field.name]">
+                                    <div v-if="typeof(lookups[field.relation])=='undefined' || lookups[field.relation].length==0">
+                                        Please wait...
+                                    </div>
+                                    <div v-else>
+                                        <select :name="field.name" v-model="item[field.name]">
+                                            <option v-for="lookup in lookups[field.relation]" :value="lookup.id">{{field.view_fn(lookup)}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div v-if="field.type=='info'">
+                                    {{field.view_fn(item)}}
                                 </div>
                             </div>
                         </div>
@@ -126,9 +122,15 @@
                 },
             };
 
-            var EditorComp = {
+            var editor_comp_generator = function(route_name, fields) { return {
                 template: '#EditorComp',
                 props: ['id'],
+                data: function() { return {
+                    route_name: route_name,
+                    fields: fields,
+                    lookups: {},
+                    item: {}
+                }},
                 methods: {
                     cancel_change: function() {
                         this.$router.push('/'+this.route_name);
@@ -165,10 +167,20 @@
                         .then(function(response) {
                             comp.item = response.data.item;
                         }).catch(function(response) {
-                            alert("FIXME error display")
+                            alert("ERROR: Unable to load.  Please try again or contact a developer.");
                         });
+                    this.fields.forEach(function (f) {
+                        if (f.type==='relation') {
+                            axios.get('/admin2/lexicon/api/'+f.relation+"?skip_pagination=true")
+                                .then(function(response) {
+                                    Vue.set(comp.lookups, f.relation, response.data.data);
+                                }).catch(function(response) {
+                                    alert("ERROR: Unable to load.  Please try again or contact a developer.");
+                                });
+                        }
+                    });
                 }
-            };
+            }};
         </script>
 
         <script>
@@ -196,10 +208,10 @@
                     enable_pagination: true,
                     fields: [
                         'id',
+                        'gloss',
                         {name:'__slot:language_name',title:'Language'},
                         'lang_attribute',
                         'class_attribute',
-                        'gloss',
                         {name:'__slot:tools',title:''}
                     ]
                 }}
@@ -213,6 +225,7 @@
                     fields: [
                         'id',
                         'reflex_id',
+                        {name:'__slot:reflex_languagename_gloss',title:'Reflex'},
                         'entry',
                         'order',
                         {name:'__slot:tools',title:''}
@@ -222,12 +235,13 @@
 
             var ReflexPosComp = Object.assign({
                 data: function() {return {
-                    route_title: 'Reflex -> Part of Speech',
+                    route_title: 'Reflex → Part of Speech',
                     route_name: 'reflex_pos',
                     enable_pagination: true,
                     fields: [
                         'id',
                         'reflex_id',
+                        {name:'__slot:reflex_languagename_gloss',title:'Reflex'},
                         'text',
                         'order',
                         {name:'__slot:tools',title:''}
@@ -303,7 +317,7 @@
                     fields: [
                         'id',
                         'name',
-                        {name:'__slot:language_sub_family_name',title:'Family->Sub Family'},
+                        {name:'__slot:language_sub_family_name',title:'Sub Family → Family'},
                         'order',
                         'abbr',
                         'aka',
@@ -342,107 +356,105 @@
                 }}
             }, TableComp);
 
-            var EtymaEditorComp = Object.assign({
-// FIXME
-            }, EditorComp);
+            var EtymaEditorComp = editor_comp_generator(
+                'etyma',
+                [
+                    {name:'old_id',label:'Old Id', type:'text'},
+                    {name:'order',label:'Order', type:'text'},
+                    {name:'entry',label:'Entry', type:'text'},
+                    {name:'gloss',label:'Gloss', type:'text'},
+                    {name:'semantic_fields',label:'Semantic Fields', type:'info',view_fn:function(etyma) {return etyma.semantic_fields.map(function(sf) {return sf.text;}).join(' | ');}},
+                    {name:'cross_references',label:'Cross References', type:'info',view_fn:function(etyma) {return etyma.cross_references.map(function(cr) {return cr.entry;}).join(', ');}},
+                    {name:'page_number',label:'Page Number', type:'text'},
+                    {name:'reflexes',label:'Reflexes', type:'info',view_fn:function(etyma) {return etyma.reflexes.map(
+                        function(cr) {return cr.language.name + ': ' + cr.entries.map(function (en) {return en.entry;}).join(',')}).join(' | ');}
+                    }
+                ]);
 
-            var ReflexEditorComp = Object.assign({
-// FIXME
-            }, EditorComp);
+            var ReflexEditorComp = editor_comp_generator(
+                'reflex',
+                [
+                    {name:'gloss',label:'Gloss', type:'text'},
+                    {name:'etymas',label:'Etymas', type:'info',view_fn:function(reflex) {return reflex.etymas.map(function(etyma){return etyma.entry}).join(", ");}},
+                    {name:'language_id',label:'Language',type:'relation',relation:'lang',view_fn:function(lang) {return lang.name;}},
+                    {name:'sources',label:'Sources',type:'info',view_fn:function(reflex) {return reflex.sources.map(function(source){return source.code}).join(", ");}},
+                    {name:'lang_attribute',label:'Lang Attribute',type:'text'},
+                    {name:'class_attribute',label:'Class Attribute',type:'text'}
+                ]);
 
-            var ReflexEntryEditorComp = Object.assign({
-// FIXME
-            }, EditorComp);
+            var ReflexEntryEditorComp = editor_comp_generator(
+                'reflex_entry',
+                [
+                    {name:'entry',label:'Entry', type:'text'},
+                    {name:'order',label:'Order', type:'text'},
+                    {name:'reflex_id',label:'Reflex ID',type:'text'},
+                ]);
 
-            var ReflexPosEditorComp = Object.assign({
-// FIXME
-            }, EditorComp);
+            var ReflexPosEditorComp = editor_comp_generator(
+                'reflex_pos',
+                [
+                    {name:'text',label:'Text', type:'text', notes:"This must match entries in Lexicon Parts of Speech. You can join multiple ones together with a period. Test the public page after you update this. If this doesn't match the Parts of Speech, you'll get an error."},
+                    {name:'order',label:'Order', type:'text'},
+                    {name:'reflex_id',label:'Reflex ID',type:'text'},
+                ]);
 
-            var SemCategoryEditorComp = Object.assign({
-                data: function() { return {
-                    route_name:'sem_cat',
-                    fields: [
-                        {name:'number',label:'Number', type:'text'},
-                        {name:'text',label:'Text', type:'text'},
-                        {name:'abbr',label:'Abbr', type:'text'}
-                    ],
-                    item: {}
-                }}
-            }, EditorComp);
+            var SemCategoryEditorComp = editor_comp_generator(
+                'sem_cat',
+                [
+                    {name:'number',label:'Number', type:'text'},
+                    {name:'text',label:'Text', type:'text'},
+                    {name:'abbr',label:'Abbr', type:'text'}
+                ]);
 
-            var SemFieldEditorComp = Object.assign({
-                data: function() { return {
-                    route_name:'sem_field',
-                    fields: [
-                        {name:'number',label:'Number', type:'text'},
-                        {name:'text',label:'Text', type:'text'},
-                        {name:'abbr',label:'Abbr', type:'text'},
-                        {name:'semantic_category_id',label:'Semantic Category',type:'relation',relation:'semantic_category'}
-                    ],
-                    item: {}
-                }}
-            }, EditorComp);
+            var SemFieldEditorComp = editor_comp_generator(
+                'sem_field',
+                [
+                    {name:'number',label:'Number', type:'text'},
+                    {name:'text',label:'Text', type:'text'},
+                    {name:'abbr',label:'Abbr', type:'text'},
+                    {name:'semantic_category_id',label:'Semantic Category',type:'relation',relation:'sem_cat',view_fn:function(sem_cat) {return sem_cat.text;}}
+                ]);
 
-            var LangFamEditorComp = Object.assign({
-                data: function() { return {
-                    route_name:'lang_fam',
-                    fields: [
-                        {name:'name',label:'Name', type:'text'},
-                        {name:'order',label:'Order', type:'text'}
-                    ],
-                    item: {}
-                }}
-            }, EditorComp);
+            var LangFamEditorComp = editor_comp_generator(
+                'lang_fam',
+                [
+                    {name:'name',label:'Name', type:'text'},
+                    {name:'order',label:'Order', type:'text'}
+                ]);
 
-            var LangSubfamEditorComp = Object.assign({
-                data: function() { return {
-                    route_name:'lang_subfam',
-                    fields: [
-                        {name:'name',label:'Name', type:'text'},
-                        {name:'order',label:'Order', type:'text'},
-                        {name:'family_id',label:'Family', type:'relation',relation:'lang_fam'}
-                    ],
-                    item: {}
-                }}
-            }, EditorComp);
+            var LangSubfamEditorComp = editor_comp_generator(
+                'lang_subfam',
+                [
+                    {name:'name',label:'Name', type:'text'},
+                    {name:'order',label:'Order', type:'text'},
+                    {name:'family_id',label:'Family', type:'relation',relation:'lang_fam',view_fn:function(lang_fam) {return lang_fam.name;}}
+                ]);
 
-            var LangEditorComp = Object.assign({
-                data: function() { return {
-                    route_name:'lang',
-                    fields: [
-                        {name:'name',label:'Name', type:'text'},
-                        {name:'order',label:'Order', type:'text'},
-                        {name:'abbr',label:'Abbr', type:'text'},
-                        {name:'sub_family_id',label:'SubFamily', type:'relation',relation:'lang_subfam'},
-                        {name:'aka',label:'AKA', type:'text'},
-                        {name:'override_family',label:'Override Family', type:'text', notes:"This is for the reflex page. This value will show instead of the Family that this Language belongs to"},
-                        {name:'custom_sort',label:'Custom Sort', type:'text', notes:"This is used to set the sort order for the lex_lang_reflexes page and should be a comma separated list of characters in the order they should be sorter. Do not use unicode code points, just paste in unicode characters. Example: A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,π,q,r,s,t,u,v,w,x,y,z If character aren't separated by a comma, they are considered equal. In the next example, p,P and π are considered the same. Example: aAÄ,bB,cC,dD,eE,fF,gG,hH,iI,Jj,Kk,Ll,Mm,Nn,Oo,Ppπ,Qq,Rr,Ss,Tt,Uu,Vv,Ww,Xx,Yy,Zz"}
-                    ],
-                    item: {}
-                }}
-            }, EditorComp);
+            var LangEditorComp = editor_comp_generator(
+                'lang',
+                [
+                    {name:'name',label:'Name', type:'text'},
+                    {name:'order',label:'Order', type:'text'},
+                    {name:'abbr',label:'Abbr', type:'text'},
+                    {name:'sub_family_id',label:'SubFamily', type:'relation',relation:'lang_subfam',view_fn:function(lang_subfam) {return lang_subfam.name + ' → ' + lang_subfam.language_family.name;}},
+                    {name:'aka',label:'AKA', type:'text'},
+                    {name:'override_family',label:'Override Family', type:'text', notes:"This is for the reflex page. This value will show instead of the Family that this Language belongs to"},
+                    {name:'custom_sort',label:'Custom Sort', type:'text', notes:"This is used to set the sort order for the lex_lang_reflexes page and should be a comma separated list of characters in the order they should be sorter. Do not use unicode code points, just paste in unicode characters. Example: A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,π,q,r,s,t,u,v,w,x,y,z If character aren't separated by a comma, they are considered equal. In the next example, p,P and π are considered the same. Example: aAÄ,bB,cC,dD,eE,fF,gG,hH,iI,Jj,Kk,Ll,Mm,Nn,Oo,Ppπ,Qq,Rr,Ss,Tt,Uu,Vv,Ww,Xx,Yy,Zz"}
+                ]);
 
-            var SourceEditorComp = Object.assign({
-                data: function() { return {
-                    route_name:'source',
-                    fields: [
-                        {name:'code',label:'Code', type:'text'},
-                        {name:'display',label:'Display', type:'text'}
-                    ],
-                    item: {}
-                }}
-            }, EditorComp);
+            var SourceEditorComp = editor_comp_generator(
+                'source',
+                [
+                    {name:'code',label:'Code', type:'text'},
+                    {name:'display',label:'Display', type:'text'}
+                ]);
 
-            var PosEditorComp = Object.assign({
-                data: function() { return {
-                    route_name:'pos',
-                    fields: [
-                        {name:'code',label:'Code', type:'text'},
-                        {name:'display',label:'Display', type:'text'}
-                        ],
-                    item: {}
-                }}
-            }, EditorComp);
+            var PosEditorComp = editor_comp_generator(
+                'pos',
+                [
+                    {name:'code',label:'Code', type:'text'},
+                    {name:'display',label:'Display', type:'text'}
+                ]);
 
             var routes = [
                 {path: '/etyma', component: EtymaComp},
@@ -480,7 +492,8 @@
             window.onhashchange = function() {
                 // nav links to get here aren't expressed via the Vue <router-link>
                 // tag; handle hash changes manually.
-                vm.$router.push(location.hash.substring(2));
+                console.log(location.hash);
+                vm.$router.push(location.hash.substring(1));
             };
         </script>
     @endverbatim
