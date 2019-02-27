@@ -14,8 +14,10 @@
 
 /* Note that this is replicated in lrcstyle.css */
 [lang] { font-family: Arial Unicode MS, ALPHABETUM Unicode, TITUS Cyberbit Basic, GentiumPlusW, Code2000, Lucida Sans Unicode, Lucida Grande, Everson Mono Unicode, Arial, Helvetica, sans-serif;}
+/*
 [lang=cu] { font-family: Miklosic2, sans-serif;font-size:120%; }
 [lang=orv] { font-family: Miklosic2, sans-serif;font-size:120%; }
+ */
 [lang=sa] { font-family: GentiumPlusW, sans-serif; }
 [lang=grc] { font-family: GentiumPlusW, sans-serif;  }
 [lang=la] { font-family: GentiumPlusW, sans-serif;  }
