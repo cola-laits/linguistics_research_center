@@ -48,6 +48,7 @@ span[lang] {background-color: #DDDDDD;}
 
 #head_word_search_result {
 	height:300px;
+    overflow:scroll;
 	border: 1px solid #A5ACB2;
 }
 

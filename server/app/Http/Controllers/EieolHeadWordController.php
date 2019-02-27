@@ -20,7 +20,7 @@ class EieolHeadWordController extends Controller
         $text = '';
         $head_words = EieolHeadWord::where('word', 'LIKE', '%' . Normalizer::normalize($request->get('head_word'), Normalizer::FORM_C) . '%')
             ->where('language_id', '=', $request->get('language') . '%')
-            ->take(10)->get()->sortBy('word');
+            ->take(50)->get()->sortBy('word');
         foreach ($head_words as $head_word) {
             $text .= '<a id="' . $head_word->id . '">' .
                 $head_word->getDisplayHeadWord() .
