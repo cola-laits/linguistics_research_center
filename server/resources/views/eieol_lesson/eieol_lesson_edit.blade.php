@@ -185,9 +185,6 @@
         		    if (json.hasOwnProperty('glossed_text_id')) {
         		    	$("#add_glossed_text").show(); //now that they've saved the glossed text, they can add another
 
-        		    	//remove old ckeditor
-        		    	CKEDITOR.instances['new_glossed_text'].destroy(true); 
-
         		    	//rename div, form and text area
         		    	var new_form_id = 'glossed_text_form_' + json['glossed_text_id'];
         		    	var new_div_id = 'glossed_text_div_' + json['glossed_text_id'];
@@ -199,15 +196,6 @@
         	    		$('#new_glossed_text_form').attr("id", new_form_id);
         	    		$('#new_glossed_text_glosses').attr("id",'glossed_text_' + json['glossed_text_id'] + '_glosses');
         	    		$('#' +  new_form_id).find('.delete_glossed_text').show();
-
-        	    		//attach new ckeditor
-        	    		CKEDITOR.replace(new_text_id,glossed_text_ckeditor_parms);
-        	    		CKEDITOR.instances[new_text_id].on('change', function() {
-        	    			if(this.checkDirty()) {
-        	    				$('#'+new_form_id).css("background-color", "#EBAD99");
-        	    				$('#'+new_form_id).attr("dirty", "dirty");
-        	    			}
-        	    		});
         		    }
 
 
