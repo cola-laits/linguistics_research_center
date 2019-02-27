@@ -792,14 +792,6 @@
     		new_div.appendTo("#glossed_texts");
     		new_div.show();
 
-    		CKEDITOR.replace('new_glossed_text',glossed_text_ckeditor_parms);
-    		CKEDITOR.instances['new_glossed_text'].on('change', function() {
-    			if(this.checkDirty()) {
-    				$('#new_glossed_text_form').css("background-color", "#EBAD99");
-    				$('#new_glossed_text_form').attr("dirty", "dirty");
-    			}
-    		});
-    		
     		//calculate next order by finding the highest order in the form and adding 10
 			var next_glosssed_text_order = 0;
 			$(".glossed_text_form").each(function() { // get the value of each order
