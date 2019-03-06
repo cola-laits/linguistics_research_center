@@ -13,7 +13,7 @@
 <div class="skinny" id="no_bullets">
 
 <ol>
-@foreach ($lessons as $lesson)
+@foreach ($series->lessons as $lesson)
     @if ($lesson->order == 0 || strstr($lesson->title, 'Bibliography') == true || strstr($lesson->title, 'Appendix') == true)
 
     @else

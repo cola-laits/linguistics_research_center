@@ -17,42 +17,6 @@ use Illuminate\Http\Request;
 
 class PublicController extends Controller
 {
-
-    /** util functions **/
-    protected function get_series_info($series_id) {
-        //used by many pages to get the series plus all the lessons and languages.
-
-        $data = array();
-
-        $data['series'] = EieolSeries::findByIdOrSlug($series_id);
-
-        $data['lessons'] = EieolLesson::with('grammars', 'language')->where('series_id', '=', $data['series']->id)->get()->sortBy('order');
-
-        $data['languages'] = array();
-        $data['bibliography_id'] = '';
-        $data['bibliography_order'] = '';
-
-        foreach ($data['lessons'] as $lesson) {
-
-            if (!in_array($lesson->language, $data['languages'])) {
-
-                $data['languages'][] = $lesson->language;
-
-            }
-            if (strpos($lesson->title, 'Bibliography') != false) {
-                $data['bibliography_id'] = $lesson->id;
-                $data['bibliography_order'] = $lesson->order;
-            }
-
-        }
-
-
-        return $data;
-
-    } //get_series_info
-
-    /** end util functions */
-
     public function index() {
         return view('index', [
             'content' => Page::whereSlug('index')->first()->content
@@ -99,29 +63,24 @@ class PublicController extends Controller
     }
 
     public function eieol_first_lesson($series_name) {
-        $data = $this->get_series_info($series_name);
-        $data['printable'] = False;
+        $series = EieolSeries::findByIdOrSlug($series_name);
 
-        if ($data['series']['use_old_gloss_ui']) {
-            $data['clickable'] = False;
-        } else {
-            $data['clickable'] = True;
-        }
-
-        $data['lesson'] = EieolLesson::with('grammars')
-            ->with('glossed_texts.glosses.language', 'glossed_texts.glosses.elements.head_word.language')
-            ->where('series_id', '=', $data['series']->id)
+        $lesson = EieolLesson::where('series_id', $series->id)
             ->orderBy('order')
-            ->first();
+            ->firstOrFail();
 
-        return view('eieol_lesson')->with($data);
+        return $this->eieol_lesson($series_name, $lesson->order);
     }
 
     public function eieol_lesson($series_name, $lesson_order) {
-        $data = $this->get_series_info($series_name);
+        $series = EieolSeries::findByIdOrSlug($series_name);
+
+        $data = [
+            'series' => $series
+        ];
         $data['printable'] = False;
 
-        if ($data['series']['use_old_gloss_ui']) {
+        if ($series['use_old_gloss_ui']) {
             $data['clickable'] = False;
         } else {
             $data['clickable'] = True;
@@ -129,7 +88,7 @@ class PublicController extends Controller
 
         $data['lesson'] = EieolLesson::with('grammars', 'language')
             ->with('glossed_texts.glosses.language', 'glossed_texts.glosses.elements.head_word.language')
-            ->where('series_id', '=', $data['series']->id)
+            ->where('series_id', '=', $series->id)
             ->where('order', '=', $lesson_order)
             ->firstOrFail();
 
@@ -137,7 +96,11 @@ class PublicController extends Controller
     }
 
     public function eieol_printable($series_id) {
-        $data = $this->get_series_info($series_id);
+        $series = EieolSeries::findByIdOrSlug($series_id);
+
+        $data = [
+            'series' => $series
+        ];
 
         $data['printable'] = True;
         $data['clickable'] = False;
@@ -146,7 +109,7 @@ class PublicController extends Controller
 
         $lessons = EieolLesson::with('grammars')
             ->with('glossed_texts.glosses.language', 'glossed_texts.glosses.elements.head_word.language')
-            ->where('series_id', '=', $data['series']->id)
+            ->where('series_id', '=', $series->id)
             ->orderBy('order')
             ->get();
 
@@ -168,19 +131,25 @@ class PublicController extends Controller
     }
 
     public function eieol_toc($series_id) {
-        $data = $this->get_series_info($series_id);
+        $series = EieolSeries::findByIdOrSlug($series_id);
 
-        return view('eieol_toc')->with($data);
+        return view('eieol_toc')->with([
+            'series' => $series
+        ]);
     }
 
     public function eieol_master_gloss($series_id, $language_id) {
-        $data = $this->get_series_info($series_id);
+        $series = EieolSeries::findByIdOrSlug($series_id);
+
+        $data = [
+            'series' => $series
+        ];
 
         $data['language'] = EieolLanguage::find($language_id);
         $data['glosses'] = [];
 
         $lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word.language')
-            ->where('series_id', '=', $data['series']->id)
+            ->where('series_id', '=', $series->id)
             ->where('language_id', '=', $language_id)
             ->select(['id', 'title', 'order'])
             ->get()
@@ -228,13 +197,17 @@ class PublicController extends Controller
     }
 
     public function eieol_base_form_dictionary($series_id, $language_id) {
-        $data = $this->get_series_info($series_id);
+        $series = EieolSeries::findByIdOrSlug($series_id);
+
+        $data = [
+            'series' => $series
+        ];
 
         $data['language'] = EieolLanguage::find($language_id);
         $data['head_words'] = array();
 
         $lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word.language', 'glossed_texts.glosses.elements.head_word.etyma')
-            ->where('series_id', '=', $data['series']->id)
+            ->where('series_id', '=', $series->id)
             ->where('language_id', '=', $language_id)
             ->select(array('id', 'title', 'order'))
             ->get()
@@ -258,7 +231,7 @@ class PublicController extends Controller
                         $key = strip_tags($key);
 
 
-                        if (!key_exists($key, $data['head_words'])) {
+                        if (!array_key_exists($key, $data['head_words'])) {
 
                             $data['head_words'][$key] = $element->head_word->toArray();
 
@@ -296,12 +269,16 @@ class PublicController extends Controller
     }
 
     public function eieol_english_meaning_index($series_id, $language_id) {
-        $data = $this->get_series_info($series_id);
+        $series = EieolSeries::findByIdOrSlug($series_id);
+
+        $data = [
+            'series' => $series
+        ];
 
         $data['language'] = EieolLanguage::find($language_id);
 
         $lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word.language', 'glossed_texts.glosses.elements.head_word.keywords')
-            ->where('series_id', '=', $data['series']->id)
+            ->where('series_id', '=', $series->id)
             ->where('language_id', '=', $language_id)
             ->select(array('id', 'title', 'order'))
             ->get()
@@ -323,7 +300,7 @@ class PublicController extends Controller
 
                             $key = $keyword->keyword . ' -- ' . $element->head_word->word . ' -- ' . $element->head_word->definition;
 
-                            if (!key_exists($key, $data['keywords'])) {
+                            if (!array_key_exists($key, $data['keywords'])) {
 
                                 $data['keywords'][$key] = $keyword->toArray();
 
@@ -365,7 +342,7 @@ class PublicController extends Controller
                 'id' => $series['id']
             ];
 
-            $languages = $series->lesson_languages->unique(function($lang) {return $lang->id;});
+            $languages = $series->lesson_languages;
             if (count($languages) > 1) {
                 foreach ($languages as $language) {
                     $text['title'] = $series['title'] . ' (' . $language['language'] . ')';

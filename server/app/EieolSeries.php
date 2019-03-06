@@ -57,16 +57,22 @@ class EieolSeries extends Model {
 	}
 
 	public function lesson_languages() {
-	    return $this->belongsToMany('\App\EieolLanguage','eieol_lesson', 'series_id', 'language_id');
+	    return $this->belongsToMany('\App\EieolLanguage','eieol_lesson', 'series_id', 'language_id')
+            ->distinct('language_id');
     }
 
 	public static function findByIdOrSlug($text) {
 	    // series are referenced by slug, but there's still calls out there that reference them by DB PK.
         if (is_numeric($text)) {
-            return EieolSeries::find($text);
+            return self::findOrFail($text);
         }
 
-        $data['series'] = EieolSeries::whereRaw("slug = ?", array($text))->get();
-        return $data['series'][0];
+        return self::where("slug", $text)->firstOrFail();
+    }
+
+    public function getBibliographyLesson() {
+	    return \App\EieolLesson::where('series_id', $this->id)
+            ->where('title', 'like', '%Bibliography%')
+            ->first();
     }
 }

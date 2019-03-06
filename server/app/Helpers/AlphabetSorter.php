@@ -11,11 +11,7 @@ class AlphabetSorter {
     }
 
     protected function length_compare($a, $b){
-        //key_compare_func for uksort of arrayify_customsort.  We want longer strings first
-        if (mb_strlen($a,'UTF-8') >= mb_strlen($b,'UTF-8')) {
-            return -1;
-        }
-        return 1;
+        return mb_strlen($b,'UTF-8') <=> mb_strlen($a,'UTF-8');
     }
 
     protected function arrayify_customsort($custom_sort) {
@@ -23,12 +19,16 @@ class AlphabetSorter {
         //It gets sorted by character length because each entry can be more than one character long, and we want longest first.
         //That way when we replace them in the sorter, we get the longest ones first, so Ž is not equal to Z and ll is not l.
         //create an array where each letter has a value equal to its comma separated position in the string
+
+        $this->alphabet[' '] = 0;
+        $this->alphabet[','] = 0;
+        $this->alphabet['>'] = 0;
         $alphabet_groups = explode(',',$custom_sort);
         foreach ($alphabet_groups as $key => $group) {
             //print $key . ' ' . $group . ' ' . mb_strlen($group,'UTF-8') . '<br/>';
             $values = explode('=',$group);
             foreach ($values as $value) {
-                $this->alphabet[$value] = str_pad(($key+1), 3, '0', STR_PAD_LEFT); //pad with zeros
+                $this->alphabet[$value] = $key+1;
             }
         }
 
@@ -65,15 +65,6 @@ class AlphabetSorter {
     protected function get_first_character_value($string) {
         //Used by alphabet_sort to get first character/sort value and remainder of a string.
         //It uses mb functions
-
-        //check for blank, comma or >
-        $treat_as_blank = array(' ', ',', '>'); //the > is at the end of head words
-        foreach($treat_as_blank as $letter) {
-            if (mb_strpos($string, $letter,0,'UTF-8') === 0) {
-                $letter_length = mb_strlen($letter,'UTF-8');
-                return ['first' => 0, 'remainder' => mb_substr($string,$letter_length,Null,'UTF-8')];
-            }
-        }
 
         foreach($this->alphabet as $letter => $value) {
             if (mb_strpos($string, $letter,0,'UTF-8') === 0) {

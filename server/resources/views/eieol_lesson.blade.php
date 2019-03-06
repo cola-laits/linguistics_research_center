@@ -120,7 +120,7 @@
 @if ($lesson->order == 0 and !$printable) 
     <h5>The {{$series->menu_name}} Lessons</h5>
     <ol>
-    @foreach ($lessons as $temp_lesson)
+    @foreach ($series->lessons as $temp_lesson)
         @if ($temp_lesson->order != 0)
             <li>
                 <a href='/eieol/{{$series->slug}}/{{$temp_lesson->order}}'>{!! $temp_lesson->title !!}</a>
@@ -133,13 +133,13 @@
 
     <ul>
         <li>Show full <a href="/eieol_toc/{{$series->slug}}">Table of Contents</a> with Grammar Points index</li>
-        @foreach($languages as $language)
+        @foreach($series->lesson_languages as $language)
             <li>Open a <a href="/eieol_master_gloss/{{$series->slug}}/{{$language->id}}">Master Glossary window</a> for these {{$language->language}} texts</li>
         @endforeach
-        @foreach($languages as $language)
+        @foreach($series->lesson_languages as $language)
             <li>Open a <a href="/eieol_base_form_dictionary/{{$series->slug}}/{{$language->id}}">Base Form Dictionary window</a> for these {{$language->language}} texts</li>
         @endforeach
-        @foreach($languages as $language)
+        @foreach($series->lesson_languages as $language)
             <li>Open an <a href="/eieol_english_meaning_index/{{$series->slug}}/{{$language->id}}">English Meaning Index window</a> for these {{$language->language}} texts</li>
         @endforeach
     </ul>

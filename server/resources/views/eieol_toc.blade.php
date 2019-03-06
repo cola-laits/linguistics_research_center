@@ -14,7 +14,7 @@
 
 <h5>Lessons</h5>
 <ol start="0">
-@foreach ($lessons as $lesson)
+@foreach ($series->lessons as $lesson)
 	<li><a href='/eieol/{{$series->slug}}/{{$lesson->order}}'>{!! $lesson->title !!}</a></li>
 @endforeach
 </ol>
@@ -22,11 +22,10 @@
 <h5>Grammar Points</h5>
 
 <ul>
-@foreach ($lessons as $lesson)
+@foreach ($series->lessons as $lesson)
 	@foreach($lesson->grammars as $grammar)
 		<li>
-			<!-- Add tabs each period -->
-			@for ($i = 1; $i <= substr_count($grammar->section_number, '.'); $i++) 
+			@for ($i = 1; $i <= substr_count($grammar->section_number, '.'); $i++)
 				&nbsp;&nbsp;&nbsp;
 			@endfor
 			<a href='/eieol/{{$series->slug}}/{{$lesson->order}}#grammar_{{$grammar->id}}'>{{$grammar->section_number}}. {!! $grammar->title !!}.</a>
