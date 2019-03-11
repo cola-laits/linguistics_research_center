@@ -253,8 +253,7 @@
 		mydata['existing_gloss_id'] = gloss_id;
 		mydata['glossed_text_id'] = glossed_text_id; //set when displaying attach modal
 		mydata['order'] = next_gloss_order;
-		mydata['token'] = '{{csrf_token()}}';
-		
+
 		$.ajax({
 			type: "POST",
 	        url:'/admin2/eieol_glossed_text_gloss/copy_gloss',
