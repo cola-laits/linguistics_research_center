@@ -4,10 +4,6 @@
 
 @if ($action != 'Create')
 
-<script src="/js/vue.js"></script>
-<script src="/js/vue-search-select.js"></script>
-<script src="/js/axios.min.js"></script>
-
 <script>
 
   var seriesId = {{$series->id}};

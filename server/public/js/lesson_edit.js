@@ -1,0 +1,893 @@
+function generate_lesson_text() {
+    //every time they update the glossed text, we calculate the full text and display it below
+    var lesson_text = '';
+    $(".glossed_text_area").each(function() {
+        var temp_text = $('#'+this.id).val();
+        temp_text = temp_text.replace('<p>', '').replace('</p>', '');
+        lesson_text +=  temp_text + ' ';
+    });
+    $('#lesson_text').html(lesson_text); //replace div with new text
+} //generate_lesson_text
+
+
+function set_comment_button_color() {
+    //loop through each comment button.  If either author or admin comment are filled in, set icon to red.  Else normal.
+    $('.comment_button').each(function(i,obj) {
+        if ($(obj).closest('form').find(".author_done").is(':checked')) {
+            $(obj).html('<div style="color:green"><i class="fa fa-comment"></i></div>');
+        } else if ($(obj).closest('form').find(".author_comments").val() ||
+            $(obj).closest('form').find(".admin_comments").val()  ||
+            $(obj).closest('form').find(".well").text() ) {
+            $(obj).html('<div style="color:red"><i class="fa fa-comment"></i></div>');
+        } else {
+            $(obj).html('<i class="fa fa-comment-o"></i>');
+        }
+    });
+} //set_comment_button_color
+
+
+//highlight forms if they are changed
+function highlight_form(input){
+    var my_form = $(input).closest('form');
+    my_form.css("background-color", "#EBAD99");
+    if (my_form.attr('id') === 'edit_gloss_form' ||
+        my_form.attr('id') === 'new_head_word_form' ||
+        my_form.attr('id') === 'edit_head_word_form' ||
+        my_form.attr('id') === 'new_gloss_form' ) {
+        //ignore popup's when it comes to setting dirty attribute
+    } else {
+        my_form.attr("dirty", "dirty");
+    }
+} //highlight form
+
+
+//listen to form inputs for change.  If you are using ckeditor, you have to do that with its on change function
+function listen_to_forms() {
+    var ctrlDown = false;
+    var ctrlKey = 17, aKey = 65, cKey = 67;
+
+    $(document).keydown(function(e)
+    {
+        if (e.keyCode === ctrlKey) ctrlDown = true;
+    }).keyup(function(e)
+    {
+        if (e.keyCode === ctrlKey) ctrlDown = false;
+    });
+
+    $(':input').keyup(function (e) { //listen for typing
+        var ignore_keys = false;
+        if(e.keyCode === 9 ||
+            e.keyCode === 16 ||
+            e.keyCode === 17 ||
+            e.keyCode === 18 ||
+            e.keyCode === 20 ||
+            e.keyCode === 27 ||
+            e.keyCode === 45 ||
+            e.keyCode === 36 ||
+            e.keyCode === 35 ||
+            e.keyCode === 33 ||
+            e.keyCode === 34 ||
+            e.keyCode === 37 ||
+            e.keyCode === 38 ||
+            e.keyCode === 39 ||
+            e.keyCode === 40 ||
+            e.keyCode === 91 ||
+            e.keyCode === 92){ //ignore tab, shift, ctrl, alt, caplock, escape, insert, home, end, page up, page down,arrows,windows keys
+            ignore_keys = true;
+        }
+
+        if (ctrlDown && (e.keyCode === aKey || e.keyCode === cKey)){ //ignore select all and copy
+            ignore_keys = true;
+        }
+
+        if (!ignore_keys) {
+            highlight_form(this);
+        }
+    });
+    $(':input').change(function () { //listen for clicking
+        highlight_form(this);
+    });
+} //listen_to_forms
+
+function listen_for_clear_comments(){
+    $('.comment_clear').click(function() {
+        $(this).closest('form').find(".author_comments").val('');
+        $(this).closest('form').find(".admin_comments").val('');
+        $(this).closest('form').find(".author_done").removeAttr('checked');
+        highlight_form($(this).closest('form'));
+        return false;
+    });
+} //listen_for_clear_comments
+
+function ajax_submit(myform) {
+    //generic ajax function.   This will prevent the regular submission and send it by ajax instead.
+
+    $(".spinner").show();
+
+    //get values from CKEditor and put them into textarea fields
+    for (var instance in CKEDITOR.instances )
+        CKEDITOR.instances[instance].updateElement();
+
+    //we need to know which form we're working with
+    var formDiv = "#"+myform.attr('id');
+
+    //hide any previous error messages
+    $(".errors", formDiv).empty();
+
+    //function that handles ajax form submission
+    $.ajax({
+        type: "POST",
+        url:myform.attr('action'),
+        data:myform.serialize(),
+        dataType: "html",
+
+        success : function(data){
+            var json = JSON.parse(data);
+
+            if(json['fail']) { //go through all errors and set error messages, just within this form
+                $.each(json['errors'], function( index, value ) {
+                    var errorDiv = '#'+index+'_error';
+                    $(errorDiv, formDiv).html(value);
+                });
+                $('#successMessage').empty();
+            }  //json fail
+
+            if(json['success']) { //briefly show a success popup and turn off form background
+                $('#success_message').html(json['message']);
+                $("#update_confirm").modal('show');
+                setTimeout(function(){
+                    $("#update_confirm").modal('hide');
+                }, 1000);
+                myform.css("background-color", "#FFFFFF");
+                myform.removeAttr("dirty");
+
+                //if they updated the language, we need to change the hidden language ids
+                if(json.hasOwnProperty('language_id')) {
+                    $(".language_id_class").each(function() {
+                        $(this).attr('value',json['language_id']);
+                        hold_language_id = json['language_id'];
+                    });
+                }
+
+                //if they updated a gloss, we need to change the text of every occurrence of it on the page
+                if(json.hasOwnProperty('gloss_id')) {
+                    $(".gloss_" + json['gloss_id']).each(function() {
+                        $(this).html(json['gloss_display']);
+
+                        if (json['author_done']) {
+                            $(this).next('.gloss_comment_indicator').html('<div style="color:green"><i class="fa fa-comments"></i></div>');
+                        } else if (json['author_comments'] || json['admin_comments']) {
+                            $(this).next('.gloss_comment_indicator').html('<div style="color:red"><i class="fa fa-comments"></i></div>');
+                        } else {
+                            $(this).next('.gloss_comment_indicator').html('');
+                        }
+
+                    });
+                }
+            } //json success
+
+            if(json['added']) { //if we just performed an add, we need to change the form to an update form
+                $(formDiv).find(":submit").attr('value','Edit');
+                $(formDiv).find(":submit").attr('class', 'btn btn-xs btn-primary');
+                $(formDiv).attr("action", json['action']);
+                $('<input>').attr({type: 'hidden', value: 'PUT', name: '_method'}).appendTo(formDiv);
+
+                //if they just added a glossed text, we need to further customize the form
+                if (json.hasOwnProperty('glossed_text_id')) {
+                    $("#add_glossed_text").show(); //now that they've saved the glossed text, they can add another
+
+                    //rename div, form and text area
+                    var new_form_id = 'glossed_text_form_' + json['glossed_text_id'];
+                    var new_div_id = 'glossed_text_div_' + json['glossed_text_id'];
+                    var new_text_id = 'glossed_text_' + json['glossed_text_id'];
+                    $('#new_glossed_text_div').find('#attach_gloss_form').find("#glossed_text_id").attr('value',json['glossed_text_id']);
+                    $('#new_glossed_text_div').find('#attach_gloss_form').find("#attach_gloss_button").show();
+                    $('#new_glossed_text_div').attr("id",new_div_id);
+                    $('#new_glossed_text_form').find('#new_glossed_text').attr("id",new_text_id);
+                    $('#new_glossed_text_form').attr("id", new_form_id);
+                    $('#new_glossed_text_glosses').attr("id",'glossed_text_' + json['glossed_text_id'] + '_glosses');
+                    $('#' +  new_form_id).find('.delete_glossed_text').show();
+                }
+
+
+                //if they just added a grammar, we need to further customize the form
+                if (json.hasOwnProperty('grammar_id')) {
+                    $("#add_grammar").show(); //now that they've saved the grammar, they can add another
+
+                    //remove old ckeditor
+                    CKEDITOR.instances['new_grammar_text'].destroy(true);
+
+                    //rename div, form and text area
+                    var new_form_id = 'grammar_form_' + json['grammar_id'];
+                    var new_text_id = 'grammar_text_' + json['grammar_id'];
+                    $('#grammars').find('#new_grammar_div').attr("id",'grammar_div_' + json['grammar_id']);
+                    $('#grammars').find('#new_grammar_form').attr("id",new_form_id);
+                    $('#grammars').find('#new_grammar_text').attr("id",new_text_id);
+                    $('#grammars').find('.delete_grammar').show();
+
+                    //attach new ckeditor
+                    CKEDITOR.replace(new_text_id,ckeditor_parms);
+                    CKEDITOR.instances[new_text_id].on('change', function() {
+                        if(this.checkDirty()) {
+                            $('#'+new_form_id).css("background-color", "#EBAD99");
+                            $('#'+new_form_id).attr("dirty", "dirty");
+                        }
+                    });
+                }
+            }
+
+            set_comment_button_color();
+            generate_lesson_text();
+
+            $(".spinner").hide();
+        }, //success
+
+        error : function(xml_http_request, text_status, error_thrown) {
+            alert('Ajax Error: ' + text_status + '/ ' + xml_http_request + '/ ' + error_thrown);
+        } //error
+
+    }); //ajax call
+} //ajax submit function
+
+function attach_gloss(gloss_id, gloss_text) {
+    //calculate next order by finding the highest order in the form and adding 10
+    var next_gloss_order = 0;
+    var temp_div = '#glossed_text_' + glossed_text_id + '_glosses'; //get div that surrouds glosses for given glossed text
+    $("form", temp_div).each(function() { // get the value of each order
+        order = parseInt($('#order', this).val());
+        if(order > next_gloss_order) {
+            next_gloss_order = order;
+        }
+    });
+    next_gloss_order += 10;
+
+    var mydata = {};
+    mydata['existing_gloss_id'] = gloss_id;
+    mydata['glossed_text_id'] = glossed_text_id; //set when displaying attach modal
+    mydata['order'] = next_gloss_order;
+
+    $.ajax({
+        type: "POST",
+        url:'/admin2/eieol_glossed_text_gloss/copy_gloss',
+        data:mydata,
+        dataType: "html",
+
+        success : function(data){
+            var json = JSON.parse(data);
+
+            if(json['fail']) {
+                alert('Ajax Error: ' + json['msg']);
+            }  //json fail
+
+            if(json['success']) {
+                var new_div_id = "glossed_text_gloss_" + json['gtg_id'] + "_div";
+                var new_form_id = "new_glossed_text_gloss_form_" + json['gtg_id'];
+                var new_form_action = "/admin2/eieol_glossed_text_gloss/" + json['gtg_id'];
+
+                var new_div = $( "#new_glossed_text_gloss_div" ).clone(true).attr("id",new_div_id);
+                new_div.appendTo( temp_div );
+                new_div.show();
+
+                $('#new_glossed_text_gloss_form', '#'+new_div_id).find("#order").attr('value',next_gloss_order);
+                $('#new_glossed_text_gloss_form', '#'+new_div_id).find("#glossed_text_id").attr('value',glossed_text_id);
+                $('#new_glossed_text_gloss_form', '#'+new_div_id).find(".gloss_text").html('<br/>' + gloss_text);
+                $('#new_glossed_text_gloss_form', '#'+new_div_id).find(".gloss_text").addClass('gloss_' + json['gloss_id']);
+                $('#new_glossed_text_gloss_form', '#'+new_div_id).attr("action",new_form_action);
+                $('#new_glossed_text_gloss_form', '#'+new_div_id).attr("id",new_form_id);
+                $('.delete_glossed_text_gloss', '#' + new_div_id).show();
+                $('.delete_glossed_text_gloss_form', '#'+new_div_id).attr("action",new_form_action);
+                $('#glossed_text_gloss_id', '#'+new_div_id).val(json['gtg_id']);
+
+                $('#edit_gloss', '#'+new_div_id).find("#gloss_id").attr('value',json['gloss_id']);
+
+                $("#attach_gloss_modal").modal('hide');
+                $('#success_message').html('Gloss successfully added.');
+                $("#update_confirm").modal('show');
+                setTimeout(function(){
+                    $("#update_confirm").modal('hide');
+                }, 1000);
+
+                set_comment_button_color();
+            } //json success
+
+        }, //success
+
+        error : function(xml_http_request, text_status, error_thrown) {
+            alert('Ajax Error: ' + text_status + '/ ' + xml_http_request + '/ ' + error_thrown);
+        } //error
+
+    }); //ajax call
+} //attach gloss function
+
+function attach_head_word(head_word_id, head_word_display) {
+    //gloss_form is set when they open the head word modal
+    $(gloss_form).find("#element_" + element_id + "_head_word_id").attr('value', head_word_id);
+    $(gloss_form).find("#element_" + element_id + "_head_word_display").html(head_word_display);
+    highlight_form($(gloss_form));
+    $("#attach_head_word_modal").modal('hide');
+} //attach head word
+
+//ajax search for glosses
+function searchGlosses(gloss) {
+    if (gloss.length===0) { //if the search is blank, reset the result box
+        document.getElementById("gloss_search_result").innerHTML="";
+        return;
+    }
+    xmlhttp=new XMLHttpRequest();
+    xmlhttp.onreadystatechange=function() {
+        if (xmlhttp.readyState===4 && xmlhttp.status===200) { //if ajax is successful, load result box
+            document.getElementById("gloss_search_result").innerHTML=xmlhttp.responseText;
+        }
+    };
+    xmlhttp.open("GET","/admin2/eieol_gloss/filtered_list?gloss="+gloss+"&language="+hold_language_id,true);
+    xmlhttp.send();
+}
+
+//ajax search for head words
+function searchHeadWords(head_word) {
+    if (head_word.length===0) { //if the search is blank, reset the result box
+        document.getElementById("head_word_search_result").innerHTML="";
+        return;
+    }
+    xmlhttp=new XMLHttpRequest();
+    xmlhttp.onreadystatechange=function() {
+        if (xmlhttp.readyState===4 && xmlhttp.status===200) { //if ajax is successful, load result box
+            document.getElementById("head_word_search_result").innerHTML=xmlhttp.responseText;
+        }
+    };
+    xmlhttp.open("GET","/admin2/eieol_head_word/filtered_list?head_word="+head_word+"&language="+hold_language_id,true);
+    xmlhttp.send();
+}
+
+function previewText(ckeditor_inst) {
+    var text = CKEDITOR.instances[ckeditor_inst].getData();
+    $("#preview_modal #preview_modal_body").html(text);
+    $('#preview_modal').modal({});
+
+}
+
+
+// --------------------------------document ready-------------------------------------
+
+$(document).ready(function(){
+
+    $("div.lotsagloss").hide();
+
+    $( "button.togglegloss" ).click(function() {
+
+        $(this).closest('div.row').parent().next('div.lotsagloss').toggle();
+
+    });
+
+    //if they have unsaved changes, ask them if they want to leave
+    window.onbeforeunload = function() {
+        dirty_page = false;
+        $("form").each(function() {
+            var attr = $(this).attr('dirty');
+            if (typeof attr !== typeof undefined && attr !== false) {
+                dirty_page = true;
+            }
+        });
+        if (dirty_page) {
+            return 'You have unsaved changes!';
+        }
+    };
+
+    //set language js variable so we can use it for the gloss, head word and keyword lookups
+    hold_language_id = window.lesson_language_id;
+
+    //build lesson text
+    generate_lesson_text();
+
+    //turn on tags for keywords (in head word modal)
+    $('#new_keywords').tagsInput({
+        'height':'50px',
+        'width':'100%',
+        'defaultText':'',
+        'autocomplete_url':'/admin2/eieol_head_word_keyword/filtered_list?language='+hold_language_id
+    });
+    $('#edit_keywords').tagsInput({
+        'height':'50px',
+        'width':'100%',
+        'defaultText':'',
+        'autocomplete_url':'/admin2/eieol_head_word_keyword/filtered_list?language='+hold_language_id
+    });
+
+    //custom keyboard for text inputs
+    $('.custom-keyboard').specialedit(window.lesson_language_custom_keyboard_layout);
+
+    //these two functions prevent users from tabbing out of the keywords fields.  We want them to stay and enter a comma after each word
+    $('#new_keywords_tag').keypress(function (e) { //listen for typing
+        if(e.keyCode === 9){ // tab
+            e.preventDefault();
+        }
+    });
+    $('#edit_keywords_tag').keypress(function (e) { //listen for typing
+        if(e.keyCode === 9){ // tab
+            e.preventDefault();
+        }
+    });
+
+    //autocomplete fields
+    $(".part_of_speech").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                dataType: "json",
+                data: {
+                    term: request.term,
+                    language_id: window.lesson_language_id,
+                },
+                type : 'GET',
+                url: '/admin2/part_of_speech/filtered_list',
+                success: function(data) {
+                    response(data)
+
+                }
+            });
+        }
+    }); //part of speech autocomplete
+
+    $(".analysis").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                dataType: "json",
+                data: {
+                    term: request.term,
+                    language_id: window.lesson_language_id,
+                },
+                type : 'GET',
+                url: '/admin2/eieol_analysis/filtered_list',
+                success: function(data) {
+                    response(data)
+
+                }
+            });
+        }
+    }); //analysis autocomplete
+
+
+    listen_to_forms();
+
+
+    //bind all ajax forms to our ajax function
+    $('.ajax_form').submit(function(){
+        ajax_submit($(this));
+        return false; // this keeps the form from submitting
+    });//submit
+
+    //popup to attach gloss
+    $(".attach_gloss_form").submit(function() {
+        $("#new_gloss_form").css("background-color", "#FFFFFF");
+        glossed_text_id = $(this).find("#glossed_text_id").val(); //this sets the global variable so we can attach a selected gloss
+        $("#gloss_search_input").val(""); //reset the input box
+        $("#attach_gloss_modal").modal('show');
+        $("#gloss_search_input").focus(); //put cursor in search box
+        document.getElementById("gloss_search_result").innerHTML=""; //reset result box so it's empty each time the click it
+        $('#new_gloss_form')[0].reset(); //reset the new gloss form
+        $(".errors", '#new_gloss_form').empty(); //reset gloss form error divs
+        for (i=1; i<=6; i++) {
+            $('#element_' + i + '_head_word_display', '#new_gloss_form').text(''); //reset headword text
+            $('#element_' + i + '_head_word_id', '#new_gloss_form').val('');//reset headword id
+        }
+        return false;
+    });
+
+    //this is when they click on a gloss in the gloss listing modal
+    $("#gloss_search_result").on('click', 'a', function() {
+        attach_gloss($(this).attr('id'), $(this).html());
+    });
+
+    //when they add a new gloss
+    $("#new_gloss_form").submit(function() {
+        $(".errors", '#new_gloss_form').empty();
+        $.ajax({
+            type: "POST",
+            url:$("#new_gloss_form").attr('action'),
+            data:$("#new_gloss_form").serialize(),
+            dataType: "html",
+
+            success : function(data){
+                var json = JSON.parse(data);
+
+                if(json['fail']) { //go through all errors and set error messages, just within this form;
+                    $.each(json['errors'], function( index, value ) {
+                        var errorDiv = '#'+index+'_error';
+                        $(errorDiv, "#new_gloss_form").html(value);
+                    });
+                }  //json fail
+
+                if(json['success']) {
+                    $(this).css("background-color", "#FFFFFF");
+                    $(this).removeAttr("dirty");
+                    attach_gloss(json['gloss_id'], json['gloss_display']);
+
+                } //json success
+            }, //success
+
+            error : function(xml_http_request, text_status, error_thrown) {
+                alert('Ajax Error: ' + text_status + '/ ' + xml_http_request + '/ ' + error_thrown);
+            } //error
+
+        }); //ajax call
+
+        return false; // this keeps the form from submitting
+    });//add gloss
+
+    //popup to edit gloss
+    $(".edit_gloss").submit(function() {
+
+        //load form with data for the record they want to edit
+        $.ajax({
+            type: "GET",
+            url: "/admin2/eieol_gloss/" + $(this).find("#gloss_id").val(),
+            data: null,
+            dataType: "json",
+
+            success : function(data){
+                //clear old values out
+                $('#edit_gloss_form')[0].reset();
+                //for some reason the reset doesn't reset all the fields
+                for (i=1; i<=6; i++) {
+                    $('#element_' + i + '_head_word_id', '#edit_gloss_form').val('');
+                }
+
+                //clear comment divs out
+                $("#gloss_author_comments").html('');
+                $("#gloss_admin_comments").html('');
+
+                if (!window.isAdmin || data['author_comments'] || data['author_done']) {
+                    //only show if you are not an admin, or if they were filled in.
+                    $("#gloss_author_comments").html('<div class="form-group col-sm-9 col-sm-offset-1">\
+						    <label for="author_comments">Author Comments</label>\
+						    <textarea class="form-control comment_textarea author_comments" name="author_comments" cols="100" rows="2" id="author_comments"></textarea>\
+						</div>\
+						<div class="form-group col-sm-1">\
+						    <label for="author_done">Done</label>\
+						    \<input class="form-control author_done" id="gloss_author_done" \
+						        name="author_done" type="checkbox" value="1"\
+						        checked='+(data.author_done?'checked':'')+'>\
+						</div>');
+                }
+
+                if (window.isAdmin) {
+                    $("#gloss_admin_comments").html('<div class="form-group col-sm-9 col-sm-offset-1">\
+							    <label for="admin_comment">Admin Comments</label>\
+					    		<textarea class="form-control comment_textarea admin_comments" name="admin_comments" cols="100" rows="2"></textarea>\
+							</div>\
+							<div class="form-group col-sm-1">\
+						        <input class="btn btn-xs btn-warning comment_clear" type="submit" value="Clear">\
+							</div>');
+                } else {
+                    if (data['admin_comments']) {
+                        //Only show admin comments to authors if they exist
+                        $("#gloss_admin_comments").html('<div class="form-group col-sm-9 col-sm-offset-1">\
+								<label for="admin_comment">Admin Comments</label>\
+								<input class="form-control" name="admin_comments" type="hidden">\
+								<div class="well" style="white-space: pre-wrap" >' + data['admin_comments'] + '</div>\
+							</div>');
+                    }
+                }
+
+                //load form
+                $.each(data, function(key, value){
+                    if (key === 'author_done') { //checkboxes behave differently
+                        if (value == 1) {
+                            $("#gloss_author_done").prop('checked', true);
+                        }
+                    } else {
+                        $('[name='+key+']', '#edit_gloss_form').val(value);
+                    }
+                });
+
+                for (i=1; i<=6; i++) {
+                    $('#element_' + i + '_head_word_display', '#edit_gloss_form').text(''); //we only get ones that already exist, so reset it first
+                    $('#element_' + i + '_head_word_display', '#edit_gloss_form').html(data['element_' + i + '_head_word_display']);
+                }
+
+                for (i=2; i<=6; i++) {
+                    if (data.hasOwnProperty('element_' + i + '_id')) {
+                        $('#element_' + i).show();
+                    } else {
+                        $('#element_' + i).hide();
+                    }
+                }
+
+                $("#gloss_lessons").html("<strong>This is used by the following lessons:</strong> " + data['lessons']);
+                $("#edit_gloss_form").attr("action", "/admin2/eieol_gloss/" + data['id']);
+                $(".errors", "#edit_gloss_form").empty(); //reset gloss form error divs
+                $("#edit_gloss_modal").modal("show");
+                $('#edit_gloss_form').css("background-color", "#FFFFFF");
+                $('#edit_gloss_form').removeAttr("dirty");
+                $("#surface_form", "#edit_gloss_form").focus(); //put cursor in first field
+
+                set_comment_button_color();
+                listen_to_forms();
+                listen_for_clear_comments();
+                $("#gloss_comments").hide(); //close comments box in case they left it open on previous editing
+
+            }, //success
+
+            error : function(xml_http_request, text_status, error_thrown) {
+                alert('Ajax Error: ' + text_status + '/ ' + xml_http_request + '/ ' + error_thrown);
+            } //error
+
+        }); //ajax call
+
+
+
+        return false;
+    }); //edit gloss
+
+    //delete glossed_text_gloss confirmation
+    $(".delete_glossed_text_gloss").click(function(e) {
+        e.preventDefault();
+        var form=$(this).closest('form');
+        var my_div = 'glossed_text_gloss_' + $(form).find("#glossed_text_gloss_id").val() + '_div';
+        $("#delete_glossed_text_gloss_confirm").modal('show')
+            .one('click', '#delete_confirmed', function () {
+                $.ajax({
+                    type: "POST",
+                    url:form.attr('action'),
+                    data:{'_method':'delete'},
+                    dataType: "html",
+
+                    success : function(){
+                        $('#' + my_div).remove();
+                        $("#delete_glossed_text_gloss_confirm").modal('hide');
+
+                        $('#success_message').html('Gloss has been unattached.');
+                        $("#update_confirm").modal('show');
+                        setTimeout(function(){
+                            $("#update_confirm").modal('hide');
+                        }, 1000);
+
+                    }, //success
+
+                    error : function(xml_http_request, text_status, error_thrown) {
+                        alert('Ajax Error: ' + text_status + '/ ' + xml_http_request + '/ ' + error_thrown);
+                    } //error
+
+                }); //ajax call
+            });
+    }); //delete glossed_text_gloss
+
+
+    //popup to attach or change head word to gloss
+    $(".pick_head_word_button").click(function() {
+        $("#new_head_word_form").css("background-color", "#FFFFFF");
+        gloss_form = $(this).closest('form'); //we will use this in the attach_head_word function
+        $("#head_word_search_input").val(""); //reset the input box
+        $("#attach_head_word_modal").modal('show');
+        $("#head_word_search_input").focus(); //put cursor in search box
+        document.getElementById("head_word_search_result").innerHTML=""; //reset result box so it's empty each time the click it
+        $('#new_head_word_form')[0].reset(); //reset the new head word form
+        $('#new_keywords').importTags(""); //trigger reset doesn't work because of the jquery tags, so do this one manually
+        $(".errors", '#new_head_word_form').empty(); //reset head word form error divs
+        return false;
+    });
+
+    //popup to edit head word
+    $(".edit_head_word_button").click(function() {
+
+        gloss_form = $(this).closest('form'); //get gloss form so we can get head_word_id
+        head_word_id = $(gloss_form).find("#element_" + element_id + "_head_word_id").val();
+        if (head_word_id === '') {
+            alert('Please add a Head Word before editing it.');
+            return false;
+        }
+
+        //load form with data for the record they want to edit
+        $.ajax({
+            type: "GET",
+            url: "/admin2/eieol_head_word/" + head_word_id,
+            data: null,
+            dataType: "json",
+
+            success : function(data){
+                $.each(data, function(key, value){
+                    $('[name='+key+']', '#edit_head_word_form').val(value);
+                });
+                $('#edit_keywords').importTags(data['keywords']); //because of the jquery tags, do this one manually
+                $("#edit_head_word_form").attr("action", "/admin2/eieol_head_word/" + data['id']);
+                $("#head_word_glosses").html("<strong>This is used by the following glosses:</strong> " + data['glosses']);
+                $(".errors", '#edit_head_word_form').empty(); //reset head word form error divs
+                $('#edit_head_word_form').css("background-color", "#FFFFFF");
+                $("#edit_head_word_modal").modal('show');
+                $("#word", "#edit_head_word_form").focus(); //put cursor in first field
+
+                set_comment_button_color();
+            }, //success
+
+            error : function(xml_http_request, text_status, error_thrown) {
+                alert('Ajax Error: ' + text_status + '/ ' + xml_http_request + '/ ' + error_thrown);
+            } //error
+
+        }); //ajax call
+
+        return false;
+    });
+
+    //this is when they click on a head word in the head word listing modal
+    $("#head_word_search_result").on('click', 'a', function() {
+        attach_head_word($(this).attr('id'), $(this).html());
+    });
+
+    //when they add a new headword
+    $("#new_head_word_form").submit(function() {
+        $(".errors", '#new_head_word_form').empty();
+        $.ajax({
+            type: "POST",
+            url:$("#new_head_word_form").attr('action'),
+            data:$("#new_head_word_form").serialize(),
+            dataType: "html",
+
+            success : function(data){
+                var json = JSON.parse(data);
+
+                if(json['fail']) { //go through all errors and set error messages, just within this form;
+                    $.each(json['errors'], function( index, value ) {
+                        var errorDiv = '#'+index+'_error';
+                        $(errorDiv, "#new_head_word_form").html(value);
+                    });
+                }  //json fail
+
+                if(json['success']) {
+                    $(this).css("background-color", "#FFFFFF");
+                    $(this).removeAttr("dirty");
+                    attach_head_word(json['head_word_id'], json['head_word_display']);
+                } //json success
+            }, //success
+
+            error : function(xml_http_request, text_status, error_thrown) {
+                alert('Ajax Error: ' + text_status + '/ ' + xml_http_request + '/ ' + error_thrown);
+            } //error
+
+        }); //ajax call
+
+        return false; // this keeps the form from submitting
+    });//add headword
+
+    //this clones the default add glossed text form and turns on the ckeditor for it
+    $("#add_glossed_text").click(function() {
+        var new_div = $("#new_glossed_text_div").clone(true);
+        new_div.appendTo("#glossed_texts");
+        new_div.show();
+
+        //calculate next order by finding the highest order in the form and adding 10
+        var next_glosssed_text_order = 0;
+        $(".glossed_text_form").each(function() { // get the value of each order
+            order = parseInt($('#order', this).val());
+            if(order > next_glosssed_text_order) {
+                next_glosssed_text_order = order;
+            }
+        });
+        next_glosssed_text_order += 10;
+        $("#glossed_texts").find("#new_glossed_text_div").find("#order").val(next_glosssed_text_order);
+
+        $("#add_glossed_text").hide(); //hide the button so they can't add another glossed text till they finsish this one
+    });
+
+    //delete glossed text confirmation
+    $(".delete_glossed_text").click(function(e) {
+        e.preventDefault();
+        var form = $(this).closest('form');
+        var div = $(form).closest('div');
+        $("#delete_glossed_text_confirm").modal('show')
+            .one('click', '#delete_confirmed', function () {
+                $.ajax({
+                    type: "POST",
+                    url:form.attr('action'),
+                    data:{'_method':'delete'},
+                    dataType: "html",
+
+                    success : function(){
+                        div.remove();
+                        generate_lesson_text();
+                        $("#delete_glossed_text_confirm").modal('hide');
+
+                        $('#success_message').html('Glossed Text has been deleted.');
+                        $("#update_confirm").modal('show');
+                        setTimeout(function(){
+                            $("#update_confirm").modal('hide');
+                        }, 1000);
+                    }, //success
+
+                    error : function(xml_http_request, text_status, error_thrown) {
+                        alert('Ajax Error: ' + text_status + '/ ' + xml_http_request + '/ ' + error_thrown);
+                    } //error
+
+                }); //ajax call
+            });
+    }); //delete glossed text
+
+
+    //this clones the default add grammar form and turns on the ckeditor for it
+    $( "#add_grammar" ).click(function() {
+        var new_div = $( "#new_grammar_div" ).clone(true);
+        new_div.appendTo( "#grammars" );
+        new_div.show();
+
+        CKEDITOR.replace('new_grammar_text',ckeditor_parms);
+        CKEDITOR.instances['new_grammar_text'].on('change', function() {
+            if(this.checkDirty()) {
+                $('#new_grammar_form').css("background-color", "#EBAD99");
+                $('#new_grammar_form').attr("dirty", "dirty");
+            }
+        });
+
+        //calculate next order by finding the highest order in the form and adding 10
+        var next_grammar_order = 0;
+        $(".grammar_form").each(function() { // get the value of each order
+            order = parseInt($('#order', this).val());
+            if(order > next_grammar_order) {
+                next_grammar_order = order;
+            }
+        });
+        next_grammar_order += 10;
+        $("#grammars").find("#new_grammar_div").find("#order").val(next_grammar_order);
+
+        $("#add_grammar").hide(); //hide the button so they can't add another glossed text till they finsish this one
+    });
+
+    //delete grammar confirmation
+    $(".delete_grammar").click(function(e) {
+        e.preventDefault();
+        var form=$(this).closest('form');
+        $("#delete_grammar_confirm").modal('show')
+            .one('click', '#delete_confirmed', function () {
+                $.ajax({
+                    type: "POST",
+                    url:form.attr('action'),
+                    data:{'_method':'delete'},
+                    dataType: "html",
+
+                    success : function(){
+                        form.remove();
+                        $("#delete_grammar_confirm").modal('hide');
+
+                        $('#success_message').html('Grammar has been deleted.');
+                        $("#update_confirm").modal('show');
+                        setTimeout(function(){
+                            $("#update_confirm").modal('hide');
+                        }, 1000);
+                    }, //success
+
+                    error : function(xml_http_request, text_status, error_thrown) {
+                        alert('Ajax Error: ' + text_status + '/ ' + xml_http_request + '/ ' + error_thrown);
+                    } //error
+
+                }); //ajax call
+            });
+    }); //delete grammar
+
+    //show element
+    $('.show_element').click(function() {
+        var content = $(this).next();
+        $(content).slideToggle('slow');
+        return false;
+    });
+
+    //show comments
+    $('.comment_button').click(function() {
+        var content = $(this).closest('form').find(".comment_rows");
+        $(content).slideToggle(250);
+        return false;
+    });
+
+    listen_for_clear_comments();
+
+    // call function to mark if comments are filled in and change button.
+    set_comment_button_color();
+
+    $('[data-toggle="popover"]').popover();
+
+    //This code is needed when we have one modal open another.
+    //Without it, when you close the second modal, the first one becomes unscrollable.
+    $('.modal').on('hidden.bs.modal', function () {
+        if($('.modal').hasClass('in')) {
+            $('body').addClass('modal-open');
+        }
+    });
+
+
+});//document ready

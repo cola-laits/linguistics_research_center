@@ -21,6 +21,10 @@
         <script src="/js/specialedit.jquery.js"></script>
         <script src="/js/google_analytics.js"></script>
 
+        <script src="/js/vue.js"></script>
+        <script src="/js/vue-search-select.js"></script>
+        <script src="/js/axios.min.js"></script>
+
         <style>
             body {
                 font-family: Times New Roman, Times, serif;
@@ -67,7 +71,10 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/">Back to Site</a></li>
-                <li><form class="navbar-form" method="POST" action="/logout">@csrf<button type="submit" class="btn btn-default">Log Out</button></form></li>
+                <li><form class="navbar-form" method="POST" action="/logout">
+                        @csrf
+                        <button type="submit" class="btn btn-default">Log Out</button>
+                    </form></li>
             </ul>
         </div>
         </div>
@@ -118,24 +125,7 @@
         </script>
 
 
-        <div id="delete_confirm" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Delete Confirmation</h4>
-                    </div>
-                    <div class="modal-body">
-                        Are you sure you want to delete this record?  <br/><br/>
-                        <p class="text-warning"><small>This action can not be undone later.</small></p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" id="delete_confirmed">Delete</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+@include('eieol_lesson.confirm_delete')
 
         <div class="container-fluid">
             @yield('content')
