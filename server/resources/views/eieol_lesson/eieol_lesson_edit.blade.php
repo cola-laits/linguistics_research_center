@@ -148,7 +148,6 @@
 		  		    }, 1000);
 	  		      	myform.css("background-color", "#FFFFFF");
 	  		      	myform.removeAttr("dirty");
-	  		      //  setTimeout(function(){$("#reminder").dialog( "open" );},1500000); //reset warning for 25 minutes
 
 	  		    	//if they updated the language, we need to change the hidden language ids
 	  		      	if(json.hasOwnProperty('language_id')) {
@@ -356,9 +355,6 @@
 
     }
 
-	//remind them to save before they timeout.  Set to 25 minutes * 60 seconds * 1000 milliseconds = 1500000
-  //  setTimeout(function(){$("#reminder").dialog( "open" );},1500000);
-
 
 	// --------------------------------document ready-------------------------------------
     
@@ -371,10 +367,6 @@
         $(this).closest('div.row').parent().next('div.lotsagloss').toggle();
         
       });
-
-    	$( "#reminder" ).dialog({
-		      autoOpen: false,
-		  });
 
     	//if they have unsaved changes, ask them if they want to leave
     	window.onbeforeunload = function() {
@@ -516,7 +508,6 @@
 		  		    if(json['success']) { 
 		  		      	$(this).css("background-color", "#FFFFFF");
 		  		        $(this).removeAttr("dirty");
-		  		       // setTimeout(function(){$("#reminder").dialog( "open" );},1500000); //reset warning for 25 minutes
 		  		        attach_gloss(json['gloss_id'], json['gloss_display']);
 
 		  		    } //json success
@@ -623,7 +614,6 @@
 				    $("#edit_gloss_modal").modal("show"); 
 				    $('#edit_gloss_form').css("background-color", "#FFFFFF");
 				    $('#edit_gloss_form').removeAttr("dirty");
-				 //   setTimeout(function(){$("#reminder").dialog( "open" );},1500000); //reset warning for 25 minutes
 				    $("#surface_form", "#edit_gloss_form").focus(); //put cursor in first field
 
 				    set_comment_button_color();
@@ -760,7 +750,6 @@
 		  		    if(json['success']) { 
 		  		      	$(this).css("background-color", "#FFFFFF");
 		  		      	$(this).removeAttr("dirty");
-		  		      //  setTimeout(function(){$("#reminder").dialog( "open" );},1500000); //reset warning for 25 minutes
 		  		        attach_head_word(json['head_word_id'], json['head_word_display']);
 		  		    } //json success
 		        }, //success
@@ -928,11 +917,6 @@
     <img src="/images/ajax_loader_red_350.gif" alt="Loading" width="150" height="150" border="0">
     <br/>Please Wait...
 </div>
-
-<div id="reminder" title="Login Timeout">
-	<p>It has been 25 minutes since you last saved.  Any changes will be lost if you do not save within the next 5 minutes.</p>
-</div>
-
 
 <div id="attach_gloss_modal" class="modal">
     <div class="modal-dialog modal-lg">
