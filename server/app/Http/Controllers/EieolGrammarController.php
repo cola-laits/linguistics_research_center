@@ -47,6 +47,7 @@ class EieolGrammarController extends Controller
             'success' => true,
             'added' => true,
             'grammar_id' => $grammar->id,
+            'grammar' => $grammar,
             'action' => '/admin2/eieol_grammar/' . $grammar->id, //sent to turn the create form into an update form
             'message' => 'Grammar was successfully added.'
         ];
@@ -82,6 +83,7 @@ class EieolGrammarController extends Controller
         $grammar->save();
         return [
             'success' => true,
+            'grammar' => $grammar,
             'message' => 'Grammar: ' . $grammar->title . ' was successfully updated.'
         ];
     }

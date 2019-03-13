@@ -58,8 +58,8 @@ CKEDITOR.plugins.add( 'onchange',
 			// Set several listeners to watch for changes to the content
 			editor.on( 'saveSnapshot', function( evt )
 			{
-				if ( !evt.data || !evt.data.contentOnly )
-					somethingChanged();
+				//if ( !evt.data || !evt.data.contentOnly )
+				//	somethingChanged();
 			});
 
 			var undoCmd = editor.getCommand('undo');
@@ -84,8 +84,8 @@ CKEDITOR.plugins.add( 'onchange',
 			} );
 
 			// To check that we are using a cool browser.
-			if (window.console && window.console.log)
-				console.log("Detecting changes using MutationObservers");
+			//if (window.console && window.console.log)
+			//	console.log("Detecting changes using MutationObservers");
 		}
 
 		// Changes in WYSIWYG mode

@@ -6,11 +6,11 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>LRC Admin - @yield('title')</title>
 
+        <script src="/js/google_analytics.js"></script>
+
         <script src="{{ mix('/js/manifest.js') }}"></script>
         <script src="{{ mix('/js/vendor.js') }}"></script>
-        <script src="{{ mix('/js/admin.js') }}"></script>
 
-        <script src="/js/vue-router.js"></script>
         <script src="/js/vuetable-2.min.js"></script>
 
         <link rel="stylesheet" href="/css/vuetable-2.css">
@@ -20,18 +20,6 @@
         <link media="all" type="text/css" rel="stylesheet" href="/css/adminstyle.css">
         <link media="all" type="text/css" rel="stylesheet" href="/css/jquery.tagsinput.css">
         <link media="all" type="text/css" rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-        <script src="//cdn.ckeditor.com/4.4.5.1/full/ckeditor.js"></script>
-
-        <script src="/js/jquery.tagsinput.js"></script>
-        <script src="//code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
-        <script src="/js/specialedit.jquery.js"></script>
-        <script src="/js/google_analytics.js"></script>
-
-        <script src="/js/vue-search-select.js"></script>
-        <script src="/js/axios.min.js"></script>
 
         <style>
             body {
@@ -88,58 +76,51 @@
         </div>
     </nav>
 
-        <script type="text/javascript">
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            $(document).ready(function(){
-                //highlight the menu for whichever page we are on - only works for main pages, not edit or create pages
-                $('a[href$="' + this.location.pathname + '"]').parent().addClass('active');
-
-                //generic delete confirmation
-                $(".delete").click(function(e) {
-                    e.preventDefault();
-                    var $form=$(this).closest('form');
-
-                    $("#delete_confirm").modal('show')
-                        .one('click', '#delete_confirmed', function (e) {
-                            $form.trigger('submit');
-                        });
-                });
-
-            });
-
-            $mytoolbar =
-                [
-                { name: 'document', items : [ 'Source','EieolLanguage'] },
-
-
-                    { name: 'clipboard', items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] },
-                    { name: 'editing', items : [ 'Find','Replace','-','SelectAll','-','SpellChecker' ] },
-                    { name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
-                    { name: 'paragraph', items : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote','-',
-                                                   'JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','BidiLtr','BidiRtl' ] },
-                    { name: 'links', items : [ 'Link','Unlink','Anchor' ] },
-                    { name: 'insert', items : [ 'Table','HorizontalRule','SpecialChar'] },
-                    { name: 'styles', items : [ 'Format','FontSize' ] },
-                    { name: 'colors', items : [ 'TextColor','BGColor' ] },
-                    { name: 'insert', items : [ 'Image' ]  },
-                    { name: 'tools', items : [ 'Maximize'] }
-                ];
-
-        </script>
-
-
 @include('eieol_lesson.confirm_delete')
 
-        <div class="container-fluid">
-            @yield('content')
-        </div>
+    <div class="container-fluid v-cloak" id="admin_app">
+        @yield('content')
+    </div>
 
-        <br><br>
+    <script src="/js/vue-search-select.js"></script>
+    <script src="/ckeditor/ckeditor-4.4.5-full/ckeditor.js"></script>
+
+    <script src="{{ mix('/js/admin.js') }}"></script>
+
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+    <script src="/js/jquery.tagsinput.js"></script>
+    <script src="//code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
+
+
+    <script type="text/javascript">
+        window.axios.defaults.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content');
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $(document).ready(function(){
+            //generic delete confirmation
+            $(".delete").click(function(e) {
+                e.preventDefault();
+                var $form=$(this).closest('form');
+
+                $("#delete_confirm").modal('show')
+                    .one('click', '#delete_confirmed', function (e) {
+                        $form.trigger('submit');
+                    });
+            });
+
+        });
+
+    </script>
+
+    @yield('foot_extra')
+
+    <br><br>
     </body>
 </html>	
 
