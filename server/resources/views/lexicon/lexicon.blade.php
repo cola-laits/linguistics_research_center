@@ -2,15 +2,6 @@
 
 @section('title') Lexicon Admin @stop
 
-@section('head_extra')
-    <script src="/js/vue.js"></script>
-    <script src="/js/vue-router.js"></script>
-    <script src="/js/vuetable-2.min.js"></script>
-    <script src="/js/axios.min.js"></script>
-
-    <link rel="stylesheet" href="/css/vuetable-2.css">
-@stop
-
 @section('content')
     <div id="vue-app">
         <router-view></router-view>

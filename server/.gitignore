@@ -9,3 +9,9 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+
+public/css/admin.css
+public/js/admin.js
+public/js/manifest.js
+public/js/vendor.js
+public/mix-manifest.json
