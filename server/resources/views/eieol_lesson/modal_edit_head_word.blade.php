@@ -11,7 +11,8 @@
                         {{ Form::open(['role' => 'form',
                            'url' => '/admin2/eieol_head_word/', 
                            'method' => 'PUT',
-                           'class' => 'form ajax_form modal_form',
+                           'class' => 'form modal_form',
+                           'onsubmit' => 'ajax_submit(this); return false;',
                            'id' => 'edit_head_word_form'
                           ]) }}
 
@@ -43,7 +44,7 @@
                         </div>
 
                         <div class='form-group bottom_button'>
-                            {{ Form::submit('Edit', ['class' => 'btn btn-xs btn-primary']) }}
+                            {{ Form::submit('Save', ['class' => 'btn btn-xs btn-primary']) }}
                         </div>
 
                         {{ Form::close() }}

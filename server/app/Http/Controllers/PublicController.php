@@ -178,7 +178,7 @@ class PublicController extends Controller
                         $data['glosses'][$key]['glossed_text_gloss_ids'] = [];
                     }
 
-                    $data['glosses'][$key]['glossed_text_gloss_ids'][$gloss->pivot->id] = $lesson;
+                    $data['glosses'][$key]['glossed_text_gloss_ids'][$gloss->id] = $lesson;
 
                 } //foreach gloss
 
@@ -203,7 +203,7 @@ class PublicController extends Controller
             'series' => $series
         ];
 
-        $data['language'] = EieolLanguage::find($language_id);
+        $data['language'] = EieolLanguage::findOrFail($language_id);
         $data['head_words'] = array();
 
         $lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word.language', 'glossed_texts.glosses.elements.head_word.etyma')
@@ -239,7 +239,7 @@ class PublicController extends Controller
 
                             $data['head_words'][$key]['glossed_text_gloss_ids'] = array();
 
-                            $data['head_words'][$key]['glossed_text_gloss_ids'][$gloss->pivot->id] = $lesson;
+                            $data['head_words'][$key]['glossed_text_gloss_ids'][$gloss->id] = $lesson;
 
                             //build sort key
                             //remove first character, because it's a '<
@@ -249,7 +249,7 @@ class PublicController extends Controller
                             $data['head_words'][$key]['sortable_key'] = \Normalizer::normalize($sort_key, \Normalizer::FORM_D);
                         } else {
 
-                            $data['head_words'][$key]['glossed_text_gloss_ids'][$gloss->pivot->id] = $lesson;
+                            $data['head_words'][$key]['glossed_text_gloss_ids'][$gloss->id] = $lesson;
 
                         }
 
@@ -308,11 +308,11 @@ class PublicController extends Controller
 
                                 $data['keywords'][$key]['glossed_text_gloss_ids'] = array();
 
-                                $data['keywords'][$key]['glossed_text_gloss_ids'][$gloss->pivot->id] = $lesson;
+                                $data['keywords'][$key]['glossed_text_gloss_ids'][$gloss->id] = $lesson;
 
                             } else {
 
-                                $data['keywords'][$key]['glossed_text_gloss_ids'][$gloss->pivot->id] = $lesson;
+                                $data['keywords'][$key]['glossed_text_gloss_ids'][$gloss->id] = $lesson;
 
                             }
 

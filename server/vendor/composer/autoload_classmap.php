@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Console\\Commands\\NormalizeUnicodeText' => $baseDir . '/app/Console/Commands/NormalizeUnicodeText.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\EieolElement' => $baseDir . '/app/EieolElement.php',
     'App\\EieolGloss' => $baseDir . '/app/EieolGloss.php',

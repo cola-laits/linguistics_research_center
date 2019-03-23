@@ -11,10 +11,6 @@
         <script src="{{ mix('/js/manifest.js') }}"></script>
         <script src="{{ mix('/js/vendor.js') }}"></script>
 
-        <script src="/js/vuetable-2.min.js"></script>
-
-        <link rel="stylesheet" href="/css/vuetable-2.css">
-
         <link media="all" type="text/css" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
         <link media="all" type="text/css" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
         <link media="all" type="text/css" rel="stylesheet" href="/css/adminstyle.css">

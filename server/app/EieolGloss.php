@@ -44,9 +44,9 @@ use Illuminate\Database\Eloquent\Model;
 class EieolGloss extends Model {
 	protected $table = 'eieol_gloss';
 	
-	public function glossed_texts()
+	public function glossed_text()
 	{
-		return $this->belongsToMany('\App\EieolGlossedText', 'eieol_glossed_text_gloss', 'gloss_id', 'glossed_text_id')->withPivot('order', 'id');
+		return $this->belongsTo('\App\EieolGlossedText', 'glossed_text_id');
 	}
 	
 	public function elements()

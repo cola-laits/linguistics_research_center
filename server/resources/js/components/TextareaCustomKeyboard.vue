@@ -1,4 +1,5 @@
 <template>
+    <div>
     <textarea
         :placeholder="placeholder"
         class="form-control"
@@ -7,7 +8,10 @@
         rows="3"
         :lang="lang"
         @input="input"
+        ref="input"
     >{{value}}</textarea>
+    <div ref="toolbar" class="custom_keyboard_toolbar" v-if="custom_keyboard.length>0"></div>
+    </div>
 </template>
 
 <script>
@@ -17,7 +21,6 @@
             'value',
             'type',
             'placeholder',
-            'lang',
             'custom_keyboard'
         ],
         methods: {
@@ -27,12 +30,10 @@
         },
         mounted() {
             // FIXME this still has a lot of jQuery glurge in it.
-            //  A partial cleanup is in progress in InputCustomKeyboard.vue; copy that over here when done
             var comp = this;
 
-            var $this_el = this.$el;
+            var $this_el = this.$refs.input;
             var chars = this.custom_keyboard;
-            var options = undefined;
 
             const KEYCODE_SHIFT = 16;
             const ESZETT = '&#223;';
@@ -48,10 +49,6 @@
                 buttonMargin: 3
             };
 
-            if (options) {
-                $.extend(settings, options);
-            }
-
             var $this = $($this_el);
 
             // Create the toolbar for this text input.
@@ -60,10 +57,11 @@
 
             //var button_top = $this.offset().top + $this.outerHeight() + 5;
             //var button_right = $this.offset().left + $this.outerWidth() - 2;
-            var button_top = $this.outerHeight() + 25;
-            var button_right = $this.outerWidth() + 15;
+            var button_top = $this_el.offsetHeight + 25;
+            var button_right = $this_el.offsetWidth + 15;
 
-            var toolbar = $('<div/>').css('position', 'absolute')
+            const toolbar_el = this.$refs.toolbar;
+            $(toolbar_el).css('position', 'absolute')
                 .css('left', (button_right - (chars.length *
                     (settings.buttonWidth + settings.buttonMargin + 2)) -
                     settings.buttonMargin) + 'px')
@@ -73,8 +71,6 @@
                 .css('width', ((chars.length *
                     (settings.buttonWidth + settings.buttonMargin + 2)) +
                     settings.buttonMargin) + 'px')
-                //.css('height', ((settings.buttonHeight +
-                //    (2 * (settings.buttonMargin + 1))) + 'px'))
                 .css('height', ((settings.buttonHeight +
                     (2 * (settings.buttonMargin + 3))) + 'px'))
                 .css('background', settings.toolbarBgColor)
@@ -93,8 +89,6 @@
             $.each(chars, function (i, c) {
                 buttons[i] = $('<div/>').html(c)
                     .css('width', settings.buttonWidth + 'px')
-                    //.css('height', (settings.buttonHeight -
-                    //    (settings.buttonHeight / 2) + 9) + 'px')
                     .css('height', (settings.buttonHeight -
                         (settings.buttonHeight / 2) + 13) + 'px')
                     .css('color', (settings.buttonTextColor))
@@ -141,10 +135,8 @@
                         }
                         comp.$emit('input', input.value);
                     });
-                toolbar.append(buttons[i]);
+                $(toolbar_el).append(buttons[i]);
             });
-
-            $this.after(toolbar);
 
             function htmlDecode(value) {
                 return $('<div/>').html(value).text();
@@ -171,7 +163,7 @@
             });
 
             $this.bind('focus.specialedit', function () {
-                toolbar.fadeIn();
+                $(toolbar_el).fadeIn();
             });
 
             /**
@@ -186,7 +178,7 @@
              */
             $this.bind('blur.specialedit', function () {
                 if (!hover) {
-                    toolbar.hide();
+                    $(toolbar_el).hide();
                 }
             });
 

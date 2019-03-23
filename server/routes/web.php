@@ -30,7 +30,7 @@ Route::get('lex_semantic_field/{field_id}', array('as' => 'field_redirect', 'use
 Route::get('lex_reflex/{etyma_id}', function() {return redirect('lex/languages/', 301);});
 Route::get('lex_semantic', function() {return redirect('lex/semantic/', 301);});
 Route::get('lex_lang_reflexes/{language_id}', array('as' => 'reflexes_redirect', 'uses' =>'PublicController@lex_lang_reflexes_redirect'));
-Route::get('lex_language', 'PublicController@lex_language_redirect');
+Route::get('lex_language', function() {return redirect('lex/languages/', 301);});
 
 Route::get('lex/master', 'PublicController@lex_pokorny');
 Route::get('lex/master/{pokorny_number}', 'PublicController@lex_reflex');

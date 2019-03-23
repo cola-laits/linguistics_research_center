@@ -3,11 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\EieolGloss;
-use App\EieolGlossedTextGloss;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
+/*
+ * This controller is a remnant of a time when there was an 'eieol_glossed_text_gloss'
+ * table between eieol_gloss and eieol_glossed_text, providing a many-to-many relationship
+ * between them.  That changed into a one-to-many relationship in April 2019, but we
+ * didn't completely rewrite the API to account for that.  'order' and 'glossed_text_id',
+ * the two fields that used to be on eieol_glossed_text_gloss, are now on eieol_gloss,
+ * but they're still treated as a separate type of thing in the API.
+ */
 class EieolGlossedTextGlossController extends Controller
 {
 
@@ -30,26 +37,22 @@ class EieolGlossedTextGlossController extends Controller
                 'msg' => $msg
             ];
         }
-        $glossed_text_gloss = new EieolGlossedTextGloss;
-        $glossed_text_gloss->order = $request->get('order');
-        $glossed_text_gloss->glossed_text_id = $request->get('glossed_text_id');
-        $glossed_text_gloss->gloss_id = $request->get('gloss_id');
-        $glossed_text_gloss->created_by = Auth::user()->username;
-        $glossed_text_gloss->updated_by = Auth::user()->username;
+        $gloss = EieolGloss::findOrFail($request->get('gloss_id'));
+        $gloss->order = $request->get('order');
+        $gloss->glossed_text_id = $request->get('glossed_text_id');
+        $gloss->updated_by = Auth::user()->username;
 
-        $glossed_text_gloss->save();
+        $gloss->save();
 
-        //now get it so we can return gloss and headword
-        $glossed_text_gloss = EieolGlossedTextGloss::with('gloss')->find($glossed_text_gloss->id);
         return [
             'success' => true,
-            'id' => $glossed_text_gloss->id,
+            'gloss'=>$gloss
         ];
     }
 
     public function update(Request $request, $id) {
         $rules = array(
-            'order' => 'required|integer|unique:eieol_glossed_text_gloss,order,' . $id . ',id,glossed_text_id,' . $request->get('glossed_text_id')
+            'order' => 'required|integer|unique:eieol_gloss,order,' . $id . ',id,glossed_text_id,' . $request->get('glossed_text_id')
         );
 
         $validator = Validator::make($request->all(), $rules);
@@ -60,12 +63,12 @@ class EieolGlossedTextGlossController extends Controller
                 'errors' => $validator->getMessageBag()->toArray()
             ];
         }
-        $glossed_text_gloss = EieolGlossedTextGloss::find($id);
+        $gloss = EieolGloss::findOrFail($id);
 
-        $glossed_text_gloss->order = $request->get('order');
-        $glossed_text_gloss->updated_by = Auth::user()->username;
+        $gloss->order = $request->get('order');
+        $gloss->updated_by = Auth::user()->username;
 
-        $glossed_text_gloss->save();
+        $gloss->save();
         return [
             'success' => true,
             'message' => 'Gloss order was successfully updated.',
@@ -73,21 +76,27 @@ class EieolGlossedTextGlossController extends Controller
     }
 
     public function destroy($id) {
-        EieolGlossedTextGloss::destroy($id);
+        $gloss = EieolGloss::findOrFail($id);
+        $gloss->glossed_text_id = null;
+        $gloss->order = null;
+        $gloss->updated_by = Auth::user()->username;
+        $gloss->save();
     }
 
     public function postCopyGloss(Request $request) {
+        $gloss_order = EieolGloss::where('glossed_text_id', $request->get('glossed_text_id'))
+            ->max('order')
+            + 10;
+
         $gloss = EieolGloss::findOrFail($request->get('existing_gloss_id'));
         $new_gloss_id = $gloss->deepCopy();
-        $gtg = new EieolGlossedTextGloss();
-        $gtg->gloss_id = $new_gloss_id;
-        $gtg->glossed_text_id = $request->get('glossed_text_id');
-        $gtg->order = $request->get('order');
-        $gtg->save();
+        $new_gloss = EieolGloss::findOrFail($new_gloss_id);
+        $new_gloss->glossed_text_id = $request->get('glossed_text_id');
+        $new_gloss->order = $gloss_order;
+        $new_gloss->save();
         return [
             'success'=>true,
-            'gtg_id'=>$gtg->id,
-            'gloss_id'=>$new_gloss_id
+            'gloss_id'=>$new_gloss_id,
         ];
     }
 

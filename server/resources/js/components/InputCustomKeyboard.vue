@@ -8,7 +8,7 @@
            autocomplete="off"
            :placeholder="placeholder"
             ref="input">
-        <div ref="toolbar" class="custom_keyboard_toolbar"></div>
+        <div ref="toolbar" class="custom_keyboard_toolbar" v-if="custom_keyboard.length>0"></div>
     </div>
 </template>
 

@@ -79,9 +79,9 @@ CKEDITOR.plugins.add( 'onchange',
 
 		if ( theMutationObserver )
 		{
-			observer = new theMutationObserver( function( mutations ) {
-				somethingChanged();
-			} );
+			//observer = new theMutationObserver( function( mutations ) {
+			//	somethingChanged();
+			//} );
 
 			// To check that we are using a cool browser.
 			//if (window.console && window.console.log)

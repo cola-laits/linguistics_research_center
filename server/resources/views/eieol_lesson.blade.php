@@ -65,8 +65,8 @@
             <a href="#" onclick="return false" class="expand_all"><i class='fa fa-plus-square-o'></i> Expand All</a>
             <ul>
                 @foreach ($glossed_text->glosses as $gloss)
-                    <li id='gloss_pivot_{{$gloss->pivot->id}}' class='gloss'>
-                        <a name='glossed_text_gloss_{{$gloss->pivot->id}}'></a>
+                    <li id='gloss_pivot_{{$gloss->id}}' class='gloss'>
+                        <a name='glossed_text_gloss_{{$gloss->id}}'></a>
                         {!! $gloss->getDisplayGloss() !!}
                     </li>
                 @endforeach
@@ -77,8 +77,8 @@
         <div class="boxey">
             <ul>
                 @foreach ($glossed_text->glosses as $gloss)
-                    <li id='old_gloss_pivot_{{$gloss->pivot->id}}'>
-                        <a name='glossed_text_gloss_{{$gloss->pivot->id}}'></a>
+                    <li id='old_gloss_pivot_{{$gloss->id}}'>
+                        <a name='glossed_text_gloss_{{$gloss->id}}'></a>
                         {!! $gloss->getDisplayGloss() !!}
                     </li>
                 @endforeach

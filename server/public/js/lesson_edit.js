@@ -1,3 +1,10 @@
+/*
+FIXME todo:
+Attach Gloss needs testing
+Gloss comments don't work
+Edit Gloss doesn't update lists
+Possibly nothing on the Gloss modals works
+ */
 
 function ajax_submit(form) {
     //generic ajax function.   This will prevent the regular submission and send it by ajax instead.
@@ -116,21 +123,9 @@ function ajax_submit(form) {
 } //ajax submit function
 
 function attach_gloss(gloss_id, gloss_text) {
-    //calculate next order by finding the highest order in the form and adding 10
-    var next_gloss_order = 0;
-    var temp_div = '#glossed_text_' + window.modal_glossed_text_id + '_glosses'; //get div that surrouds glosses for given glossed text
-    $("form", temp_div).each(function() { // get the value of each order
-        order = parseInt($('#order', this).val());
-        if(order > next_gloss_order) {
-            next_gloss_order = order;
-        }
-    });
-    next_gloss_order += 10;
-
     var mydata = {};
     mydata['existing_gloss_id'] = gloss_id;
     mydata['glossed_text_id'] = window.modal_glossed_text_id; //set when displaying attach modal
-    mydata['order'] = next_gloss_order;
 
     $.ajax({
         type: "POST",
@@ -146,25 +141,7 @@ function attach_gloss(gloss_id, gloss_text) {
             }  //json fail
 
             if(json['success']) {
-                var new_div_id = "glossed_text_gloss_" + json['gtg_id'] + "_div";
-                var new_form_id = "new_glossed_text_gloss_form_" + json['gtg_id'];
-                var new_form_action = "/admin2/eieol_glossed_text_gloss/" + json['gtg_id'];
-
-                var new_div = $( "#new_glossed_text_gloss_div" ).clone(true).attr("id",new_div_id);
-                new_div.appendTo( temp_div );
-                new_div.show();
-
-                $('#new_glossed_text_gloss_form', '#'+new_div_id).find("#order").attr('value',next_gloss_order);
-                $('#new_glossed_text_gloss_form', '#'+new_div_id).find("#glossed_text_id").attr('value',window.modal_glossed_text_id);
-                $('#new_glossed_text_gloss_form', '#'+new_div_id).find(".gloss_text").html('<br/>' + gloss_text);
-                $('#new_glossed_text_gloss_form', '#'+new_div_id).find(".gloss_text").addClass('gloss_' + json['gloss_id']);
-                $('#new_glossed_text_gloss_form', '#'+new_div_id).attr("action",new_form_action);
-                $('#new_glossed_text_gloss_form', '#'+new_div_id).attr("id",new_form_id);
-                $('.delete_glossed_text_gloss', '#' + new_div_id).show();
-                $('.delete_glossed_text_gloss_form', '#'+new_div_id).attr("action",new_form_action);
-                $('#glossed_text_gloss_id', '#'+new_div_id).val(json['gtg_id']);
-
-                $('#edit_gloss', '#'+new_div_id).find("#gloss_id").attr('value',json['gloss_id']);
+                alert("FIXME: Get gloss from response and add it to the text");
 
                 $("#attach_gloss_modal").modal('hide');
                 $('#success_message').html('Gloss successfully added.');
@@ -237,6 +214,123 @@ window.onbeforeunload = function() {
         return 'You have unsaved changes!  Would you like to leave this page anyway?';
     }
 };
+
+function new_gloss_form_submit() {
+    $(".errors", '#new_gloss_form').empty();
+    $.ajax({
+        type: "POST",
+        url: $("#new_gloss_form").attr('action'),
+        data: $("#new_gloss_form").serialize(),
+        dataType: "html",
+
+        success: function (data) {
+            var json = JSON.parse(data);
+
+            if (json['fail']) { //go through all errors and set error messages, just within this form;
+                $.each(json['errors'], function (index, value) {
+                    var errorDiv = '#' + index + '_error';
+                    $(errorDiv, "#new_gloss_form").html(value);
+                });
+            }  //json fail
+
+            if (json['success']) {
+                $(this).removeAttr("dirty");
+                attach_gloss(json['gloss_id'], json['gloss_display']);
+
+            } //json success
+        }, //success
+
+        error: function (xml_http_request, text_status, error_thrown) {
+            alert('Ajax Error: ' + text_status + '/ ' + xml_http_request + '/ ' + error_thrown);
+        } //error
+
+    }); //ajax call
+
+    return false; // this keeps the form from submitting
+}
+
+function pick_head_word_button_click() {
+    $("#new_head_word_form").css("background-color", "#FFFFFF");
+    gloss_form = $(this).closest('form'); //we will use this in the attach_head_word function
+    $("#head_word_search_input").val(""); //reset the input box
+    $("#attach_head_word_modal").modal('show');
+    $("#head_word_search_input").focus(); //put cursor in search box
+    document.getElementById("head_word_search_result").innerHTML = ""; //reset result box so it's empty each time the click it
+    $('#new_head_word_form')[0].reset(); //reset the new head word form
+    $('#new_keywords').importTags(""); //trigger reset doesn't work because of the jquery tags, so do this one manually
+    $(".errors", '#new_head_word_form').empty(); //reset head word form error divs
+    return false;
+}
+
+function new_head_word_form_submit() {
+    $(".errors", '#new_head_word_form').empty();
+    $.ajax({
+        type: "POST",
+        url: $("#new_head_word_form").attr('action'),
+        data: $("#new_head_word_form").serialize(),
+        dataType: "html",
+
+        success: function (data) {
+            var json = JSON.parse(data);
+
+            if (json['fail']) { //go through all errors and set error messages, just within this form;
+                $.each(json['errors'], function (index, value) {
+                    var errorDiv = '#' + index + '_error';
+                    $(errorDiv, "#new_head_word_form").html(value);
+                });
+            }  //json fail
+
+            if (json['success']) {
+                $(this).removeAttr("dirty");
+                attach_head_word(json['head_word_id'], json['head_word_display']);
+            } //json success
+        }, //success
+
+        error: function (xml_http_request, text_status, error_thrown) {
+            alert('Ajax Error: ' + text_status + '/ ' + xml_http_request + '/ ' + error_thrown);
+        } //error
+
+    }); //ajax call
+
+    return false; // this keeps the form from submitting
+}
+
+function edit_head_word_button_click() {
+    gloss_form = $(this).closest('form'); //get gloss form so we can get head_word_id
+    head_word_id = $(gloss_form).find("#element_" + element_id + "_head_word_id").val();
+    if (head_word_id === '') {
+        alert('Please add a Head Word before editing it.');
+    } else {
+        //load form with data for the record they want to edit
+        $.ajax({
+            type: "GET",
+            url: "/admin2/eieol_head_word/" + head_word_id,
+            data: null,
+            dataType: "json",
+
+            success: function (data) {
+                $.each(data, function (key, value) {
+                    $('[name=' + key + ']', '#edit_head_word_form').val(value);
+                });
+                $('#edit_keywords').importTags(data['keywords']); //because of the jquery tags, do this one manually
+                $("#edit_head_word_form").attr("action", "/admin2/eieol_head_word/" + data['id']);
+                $("#head_word_glosses").html("<strong>This is used by the following glosses:</strong> " + data['glosses']);
+                $(".errors", '#edit_head_word_form').empty(); //reset head word form error divs
+                $('#edit_head_word_form').css("background-color", "#FFFFFF");
+                $("#edit_head_word_modal").modal('show');
+                $("#word", "#edit_head_word_form").focus(); //put cursor in first field
+
+            }, //success
+
+            error: function (xml_http_request, text_status, error_thrown) {
+                alert('Ajax Error: ' + text_status + '/ ' + xml_http_request + '/ ' + error_thrown);
+            } //error
+
+        }); //ajax call
+    }
+
+    return false;
+}
 
 $(document).ready(function(){
 
@@ -313,197 +407,17 @@ $(document).ready(function(){
 
     //when they add a new gloss
     $("#new_gloss_form").submit(function() {
-        $(".errors", '#new_gloss_form').empty();
-        $.ajax({
-            type: "POST",
-            url:$("#new_gloss_form").attr('action'),
-            data:$("#new_gloss_form").serialize(),
-            dataType: "html",
-
-            success : function(data){
-                var json = JSON.parse(data);
-
-                if(json['fail']) { //go through all errors and set error messages, just within this form;
-                    $.each(json['errors'], function( index, value ) {
-                        var errorDiv = '#'+index+'_error';
-                        $(errorDiv, "#new_gloss_form").html(value);
-                    });
-                }  //json fail
-
-                if(json['success']) {
-                    $(this).removeAttr("dirty");
-                    attach_gloss(json['gloss_id'], json['gloss_display']);
-
-                } //json success
-            }, //success
-
-            error : function(xml_http_request, text_status, error_thrown) {
-                alert('Ajax Error: ' + text_status + '/ ' + xml_http_request + '/ ' + error_thrown);
-            } //error
-
-        }); //ajax call
-
-        return false; // this keeps the form from submitting
+        return new_gloss_form_submit();
     });//add gloss
-
-    //popup to edit gloss
-    $(".edit_gloss").submit(function() {
-
-        //load form with data for the record they want to edit
-        $.ajax({
-            type: "GET",
-            url: "/admin2/eieol_gloss/" + $(this).find("#gloss_id").val(),
-            data: null,
-            dataType: "json",
-
-            success : function(data){
-                //clear old values out
-                $('#edit_gloss_form')[0].reset();
-                //for some reason the reset doesn't reset all the fields
-                for (i=1; i<=6; i++) {
-                    $('#element_' + i + '_head_word_id', '#edit_gloss_form').val('');
-                }
-
-                //clear comment divs out
-                $("#gloss_author_comments").html('');
-                $("#gloss_admin_comments").html('');
-
-                if (!window.isAdmin || data['author_comments'] || data['author_done']) {
-                    //only show if you are not an admin, or if they were filled in.
-                    $("#gloss_author_comments").html('<div class="form-group col-sm-9 col-sm-offset-1">\
-						    <label for="author_comments">Author Comments</label>\
-						    <textarea class="form-control comment_textarea author_comments" name="author_comments" cols="100" rows="2" id="author_comments"></textarea>\
-						</div>\
-						<div class="form-group col-sm-1">\
-						    <label for="author_done">Done</label>\
-						    \<input class="form-control author_done" id="gloss_author_done" \
-						        name="author_done" type="checkbox" value="1"\
-						        checked='+(data.author_done?'checked':'')+'>\
-						</div>');
-                }
-
-                if (window.isAdmin) {
-                    $("#gloss_admin_comments").html('<div class="form-group col-sm-9 col-sm-offset-1">\
-							    <label for="admin_comment">Admin Comments</label>\
-					    		<textarea class="form-control comment_textarea admin_comments" name="admin_comments" cols="100" rows="2"></textarea>\
-							</div>\
-							<div class="form-group col-sm-1">\
-						        <input class="btn btn-xs btn-warning comment_clear" type="submit" value="Clear">\
-							</div>');
-                } else {
-                    if (data['admin_comments']) {
-                        //Only show admin comments to authors if they exist
-                        $("#gloss_admin_comments").html('<div class="form-group col-sm-9 col-sm-offset-1">\
-								<label for="admin_comment">Admin Comments</label>\
-								<input class="form-control" name="admin_comments" type="hidden">\
-								<div class="well" style="white-space: pre-wrap" >' + data['admin_comments'] + '</div>\
-							</div>');
-                    }
-                }
-
-                //load form
-                $.each(data, function(key, value){
-                    if (key === 'author_done') { //checkboxes behave differently
-                        if (value == 1) {
-                            $("#gloss_author_done").prop('checked', true);
-                        }
-                    } else {
-                        $('[name='+key+']', '#edit_gloss_form').val(value);
-                    }
-                });
-
-                for (i=1; i<=6; i++) {
-                    $('#element_' + i + '_head_word_display', '#edit_gloss_form').text(''); //we only get ones that already exist, so reset it first
-                    $('#element_' + i + '_head_word_display', '#edit_gloss_form').html(data['element_' + i + '_head_word_display']);
-                }
-
-                for (i=2; i<=6; i++) {
-                    if (data.hasOwnProperty('element_' + i + '_id')) {
-                        $('#element_' + i).show();
-                    } else {
-                        $('#element_' + i).hide();
-                    }
-                }
-
-                $("#gloss_lessons").html("<strong>This is used by the following lessons:</strong> " + data['lessons']);
-                $("#edit_gloss_form").attr("action", "/admin2/eieol_gloss/" + data['id']);
-                $(".errors", "#edit_gloss_form").empty(); //reset gloss form error divs
-                $("#edit_gloss_modal").modal("show");
-                $('#edit_gloss_form').removeAttr("dirty");
-                $("#surface_form", "#edit_gloss_form").focus(); //put cursor in first field
-
-                set_comment_button_color();
-                listen_to_forms();
-                listen_for_clear_comments();
-                $("#gloss_comments").hide(); //close comments box in case they left it open on previous editing
-
-            }, //success
-
-            error : function(xml_http_request, text_status, error_thrown) {
-                alert('Ajax Error: ' + text_status + '/ ' + xml_http_request + '/ ' + error_thrown);
-            } //error
-
-        }); //ajax call
-
-
-
-        return false;
-    }); //edit gloss
-
 
     //popup to attach or change head word to gloss
     $(".pick_head_word_button").click(function() {
-        $("#new_head_word_form").css("background-color", "#FFFFFF");
-        gloss_form = $(this).closest('form'); //we will use this in the attach_head_word function
-        $("#head_word_search_input").val(""); //reset the input box
-        $("#attach_head_word_modal").modal('show');
-        $("#head_word_search_input").focus(); //put cursor in search box
-        document.getElementById("head_word_search_result").innerHTML=""; //reset result box so it's empty each time the click it
-        $('#new_head_word_form')[0].reset(); //reset the new head word form
-        $('#new_keywords').importTags(""); //trigger reset doesn't work because of the jquery tags, so do this one manually
-        $(".errors", '#new_head_word_form').empty(); //reset head word form error divs
-        return false;
+        return pick_head_word_button_click.call(this);
     });
 
     //popup to edit head word
     $(".edit_head_word_button").click(function() {
-
-        gloss_form = $(this).closest('form'); //get gloss form so we can get head_word_id
-        head_word_id = $(gloss_form).find("#element_" + element_id + "_head_word_id").val();
-        if (head_word_id === '') {
-            alert('Please add a Head Word before editing it.');
-            return false;
-        }
-
-        //load form with data for the record they want to edit
-        $.ajax({
-            type: "GET",
-            url: "/admin2/eieol_head_word/" + head_word_id,
-            data: null,
-            dataType: "json",
-
-            success : function(data){
-                $.each(data, function(key, value){
-                    $('[name='+key+']', '#edit_head_word_form').val(value);
-                });
-                $('#edit_keywords').importTags(data['keywords']); //because of the jquery tags, do this one manually
-                $("#edit_head_word_form").attr("action", "/admin2/eieol_head_word/" + data['id']);
-                $("#head_word_glosses").html("<strong>This is used by the following glosses:</strong> " + data['glosses']);
-                $(".errors", '#edit_head_word_form').empty(); //reset head word form error divs
-                $('#edit_head_word_form').css("background-color", "#FFFFFF");
-                $("#edit_head_word_modal").modal('show');
-                $("#word", "#edit_head_word_form").focus(); //put cursor in first field
-
-                set_comment_button_color();
-            }, //success
-
-            error : function(xml_http_request, text_status, error_thrown) {
-                alert('Ajax Error: ' + text_status + '/ ' + xml_http_request + '/ ' + error_thrown);
-            } //error
-
-        }); //ajax call
-
-        return false;
+        return edit_head_word_button_click.call(this);
     });
 
     //this is when they click on a head word in the head word listing modal
@@ -513,36 +427,7 @@ $(document).ready(function(){
 
     //when they add a new headword
     $("#new_head_word_form").submit(function() {
-        $(".errors", '#new_head_word_form').empty();
-        $.ajax({
-            type: "POST",
-            url:$("#new_head_word_form").attr('action'),
-            data:$("#new_head_word_form").serialize(),
-            dataType: "html",
-
-            success : function(data){
-                var json = JSON.parse(data);
-
-                if(json['fail']) { //go through all errors and set error messages, just within this form;
-                    $.each(json['errors'], function( index, value ) {
-                        var errorDiv = '#'+index+'_error';
-                        $(errorDiv, "#new_head_word_form").html(value);
-                    });
-                }  //json fail
-
-                if(json['success']) {
-                    $(this).removeAttr("dirty");
-                    attach_head_word(json['head_word_id'], json['head_word_display']);
-                } //json success
-            }, //success
-
-            error : function(xml_http_request, text_status, error_thrown) {
-                alert('Ajax Error: ' + text_status + '/ ' + xml_http_request + '/ ' + error_thrown);
-            } //error
-
-        }); //ajax call
-
-        return false; // this keeps the form from submitting
+        return new_head_word_form_submit();
     });//add headword
 
     //show element

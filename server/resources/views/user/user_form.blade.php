@@ -67,7 +67,7 @@
 	</div>
  
     <div class='form-group'>
-        {{ Form::submit($action, ['class' => 'btn btn-primary']) }}
+        <input type="submit" value="Save" class="btn btn-primary">
     </div>
  
     {{ Form::close() }}

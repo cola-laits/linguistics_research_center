@@ -10,7 +10,8 @@
                 {{ Form::open(['role' => 'form',
                       'url' => '', 
                       'method' => 'PUT',
-                      'class' => 'form ajax_form modal_form',
+                      'class' => 'form modal_form',
+                      'onsubmit' => 'ajax_submit(this); return false;',
                       'id' => 'edit_gloss_form'  
                 ]) }}
 
@@ -65,7 +66,7 @@
                                         </div>
                                         &nbsp;&nbsp;
 
-                                        {{ Form::submit('Edit', ['class' => 'btn btn-xs btn-primary']) }}
+                                        {{ Form::submit('Save', ['class' => 'btn btn-xs btn-primary']) }}
                                     </div>
                                 @else
                             </div>

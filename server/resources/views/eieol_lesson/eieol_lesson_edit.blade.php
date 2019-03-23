@@ -193,7 +193,7 @@
                             success : function(){
                                 app.glossed_texts.forEach(function (glossed_text) {
                                     glossed_text.glosses = glossed_text.glosses.filter(function(gloss) {
-                                        return gloss.pivot.id !== id;
+                                        return gloss.id !== id;
                                     });
                                 });
                                 $("#delete_glossed_text_gloss_confirm").modal('hide');
@@ -226,8 +226,99 @@
                     $('#element_' + i + '_head_word_id', '#new_gloss_form').val('');//reset headword id
                 }
             },
-            open_edit_gloss_modal() {
-                alert("Edit modal here");
+            open_edit_gloss_modal(gloss_id) {
+                //load form with data for the record they want to edit
+                $.ajax({
+                    type: "GET",
+                    url: "/admin2/eieol_gloss/" + gloss_id,
+                    data: null,
+                    dataType: "json",
+
+                    success: function (data) {
+                        //clear old values out
+                        $('#edit_gloss_form')[0].reset();
+                        //for some reason the reset doesn't reset all the fields
+                        for (i = 1; i <= 6; i++) {
+                            $('#element_' + i + '_head_word_id', '#edit_gloss_form').val('');
+                        }
+
+                        //clear comment divs out
+                        $("#gloss_author_comments").html('');
+                        $("#gloss_admin_comments").html('');
+
+                        if (!window.isAdmin || data['author_comments'] || data['author_done']) {
+                            //only show if you are not an admin, or if they were filled in.
+                            $("#gloss_author_comments").html('<div class="form-group col-sm-9 col-sm-offset-1">\
+						    <label for="author_comments">Author Comments</label>\
+						    <textarea class="form-control comment_textarea author_comments" name="author_comments" cols="100" rows="2" id="author_comments"></textarea>\
+						</div>\
+						<div class="form-group col-sm-1">\
+						    <label for="author_done">Done</label>\
+						    \<input class="form-control author_done" id="gloss_author_done" \
+						        name="author_done" type="checkbox" value="1"\
+						        checked=' + (data.author_done ? 'checked' : '') + '>\
+						</div>');
+                        }
+
+                        if (window.isAdmin) {
+                            $("#gloss_admin_comments").html('<div class="form-group col-sm-9 col-sm-offset-1">\
+							    <label for="admin_comment">Admin Comments</label>\
+					    		<textarea class="form-control comment_textarea admin_comments" name="admin_comments" cols="100" rows="2"></textarea>\
+							</div>\
+							<div class="form-group col-sm-1">\
+						        <input class="btn btn-xs btn-warning comment_clear" type="submit" value="Clear">\
+							</div>');
+                        } else {
+                            if (data['admin_comments']) {
+                                //Only show admin comments to authors if they exist
+                                $("#gloss_admin_comments").html('<div class="form-group col-sm-9 col-sm-offset-1">\
+								<label for="admin_comment">Admin Comments</label>\
+								<input class="form-control" name="admin_comments" type="hidden">\
+								<div class="well" style="white-space: pre-wrap" >' + data['admin_comments'] + '</div>\
+							</div>');
+                            }
+                        }
+
+                        //load form
+                        $.each(data, function (key, value) {
+                            if (key === 'author_done') { //checkboxes behave differently
+                                if (value == 1) {
+                                    $("#gloss_author_done").prop('checked', true);
+                                }
+                            } else {
+                                $('[name=' + key + ']', '#edit_gloss_form').val(value);
+                            }
+                        });
+
+                        for (i = 1; i <= 6; i++) {
+                            $('#element_' + i + '_head_word_display', '#edit_gloss_form').text(''); //we only get ones that already exist, so reset it first
+                            $('#element_' + i + '_head_word_display', '#edit_gloss_form').html(data['element_' + i + '_head_word_display']);
+                        }
+
+                        for (i = 2; i <= 6; i++) {
+                            if (data.hasOwnProperty('element_' + i + '_id')) {
+                                $('#element_' + i).show();
+                            } else {
+                                $('#element_' + i).hide();
+                            }
+                        }
+
+                        $("#gloss_lessons").html("<strong>This is used by the following lessons:</strong> " + data['lessons']);
+                        $("#edit_gloss_form").attr("action", "/admin2/eieol_gloss/" + data['id']);
+                        $(".errors", "#edit_gloss_form").empty(); //reset gloss form error divs
+                        $("#edit_gloss_modal").modal("show");
+                        $('#edit_gloss_form').removeAttr("dirty");
+                        $("#surface_form", "#edit_gloss_form").focus(); //put cursor in first field
+
+                        $("#gloss_comments").hide(); //close comments box in case they left it open on previous editing
+
+                    }, //success
+
+                    error: function (xml_http_request, text_status, error_thrown) {
+                        alert('Ajax Error: ' + text_status + '/ ' + xml_http_request + '/ ' + error_thrown);
+                    } //error
+
+                }); //ajax call
             }
         };
     </script>
@@ -358,7 +449,7 @@
                            @input="markFormDirty('update_form')"
                 ></ck-editor>
 		        <div id="intro_text_error" class="alert-danger errors"></div>
-                <input class="btn btn-xs btn-primary" type="submit" value="Edit">
+                <input class="btn btn-xs btn-primary" type="submit" value="Save">
                 <button type="button" class="btn btn-xs" onclick="previewText('intro_text')">Preview</button>
 		    </div>
 		</div>		    
@@ -413,7 +504,7 @@
 						</div>
 					    
 					    <div class='form-group col-sm-1 bottom_button'>
-                            <input class="btn btn-xs btn-primary" type="submit" value="Edit">
+                            <input class="btn btn-xs btn-primary" type="submit" value="Save">
 						</div>
 					
 			    		<div class='form-group col-sm-1 bottom_button'>
@@ -451,24 +542,24 @@
 							<div class='col-sm-2'></div>
 
                             <form method="POST"
-                                  :action="gloss.pivot.id==='' ? '/admin2/eieol_glossed_text_gloss' : '/admin2/eieol_glossed_text_gloss/'+gloss.pivot.id"
+                                  :action="gloss.id==='' ? '/admin2/eieol_glossed_text_gloss' : '/admin2/eieol_glossed_text_gloss/'+gloss.id"
                                   accept-charset="UTF-8"
                                   class="form"
-                                  :id="'glossed_text_gloss_form_'+gloss.pivot.id"
+                                  :id="'glossed_text_gloss_form_'+gloss.id"
                                   onsubmit="ajax_submit(this);return false;"
-                                  :dirty="isFormDirty('glossed_text_gloss_form_'+gloss.pivot.id)">
+                                  :dirty="isFormDirty('glossed_text_gloss_form_'+gloss.id)">
                                 <input type="hidden" name="glossed_text_id" :value="glossed_text.id">
-                                <input name="_method" type="hidden" value="PUT" v-if="gloss.pivot.id !== ''">
+                                <input name="_method" type="hidden" value="PUT" v-if="gloss.id !== ''">
 							<div class='form-group col-sm-1 '>
 
 						        <label for="order">Order</label>
                                     <input placeholder="Order" class="form-control" id="order" name="order" type="text"
-                                           v-model="gloss.pivot.order">
+                                           v-model="gloss.order">
 						        <div id ="order_error" class="alert-danger errors"></div>
 						    </div>
 						    
 						    <div class='form-group col-sm-1 bottom_button'>
-    						    <input type="submit" value="Edit Order" class="btn btn-xs btn-primary">
+    						    <input type="submit" value="Save Order" class="btn btn-xs btn-primary">
 							</div>
                             </form>
 
@@ -496,15 +587,16 @@
 			    			</div>
 			    			
 			    			<div class='col-sm-1 bottom_button'>
-                                <form class="edit_gloss" :id="'edit_gloss_form_' + gloss.pivot.id">
+                                <form class="edit_gloss" :id="'edit_gloss_form_' + gloss.id">
                                     <input type="hidden" name="gloss_id" :value="gloss.id">
-                                    <input type="submit" value="Edit Gloss" class="btn btn-xs btn-primary">
+                                    <input type="button" value="Edit Gloss" class="btn btn-xs btn-primary"
+                                        @click="open_edit_gloss_modal(gloss.id)">
 			    				</form>
 			    			</div>
 			    			
 			    			<div class='form-group col-sm-1 bottom_button'>
                                 <input type="button" value="Remove" class="btn btn-xs btn-danger"
-                                       @click="delete_glossed_text_gloss(gloss.pivot.id)">
+                                       @click="delete_glossed_text_gloss(gloss.id)">
 							</div>
 						      
 					    </div>
@@ -591,7 +683,7 @@
 
 	    <div class='row'>
 	    	<div class='form-group col-sm-2 col-sm-offset-1'>
-                <input class="btn btn-xs btn-primary" type="submit" value="Edit Translation">
+                <input class="btn btn-xs btn-primary" type="submit" value="Save Translation">
                 <button type="button" class="btn btn-xs" onclick="previewText('lesson_translation')">Preview</button>
             </div>
 	    </div>
@@ -679,7 +771,7 @@
 					<div class='row'>
 			    		<div class='form-group col-sm-1 '></div>
 			    		<div class='form-group col-sm-2 '>
-                            <input class="btn btn-xs btn-primary" type="submit" value="Edit">
+                            <input class="btn btn-xs btn-primary" type="submit" value="Save">
                             <button type="button" class="btn btn-xs" :onclick="'previewText(\'grammar_text_'+grammar.id+'\')'">Preview</button>
                         </div>
 			    		
