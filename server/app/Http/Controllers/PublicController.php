@@ -203,7 +203,7 @@ class PublicController extends Controller
             'series' => $series
         ];
 
-        $data['language'] = EieolLanguage::find($language_id);
+        $data['language'] = EieolLanguage::findOrFail($language_id);
         $data['head_words'] = array();
 
         $lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word.language', 'glossed_texts.glosses.elements.head_word.etyma')
