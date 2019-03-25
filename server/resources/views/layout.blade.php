@@ -116,11 +116,6 @@ the page content is in <section class="main-section">
                     <ul class="side-nav">
                         <li>
                             <label>Address</label>
-                            <span class="map-link">
-                                <a href="http://www.utexas.edu/facilities/buildings/UTM/0559" target="_blank">
-                                    <i class="fa fa-map-marker">&#160;</i> Map
-                                </a>
-                            </span>
                         </li>
                         <li class="phone-address">
                             <h6>Linguistics Research Center</h6>
@@ -302,11 +297,6 @@ the page content is in <section class="main-section">
                     <ul class="side-nav">
                         <li>
                             <label>Address</label>
-                            <span class="map-link">
-                                <a href="http://www.utexas.edu/facilities/buildings/UTM/0559" target="_blank">
-                                    <i class="fa fa-map-marker">&#160;</i> Map
-                                </a>
-                            </span>
                         </li>
                         <li class="phone-address">
                             <h6>Linguistics Research Center</h6>
