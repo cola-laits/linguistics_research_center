@@ -10,40 +10,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Normalizer;
 
-Validator::extend('unique_gloss', function ($field, $value, $parameters) {
-    //this validator attaches to the surface form
-    //parameter 0 is the $id of the gloss (can be null)
-    //parameter 1 is contextual_gloss
-    //parameter 2 is language_id
-    //parameter 3 is the element_1_part_of_speech
-    //parameter 4 is the element_1_analysis
-    //parameter 5 is the element_1_head_word_id
-
-    if ($parameters[0] == null) {
-        $glosses = EieolGloss::where('surface_form', '=', Normalizer::normalize($value, Normalizer::FORM_C))
-            ->where('contextual_gloss', '=', Normalizer::normalize($parameters[1], Normalizer::FORM_C))
-            ->where('language_id', '=', $parameters[2])
-            ->get();
-    } else {
-        $glosses = EieolGloss::where('surface_form', '=', Normalizer::normalize($value, Normalizer::FORM_C))
-            ->where('contextual_gloss', '=', Normalizer::normalize($parameters[1], Normalizer::FORM_C))
-            ->where('language_id', '=', $parameters[2])
-            ->where('id', '!=', $parameters[0])
-            ->get();
-    }
-    foreach ($glosses as $gloss) {
-        $count = EieolElement::where('gloss_id', '=', $gloss->id)
-            ->where('part_of_speech', '=', $parameters[3])
-            ->where('analysis', '=', $parameters[4])
-            ->where('head_word_id', '=', $parameters[5])
-            ->count();
-        if ($count > 0) {
-            return false;
-        }
-    }
-    return true;
-});
-
 class EieolGlossController extends Controller
 {
 
@@ -100,12 +66,7 @@ class EieolGlossController extends Controller
     public function store(Request $request) {
 
         $rules = array(
-            'surface_form' => 'required|unique_gloss:' . null . ',' .
-                $request->get("contextual_gloss") . ',' .
-                $request->get("language_id") . ',' .
-                $request->get("element_1_part_of_speech") . ',' .
-                $request->get("element_1_analysis") . ',' .
-                $request->get("element_1_head_word_id"),
+            'surface_form' => 'required',
             'contextual_gloss' => 'required',
             'language_id' => 'required',
             'element_1_part_of_speech' => 'required',
@@ -122,7 +83,6 @@ class EieolGlossController extends Controller
             'element_6_head_word_id' => 'required_with:element_6_part_of_speech',
         );
         $messages = array(
-            'surface_form.unique_gloss' => 'This Surface Form/Part of Speech/Analysis/Head Word/Contextual Gloss combination already exists',
             'element_1_part_of_speech.required' => 'The first Part of Speech is required',
             'element_1_head_word_id.required' => 'The first Head Word is required',
             'element_2_part_of_speech.required_with' => 'Since you picked a Head Word, you must enter a Part of Speech',
@@ -202,13 +162,7 @@ class EieolGlossController extends Controller
 
     public function update(Request $request, $id) {
         $rules = array(
-            'surface_form' => 'required|unique_gloss:' . $id . ',' .
-                $request->get("contextual_gloss") . ',' .
-                $request->get("language_id") . ',' .
-                $request->get("element_1_part_of_speech") . ',' .
-                $request->get("element_1_analysis") . ',' .
-                $request->get("element_1_head_word_id"),
-            'contextual_gloss' => 'required',
+            'surface_form' => 'required',
             'element_1_part_of_speech' => 'required',
             'element_1_head_word_id' => 'required|exists:eieol_head_word,id',
             'element_2_part_of_speech' => 'required_with:element_2_head_word_id',
@@ -223,7 +177,6 @@ class EieolGlossController extends Controller
             'element_6_head_word_id' => 'required_with:element_6_part_of_speech',
         );
         $messages = array(
-            'surface_form.unique_gloss' => 'This Surface Form/Part of Speech/Analysis/Head Word/Contextual Gloss combination already exists',
             'element_1_part_of_speech.required' => 'The first Part of Speech is required',
             'element_1_head_word_id.required' => 'The first Head Word is required',
             'element_2_part_of_speech.required_with' => 'Since you picked a Head Word, you must enter a Part of Speech',
