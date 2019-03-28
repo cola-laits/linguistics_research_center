@@ -220,7 +220,7 @@ class EieolGlossController extends Controller
                 if ($request->get('element_' . $i . '_part_of_speech')) {
 
                     //decide if we are storing or updating elements
-                    if ($request->has('element_' . $i . '_id')) {
+                    if ($request->get('element_' . $i . '_id')) {
                         $element = EieolElement::find($request->get('element_' . $i . '_id'));
 
                         $element->part_of_speech = $request->get('element_' . $i . '_part_of_speech');
