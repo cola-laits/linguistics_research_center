@@ -7,8 +7,27 @@
            @input="input"
            autocomplete="off"
            :placeholder="placeholder"
-            ref="input">
-        <div ref="toolbar" class="custom_keyboard_toolbar" v-if="custom_keyboard.length>0"></div>
+           ref="input"
+
+
+
+           @keydown="check_mark_shifting($event, true)"
+           @keyup="check_mark_shifting($event, false)"
+           @focus="on_input_focus()"
+           @blur="on_input_blur()"
+    >
+        <transition name="keyboard-fade">
+
+            <div ref="toolbar" class="custom_keyboard_toolbar"
+                 v-if="should_show_custom_keyboard()"
+                 @mousedown.prevent
+            >
+                <div class="custom_keyboard_button" v-for="c in custom_keyboard"
+                    @mousedown.prevent="select_character(c)"
+                >{{get_display_char(c)}}</div>
+            </div>
+        </transition>
+
     </div>
 </template>
 
@@ -21,171 +40,96 @@
             'placeholder',
             'custom_keyboard'
         ],
+        data: function() { return {
+            focused: false,
+            shifting: false,
+        }},
         methods: {
             input(event) {
                 this.$emit('input', event.target.value);
+            },
+            get_display_char(c) {
+                if (this.shifting) {
+                    return c.toUpperCase();
+                }
+                return c;
+            },
+            check_mark_shifting(event, s) {
+                const KEYCODE_SHIFT = 16;
+                if (event.which === KEYCODE_SHIFT) {
+                    this.shifting = s;
+                }
+            },
+            mark_hovering(h) {
+                this.hovering = h;
+            },
+            select_character(c) {
+                let value = this.get_display_char(c);
+
+                let startPos = this.$refs.input.selectionStart;
+                let endPos = this.$refs.input.selectionEnd;
+                this.$refs.input.value = this.$refs.input.value.substring(0, startPos) + value +
+                            this.$refs.input.value.substring(endPos, this.$refs.input.value.length);
+                this.$refs.input.selectionStart = startPos + value.length;
+                this.$refs.input.selectionEnd = startPos + value.length;
+
+                this.$emit('input', this.$refs.input.value);
+            },
+            on_input_focus() {
+                this.focused = true;
+            },
+            on_input_blur() {
+                this.focused = false;
+            },
+            should_show_custom_keyboard() {
+                return this.custom_keyboard.length>0
+                    && this.focused;
             }
         },
-        mounted() {
-            // FIXME this still has a lot of jQuery glurge in it.
-            var comp = this;
+        updated() {
+            if (this.$refs.toolbar) {
+                let button_top = this.$refs.input.offsetHeight + 25;
+                let button_right = this.$refs.input.offsetWidth + 15;
 
-            var $this_el = this.$refs.input;
-            var chars = this.custom_keyboard;
-
-            const KEYCODE_SHIFT = 16;
-            const ESZETT = '&#223;';
-
-            var settings = {
-                toolbarBgColor: '#f0f0ee',
-                toolbarBorderColor: '#cccccc',
-                buttonBgColor: '#b2bbd0',
-                buttonBorderColor: '#000000',
-                buttonTextColor: '#000000',
-                buttonWidth: 20,
-                buttonHeight: 20,
-                buttonMargin: 3
-            };
-
-            var $this = $($this_el);
-
-            // Create the toolbar for this text input.
-            var hover = false;
-            var buttons = [];
-
-            //var button_top = $this.offset().top + $this.outerHeight() + 5;
-            //var button_right = $this.offset().left + $this.outerWidth() - 2;
-            var button_top = $this_el.offsetHeight + 25;
-            var button_right = $this_el.offsetWidth + 15;
-
-            const toolbar_el = this.$refs.toolbar;
-            $(toolbar_el).css('position', 'absolute')
-                .css('left', (button_right - (chars.length *
-                    (settings.buttonWidth + settings.buttonMargin + 2)) -
-                    settings.buttonMargin) + 'px')
-                .css('top', button_top + 'px')
-                .css('display', 'none')
-                .css('border', '1px solid ' + settings.toolbarBorderColor)
-                .css('width', ((chars.length *
-                    (settings.buttonWidth + settings.buttonMargin + 2)) +
-                    settings.buttonMargin) + 'px')
-                .css('height', ((settings.buttonHeight +
-                    (2 * (settings.buttonMargin + 3))) + 'px'))
-                .css('background', settings.toolbarBgColor)
-                .css('z-index', 100)
-                .mouseover(function () {
-                    hover = true;
-                })
-                .mouseout(function () {
-                    hover = false;
-                })
-                .click(function () {
-                    $this.focus();
-                });
-
-            // Create each of the buttons on the toolbar.
-            $.each(chars, function (i, c) {
-                buttons[i] = $('<div/>').html(c)
-                    .css('width', settings.buttonWidth + 'px')
-                    .css('height', (settings.buttonHeight -
-                        (settings.buttonHeight / 2) + 13) + 'px')
-                    .css('color', (settings.buttonTextColor))
-                    .css('border', '0')
-                    .css('text-align', 'center')
-                    .css('cursor', 'pointer')
-                    .css('top', settings.buttonMargin + 'px')
-                    .css('left', (((settings.buttonWidth + settings.buttonMargin + 2) *
-                        i) + settings.buttonMargin) + 'px')
-                    .css('border', '1px solid ' + settings.toolbarBgColor)
-                    .css('padding-top', ((settings.buttonHeight / 2) - 8) + 'px')
-                    .css('position', 'absolute')
-                    .mouseover(function () {
-                        $(this).css('border', '1px solid ' +
-                            settings.buttonBorderColor)
-                            .css('background', settings.buttonBgColor);
-                    })
-                    .mouseout(function () {
-                        $(this).css('border', '1px solid ' + settings.toolbarBgColor)
-                            .css('background', settings.toolbarBgColor);
-                    })
-                    .mousedown(function () {
-                        var input = $this[0];
-                        var value = htmlDecode($(this).html());
-                        if (document.selection) {
-                            input.focus();
-                            sel = document.selection.createRange();
-                            sel.text = value;
-                            input.focus();
-                        } else if (input.selectionStart ||
-                            input.selectionStart == '0') {
-                            var startPos = input.selectionStart;
-                            var endPos = input.selectionEnd;
-                            var scrollTop = input.scrollTop;
-                            input.value = input.value.substring(0, startPos) + value +
-                                input.value.substring(endPos, input.value.length);
-                            input.focus();
-                            input.selectionStart = startPos + value.length;
-                            input.selectionEnd = startPos + value.length;
-                            input.scrollTop = scrollTop;
-                        } else {
-                            input.value += value;
-                            input.focus();
-                        }
-                        comp.$emit('input', input.value);
-                    });
-                $(toolbar_el).append(buttons[i]);
-            });
-
-            function htmlDecode(value) {
-                return $('<div/>').html(value).text();
+                this.$refs.toolbar.style.left = (button_right - (this.custom_keyboard.length * 25) - 3) + 'px';
+                this.$refs.toolbar.style.top = button_top + 'px';
             }
-
-            // Bind events to text input using '.specialedit' namespace.
-            $this.bind('keydown.specialedit', function (event) {
-                if (event.which == KEYCODE_SHIFT) {
-                    for (var c in buttons) {
-                        // The eszett doesn't play well with toUpperCase method.
-                        if (buttons[c].html() != htmlDecode(ESZETT)) {
-                            buttons[c].html(buttons[c].html().toUpperCase());
-                        }
-                    }
-                }
-            });
-
-            $this.bind('keyup.specialedit', function (event) {
-                if (event.which == KEYCODE_SHIFT) {
-                    for (var c in buttons) {
-                        buttons[c].html(buttons[c].html().toLowerCase());
-                    }
-                }
-            });
-
-            $this.bind('focus.specialedit', function () {
-                $(toolbar_el).fadeIn();
-            });
-
-            /**
-             * We check to see if the mouse is currently over the buttons. If it is
-             * then we take this to mean that the user has clicked a button, and
-             * that's why the blur event has been triggered. In that case, the
-             * buttons shouldn't be hidden.
-             *
-             * This causes a minor bug if the user is hovering over the buttons,
-             * while the text field loses focus some over way, (for example, by
-             * pressing TAB).
-             */
-            $this.bind('blur.specialedit', function () {
-                if (!hover) {
-                    $(toolbar_el).hide();
-                }
-            });
-
         }
     }
 </script>
 
 <style scoped>
     .custom_keyboard_toolbar {
-
+        position:absolute;
+        z-index:100;
+        border: 1px solid #cccccc;
+        background: #f0f0ee;
+        padding: 3px;
     }
+
+    .custom_keyboard_button {
+        display:inline-block;
+        width: 20px;
+        height: 23px;
+        color: #000000;
+        text-align: center;
+        cursor: pointer;
+        border: 1px solid #f0f0ee;
+        padding-top: 2px;
+        margin:2px;
+    }
+
+    .custom_keyboard_button:hover {
+        border: 1px solid #000000;
+        background: #b2bbd0;
+    }
+
+    .keyboard-fade-enter,
+    .keyboard-fade-leave-to { opacity: 0 }
+
+    .keyboard-fade-leave,
+    .keyboard-fade-enter-to { opacity: 1 }
+
+    .keyboard-fade-enter-active,
+    .keyboard-fade-leave-active { transition: opacity 200ms }
 </style>
