@@ -20,6 +20,7 @@
             'name',
             'value',
             'type',
+            'lang',
             'placeholder',
             'custom_keyboard'
         ],

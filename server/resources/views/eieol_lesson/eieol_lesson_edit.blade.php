@@ -39,9 +39,9 @@
             lesson_text: function() {
                 var lesson_text = '';
                 this.glossed_texts.forEach(function(gt) {
-                    var temp_text = gt.glossed_text;
-                    temp_text = temp_text.replace('<p>', '').replace('</p>', '');
-                    lesson_text +=  temp_text + ' ';
+                    if (gt.glossed_text) {
+                        lesson_text += gt.glossed_text.replace('<p>', '').replace('</p>', '') + ' ';
+                    }
                 });
                 return lesson_text;
             },
