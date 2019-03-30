@@ -88,11 +88,8 @@
         },
         updated() {
             if (this.$refs.toolbar) {
-                let button_top = this.$refs.input.offsetHeight + 25;
-                let button_right = this.$refs.input.offsetWidth + 15;
-
-                this.$refs.toolbar.style.left = (button_right - (this.custom_keyboard.length * 25) - 3) + 'px';
-                this.$refs.toolbar.style.top = button_top + 'px';
+                this.$refs.toolbar.style.right = '13px';
+                this.$refs.toolbar.style.top = this.$refs.input.offsetHeight + 25 + 'px';
             }
         }
     }
