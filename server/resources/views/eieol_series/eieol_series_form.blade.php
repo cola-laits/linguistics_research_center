@@ -20,29 +20,29 @@
           </ul>
         </div>
     @endif
-    
-    <div class='row'>
- 
+
     @if ($action == 'Create')
-      {{ Form::open(['role' => 'form', 'url' => '/admin2/eieol_series', 'class' => 'form']) }}
+        {{ Form::open(['role' => 'form', 'url' => '/admin2/eieol_series', 'class' => 'form']) }}
     @else
         {{ Form::model($series, ['role' => 'form', 'url' => '/admin2/eieol_series/' . $series->id, 'method' => 'PUT', 'class' => 'form']) }}
     @endif
+
+    <div class='form-row'>
     
     <div class='form-group col-sm-1 @if ($errors->has('published')) has-error @endif  '>
-          {{ Form::label('published', 'Published') }}
-        <input type="checkbox" id="published" name="published" class="form-control" value="1"
+        <input type="checkbox" id="published" name="published" class="form-check-input" value="1"
             @if (isset($series) && $series->published) checked="checked" @endif>
+        <label for="published" class="form-check-label">Published</label>
     </div>
     
     <div class='form-group col-sm-1 @if ($errors->has('use_old_gloss_ui')) has-error @endif  '>
-          {{ Form::label('use_old_gloss_ui', 'Old Gloss UI') }}
-        <input type="checkbox" id="use_old_gloss_ui" name="use_old_gloss_ui" class="form-control" value="1"
+        <input type="checkbox" id="use_old_gloss_ui" name="use_old_gloss_ui" class="form-check-input" value="1"
                @if (isset($series) && $series->use_old_gloss_ui) checked="checked" @endif>
+        <label for="use_old_gloss_ui" class="form-check-label">Old Gloss UI</label>
     </div>
     
     <div class='form-group col-sm-1 @if ($errors->has('order')) has-error @endif  '>
-          {{ Form::label('order', 'Order') }}
+        <label for="order">Order</label>
           {{ Form::text('order', null, ['placeholder' => '', 'class' => 'form-control']) }}
       </div>
         
@@ -77,12 +77,13 @@
       </div>  
     
       <div class='form-group col-sm-1'>
-          {{ Form::submit($action, ['class' => 'btn btn-primary']) }}
+          {{ Form::submit('Save', ['class' => 'btn btn-primary']) }}
       </div>
   
  
-      {{ Form::close() }}
     </div>
+
+    </form>
     
   @if ($action != 'Create')
   

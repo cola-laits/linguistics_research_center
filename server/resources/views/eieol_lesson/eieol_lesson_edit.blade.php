@@ -209,7 +209,7 @@
 
                         if (!window.isAdmin || data['author_comments'] || data['author_done']) {
                             //only show if you are not an admin, or if they were filled in.
-                            $("#gloss_author_comments").html('<div class="form-group col-sm-9 col-sm-offset-1">\
+                            $("#gloss_author_comments").html('<div class="form-group col-sm-9 offset-1">\
 						    <label for="author_comments">Author Comments</label>\
 						    <textarea class="form-control comment_textarea author_comments" name="author_comments" cols="100" rows="2" id="author_comments"></textarea>\
 						</div>\
@@ -222,20 +222,20 @@
                         }
 
                         if (window.isAdmin) {
-                            $("#gloss_admin_comments").html('<div class="form-group col-sm-9 col-sm-offset-1">\
+                            $("#gloss_admin_comments").html('<div class="form-group col-sm-9 offset-1">\
 							    <label for="admin_comment">Admin Comments</label>\
 					    		<textarea class="form-control comment_textarea admin_comments" name="admin_comments" cols="100" rows="2"></textarea>\
 							</div>\
 							<div class="form-group col-sm-1">\
-						        <input class="btn btn-xs btn-warning comment_clear" type="submit" value="Clear">\
+						        <input class="btn btn-sm btn-warning comment_clear" type="submit" value="Clear">\
 							</div>');
                         } else {
                             if (data['admin_comments']) {
                                 //Only show admin comments to authors if they exist
-                                $("#gloss_admin_comments").html('<div class="form-group col-sm-9 col-sm-offset-1">\
+                                $("#gloss_admin_comments").html('<div class="form-group col-sm-9 offset-1">\
 								<label for="admin_comment">Admin Comments</label>\
 								<input class="form-control" name="admin_comments" type="hidden">\
-								<div class="well" style="white-space: pre-wrap" >' + data['admin_comments'] + '</div>\
+								<div class="card"><div class="card-body" style="white-space: pre-wrap" >' + data['admin_comments'] + '</div></div>\
 							</div>');
                             }
                         }
@@ -312,7 +312,7 @@
     <h1><i class='fa fa-file-text'></i> Edit Lesson for <a :href="'/admin2/eieol_series/'+lesson.series.id+'/edit'" title="Return to series">{{lesson.series.title}}</a></h1>
     <p><a href="/guides/eieol_author" target=_new>Author Guide</a></p>
     <p><a :href="'/eieol_lesson/'+lesson.series.id+'?id='+lesson.id" target="_blank">Preview</a></p>
-    <div class='bg-danger alert'>
+    <div class='alert-warning alert'>
     	If you change the order of items on this page, they will not appear in that order until you refresh the page.
     	<br/><br/>
     	<a href="#"
@@ -347,7 +347,7 @@
 
     <input name="series_id" type="hidden" :value="lesson.series_id">
 
-		<div class='row'>
+		<div class='form-row'>
 			<div class='col-sm-1'></div>
 			
 			<div class='form-group col-sm-1 '>
@@ -401,7 +401,7 @@
         ></comment-area>
 			    	
 		<div class='row'>	    	
-		    <div class='form-group col-sm-10 col-sm-offset-1'>
+		    <div class='form-group col-sm-10 offset-1'>
                 <label for="intro_text">Intro Text</label>
 		        <ck-editor html_id="intro_text"
                            html_name="intro_text"
@@ -410,8 +410,10 @@
                            @input="markFormDirty('update_form')"
                 ></ck-editor>
 		        <div id="intro_text_error" class="alert-danger errors"></div>
-                <input class="btn btn-xs btn-primary" type="submit" value="Save">
-                <button type="button" class="btn btn-xs" onclick="previewText('intro_text')">Preview</button>
+                <input class="btn btn-sm btn-primary" type="submit" value="Save">
+                <button type="button" class="btn btn-sm btn-secondary" v-b-modal.intro_text_preview>Preview</button>
+                <b-modal id="intro_text_preview" title="Intro Text"  :ok-only="true"
+                         size="xl"><div v-html="lesson.intro_text"></div></b-modal>
 		    </div>
 		</div>		    
 
@@ -465,11 +467,11 @@
 						</div>
 					    
 					    <div class='form-group col-sm-1 bottom_button'>
-                            <input class="btn btn-xs btn-primary" type="submit" value="Save">
+                            <input class="btn btn-sm btn-primary" type="submit" value="Save">
 						</div>
 					
 			    		<div class='form-group col-sm-1 bottom_button'>
-                            <button class="btn btn-xs btn-danger delete_glossed_text" type="button"
+                            <button class="btn btn-sm btn-danger delete_glossed_text" type="button"
                                     @click="delete_glossed_text(glossed_text.id)"
                                     v-if="glossed_text.id !== ''">Delete</button>
                         </div>
@@ -488,7 +490,7 @@
 			    <div class="row">
                     <div class='col-sm-2'></div>
                     <div class="col-sm-10">
-			    <button class="togglegloss btn btn-xs btn-default" @click="toggleGlossOpen('gloss_'+glossed_text.id)"
+			    <button class="togglegloss btn btn-sm btn-secondary" @click="toggleGlossOpen('gloss_'+glossed_text.id)"
                         v-if="glossed_text.id !== ''">Toggle glosses</button>
 			    </div>
 			    </div>
@@ -514,14 +516,14 @@
 							<div class='form-group col-sm-1 '>
 
 						        <label for="order">Order</label>
-                                    <input placeholder="Order" class="form-control" id="order" name="order" type="text"
+                                <div class="row">
+                                    <input placeholder="Order" id="order" name="order" type="text"
                                            v-model="gloss.order">
+                                    <input type="submit" value="Save Order" class="btn btn-sm btn-primary">
+                                </div>
 						        <div id ="order_error" class="alert-danger errors"></div>
 						    </div>
-						    
-						    <div class='form-group col-sm-1 bottom_button'>
-    						    <input type="submit" value="Save Order" class="btn btn-xs btn-primary">
-							</div>
+
                             </form>
 
                             <div class='col-sm-4'>
@@ -550,13 +552,13 @@
 			    			<div class='col-sm-1 bottom_button'>
                                 <form class="edit_gloss" :id="'edit_gloss_form_' + gloss.id">
                                     <input type="hidden" name="gloss_id" :value="gloss.id">
-                                    <input type="button" value="Edit Gloss" class="btn btn-xs btn-primary"
+                                    <input type="button" value="Edit Gloss" class="btn btn-sm btn-primary"
                                         @click="open_edit_gloss_modal(gloss.id)">
 			    				</form>
 			    			</div>
 			    			
 			    			<div class='form-group col-sm-1 bottom_button'>
-                                <input type="button" value="Remove" class="btn btn-xs btn-danger"
+                                <input type="button" value="Remove" class="btn btn-sm btn-danger"
                                        @click="delete_glossed_text_gloss(gloss.id)">
 							</div>
 						      
@@ -568,7 +570,7 @@
 			    <div class='row'>
 			   		<div class='col-sm-2'></div>
 			   		<div class='form-group col-sm-1 '>
-                        <input class="btn btn-xs btn-success" type="button" value="Attach Gloss"
+                        <input class="btn btn-sm btn-success" type="button" value="Attach Gloss"
                                 @click="open_attach_gloss_modal(glossed_text.id)">
 				    </div>
 				</div>
@@ -584,7 +586,7 @@
 	  <div class='row'>
 	  	<div class='col-sm-1'></div>
 	  	<div class="col-sm-1">
-	  		<a class="btn btn-xs btn-success" @click="add_glossed_text()">Create New Glossed Text</a>
+	  		<a class="btn btn-sm btn-success" @click="add_glossed_text()">Create New Glossed Text</a>
 	  	</div>
 	  </div>
 
@@ -597,11 +599,11 @@
     <h2>Text and Translation</h2>
 
     <div class='row'>
-		<div class='col-sm-10 col-sm-offset-1'>
+		<div class='col-sm-10 offset-1'>
 	        <strong>Lesson Text</strong> 
-	        <div class="well" id="lesson_text">
+	        <div class="card"><div class="card-body" id="lesson_text">
                 {{lesson_text}}
-	        </div>
+	        </div></div>
 	    </div>
 	    <br/>
     </div>
@@ -615,7 +617,7 @@
         <input name="_method" type="hidden" value="PUT">
 
         <div class='row'>
-			<div class='form-group col-sm-10 col-sm-offset-1'>
+			<div class='form-group col-sm-10 offset-1'>
                 <label for="lesson_translation">Lesson Translation</label>
                 <ck-editor html_id="lesson_translation"
                            html_name="lesson_translation"
@@ -643,9 +645,11 @@
         ></comment-area>
 
 	    <div class='row'>
-	    	<div class='form-group col-sm-2 col-sm-offset-1'>
-                <input class="btn btn-xs btn-primary" type="submit" value="Save Translation">
-                <button type="button" class="btn btn-xs" onclick="previewText('lesson_translation')">Preview</button>
+	    	<div class='form-group col-sm-2 offset-1'>
+                <input class="btn btn-sm btn-primary" type="submit" value="Save Translation">
+                <button type="button" class="btn btn-sm btn-secondary" v-b-modal.lesson_translation_preview>Preview</button>
+                <b-modal id="lesson_translation_preview" title="Lesson Translation" :ok-only="true"
+                         size="xl"><div v-html="lesson.lesson_translation"></div></b-modal>
             </div>
 	    </div>
 	    
@@ -717,7 +721,7 @@
                 ></comment-area>
 
 					<div class='row'>    
-					    <div class='form-group col-sm-10 col-sm-offset-1'>
+					    <div class='form-group col-sm-10 offset-1'>
                             <label for="grammar_text">Grammar Text</label>
                             <ck-editor :html_id="'grammar_text_'+grammar.id"
                                        html_name="grammar_text"
@@ -732,13 +736,15 @@
 					<div class='row'>
 			    		<div class='form-group col-sm-1 '></div>
 			    		<div class='form-group col-sm-2 '>
-                            <input class="btn btn-xs btn-primary" type="submit" value="Save">
-                            <button type="button" class="btn btn-xs" :onclick="'previewText(\'grammar_text_'+grammar.id+'\')'">Preview</button>
+                            <input class="btn btn-sm btn-primary" type="submit" value="Save">
+                            <button type="button" class="btn btn-sm btn-secondary" v-b-modal="'grammar_text_preview_'+grammar.id">Preview</button>
+                            <b-modal :id="'grammar_text_preview_'+grammar.id" :ok-only="true"
+                                     title="Grammar" size="xl"><div v-html="grammar.grammar_text"></div></b-modal>
                         </div>
 			    		
 			    		<div class='form-group col-sm-8 '></div>
 			    		<div class='form-group col-sm-1 '>
-                            <button class="btn btn-xs btn-danger delete_grammar" type="button"
+                            <button class="btn btn-sm btn-danger delete_grammar" type="button"
                                     v-if="grammar.id !== ''"
                                 @click.prevent="delete_grammar(grammar.id)">Delete</button>
 						</div>
@@ -753,7 +759,7 @@
 	  <div class='row'>
 	  	<div class='col-sm-1'></div>
 	  	<div class="col-sm-1">
-	  		<a class="btn btn-xs btn-success" @click="add_grammar()">Create New Grammar</a>
+	  		<a class="btn btn-sm btn-success" @click="add_grammar()">Create New Grammar</a>
 	  	</div>
 	  </div>
     
@@ -786,7 +792,7 @@
                 <p id="preview_modal_body"></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

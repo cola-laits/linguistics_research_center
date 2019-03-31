@@ -14,8 +14,8 @@
                 </p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-xs btn-danger" id="delete_confirmed">Delete</button>
-                <button type="button" class="btn btn-xs btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-sm btn-danger" id="delete_confirmed">Delete</button>
+                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>

@@ -89,8 +89,8 @@
         },
         updated() {
             if (this.$refs.toolbar) {
-                this.$refs.toolbar.style.right = '13px';
-                this.$refs.toolbar.style.top = this.$refs.input.offsetHeight + 25 + 'px';
+                this.$refs.toolbar.style.right = '0px';
+                this.$refs.toolbar.style.top = (this.$refs.input.offsetHeight + 32) + 'px';
             }
         }
     }

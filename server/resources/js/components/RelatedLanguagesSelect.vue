@@ -16,7 +16,7 @@
 
             <button @click.prevent="addLanguage()"
                     :disabled="dropdown_selected.value == ''"
-                    class="btn btn-xs btn-primary">Attach</button>
+                    class="btn btn-sm btn-primary">Attach</button>
 
         </div>
 

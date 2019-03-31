@@ -44,14 +44,14 @@
                         </div>
 
                         <div class='form-group bottom_button'>
-                            {{ Form::submit('Save', ['class' => 'btn btn-xs btn-primary']) }}
+                            {{ Form::submit('Save', ['class' => 'btn btn-sm btn-primary']) }}
                         </div>
 
                         {{ Form::close() }}
                     </div>
                 </div>
 
-                <div class="well" id="head_word_glosses"></div>
+                <div class="card"><div class="card-body" id="head_word_glosses"></div></div>
             </div>
 
         </div>

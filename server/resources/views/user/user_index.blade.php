@@ -4,7 +4,7 @@
  
 @section('content')
  
-<div class='col-lg-8 col-lg-offset-2'>
+<div class='col-lg-8 offset-2'>
  
     <h1><i class="fa fa-users"></i> User Administration</h1>
     

@@ -1,7 +1,7 @@
 <template>
     <transition name="comment-slide">
         <div class="row comment_rows" v-if="show_comments_area">
-            <div class='form-group col-sm-9 col-sm-offset-1'>
+            <div class='form-group col-sm-9 offset-1'>
                 <label :for="author_comments_prop">Author Comments</label>
                 <textarea class="form-control comment_textarea"
                           :name="author_comments_prop"
@@ -14,18 +14,20 @@
             </div>
 
             <div class='form-group col-sm-1'>
-                <label :for="author_done_prop">Done</label>
-                <input class="form-control author_done"
-                       :name="author_done_prop"
-                       type="checkbox"
-                       value="1"
-                       :id="author_done_prop"
-                       v-model="value[author_done_prop]"
-                       @input="input()"
-                >
+                <div class="form-check">
+                    <input class="form-check-input author_done"
+                           :name="author_done_prop"
+                           type="checkbox"
+                           value="1"
+                           :id="author_done_prop"
+                           v-model="value[author_done_prop]"
+                           @input="input()"
+                    >
+                    <label :for="author_done_prop" class="form-check-label">Done</label>
+                </div>
             </div>
 
-            <div class='form-group col-sm-9 col-sm-offset-1'>
+            <div class='form-group col-sm-9 offset-1'>
                 <label :for="admin_comments_prop">Admin Comments</label>
                 <div v-if="is_user_admin">
                         <textarea
@@ -40,12 +42,12 @@
                 </div>
                 <div v-else>
                     <input type="hidden" name="admin_comments" v-model="value[admin_comments_prop]">
-                    <div class="well" style="white-space: pre-wrap">{{value[admin_comments_prop]}}</div>
+                    <div class="card"><div class="card-body" style="white-space: pre-wrap">{{value[admin_comments_prop]}}</div></div>
                 </div>
             </div>
 
             <div class='form-group col-sm-1'>
-                <button class="btn btn-xs btn-warning" type="button" @click="clear_comments()">Clear</button>
+                <button class="btn btn-sm btn-warning" type="button" @click="clear_comments()">Clear</button>
             </div>
         </div>
     </transition>

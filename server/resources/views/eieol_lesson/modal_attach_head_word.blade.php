@@ -52,7 +52,7 @@
                         </div>
 
                         <div class='form-group bottom_button'>
-                            {{ Form::submit('Add', ['class' => 'btn btn-xs btn-success']) }}
+                            {{ Form::submit('Add', ['class' => 'btn btn-sm btn-success']) }}
                         </div>
                         {{ Form::close() }}
                     </div>

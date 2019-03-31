@@ -3,6 +3,10 @@ window.Vue = require('vue');
 window.VueRouter = require('vue-router').default;
 Vue.use(VueRouter);
 window.axios = require('axios').default;
+import BootstrapVue from 'bootstrap-vue'
+
+Vue.use(BootstrapVue);
+
 window.jQuery = window.$ = require('jquery');
 
 const files = require.context('./', true, /\.vue$/i)
@@ -58,9 +62,9 @@ var routes = [
     {path: '/reflex_editor/:id', component: LexEditor, props:(route)=>({id:route.params.id,    'route_name':'reflex',
             'fields':[
                 {name:'gloss',label:'Gloss', type:'text'},
-                {name:'etymas',label:'Etymas', type:'info',view_fn:function(reflex) {return reflex.etymas.map(function(etyma){return etyma.entry}).join(", ");}},
+                {name:'etymas',label:'Etymas', type:'info',view_fn:function(reflex) {return reflex.etymas ? reflex.etymas.map(function(etyma){return etyma.entry}).join(", ") : "";}},
                 {name:'language_id',label:'Language',type:'relation',relation:'lang',view_fn:function(lang) {return lang.name;}},
-                {name:'sources',label:'Sources',type:'info',view_fn:function(reflex) {return reflex.sources.map(function(source){return source.code}).join(", ");}},
+                {name:'sources',label:'Sources',type:'info',view_fn:function(reflex) {return reflex.sources ? reflex.sources.map(function(source){return source.code}).join(", ") : "";}},
                 {name:'lang_attribute',label:'Lang Attribute',type:'text'},
                 {name:'class_attribute',label:'Class Attribute',type:'text'}
             ]})},

@@ -48,8 +48,8 @@
                                     {{ Form::label('element_' . $i . '_head_word_id', 'Head Word') }}
                                     {{ Form::hidden('element_' . $i . '_head_word_id', null, ['id' => 'element_' . $i . '_head_word_id']) }}
                                     <div id="element_{{$i}}_head_word_display"></div>
-                                    {{ Form::button('Pick Head Word', ['class' => 'btn btn-primary btn-xs pick_head_word_button', 'onclick' => 'element_id =' . $i]) }}
-                                    {{ Form::button('Edit Head Word', ['class' => 'btn btn-primary btn-xs edit_head_word_button', 'onclick' => 'element_id =' . $i]) }}
+                                    {{ Form::button('Pick Head Word', ['class' => 'btn btn-primary btn-sm pick_head_word_button', 'onclick' => 'element_id =' . $i]) }}
+                                    {{ Form::button('Edit Head Word', ['class' => 'btn btn-primary btn-sm edit_head_word_button', 'onclick' => 'element_id =' . $i]) }}
                                     <div id="element_{{$i}}_head_word_id_error" class="alert-danger errors"></div>
                                 </div>
 
@@ -66,7 +66,7 @@
                                         </div>
                                         &nbsp;&nbsp;
 
-                                        {{ Form::submit('Save', ['class' => 'btn btn-xs btn-primary']) }}
+                                        {{ Form::submit('Save', ['class' => 'btn btn-sm btn-primary']) }}
                                     </div>
                                 @else
                             </div>
@@ -99,7 +99,7 @@
 
                 {{ Form::close() }}
 
-                <div class="well" id="gloss_lessons"></div>
+                <div class="card"><div class="card-body" id="gloss_lessons"></div></div>
             </div>
         </div>
     </div>

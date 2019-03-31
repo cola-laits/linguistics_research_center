@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <br><br>
-                <button type="button" @click="cancel_change()" class="btn btn-default">Cancel</button>
+                <button type="button" @click="cancel_change()" class="btn btn-secondary">Cancel</button>
                 <button type="button" @click="edit_change()" class="btn btn-primary">Save</button>
                 <button type="button" @click="delete_change()" class="btn btn-danger">Delete</button>
             </div>

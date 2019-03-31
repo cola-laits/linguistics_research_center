@@ -1,5 +1,7 @@
 /*
 FIXME todo:
+Ajax spinner logic needs to move to axios instead
+Modals are broken and need to be replaced with vue-bootstrap modals
 Attach Gloss needs testing
 Gloss comments don't work
 Edit Gloss doesn't update lists
@@ -195,7 +197,6 @@ function previewText(ckeditor_inst) {
     var text = CKEDITOR.instances[ckeditor_inst].getData();
     $("#preview_modal #preview_modal_body").html(text);
     $('#preview_modal').modal({});
-
 }
 
 
@@ -430,14 +431,5 @@ $(document).ready(function(){
     });
 
     $('[data-toggle="popover"]').popover();
-
-    //This code is needed when we have one modal open another.
-    //Without it, when you close the second modal, the first one becomes unscrollable.
-    $('.modal').on('hidden.bs.modal', function () {
-        if($('.modal').hasClass('in')) {
-            $('body').addClass('modal-open');
-        }
-    });
-
 
 });//document ready

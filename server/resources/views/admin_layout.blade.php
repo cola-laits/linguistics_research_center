@@ -11,7 +11,7 @@
         <script src="{{ mix('/js/manifest.js') }}"></script>
         <script src="{{ mix('/js/vendor.js') }}"></script>
 
-        <link media="all" type="text/css" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+        <link media="all" type="text/css" rel="stylesheet" href="{{ mix('/css/admin.css') }}">
         <link media="all" type="text/css" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
         <link media="all" type="text/css" rel="stylesheet" href="/css/adminstyle.css">
         <link media="all" type="text/css" rel="stylesheet" href="/css/jquery.tagsinput.css">
@@ -27,48 +27,46 @@
     </head>
     <body onload="top.scrollTo(0,0)">
 
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/admin">Admin</a>
+    <nav class="navbar navbar-light bg-light navbar-expand-md">
+        <a class="navbar-brand" href="/admin">Admin</a>
 
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">EIEOL <span class="caret"></span></a>
+                <li class="dropdown nav-item">
+                    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">EIEOL <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="/admin2/eieol_series">Series</a></li>
-                        <li><a href="/admin2/eieol_language">Languages</a></li>
+                        <li><a class="dropdown-item" href="/admin2/eieol_series">Series</a></li>
+                        <li><a class="dropdown-item" href="/admin2/eieol_language">Languages</a></li>
                     </ul>
                 </li>
                 @if (\Illuminate\Support\Facades\Auth::user()->isAdmin())
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Lexicon <span class="caret"></span></a>
+                    <li class="dropdown nav-item">
+                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Lexicon <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/admin2/lexicon#/etyma">Etyma</a></li>
-                            <li><a href="/admin2/lexicon#/reflex">Reflex</a></li>
-                            <li><a href="/admin2/lexicon#/reflex_entry">Reflex → Entry</a></li>
-                            <li><a href="/admin2/lexicon#/reflex_pos">Reflex → Part of Speech</a></li>
-                            <li><a href="/admin2/lexicon#/sem_cat">Semantic Category</a></li>
-                            <li><a href="/admin2/lexicon#/sem_field">Semantic Field</a></li>
-                            <li><a href="/admin2/lexicon#/lang_fam">Language Family</a></li>
-                            <li><a href="/admin2/lexicon#/lang_subfam">Language Sub Family</a></li>
-                            <li><a href="/admin2/lexicon#/lang">Language</a></li>
-                            <li><a href="/admin2/lexicon#/source">Source</a></li>
-                            <li><a href="/admin2/lexicon#/pos">Part of Speech</a></li>
+                            <li><a class="dropdown-item" href="/admin2/lexicon#/etyma">Etyma</a></li>
+                            <li><a class="dropdown-item" href="/admin2/lexicon#/reflex">Reflex</a></li>
+                            <li><a class="dropdown-item" href="/admin2/lexicon#/reflex_entry">Reflex → Entry</a></li>
+                            <li><a class="dropdown-item" href="/admin2/lexicon#/reflex_pos">Reflex → Part of Speech</a></li>
+                            <li><a class="dropdown-item" href="/admin2/lexicon#/sem_cat">Semantic Category</a></li>
+                            <li><a class="dropdown-item" href="/admin2/lexicon#/sem_field">Semantic Field</a></li>
+                            <li><a class="dropdown-item" href="/admin2/lexicon#/lang_fam">Language Family</a></li>
+                            <li><a class="dropdown-item" href="/admin2/lexicon#/lang_subfam">Language Sub Family</a></li>
+                            <li><a class="dropdown-item" href="/admin2/lexicon#/lang">Language</a></li>
+                            <li><a class="dropdown-item" href="/admin2/lexicon#/source">Source</a></li>
+                            <li><a class="dropdown-item" href="/admin2/lexicon#/pos">Part of Speech</a></li>
                         </ul>
                     </li>
-                <li><a href="/admin2/user">Users</a></li>
-                <li><a href="/admin2/page">Pages</a></li>
+                <li class="nav-item"><a class="nav-link" href="/admin2/user">Users</a></li>
+                <li class="nav-item"><a class="nav-link" href="/admin2/page">Pages</a></li>
                 @endif
             </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="/">Back to Site</a></li>
-                <li><form class="navbar-form" method="POST" action="/logout">
+            <ul class="nav navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="/">Back to Site</a></li>
+                <li class="nav-item"><form class="navbar-form" method="POST" action="/logout">
                         @csrf
-                        <button type="submit" class="btn btn-default">Log Out</button>
+                        <button type="submit" class="btn btn-secondary">Log Out</button>
                     </form></li>
             </ul>
-        </div>
         </div>
     </nav>
 

@@ -55,7 +55,7 @@
                                     {{ Form::label('element_' . $i . '_head_word_id', 'Head Word') }}
                                     {{ Form::hidden('element_' . $i . '_head_word_id', null, ['id' => 'element_' . $i . '_head_word_id']) }}
                                     <div id="element_{{$i}}_head_word_display"></div>
-                                    {{ Form::button('Pick Head Word', ['class' => 'btn btn-primary btn-xs pick_head_word_button', 'onclick' => 'element_id =' . $i]) }}
+                                    {{ Form::button('Pick Head Word', ['class' => 'btn btn-primary btn-sm pick_head_word_button', 'onclick' => 'element_id =' . $i]) }}
                                     <div id ="element_{{$i}}_head_word_id_error" class="alert-danger errors"></div>
                                 </div>
 
@@ -67,7 +67,7 @@
                                     </div>
 
                                     <div class='form-group col-sm-1 bottom_button'>
-                                        {{ Form::submit('Add', ['class' => 'btn btn-xs btn-success']) }}
+                                        {{ Form::submit('Add', ['class' => 'btn btn-sm btn-success']) }}
                                     </div>
                                 @else
                             </div>

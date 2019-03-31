@@ -27,7 +27,7 @@
 	
 	{{ Form::hidden('series_id', $series->id) }}
 	
-	<div class='row'>
+	<div class='form-row'>
 		<div class='form-group col-sm-1 @if ($errors->has('order')) has-error @endif  '>
 	        {{ Form::label('order', 'Order') }}
 	        {{ Form::text('order', null, ['placeholder' => 'Order', 'class' => 'form-control']) }}
