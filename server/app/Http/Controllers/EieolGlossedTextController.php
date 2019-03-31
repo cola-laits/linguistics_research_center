@@ -48,8 +48,6 @@ class EieolGlossedTextController extends Controller
             'glossed_text_id' => $glossed_text->id,
             'message' => 'Glossed Text was successfully added.'
         ];
-
-
     }
 
     public function update(Request $request, $id) {
@@ -81,12 +79,14 @@ class EieolGlossedTextController extends Controller
             'success' => true,
             'message' => 'Glossed Text was successfully updated.'
         ];
-
-
     }
 
     public function destroy($id): void {
-        EieolGlossedText::findOrFail($id)->glosses()->detach();
+        foreach (EieolGlossedText::findOrFail($id)->glosses() as $gloss) {
+            $gloss->order = null;
+            $gloss->glossed_text_id = null;
+            $gloss->save();
+        }
         EieolGlossedText::destroy($id);
     }
 

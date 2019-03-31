@@ -91,6 +91,12 @@
 
     <script type="text/javascript">
         window.axios.defaults.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content');
+        axios.interceptors.response.use(function(response) {
+            return response;
+        }, function(error) {
+            alert("Sorry, an error occurred.  Refresh the page and try again.");
+            return Promise.reject(error);
+        });
 
         $.ajaxSetup({
             headers: {

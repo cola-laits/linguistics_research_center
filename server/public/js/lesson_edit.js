@@ -42,11 +42,7 @@ function ajax_submit(form) {
             }  //json fail
 
             if(json['success']) { //briefly show a success popup and turn off form background
-                $('#success_message').html(json['message']);
-                $("#update_confirm").modal('show');
-                setTimeout(function(){
-                    $("#update_confirm").modal('hide');
-                }, 1000);
+                flash_modal(json['message']);
                 myform.removeAttr("dirty");
 
                 //if they updated the language, we need to change the hidden language ids
@@ -144,11 +140,7 @@ function attach_gloss(gloss_id, gloss_text) {
                 alert("FIXME: Get gloss from response and add it to the text");
 
                 $("#attach_gloss_modal").modal('hide');
-                $('#success_message').html('Gloss successfully added.');
-                $("#update_confirm").modal('show');
-                setTimeout(function(){
-                    $("#update_confirm").modal('hide');
-                }, 1000);
+                flash_modal('Gloss successfully added.');
             } //json success
 
         }, //success

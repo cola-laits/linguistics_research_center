@@ -4,6 +4,13 @@
 
 @section('head_extra')
     <script type="text/javascript">
+        function flash_modal(msg) {
+            $('#success_message').html(msg);
+            $("#update_confirm").modal('show');
+            setTimeout(function(){
+                $("#update_confirm").modal('hide');
+            }, 1000);
+        }
 
         window.lesson_language_id = {{$lesson->language_id}};
         window.lesson_language_custom_keyboard_layout = [ {!! $lesson->language->custom_keyboard_layout !!} ];
@@ -94,36 +101,21 @@
                 var app = this;
                 $("#delete_grammar_confirm").modal('show')
                     .one('click', '#delete_confirmed', function () {
-                        $.ajax({
-                            type: "POST",
-                            url:'/admin2/eieol_grammar/'+id,
-                            data:{'_method':'delete'},
-                            dataType: "html",
-
-                            success : function(){
+                        axios.post('/admin2/eieol_grammar/'+id, {'_method':'delete'})
+                            .then(function(response) {
                                 app.grammars = app.grammars.filter(function(grammar) {
                                     return grammar.id !== id;
                                 });
                                 $("#delete_grammar_confirm").modal('hide');
 
-                                $('#success_message').html('Grammar has been deleted.');
-                                $("#update_confirm").modal('show');
-                                setTimeout(function(){
-                                    $("#update_confirm").modal('hide');
-                                }, 1000);
-                            }, //success
-
-                            error : function(xml_http_request, text_status, error_thrown) {
-                                alert('Ajax Error: ' + text_status + '/ ' + xml_http_request + '/ ' + error_thrown);
-                            } //error
-
-                        }); //ajax call
+                                flash_modal('Grammar has been deleted.');
+                            });
                     });
             },
             add_grammar() {
                 var next_grammar_order = 0;
-                $(".grammar_form").each(function() { // get the value of each order
-                    order = parseInt($('#order', this).val());
+                this.grammars.forEach(function(grammar) {
+                    var order = parseInt(grammar.order);
                     if(order > next_grammar_order) {
                         next_grammar_order = order;
                     }
@@ -139,37 +131,22 @@
                 var app = this;
                 $("#delete_glossed_text_confirm").modal('show')
                     .one('click', '#delete_confirmed', function () {
-                        $.ajax({
-                            type: "POST",
-                            url:'/admin2/eieol_glossed_text/'+id,
-                            data:{'_method':'delete'},
-                            dataType: "html",
-
-                            success : function(){
+                        axios.post('/admin2/eieol_glossed_text/'+id, {'_method':'delete'})
+                            .then(function(response) {
                                 app.glossed_texts = app.glossed_texts.filter(function(glossed_text) {
                                     return glossed_text.id !== id;
                                 });
                                 $("#delete_glossed_text_confirm").modal('hide');
 
-                                $('#success_message').html('Glossed Text has been deleted.');
-                                $("#update_confirm").modal('show');
-                                setTimeout(function(){
-                                    $("#update_confirm").modal('hide');
-                                }, 1000);
-                            }, //success
-
-                            error : function(xml_http_request, text_status, error_thrown) {
-                                alert('Ajax Error: ' + text_status + '/ ' + xml_http_request + '/ ' + error_thrown);
-                            } //error
-
-                        }); //ajax call
+                                flash_modal('Glossed Text has been deleted.');
+                            });
                     });
             },
             add_glossed_text() {
                 //calculate next order by finding the highest order in the form and adding 10
                 var next_glosssed_text_order = 0;
-                $(".glossed_text_form").each(function() { // get the value of each order
-                    order = parseInt($('#order', this).val());
+                this.glossed_texts.forEach(function(gt) {
+                    var order = parseInt(gt.order);
                     if(order > next_glosssed_text_order) {
                         next_glosssed_text_order = order;
                     }
@@ -184,13 +161,8 @@
                 var app = this;
                 $("#delete_glossed_text_gloss_confirm").modal('show')
                     .one('click', '#delete_confirmed', function () {
-                        $.ajax({
-                            type: "POST",
-                            url:'/admin2/eieol_glossed_text_gloss/' + id,
-                            data:{'_method':'delete'},
-                            dataType: "html",
-
-                            success : function(){
+                        axios.post('/admin2/eieol_glossed_text_gloss/'+id, {'_method':'delete'})
+                            .then(function(response) {
                                 app.glossed_texts.forEach(function (glossed_text) {
                                     glossed_text.glosses = glossed_text.glosses.filter(function(gloss) {
                                         return gloss.id !== id;
@@ -198,19 +170,8 @@
                                 });
                                 $("#delete_glossed_text_gloss_confirm").modal('hide');
 
-                                $('#success_message').html('Gloss has been unattached.');
-                                $("#update_confirm").modal('show');
-                                setTimeout(function(){
-                                    $("#update_confirm").modal('hide');
-                                }, 1000);
-
-                            }, //success
-
-                            error : function(xml_http_request, text_status, error_thrown) {
-                                alert('Ajax Error: ' + text_status + '/ ' + xml_http_request + '/ ' + error_thrown);
-                            } //error
-
-                        }); //ajax call
+                                flash_modal('Gloss has been unattached.');
+                            });
                     });
             },
             open_attach_gloss_modal(glossed_text_id) {
