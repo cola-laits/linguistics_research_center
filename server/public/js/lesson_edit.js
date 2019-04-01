@@ -120,62 +120,12 @@ function ajax_submit(form) {
     }); //ajax call
 } //ajax submit function
 
-function attach_gloss(gloss_id, gloss_text) {
-    var mydata = {};
-    mydata['existing_gloss_id'] = gloss_id;
-    mydata['glossed_text_id'] = window.modal_glossed_text_id; //set when displaying attach modal
-
-    $.ajax({
-        type: "POST",
-        url:'/admin2/eieol_glossed_text_gloss/copy_gloss',
-        data:mydata,
-        dataType: "html",
-
-        success : function(data){
-            var json = JSON.parse(data);
-
-            if(json['fail']) {
-                alert('Ajax Error: ' + json['msg']);
-            }  //json fail
-
-            if(json['success']) {
-                alert("FIXME: Get gloss from response and add it to the text");
-
-                $("#attach_gloss_modal").modal('hide');
-                flash_modal('Gloss successfully added.');
-            } //json success
-
-        }, //success
-
-        error : function(xml_http_request, text_status, error_thrown) {
-            alert('Ajax Error: ' + text_status + '/ ' + xml_http_request + '/ ' + error_thrown);
-        } //error
-
-    }); //ajax call
-} //attach gloss function
-
 function attach_head_word(head_word_id, head_word_display) {
     //gloss_form is set when they open the head word modal
     $(gloss_form).find("#element_" + element_id + "_head_word_id").attr('value', head_word_id);
     $(gloss_form).find("#element_" + element_id + "_head_word_display").html(head_word_display);
     $("#attach_head_word_modal").modal('hide');
 } //attach head word
-
-//ajax search for glosses
-function searchGlosses(gloss) {
-    if (gloss.length===0) { //if the search is blank, reset the result box
-        document.getElementById("gloss_search_result").innerHTML="";
-        return;
-    }
-    var xmlhttp=new XMLHttpRequest();
-    xmlhttp.onreadystatechange=function() {
-        if (xmlhttp.readyState===4 && xmlhttp.status===200) { //if ajax is successful, load result box
-            document.getElementById("gloss_search_result").innerHTML=xmlhttp.responseText;
-        }
-    };
-    xmlhttp.open("GET","/admin2/eieol_gloss/filtered_list?gloss="+gloss+"&language="+hold_language_id,true);
-    xmlhttp.send();
-}
 
 //ajax search for head words
 function searchHeadWords(head_word) {
@@ -200,40 +150,6 @@ window.onbeforeunload = function() {
         return 'You have unsaved changes!  Would you like to leave this page anyway?';
     }
 };
-
-function new_gloss_form_submit() {
-    $(".errors", '#new_gloss_form').empty();
-    $.ajax({
-        type: "POST",
-        url: $("#new_gloss_form").attr('action'),
-        data: $("#new_gloss_form").serialize(),
-        dataType: "html",
-
-        success: function (data) {
-            var json = JSON.parse(data);
-
-            if (json['fail']) { //go through all errors and set error messages, just within this form;
-                $.each(json['errors'], function (index, value) {
-                    var errorDiv = '#' + index + '_error';
-                    $(errorDiv, "#new_gloss_form").html(value);
-                });
-            }  //json fail
-
-            if (json['success']) {
-                $(this).removeAttr("dirty");
-                attach_gloss(json['gloss_id'], json['gloss_display']);
-
-            } //json success
-        }, //success
-
-        error: function (xml_http_request, text_status, error_thrown) {
-            alert('Ajax Error: ' + text_status + '/ ' + xml_http_request + '/ ' + error_thrown);
-        } //error
-
-    }); //ajax call
-
-    return false; // this keeps the form from submitting
-}
 
 function pick_head_word_button_click() {
     $("#new_head_word_form").css("background-color", "#FFFFFF");
@@ -386,16 +302,6 @@ $(document).ready(function(){
         }
     }); //analysis autocomplete
 
-    //this is when they click on a gloss in the gloss listing modal
-    $("#gloss_search_result").on('click', 'a', function() {
-        attach_gloss($(this).attr('id'), $(this).html());
-    });
-
-    //when they add a new gloss
-    $("#new_gloss_form").submit(function() {
-        return new_gloss_form_submit();
-    });//add gloss
-
     //popup to attach or change head word to gloss
     $(".pick_head_word_button").click(function() {
         return pick_head_word_button_click.call(this);
@@ -415,13 +321,6 @@ $(document).ready(function(){
     $("#new_head_word_form").submit(function() {
         return new_head_word_form_submit();
     });//add headword
-
-    //show element
-    $('.show_element').click(function() {
-        var content = $(this).next();
-        $(content).slideToggle('slow');
-        return false;
-    });
 
     $('[data-toggle="popover"]').popover();
 

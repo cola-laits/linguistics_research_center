@@ -15,22 +15,18 @@ class EieolGlossController extends Controller
 
     public function filtered_list(Request $request) {
         //this is a search that returns glosses that start with the url parm "gloss"
-        $text = '';
         $glosses = EieolGloss::with('elements.head_word')->where('surface_form', 'LIKE', Normalizer::normalize($request->get('gloss'), Normalizer::FORM_C) . '%')
             ->where('language_id', '=', $request->get('language') . '%')
-            ->take(15)->get()->sortBy('surface_form');
-        foreach ($glosses as $gloss) {
-            $text .= '<a id="' . $gloss->id . '">' .
-                $gloss->getDisplayGloss() .
-                '</a>' .
-                '<br/>';
-        }
-        if (count($glosses) === 0) {
-            return 'No matching glosses found';
-        }
+            ->take(15)->orderBy('surface_form')->get()->map(function($g) {
+                $v = new \stdClass();
+                $v->id = $g['id'];
+                $v->html = $g->getDisplayGloss();
+                return $v;
+            });
 
-        return $text;
-
+        return [
+            'glosses'=>$glosses
+        ];
     }
 
     public function show($id) {

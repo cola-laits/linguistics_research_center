@@ -85,14 +85,6 @@ span[lang] {background-color: #DDDDDD;}
 	padding:10px;
 }
 
-.element {
-    display:none;
-}
-
-.show_element {
-	margin-left: 10px;
-}
-
 input[type="text"] {
 	font-family: Times New Roman, Times, serif;
 }
