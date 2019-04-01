@@ -70,9 +70,7 @@
         </div>
     </nav>
 
-@include('eieol_lesson.confirm_delete')
-
-    <div class="container-fluid v-cloak" id="admin_app">
+    <div class="container-fluid" v-cloak id="admin_app">
         @yield('content')
     </div>
 
@@ -80,8 +78,6 @@
     <script src="/ckeditor/ckeditor-4.4.5-full/ckeditor.js"></script>
 
     <script src="{{ mix('/js/admin.js') }}"></script>
-
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 
     <script src="/js/jquery.tagsinput.js"></script>
     <script src="//code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
@@ -100,20 +96,6 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
-        });
-
-        $(document).ready(function(){
-            //generic delete confirmation
-            $(".delete").click(function(e) {
-                e.preventDefault();
-                var $form=$(this).closest('form');
-
-                $("#delete_confirm").modal('show')
-                    .one('click', '#delete_confirmed', function (e) {
-                        $form.trigger('submit');
-                    });
-            });
-
         });
 
     </script>

@@ -32,9 +32,6 @@
                     <td>{{{ $page->updated_at->format('m/d/Y h:ia') }}} </td>
                     <td>
                         <a href="/admin2/page/{{{ $page->id }}}/edit" class="btn btn-primary pull-left" style="margin-right: 3px;">Edit</a>
-                        {{-- Form::open(['url' => '/admin2/page/' . $page->id, 'method' => 'DELETE', 'style' => 'display:inline']) }}
-                        {{ Form::submit('Delete', ['class' => 'btn btn-danger delete'])}}
-                        {{ Form::close() --}}
                     </td>
                 </tr>
                 @endforeach
@@ -42,9 +39,7 @@
  
         </table>
     </div>
- 
-    <!--<a href="/admin2/page/create" class="btn btn-success">Add Page</a>-->
- 
+
  
 </div>
  

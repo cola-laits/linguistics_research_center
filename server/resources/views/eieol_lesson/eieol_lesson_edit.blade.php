@@ -4,16 +4,7 @@
 
 @section('head_extra')
     <script type="text/javascript">
-        function flash_modal(msg) {
-            $('#success_message').html(msg);
-            $("#update_confirm").modal('show');
-            setTimeout(function(){
-                $("#update_confirm").modal('hide');
-            }, 1000);
-        }
-
         window.lesson_language_id = {{$lesson->language_id}};
-        window.lesson_language_custom_keyboard_layout = [ {!! $lesson->language->custom_keyboard_layout !!} ];
         @if (Auth::user()->isAdmin())
             window.isAdmin = true;
         @else
@@ -39,7 +30,12 @@
             'dirty_form_ids': [],
             'open_comment_ids': [],
             'toggled_gloss_ids': [],
-            'is_user_admin': {{Auth::user()->isAdmin()}}
+            'is_user_admin': {{Auth::user()->isAdmin()}},
+            'modal_flash_title': '',
+            'modal_flash_body': '',
+            'delete_grammar_confirm_grammar_id': '',
+            'delete_glossed_text_confirm_glossed_text_id': '',
+            'delete_glossed_text_gloss_confirm_glossed_text_gloss_id': ''
         };
 
         window.admin_app_computed = {
@@ -55,6 +51,15 @@
         };
 
         window.admin_app_methods = {
+            flash_modal(msg) {
+                this.modal_flash_title = 'Update Confirmation';
+                this.modal_flash_body = msg;
+                this.$refs['flash_modal'].show();
+                var app = this;
+                setTimeout(function() {
+                    app.$refs['flash_modal'].hide();
+                }, 2000);
+            },
             getElementsForDisplay(gloss) {
                 return gloss.elements
                     .map(function(el) {
@@ -75,6 +80,7 @@
             isFormDirty(id) {
                 return this.dirty_form_ids.indexOf(id) !== -1;
             },
+            // FIXME use https://bootstrap-vue.js.org/docs/components/collapse/ for this
             toggleCommentsOpen(id) {
                 var ix = this.open_comment_ids.indexOf(id);
                 if (ix !== -1) {
@@ -86,30 +92,20 @@
             areCommentsOpen(id) {
                 return this.open_comment_ids.indexOf(id) !== -1;
             },
-            toggleGlossOpen(id) {
-                var ix = this.toggled_gloss_ids.indexOf(id);
-                if (ix !== -1) {
-                    this.toggled_gloss_ids.splice(ix, 1);
-                } else {
-                    this.toggled_gloss_ids.push(id);
-                }
-            },
-            isGlossOpen(id) {
-                return this.toggled_gloss_ids.indexOf(id) !== -1;
-            },
             delete_grammar(id) {
+                this.delete_grammar_confirm_grammar_id = id;
+                this.$refs['delete_grammar_confirm'].show();
+            },
+            delete_grammar_after_confirmation(id) {
                 var app = this;
-                $("#delete_grammar_confirm").modal('show')
-                    .one('click', '#delete_confirmed', function () {
-                        axios.post('/admin2/eieol_grammar/'+id, {'_method':'delete'})
-                            .then(function(response) {
-                                app.grammars = app.grammars.filter(function(grammar) {
-                                    return grammar.id !== id;
-                                });
-                                $("#delete_grammar_confirm").modal('hide');
+                axios.post('/admin2/eieol_grammar/'+id, {'_method':'delete'})
+                    .then(function(response) {
+                        app.grammars = app.grammars.filter(function(grammar) {
+                            return grammar.id !== id;
+                        });
+                        $("#delete_grammar_confirm").modal('hide');
 
-                                flash_modal('Grammar has been deleted.');
-                            });
+                        app.flash_modal('Grammar has been deleted.');
                     });
             },
             add_grammar() {
@@ -128,18 +124,19 @@
                 });
             },
             delete_glossed_text(id) {
+                this.delete_glossed_text_confirm_glossed_text_id = id;
+                this.$refs['delete_glossed_text_confirm'].show();
+            },
+            delete_glossed_text_after_confirmation(id) {
                 var app = this;
-                $("#delete_glossed_text_confirm").modal('show')
-                    .one('click', '#delete_confirmed', function () {
-                        axios.post('/admin2/eieol_glossed_text/'+id, {'_method':'delete'})
-                            .then(function(response) {
-                                app.glossed_texts = app.glossed_texts.filter(function(glossed_text) {
-                                    return glossed_text.id !== id;
-                                });
-                                $("#delete_glossed_text_confirm").modal('hide');
+                axios.post('/admin2/eieol_glossed_text/'+id, {'_method':'delete'})
+                    .then(function(response) {
+                        app.glossed_texts = app.glossed_texts.filter(function(glossed_text) {
+                            return glossed_text.id !== id;
+                        });
+                        $("#delete_glossed_text_confirm").modal('hide');
 
-                                flash_modal('Glossed Text has been deleted.');
-                            });
+                        app.flash_modal('Glossed Text has been deleted.');
                     });
             },
             add_glossed_text() {
@@ -158,20 +155,21 @@
                 });
             },
             delete_glossed_text_gloss(id) {
+                this.delete_glossed_text_gloss_confirm_glossed_text_gloss_id = id;
+                this.$refs['delete_glossed_text_gloss_confirm'].show();
+            },
+            delete_glossed_text_gloss_after_confirmation(id) {
                 var app = this;
-                $("#delete_glossed_text_gloss_confirm").modal('show')
-                    .one('click', '#delete_confirmed', function () {
-                        axios.post('/admin2/eieol_glossed_text_gloss/'+id, {'_method':'delete'})
-                            .then(function(response) {
-                                app.glossed_texts.forEach(function (glossed_text) {
-                                    glossed_text.glosses = glossed_text.glosses.filter(function(gloss) {
-                                        return gloss.id !== id;
-                                    });
-                                });
-                                $("#delete_glossed_text_gloss_confirm").modal('hide');
-
-                                flash_modal('Gloss has been unattached.');
+                axios.post('/admin2/eieol_glossed_text_gloss/'+id, {'_method':'delete'})
+                    .then(function(response) {
+                        app.glossed_texts.forEach(function (glossed_text) {
+                            glossed_text.glosses = glossed_text.glosses.filter(function(gloss) {
+                                return gloss.id !== id;
                             });
+                        });
+                        $("#delete_glossed_text_gloss_confirm").modal('hide');
+
+                        app.flash_modal('Gloss has been unattached.');
                     });
             },
             open_attach_gloss_modal(glossed_text_id) {
@@ -300,12 +298,35 @@
 @include('eieol_lesson.modal_edit_gloss')
 @include('eieol_lesson.modal_attach_head_word')
 @include('eieol_lesson.modal_edit_head_word')
-@include('eieol_lesson.confirm_delete_glosssed_text')
-@include('eieol_lesson.confirm_delete_glossed_text_gloss')
-@include('eieol_lesson.confirm_delete_grammar')
 
 @verbatim
-<!-- ---------------------------------------------------------------------------------------- -->  
+<!-- ---------------------------------------------------------------------------------------- -->
+
+<b-modal ref="flash_modal" :title="modal_flash_title" :ok-only="true" size="md"><div v-html="modal_flash_body"></div></b-modal>
+
+<b-modal ref="delete_grammar_confirm" title="Delete Confirmation" @ok="delete_grammar_after_confirmation(delete_grammar_confirm_grammar_id)">
+    Are you sure you want to delete this Grammar lesson? <br/><br/>
+    <div class="alert alert-warning">
+        This action can not be undone later. The contents of this grammar will be deleted.
+    </div>
+</b-modal>
+
+<b-modal ref="delete_glossed_text_confirm" title="Delete Confirmation" @ok="delete_glossed_text_after_confirmation(delete_glossed_text_confirm_glossed_text_id)">
+    Are you sure you want to delete this Glossed Text? <br/><br/>
+    <div class="alert alert-warning">
+        This action can not be undone later. The contents of this glossed text will be deleted.<br/>
+        All attached glosses will be unattached, though they will still be on file.
+    </div>
+</b-modal>
+
+<b-modal ref="delete_glossed_text_gloss_confirm" title="Delete Confirmation" @ok="delete_glossed_text_gloss_after_confirmation(delete_glossed_text_gloss_confirm_glossed_text_gloss_id)">
+    Are you sure you want to remove this gloss? <br/><br/>
+    <div class="alert alert-warning">
+        This action can not be undone later. The contents of this gloss will be unattached from this
+        glossed text.<br/><br/>
+        The gloss will still be on file.
+    </div>
+</b-modal>
 
 <div class='col-lg-12'>
  
@@ -490,12 +511,13 @@
 			    <div class="row">
                     <div class='col-sm-2'></div>
                     <div class="col-sm-10">
-			    <button class="togglegloss btn btn-sm btn-secondary" @click="toggleGlossOpen('gloss_'+glossed_text.id)"
-                        v-if="glossed_text.id !== ''">Toggle glosses</button>
+                <b-button size="sm" variant="secondary"
+                          v-b-toggle="'glosses-'+glossed_text.id"
+                          v-if="glossed_text.id !== ''">Toggle Glosses</b-button>
 			    </div>
 			    </div>
 			    
-			    <div class='lotsagloss' v-if="isGlossOpen('gloss_'+glossed_text.id)">
+			    <b-collapse :id="'glosses-'+glossed_text.id">
 			    
                     <p></p>
 			    <div id="'glossed_text_'+glossed_text.id+'_glosses'">
@@ -575,7 +597,7 @@
 				    </div>
 				</div>
 				
-				  </div>
+				  </b-collapse>
 
 			    <hr/>
 			</div>
@@ -765,38 +787,6 @@
     
 </div>
 
-
-<!-- This has to be defined after any other modals so it will show up if in a modal -->
-<div id="update_confirm" class="modal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Update Confirmation</h4>
-            </div>
-            <div class="modal-body" id="success_message">
-                Update was successful
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" tabindex="-1" role="dialog" id="preview_modal">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Preview</h4>
-            </div>
-            <div class="modal-body">
-                <p id="preview_modal_body"></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 @endverbatim
 @stop

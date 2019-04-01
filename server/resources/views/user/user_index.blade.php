@@ -37,7 +37,11 @@
                     <td>
                         <a href="/admin2/user/{{{ $user->id }}}/edit" class="btn btn-primary pull-left" style="margin-right: 3px;">Edit</a>
                         <a href="/admin2/user/password_form/{{{ $user->id }}}" class="btn btn-info pull-left" style="margin-right: 3px;">Password</a>
-                        {{ Form::open(['url' => '/admin2/user/' . $user->id, 'method' => 'DELETE', 'style' => 'display:inline']) }}
+                        {{ Form::open(['url' => '/admin2/user/' . $user->id,
+                            'method' => 'DELETE',
+                            'style' => 'display:inline',
+                            'onsubmit' => 'return confirm("Are you sure you want to delete this user?");'
+                            ]) }}
                         {{ Form::submit('Delete', ['class' => 'btn btn-danger delete'])}}
                         {{ Form::close() }}
                     </td>

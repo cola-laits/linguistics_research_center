@@ -193,13 +193,6 @@ function searchHeadWords(head_word) {
     xmlhttp.send();
 }
 
-function previewText(ckeditor_inst) {
-    var text = CKEDITOR.instances[ckeditor_inst].getData();
-    $("#preview_modal #preview_modal_body").html(text);
-    $('#preview_modal').modal({});
-}
-
-
 // --------------------------------document ready-------------------------------------
 
 window.onbeforeunload = function() {

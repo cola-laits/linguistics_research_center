@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\EieolGloss;
 use App\EieolGlossedText;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -82,7 +83,7 @@ class EieolGlossedTextController extends Controller
     }
 
     public function destroy($id): void {
-        foreach (EieolGlossedText::findOrFail($id)->glosses() as $gloss) {
+        foreach (EieolGloss::where('glossed_text_id',$id)->get() as $gloss) {
             $gloss->order = null;
             $gloss->glossed_text_id = null;
             $gloss->save();
