@@ -82,7 +82,7 @@ class EieolLanguageController extends Controller
         $language = new EieolLanguage;
 
         $language->language = $request->get('language');
-        $language->custom_keyboard_layout = Normalizer::normalize($request->get('custom_keyboard_layout'), Normalizer::FORM_D);
+        $language->custom_keyboard_layout = Normalizer::normalize($request->get('custom_keyboard_layout'));
         $language->custom_sort = Normalizer::normalize($request->get('custom_sort'), Normalizer::FORM_D);
         $language->substitutions = Normalizer::normalize($request->get('substitutions'), Normalizer::FORM_D);
         $language->lang_attribute = $request->get('lang_attribute');
@@ -196,7 +196,7 @@ class EieolLanguageController extends Controller
         $language = EieolLanguage::find($id);
 
         $language->language = $request->get('language');
-        $language->custom_keyboard_layout = Normalizer::normalize($request->get('custom_keyboard_layout'), Normalizer::FORM_D);
+        $language->custom_keyboard_layout = Normalizer::normalize($request->get('custom_keyboard_layout'));
         $language->custom_sort = Normalizer::normalize($request->get('custom_sort'), Normalizer::FORM_D);
         $language->substitutions = Normalizer::normalize($request->get('substitutions'), Normalizer::FORM_D);
         $language->lang_attribute = $request->get('lang_attribute');
