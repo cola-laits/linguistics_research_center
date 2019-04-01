@@ -40,7 +40,9 @@
             // 'attach gloss' modal
             'modal_attached_gloss': {},
             'modal_attached_gloss_search': '',
-            'modal_attached_gloss_search_results': []
+            'modal_attached_gloss_search_results': [],
+            'modal_attached_gloss_elements_open': [],
+            'modal_attached_gloss_errors': {}
         };
 
         window.admin_app_computed = {
@@ -184,6 +186,8 @@
                 };
                 this.modal_attached_gloss_search = '';
                 this.modal_attached_gloss_search_results = [];
+                this.modal_attached_gloss_elements_open = [];
+                this.modal_attached_gloss_errors = {};
                 this.$refs['attach_gloss_modal'].show();
             },
             searchGlosses(gloss) {
@@ -208,11 +212,10 @@
                     }  //json fail
 
                     if(json['success']) {
-                        app.glossed_texts = app.glossed_texts.map(function(gt) {
+                        app.glossed_texts.forEach(function(gt) {
                             if (gt.id===json['glossed_text'].id) {
-                                return json['glossed_text'];
+                                gt.glosses = json['glossed_text'].glosses;
                             }
-                            return gt;
                         });
 
                         app.$refs['attach_gloss_modal'].hide();
@@ -220,43 +223,38 @@
                     }
                 });
             },
+            toggleAttachGlossElementOpen(id) {
+                var ix = this.modal_attached_gloss_elements_open.indexOf(id);
+                if (ix !== -1) {
+                    this.modal_attached_gloss_elements_open.splice(ix, 1);
+                } else {
+                    this.modal_attached_gloss_elements_open.push(id);
+                }
+            },
+            isAttachGlossElementOpen(id) {
+                return this.modal_attached_gloss_elements_open.indexOf(id) !== -1;
+            },
             new_gloss_form_submit() {
-                /*
-                $(".errors", '#new_gloss_form').empty();
-                $.ajax({
-                    type: "POST",
-                    url: $("#new_gloss_form").attr('action'),
-                    data: $("#new_gloss_form").serialize(),
-                    dataType: "html",
-
-                    success: function (data) {
-                        var json = JSON.parse(data);
-
-                        if (json['fail']) { //go through all errors and set error messages, just within this form;
-                            $.each(json['errors'], function (index, value) {
-                                var errorDiv = '#' + index + '_error';
-                                $(errorDiv, "#new_gloss_form").html(value);
-                            });
-                        }  //json fail
+                var app = this;
+                this.modal_attached_gloss_errors = {};
+                axios.post('/admin2/eieol_gloss', this.modal_attached_gloss)
+                    .then(function(response) {
+                        var json = response.data;
+                        if (json['fail']) {
+                            app.modal_attached_gloss_errors = json['errors'];
+                        }
 
                         if (json['success']) {
-                            $(this).removeAttr("dirty");
-                            attach_gloss(json['gloss_id'], json['gloss_display']);
+                            app.glossed_texts.forEach(function(gt) {
+                                if (gt.id===json['glossed_text'].id) {
+                                    gt.glosses = json['glossed_text'].glosses;
+                                }
+                            });
 
-                        } //json success
-                    }, //success
-
-                    error: function (xml_http_request, text_status, error_thrown) {
-                        alert('Ajax Error: ' + text_status + '/ ' + xml_http_request + '/ ' + error_thrown);
-                    } //error
-
-                }); //ajax call
-
-                return false; // this keeps the form from submitting
-
-                 */
-                console.log(this.modal_attached_gloss);
-                alert("FIXME new gloss form submit");
+                            app.$refs['attach_gloss_modal'].hide();
+                            app.flash_modal('Gloss successfully added.');
+                        }
+                    });
             },
             open_edit_gloss_modal(gloss_id) {
                 //load form with data for the record they want to edit
@@ -406,6 +404,7 @@
         <label for="gloss_search_input">Search Gloss</label>
         <input placeholder="Search Gloss" class="form-control custom-keyboard"
                @keyup="searchGlosses(modal_attached_gloss_search)" name="gloss_search_input" type="text"
+               id="gloss_search_input"
                v-model="modal_attached_gloss_search">
         <br/><br/>
     </div>
@@ -427,21 +426,21 @@
                 <label for="surface_form">Surface Form</label>
                 <input placeholder="Surface Form" class="form-control custom-keyboard" id="surface_form" name="surface_form" type="text"
                     v-model="modal_attached_gloss.surface_form">
-                <div id ="surface_form_error" class="alert-danger errors"></div>
+                <div id ="surface_form_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['surface_form']">{{error}}</div></div>
             </div>
 
             <div class='form-group col-sm-2'>
                 <label for="element_1_part_of_speech">Part Of Speech</label>
                 <input placeholder="Part Of Speech" class="form-control part_of_speech" name="element_1_part_of_speech" type="text" id="element_1_part_of_speech"
                        v-model="modal_attached_gloss.element_1_part_of_speech">
-                <div id ="element_1_part_of_speech_error" class="alert-danger errors"></div>
+                <div id ="element_1_part_of_speech_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_1_part_of_speech']">{{error}}</div></div>
             </div>
 
             <div class='form-group col-sm-3'>
                 <label for="element_1_analysis">Analysis</label>
                 <textarea class="form-control analysis" name="element_1_analysis" cols="10" rows="2" id="element_1_analysis"
                           v-model="modal_attached_gloss.element_1_analysis"></textarea>
-                <div id ="element_1_analysis_error" class="alert-danger errors"></div>
+                <div id ="element_1_analysis_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_1_analysis']">{{error}}</div></div>
             </div>
 
             <div class='form-group col-sm-2'>
@@ -449,14 +448,14 @@
                 <input id="element_1_head_word_id" name="element_1_head_word_id" type="hidden">
                 <div id="element_1_head_word_display"></div>
                 <button class="btn btn-primary btn-sm pick_head_word_button" onclick="element_id =1" type="button">Pick Head Word</button>
-                <div id ="element_1_head_word_id_error" class="alert-danger errors"></div>
+                <div id ="element_1_head_word_id_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_1_head_word_id']">{{error}}</div></div>
             </div>
 
             <div class='form-group col-sm-2'>
                 <label for="contextual_gloss">Contextual Gloss</label>
                 <input placeholder="Contextual Gloss" class="form-control" id="contextual_gloss" name="contextual_gloss" type="text"
                        v-model="modal_attached_gloss.contextual_gloss">
-                <div id ="contextual_gloss_error" class="alert-danger errors"></div>
+                <div id ="contextual_gloss_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['contextual_gloss']">{{error}}</div></div>
             </div>
 
             <div class='form-group col-sm-1 bottom_button'>
@@ -465,14 +464,13 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" v-if="!isAttachGlossElementOpen(2)">
             <div class="col-sm-2">
-                <a class="show_element" href="#" v-b-toggle.attach_modal_row_2><i class='fa fa-plus-square-o '></i></a>
+                <a class="show_element" href="#" @click.prevent="toggleAttachGlossElementOpen(2)"><i class='fa fa-plus-square-o '></i></a>
             </div>
         </div>
 
-        <b-collapse id="attach_modal_row_2">
-        <div class='row'>
+        <div class='row' v-if="isAttachGlossElementOpen(2)">
                 <div class='form-group col-sm-2'></div>
 
                 <div class='form-group col-sm-2'>
@@ -480,7 +478,7 @@
                     <input placeholder="Part Of Speech" class="form-control part_of_speech"
                            name="element_2_part_of_speech" type="text" id="element_2_part_of_speech"
                            v-model="modal_attached_gloss.element_2_part_of_speech">
-                    <div id="element_2_part_of_speech_error" class="alert-danger errors"></div>
+                    <div id="element_2_part_of_speech_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_2_part_of_speech']">{{error}}</div></div>
                 </div>
 
                 <div class='form-group col-sm-3'>
@@ -488,7 +486,7 @@
                     <textarea class="form-control analysis" name="element_2_analysis" cols="10" rows="2"
                               id="element_2_analysis"
                               v-model="modal_attached_gloss.element_2_analysis"></textarea>
-                    <div id="element_2_analysis_error" class="alert-danger errors"></div>
+                    <div id="element_2_analysis_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_2_analysis']">{{error}}</div></div>
                 </div>
 
                 <div class='form-group col-sm-2'>
@@ -498,19 +496,17 @@
                     <button class="btn btn-primary btn-sm pick_head_word_button" onclick="element_id =2"
                             type="button">Pick Head Word
                     </button>
-                    <div id="element_2_head_word_id_error" class="alert-danger errors"></div>
+                    <div id="element_2_head_word_id_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_2_head_word_id']">{{error}}</div></div>
                 </div>
         </div>
-        </b-collapse>
 
-        <div class="row">
+        <div class="row" v-if="!isAttachGlossElementOpen(3)">
             <div class="col-sm-2">
-                <a class="show_element" href="#" v-b-toggle.attach_modal_row_3><i class='fa fa-plus-square-o '></i></a>
+                <a class="show_element" href="#" @click.prevent="toggleAttachGlossElementOpen(3)"><i class='fa fa-plus-square-o '></i></a>
             </div>
         </div>
 
-        <b-collapse id="attach_modal_row_3">
-            <div class='row'>
+        <div class='row' v-if="isAttachGlossElementOpen(3)">
                 <div class='form-group col-sm-2'></div>
 
                 <div class='form-group col-sm-2'>
@@ -518,7 +514,7 @@
                     <input placeholder="Part Of Speech" class="form-control part_of_speech"
                            name="element_3_part_of_speech" type="text" id="element_3_part_of_speech"
                            v-model="modal_attached_gloss.element_3_part_of_speech">
-                    <div id="element_3_part_of_speech_error" class="alert-danger errors"></div>
+                    <div id="element_3_part_of_speech_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_3_part_of_speech']">{{error}}</div></div>
                 </div>
 
                 <div class='form-group col-sm-3'>
@@ -526,7 +522,7 @@
                     <textarea class="form-control analysis" name="element_3_analysis" cols="10" rows="2"
                               id="element_3_analysis"
                               v-model="modal_attached_gloss.element_3_analysis"></textarea>
-                    <div id="element_3_analysis_error" class="alert-danger errors"></div>
+                    <div id="element_3_analysis_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_3_analysis']">{{error}}</div></div>
                 </div>
 
                 <div class='form-group col-sm-2'>
@@ -536,19 +532,17 @@
                     <button class="btn btn-primary btn-sm pick_head_word_button" onclick="element_id =3"
                             type="button">Pick Head Word
                     </button>
-                    <div id="element_3_head_word_id_error" class="alert-danger errors"></div>
+                    <div id="element_3_head_word_id_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_3_head_word_id']">{{error}}</div></div>
                 </div>
             </div>
-        </b-collapse>
 
-        <div class="row">
+        <div class="row" v-if="!isAttachGlossElementOpen(4)">
             <div class="col-sm-2">
-                <a class="show_element" href="#" v-b-toggle.attach_modal_row_4><i class='fa fa-plus-square-o '></i></a>
+                <a class="show_element" href="#" @click.prevent="toggleAttachGlossElementOpen(4)"><i class='fa fa-plus-square-o '></i></a>
             </div>
         </div>
 
-        <b-collapse id="attach_modal_row_4">
-            <div class='row'>
+        <div class='row' v-if="isAttachGlossElementOpen(4)">
                 <div class='form-group col-sm-2'></div>
 
                 <div class='form-group col-sm-2'>
@@ -556,7 +550,7 @@
                     <input placeholder="Part Of Speech" class="form-control part_of_speech"
                            name="element_4_part_of_speech" type="text" id="element_4_part_of_speech"
                            v-model="modal_attached_gloss.element_4_part_of_speech">
-                    <div id="element_4_part_of_speech_error" class="alert-danger errors"></div>
+                    <div id="element_4_part_of_speech_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_4_part_of_speech']">{{error}}</div></div>
                 </div>
 
                 <div class='form-group col-sm-3'>
@@ -564,7 +558,7 @@
                     <textarea class="form-control analysis" name="element_4_analysis" cols="10" rows="2"
                               id="element_4_analysis"
                               v-model="modal_attached_gloss.element_4_analysis"></textarea>
-                    <div id="element_4_analysis_error" class="alert-danger errors"></div>
+                    <div id="element_4_analysis_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_4_analysis']">{{error}}</div></div>
                 </div>
 
                 <div class='form-group col-sm-2'>
@@ -574,19 +568,17 @@
                     <button class="btn btn-primary btn-sm pick_head_word_button" onclick="element_id =4"
                             type="button">Pick Head Word
                     </button>
-                    <div id="element_4_head_word_id_error" class="alert-danger errors"></div>
+                    <div id="element_4_head_word_id_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_4_head_word_id']">{{error}}</div></div>
                 </div>
             </div>
-        </b-collapse>
 
-        <div class="row">
+        <div class="row" v-if="!isAttachGlossElementOpen(5)">
             <div class="col-sm-2">
-                <a class="show_element" href="#" v-b-toggle.attach_modal_row_5><i class='fa fa-plus-square-o '></i></a>
+                <a class="show_element" href="#" @click.prevent="toggleAttachGlossElementOpen(5)"><i class='fa fa-plus-square-o '></i></a>
             </div>
         </div>
 
-        <b-collapse id="attach_modal_row_5">
-            <div class='row'>
+        <div class='row' v-if="isAttachGlossElementOpen(5)">
                 <div class='form-group col-sm-2'></div>
 
                 <div class='form-group col-sm-2'>
@@ -594,7 +586,7 @@
                     <input placeholder="Part Of Speech" class="form-control part_of_speech"
                            name="element_5_part_of_speech" type="text" id="element_5_part_of_speech"
                            v-model="modal_attached_gloss.element_5_part_of_speech">
-                    <div id="element_5_part_of_speech_error" class="alert-danger errors"></div>
+                    <div id="element_5_part_of_speech_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_5_part_of_speech']">{{error}}</div></div>
                 </div>
 
                 <div class='form-group col-sm-3'>
@@ -602,7 +594,7 @@
                     <textarea class="form-control analysis" name="element_5_analysis" cols="10" rows="2"
                               id="element_5_analysis"
                               v-model="modal_attached_gloss.element_5_analysis"></textarea>
-                    <div id="element_5_analysis_error" class="alert-danger errors"></div>
+                    <div id="element_5_analysis_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_5_analysis']">{{error}}</div></div>
                 </div>
 
                 <div class='form-group col-sm-2'>
@@ -612,19 +604,17 @@
                     <button class="btn btn-primary btn-sm pick_head_word_button" onclick="element_id =5"
                             type="button">Pick Head Word
                     </button>
-                    <div id="element_5_head_word_id_error" class="alert-danger errors"></div>
+                    <div id="element_5_head_word_id_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_5_head_word_id']">{{error}}</div></div>
                 </div>
             </div>
-        </b-collapse>
 
-        <div class="row">
+        <div class="row" v-if="!isAttachGlossElementOpen(6)">
             <div class="col-sm-2">
-                <a class="show_element" href="#" v-b-toggle.attach_modal_row_6><i class='fa fa-plus-square-o '></i></a>
+                <a class="show_element" href="#" @click.prevent="toggleAttachGlossElementOpen(6)"><i class='fa fa-plus-square-o '></i></a>
             </div>
         </div>
 
-        <b-collapse id="attach_modal_row_6">
-            <div class='row'>
+        <div class='row' v-if="isAttachGlossElementOpen(6)">
                 <div class='form-group col-sm-2'></div>
 
                 <div class='form-group col-sm-2'>
@@ -632,7 +622,7 @@
                     <input placeholder="Part Of Speech" class="form-control part_of_speech"
                            name="element_6_part_of_speech" type="text" id="element_6_part_of_speech"
                            v-model="modal_attached_gloss.element_6_part_of_speech">
-                    <div id="element_6_part_of_speech_error" class="alert-danger errors"></div>
+                    <div id="element_6_part_of_speech_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_6_part_of_speech']">{{error}}</div></div>
                 </div>
 
                 <div class='form-group col-sm-3'>
@@ -640,7 +630,7 @@
                     <textarea class="form-control analysis" name="element_6_analysis" cols="10" rows="2"
                               id="element_6_analysis"
                               v-model="modal_attached_gloss.element_6_analysis"></textarea>
-                    <div id="element_6_analysis_error" class="alert-danger errors"></div>
+                    <div id="element_6_analysis_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_6_analysis']">{{error}}</div></div>
                 </div>
 
                 <div class='form-group col-sm-2'>
@@ -650,10 +640,9 @@
                     <button class="btn btn-primary btn-sm pick_head_word_button" onclick="element_id =6"
                             type="button">Pick Head Word
                     </button>
-                    <div id="element_6_head_word_id_error" class="alert-danger errors"></div>
+                    <div id="element_6_head_word_id_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_6_head_word_id']">{{error}}</div></div>
                 </div>
             </div>
-        </b-collapse>
 
         <div class='row'>
             <div class='form-group col-sm-12'>
@@ -661,7 +650,7 @@
                 <input placeholder="Comments" class="form-control" id="comments" name="comments"
                        type="text"
                        v-model="modal_attached_gloss.comments">
-                <div id="comments_gloss_error" class="alert-danger errors"></div>
+                <div id="comments_gloss_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['comments']">{{error}}</div></div>
             </div>
         </div>
 
@@ -671,7 +660,7 @@
                 <input placeholder="Underlying Form" class="form-control" id="underlying_form"
                        name="underlying_form" type="text"
                        v-model="modal_attached_gloss.underlying_form">
-                <div id="underlying_form_gloss_error" class="alert-danger errors"></div>
+                <div id="underlying_form_gloss_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['underlying_form']">{{error}}</div></div>
             </div>
         </div>
 

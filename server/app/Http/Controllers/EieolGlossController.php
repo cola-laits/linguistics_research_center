@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\EieolElement;
 use App\EieolGloss;
+use App\EieolGlossedText;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -149,7 +150,10 @@ class EieolGlossController extends Controller
             'message' => 'Gloss was successfully added.',
             'author_comments' => $gloss->author_comments,
             'author_done' => $gloss->author_done,
-            'admin_comments' => $gloss->admin_comments
+            'admin_comments' => $gloss->admin_comments,
+            'glossed_text'=>EieolGlossedText::with('glosses.language', 'glosses.elements.head_word.language')
+                ->where('id', $request->get('glossed_text_id'))
+                ->first()
         ];
 
 
@@ -252,7 +256,10 @@ class EieolGlossController extends Controller
             'gloss_display' => '<br>' . $gloss->getDisplayGloss(),
             'author_comments' => $gloss->author_comments,
             'author_done' => $gloss->author_done,
-            'admin_comments' => $gloss->admin_comments
+            'admin_comments' => $gloss->admin_comments,
+            'glossed_text'=>EieolGlossedText::with('glosses.language', 'glosses.elements.head_word.language')
+                ->where('id', $request->get('glossed_text_id'))
+                ->first()
         ];
 
 
