@@ -1,3 +1,6 @@
 
 @import '~bootstrap/scss/bootstrap';
 
+div.modal-dialog.modal-xxl {
+    max-width: 1800px !important;
+}
