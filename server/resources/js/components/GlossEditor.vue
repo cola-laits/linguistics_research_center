@@ -1,5 +1,3 @@
-<!-- FIXME add custom keyboard to surface form -->
-<!-- FIXME add autocomplete to part of speech, analysis -->
 <template>
     <div>
     <b-modal ref="attach_gloss_modal" :title="is_new_gloss ? 'Attach Gloss' : 'Edit Gloss'" size="xxl">
@@ -29,23 +27,33 @@
 
             <div class='row'>
                 <div class='form-group col-sm-2'>
-                    <label for="surface_form">Surface Form</label>
-                    <input placeholder="Surface Form" class="form-control custom-keyboard" id="surface_form" name="surface_form" type="text"
-                           v-model="gloss.surface_form">
+                    <label>Surface Form</label>
+                    <input-custom-keyboard placeholder="Surface Form"
+                                           id="surface_form"
+                                           name="surface_form"
+                                           type="text"
+                                           v-model="gloss.surface_form"
+                                           :custom_keyboard="custom_keyboard"></input-custom-keyboard>
                     <div id ="surface_form_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['surface_form']">{{error}}</div></div>
                 </div>
 
                 <div class='form-group col-sm-2'>
-                    <label for="element_1_part_of_speech">Part Of Speech</label>
-                    <input placeholder="Part Of Speech" class="form-control part_of_speech" name="element_1_part_of_speech" type="text" id="element_1_part_of_speech"
-                           v-model="gloss.element_1_part_of_speech">
+                    <label>Part Of Speech</label>
+                    <input-typeahead-ajax
+                        placeholder="Part Of Speech"
+                        v-model="gloss.element_1_part_of_speech"
+                        :search_url="'/admin2/part_of_speech/filtered_list?language_id='+language.id+'&term=:query'"
+                    ></input-typeahead-ajax>
                     <div id ="element_1_part_of_speech_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_1_part_of_speech']">{{error}}</div></div>
                 </div>
 
                 <div class='form-group col-sm-3'>
-                    <label for="element_1_analysis">Analysis</label>
-                    <textarea class="form-control analysis" name="element_1_analysis" cols="10" rows="2" id="element_1_analysis"
-                              v-model="gloss.element_1_analysis"></textarea>
+                    <label>Analysis</label>
+                    <input-typeahead-ajax
+                        placeholder="Analysis"
+                        v-model="gloss.element_1_analysis"
+                        :search_url="'/admin2/eieol_analysis/filtered_list?language_id='+language.id+'&term=:query'"
+                    ></input-typeahead-ajax>
                     <div id ="element_1_analysis_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_1_analysis']">{{error}}</div></div>
                 </div>
 
@@ -92,18 +100,22 @@
                 <div class='form-group col-sm-2'></div>
 
                 <div class='form-group col-sm-2'>
-                    <label for="element_2_part_of_speech">Part Of Speech</label>
-                    <input placeholder="Part Of Speech" class="form-control part_of_speech"
-                           name="element_2_part_of_speech" type="text" id="element_2_part_of_speech"
-                           v-model="gloss.element_2_part_of_speech">
+                    <label>Part Of Speech</label>
+                    <input-typeahead-ajax
+                        placeholder="Part Of Speech"
+                        v-model="gloss.element_2_part_of_speech"
+                        :search_url="'/admin2/part_of_speech/filtered_list?language_id='+language.id+'&term=:query'"
+                    ></input-typeahead-ajax>
                     <div id="element_2_part_of_speech_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_2_part_of_speech']">{{error}}</div></div>
                 </div>
 
                 <div class='form-group col-sm-3'>
-                    <label for="element_2_analysis">Analysis</label>
-                    <textarea class="form-control analysis" name="element_2_analysis" cols="10" rows="2"
-                              id="element_2_analysis"
-                              v-model="gloss.element_2_analysis"></textarea>
+                    <label>Analysis</label>
+                    <input-typeahead-ajax
+                        placeholder="Analysis"
+                        v-model="gloss.element_2_analysis"
+                        :search_url="'/admin2/eieol_analysis/filtered_list?language_id='+language.id+'&term=:query'"
+                    ></input-typeahead-ajax>
                     <div id="element_2_analysis_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_2_analysis']">{{error}}</div></div>
                 </div>
 
@@ -133,18 +145,22 @@
                 <div class='form-group col-sm-2'></div>
 
                 <div class='form-group col-sm-2'>
-                    <label for="element_3_part_of_speech">Part Of Speech</label>
-                    <input placeholder="Part Of Speech" class="form-control part_of_speech"
-                           name="element_3_part_of_speech" type="text" id="element_3_part_of_speech"
-                           v-model="gloss.element_3_part_of_speech">
+                    <label>Part Of Speech</label>
+                    <input-typeahead-ajax
+                        placeholder="Part Of Speech"
+                        v-model="gloss.element_3_part_of_speech"
+                        :search_url="'/admin2/part_of_speech/filtered_list?language_id='+language.id+'&term=:query'"
+                    ></input-typeahead-ajax>
                     <div id="element_3_part_of_speech_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_3_part_of_speech']">{{error}}</div></div>
                 </div>
 
                 <div class='form-group col-sm-3'>
-                    <label for="element_3_analysis">Analysis</label>
-                    <textarea class="form-control analysis" name="element_3_analysis" cols="10" rows="2"
-                              id="element_3_analysis"
-                              v-model="gloss.element_3_analysis"></textarea>
+                    <label>Analysis</label>
+                    <input-typeahead-ajax
+                        placeholder="Analysis"
+                        v-model="gloss.element_3_analysis"
+                        :search_url="'/admin2/eieol_analysis/filtered_list?language_id='+language.id+'&term=:query'"
+                    ></input-typeahead-ajax>
                     <div id="element_3_analysis_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_3_analysis']">{{error}}</div></div>
                 </div>
 
@@ -174,18 +190,22 @@
                 <div class='form-group col-sm-2'></div>
 
                 <div class='form-group col-sm-2'>
-                    <label for="element_4_part_of_speech">Part Of Speech</label>
-                    <input placeholder="Part Of Speech" class="form-control part_of_speech"
-                           name="element_4_part_of_speech" type="text" id="element_4_part_of_speech"
-                           v-model="gloss.element_4_part_of_speech">
+                    <label>Part Of Speech</label>
+                    <input-typeahead-ajax
+                        placeholder="Part Of Speech"
+                        v-model="gloss.element_4_part_of_speech"
+                        :search_url="'/admin2/part_of_speech/filtered_list?language_id='+language.id+'&term=:query'"
+                    ></input-typeahead-ajax>
                     <div id="element_4_part_of_speech_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_4_part_of_speech']">{{error}}</div></div>
                 </div>
 
                 <div class='form-group col-sm-3'>
-                    <label for="element_4_analysis">Analysis</label>
-                    <textarea class="form-control analysis" name="element_4_analysis" cols="10" rows="2"
-                              id="element_4_analysis"
-                              v-model="gloss.element_4_analysis"></textarea>
+                    <label>Analysis</label>
+                    <input-typeahead-ajax
+                        placeholder="Analysis"
+                        v-model="gloss.element_4_analysis"
+                        :search_url="'/admin2/eieol_analysis/filtered_list?language_id='+language.id+'&term=:query'"
+                    ></input-typeahead-ajax>
                     <div id="element_4_analysis_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_4_analysis']">{{error}}</div></div>
                 </div>
 
@@ -215,18 +235,22 @@
                 <div class='form-group col-sm-2'></div>
 
                 <div class='form-group col-sm-2'>
-                    <label for="element_5_part_of_speech">Part Of Speech</label>
-                    <input placeholder="Part Of Speech" class="form-control part_of_speech"
-                           name="element_5_part_of_speech" type="text" id="element_5_part_of_speech"
-                           v-model="gloss.element_5_part_of_speech">
+                    <label>Part Of Speech</label>
+                    <input-typeahead-ajax
+                        placeholder="Part Of Speech"
+                        v-model="gloss.element_5_part_of_speech"
+                        :search_url="'/admin2/part_of_speech/filtered_list?language_id='+language.id+'&term=:query'"
+                    ></input-typeahead-ajax>
                     <div id="element_5_part_of_speech_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_5_part_of_speech']">{{error}}</div></div>
                 </div>
 
                 <div class='form-group col-sm-3'>
-                    <label for="element_5_analysis">Analysis</label>
-                    <textarea class="form-control analysis" name="element_5_analysis" cols="10" rows="2"
-                              id="element_5_analysis"
-                              v-model="gloss.element_5_analysis"></textarea>
+                    <label>Analysis</label>
+                    <input-typeahead-ajax
+                        placeholder="Analysis"
+                        v-model="gloss.element_5_analysis"
+                        :search_url="'/admin2/eieol_analysis/filtered_list?language_id='+language.id+'&term=:query'"
+                    ></input-typeahead-ajax>
                     <div id="element_5_analysis_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_5_analysis']">{{error}}</div></div>
                 </div>
 
@@ -256,18 +280,22 @@
                 <div class='form-group col-sm-2'></div>
 
                 <div class='form-group col-sm-2'>
-                    <label for="element_6_part_of_speech">Part Of Speech</label>
-                    <input placeholder="Part Of Speech" class="form-control part_of_speech"
-                           name="element_6_part_of_speech" type="text" id="element_6_part_of_speech"
-                           v-model="gloss.element_6_part_of_speech">
+                    <label>Part Of Speech</label>
+                    <input-typeahead-ajax
+                        placeholder="Part Of Speech"
+                        v-model="gloss.element_6_part_of_speech"
+                        :search_url="'/admin2/part_of_speech/filtered_list?language_id='+language.id+'&term=:query'"
+                    ></input-typeahead-ajax>
                     <div id="element_6_part_of_speech_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_6_part_of_speech']">{{error}}</div></div>
                 </div>
 
                 <div class='form-group col-sm-3'>
-                    <label for="element_6_analysis">Analysis</label>
-                    <textarea class="form-control analysis" name="element_6_analysis" cols="10" rows="2"
-                              id="element_6_analysis"
-                              v-model="gloss.element_6_analysis"></textarea>
+                    <label>Analysis</label>
+                    <input-typeahead-ajax
+                        placeholder="Analysis"
+                        v-model="gloss.element_6_analysis"
+                        :search_url="'/admin2/eieol_analysis/filtered_list?language_id='+language.id+'&term=:query'"
+                    ></input-typeahead-ajax>
                     <div id="element_6_analysis_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_6_analysis']">{{error}}</div></div>
                 </div>
 
@@ -321,13 +349,21 @@
         <div slot="modal-footer"><!-- no ok or cancel buttons --></div>
     </b-modal>
 
-        <head-word-editor ref="head-word-editor"></head-word-editor>
+        <head-word-editor ref="head-word-editor"
+                          :headword="{}"
+            :custom_keyboard="custom_keyboard"
+        ></head-word-editor>
     </div>
 </template>
 
 <script>
     export default {
-        props: ['gloss','lesson_lang_attribute','is_user_admin'],
+        props: ['gloss',
+            'lesson_lang_attribute',
+            'language',
+            'is_user_admin',
+            'custom_keyboard'
+        ],
         data: function() { return {
             modal_attached_gloss_search: '',
             modal_attached_gloss_search_results: [],
@@ -342,12 +378,19 @@
         },
         methods: {
             show() {
-                this.modal_attached_gloss_search = '';
-                this.modal_attached_gloss_search_results = [];
-                this.modal_attached_gloss_elements_open = [];
-                this.modal_attached_gloss_errors = {};
-                this.comments_are_open = false;
-                this.$refs['attach_gloss_modal'].show();
+                Vue.nextTick(function() {
+                    this.modal_attached_gloss_search = '';
+                    this.modal_attached_gloss_search_results = [];
+                    this.modal_attached_gloss_elements_open = [];
+                    this.modal_attached_gloss_errors = {};
+                    if (this.gloss.element_2_part_of_speech) {this.modal_attached_gloss_elements_open.push(2)}
+                    if (this.gloss.element_3_part_of_speech) {this.modal_attached_gloss_elements_open.push(3)}
+                    if (this.gloss.element_4_part_of_speech) {this.modal_attached_gloss_elements_open.push(4)}
+                    if (this.gloss.element_5_part_of_speech) {this.modal_attached_gloss_elements_open.push(5)}
+                    if (this.gloss.element_6_part_of_speech) {this.modal_attached_gloss_elements_open.push(6)}
+                    this.comments_are_open = false;
+                    this.$refs['attach_gloss_modal'].show();
+                }, this);
             },
             hide() {
                 this.$refs['attach_gloss_modal'].hide();
@@ -411,6 +454,7 @@
                     });
             },
             pick_head_word() {
+                this.$refs['head-word-editor'].show();
                 alert("PICK HEAD WORD");
             },
             edit_head_word(ix) {

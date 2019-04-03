@@ -1,14 +1,15 @@
 <!-- FIXME add custom keyboard to search head word, word -->
 <template>
-    <b-modal ref="attach_headword_modal" :title="is_new_headword ? 'Attach Head Word' : 'Edit Head Word'" size="xxl">
+    <b-modal ref="attach_headword_modal" :title="is_new_headword ? 'Attach Head Word' : 'Edit Head Word'" size="xl">
         <div v-if="is_new_headword">
             <div class='col-lg-12'>
                 <label for="head_word_search_input">Search Head Word</label>
-                <input placeholder="Search Head Words" class="form-control custom-keyboard"
-                       @keyup="searchHeadWords(modal_attached_headword_search)"
-                       name="head_word_search_input"
-                       type="text" id="head_word_search_input"
-                       v-model="modal_attached_headword_search">
+                <input-custom-keyboard placeholder="Search Head Words"
+                                       name="head_word_search_input"
+                                       id="head_word_search_input"
+                                       type="text"
+                                       v-model="modal_attached_headword_search"
+                                       :custom_keyboard="custom_keyboard"></input-custom-keyboard>
                 <br/><br/>
             </div>
             <div id="head_word_search_result">
@@ -65,7 +66,7 @@
 
 <script>
     export default {
-        props: ['headword'],
+        props: ['headword','custom_keyboard'],
         data: function() { return {
             modal_attached_headword_search: '',
             modal_attached_headword_search_results: [],
@@ -78,10 +79,12 @@
         },
         methods: {
             show() {
-                this.modal_attached_headword_search = '';
-                this.modal_attached_headword_search_results = [];
-                this.modal_attached_headword_errors = {};
-                this.$refs['attach_headword_modal'].show();
+                Vue.nextTick(function() {
+                    this.modal_attached_headword_search = '';
+                    this.modal_attached_headword_search_results = [];
+                    this.modal_attached_headword_errors = {};
+                    this.$refs['attach_headword_modal'].show();
+                }, this);
             },
             hide() {
                 this.$refs['attach_headword_modal'].hide();

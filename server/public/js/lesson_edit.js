@@ -269,6 +269,7 @@ $(document).ready(function(){
         }
     });
 
+    /*
     //autocomplete fields
     $(".part_of_speech").autocomplete({
         source: function (request, response) {
@@ -305,6 +306,7 @@ $(document).ready(function(){
             });
         }
     }); //analysis autocomplete
+     */
 
     /*
     //popup to attach or change head word to gloss

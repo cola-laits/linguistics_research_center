@@ -250,7 +250,9 @@
 <gloss-editor ref="gloss_editor" :gloss="gloss_for_edit"
               :is_user_admin="is_user_admin"
               :lesson_lang_attribute="lesson.language.lang_attribute"
-              @saved="update_gloss_after_save"></gloss-editor>
+              :language="lesson.language"
+              @saved="update_gloss_after_save"
+              :custom_keyboard="custom_keyboard_layout">></gloss-editor>
 
 <div class='col-lg-12'>
  

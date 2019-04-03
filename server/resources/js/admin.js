@@ -4,15 +4,18 @@ window.VueRouter = require('vue-router').default;
 Vue.use(VueRouter);
 window.axios = require('axios').default;
 import BootstrapVue from 'bootstrap-vue'
-
 Vue.use(BootstrapVue);
+import VueBootstrapTypeahead from 'vue-bootstrap-typeahead'
+Vue.component('vue-bootstrap-typeahead', VueBootstrapTypeahead);
 
 window.jQuery = window.$ = require('jquery');
 
-const files = require.context('./', true, /\.vue$/i)
-files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+const files = require.context('./', true, /\.vue$/i);
+files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 Vue.component('basic-select', VueSearchSelect.BasicSelect); // FIXME this is available on npm - get it from there
+
+import store from './admin-store';
 
 let LexTable = Vue.component('LexTable');
 let LexEditor = Vue.component('LexEditor');
@@ -256,6 +259,7 @@ var router = new VueRouter({routes});
 const admin_app = new Vue({
     el: '#admin_app',
     router,
+    store,
     data() {
         if (window.admin_app_initial_state) {
             return window.admin_app_initial_state;

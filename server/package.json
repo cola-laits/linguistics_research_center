@@ -23,8 +23,11 @@
     "sass-loader": "^7.1.0",
     "vue": "^2.5.17",
     "vue-router": "^3.0.2",
-    "vue-template-compiler": "^2.6.8"
+    "vue-template-compiler": "^2.6.8",
+    "vuex": "^3.1.0",
+    "vue-bootstrap-typeahead": "^0.2.6"
   },
   "dependencies": {
+
   }
 }
