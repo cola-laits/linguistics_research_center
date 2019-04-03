@@ -191,98 +191,12 @@
                 this.flash_modal('Gloss successfully added.');
             },
             open_edit_gloss_modal(gloss_id) {
-                //load form with data for the record they want to edit
-                $.ajax({
-                    type: "GET",
-                    url: "/admin2/eieol_gloss/" + gloss_id,
-                    data: null,
-                    dataType: "json",
-
-                    success: function (data) {
-                        //clear old values out
-                        $('#edit_gloss_form')[0].reset();
-                        //for some reason the reset doesn't reset all the fields
-                        for (i = 1; i <= 6; i++) {
-                            $('#element_' + i + '_head_word_id', '#edit_gloss_form').val('');
-                        }
-
-                        //clear comment divs out
-                        $("#gloss_author_comments").html('');
-                        $("#gloss_admin_comments").html('');
-
-                        if (!window.isAdmin || data['author_comments'] || data['author_done']) {
-                            //only show if you are not an admin, or if they were filled in.
-                            $("#gloss_author_comments").html('<div class="form-group col-sm-9 offset-1">\
-						    <label for="author_comments">Author Comments</label>\
-						    <textarea class="form-control comment_textarea author_comments" name="author_comments" cols="100" rows="2" id="author_comments"></textarea>\
-						</div>\
-						<div class="form-group col-sm-1">\
-						    <label for="author_done">Done</label>\
-						    \<input class="form-control author_done" id="gloss_author_done" \
-						        name="author_done" type="checkbox" value="1"\
-						        checked=' + (data.author_done ? 'checked' : '') + '>\
-						</div>');
-                        }
-
-                        if (window.isAdmin) {
-                            $("#gloss_admin_comments").html('<div class="form-group col-sm-9 offset-1">\
-							    <label for="admin_comment">Admin Comments</label>\
-					    		<textarea class="form-control comment_textarea admin_comments" name="admin_comments" cols="100" rows="2"></textarea>\
-							</div>\
-							<div class="form-group col-sm-1">\
-						        <input class="btn btn-sm btn-warning comment_clear" type="submit" value="Clear">\
-							</div>');
-                        } else {
-                            if (data['admin_comments']) {
-                                //Only show admin comments to authors if they exist
-                                $("#gloss_admin_comments").html('<div class="form-group col-sm-9 offset-1">\
-								<label for="admin_comment">Admin Comments</label>\
-								<input class="form-control" name="admin_comments" type="hidden">\
-								<div class="card"><div class="card-body" style="white-space: pre-wrap" >' + data['admin_comments'] + '</div></div>\
-							</div>');
-                            }
-                        }
-
-                        //load form
-                        $.each(data, function (key, value) {
-                            if (key === 'author_done') { //checkboxes behave differently
-                                if (value == 1) {
-                                    $("#gloss_author_done").prop('checked', true);
-                                }
-                            } else {
-                                $('[name=' + key + ']', '#edit_gloss_form').val(value);
-                            }
-                        });
-
-                        for (i = 1; i <= 6; i++) {
-                            $('#element_' + i + '_head_word_display', '#edit_gloss_form').text(''); //we only get ones that already exist, so reset it first
-                            $('#element_' + i + '_head_word_display', '#edit_gloss_form').html(data['element_' + i + '_head_word_display']);
-                        }
-
-                        for (i = 2; i <= 6; i++) {
-                            if (data.hasOwnProperty('element_' + i + '_id')) {
-                                $('#element_' + i).show();
-                            } else {
-                                $('#element_' + i).hide();
-                            }
-                        }
-
-                        $("#gloss_lessons").html("<strong>This is used by the following lessons:</strong> " + data['lessons']);
-                        $("#edit_gloss_form").attr("action", "/admin2/eieol_gloss/" + data['id']);
-                        $(".errors", "#edit_gloss_form").empty(); //reset gloss form error divs
-                        $("#edit_gloss_modal").modal("show");
-                        $('#edit_gloss_form').removeAttr("dirty");
-                        $("#surface_form", "#edit_gloss_form").focus(); //put cursor in first field
-
-                        $("#gloss_comments").hide(); //close comments box in case they left it open on previous editing
-
-                    }, //success
-
-                    error: function (xml_http_request, text_status, error_thrown) {
-                        alert('Ajax Error: ' + text_status + '/ ' + xml_http_request + '/ ' + error_thrown);
-                    } //error
-
-                }); //ajax call
+                var app = this;
+                axios.get('/admin2/eieol_gloss/' + gloss_id)
+                    .then(function(response) {
+                        app.gloss_for_edit = response.data;
+                        app.$refs['gloss_editor'].show();
+                    });
             }
         };
     </script>
@@ -333,7 +247,10 @@
     </div>
 </b-modal>
 
-<gloss-editor ref="gloss_editor" :gloss="gloss_for_edit" @saved="update_gloss_after_save"></gloss-editor>
+<gloss-editor ref="gloss_editor" :gloss="gloss_for_edit"
+              :is_user_admin="is_user_admin"
+              :lesson_lang_attribute="lesson.language.lang_attribute"
+              @saved="update_gloss_after_save"></gloss-editor>
 
 <div class='col-lg-12'>
  

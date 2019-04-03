@@ -15,23 +15,18 @@ class EieolHeadWordController extends Controller
 
 
     public function filtered_list(Request $request) {
-        //this  is a search that returns head words that contain with the url parm "headword"
-        //since head words starts with a <, it looks for any matching chars.
-        $text = '';
         $head_words = EieolHeadWord::where('word', 'LIKE', '%' . Normalizer::normalize($request->get('head_word'), Normalizer::FORM_C) . '%')
             ->where('language_id', '=', $request->get('language') . '%')
-            ->take(50)->get()->sortBy('word');
-        foreach ($head_words as $head_word) {
-            $text .= '<a id="' . $head_word->id . '">' .
-                $head_word->getDisplayHeadWord() .
-                '</a>' .
-                '<br/>';
-        }
-        if (count($head_words) == 0) {
-            return 'No matching Head Words found';
-        }
+            ->take(50)->orderBy('word')->get()->map(function($h) {
+                $v = new \stdClass();
+                $v->id = $h['id'];
+                $v->html = $h->getDisplayHeadWord();
+                return $v;
+            });
 
-        return $text;
+        return [
+            'headwords'=>$head_words
+        ];
     }
 
     public function show($id) {

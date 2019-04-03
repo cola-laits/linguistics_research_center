@@ -120,6 +120,7 @@ function ajax_submit(form) {
     }); //ajax call
 } //ajax submit function
 
+/*
 function attach_head_word(head_word_id, head_word_display) {
     //gloss_form is set when they open the head word modal
     $(gloss_form).find("#element_" + element_id + "_head_word_id").attr('value', head_word_id);
@@ -142,6 +143,7 @@ function searchHeadWords(head_word) {
     xmlhttp.open("GET","/admin2/eieol_head_word/filtered_list?head_word="+head_word+"&language="+hold_language_id,true);
     xmlhttp.send();
 }
+*/
 
 // --------------------------------document ready-------------------------------------
 
@@ -151,6 +153,7 @@ window.onbeforeunload = function() {
     }
 };
 
+/*
 function pick_head_word_button_click() {
     $("#new_head_word_form").css("background-color", "#FFFFFF");
     gloss_form = $(this).closest('form'); //we will use this in the attach_head_word function
@@ -233,6 +236,7 @@ function edit_head_word_button_click() {
 
     return false;
 }
+ */
 
 $(document).ready(function(){
 
@@ -302,6 +306,7 @@ $(document).ready(function(){
         }
     }); //analysis autocomplete
 
+    /*
     //popup to attach or change head word to gloss
     $(".pick_head_word_button").click(function() {
         return pick_head_word_button_click.call(this);
@@ -321,6 +326,7 @@ $(document).ready(function(){
     $("#new_head_word_form").submit(function() {
         return new_head_word_form_submit();
     });//add headword
+     */
 
     $('[data-toggle="popover"]').popover();
 

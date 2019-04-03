@@ -1,10 +1,14 @@
+<!-- FIXME add custom keyboard to surface form -->
+<!-- FIXME add autocomplete to part of speech, analysis -->
 <template>
+    <div>
     <b-modal ref="attach_gloss_modal" :title="is_new_gloss ? 'Attach Gloss' : 'Edit Gloss'" size="xxl">
         <div v-if="is_new_gloss">
             <div class='col-lg-12'>
                 <label for="gloss_search_input">Search Gloss</label>
                 <input placeholder="Search Gloss" class="form-control custom-keyboard"
-                       @keyup="searchGlosses(modal_attached_gloss_search)" name="gloss_search_input" type="text"
+                       @keyup="searchGlosses(modal_attached_gloss_search)"
+                       name="gloss_search_input" type="text"
                        id="gloss_search_input"
                        v-model="modal_attached_gloss_search">
                 <br/><br/>
@@ -46,14 +50,16 @@
                 </div>
 
                 <div class='form-group col-sm-2'>
-                    <label for="element_1_head_word_id">Head Word</label>
-                    <input id="element_1_head_word_id" name="element_1_head_word_id" type="hidden">
-                    <div id="element_1_head_word_display"></div>
+                    <label>Head Word</label><br>
+                    <div id="element_1_head_word_display" v-if="gloss.elements && gloss.elements[0]">
+                        <span style='white-space: nowrap' :lang='lesson_lang_attribute'>{{gloss.elements[0].head_word.word}}</span>
+                        {{gloss.elements[0].head_word.definition}}
+                    </div>
                     <button class="btn btn-primary btn-sm pick_head_word_button"
-                            type="button">Pick Head Word
+                            type="button" @click="pick_head_word()">Pick Head Word
                     </button>
                     <button class="btn btn-primary btn-sm edit_head_word_button"
-                            type="button">Edit Head Word
+                            type="button" @click="edit_head_word(1)">Edit Head Word
                     </button>
                     <div id ="element_1_head_word_id_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_1_head_word_id']">{{error}}</div></div>
                 </div>
@@ -66,6 +72,11 @@
                 </div>
 
                 <div class='form-group col-sm-1 bottom_button'>
+                    <comment-icon :author_comment="gloss.author_comments"
+                                  :admin_comment="gloss.admin_comments"
+                                  :author_done="gloss.author_done"
+                                  @click="comments_are_open = !comments_are_open"></comment-icon>
+                    <br>
                     <input class="btn btn-sm btn-success" type="button" value="Save"
                            @click="new_gloss_form_submit()">
                 </div>
@@ -97,14 +108,16 @@
                 </div>
 
                 <div class='form-group col-sm-2'>
-                    <label for="element_2_head_word_id">Head Word</label>
-                    <input id="element_2_head_word_id" name="element_2_head_word_id" type="hidden">
-                    <div id="element_2_head_word_display"></div>
+                    <label>Head Word</label><br>
+                    <div id="element_2_head_word_display" v-if="gloss.elements && gloss.elements[1]">
+                        <span style='white-space: nowrap' :lang='lesson_lang_attribute'>{{gloss.elements[1].head_word.word}}</span>
+                        {{gloss.elements[1].head_word.definition}}
+                    </div>
                     <button class="btn btn-primary btn-sm pick_head_word_button"
-                            type="button">Pick Head Word
+                            type="button" @click="pick_head_word()">Pick Head Word
                     </button>
                     <button class="btn btn-primary btn-sm edit_head_word_button"
-                            type="button">Edit Head Word
+                            type="button" @click="edit_head_word(2)">Edit Head Word
                     </button>
                     <div id="element_2_head_word_id_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_2_head_word_id']">{{error}}</div></div>
                 </div>
@@ -136,14 +149,16 @@
                 </div>
 
                 <div class='form-group col-sm-2'>
-                    <label for="element_3_head_word_id">Head Word</label>
-                    <input id="element_3_head_word_id" name="element_3_head_word_id" type="hidden">
-                    <div id="element_3_head_word_display"></div>
+                    <label>Head Word</label><br>
+                    <div id="element_3_head_word_display" v-if="gloss.elements && gloss.elements[2]">
+                        <span style='white-space: nowrap' :lang='lesson_lang_attribute'>{{gloss.elements[2].head_word.word}}</span>
+                        {{gloss.elements[2].head_word.definition}}
+                    </div>
                     <button class="btn btn-primary btn-sm pick_head_word_button"
-                            type="button">Pick Head Word
+                            type="button" @click="pick_head_word()">Pick Head Word
                     </button>
                     <button class="btn btn-primary btn-sm edit_head_word_button"
-                            type="button">Edit Head Word
+                            type="button" @click="edit_head_word(3)">Edit Head Word
                     </button>
                     <div id="element_3_head_word_id_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_3_head_word_id']">{{error}}</div></div>
                 </div>
@@ -175,14 +190,16 @@
                 </div>
 
                 <div class='form-group col-sm-2'>
-                    <label for="element_4_head_word_id">Head Word</label>
-                    <input id="element_4_head_word_id" name="element_4_head_word_id" type="hidden">
-                    <div id="element_4_head_word_display"></div>
+                    <label>Head Word</label><br>
+                    <div id="element_4_head_word_display" v-if="gloss.elements && gloss.elements[3]">
+                        <span style='white-space: nowrap' :lang='lesson_lang_attribute'>{{gloss.elements[3].head_word.word}}</span>
+                        {{gloss.elements[3].head_word.definition}}
+                    </div>
                     <button class="btn btn-primary btn-sm pick_head_word_button"
-                            type="button">Pick Head Word
+                            type="button" @click="pick_head_word()">Pick Head Word
                     </button>
                     <button class="btn btn-primary btn-sm edit_head_word_button"
-                            type="button">Edit Head Word
+                            type="button" @click="edit_head_word(4)">Edit Head Word
                     </button>
                     <div id="element_4_head_word_id_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_4_head_word_id']">{{error}}</div></div>
                 </div>
@@ -214,14 +231,16 @@
                 </div>
 
                 <div class='form-group col-sm-2'>
-                    <label for="element_5_head_word_id">Head Word</label>
-                    <input id="element_5_head_word_id" name="element_5_head_word_id" type="hidden">
-                    <div id="element_5_head_word_display"></div>
+                    <label>Head Word</label><br>
+                    <div id="element_5_head_word_display" v-if="gloss.elements && gloss.elements[4]">
+                        <span style='white-space: nowrap' :lang='lesson_lang_attribute'>{{gloss.elements[4].head_word.word}}</span>
+                        {{gloss.elements[4].head_word.definition}}
+                    </div>
                     <button class="btn btn-primary btn-sm pick_head_word_button"
-                            type="button">Pick Head Word
+                            type="button" @click="pick_head_word()">Pick Head Word
                     </button>
                     <button class="btn btn-primary btn-sm edit_head_word_button"
-                            type="button">Edit Head Word
+                            type="button" @click="edit_head_word(5)">Edit Head Word
                     </button>
                     <div id="element_5_head_word_id_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_5_head_word_id']">{{error}}</div></div>
                 </div>
@@ -253,14 +272,16 @@
                 </div>
 
                 <div class='form-group col-sm-2'>
-                    <label for="element_6_head_word_id">Head Word</label>
-                    <input id="element_6_head_word_id" name="element_6_head_word_id" type="hidden">
-                    <div id="element_6_head_word_display"></div>
+                    <label>Head Word</label><br>
+                    <div id="element_6_head_word_display" v-if="gloss.elements && gloss.elements[5]">
+                        <span style='white-space: nowrap' :lang='lesson_lang_attribute'>{{gloss.elements[5].head_word.word}}</span>
+                        {{gloss.elements[5].head_word.definition}}
+                    </div>
                     <button class="btn btn-primary btn-sm pick_head_word_button"
-                            type="button">Pick Head Word
+                            type="button" @click="pick_head_word()">Pick Head Word
                     </button>
                     <button class="btn btn-primary btn-sm edit_head_word_button"
-                            type="button">Edit Head Word
+                            type="button" @click="edit_head_word(6)">Edit Head Word
                     </button>
                     <div id="element_6_head_word_id_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_6_head_word_id']">{{error}}</div></div>
                 </div>
@@ -286,20 +307,33 @@
                 </div>
             </div>
 
+            <div class='row'>
+                <div class='col-sm-12'>
+                    <comment-area v-model="gloss"
+                                  :is_user_admin="is_user_admin"
+                                  :show_comments_area="comments_are_open"
+                    ></comment-area>
+                </div>
+            </div>
+
         </form>
 
         <div slot="modal-footer"><!-- no ok or cancel buttons --></div>
     </b-modal>
+
+        <head-word-editor ref="head-word-editor"></head-word-editor>
+    </div>
 </template>
 
 <script>
     export default {
-        props: ['gloss'],
+        props: ['gloss','lesson_lang_attribute','is_user_admin'],
         data: function() { return {
             modal_attached_gloss_search: '',
             modal_attached_gloss_search_results: [],
             modal_attached_gloss_elements_open: [],
             modal_attached_gloss_errors: {},
+            comments_are_open: false,
         }},
         computed: {
             is_new_gloss() {
@@ -308,6 +342,11 @@
         },
         methods: {
             show() {
+                this.modal_attached_gloss_search = '';
+                this.modal_attached_gloss_search_results = [];
+                this.modal_attached_gloss_elements_open = [];
+                this.modal_attached_gloss_errors = {};
+                this.comments_are_open = false;
                 this.$refs['attach_gloss_modal'].show();
             },
             hide() {
@@ -353,7 +392,13 @@
             new_gloss_form_submit() {
                 let app = this;
                 this.modal_attached_gloss_errors = {};
-                axios.post('/admin2/eieol_gloss', this.gloss)
+                let update_promise = null;
+                if (this.is_new_gloss) {
+                    update_promise = axios.post('/admin2/eieol_gloss', this.gloss)
+                } else {
+                    update_promise = axios.put('/admin2/eieol_gloss/'+this.gloss.id, this.gloss)
+                }
+                update_promise
                     .then(function(response) {
                         let json = response.data;
                         if (json['fail']) {
@@ -365,6 +410,12 @@
                         }
                     });
             },
+            pick_head_word() {
+                alert("PICK HEAD WORD");
+            },
+            edit_head_word(ix) {
+                alert("EDIT HEAD WORD "+ix);
+            }
         },
         mounted() {
         }
