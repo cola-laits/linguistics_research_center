@@ -18,8 +18,7 @@ class EieolHeadWordController extends Controller
         $head_words = EieolHeadWord::where('word', 'LIKE', '%' . Normalizer::normalize($request->get('head_word'), Normalizer::FORM_C) . '%')
             ->where('language_id', '=', $request->get('language') . '%')
             ->take(50)->orderBy('word')->get()->map(function($h) {
-                $v = new \stdClass();
-                $v->id = $h['id'];
+                $v = $h;
                 $v->html = $h->getDisplayHeadWord();
                 return $v;
             });
@@ -112,8 +111,6 @@ class EieolHeadWordController extends Controller
             'head_word_display' => $returned_head_word->getDisplayHeadWord(),
             'message' => 'Head Word was successfully added.'
         ];
-
-
     }
 
     public function update(Request $request, $id) {

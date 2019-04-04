@@ -16,6 +16,7 @@
             'languages':{!! json_encode($languages) !!},
             'glossed_texts':{!! json_encode($glossed_texts) !!},
             'grammars':{!! json_encode($grammars) !!},
+            'etymas': {!! json_encode($etymas) !!},
             'ckeditor_customization':{
                 language_list :
                 [
@@ -251,6 +252,7 @@
               :is_user_admin="is_user_admin"
               :lesson_lang_attribute="lesson.language.lang_attribute"
               :language="lesson.language"
+              :etymas="etymas"
               @saved="update_gloss_after_save"
               :custom_keyboard="custom_keyboard_layout">></gloss-editor>
 

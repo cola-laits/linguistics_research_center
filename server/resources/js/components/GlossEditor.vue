@@ -64,10 +64,10 @@
                         {{gloss.elements[0].head_word.definition}}
                     </div>
                     <button class="btn btn-primary btn-sm pick_head_word_button"
-                            type="button" @click="pick_head_word()">Pick Head Word
+                            type="button" @click="pick_head_word(0)">Pick Head Word
                     </button>
                     <button class="btn btn-primary btn-sm edit_head_word_button"
-                            type="button" @click="edit_head_word(1)">Edit Head Word
+                            type="button" @click="edit_head_word(0)">Edit Head Word
                     </button>
                     <div id ="element_1_head_word_id_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_1_head_word_id']">{{error}}</div></div>
                 </div>
@@ -126,10 +126,10 @@
                         {{gloss.elements[1].head_word.definition}}
                     </div>
                     <button class="btn btn-primary btn-sm pick_head_word_button"
-                            type="button" @click="pick_head_word()">Pick Head Word
+                            type="button" @click="pick_head_word(1)">Pick Head Word
                     </button>
                     <button class="btn btn-primary btn-sm edit_head_word_button"
-                            type="button" @click="edit_head_word(2)">Edit Head Word
+                            type="button" @click="edit_head_word(1)">Edit Head Word
                     </button>
                     <div id="element_2_head_word_id_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_2_head_word_id']">{{error}}</div></div>
                 </div>
@@ -171,10 +171,10 @@
                         {{gloss.elements[2].head_word.definition}}
                     </div>
                     <button class="btn btn-primary btn-sm pick_head_word_button"
-                            type="button" @click="pick_head_word()">Pick Head Word
+                            type="button" @click="pick_head_word(2)">Pick Head Word
                     </button>
                     <button class="btn btn-primary btn-sm edit_head_word_button"
-                            type="button" @click="edit_head_word(3)">Edit Head Word
+                            type="button" @click="edit_head_word(2)">Edit Head Word
                     </button>
                     <div id="element_3_head_word_id_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_3_head_word_id']">{{error}}</div></div>
                 </div>
@@ -216,10 +216,10 @@
                         {{gloss.elements[3].head_word.definition}}
                     </div>
                     <button class="btn btn-primary btn-sm pick_head_word_button"
-                            type="button" @click="pick_head_word()">Pick Head Word
+                            type="button" @click="pick_head_word(3)">Pick Head Word
                     </button>
                     <button class="btn btn-primary btn-sm edit_head_word_button"
-                            type="button" @click="edit_head_word(4)">Edit Head Word
+                            type="button" @click="edit_head_word(3)">Edit Head Word
                     </button>
                     <div id="element_4_head_word_id_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_4_head_word_id']">{{error}}</div></div>
                 </div>
@@ -261,10 +261,10 @@
                         {{gloss.elements[4].head_word.definition}}
                     </div>
                     <button class="btn btn-primary btn-sm pick_head_word_button"
-                            type="button" @click="pick_head_word()">Pick Head Word
+                            type="button" @click="pick_head_word(4)">Pick Head Word
                     </button>
                     <button class="btn btn-primary btn-sm edit_head_word_button"
-                            type="button" @click="edit_head_word(5)">Edit Head Word
+                            type="button" @click="edit_head_word(4)">Edit Head Word
                     </button>
                     <div id="element_5_head_word_id_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_5_head_word_id']">{{error}}</div></div>
                 </div>
@@ -306,10 +306,10 @@
                         {{gloss.elements[5].head_word.definition}}
                     </div>
                     <button class="btn btn-primary btn-sm pick_head_word_button"
-                            type="button" @click="pick_head_word()">Pick Head Word
+                            type="button" @click="pick_head_word(5)">Pick Head Word
                     </button>
                     <button class="btn btn-primary btn-sm edit_head_word_button"
-                            type="button" @click="edit_head_word(6)">Edit Head Word
+                            type="button" @click="edit_head_word(5)">Edit Head Word
                     </button>
                     <div id="element_6_head_word_id_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_6_head_word_id']">{{error}}</div></div>
                 </div>
@@ -350,8 +350,11 @@
     </b-modal>
 
         <head-word-editor ref="head-word-editor"
-                          :headword="{}"
-            :custom_keyboard="custom_keyboard"
+                          :headword="headword_for_edit"
+                          @input="headword_selected($event)"
+                          :etymas="etymas"
+                          :language="language"
+                          :custom_keyboard="custom_keyboard"
         ></head-word-editor>
     </div>
 </template>
@@ -361,6 +364,7 @@
         props: ['gloss',
             'lesson_lang_attribute',
             'language',
+            'etymas',
             'is_user_admin',
             'custom_keyboard'
         ],
@@ -370,6 +374,8 @@
             modal_attached_gloss_elements_open: [],
             modal_attached_gloss_errors: {},
             comments_are_open: false,
+            headword_for_edit: {},
+            element_index_for_headword_edit: 0,
         }},
         computed: {
             is_new_gloss() {
@@ -453,12 +459,38 @@
                         }
                     });
             },
-            pick_head_word() {
+            pick_head_word(ix) {
+                this.headword_for_edit = {};
+                this.element_index_for_headword_edit = ix;
                 this.$refs['head-word-editor'].show();
-                alert("PICK HEAD WORD");
             },
             edit_head_word(ix) {
-                alert("EDIT HEAD WORD "+ix);
+                this.headword_for_edit = this.gloss.elements[ix].head_word;
+                this.element_index_for_headword_edit = ix;
+                this.$refs['head-word-editor'].show();
+            },
+            headword_selected(evt) {
+                this.gloss.elements[this.element_index_for_headword_edit].head_word = evt;
+                this.gloss.elements[this.element_index_for_headword_edit].head_word_id = evt.id;
+                if (this.element_index_for_headword_edit===0) {
+                    this.gloss.element_1_head_word_id = evt.id;
+                }
+                if (this.element_index_for_headword_edit===1) {
+                    this.gloss.element_2_head_word_id = evt.id;
+                }
+                if (this.element_index_for_headword_edit===2) {
+                    this.gloss.element_3_head_word_id = evt.id;
+                }
+                if (this.element_index_for_headword_edit===3) {
+                    this.gloss.element_4_head_word_id = evt.id;
+                }
+                if (this.element_index_for_headword_edit===4) {
+                    this.gloss.element_5_head_word_id = evt.id;
+                }
+                if (this.element_index_for_headword_edit===5) {
+                    this.gloss.element_6_head_word_id = evt.id;
+                }
+                this.$refs['head-word-editor'].hide();
             }
         },
         mounted() {
