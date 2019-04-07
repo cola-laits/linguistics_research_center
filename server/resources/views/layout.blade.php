@@ -520,7 +520,6 @@ the page content is in <section class="main-section">
 </ul>
 <p class="address"><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cio/policies/web-privacy">Web Privacy Policy</a><br/>
  <a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cio/policies/web-accessibility">Web Accessibility Policy</a><br/>
- <a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/policies/dmca.html">&#169; Copyright</a> <span id="year">TEXT</span></p>
 </div>
 </div>
 </div>
@@ -535,8 +534,6 @@ the page content is in <section class="main-section">
 </div> <!-- Close <div class="off-canvas-wrap" data-offcanvas=""> -->
 <script src="https://liberalarts.utexas.edu/_internal/js/foundation.min.js" type="text/javascript"></script>
 <script src="https://liberalarts.utexas.edu/_internal/js/foundation.offcanvas.js"></script>
-<script src="//cdn.jsdelivr.net/jquery.slick/1.4.1/slick.min.js" type="text/javascript"></script>
-<script src="https://liberalarts.utexas.edu/_internal/js/app.js" type="text/javascript"></script>
 </body>
 </html>
 @stop
