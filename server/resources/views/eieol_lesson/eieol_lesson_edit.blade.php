@@ -37,7 +37,8 @@
             'delete_grammar_confirm_grammar_id': '',
             'delete_glossed_text_confirm_glossed_text_id': '',
             'delete_glossed_text_gloss_confirm_glossed_text_gloss_id': '',
-            'gloss_for_edit': {}
+            'gloss_for_edit': {},
+            'help_images_popover_shown': false
         };
 
         window.admin_app_computed = {
@@ -260,26 +261,27 @@
     <div class='alert-warning alert'>
     	If you change the order of items on this page, they will not appear in that order until you refresh the page.
     	<br/><br/>
-    	<a href="#"
-    	   data-toggle="popover" 
-    	   data-trigger="focus"
-    	   title="How to add images" 
-    	   data-html ="true"
-    	   data-content="You need a FTP program like Filezilla.  New users will have to be authorized for this (contact la-help@utlists.utexas.edu.)  Set it up with the following:
-						<ol>
-							<li>Make sure you are using SFTP</li>
-							<li>The host is file.laits.utexas.edu</li>
-							<li>Logon Type is normal</li>
-							<li>User is your EID</li>
-							<li>Password is your EID password</li>
-							<li>In the Advanced Tab, set the Default remote directory to /mnt/www/la.utexas.edu/lrc.</li>
-						</ol>
-						Here you can drag images from your machine
-						<br/><br/>
-						Within the lesson editor, any field that has a tool bar has a button for an image.  It should be the 2nd to last button.  For the url, put http://www.la.utexas.edu/lrc/ followed by the name of your image.  You can further set the size, border alternate text, etc...
-    	   ">
+    	<a href="#" @click="help_images_popover_shown = !help_images_popover_shown">
     		How to add images
     	</a>
+        <div v-if="help_images_popover_shown">
+            <b-card title="How to add images">
+                <b-card-text>
+                    You need a FTP program like Filezilla.  New users will have to be authorized for this (contact la-help@utlists.utexas.edu.)  Set it up with the following:
+                    <ol>
+                        <li>Make sure you are using SFTP</li>
+                        <li>The host is file.laits.utexas.edu</li>
+                        <li>Logon Type is normal</li>
+                        <li>User is your EID</li>
+                        <li>Password is your EID password</li>
+                        <li>In the Advanced Tab, set the Default remote directory to /mnt/www/la.utexas.edu/lrc.</li>
+                    </ol>
+                    Here you can drag images from your machine
+                    <br/><br/>
+                    Within the lesson editor, any field that has a tool bar has a button for an image.  It should be the 2nd to last button.  For the url, put http://www.la.utexas.edu/lrc/ followed by the name of your image.  You can further set the size, border alternate text, etc...
+                </b-card-text>
+            </b-card>
+        </div>
     </div>
 
     <form method="POST" :action="'/admin2/eieol_lesson/'+lesson.id"

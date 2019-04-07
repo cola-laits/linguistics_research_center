@@ -5,6 +5,8 @@ headword save is still stubbed
  */
 
 function ajax_submit(form) {
+    alert("STOP CALLING AJAX SUBMIT");
+    return;
     //generic ajax function.   This will prevent the regular submission and send it by ajax instead.
 
     var myform = $(form);
@@ -123,11 +125,3 @@ window.onbeforeunload = function() {
     }
 };
 
-$(document).ready(function(){
-
-    //set language js variable so we can use it for the gloss, head word and keyword lookups
-    hold_language_id = window.lesson_language_id;
-
-    $('[data-toggle="popover"]').popover();
-
-});

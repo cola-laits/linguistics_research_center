@@ -14,7 +14,6 @@
         <link media="all" type="text/css" rel="stylesheet" href="{{ mix('/css/admin.css') }}">
         <link media="all" type="text/css" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
         <link media="all" type="text/css" rel="stylesheet" href="/css/adminstyle.css">
-        <link media="all" type="text/css" rel="stylesheet" href="/css/jquery.tagsinput.css">
         <link media="all" type="text/css" rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
 
         <style>
@@ -79,7 +78,6 @@
 
     <script src="{{ mix('/js/admin.js') }}"></script>
 
-    <script src="/js/jquery.tagsinput.js"></script>
     <script src="//code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
 
 
