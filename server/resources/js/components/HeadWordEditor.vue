@@ -59,13 +59,22 @@
 
                 <div class='form-group'>
                     <label for="keywords">Keywords</label>
-                    <input class="form-control keywords" id="keywords" name="keywords" type="text">
-                    <div class="alert-warning">Separate with commas</div>
+                    <tags-input
+                        :add-on-key="[13,',']"
+                        :autocomplete-items="autocomplete_items"
+                        :tags="format_tags_from_csv(headword.keywords)"
+                        v-model="new_tag"
+                        @tags-changed="newTags => format_tags_to_csv(newTags)"
+                        :separators="[',']"
+                    >
+
+                    </tags-input>
+                    <div class="alert-warning">Up/down in list to choose an existing tag.  'Enter' or comma after typing to enter a new tag.</div>
                     <div id="keywords_error" class="alert-danger errors"></div>
                 </div>
 
                 <div class='form-group bottom_button'>
-                    <input class="btn btn-xs btn-success" type="submit" value="Save">
+                    <input class="btn btn-xs btn-success" type="button" @click="save()" value="Save">
                 </div>
                 </form>
             </div>
@@ -82,14 +91,25 @@
             modal_attached_headword_search: '',
             modal_attached_headword_search_results: [],
             modal_attached_headword_errors: {},
+            keyword_choices: [],
+            new_tag: '',
         }},
         computed: {
             is_new_headword() {
                 return !this.headword.id;
+            },
+            autocomplete_items() {
+                return this.keyword_choices.filter(tag => {
+                    return tag.text.toUpperCase().indexOf(this.new_tag.toUpperCase()) !== -1;
+                });
             }
         },
         methods: {
             show() {
+                axios.get('/admin2/eieol_head_word_keyword/filtered_list?language='+this.language.id)
+                    .then((response) => {
+                        this.keyword_choices = response.data.map((tag) => {return {'text':tag}});
+                    });
                 Vue.nextTick(function() {
                     this.modal_attached_headword_search = '';
                     this.modal_attached_headword_search_results = [];
@@ -99,6 +119,15 @@
             },
             hide() {
                 this.$refs['attach_headword_modal'].hide();
+            },
+            format_tags_from_csv() {
+                if (!this.headword.keywords) {
+                    return [];
+                }
+                return this.headword.keywords.split(',').map((tag) => {return {'text':tag}});
+            },
+            format_tags_to_csv(newTags) {
+                this.headword.keywords = newTags.map(obj => obj.text.toUpperCase()).join(',');
             },
             searchHeadwords(search_text) {
                 let app = this;
@@ -113,12 +142,12 @@
             attach_headword(headword) {
                 this.$emit('input',headword);
             },
-            new_headword_form_submit() {
+            save() {
                 /*
                 let app = this;
-                this.modal_attached_gloss_errors = {};
+                this.modal_attached_headword_errors = {};
                 let update_promise = null;
-                if (this.is_new_gloss) {
+                if (this.is_new_headword) {
                     update_promise = axios.post('/admin2/eieol_gloss', this.gloss)
                 } else {
                     update_promise = axios.put('/admin2/eieol_gloss/'+this.gloss.id, this.gloss)
@@ -141,4 +170,3 @@
         }
     }
 </script>
-

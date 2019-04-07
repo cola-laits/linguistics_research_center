@@ -11,7 +11,6 @@ return array(
     'App\\EieolElement' => $baseDir . '/app/EieolElement.php',
     'App\\EieolGloss' => $baseDir . '/app/EieolGloss.php',
     'App\\EieolGlossedText' => $baseDir . '/app/EieolGlossedText.php',
-    'App\\EieolGlossedTextGloss' => $baseDir . '/app/EieolGlossedTextGloss.php',
     'App\\EieolGrammar' => $baseDir . '/app/EieolGrammar.php',
     'App\\EieolHeadWord' => $baseDir . '/app/EieolHeadWord.php',
     'App\\EieolHeadWordKeyword' => $baseDir . '/app/EieolHeadWordKeyword.php',

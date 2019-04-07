@@ -214,11 +214,6 @@
     <br/>Please Wait...
 </div>
 
-@include('eieol_lesson.modal_attach_gloss')
-@include('eieol_lesson.modal_edit_gloss')
-@include('eieol_lesson.modal_attach_head_word')
-@include('eieol_lesson.modal_edit_head_word')
-
 @verbatim
 <!-- ---------------------------------------------------------------------------------------- -->
 
@@ -248,7 +243,8 @@
     </div>
 </b-modal>
 
-<gloss-editor ref="gloss_editor" :gloss="gloss_for_edit"
+<gloss-editor ref="gloss_editor"
+              :gloss="gloss_for_edit"
               :is_user_admin="is_user_admin"
               :lesson_lang_attribute="lesson.language.lang_attribute"
               :language="lesson.language"
@@ -551,8 +547,7 @@
     <div class='row'>
 		<div class='col-sm-10 offset-1'>
 	        <strong>Lesson Text</strong> 
-	        <div class="card"><div class="card-body" id="lesson_text">
-                {{lesson_text}}
+	        <div class="card"><div class="card-body" id="lesson_text" v-html="lesson_text">
 	        </div></div>
 	    </div>
 	    <br/>

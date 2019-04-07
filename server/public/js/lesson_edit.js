@@ -1,11 +1,7 @@
 /*
 FIXME todo:
 Ajax spinner logic needs to move to axios instead
-Modals are broken and need to be replaced with vue-bootstrap modals
-Attach Gloss needs testing
-Gloss comments don't work
-Edit Gloss doesn't update lists
-Possibly nothing on the Gloss modals works
+headword save is still stubbed
  */
 
 function ajax_submit(form) {
@@ -120,32 +116,6 @@ function ajax_submit(form) {
     }); //ajax call
 } //ajax submit function
 
-/*
-function attach_head_word(head_word_id, head_word_display) {
-    //gloss_form is set when they open the head word modal
-    $(gloss_form).find("#element_" + element_id + "_head_word_id").attr('value', head_word_id);
-    $(gloss_form).find("#element_" + element_id + "_head_word_display").html(head_word_display);
-    $("#attach_head_word_modal").modal('hide');
-} //attach head word
-
-//ajax search for head words
-function searchHeadWords(head_word) {
-    if (head_word.length===0) { //if the search is blank, reset the result box
-        document.getElementById("head_word_search_result").innerHTML="";
-        return;
-    }
-    var xmlhttp=new XMLHttpRequest();
-    xmlhttp.onreadystatechange=function() {
-        if (xmlhttp.readyState===4 && xmlhttp.status===200) { //if ajax is successful, load result box
-            document.getElementById("head_word_search_result").innerHTML=xmlhttp.responseText;
-        }
-    };
-    xmlhttp.open("GET","/admin2/eieol_head_word/filtered_list?head_word="+head_word+"&language="+hold_language_id,true);
-    xmlhttp.send();
-}
-*/
-
-// --------------------------------document ready-------------------------------------
 
 window.onbeforeunload = function() {
     if ($("form[dirty]").length > 0) {
@@ -153,183 +123,11 @@ window.onbeforeunload = function() {
     }
 };
 
-/*
-function pick_head_word_button_click() {
-    $("#new_head_word_form").css("background-color", "#FFFFFF");
-    gloss_form = $(this).closest('form'); //we will use this in the attach_head_word function
-    $("#head_word_search_input").val(""); //reset the input box
-    $("#attach_head_word_modal").modal('show');
-    $("#head_word_search_input").focus(); //put cursor in search box
-    document.getElementById("head_word_search_result").innerHTML = ""; //reset result box so it's empty each time the click it
-    $('#new_head_word_form')[0].reset(); //reset the new head word form
-    $('#new_keywords').importTags(""); //trigger reset doesn't work because of the jquery tags, so do this one manually
-    $(".errors", '#new_head_word_form').empty(); //reset head word form error divs
-    return false;
-}
-
-function new_head_word_form_submit() {
-    $(".errors", '#new_head_word_form').empty();
-    $.ajax({
-        type: "POST",
-        url: $("#new_head_word_form").attr('action'),
-        data: $("#new_head_word_form").serialize(),
-        dataType: "html",
-
-        success: function (data) {
-            var json = JSON.parse(data);
-
-            if (json['fail']) { //go through all errors and set error messages, just within this form;
-                $.each(json['errors'], function (index, value) {
-                    var errorDiv = '#' + index + '_error';
-                    $(errorDiv, "#new_head_word_form").html(value);
-                });
-            }  //json fail
-
-            if (json['success']) {
-                $(this).removeAttr("dirty");
-                attach_head_word(json['head_word_id'], json['head_word_display']);
-            } //json success
-        }, //success
-
-        error: function (xml_http_request, text_status, error_thrown) {
-            alert('Ajax Error: ' + text_status + '/ ' + xml_http_request + '/ ' + error_thrown);
-        } //error
-
-    }); //ajax call
-
-    return false; // this keeps the form from submitting
-}
-
-function edit_head_word_button_click() {
-    gloss_form = $(this).closest('form'); //get gloss form so we can get head_word_id
-    head_word_id = $(gloss_form).find("#element_" + element_id + "_head_word_id").val();
-    if (head_word_id === '') {
-        alert('Please add a Head Word before editing it.');
-    } else {
-        //load form with data for the record they want to edit
-        $.ajax({
-            type: "GET",
-            url: "/admin2/eieol_head_word/" + head_word_id,
-            data: null,
-            dataType: "json",
-
-            success: function (data) {
-                $.each(data, function (key, value) {
-                    $('[name=' + key + ']', '#edit_head_word_form').val(value);
-                });
-                $('#edit_keywords').importTags(data['keywords']); //because of the jquery tags, do this one manually
-                $("#edit_head_word_form").attr("action", "/admin2/eieol_head_word/" + data['id']);
-                $("#head_word_glosses").html("<strong>This is used by the following glosses:</strong> " + data['glosses']);
-                $(".errors", '#edit_head_word_form').empty(); //reset head word form error divs
-                $('#edit_head_word_form').css("background-color", "#FFFFFF");
-                $("#edit_head_word_modal").modal('show');
-                $("#word", "#edit_head_word_form").focus(); //put cursor in first field
-
-            }, //success
-
-            error: function (xml_http_request, text_status, error_thrown) {
-                alert('Ajax Error: ' + text_status + '/ ' + xml_http_request + '/ ' + error_thrown);
-            } //error
-
-        }); //ajax call
-    }
-
-    return false;
-}
- */
-
 $(document).ready(function(){
 
     //set language js variable so we can use it for the gloss, head word and keyword lookups
     hold_language_id = window.lesson_language_id;
 
-    //turn on tags for keywords (in head word modal)
-    $('#new_keywords').tagsInput({
-        'height':'50px',
-        'width':'100%',
-        'defaultText':'',
-        'autocomplete_url':'/admin2/eieol_head_word_keyword/filtered_list?language='+hold_language_id
-    });
-    $('#edit_keywords').tagsInput({
-        'height':'50px',
-        'width':'100%',
-        'defaultText':'',
-        'autocomplete_url':'/admin2/eieol_head_word_keyword/filtered_list?language='+hold_language_id
-    });
-
-    //these two functions prevent users from tabbing out of the keywords fields.  We want them to stay and enter a comma after each word
-    $('#new_keywords_tag').keypress(function (e) { //listen for typing
-        if(e.keyCode === 9){ // tab
-            e.preventDefault();
-        }
-    });
-    $('#edit_keywords_tag').keypress(function (e) { //listen for typing
-        if(e.keyCode === 9){ // tab
-            e.preventDefault();
-        }
-    });
-
-    /*
-    //autocomplete fields
-    $(".part_of_speech").autocomplete({
-        source: function (request, response) {
-            $.ajax({
-                dataType: "json",
-                data: {
-                    term: request.term,
-                    language_id: window.lesson_language_id,
-                },
-                type : 'GET',
-                url: '/admin2/part_of_speech/filtered_list',
-                success: function(data) {
-                    response(data)
-
-                }
-            });
-        }
-    }); //part of speech autocomplete
-
-    $(".analysis").autocomplete({
-        source: function (request, response) {
-            $.ajax({
-                dataType: "json",
-                data: {
-                    term: request.term,
-                    language_id: window.lesson_language_id,
-                },
-                type : 'GET',
-                url: '/admin2/eieol_analysis/filtered_list',
-                success: function(data) {
-                    response(data)
-
-                }
-            });
-        }
-    }); //analysis autocomplete
-     */
-
-    /*
-    //popup to attach or change head word to gloss
-    $(".pick_head_word_button").click(function() {
-        return pick_head_word_button_click.call(this);
-    });
-
-    //popup to edit head word
-    $(".edit_head_word_button").click(function() {
-        return edit_head_word_button_click.call(this);
-    });
-
-    //this is when they click on a head word in the head word listing modal
-    $("#head_word_search_result").on('click', 'a', function() {
-        attach_head_word($(this).attr('id'), $(this).html());
-    });
-
-    //when they add a new headword
-    $("#new_head_word_form").submit(function() {
-        return new_head_word_form_submit();
-    });//add headword
-     */
-
     $('[data-toggle="popover"]').popover();
 
-});//document ready
+});

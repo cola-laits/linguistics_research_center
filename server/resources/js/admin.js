@@ -3,10 +3,13 @@ window.Vue = require('vue');
 window.VueRouter = require('vue-router').default;
 Vue.use(VueRouter);
 window.axios = require('axios').default;
+
 import BootstrapVue from 'bootstrap-vue'
 Vue.use(BootstrapVue);
 import VueBootstrapTypeahead from 'vue-bootstrap-typeahead'
 Vue.component('vue-bootstrap-typeahead', VueBootstrapTypeahead);
+import VueTagsInput from '@johmun/vue-tags-input';
+Vue.component('tags-input', VueTagsInput);
 
 window.jQuery = window.$ = require('jquery');
 

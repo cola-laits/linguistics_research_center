@@ -37,11 +37,6 @@ use Illuminate\Database\Eloquent\Model;
 class EieolHeadWord extends Model {
 	protected $table = 'eieol_head_word';
 	
-	public function keywords()
-	{
-		return $this->hasMany('\App\EieolHeadWordKeyword', 'head_word_id', 'id')->orderBy('keyword');
-	}
-	
 	public function elements()
 	{
 		return $this->hasMany('\App\EieolElement', 'head_word_id', 'id');

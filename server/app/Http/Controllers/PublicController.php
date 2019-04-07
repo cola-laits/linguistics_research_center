@@ -277,7 +277,7 @@ class PublicController extends Controller
 
         $data['language'] = EieolLanguage::find($language_id);
 
-        $lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word.language', 'glossed_texts.glosses.elements.head_word.keywords')
+        $lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word.language')
             ->where('series_id', '=', $series->id)
             ->where('language_id', '=', $language_id)
             ->select(array('id', 'title', 'order'))
@@ -289,41 +289,31 @@ class PublicController extends Controller
         //loop through all the lessons, glossed texts and glosses to group like keywords
 
         foreach ($lessons as $lesson) {
-
             foreach ($lesson->glossed_texts as $glossed_text) {
-
                 foreach ($glossed_text->glosses as $gloss) {
-
                     foreach ($gloss->elements as $element) {
 
-                        foreach ($element->head_word->keywords as $keyword) {
+                        if (!$element->head_word->keywords) {
+                            continue;
+                        }
 
-                            $key = $keyword->keyword . ' -- ' . $element->head_word->word . ' -- ' . $element->head_word->definition;
+                        foreach (explode(',',$element->head_word->keywords) as $keyword) {
+                            $key = $keyword . ' -- ' . $element->head_word->word . ' -- ' . $element->head_word->definition;
 
                             if (!array_key_exists($key, $data['keywords'])) {
-
-                                $data['keywords'][$key] = $keyword->toArray();
-
-                                $data['keywords'][$key]['head_word'] = $element->head_word->getDisplayHeadWord();
-
-                                $data['keywords'][$key]['glossed_text_gloss_ids'] = array();
-
-                                $data['keywords'][$key]['glossed_text_gloss_ids'][$gloss->id] = $lesson;
-
-                            } else {
-
-                                $data['keywords'][$key]['glossed_text_gloss_ids'][$gloss->id] = $lesson;
-
+                                $data['keywords'][$key] = [
+                                    'keyword'=>$keyword,
+                                    'head_word'=>$element->head_word->getDisplayHeadWord(),
+                                    'glossed_text_gloss_ids'=>[]
+                                ];
                             }
 
+                            $data['keywords'][$key]['glossed_text_gloss_ids'][$gloss->id] = $lesson;
                         }
 
                     }
-
                 }
-
             }
-
         }
 
         ksort($data['keywords']);
