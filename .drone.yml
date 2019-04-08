@@ -4,10 +4,10 @@ name: default
 
 steps:
 - name: prebuild
-  image: ubuntu
+  image: node:9
   pull: always
   commands:
-  - npm rebuild && npm run production
+    - cd server && npm rebuild && npm run production
 
 
 - name: publish_test
