@@ -38,7 +38,8 @@
             'delete_glossed_text_confirm_glossed_text_id': '',
             'delete_glossed_text_gloss_confirm_glossed_text_gloss_id': '',
             'gloss_for_edit': {},
-            'help_images_popover_shown': false
+            'help_images_popover_shown': false,
+            'error_messages': {}
         };
 
         window.admin_app_computed = {
@@ -80,6 +81,12 @@
                 }
                 this.dirty_form_ids.push(id);
             },
+            markFormClean(id) {
+                var ix = this.dirty_form_ids.indexOf(id);
+                if (ix !== -1) {
+                    this.dirty_form_ids.splice(ix, 1);
+                }
+            },
             isFormDirty(id) {
                 return this.dirty_form_ids.indexOf(id) !== -1;
             },
@@ -95,6 +102,50 @@
             areCommentsOpen(id) {
                 return this.open_comment_ids.indexOf(id) !== -1;
             },
+            save_lesson() {
+                var app = this;
+                $(".spinner").show();
+                axios.post('/admin2/eieol_lesson/'+this.lesson.id, {
+                    _method:'PUT',
+                    title:this.lesson.title,
+                    order:this.lesson.order,
+                    intro_text:this.lesson.intro_text
+                })
+                    .then(function(response) {
+                        $(".spinner").hide();
+                        if (response.data.fail) {
+                            app.error_messages = response.data.errors;
+                        } else {
+                            app.error_messages = {};
+                            app.flash_modal(response.data.message);
+                            app.markFormClean('update_form');
+                        }
+                    });
+            },
+            save_lesson_translation() {
+                var app = this;
+                $(".spinner").show();
+                axios.post('/admin2/eieol_lesson/update_translation/'+this.lesson.id, {
+                    _method:'PUT',
+                    lesson_translation:this.lesson.lesson_translation,
+                })
+                    .then(function(response) {
+                        $(".spinner").hide();
+                        if (response.data.fail) {
+                            app.error_messages = response.data.errors;
+                        } else {
+                            app.error_messages = {};
+                            app.flash_modal(response.data.message);
+                            app.markFormClean('update_translation_form');
+                        }
+                    });
+            },
+            get_error_message_html(key) {
+                if (!this.error_messages[key]) {
+                    return null;
+                }
+                return this.error_messages[key].join("<br>");
+            },
             delete_grammar(id) {
                 this.delete_grammar_confirm_grammar_id = id;
                 this.$refs['delete_grammar_confirm'].show();
@@ -106,7 +157,6 @@
                         app.grammars = app.grammars.filter(function(grammar) {
                             return grammar.id !== id;
                         });
-                        $("#delete_grammar_confirm").modal('hide');
 
                         app.flash_modal('Grammar has been deleted.');
                     });
@@ -137,7 +187,6 @@
                         app.glossed_texts = app.glossed_texts.filter(function(glossed_text) {
                             return glossed_text.id !== id;
                         });
-                        $("#delete_glossed_text_confirm").modal('hide');
 
                         app.flash_modal('Glossed Text has been deleted.');
                     });
@@ -170,7 +219,6 @@
                                 return gloss.id !== id;
                             });
                         });
-                        $("#delete_glossed_text_gloss_confirm").modal('hide');
 
                         app.flash_modal('Gloss has been unattached.');
                     });
@@ -205,7 +253,14 @@
 @endsection
 
 @section('foot_extra')
-    <script src="/js/lesson_edit.js"></script>
+    <script>
+        window.onbeforeunload = function() {
+            if ($("form[dirty]").length > 0) {
+                return 'You have unsaved changes!  Would you like to leave this page anyway?';
+            }
+        };
+
+    </script>
 @endsection
 
 @section('content')
@@ -284,13 +339,12 @@
         </div>
     </div>
 
-    <form method="POST" :action="'/admin2/eieol_lesson/'+lesson.id"
+    <form method="POST"
           accept-charset="UTF-8"
           class="form"
           id="update_form"
-          onsubmit="ajax_submit(this);return false;"
+          @submit.prevent="save_lesson()"
           :dirty="isFormDirty('update_form')">
-        <input name="_method" type="hidden" value="PUT">
 
     <input name="series_id" type="hidden" :value="lesson.series_id">
 
@@ -304,7 +358,7 @@
                        autocomplete="off"
                        @input="markFormDirty('update_form')"
                 >
-		        <div id="order_error" class="alert-danger errors"></div>
+		        <div id="order_error" class="alert-danger errors">{{get_error_message_html('order')}}</div>
 		    </div>
 		    	
 		    <div class='form-group col-sm-3'>
@@ -321,15 +375,7 @@
 		    
 		    <div class='form-group col-sm-2'>
                 <label for="language">Language</label><br/>
-                    <select id="language" name="language" v-model="lesson.language_id"
-                            class="form-control"
-                        @change="markFormDirty('update_form')">
-                    <option value="">Select a language</option>
-                    <option v-for="(lang_name, lang_id) in languages" :value="lang_id">
-                        {{ lang_name }}
-                    </option>
-                </select>
-		        <div id="language_error" class="alert-danger errors"></div>
+                <input type="text" disabled id="language" class="form-control" :value="lesson.language.language"/>
 		    </div>
 		    
 		    <div class='form-group col-sm-2'>
@@ -559,7 +605,7 @@
           accept-charset="UTF-8"
           class="form"
           id="update_translation_form"
-          onsubmit="ajax_submit(this);return false;"
+          @submit.prevent="save_lesson_translation()"
           :dirty="isFormDirty('update_translation_form')">
         <input name="_method" type="hidden" value="PUT">
 
