@@ -173,8 +173,28 @@
 
                 this.grammars.push({
                     id:"",
-                    order:next_grammar_order
+                    order:next_grammar_order,
+                    lesson_id:this.lesson.id
                 });
+            },
+            save_grammar(grammar) {
+                var app = this;
+                $(".spinner").show();
+                var url = grammar.id==='' ? '/admin2/eieol_grammar' : '/admin2/eieol_grammar/'+grammar.id;
+                var payload = grammar.id==='' ? grammar : Object.assign(grammar, {_method:'PUT'});
+                axios.post(url, payload)
+                    .then(function(response) {
+                        $(".spinner").hide();
+                        if (response.data.fail) {
+                            app.error_messages = _.mapKeys(response.data.errors, function(value,key) {
+                                return 'grammar_'+grammar.id+'_'+key;
+                            });
+                        } else {
+                            app.error_messages = {};
+                            app.flash_modal(response.data.message);
+                            app.markFormClean('grammar_form_'+grammar.id);
+                        }
+                    });
             },
             delete_glossed_text(id) {
                 this.delete_glossed_text_confirm_glossed_text_id = id;
@@ -203,8 +223,28 @@
                 next_glosssed_text_order += 10;
                 this.glossed_texts.push({
                     id:"",
-                    order:next_glosssed_text_order
+                    order:next_glosssed_text_order,
+                    lesson_id:this.lesson.id
                 });
+            },
+            save_glossed_text(glossed_text) {
+                var app = this;
+                $(".spinner").show();
+                var url = glossed_text.id==='' ? '/admin2/eieol_glossed_text' : '/admin2/eieol_glossed_text/'+glossed_text.id;
+                var payload = glossed_text.id==='' ? glossed_text : Object.assign(glossed_text, {_method:'PUT'});
+                axios.post(url, payload)
+                    .then(function(response) {
+                        $(".spinner").hide();
+                        if (response.data.fail) {
+                            app.error_messages = _.mapKeys(response.data.errors, function(value,key) {
+                                return 'glossed_text_'+glossed_text.id+'_'+key;
+                            });
+                        } else {
+                            app.error_messages = {};
+                            app.flash_modal(response.data.message);
+                            app.markFormClean('glossed_text_form_'+glossed_text.id);
+                        }
+                    });
             },
             delete_glossed_text_gloss(id) {
                 this.delete_glossed_text_gloss_confirm_glossed_text_gloss_id = id;
@@ -247,7 +287,26 @@
                         app.gloss_for_edit = response.data;
                         app.$refs['gloss_editor'].show();
                     });
-            }
+            },
+            save_gloss_order(gloss) {
+                var app = this;
+                $(".spinner").show();
+                var url = gloss.id==='' ? '/admin2/eieol_glossed_text_gloss' : '/admin2/eieol_glossed_text_gloss/'+gloss.id;
+                var payload = gloss.id==='' ? gloss : Object.assign(gloss, {_method:'PUT'});
+                axios.post(url, payload)
+                    .then(function(response) {
+                        $(".spinner").hide();
+                        if (response.data.fail) {
+                            app.error_messages = _.mapKeys(response.data.errors, function(value,key) {
+                                return 'gloss_'+gloss.id+'_'+key;
+                            });
+                        } else {
+                            app.error_messages = {};
+                            app.flash_modal(response.data.message);
+                            app.markFormClean('glossed_text_gloss_form_'+gloss.id);
+                        }
+                    });
+            },
         };
     </script>
 @endsection
@@ -309,7 +368,7 @@
               :custom_keyboard="custom_keyboard_layout">></gloss-editor>
 
 <div class='col-lg-12'>
- 
+
     <h1><i class='fa fa-file-text'></i> Edit Lesson for <a :href="'/admin2/eieol_series/'+lesson.series.id+'/edit'" title="Return to series">{{lesson.series.title}}</a></h1>
     <p><a href="/guides/eieol_author" target=_new>Author Guide</a></p>
     <p><a :href="'/eieol_lesson/'+lesson.series.id+'?id='+lesson.id" target="_blank">Preview</a></p>
@@ -350,7 +409,7 @@
 
 		<div class='form-row'>
 			<div class='col-sm-1'></div>
-			
+
 			<div class='form-group col-sm-1 '>
                 <label for="order">Order</label>
                 <input placeholder="Order" class="form-control" name="order" type="text" id="order"
@@ -360,7 +419,7 @@
                 >
 		        <div id="order_error" class="alert-danger errors">{{get_error_message_html('order')}}</div>
 		    </div>
-		    	
+
 		    <div class='form-group col-sm-3'>
                 <label for="title">Title</label>
                 <input-custom-keyboard placeholder="Title"
@@ -372,19 +431,19 @@
                 </input-custom-keyboard>
 		        <div id="title_error" class="alert-danger errors"></div>
 		    </div>
-		    
+
 		    <div class='form-group col-sm-2'>
                 <label for="language">Language</label><br/>
                 <input type="text" disabled id="language" class="form-control" :value="lesson.language.language"/>
 		    </div>
-		    
+
 		    <div class='form-group col-sm-2'>
 		    	<comment-icon :author_comment="lesson.author_comments"
                               :admin_comment="lesson.admin_comments"
                               :author_done="lesson.author_done"
                               @click="toggleCommentsOpen('lesson_main')"></comment-icon>
 		    </div>
-		    
+
 		 </div>
 
         <comment-area v-model="lesson"
@@ -392,8 +451,8 @@
                       :show_comments_area="areCommentsOpen('lesson_main')"
                       @input="markFormDirty('update_form')"
         ></comment-area>
-			    	
-		<div class='row'>	    	
+
+		<div class='row'>
 		    <div class='form-group col-sm-10 offset-1'>
                 <label for="intro_text">Intro Text</label>
 		        <ck-editor html_id="intro_text"
@@ -408,39 +467,37 @@
                 <b-modal id="intro_text_preview" title="Intro Text"  :ok-only="true"
                          size="xl"><div v-html="lesson.intro_text"></div></b-modal>
 		    </div>
-		</div>		    
+		</div>
 
     </form>
 
-    
-    <!-- ---------------------------------------------------------------------------------------- -->  
-    
+
+    <!-- ---------------------------------------------------------------------------------------- -->
+
     <hr/>
     <h2>Glossed Texts</h2>
-    
+
     <div id ="glossed_texts">
         <div v-for="(glossed_text, glossed_text_ix) in glossed_texts">
 
                 <form method="POST"
-                      :action="glossed_text.id==='' ? '/admin2/eieol_glossed_text' : '/admin2/eieol_glossed_text/'+glossed_text.id"
                       accept-charset="UTF-8"
                       class="form glossed_text_form"
                       :id="'glossed_text_form_'+glossed_text.id"
-                      onsubmit="ajax_submit(this);return false;"
+                      @submit.prevent="save_glossed_text(glossed_text)"
                       :dirty="isFormDirty('glossed_text_form_'+glossed_text.id)">
-                    <input type="hidden" name="lesson_id" :value="lesson.id">
-                    <input name="_method" type="hidden" value="PUT" v-if="glossed_text.id !== ''">
-					
+
 					<div class='row'>
 						<div class='col-sm-1'></div>
-						
+
 						<div class='form-group col-sm-1 '>
                             <label for="order">Order</label>
                             <input placeholder="Order" class="form-control" id="order" name="order" type="text"
+                                   @input="markFormDirty('glossed_text_form_'+glossed_text.id)"
                                 v-model="glossed_text.order">
-					        <div id ="order_error" class="alert-danger errors"></div>
+					        <div class="alert-danger errors">{{get_error_message_html('glossed_text_'+glossed_text.id+'_order')}}</div>
 					    </div>
-					    	
+
 					    <div class='form-group col-sm-7'>
                             <label for="glossed_text">Glossed Text</label>
                             <textarea-custom-keyboard placeholder="Glossed Text"
@@ -449,26 +506,26 @@
                                                    @input="markFormDirty('glossed_text_form_'+glossed_text.id)"
                                                       :lang="lesson.language.lang_attribute"
                                                       :custom_keyboard="custom_keyboard_layout"></textarea-custom-keyboard>
-					        <div id ="glossed_text_error" class="alert-danger errors"></div>
-					    </div>	    
-					    
+					        <div class="alert-danger errors">{{get_error_message_html('glossed_text_'+glossed_text.id+'_glossed_text')}}</div>
+					    </div>
+
 					    <div class='form-group col-sm-1 comment_button'>
                             <comment-icon :author_comment="glossed_text.author_comments"
                                           :admin_comment="glossed_text.admin_comments"
                                           :author_done="glossed_text.author_done"
                                           @click="toggleCommentsOpen('glossed_text_'+glossed_text.id)"></comment-icon>
 						</div>
-					    
+
 					    <div class='form-group col-sm-1 bottom_button'>
                             <input class="btn btn-sm btn-primary" type="submit" value="Save">
 						</div>
-					
+
 			    		<div class='form-group col-sm-1 bottom_button'>
                             <button class="btn btn-sm btn-danger delete_glossed_text" type="button"
                                     @click="delete_glossed_text(glossed_text.id)"
                                     v-if="glossed_text.id !== ''">Delete</button>
                         </div>
-	
+
 				    </div>
 
 
@@ -479,7 +536,7 @@
                     ></comment-area>
 
                 </form>
-			    
+
 			    <div class="row">
                     <div class='col-sm-2'></div>
                     <div class="col-sm-10">
@@ -488,34 +545,32 @@
                           v-if="glossed_text.id !== ''">Toggle Glosses</b-button>
 			    </div>
 			    </div>
-			    
+
 			    <b-collapse :id="'glosses-'+glossed_text.id">
-			    
+
                     <p></p>
 			    <div id="'glossed_text_'+glossed_text.id+'_glosses'">
 					  <div v-for="(gloss, gloss_ix) in glossed_text.glosses">
-					  
+
 						<div class='row'>
 							<div class='col-sm-2'></div>
 
                             <form method="POST"
-                                  :action="gloss.id==='' ? '/admin2/eieol_glossed_text_gloss' : '/admin2/eieol_glossed_text_gloss/'+gloss.id"
                                   accept-charset="UTF-8"
                                   class="form"
                                   :id="'glossed_text_gloss_form_'+gloss.id"
-                                  onsubmit="ajax_submit(this);return false;"
+                                  @submit.prevent="save_gloss_order(gloss)"
                                   :dirty="isFormDirty('glossed_text_gloss_form_'+gloss.id)">
-                                <input type="hidden" name="glossed_text_id" :value="glossed_text.id">
-                                <input name="_method" type="hidden" value="PUT" v-if="gloss.id !== ''">
 							<div class='form-group col-sm-1 '>
 
 						        <label for="order">Order</label>
                                 <div class="row">
                                     <input placeholder="Order" id="order" name="order" type="text"
+                                           @input="markFormDirty('glossed_text_gloss_form_'+gloss.id)"
                                            v-model="gloss.order">
                                     <input type="submit" value="Save Order" class="btn btn-sm btn-primary">
                                 </div>
-						        <div id ="order_error" class="alert-danger errors"></div>
+						        <div class="alert-danger errors">{{get_error_message_html('gloss_'+gloss.id+'_order')}}</div>
 						    </div>
 
                             </form>
@@ -536,13 +591,13 @@
                                         </span>
                                     </span>
 			    			</div>
-			    			
+
 			    			<div class='col-sm-1 bottom_button gloss_comment_indicator'>
                                 <comment-icon :author_comment="gloss.author_comments"
                                               :admin_comment="gloss.admin_comments"
                                               :author_done="gloss.author_done"></comment-icon>
 			    			</div>
-			    			
+
 			    			<div class='col-sm-1 bottom_button'>
                                 <form class="edit_gloss" :id="'edit_gloss_form_' + gloss.id">
                                     <input type="hidden" name="gloss_id" :value="gloss.id">
@@ -550,17 +605,17 @@
                                         @click="open_edit_gloss_modal(gloss.id)">
 			    				</form>
 			    			</div>
-			    			
+
 			    			<div class='form-group col-sm-1 bottom_button'>
                                 <input type="button" value="Remove" class="btn btn-sm btn-danger"
                                        @click="delete_glossed_text_gloss(gloss.id)">
 							</div>
-						      
+
 					    </div>
 					  </div>
 			    </div>
-			   
-			    <!-- this will open a modal to attach a gloss to the glossed text --> 
+
+			    <!-- this will open a modal to attach a gloss to the glossed text -->
 			    <div class='row'>
 			   		<div class='col-sm-2'></div>
 			   		<div class='form-group col-sm-1 '>
@@ -568,14 +623,14 @@
                                 @click="open_attach_gloss_modal(glossed_text.id)">
 				    </div>
 				</div>
-				
+
 				  </b-collapse>
 
 			    <hr/>
 			</div>
     </div>
-	  
-	  
+
+
 	  <!-- Button that will clone the new glossed text template -->
 	  <div class='row'>
 	  	<div class='col-sm-1'></div>
@@ -587,14 +642,14 @@
 
     <!-- ---------------------------------------------------------------------------------------- -->
 
-    
+
     <hr/>
-    
+
     <h2>Text and Translation</h2>
 
     <div class='row'>
 		<div class='col-sm-10 offset-1'>
-	        <strong>Lesson Text</strong> 
+	        <strong>Lesson Text</strong>
 	        <div class="card"><div class="card-body" id="lesson_text" v-html="lesson_text">
 	        </div></div>
 	    </div>
@@ -645,22 +700,22 @@
                          size="xl"><div v-html="lesson.lesson_translation"></div></b-modal>
             </div>
 	    </div>
-	    
+
 	</form>
-	
-	
+
+
 	<!-- ---------------------------------------------------------------------------------------- -->
-	
-	
+
+
 	<hr/>
-    <h2>Grammar</h2>	
+    <h2>Grammar</h2>
     <div id ="grammars">
         <div v-for="(grammar, grammar_ix) in grammars">
             <form method="POST" :action="grammar.id==='' ? '/admin2/eieol_grammar' : '/admin2/eieol_grammar/'+grammar.id"
                   accept-charset="UTF-8"
                   class="form grammar_form"
                   :id="'grammar_form_'+grammar.id"
-                  onsubmit="ajax_submit(this);return false;"
+                  @submit.prevent="save_grammar(grammar)"
                   :dirty="isFormDirty('grammar_form_'+grammar.id)"
             >
                 <input name="_method" type="hidden" value="PUT" v-if="grammar.id !== ''">
@@ -668,25 +723,25 @@
 
                 <div class='row'>
 						<div class='col-sm-1'></div>
-						
+
 						<div class='form-group col-sm-1 '>
                             <label for="order">Order</label>
                             <input placeholder="Order" class="form-control" id="order" name="order" type="text"
                                    v-model="grammar.order"
                                    @input="markFormDirty('grammar_form_'+grammar.id)"
                             >
-					        <div id ="order_error" class="alert-danger errors"></div>
+					        <div class="alert-danger errors">{{get_error_message_html('grammar_'+grammar.id+'_order')}}</div>
 					    </div>
-					    
+
 					    <div class='form-group col-sm-1 '>
                             <label for="section_number">Section Number</label>
                             <input placeholder="Section Number" class="form-control" name="section_number" type="text" id="section_number"
                                    v-model="grammar.section_number"
                                    @input="markFormDirty('grammar_form_'+grammar.id)"
                             >
-					        <div id ="section_number_error" class="alert-danger errors"></div>
+					        <div class="alert-danger errors">{{get_error_message_html('grammar_'+grammar.id+'_section_number')}}</div>
 					    </div>
-					    	
+
 					    <div class='form-group col-sm-3'>
                             <label for="title">Title</label>
                             <input-custom-keyboard placeholder="Title"
@@ -695,16 +750,16 @@
                                                    v-model="grammar.title"
                                                    @input="markFormDirty('grammar_form_'+grammar.id)"
                                                    :custom_keyboard="custom_keyboard_layout"></input-custom-keyboard>
-					        <div id ="title_error" class="alert-danger errors"></div>
+					        <div class="alert-danger errors">{{get_error_message_html('grammar_'+grammar.id+'_title')}}</div>
 					    </div>
-					    
+
 						<div class='form-group col-sm-1 comment_button'>
                             <comment-icon :author_comment="grammar.author_comments"
                                           :admin_comment="grammar.admin_comments"
                                           :author_done="grammar.author_done"
                                           @click="toggleCommentsOpen('grammar_'+grammar.id)"></comment-icon>
 					    </div>
-				    
+
 				   </div>
 
                 <comment-area v-model="grammars[grammar_ix]"
@@ -713,7 +768,7 @@
                               @input="markFormDirty('grammar_form_'+grammar.id)"
                 ></comment-area>
 
-					<div class='row'>    
+					<div class='row'>
 					    <div class='form-group col-sm-10 offset-1'>
                             <label for="grammar_text">Grammar Text</label>
                             <ck-editor :html_id="'grammar_text_'+grammar.id"
@@ -722,7 +777,7 @@
                                        :custom_config="ckeditor_customization"
                                        @input="markFormDirty('grammar_form_'+grammar.id)"
                             ></ck-editor>
-					        <div id ="grammar_text_error" class="alert-danger errors"></div>
+					        <div class="alert-danger errors">{{get_error_message_html('grammar_'+grammar.id+'_grammar_text')}}</div>
 					    </div>	
 					</div>
 					

@@ -455,7 +455,7 @@
                         }
 
                         if (json['success']) {
-                            app.$emit('saved', json['glossed_text'].glosses, this.gloss.glossed_text_id);
+                            app.$emit('saved', json['glossed_text'].glosses, app.gloss.glossed_text_id);
                         }
                     });
             },
@@ -465,11 +465,19 @@
                 this.$refs['head-word-editor'].show();
             },
             edit_head_word(ix) {
-                this.headword_for_edit = this.gloss.elements[ix].head_word;
+                if (this.gloss.elements[ix]) {
+                    this.headword_for_edit = this.gloss.elements[ix].head_word;
+                } else {
+                    this.headword_for_edit = {id:'',language_id:this.language.id};
+                }
                 this.element_index_for_headword_edit = ix;
                 this.$refs['head-word-editor'].show();
             },
             headword_selected(evt) {
+                console.log('headword_selected');
+                if (!this.gloss.elements[this.element_index_for_headword_edit]) {
+                    this.gloss.elements.splice(this.element_index_for_headword_edit, 1, {});
+                }
                 this.gloss.elements[this.element_index_for_headword_edit].head_word = evt;
                 this.gloss.elements[this.element_index_for_headword_edit].head_word_id = evt.id;
                 if (this.element_index_for_headword_edit===0) {

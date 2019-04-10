@@ -6,8 +6,6 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>LRC Admin - @yield('title')</title>
 
-        <script src="/js/google_analytics.js"></script>
-
         <script src="{{ mix('/js/manifest.js') }}"></script>
         <script src="{{ mix('/js/vendor.js') }}"></script>
 

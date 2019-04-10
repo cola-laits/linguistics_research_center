@@ -1,4 +1,3 @@
-<!-- FIXME add custom keyboard to search head word, word -->
 <template>
     <b-modal ref="attach_headword_modal" :title="is_new_headword ? 'Attach Head Word' : 'Edit Head Word'" size="xl">
         <div v-if="is_new_headword">
@@ -35,7 +34,7 @@
                                            type="text"
                                            v-model="headword.word"
                                            :custom_keyboard="custom_keyboard"></input-custom-keyboard>
-                    <div id="word_error" class="alert-danger errors"></div>
+                    <div class="alert-danger errors">{{get_error_message_html('word')}}</div>
                 </div>
 
                 <div class='form-group'>
@@ -43,7 +42,7 @@
                     <input placeholder="Definition" class="form-control" id="definition" name="definition" type="text"
                         v-model="headword.definition"
                     >
-                    <div id="definition_error" class="alert-danger errors"></div>
+                    <div class="alert-danger errors">{{get_error_message_html('definition')}}</div>
                 </div>
 
                 <div class='form-group'>
@@ -54,7 +53,7 @@
                     >
                         <option :value="null">Select an etymon</option>
                     </b-form-select>
-                    <div id="etyma_id_error" class="alert-danger errors"></div>
+                    <div class="alert-danger errors">{{get_error_message_html('etyma_id')}}</div>
                 </div>
 
                 <div class='form-group'>
@@ -70,7 +69,7 @@
 
                     </tags-input>
                     <div class="alert-warning">Up/down in list to choose an existing tag.  'Enter' or comma after typing to enter a new tag.</div>
-                    <div id="keywords_error" class="alert-danger errors"></div>
+                    <div class="alert-danger errors">{{get_error_message_html('keywords')}}</div>
                 </div>
 
                 <div class='form-group bottom_button'>
@@ -96,7 +95,7 @@
         }},
         computed: {
             is_new_headword() {
-                return !this.headword.id;
+                return typeof this.headword.id === 'undefined';
             },
             autocomplete_items() {
                 return this.keyword_choices.filter(tag => {
@@ -119,6 +118,12 @@
             },
             hide() {
                 this.$refs['attach_headword_modal'].hide();
+            },
+            get_error_message_html(key) {
+                if (!this.modal_attached_headword_errors[key]) {
+                    return null;
+                }
+                return this.modal_attached_headword_errors[key].join("<br>");
             },
             format_tags_from_csv() {
                 if (!this.headword.keywords) {
@@ -143,27 +148,21 @@
                 this.$emit('input',headword);
             },
             save() {
-                /*
-                let app = this;
-                this.modal_attached_headword_errors = {};
-                let update_promise = null;
-                if (this.is_new_headword) {
-                    update_promise = axios.post('/admin2/eieol_gloss', this.gloss)
-                } else {
-                    update_promise = axios.put('/admin2/eieol_gloss/'+this.gloss.id, this.gloss)
-                }
-                update_promise
+                console.log("save");
+                var app = this;
+                $(".spinner").show();
+                var url = this.headword.id==='' ? '/admin2/eieol_head_word' : '/admin2/eieol_head_word/'+this.headword.id;
+                var payload = this.headword.id==='' ? this.headword : Object.assign(this.headword, {_method:'PUT'});
+                axios.post(url, payload)
                     .then(function(response) {
-                        let json = response.data;
-                        if (json['fail']) {
-                            app.modal_attached_gloss_errors = json['errors'];
-                        }
-
-                        if (json['success']) {
-                            app.$emit('saved', json['glossed_text'].glosses, this.gloss.glossed_text_id);
+                        $(".spinner").hide();
+                        if (response.data.fail) {
+                            app.modal_attached_headword_errors = response.data.errors;
+                        } else {
+                            app.modal_attached_headword_errors = {};
+                            app.$emit('input',app.headword);
                         }
                     });
-                 */ alert("FIXME");
             },
         },
         mounted() {

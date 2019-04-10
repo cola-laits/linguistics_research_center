@@ -41,6 +41,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolSeries whereUpdatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolSeries whereUseOldGlossUi($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\EieolLanguage[] $lesson_languages
  */
 class EieolSeries extends Model {
 	
