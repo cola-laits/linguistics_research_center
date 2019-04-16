@@ -27,6 +27,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\IsoLanguage whereRefName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\IsoLanguage whereScope($value)
  * @mixin \Eloquent
+ * @property string|null $iso_id
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\IsoLanguage whereIsoId($value)
  */
 class IsoLanguage extends Model {
 	protected $table = 'iso_language';

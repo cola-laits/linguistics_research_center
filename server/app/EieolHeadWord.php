@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 /**
  * App\EieolHeadWord
  *
@@ -12,13 +13,13 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $definition
  * @property int $language_id
  * @property int|null $etyma_id
- * @property \Illuminate\Support\Carbon $created_at
- * @property \Illuminate\Support\Carbon $updated_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $created_by
  * @property string|null $updated_by
+ * @property string $keywords
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\EieolElement[] $elements
  * @property-read \App\LexEtyma|null $etyma
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\EieolHeadWordKeyword[] $keywords
  * @property-read \App\EieolLanguage $language
  * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolHeadWord newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolHeadWord newQuery()
@@ -28,6 +29,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolHeadWord whereDefinition($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolHeadWord whereEtymaId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolHeadWord whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolHeadWord whereKeywords($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolHeadWord whereLanguageId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolHeadWord whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolHeadWord whereUpdatedBy($value)
@@ -36,11 +38,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 class EieolHeadWord extends Model {
 	protected $table = 'eieol_head_word';
-	
-	public function keywords()
-	{
-		return $this->hasMany('\App\EieolHeadWordKeyword', 'head_word_id', 'id')->orderBy('keyword');
-	}
 	
 	public function elements()
 	{

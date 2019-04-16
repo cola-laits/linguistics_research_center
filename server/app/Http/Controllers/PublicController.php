@@ -178,7 +178,7 @@ class PublicController extends Controller
                         $data['glosses'][$key]['glossed_text_gloss_ids'] = [];
                     }
 
-                    $data['glosses'][$key]['glossed_text_gloss_ids'][$gloss->pivot->id] = $lesson;
+                    $data['glosses'][$key]['glossed_text_gloss_ids'][$gloss->id] = $lesson;
 
                 } //foreach gloss
 
@@ -239,7 +239,7 @@ class PublicController extends Controller
 
                             $data['head_words'][$key]['glossed_text_gloss_ids'] = array();
 
-                            $data['head_words'][$key]['glossed_text_gloss_ids'][$gloss->pivot->id] = $lesson;
+                            $data['head_words'][$key]['glossed_text_gloss_ids'][$gloss->id] = $lesson;
 
                             //build sort key
                             //remove first character, because it's a '<
@@ -249,7 +249,7 @@ class PublicController extends Controller
                             $data['head_words'][$key]['sortable_key'] = \Normalizer::normalize($sort_key, \Normalizer::FORM_D);
                         } else {
 
-                            $data['head_words'][$key]['glossed_text_gloss_ids'][$gloss->pivot->id] = $lesson;
+                            $data['head_words'][$key]['glossed_text_gloss_ids'][$gloss->id] = $lesson;
 
                         }
 
@@ -277,7 +277,7 @@ class PublicController extends Controller
 
         $data['language'] = EieolLanguage::find($language_id);
 
-        $lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word.language', 'glossed_texts.glosses.elements.head_word.keywords')
+        $lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word.language')
             ->where('series_id', '=', $series->id)
             ->where('language_id', '=', $language_id)
             ->select(array('id', 'title', 'order'))
@@ -289,41 +289,31 @@ class PublicController extends Controller
         //loop through all the lessons, glossed texts and glosses to group like keywords
 
         foreach ($lessons as $lesson) {
-
             foreach ($lesson->glossed_texts as $glossed_text) {
-
                 foreach ($glossed_text->glosses as $gloss) {
-
                     foreach ($gloss->elements as $element) {
 
-                        foreach ($element->head_word->keywords as $keyword) {
+                        if (!$element->head_word->keywords) {
+                            continue;
+                        }
 
-                            $key = $keyword->keyword . ' -- ' . $element->head_word->word . ' -- ' . $element->head_word->definition;
+                        foreach (explode(',',$element->head_word->keywords) as $keyword) {
+                            $key = $keyword . ' -- ' . $element->head_word->word . ' -- ' . $element->head_word->definition;
 
                             if (!array_key_exists($key, $data['keywords'])) {
-
-                                $data['keywords'][$key] = $keyword->toArray();
-
-                                $data['keywords'][$key]['head_word'] = $element->head_word->getDisplayHeadWord();
-
-                                $data['keywords'][$key]['glossed_text_gloss_ids'] = array();
-
-                                $data['keywords'][$key]['glossed_text_gloss_ids'][$gloss->pivot->id] = $lesson;
-
-                            } else {
-
-                                $data['keywords'][$key]['glossed_text_gloss_ids'][$gloss->pivot->id] = $lesson;
-
+                                $data['keywords'][$key] = [
+                                    'keyword'=>$keyword,
+                                    'head_word'=>$element->head_word->getDisplayHeadWord(),
+                                    'glossed_text_gloss_ids'=>[]
+                                ];
                             }
 
+                            $data['keywords'][$key]['glossed_text_gloss_ids'][$gloss->id] = $lesson;
                         }
 
                     }
-
                 }
-
             }
-
         }
 
         ksort($data['keywords']);
@@ -503,7 +493,7 @@ class PublicController extends Controller
     }
 
     public function lex_semantic_category($cat_abbr) {
-        $category = LexSemanticCategory::whereAbbr($cat_abbr)->firstOrFail();
+        $category = LexSemanticCategory::whereAbbr($cat_abbr)->first();
         $alpha_cats = LexSemanticCategory::get()->sortBy('text');
         $fields = LexSemanticField::withCount('etymas')
             ->where('semantic_category_id', '=', $category->id)
@@ -520,7 +510,7 @@ class PublicController extends Controller
 
     public function lex_semantic_field($field_abbr) {
         $field = LexSemanticField::with('etymas', 'semantic_category')
-            ->where("abbr", $field_abbr)->firstOrFail();
+            ->where("abbr", $field_abbr)->first();
         $alpha_cats = LexSemanticCategory::get()->sortBy('text');
 
         $data = [

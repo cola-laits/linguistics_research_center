@@ -6,11 +6,11 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Console\\Commands\\NormalizeUnicodeText' => $baseDir . '/app/Console/Commands/NormalizeUnicodeText.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\EieolElement' => $baseDir . '/app/EieolElement.php',
     'App\\EieolGloss' => $baseDir . '/app/EieolGloss.php',
     'App\\EieolGlossedText' => $baseDir . '/app/EieolGlossedText.php',
-    'App\\EieolGlossedTextGloss' => $baseDir . '/app/EieolGlossedTextGloss.php',
     'App\\EieolGrammar' => $baseDir . '/app/EieolGrammar.php',
     'App\\EieolHeadWord' => $baseDir . '/app/EieolHeadWord.php',
     'App\\EieolHeadWordKeyword' => $baseDir . '/app/EieolHeadWordKeyword.php',

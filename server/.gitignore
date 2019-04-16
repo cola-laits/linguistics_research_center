@@ -15,3 +15,10 @@ public/js/admin.js
 public/js/manifest.js
 public/js/vendor.js
 public/mix-manifest.json
+
+node_modules/gifsicle/vendor/
+node_modules/mozjpeg/vendor/
+node_modules/node-sass/vendor/
+node_modules/optipng-bin/vendor/
+node_modules/pngquant-bin/vendor/
+node_modules/.cache

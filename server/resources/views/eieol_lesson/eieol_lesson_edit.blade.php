@@ -1,865 +1,818 @@
 @extends('admin_layout')
  
 @section('title') Edit Lesson @stop
- 
+
+@section('head_extra')
+    <script type="text/javascript">
+        window.lesson_language_id = {{$lesson->language_id}};
+        @if (Auth::user()->isAdmin())
+            window.isAdmin = true;
+        @else
+            window.isAdmin = false;
+        @endif
+
+        window.admin_app_initial_state = {
+            'lesson':{!! json_encode($lesson) !!},
+            'languages':{!! json_encode($languages) !!},
+            'glossed_texts':{!! json_encode($glossed_texts) !!},
+            'grammars':{!! json_encode($grammars) !!},
+            'etymas': {!! json_encode($etymas) !!},
+            'ckeditor_customization':{
+                language_list :
+                [
+                    @foreach ($series_languages as $series_language)
+                        '{{$series_language}}',
+                    @endforeach
+                ],
+                language_lang : '{{$lesson->language->lang_attribute}}',
+                specialChars : [ {!! $lesson->language->custom_keyboard_layout !!}]
+            },
+            'custom_keyboard_layout': [ {!! $lesson->language->custom_keyboard_layout !!} ],
+            'dirty_form_ids': [],
+            'open_comment_ids': [],
+            'toggled_gloss_ids': [],
+            'is_user_admin': {{Auth::user()->isAdmin()}},
+            'modal_flash_title': '',
+            'modal_flash_body': '',
+            'delete_grammar_confirm_grammar_id': '',
+            'delete_glossed_text_confirm_glossed_text_id': '',
+            'delete_glossed_text_gloss_confirm_glossed_text_gloss_id': '',
+            'gloss_for_edit': {},
+            'help_images_popover_shown': false,
+            'error_messages': {}
+        };
+
+        window.admin_app_computed = {
+            lesson_text: function() {
+                var lesson_text = '';
+                this.glossed_texts.forEach(function(gt) {
+                    if (gt.glossed_text) {
+                        lesson_text += gt.glossed_text.replace('<p>', '').replace('</p>', '') + ' ';
+                    }
+                });
+                return lesson_text;
+            },
+        };
+
+        window.admin_app_methods = {
+            flash_modal(msg) {
+                this.modal_flash_title = 'Update Confirmation';
+                this.modal_flash_body = msg;
+                this.$refs['flash_modal'].show();
+                var app = this;
+                setTimeout(function() {
+                    app.$refs['flash_modal'].hide();
+                }, 2000);
+            },
+            getElementsForDisplay(gloss) {
+                return gloss.elements
+                    .map(function(el) {
+                        return el.part_of_speech + '; ' +
+                            el.analysis + ' ' +
+                            "<span style='white-space: nowrap' lang='" + gloss.language.lang_attribute + "'> &lt;" +
+                            el.head_word.word.substring(1,el.head_word.word.length-1) +
+                            "&gt;</span> " + el.head_word.definition;
+                    })
+                    .join(' + ');
+            },
+            markFormDirty(id) {
+                if (this.dirty_form_ids.indexOf(id) !== -1) {
+                    return;
+                }
+                this.dirty_form_ids.push(id);
+            },
+            markFormClean(id) {
+                var ix = this.dirty_form_ids.indexOf(id);
+                if (ix !== -1) {
+                    this.dirty_form_ids.splice(ix, 1);
+                }
+            },
+            isFormDirty(id) {
+                return this.dirty_form_ids.indexOf(id) !== -1;
+            },
+            // FIXME use https://bootstrap-vue.js.org/docs/components/collapse/ for this
+            toggleCommentsOpen(id) {
+                var ix = this.open_comment_ids.indexOf(id);
+                if (ix !== -1) {
+                    this.open_comment_ids.splice(ix, 1);
+                } else {
+                    this.open_comment_ids.push(id);
+                }
+            },
+            areCommentsOpen(id) {
+                return this.open_comment_ids.indexOf(id) !== -1;
+            },
+            save_lesson() {
+                var app = this;
+                $(".spinner").show();
+                axios.post('/admin2/eieol_lesson/'+this.lesson.id, {
+                    _method:'PUT',
+                    title:this.lesson.title,
+                    order:this.lesson.order,
+                    intro_text:this.lesson.intro_text
+                })
+                    .then(function(response) {
+                        $(".spinner").hide();
+                        if (response.data.fail) {
+                            app.error_messages = response.data.errors;
+                        } else {
+                            app.error_messages = {};
+                            app.flash_modal(response.data.message);
+                            app.markFormClean('update_form');
+                        }
+                    });
+            },
+            save_lesson_translation() {
+                var app = this;
+                $(".spinner").show();
+                axios.post('/admin2/eieol_lesson/update_translation/'+this.lesson.id, {
+                    _method:'PUT',
+                    lesson_translation:this.lesson.lesson_translation,
+                })
+                    .then(function(response) {
+                        $(".spinner").hide();
+                        if (response.data.fail) {
+                            app.error_messages = response.data.errors;
+                        } else {
+                            app.error_messages = {};
+                            app.flash_modal(response.data.message);
+                            app.markFormClean('update_translation_form');
+                        }
+                    });
+            },
+            get_error_message_html(key) {
+                if (!this.error_messages[key]) {
+                    return null;
+                }
+                return this.error_messages[key].join("<br>");
+            },
+            delete_grammar(id) {
+                this.delete_grammar_confirm_grammar_id = id;
+                this.$refs['delete_grammar_confirm'].show();
+            },
+            delete_grammar_after_confirmation(id) {
+                var app = this;
+                axios.post('/admin2/eieol_grammar/'+id, {'_method':'delete'})
+                    .then(function(response) {
+                        app.grammars = app.grammars.filter(function(grammar) {
+                            return grammar.id !== id;
+                        });
+
+                        app.flash_modal('Grammar has been deleted.');
+                    });
+            },
+            add_grammar() {
+                var next_grammar_order = 0;
+                this.grammars.forEach(function(grammar) {
+                    var order = parseInt(grammar.order);
+                    if(order > next_grammar_order) {
+                        next_grammar_order = order;
+                    }
+                });
+                next_grammar_order += 10;
+
+                this.grammars.push({
+                    id:"",
+                    order:next_grammar_order,
+                    lesson_id:this.lesson.id
+                });
+            },
+            save_grammar(grammar) {
+                var app = this;
+                $(".spinner").show();
+                var url = grammar.id==='' ? '/admin2/eieol_grammar' : '/admin2/eieol_grammar/'+grammar.id;
+                var payload = grammar.id==='' ? grammar : Object.assign(grammar, {_method:'PUT'});
+                axios.post(url, payload)
+                    .then(function(response) {
+                        $(".spinner").hide();
+                        if (response.data.fail) {
+                            app.error_messages = _.mapKeys(response.data.errors, function(value,key) {
+                                return 'grammar_'+grammar.id+'_'+key;
+                            });
+                        } else {
+                            app.error_messages = {};
+                            app.flash_modal(response.data.message);
+                            app.markFormClean('grammar_form_'+grammar.id);
+                        }
+                    });
+            },
+            delete_glossed_text(id) {
+                this.delete_glossed_text_confirm_glossed_text_id = id;
+                this.$refs['delete_glossed_text_confirm'].show();
+            },
+            delete_glossed_text_after_confirmation(id) {
+                var app = this;
+                axios.post('/admin2/eieol_glossed_text/'+id, {'_method':'delete'})
+                    .then(function(response) {
+                        app.glossed_texts = app.glossed_texts.filter(function(glossed_text) {
+                            return glossed_text.id !== id;
+                        });
+
+                        app.flash_modal('Glossed Text has been deleted.');
+                    });
+            },
+            add_glossed_text() {
+                //calculate next order by finding the highest order in the form and adding 10
+                var next_glosssed_text_order = 0;
+                this.glossed_texts.forEach(function(gt) {
+                    var order = parseInt(gt.order);
+                    if(order > next_glosssed_text_order) {
+                        next_glosssed_text_order = order;
+                    }
+                });
+                next_glosssed_text_order += 10;
+                this.glossed_texts.push({
+                    id:"",
+                    order:next_glosssed_text_order,
+                    lesson_id:this.lesson.id
+                });
+            },
+            save_glossed_text(glossed_text) {
+                var app = this;
+                $(".spinner").show();
+                var url = glossed_text.id==='' ? '/admin2/eieol_glossed_text' : '/admin2/eieol_glossed_text/'+glossed_text.id;
+                var payload = glossed_text.id==='' ? glossed_text : Object.assign(glossed_text, {_method:'PUT'});
+                axios.post(url, payload)
+                    .then(function(response) {
+                        $(".spinner").hide();
+                        if (response.data.fail) {
+                            app.error_messages = _.mapKeys(response.data.errors, function(value,key) {
+                                return 'glossed_text_'+glossed_text.id+'_'+key;
+                            });
+                        } else {
+                            app.error_messages = {};
+                            app.flash_modal(response.data.message);
+                            app.markFormClean('glossed_text_form_'+glossed_text.id);
+                        }
+                    });
+            },
+            delete_glossed_text_gloss(id) {
+                this.delete_glossed_text_gloss_confirm_glossed_text_gloss_id = id;
+                this.$refs['delete_glossed_text_gloss_confirm'].show();
+            },
+            delete_glossed_text_gloss_after_confirmation(id) {
+                var app = this;
+                axios.post('/admin2/eieol_glossed_text_gloss/'+id, {'_method':'delete'})
+                    .then(function(response) {
+                        app.glossed_texts.forEach(function (glossed_text) {
+                            glossed_text.glosses = glossed_text.glosses.filter(function(gloss) {
+                                return gloss.id !== id;
+                            });
+                        });
+
+                        app.flash_modal('Gloss has been unattached.');
+                    });
+            },
+            open_attach_gloss_modal(glossed_text_id) {
+                this.gloss_for_edit = {
+                    'glossed_text_id': glossed_text_id,
+                    'language_id': this.lesson.language_id
+                };
+                this.$refs['gloss_editor'].show();
+            },
+            update_gloss_after_save(glosses, glossed_text_id) {
+                this.glossed_texts.forEach(function(gt) {
+                    if (gt.id===glossed_text_id) {
+                        gt.glosses = glosses;
+                    }
+                });
+
+                this.$refs['gloss_editor'].hide();
+                this.flash_modal('Gloss successfully added.');
+            },
+            open_edit_gloss_modal(gloss_id) {
+                var app = this;
+                axios.get('/admin2/eieol_gloss/' + gloss_id)
+                    .then(function(response) {
+                        app.gloss_for_edit = response.data;
+                        app.$refs['gloss_editor'].show();
+                    });
+            },
+            save_gloss_order(gloss) {
+                var app = this;
+                $(".spinner").show();
+                var url = gloss.id==='' ? '/admin2/eieol_glossed_text_gloss' : '/admin2/eieol_glossed_text_gloss/'+gloss.id;
+                var payload = gloss.id==='' ? gloss : Object.assign(gloss, {_method:'PUT'});
+                axios.post(url, payload)
+                    .then(function(response) {
+                        $(".spinner").hide();
+                        if (response.data.fail) {
+                            app.error_messages = _.mapKeys(response.data.errors, function(value,key) {
+                                return 'gloss_'+gloss.id+'_'+key;
+                            });
+                        } else {
+                            app.error_messages = {};
+                            app.flash_modal(response.data.message);
+                            app.markFormClean('glossed_text_gloss_form_'+gloss.id);
+                        }
+                    });
+            },
+        };
+    </script>
+@endsection
+
+@section('foot_extra')
+    <script>
+        window.onbeforeunload = function() {
+            if ($("form[dirty]").length > 0) {
+                return 'You have unsaved changes!  Would you like to leave this page anyway?';
+            }
+        };
+
+    </script>
+@endsection
+
 @section('content')
 
-<script type="text/javascript">
-
-    window.lesson_language_id = {{$lesson->language_id}};
-    window.lesson_language_custom_keyboard_layout = [ {!! $lesson->language->custom_keyboard_layout !!} ];
-    @if (Auth::user()->isAdmin())
-        window.isAdmin = true;
-    @else
-        window.isAdmin = false;
-    @endif
-
-</script>
-<script src="/js/lesson_edit.js"></script>
-
-<!-- ---------------------------------------------------------------------------------------- -->
-
 <div class="spinner">
-    <img src="/images/ajax_loader_red_350.gif" alt="Loading" width="150" height="150" border="0">
+    <img src="/images/ajax_loader_red_350.gif" alt="Loading" width="150" height="150" style="border:0;">
     <br/>Please Wait...
 </div>
 
-@include('eieol_lesson.modal_attach_gloss')
-@include('eieol_lesson.modal_edit_gloss')
-@include('eieol_lesson.modal_attach_head_word')
-@include('eieol_lesson.modal_edit_head_word')
-@include('eieol_lesson.confirm_delete_glosssed_text')
-@include('eieol_lesson.confirm_delete_glossed_text_gloss')
-@include('eieol_lesson.confirm_delete_grammar')
+@verbatim
+<!-- ---------------------------------------------------------------------------------------- -->
 
+<b-modal ref="flash_modal" :title="modal_flash_title" :ok-only="true" size="md"><div v-html="modal_flash_body"></div></b-modal>
 
-<!-- ---------------------------------------------------------------------------------------- -->  
+<b-modal ref="delete_grammar_confirm" title="Delete Confirmation" @ok="delete_grammar_after_confirmation(delete_grammar_confirm_grammar_id)">
+    Are you sure you want to delete this Grammar lesson? <br/><br/>
+    <div class="alert alert-warning">
+        This action can not be undone later. The contents of this grammar will be deleted.
+    </div>
+</b-modal>
+
+<b-modal ref="delete_glossed_text_confirm" title="Delete Confirmation" @ok="delete_glossed_text_after_confirmation(delete_glossed_text_confirm_glossed_text_id)">
+    Are you sure you want to delete this Glossed Text? <br/><br/>
+    <div class="alert alert-warning">
+        This action can not be undone later. The contents of this glossed text will be deleted.<br/>
+        All attached glosses will be unattached, though they will still be on file.
+    </div>
+</b-modal>
+
+<b-modal ref="delete_glossed_text_gloss_confirm" title="Delete Confirmation" @ok="delete_glossed_text_gloss_after_confirmation(delete_glossed_text_gloss_confirm_glossed_text_gloss_id)">
+    Are you sure you want to remove this gloss? <br/><br/>
+    <div class="alert alert-warning">
+        This action can not be undone later. The contents of this gloss will be unattached from this
+        glossed text.<br/><br/>
+        The gloss will still be on file.
+    </div>
+</b-modal>
+
+<gloss-editor ref="gloss_editor"
+              :gloss="gloss_for_edit"
+              :is_user_admin="is_user_admin"
+              :lesson_lang_attribute="lesson.language.lang_attribute"
+              :language="lesson.language"
+              :etymas="etymas"
+              @saved="update_gloss_after_save"
+              :custom_keyboard="custom_keyboard_layout">></gloss-editor>
 
 <div class='col-lg-12'>
- 
-    <h1><i class='fa fa-file-text'></i> Edit Lesson for <a href="/admin2/eieol_series/{{$lesson->series->id}}/edit" title="Return to series">{{$lesson->series->title}}</a></h1>
+
+    <h1><i class='fa fa-file-text'></i> Edit Lesson for <a :href="'/admin2/eieol_series/'+lesson.series.id+'/edit'" title="Return to series">{{lesson.series.title}}</a></h1>
     <p><a href="/guides/eieol_author" target=_new>Author Guide</a></p>
-    <p><a href="../../../eieol_lesson/{{$lesson->series->id}}?id={{$lesson->id}}" target="_blank">Preview</a></p>
-    <div class='bg-danger alert'>
+    <p><a :href="'/eieol_lesson/'+lesson.series.id+'?id='+lesson.id" target="_blank">Preview</a></p>
+    <div class='alert-warning alert'>
     	If you change the order of items on this page, they will not appear in that order until you refresh the page.
     	<br/><br/>
-    	<a href="#" 
-    	   data-toggle="popover" 
-    	   data-trigger="focus"
-    	   title="How to add images" 
-    	   data-html ="true"
-    	   data-content="You need a FTP program like Filezilla.  New users will have to be authorized for this (contact la-help@utlists.utexas.edu.)  Set it up with the following:
-						<ol>
-							<li>Make sure you are using SFTP</li>
-							<li>The host is file.laits.utexas.edu</li>
-							<li>Logon Type is normal</li>
-							<li>User is your EID</li>
-							<li>Password is your EID password</li>
-							<li>In the Advanced Tab, set the Default remote directory to /mnt/www/la.utexas.edu/lrc.</li>
-						</ol>
-						Here you can drag images from your machine
-						<br/><br/>
-						Within the lesson editor, any field that has a tool bar has a button for an image.  It should be the 2nd to last button.  For the url, put http://www.la.utexas.edu/lrc/ followed by the name of your image.  You can further set the size, border alternate text, etc...
-    	   ">
+    	<a href="#" @click="help_images_popover_shown = !help_images_popover_shown">
     		How to add images
     	</a>
+        <div v-if="help_images_popover_shown">
+            <b-card title="How to add images">
+                <b-card-text>
+                    You need a FTP program like Filezilla.  New users will have to be authorized for this (contact la-help@utlists.utexas.edu.)  Set it up with the following:
+                    <ol>
+                        <li>Make sure you are using SFTP</li>
+                        <li>The host is file.laits.utexas.edu</li>
+                        <li>Logon Type is normal</li>
+                        <li>User is your EID</li>
+                        <li>Password is your EID password</li>
+                        <li>In the Advanced Tab, set the Default remote directory to /mnt/www/la.utexas.edu/lrc.</li>
+                    </ol>
+                    Here you can drag images from your machine
+                    <br/><br/>
+                    Within the lesson editor, any field that has a tool bar has a button for an image.  It should be the 2nd to last button.  For the url, put http://www.la.utexas.edu/lrc/ followed by the name of your image.  You can further set the size, border alternate text, etc...
+                </b-card-text>
+            </b-card>
+        </div>
     </div>
-    
-    {{ Form::model($lesson, ['role' => 'form', 
-    						 'url' => '/admin2/eieol_lesson/' . $lesson->id, 
-    						 'method' => 'PUT', 
-    						 'class' => 'form ajax_form',
-    						 'id' => 'update_form'
-    						 ]) }}
-		
-		{{ Form::hidden('series_id', $lesson->series->id) }}
-		
-		<div class='row'>
+
+    <form method="POST"
+          accept-charset="UTF-8"
+          class="form"
+          id="update_form"
+          @submit.prevent="save_lesson()"
+          :dirty="isFormDirty('update_form')">
+
+    <input name="series_id" type="hidden" :value="lesson.series_id">
+
+		<div class='form-row'>
 			<div class='col-sm-1'></div>
-			
+
 			<div class='form-group col-sm-1 '>
-		        {{ Form::label('order', 'Order') }}
-		        {{ Form::text('order', null, ['placeholder' => 'Order', 'class' => 'form-control']) }}
-		        <div id ="order_error" class="alert-danger errors"></div>
+                <label for="order">Order</label>
+                <input placeholder="Order" class="form-control" name="order" type="text" id="order"
+                       v-model="lesson.order"
+                       autocomplete="off"
+                       @input="markFormDirty('update_form')"
+                >
+		        <div id="order_error" class="alert-danger errors">{{get_error_message_html('order')}}</div>
 		    </div>
-		    	
+
 		    <div class='form-group col-sm-3'>
-		        {{ Form::label('title', 'Title') }}
-		        {{ Form::text('title', null, ['placeholder' => 'Title', 'class' => 'form-control custom-keyboard']) }}
-		        <div id ="title_error" class="alert-danger errors"></div>
+                <label for="title">Title</label>
+                <input-custom-keyboard placeholder="Title"
+                       name="title"
+                       type="text"
+                       v-model="lesson.title"
+                        @input="markFormDirty('update_form')"
+                       :custom_keyboard="custom_keyboard_layout">
+                </input-custom-keyboard>
+		        <div id="title_error" class="alert-danger errors"></div>
 		    </div>
-		    
+
 		    <div class='form-group col-sm-2'>
-		        {{ Form::label('language', 'Language') }}<br/>
-		        {{ Form::select('language', $languages, $lesson->language_id, ['class' => 'form-control', 'placeholder'=>'Select a language']) }}
-		        <div id ="language_error" class="alert-danger errors"></div>
+                <label for="language">Language</label><br/>
+                <input type="text" disabled id="language" class="form-control" :value="lesson.language.language"/>
 		    </div>
-		    
-		    <div class='form-group col-sm-2 comment_button'>
-		    	<i class="fa fa-comment-o"></i>
+
+		    <div class='form-group col-sm-2'>
+		    	<comment-icon :author_comment="lesson.author_comments"
+                              :admin_comment="lesson.admin_comments"
+                              :author_done="lesson.author_done"
+                              @click="toggleCommentsOpen('lesson_main')"></comment-icon>
 		    </div>
-		    
+
 		 </div>
-		    
-	    <div class="row comment_rows">
-	    	@if (!Auth::user()->isAdmin() || $lesson->author_comments || $lesson->author_done)
-	    		<!-- only show if you are not an admin, or if they were filled in. -->
-			    <div class='form-group col-sm-9 col-sm-offset-1'>
-			    	{{ Form::label('author_comments', 'Author Comments') }}
-				    {{ Form::textarea('author_comments', null, ['class' => 'form-control comment_textarea author_comments', 'size' => '100x2']) }}
-				</div>
-				
-				<div class='form-group col-sm-1'>
-			    	{{ Form::label('author_done', 'Done') }}
-                    <input class="form-control author_done" name="author_done"
-                           type="checkbox" value="1" id="author_done"
-                           checked="{{$lesson->author_done?'checked':''}}">
-				</div>
-			@endif
-		 
-			@if (Auth::user()->isAdmin())
-				<div class='form-group col-sm-9 col-sm-offset-1'>
-			 		{{ Form::label('admin_comment', 'Admin Comments') }}	  
-			    	{{ Form::textarea('admin_comments', null, ['class' => 'form-control comment_textarea admin_comments', 'size' => '100x2']) }}
-			    </div>
-			    
-			    <div class='form-group col-sm-1'>
-		    		{{ Form::submit('Clear', ['class' => 'btn btn-xs btn-warning comment_clear']) }}
-			    </div>
-		    @else
-		    	@if ($lesson->admin_comments)
-		    		<!-- Only show admin comments to authors if they exist -->
-				    <div class='form-group col-sm-9 col-sm-offset-1'>
-				        {{ Form::label('admin_comment', 'Admin Comments') }}	
-				    	{{ Form::hidden('admin_comments', null, ['class' => 'form-control']) }}
-				    	<div class="well" style="white-space: pre-wrap" >{{$lesson->admin_comments}}</div>
-				    </div>
-				@endif
-			@endif
-		</div>
-			    	
-		<div class='row'>	    	
-		    <div class='form-group col-sm-10 col-sm-offset-1'>
-		        {{ Form::label('intro_text', 'Intro Text') }}
-		        {{ Form::textarea('intro_text', null, ['placeholder' => 'Intro Text', 'class' => 'form-control', 'size' => '100x10']) }}
-		        <div id ="intro_text_error" class="alert-danger errors"></div>
-		        {{ Form::submit('Edit', ['class' => 'btn btn-xs btn-primary']) }}
-                <button type="button" class="btn btn-xs" onclick="previewText('intro_text')">Preview</button>
+
+        <comment-area v-model="lesson"
+                      :is_user_admin="is_user_admin"
+                      :show_comments_area="areCommentsOpen('lesson_main')"
+                      @input="markFormDirty('update_form')"
+        ></comment-area>
+
+		<div class='row'>
+		    <div class='form-group col-sm-10 offset-1'>
+                <label for="intro_text">Intro Text</label>
+		        <ck-editor html_id="intro_text"
+                           html_name="intro_text"
+                           v-model="lesson.intro_text"
+                           :custom_config="ckeditor_customization"
+                           @input="markFormDirty('update_form')"
+                ></ck-editor>
+		        <div id="intro_text_error" class="alert-danger errors"></div>
+                <input class="btn btn-sm btn-primary" type="submit" value="Save">
+                <button type="button" class="btn btn-sm btn-secondary" v-b-modal.intro_text_preview>Preview</button>
+                <b-modal id="intro_text_preview" title="Intro Text"  :ok-only="true"
+                         size="xl"><div v-html="lesson.intro_text"></div></b-modal>
 		    </div>
-		</div>		    
+		</div>
 
-    
-    {{ Form::close() }}
-    
+    </form>
 
-    
-    
-    
-    <!-- ---------------------------------------------------------------------------------------- -->  
-    
-    
+
+    <!-- ---------------------------------------------------------------------------------------- -->
+
     <hr/>
     <h2>Glossed Texts</h2>
-    
+
     <div id ="glossed_texts">
-	    @foreach ($glossed_texts as $glossed_text)
-	    	<div id = 'glossed_text_div_{{$glossed_text->id}}'>
-	    
-	          {{ Form::model($glossed_text, ['role' => 'form',
-			    					   'url' => '/admin2/eieol_glossed_text/' . $glossed_text->id, 
-			    					   'method' => 'PUT', 
-			    					   'class' => 'form ajax_form glossed_text_form',
-			    					   'id' => 'glossed_text_form_' . $glossed_text->id
-			    					  ]) }}
-					
+        <div v-for="(glossed_text, glossed_text_ix) in glossed_texts">
+
+                <form method="POST"
+                      accept-charset="UTF-8"
+                      class="form glossed_text_form"
+                      :id="'glossed_text_form_'+glossed_text.id"
+                      @submit.prevent="save_glossed_text(glossed_text)"
+                      :dirty="isFormDirty('glossed_text_form_'+glossed_text.id)">
+
 					<div class='row'>
 						<div class='col-sm-1'></div>
-						
+
 						<div class='form-group col-sm-1 '>
-					        {{ Form::label('order', 'Order') }}
-					        {{ Form::text('order', null, ['placeholder' => 'Order', 'class' => 'form-control', 'id' => 'order']) }}
-					        <div id ="order_error" class="alert-danger errors"></div>
+                            <label for="order">Order</label>
+                            <input placeholder="Order" class="form-control" id="order" name="order" type="text"
+                                   @input="markFormDirty('glossed_text_form_'+glossed_text.id)"
+                                v-model="glossed_text.order">
+					        <div class="alert-danger errors">{{get_error_message_html('glossed_text_'+glossed_text.id+'_order')}}</div>
 					    </div>
-					    	
+
 					    <div class='form-group col-sm-7'>
-					        {{ Form::label('glossed_text', 'Glossed Text') }}
-					        {{ Form::textarea('glossed_text', null, ['placeholder' => 'Glossed Text', 'class' => 'form-control glossed_text_area custom-keyboard', 'size' => '100x3', 'id' => 'glossed_text_' . $glossed_text->id, 'lang'=>$lesson->language->lang_attribute]) }}
-					        <div id ="glossed_text_error" class="alert-danger errors"></div>
-					    </div>	    
-					    
+                            <label for="glossed_text">Glossed Text</label>
+                            <textarea-custom-keyboard placeholder="Glossed Text"
+                                                   name="glossed_text"
+                                                   v-model="glossed_text.glossed_text"
+                                                   @input="markFormDirty('glossed_text_form_'+glossed_text.id)"
+                                                      :lang="lesson.language.lang_attribute"
+                                                      :custom_keyboard="custom_keyboard_layout"></textarea-custom-keyboard>
+					        <div class="alert-danger errors">{{get_error_message_html('glossed_text_'+glossed_text.id+'_glossed_text')}}</div>
+					    </div>
+
 					    <div class='form-group col-sm-1 comment_button'>
-							<i class="fa fa-comment-o"></i>
+                            <comment-icon :author_comment="glossed_text.author_comments"
+                                          :admin_comment="glossed_text.admin_comments"
+                                          :author_done="glossed_text.author_done"
+                                          @click="toggleCommentsOpen('glossed_text_'+glossed_text.id)"></comment-icon>
 						</div>
-					    
+
 					    <div class='form-group col-sm-1 bottom_button'>
-						    {{ Form::submit('Edit', ['class' => 'btn btn-xs btn-primary']) }}
+                            <input class="btn btn-sm btn-primary" type="submit" value="Save">
 						</div>
-					
+
 			    		<div class='form-group col-sm-1 bottom_button'>
-			            	{{ Form::button('Delete', ['class' => 'btn btn-xs btn-danger delete_glossed_text'])}}    
-						</div>
-	
+                            <button class="btn btn-sm btn-danger delete_glossed_text" type="button"
+                                    @click="delete_glossed_text(glossed_text.id)"
+                                    v-if="glossed_text.id !== ''">Delete</button>
+                        </div>
+
 				    </div>
-				    
-				    
-				    <div class="row comment_rows">
-				    	@if (!Auth::user()->isAdmin() || $glossed_text->author_comments || $glossed_text->author_done)
-				    		<!-- only show if you are not an admin, or if they were filled in. -->
-						    <div class='form-group col-sm-9 col-sm-offset-1'>
-						    	{{ Form::label('author_comments', 'Author Comments') }}
-							    {{ Form::textarea('author_comments', null, ['class' => 'form-control comment_textarea author_comments', 'size' => '100x2']) }}
-							</div>
-							
-							<div class='form-group col-sm-1'>
-						    	{{ Form::label('author_done', 'Done') }}
-                                <input class="form-control author_done" name="author_done"
-                                       type="checkbox" value="1" id="author_done"
-                                       checked="{{$glossed_text->author_done?'checked':''}}">
-							</div>
-						@endif
-					 
-						@if (Auth::user()->isAdmin())
-							<div class='form-group col-sm-9 col-sm-offset-1'>
-						 		{{ Form::label('admin_comment', 'Admin Comments') }}	  
-						    	{{ Form::textarea('admin_comments', null, ['class' => 'form-control comment_textarea admin_comments', 'size' => '100x2']) }}
-						    </div>
-						    
-						    <div class='form-group col-sm-1'>
-					    		{{ Form::submit('Clear', ['class' => 'btn btn-xs btn-warning comment_clear']) }}
-						    </div>
-					    @else
-					    	@if ($glossed_text->admin_comments)
-					    		<!-- Only show admin comments to authors if they exist -->
-							    <div class='form-group col-sm-9 col-sm-offset-1'>
-							        {{ Form::label('admin_comment', 'Admin Comments') }}	
-							    	{{ Form::hidden('admin_comments', null, ['class' => 'form-control']) }}
-							    	<div class="well" style="white-space: pre-wrap" >{{$glossed_text->admin_comments}}</div>
-							    </div>
-							@endif
-						@endif
-					</div>
-			    
-			    {{ Form::close() }}
-			    
+
+
+                    <comment-area v-model="glossed_texts[glossed_text_ix]"
+                                  :is_user_admin="is_user_admin"
+                                  :show_comments_area="areCommentsOpen('glossed_text_'+glossed_text.id)"
+                                  @input="markFormDirty('glossed_text_form_'+glossed_text.id)"
+                    ></comment-area>
+
+                </form>
+
 			    <div class="row">
-			    <div class='col-sm-2'></div>
-			    <button class="togglegloss btn btn-xs btn-default">Toggle glosses</button>
+                    <div class='col-sm-2'></div>
+                    <div class="col-sm-10">
+                <b-button size="sm" variant="secondary"
+                          v-b-toggle="'glosses-'+glossed_text.id"
+                          v-if="glossed_text.id !== ''">Toggle Glosses</b-button>
 			    </div>
 			    </div>
-			    
-			    <div class='lotsagloss'>
-			    
-			    <p/>
-			    <div id="glossed_text_{{$glossed_text->id}}_glosses">
-			    
-				    @foreach ($glossed_text->glosses as $gloss)
-					  <div id="glossed_text_gloss_{{$gloss->pivot->id}}_div">
-					  
+
+			    <b-collapse :id="'glosses-'+glossed_text.id">
+
+                    <p></p>
+			    <div id="'glossed_text_'+glossed_text.id+'_glosses'">
+					  <div v-for="(gloss, gloss_ix) in glossed_text.glosses">
+
 						<div class='row'>
 							<div class='col-sm-2'></div>
 
+                            <form method="POST"
+                                  accept-charset="UTF-8"
+                                  class="form"
+                                  :id="'glossed_text_gloss_form_'+gloss.id"
+                                  @submit.prevent="save_gloss_order(gloss)"
+                                  :dirty="isFormDirty('glossed_text_gloss_form_'+gloss.id)">
 							<div class='form-group col-sm-1 '>
-								{{ Form::model($gloss, ['role' => 'form',
-				    					   'url' => '/admin2/eieol_glossed_text_gloss/' . $gloss->pivot->id,
-				    					   'method' => 'PUT',
-				    					   'class' => 'form ajax_form',
-				    					   'id' => 'glossed_text_gloss_form_' . $gloss->pivot->id
-				    					  ]) }}
-								{{ Form::hidden('glossed_text_id', $glossed_text->id, ['id' => 'glossed_text_id']) }}
-						        {{ Form::label('order', 'Order') }}
-						        {{ Form::text('order', $gloss->pivot->order, ['placeholder' => 'Order', 'class' => 'form-control']) }}
-						        <div id ="order_error" class="alert-danger errors"></div>
+
+						        <label for="order">Order</label>
+                                <div class="row">
+                                    <input placeholder="Order" id="order" name="order" type="text"
+                                           @input="markFormDirty('glossed_text_gloss_form_'+gloss.id)"
+                                           v-model="gloss.order">
+                                    <input type="submit" value="Save Order" class="btn btn-sm btn-primary">
+                                </div>
+						        <div class="alert-danger errors">{{get_error_message_html('gloss_'+gloss.id+'_order')}}</div>
 						    </div>
-						    
-						    <div class='form-group col-sm-1 bottom_button'>
-							    {{ Form::submit('Edit Order', ['class' => 'btn btn-xs btn-primary']) }}
-							    {{ Form::close() }}
+
+                            </form>
+
+                            <div class='col-sm-4'>
+                                <br>
+                                <span :lang="gloss.language.lang_attribute">{{gloss.surface_form}}</span>
+                                <span style="white-space: nowrap">--</span>
+                                    <span v-html="getElementsForDisplay(gloss)"></span>
+                                    <span style="white-space: nowrap">--</span>
+                                <strong>{{gloss.contextual_gloss}}</strong>
+                                    <span v-if="gloss.comments"># {{gloss.comments}}</span>
+                                    <span v-if="gloss.underlying_form">
+                                        <br/>
+                                        <span :lang="gloss.language.lang_attribute"
+                                              style="margin-left:10px;">
+                                            ({{gloss.underlying_form}})
+                                        </span>
+                                    </span>
+			    			</div>
+
+			    			<div class='col-sm-1 bottom_button gloss_comment_indicator'>
+                                <comment-icon :author_comment="gloss.author_comments"
+                                              :admin_comment="gloss.admin_comments"
+                                              :author_done="gloss.author_done"></comment-icon>
+			    			</div>
+
+			    			<div class='col-sm-1 bottom_button'>
+                                <form class="edit_gloss" :id="'edit_gloss_form_' + gloss.id">
+                                    <input type="hidden" name="gloss_id" :value="gloss.id">
+                                    <input type="button" value="Edit Gloss" class="btn btn-sm btn-primary"
+                                        @click="open_edit_gloss_modal(gloss.id)">
+			    				</form>
+			    			</div>
+
+			    			<div class='form-group col-sm-1 bottom_button'>
+                                <input type="button" value="Remove" class="btn btn-sm btn-danger"
+                                       @click="delete_glossed_text_gloss(gloss.id)">
 							</div>
 
-						    <div class='col-sm-4 gloss_{{$gloss->id}}'>
-						    	<br/>
-						    	{!! $gloss->getDisplayGloss() !!}
-			    			</div>
-			    			
-			    			<div class='col-sm-1 bottom_button gloss_comment_indicator'>
-			    				@if ($gloss->author_done)
-			    					<div style="color:green"><i class="fa fa-comments"></i></div>
-			    				@elseif ($gloss->author_comments || $gloss->admin_comments)
-			    					<div style="color:red"><i class="fa fa-comments"></i></div>
-			    				@endif
-			    			</div>
-			    			
-			    			<div class='col-sm-1 bottom_button'>
-			    				{{ Form::open(['class' => 'edit_gloss', 
-			    							   'id' => 'edit_gloss_form_' . $gloss->pivot->id]) }} 
-			    					{{ Form::hidden('gloss_id', $gloss->id, ['id' => 'gloss_id']) }}
-			    					{{ Form::submit('Edit Gloss', ['class' => 'btn btn-xs btn-primary']) }}
-			    				{{ Form::close() }}
-			    			</div>
-			    			
-			    			<div class='form-group col-sm-1 bottom_button'>
-			    				{{ Form::open(['class' => 'delete_glossed_text_gloss_form',
-			    							   'url' => '/admin2/eieol_glossed_text_gloss/' . $gloss->pivot->id,
-			    							   'id' => 'delete_glossed_text_gloss_form_' . $gloss->pivot->id]) }} 
-				            		{{ Form::hidden('glossed_text_gloss_id', $gloss->pivot->id, ['id' => 'glossed_text_gloss_id']) }}
-				            		{{ Form::button('Remove', ['class' => 'btn btn-xs btn-danger delete_glossed_text_gloss'])}}   
-				            	{{ Form::close() }} 
-							</div>
-						      
 					    </div>
 					  </div>
-				    @endforeach
-			    
 			    </div>
-			   
-			    <!-- this will open a modal to attach a gloss to the glossed text --> 
+
+			    <!-- this will open a modal to attach a gloss to the glossed text -->
 			    <div class='row'>
 			   		<div class='col-sm-2'></div>
-			   		<div class='form-group col-sm-1 '> 
-			   			{{ Form::open(['class' => 'attach_gloss_form',
-			   						   'id' => 'attach_gloss_form_' . $glossed_text->id]) }} 
-			   				{{ Form::hidden('glossed_text_id', $glossed_text->id, ['id' => 'glossed_text_id']) }}
-				    		{{ Form::submit('Attach Gloss', ['class' => 'btn btn-xs btn-success']) }}
-				    	{{ Form::close() }}
+			   		<div class='form-group col-sm-1 '>
+                        <input class="btn btn-sm btn-success" type="button" value="Attach Gloss"
+                                @click="open_attach_gloss_modal(glossed_text.id)">
 				    </div>
 				</div>
-				
-				  </div>
+
+				  </b-collapse>
 
 			    <hr/>
 			</div>
-	    @endforeach
     </div>
-    
-    <!-- This is the template for adding new glossed text.  It is not used, but cloned when we want to add a new one -->
-    <div id="new_glossed_text_div" style="display: none">
-	    {{ Form::open(['role' => 'form',
-		    		   'url' => '/admin2/eieol_glossed_text/', 
-		    		   'class' => 'form ajax_form glossed_text_form',
-		    		   'id' => 'new_glossed_text_form'  
-		    		  ]) }}
-		    	
-		    	{{ Form::hidden('lesson_id', $lesson->id) }}
-		    	
-				<div class='row'>
-					<div class='col-sm-1'></div>
-					
-					<div class='form-group col-sm-1'>
-				        {{ Form::label('order', 'Order') }}
-				        {{ Form::text('order', null, ['placeholder' => 'Order', 'class' => 'form-control', 'id' => 'order']) }}
-				        <div id ="order_error" class="alert-danger errors"></div>
-				    </div>
-				    
-				    <div class='form-group col-sm-7'>
-				        {{ Form::label('glossed_text', 'Glossed Text') }}
-				        {{ Form::textarea('glossed_text', null, ['placeholder' => 'Glossed Text', 'class' => 'form-control','size' => '100x10', 'id' => 'new_glossed_text']) }}
-				        <div id ="glossed_text_error" class="alert-danger errors"></div>
-				    </div>	     
-				    
-				    <div class='form-group col-sm-1 comment_button'>
-						<i class="fa fa-comment-o"></i>
-					</div>
-				    
-				    <div class='form-group col-sm-1 bottom_button'> 
-				    	{{ Form::submit('Add', ['class' => 'btn btn-xs btn-success']) }}
-				    </div>
-				    
-				    <div class='form-group col-sm-1 bottom_button'>
-		            	{{ Form::button('Delete', ['class' => 'btn btn-xs btn-danger delete_glossed_text', 'style' => 'display: none'])}}    
-					</div>
-			    </div>
-			    
-			    <div class="row comment_rows">
-			    	@if (!Auth::user()->isAdmin())
-			    		<!-- only show if you are not an admin, or if they were filled in. -->
-					    <div class='form-group col-sm-9 col-sm-offset-1'>
-					    	{{ Form::label('author_comments', 'Author Comments') }}
-						    {{ Form::textarea('author_comments', null, ['class' => 'form-control comment_textarea author_comments', 'size' => '100x2']) }}
-						</div>
-						
-						<div class='form-group col-sm-1'>
-					    	{{ Form::label('author_done', 'Done') }}
-                            <input class="form-control author_done" name="author_done"
-                                   type="checkbox" value="1" id="author_done">
-						</div>
-					@endif
-				 
-					@if (Auth::user()->isAdmin())
-						<div class='form-group col-sm-9 col-sm-offset-1'>
-					 		{{ Form::label('admin_comment', 'Admin Comments') }}	  
-					    	{{ Form::textarea('admin_comments', null, ['class' => 'form-control comment_textarea admin_comments', 'size' => '100x2']) }}
-					    </div>
-					    
-					    <div class='form-group col-sm-1'>
-				    		{{ Form::submit('Clear', ['class' => 'btn btn-xs btn-warning comment_clear']) }}
-					    </div>
-					@endif
-				</div>
-			    
-			    
-		    
-		    {{ Form::close() }}
-		    
-		    <div id="new_glossed_text_glosses">
-		    </div>
-		    
-		    <!-- this will open a modal to attach a gloss to the glossed text --> 
-		    <div class='row'>
-		   		<div class='col-sm-2'></div>
-		   		<div class='form-group col-sm-1 '> 
-		   			{{ Form::open(['class' => 'attach_gloss_form', 'id' => 'attach_gloss_form']) }} 
-		   				{{ Form::hidden('glossed_text_id', 0, ['id' => 'glossed_text_id']) }} 
-			    		{{ Form::submit('Attach Gloss', ['class' => 'btn btn-xs btn-success', 'id' => 'attach_gloss_button', 'style' => 'display: none']) }}
-			    	{{ Form::close() }}
-			    </div>
-			</div>
-		    
-		    
-		    
-		    <hr/>
-	  </div>
-	  
-	  
+
+
 	  <!-- Button that will clone the new glossed text template -->
 	  <div class='row'>
 	  	<div class='col-sm-1'></div>
 	  	<div class="col-sm-1">
-	  		<a class="btn btn-xs btn-success" id="add_glossed_text">Create New Glossed Text</a>
+	  		<a class="btn btn-sm btn-success" @click="add_glossed_text()">Create New Glossed Text</a>
 	  	</div>
 	  </div>
-	  
-	  
-	  
-    
-    
-    	<!-- This is the template for adding new glossed_text_GLOSS.  It is not used, but cloned when we want to add a new one -->
-    	<div id="new_glossed_text_gloss_div" style="display: none">
-	    	{{ Form::open(['role' => 'form',
-		   		   'url' => '/admin2/eieol_glossed_text_gloss/', 
-		   		   'class' => 'form ajax_form',
-		   		   'id' => 'new_glossed_text_gloss_form'
-		   		  ]) }} 
-		    	
-		   		{{ Form::hidden('_method', 'PUT') }}
-		   		{{ Form::hidden('glossed_text_id', 0, ['id' => 'glossed_text_id']) }}
-		   		<div class='row'>
-					<div class='col-sm-2'></div>
-					
-					<div class='form-group col-sm-1 '>
-				        {{ Form::label('order', 'Order') }}
-				        {{ Form::text('order', null, ['placeholder' => 'Order', 'class' => 'form-control', 'id' => 'order']) }}
-				        <div id ="order_error" class="alert-danger errors"></div>
-				    </div>
-				    
-				    <div class='form-group col-sm-1 bottom_button'>
-					    {{ Form::submit('Edit Order', ['class' => 'btn btn-xs btn-primary']) }}
-					    {{ Form::close() }}
-					</div>
-				    	
-				    <div class='col-sm-4 gloss_text'>
-		   			</div>
-		   			
-		   			<div class='col-sm-1 bottom_button gloss_comment_indicator'>
-		   			</div>   
-		   			
-		   			<div class='col-sm-1 bottom_button'>
-	    				{{ Form::open(['class' => 'edit_gloss', 'id' => 'edit_gloss']) }} 
-	    					{{ Form::hidden('gloss_id', null, ['id' => 'gloss_id']) }}
-	    					{{ Form::submit('Edit Gloss', ['class' => 'btn btn-xs btn-primary']) }}
-	    				{{ Form::close() }}
-	    			</div>
-				    
-				    <div class='form-group col-sm-1 bottom_button'>
-				    	{{ Form::open(['class' => 'delete_glossed_text_gloss_form',
-	    							   'url' => '/admin2/eieol_glossed_text_gloss/', 
-	    							   'id' => 'delete_gloss']) }} 
-	    					{{ Form::hidden('glossed_text_gloss_id', null, ['id' => 'glossed_text_gloss_id']) }}
-		            		{{ Form::button('Remove', ['class' => 'btn btn-xs btn-danger delete_glossed_text_gloss', 'style' => 'display: none'])}}  
-		            	{{ Form::close() }} 
-					</div>
-					  
-			    </div>
-		    
-    	</div>
-    
+
+
     <!-- ---------------------------------------------------------------------------------------- -->
-    
-    
+
+
     <hr/>
-    
+
     <h2>Text and Translation</h2>
-    
+
     <div class='row'>
-		<div class='col-sm-10 col-sm-offset-1'>
-	        <strong>Lesson Text</strong> 
-	        <div class="well" id="lesson_text">
-	        </div>
+		<div class='col-sm-10 offset-1'>
+	        <strong>Lesson Text</strong>
+	        <div class="card"><div class="card-body" id="lesson_text" v-html="lesson_text">
+	        </div></div>
 	    </div>
 	    <br/>
     </div>
-    
-    
-    {{ Form::model($lesson, ['role' => 'form', 
-    						 'url' => '/admin2/eieol_lesson/update_translation/' . $lesson->id, 
-    						 'method' => 'PUT', 
-    						 'class' => 'form ajax_form',
-    						 'id' => 'update_translation_form'
-    						 ]) }}
-		    
-		<div class='row'>
-			<div class='form-group col-sm-10 col-sm-offset-1'>
-		        {{ Form::label('lesson_translation', 'Lesson Translation') }}
-		        {{ Form::textarea('lesson_translation', null, ['placeholder' => 'Lesson Translation', 'class' => 'form-control', 'size' => '100x10']) }}
-		        <div id ="lesson_translation_error" class="alert-danger errors"></div>
+
+    <form method="POST" :action="'/admin2/eieol_lesson/update_translation/'+lesson.id"
+          accept-charset="UTF-8"
+          class="form"
+          id="update_translation_form"
+          @submit.prevent="save_lesson_translation()"
+          :dirty="isFormDirty('update_translation_form')">
+        <input name="_method" type="hidden" value="PUT">
+
+        <div class='row'>
+			<div class='form-group col-sm-10 offset-1'>
+                <label for="lesson_translation">Lesson Translation</label>
+                <ck-editor html_id="lesson_translation"
+                           html_name="lesson_translation"
+                           v-model="lesson.lesson_translation"
+                           :custom_config="ckeditor_customization"
+                           @input="markFormDirty('update_translation_form')"
+                ></ck-editor>
+		        <div id="lesson_translation_error" class="alert-danger errors"></div>
 		    </div>
-		    <div class='form-group col-sm-1 comment_button'>
-				<i class="fa fa-comment-o"></i>
+		    <div class='form-group col-sm-1'>
+                <comment-icon :author_comment="lesson.translation_author_comments"
+                              :admin_comment="lesson.translation_admin_comments"
+                              :author_done="lesson.translation_author_done"
+                              @click="toggleCommentsOpen('lesson_translation')"></comment-icon>
 			</div>
 	    </div>
-	    <div class="row comment_rows">
-	    	@if (!Auth::user()->isAdmin() || $lesson->translation_author_comments || $lesson->translation_author_done)
-	    		<!-- only show if you are not an admin, or if they were filled in. -->
-			    <div class='form-group col-sm-9 col-sm-offset-1'>
-			    	{{ Form::label('translation_author_comments', 'Author Comments') }}
-				    {{ Form::textarea('translation_author_comments', null, ['class' => 'form-control comment_textarea author_comments', 'size' => '100x2']) }}
-				</div>
-				
-				<div class='form-group col-sm-1'>
-			    	{{ Form::label('translation_author_done', 'Done') }}
-                    <input class="form-control author_done" name="translation_author_done"
-                           type="checkbox" value="1" id="translation_author_done"
-                           checked="{{$lesson->translation_author_done?'checked':''}}">
-				</div>
-			@endif
-		 
-			@if (Auth::user()->isAdmin())
-				<div class='form-group col-sm-9 col-sm-offset-1'>
-			 		{{ Form::label('translation_admin_comment', 'Admin Comments') }}	  
-			    	{{ Form::textarea('translation_admin_comments', null, ['class' => 'form-control comment_textarea admin_comments', 'size' => '100x2']) }}
-			    </div>
-			    
-			    <div class='form-group col-sm-1'>
-		    		{{ Form::submit('Clear', ['class' => 'btn btn-xs btn-warning comment_clear']) }}
-			    </div>
-		    @else
-		    	@if ($lesson->translation_admin_comments)
-		    		<!-- Only show admin comments to authors if they exist -->
-				    <div class='form-group col-sm-9 col-sm-offset-1'>
-				        {{ Form::label('translation_admin_comment', 'Admin Comments') }}	
-				    	{{ Form::hidden('translation_admin_comments', null, ['class' => 'form-control']) }}
-				    	<div class="well" style="white-space: pre-wrap" >{{{$lesson->translation_admin_comments}}}</div>
-				    </div>
-				@endif
-			@endif
-		</div>
-					
+
+        <comment-area v-model="lesson"
+              :is_user_admin="is_user_admin"
+                      author_comments_prop_name="translation_author_comments"
+                      author_done_prop_name="translation_author_done"
+                      admin_comments_prop_name="translation_admin_comments"
+              :show_comments_area="areCommentsOpen('lesson_translation')"
+              @input="markFormDirty('update_translation_form')"
+        ></comment-area>
+
 	    <div class='row'>
-	    	<div class='form-group col-sm-2 col-sm-offset-1'>
-	    		{{ Form::submit('Edit Translation', ['class' => 'btn btn-xs btn-primary']) }}
-                <button type="button" class="btn btn-xs" onclick="previewText('lesson_translation')">Preview</button>
+	    	<div class='form-group col-sm-2 offset-1'>
+                <input class="btn btn-sm btn-primary" type="submit" value="Save Translation">
+                <button type="button" class="btn btn-sm btn-secondary" v-b-modal.lesson_translation_preview>Preview</button>
+                <b-modal id="lesson_translation_preview" title="Lesson Translation" :ok-only="true"
+                         size="xl"><div v-html="lesson.lesson_translation"></div></b-modal>
             </div>
 	    </div>
-	    
-	{{ Form::close() }}
-	
-	
+
+	</form>
+
+
 	<!-- ---------------------------------------------------------------------------------------- -->
-	
-	
+
+
 	<hr/>
-    <h2>Grammar</h2>	
+    <h2>Grammar</h2>
     <div id ="grammars">
-	    @foreach ($grammars as $grammar)
-	          {{ Form::model($grammar, ['role' => 'form',
-			    					   'url' => '/admin2/eieol_grammar/' . $grammar->id, 
-			    					   'method' => 'PUT', 
-			    					   'class' => 'form ajax_form grammar_form',
-			    					   'id' => 'grammar_form_' . $grammar->id
-			    					  ]) }}
-					
-					<div class='row'>
+        <div v-for="(grammar, grammar_ix) in grammars">
+            <form method="POST" :action="grammar.id==='' ? '/admin2/eieol_grammar' : '/admin2/eieol_grammar/'+grammar.id"
+                  accept-charset="UTF-8"
+                  class="form grammar_form"
+                  :id="'grammar_form_'+grammar.id"
+                  @submit.prevent="save_grammar(grammar)"
+                  :dirty="isFormDirty('grammar_form_'+grammar.id)"
+            >
+                <input name="_method" type="hidden" value="PUT" v-if="grammar.id !== ''">
+                <input name="lesson_id" type="hidden" :value="lesson.id">
+
+                <div class='row'>
 						<div class='col-sm-1'></div>
-						
+
 						<div class='form-group col-sm-1 '>
-					        {{ Form::label('order', 'Order') }}
-					        {{ Form::text('order', null, ['placeholder' => 'Order', 'class' => 'form-control', 'id' => 'order']) }}
-					        <div id ="order_error" class="alert-danger errors"></div>
+                            <label for="order">Order</label>
+                            <input placeholder="Order" class="form-control" id="order" name="order" type="text"
+                                   v-model="grammar.order"
+                                   @input="markFormDirty('grammar_form_'+grammar.id)"
+                            >
+					        <div class="alert-danger errors">{{get_error_message_html('grammar_'+grammar.id+'_order')}}</div>
 					    </div>
-					    
+
 					    <div class='form-group col-sm-1 '>
-					        {{ Form::label('section_number', 'Section Number') }}
-					        {{ Form::text('section_number', null, ['placeholder' => 'Section Number', 'class' => 'form-control']) }}
-					        <div id ="section_number_error" class="alert-danger errors"></div>
+                            <label for="section_number">Section Number</label>
+                            <input placeholder="Section Number" class="form-control" name="section_number" type="text" id="section_number"
+                                   v-model="grammar.section_number"
+                                   @input="markFormDirty('grammar_form_'+grammar.id)"
+                            >
+					        <div class="alert-danger errors">{{get_error_message_html('grammar_'+grammar.id+'_section_number')}}</div>
 					    </div>
-					    	
+
 					    <div class='form-group col-sm-3'>
-					        {{ Form::label('title', 'Title') }}
-					        {{ Form::text('title', null, ['placeholder' => 'Title', 'class' => 'form-control custom-keyboard']) }}
-					        <div id ="title_error" class="alert-danger errors"></div>
+                            <label for="title">Title</label>
+                            <input-custom-keyboard placeholder="Title"
+                                                   name="title"
+                                                   type="text"
+                                                   v-model="grammar.title"
+                                                   @input="markFormDirty('grammar_form_'+grammar.id)"
+                                                   :custom_keyboard="custom_keyboard_layout"></input-custom-keyboard>
+					        <div class="alert-danger errors">{{get_error_message_html('grammar_'+grammar.id+'_title')}}</div>
 					    </div>
-					    
+
 						<div class='form-group col-sm-1 comment_button'>
-					    	<i class="fa fa-comment-o"></i>
+                            <comment-icon :author_comment="grammar.author_comments"
+                                          :admin_comment="grammar.admin_comments"
+                                          :author_done="grammar.author_done"
+                                          @click="toggleCommentsOpen('grammar_'+grammar.id)"></comment-icon>
 					    </div>
-				    
+
 				   </div>
-				    
-				    <div class="row comment_rows">
-				    	@if (!Auth::user()->isAdmin() || $grammar->author_comments || $grammar->author_done)
-				    		<!-- only show if you are not an admin, or if they were filled in. -->
-						    <div class='form-group col-sm-9 col-sm-offset-1'>
-						    	{{ Form::label('author_comments', 'Author Comments') }}
-							    {{ Form::textarea('author_comments', null, ['class' => 'form-control comment_textarea author_comments', 'size' => '100x2']) }}
-							</div>
-							
-							<div class='form-group col-sm-1'>
-						    	{{ Form::label('author_done', 'Done') }}
-                                <input class="form-control author_done" name="author_done" type="checkbox"
-                                       value="1" id="author_done"
-                                       checked="{{$grammar->author_done?'checked':''}}">
-							</div>
-						@endif
-					 
-						@if (Auth::user()->isAdmin())
-							<div class='form-group col-sm-9 col-sm-offset-1'>
-						 		{{ Form::label('admin_comment', 'Admin Comments') }}	  
-						    	{{ Form::textarea('admin_comments', null, ['class' => 'form-control comment_textarea admin_comments', 'size' => '100x2']) }}
-						    </div>
-						    
-						    <div class='form-group col-sm-1'>
-					    		{{ Form::submit('Clear', ['class' => 'btn btn-xs btn-warning comment_clear']) }}
-						    </div>
-					    @else
-					    	@if ($grammar->admin_comments)
-					    		<!-- Only show admin comments to authors if they exist -->
-							    <div class='form-group col-sm-9 col-sm-offset-1'>
-							        {{ Form::label('admin_comment', 'Admin Comments') }}	
-							    	{{ Form::hidden('admin_comments', null, ['class' => 'form-control']) }}
-							    	<div class="well" style="white-space: pre-wrap" >{{$grammar->admin_comments}}</div>
-							    </div>
-							@endif
-						@endif
-					</div>
-					
-					
-					<div class='row'>    
-					    <div class='form-group col-sm-10 col-sm-offset-1'>
-					        {{ Form::label('grammar_text', 'Grammar Text') }}
-					        {{ Form::textarea('grammar_text', null, ['placeholder' => 'Grammar Text', 'class' => 'form-control', 'size' => '100x10', 'id' => 'grammar_text_' . $grammar->id]) }}
-					        <div id ="grammar_text_error" class="alert-danger errors"></div>
-					        
+
+                <comment-area v-model="grammars[grammar_ix]"
+                              :is_user_admin="is_user_admin"
+                              :show_comments_area="areCommentsOpen('grammar_'+grammar.id)"
+                              @input="markFormDirty('grammar_form_'+grammar.id)"
+                ></comment-area>
+
+					<div class='row'>
+					    <div class='form-group col-sm-10 offset-1'>
+                            <label for="grammar_text">Grammar Text</label>
+                            <ck-editor :html_id="'grammar_text_'+grammar.id"
+                                       html_name="grammar_text"
+                                       v-model="grammar.grammar_text"
+                                       :custom_config="ckeditor_customization"
+                                       @input="markFormDirty('grammar_form_'+grammar.id)"
+                            ></ck-editor>
+					        <div class="alert-danger errors">{{get_error_message_html('grammar_'+grammar.id+'_grammar_text')}}</div>
 					    </div>	
 					</div>
 					
 					<div class='row'>
 			    		<div class='form-group col-sm-1 '></div>
 			    		<div class='form-group col-sm-2 '>
-			    			{{ Form::submit('Edit', ['class' => 'btn btn-xs btn-primary']) }}
-                            <button type="button" class="btn btn-xs" onclick="previewText('grammar_text_{{$grammar->id}}')">Preview</button>
-
+                            <input class="btn btn-sm btn-primary" type="submit" value="Save">
+                            <button type="button" class="btn btn-sm btn-secondary" v-b-modal="'grammar_text_preview_'+grammar.id">Preview</button>
+                            <b-modal :id="'grammar_text_preview_'+grammar.id" :ok-only="true"
+                                     title="Grammar" size="xl"><div v-html="grammar.grammar_text"></div></b-modal>
                         </div>
 			    		
 			    		<div class='form-group col-sm-8 '></div>
 			    		<div class='form-group col-sm-1 '>
-			            	{{ Form::button('Delete', ['class' => 'btn btn-xs btn-danger delete_grammar'])}}    
+                            <button class="btn btn-sm btn-danger delete_grammar" type="button"
+                                    v-if="grammar.id !== ''"
+                                @click.prevent="delete_grammar(grammar.id)">Delete</button>
 						</div>
 				    </div>
-			    {{ Form::close() }}
+            </form>
 			    
 			    <hr/>
-	    @endforeach
+        </div>
     </div>
-    
-    <!-- This is the template for adding new grammars.  It is not used, but cloned when we want to add a new one -->
-    <div id="new_grammar_div" style="display: none">
-	    {{ Form::open(['role' => 'form',
-		    		   'url' => '/admin2/eieol_grammar/', 
-		    		   'class' => 'form ajax_form grammar_form',
-		    		   'id' => 'new_grammar_form'
-		    		  ]) }} 
-		    	
-		    	{{ Form::hidden('lesson_id', $lesson->id) }}
-		    	
-				<div class='row'>
-					<div class='col-sm-1'></div>
-					
-					<div class='form-group col-sm-1'>
-				        {{ Form::label('order', 'Order') }}
-				        {{ Form::text('order', null, ['placeholder' => 'Order', 'class' => 'form-control', 'id' => 'order']) }}
-				        <div id ="order_error" class="alert-danger errors"></div>
-				    </div>
-				    
-				    <div class='form-group col-sm-1'>
-				        {{ Form::label('section_number', 'Section Number') }}
-				        {{ Form::text('section_number', null, ['placeholder' => 'Section Number', 'class' => 'form-control']) }}
-				        <div id ="section_number_error" class="alert-danger errors"></div>
-				    </div>
-				    	
-				    <div class='form-group col-sm-3'>
-				        {{ Form::label('title', 'Title') }}
-				        {{ Form::text('title', null, ['placeholder' => 'Title', 'class' => 'form-control custom-keyboard']) }}
-				        <div id ="title_error" class="alert-danger errors"></div>
-				    </div>
-				    
-					<div class='form-group col-sm-1 comment_button'>
-				    	<i class="fa fa-comment-o"></i>
-				    </div>
-			    
-			   </div>
-			    
-			    <div class="row comment_rows">
-			    	@if (!Auth::user()->isAdmin())
-			    		<!-- only show if you are not an admin, or if they were filled in. -->
-					    <div class='form-group col-sm-9 col-sm-offset-1'>
-					    	{{ Form::label('author_comments', 'Author Comments') }}
-						    {{ Form::textarea('author_comments', null, ['class' => 'form-control comment_textarea author_comments', 'size' => '100x2']) }}
-						</div>
-						
-						<div class='form-group col-sm-1'>
-					    	{{ Form::label('author_done', 'Done') }}
-                            <input class="form-control author_done" name="author_done" type="checkbox"
-                                   value="1" id="author_done">
-						</div>
-					@endif
-				 
-					@if (Auth::user()->isAdmin())
-						<div class='form-group col-sm-9 col-sm-offset-1'>
-					 		{{ Form::label('admin_comment', 'Admin Comments') }}	  
-					    	{{ Form::textarea('admin_comments', null, ['class' => 'form-control comment_textarea admin_comments', 'size' => '100x2']) }}
-					    </div>
-					    
-					    <div class='form-group col-sm-1'>
-				    		{{ Form::submit('Clear', ['class' => 'btn btn-xs btn-warning comment_clear']) }}
-					    </div>
-					@endif
-				</div>
-			
-				<div class='row'>
-				    
-				    <div class='form-group col-sm-10 col-sm-offset-1'>
-				        {{ Form::label('grammar_text', 'Grammar Text') }}
-				        {{ Form::textarea('grammar_text', null, ['placeholder' => 'Grammar Text', 'class' => 'form-control', 'size' => '100x10', 'id' => 'new_grammar_text']) }}
-				        <div id ="grammar_text_error" class="alert-danger errors"></div>
-				        
-				    </div>		    
-		
-			    </div>
-			    
-			    <div class='row'>
-		    		<div class='form-group col-sm-1 '></div>
-		    		<div class='form-group col-sm-1 '>
-		    			{{ Form::submit('Add', ['class' => 'btn btn-xs btn-success']) }}
-				        
-		    		</div>
-		    		
-		    		<div class='form-group col-sm-8 '></div>
-		    		<div class='form-group col-sm-1 '>
-		            	{{ Form::button('Delete', ['class' => 'btn btn-xs btn-danger delete_grammar', 'style' => 'display: none'])}}    
-					</div>
-			    </div>
-		    
-		    {{ Form::close() }}
-                        
-		    <hr/>
-	  </div>
-	  
-	  
+
 	  <!-- Button that will clone the new grammar template -->
 	  <div class='row'>
 	  	<div class='col-sm-1'></div>
 	  	<div class="col-sm-1">
-	  		<a class="btn btn-xs btn-success" id="add_grammar">Create New Grammar</a>
+	  		<a class="btn btn-sm btn-success" @click="add_grammar()">Create New Grammar</a>
 	  	</div>
 	  </div>
     
 </div>
 
 
-<!-- ---------------------------------------------------------------------------------------- -->
-
-<script>
-	CKEDITOR.plugins.addExternal( 'onchange', '/js/', 'onchangeplugin.js' );
-	CKEDITOR.plugins.addExternal( 'eieol_language', '/ckeditor-plugins/eieol_language/');
-	ckeditor_parms = {
-			  toolbar : $mytoolbar,
-			  language_list :
-        [
-            @foreach ($series_languages as $series_language)	
-            '{{$series_language}}',
-            @endforeach
-        ],
-			  contentsCss : '/css/lrcstyle.css',
-			  disableNativeSpellChecker : false, 
-			  allowedContent : true, 
-			  extraPlugins : 'onchange,eieol_language',
-			  language_lang : '{{$lesson->language->lang_attribute}}',
-			  specialChars : [ {!! $lesson->language->custom_keyboard_layout !!}],
-			  enterMode : 'CKEDITOR.ENTER_BR',
-			  entities : false
-			};
-	glossed_text_ckeditor_parms = jQuery.extend(true, {}, ckeditor_parms); //deep copy
-	glossed_text_ckeditor_parms['height'] = '4em';
-
-	//apply the ckeditor to the intro text
-	CKEDITOR.replace('intro_text',ckeditor_parms);
-	CKEDITOR.instances['intro_text'].on('change', function() {
-		if(this.checkDirty()) {
-			$('#update_form').css("background-color", "#EBAD99");
-			$('#update_form').attr("dirty", "dirty");
-		}
-	});
-
-	//apply the ckeditor to the translation
-	CKEDITOR.replace('lesson_translation',ckeditor_parms);
-	CKEDITOR.instances['lesson_translation'].on('change', function() {
-		if(this.checkDirty()) {
-			$('#update_translation_form').css("background-color", "#EBAD99"); 
-			$('#update_translation_form').attr("dirty", "dirty");
-		}
-	});
-
-	//apply the ckeditor to each exisiting grammar
-	@foreach ($grammars as $grammar)
-		CKEDITOR.replace('grammar_text_{{{$grammar->id}}}', ckeditor_parms);
-		CKEDITOR.instances['grammar_text_{{{$grammar->id}}}'].on('change', function() {
-			if(this.checkDirty()) {
-				$('#grammar_form_{{{$grammar->id}}}').css("background-color", "#EBAD99");
-				$('#grammar_form_{{{$grammar->id}}}').attr("dirty", "dirty");
-			}
-		});
-	@endforeach
-</script>
-
-<!-- This has to be defined after any other modals so it will show up if in a modal -->
-<div id="update_confirm" class="modal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Update Confirmation</h4>
-            </div>
-            <div class="modal-body" id="success_message">
-                Update was successful
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" tabindex="-1" role="dialog" id="preview_modal">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Preview</h4>
-            </div>
-            <div class="modal-body">
-                <p id="preview_modal_body"></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
- 
+@endverbatim
 @stop

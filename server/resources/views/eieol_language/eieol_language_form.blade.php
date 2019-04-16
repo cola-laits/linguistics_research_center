@@ -4,7 +4,7 @@
  
 @section('content')
  
-<div class='col-lg-8 col-lg-offset-2'>
+<div class='col-lg-8 offset-2'>
  
     <h1><i class='fa fa-comment'></i> {{{$action}}} Language</h1>
     
@@ -92,7 +92,7 @@
     </div>
  
     <div class='form-group'>
-        {{ Form::submit($action, ['class' => 'btn btn-primary']) }}
+        <input type="submit" value="Save" class="btn btn-primary">
     </div>
  
     {{ Form::close() }}

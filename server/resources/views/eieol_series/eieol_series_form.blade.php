@@ -1,19 +1,6 @@
 @extends('admin_layout')
- 
+
 @section('content')
-
-@if ($action != 'Create')
-
-<script>
-
-  var seriesId = {{$series->id}};
-
-  </script>
- 
-<script src="/js/related_languages.js"></script>
-
-@endif
-
 
 <div class='col-lg-12'>
  
@@ -33,29 +20,29 @@
           </ul>
         </div>
     @endif
-    
-    <div class='row'>
- 
+
     @if ($action == 'Create')
-      {{ Form::open(['role' => 'form', 'url' => '/admin2/eieol_series', 'class' => 'form']) }}
+        {{ Form::open(['role' => 'form', 'url' => '/admin2/eieol_series', 'class' => 'form']) }}
     @else
         {{ Form::model($series, ['role' => 'form', 'url' => '/admin2/eieol_series/' . $series->id, 'method' => 'PUT', 'class' => 'form']) }}
     @endif
+
+    <div class='form-row'>
     
     <div class='form-group col-sm-1 @if ($errors->has('published')) has-error @endif  '>
-          {{ Form::label('published', 'Published') }}
-        <input type="checkbox" id="published" name="published" class="form-control" value="1"
+        <input type="checkbox" id="published" name="published" class="form-check-input" value="1"
             @if (isset($series) && $series->published) checked="checked" @endif>
+        <label for="published" class="form-check-label">Published</label>
     </div>
     
     <div class='form-group col-sm-1 @if ($errors->has('use_old_gloss_ui')) has-error @endif  '>
-          {{ Form::label('use_old_gloss_ui', 'Old Gloss UI') }}
-        <input type="checkbox" id="use_old_gloss_ui" name="use_old_gloss_ui" class="form-control" value="1"
+        <input type="checkbox" id="use_old_gloss_ui" name="use_old_gloss_ui" class="form-check-input" value="1"
                @if (isset($series) && $series->use_old_gloss_ui) checked="checked" @endif>
+        <label for="use_old_gloss_ui" class="form-check-label">Old Gloss UI</label>
     </div>
     
     <div class='form-group col-sm-1 @if ($errors->has('order')) has-error @endif  '>
-          {{ Form::label('order', 'Order') }}
+        <label for="order">Order</label>
           {{ Form::text('order', null, ['placeholder' => '', 'class' => 'form-control']) }}
       </div>
         
@@ -90,12 +77,13 @@
       </div>  
     
       <div class='form-group col-sm-1'>
-          {{ Form::submit($action, ['class' => 'btn btn-primary']) }}
+          {{ Form::submit('Save', ['class' => 'btn btn-primary']) }}
       </div>
   
  
-      {{ Form::close() }}
     </div>
+
+    </form>
     
   @if ($action != 'Create')
   
@@ -103,40 +91,9 @@
     Updated {{{ $series->updated_at->format('m/d/Y h:ia') }}} by {{{ $series->updated_by }}}</i>
    
     <hr/>
-    
-    <div id="related_languages" class='row'>
-              
-      <div class='form-group col-sm-4 v-cloak'>
-        
-            <h2>Related Languages</h2>
 
-            <basic-select v-bind:options="dropdown_options"
-                          v-bind:selected-option="dropdown_selected"
-                          placeholder="choose language"
-                          v-on:select="selectLanguage">
-            </basic-select>
-          
-            <br/>
-          
-            <button v-on:click.prevent="addLanguage()" v-bind:disabled="dropdown_selected.value == ''" class="btn btn-xs btn-primary">Attach</button>
-        
-      </div>
-        
-      <div class='col-sm-4 v-cloak'>
-        
-            <ul>
+    <related-languages-select series_id="{{$series->id}}"></related-languages-select>
 
-            <li v-for="language in languages">
-            {# language['text'] #}
-            &nbsp;<a v-on:click.prevent="removeLanguage(language)" href="#">remove</a>
-            </li>
-
-            </ul>
-        
-      </div>
-        
-    </div>  
-    
     <h2>Lessons</h2>
     
     <div class="table-responsive">

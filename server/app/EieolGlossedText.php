@@ -46,9 +46,8 @@ class EieolGlossedText extends Model
     }
 
     public function glosses() {
-        return $this->belongsToMany('\App\EieolGloss', 'eieol_glossed_text_gloss', 'glossed_text_id', 'gloss_id')
-            ->orderBy('eieol_glossed_text_gloss.order')
-            ->withPivot('order', 'id');
+        return $this->hasMany('\App\EieolGloss', 'glossed_text_id')
+            ->orderBy('order');
     }
 
     public function clickable_gloss_text() {
@@ -79,7 +78,7 @@ class EieolGlossedText extends Model
         $glosses = [];
         foreach ($this->glosses as $g) {
             $gloss['form'] = $g->$f;
-            $gloss['id'] = $g->pivot->id;
+            $gloss['id'] = $g->id;
             if ($gloss['form'] && $gloss['id']) $glosses[] = $gloss;
         }
 

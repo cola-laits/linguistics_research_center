@@ -1,7 +1,7 @@
 @extends('admin_layout')
  
 @section('title') Create Lesson @stop
- 
+
 @section('content')
  
 <div class='col-lg-12'>
@@ -27,7 +27,7 @@
 	
 	{{ Form::hidden('series_id', $series->id) }}
 	
-	<div class='row'>
+	<div class='form-row'>
 		<div class='form-group col-sm-1 @if ($errors->has('order')) has-error @endif  '>
 	        {{ Form::label('order', 'Order') }}
 	        {{ Form::text('order', null, ['placeholder' => 'Order', 'class' => 'form-control']) }}
@@ -48,31 +48,18 @@
     <br/>
     
     <div class='form-group @if ($errors->has('intro_text')) has-error @endif  '>
-        {{ Form::label('intro_text', 'Intro Text') }}
-        {{ Form::textarea('intro_text', null, ['placeholder' => 'Intro Text', 'class' => 'form-control', 'size' => '100x10']) }}
+        <label for="intro_text">Intro Text</label>
+        <ck-editor html_id="intro_text" html_name="intro_text"></ck-editor>
     </div>
 
 	<br/>
  
     <div class='form-group col-sm-1'>
-        {{ Form::submit('Create', ['class' => 'btn btn-primary']) }}
+        <input class="btn btn-primary" type="submit" value="Create">
     </div>
-	
-    {{ Form::close() }}
+
+    </form>
     
 </div>
-
-<script>
-	CKEDITOR.plugins.addExternal( 'onchange', '/js/', 'onchangeplugin.js' );
-	CKEDITOR.replace( 'intro_text',{toolbar : $mytoolbar, 
-									contentsCss : '/css/lrcstyle.css', 
-									disableNativeSpellChecker:false,
-									allowedContent : true, 
-									extraPlugins : 'onchange',
-									enterMode : 'CKEDITOR.ENTER_BR',
-                  entities : false
-									} );
-	
-</script>
  
 @stop

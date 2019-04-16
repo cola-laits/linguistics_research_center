@@ -13,29 +13,22 @@ use Normalizer;
 class EieolHeadWordController extends Controller
 {
 
-
     public function filtered_list(Request $request) {
-        //this  is a search that returns head words that contain with the url parm "headword"
-        //since head words starts with a <, it looks for any matching chars.
-        $text = '';
         $head_words = EieolHeadWord::where('word', 'LIKE', '%' . Normalizer::normalize($request->get('head_word'), Normalizer::FORM_C) . '%')
             ->where('language_id', '=', $request->get('language') . '%')
-            ->take(50)->get()->sortBy('word');
-        foreach ($head_words as $head_word) {
-            $text .= '<a id="' . $head_word->id . '">' .
-                $head_word->getDisplayHeadWord() .
-                '</a>' .
-                '<br/>';
-        }
-        if (count($head_words) == 0) {
-            return 'No matching Head Words found';
-        }
+            ->take(50)->orderBy('word')->get()->map(function ($h) {
+                $v = $h;
+                $v->html = $h->getDisplayHeadWord();
+                return $v;
+            });
 
-        return $text;
+        return [
+            'headwords' => $head_words
+        ];
     }
 
     public function show($id) {
-        $head_word = EieolHeadWord::with('keywords', 'elements', 'etyma')->find($id);
+        $head_word = EieolHeadWord::with('elements', 'etyma')->find($id);
         $return_head_word = $head_word->toArray();
 
         $glosses = array();
@@ -50,11 +43,6 @@ class EieolHeadWordController extends Controller
             $return_head_word['glosses'] .= $gloss . ', ';
         }
         $return_head_word['glosses'] = rtrim($return_head_word['glosses'], ', '); //trim off last comma
-
-        $return_head_word['keywords'] = '';
-        foreach ($head_word->keywords as $keyword) {
-            $return_head_word['keywords'] .= $keyword->keyword . ',';
-        }
 
         return $return_head_word;
     }
@@ -82,43 +70,28 @@ class EieolHeadWordController extends Controller
             ];
         }
 
-        $returned_head_word = DB::transaction(function () use ($request) {
-            $head_word = new EieolHeadWord;
-            $head_word->word = Normalizer::normalize($request->get('word'), Normalizer::FORM_C);
-            $head_word->definition = Normalizer::normalize($request->get('definition'), Normalizer::FORM_C);
-            if ($request->get('etyma_id') == '0') {
-                $head_word->etyma_id = null;
-            } else {
-                $head_word->etyma_id = $request->get('etyma_id');
-            }
-            $head_word->language_id = $request->get('language_id');
-            $head_word->created_by = Auth::user()->username;
-            $head_word->updated_by = Auth::user()->username;
+        $head_word = new EieolHeadWord;
+        $head_word->word = Normalizer::normalize($request->get('word'), Normalizer::FORM_C);
+        $head_word->definition = Normalizer::normalize($request->get('definition'), Normalizer::FORM_C);
+        if ($request->get('etyma_id') == '0') {
+            $head_word->etyma_id = null;
+        } else {
+            $head_word->etyma_id = $request->get('etyma_id');
+        }
+        $head_word->keywords = $request->get('keywords');
+        $head_word->language_id = $request->get('language_id');
+        $head_word->created_by = Auth::user()->username;
+        $head_word->updated_by = Auth::user()->username;
 
-            $head_word->save();
-
-            //now deal with keywords
-            $keyword_recs = array();
-            foreach (explode(',', $request->get('keywords')) as $keyword) {
-                $keyword_recs[] = new EieolHeadWordKeyword(array('keyword' => strtoupper($keyword),
-                    'language_id' => $request->get('language_id'),
-                    'created_by' => Auth::user()->username,
-                    'updated_by' => Auth::user()->username,));
-            }
-            $head_word->keywords()->saveMany($keyword_recs);
-
-            return $head_word;
-        }); //end transaction
+        $head_word->save();
 
         return [
             'success' => true,
             'added' => true,
-            'head_word_id' => $returned_head_word->id,
-            'head_word_display' => $returned_head_word->getDisplayHeadWord(),
+            'head_word_id' => $head_word->id,
+            'head_word_display' => $head_word->getDisplayHeadWord(),
             'message' => 'Head Word was successfully added.'
         ];
-
-
     }
 
     public function update(Request $request, $id) {
@@ -141,51 +114,20 @@ class EieolHeadWordController extends Controller
             ];
         }
 
-        DB::transaction(function () use ($id, $request) {
-            $head_word = EieolHeadWord::with('keywords')->find($id);
-            $head_word->word = Normalizer::normalize($request->get('word'), Normalizer::FORM_C);
-            if ($request->get('etyma_id') == '0') {
-                $head_word->etyma_id = null;
-            } else {
-                $head_word->etyma_id = $request->get('etyma_id');
-            }
-            $head_word->definition = Normalizer::normalize($request->get('definition'), Normalizer::FORM_C);
-            $head_word->updated_by = Auth::user()->username;
+        $head_word = EieolHeadWord::find($id);
+        $head_word->word = Normalizer::normalize($request->get('word'), Normalizer::FORM_C);
+        if ($request->get('etyma_id') == '0') {
+            $head_word->etyma_id = null;
+        } else {
+            $head_word->etyma_id = $request->get('etyma_id');
+        }
+        $head_word->keywords = $request->get('keywords');
+        $head_word->definition = Normalizer::normalize($request->get('definition'), Normalizer::FORM_C);
+        $head_word->updated_by = Auth::user()->username;
 
-            $head_word->save();
+        $head_word->save();
 
-            //now deal with keywords
-
-            //build list of all keywords sent in
-            $input_keywords = array();
-            foreach (explode(',', $request->get('keywords')) as $keyword) {
-                $input_keywords[] = strtoupper($keyword);
-            }
-
-            //build list of all keywords on the table, if a word is on file but not in input, delete it
-            $table_keywords = array();
-            foreach ($head_word->keywords as $keyword) {
-                if (!in_array($keyword->keyword, $input_keywords)) {
-                    $keyword->delete();
-                } else {
-                    $table_keywords[] = $keyword->keyword;
-                }
-            }
-
-            //if a word is in the input but not on file, add it
-            foreach ($input_keywords as $keyword) {
-                if (!in_array($keyword, $table_keywords)) {
-                    $keyword_rec = new EieolHeadWordKeyword(array('keyword' => $keyword,
-                        'language_id' => $request->get('language_id'),
-                        'created_by' => Auth::user()->username,
-                        'updated_by' => Auth::user()->username,));
-                    $head_word->keywords()->save($keyword_rec);
-                }
-            }
-        }); //end transaction
-
-        $head_word = EieolHeadWord::with('keywords')->find($id);
-
+        $head_word = EieolHeadWord::find($id);
 
         return [
             'success' => true,

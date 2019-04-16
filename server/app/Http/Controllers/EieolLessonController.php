@@ -64,18 +64,10 @@ class EieolLessonController extends Controller
 
     public function edit($id) {
         $lesson = EieolLesson::with('series', 'language')->find($id);
-        $lesson->intro_text = htmlentities($lesson->intro_text);
-        $lesson->lesson_translation = htmlentities($lesson->lesson_translation);
 
         $grammars = EieolGrammar::where('lesson_id', '=', $id)->get()->sortBy('order');
-        foreach ($grammars as $g) {
-            $g->grammar_text = htmlentities($g->grammar_text);
-        }
 
         $glossed_texts = EieolGlossedText::with('glosses.language', 'glosses.elements.head_word.language')->where('lesson_id', '=', $id)->get()->sortBy('order');
-        foreach ($glossed_texts as $g) {
-            $g->glossed_text = htmlentities($g->glossed_text);
-        }
 
         $series = EieolSeries::with('languages')->find($lesson->series_id);
 
@@ -110,9 +102,7 @@ class EieolLessonController extends Controller
         $rules = array(
             'order' => 'required|integer|unique:eieol_lesson,order,' . $id . ',id,series_id,' . $request->get('series_id'),
             'title' => 'required|unique:eieol_lesson,title,' . $id . ',id,series_id,' . $request->get('series_id'),
-            'language' => 'required',
-            'intro_text' => 'required',
-            'series_id' => 'required|exists:eieol_series,id'
+            'intro_text' => 'required'
         );
         $validator = Validator::make($request->all(), $rules);
 
@@ -126,31 +116,9 @@ class EieolLessonController extends Controller
         DB::transaction(function () use ($id, $request) {
             $lesson = EieolLesson::find($id);
 
-            $language_updated = false;
-            //if they change the language, we have to sweep all the glosses, head words and keywords
-            if ($lesson->language_id != $request->get('language')) {
-                $language_updated = true;
-                $glossed_texts = EieolGlossedText::with('glosses.elements.head_word.keywords')->where('lesson_id', '=', $id)->get();
-                foreach ($glossed_texts as $glossed_text) {
-                    foreach ($glossed_text->glosses as $gloss) {
-                        $gloss->language_id = $request->get('language');
-                        $gloss->save();
-                        foreach ($gloss->elements as $element) {
-                            $element->head_word->language_id = $request->get('language');
-                            $element->head_word->save();
-                            foreach ($element->head_word->keywords as $keyword) {
-                                $keyword->language_id = $request->get('language');
-                                $keyword->save();
-                            }
-                        }
-                    }
-                }
-            }
-
             $lesson->title = Normalizer::normalize($request->get('title'), Normalizer::FORM_C);
             $lesson->order = $request->get('order');
             $lesson->intro_text = Normalizer::normalize($request->get('intro_text'), Normalizer::FORM_C);
-            $lesson->language_id = $request->get('language');
             $lesson->author_comments = Normalizer::normalize($request->get('author_comments'), Normalizer::FORM_C);
             $lesson->author_done = $request->get('author_done');
             $lesson->admin_comments = Normalizer::normalize($request->get('admin_comments'), Normalizer::FORM_C);

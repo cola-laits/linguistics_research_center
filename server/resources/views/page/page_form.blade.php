@@ -1,10 +1,16 @@
 @extends('admin_layout')
  
 @section('title') {{{$action}}} Page @stop
- 
+
+@section('head_extra')
+    <script>
+        window.admin_app_initial_state = {'page':{!! json_encode($page) !!}};
+    </script>
+@endsection
+
 @section('content')
  
-<div class='col-lg-8 col-lg-offset-2'>
+<div class='col-lg-8 offset-2'>
  
     <h1><i class='fa fa-user'></i> {{{$action}}} Page</h1>
     
@@ -40,46 +46,14 @@
     
     <div class='form-group @if ($errors->has('content')) has-error @endif  '>
         {{ Form::label('last_name', 'Content') }}
-        {{ Form::textarea('content', null, ['placeholder' => 'Page content', 'class' => 'form-control', 'size' => '100x10', 'id' => 'page_content']) }}
+        <ck-editor html_id="content" html_name="content" :value="page.content"></ck-editor>
     </div>
  
     <div class='form-group'>
-        {{ Form::submit($action, ['class' => 'btn btn-primary']) }}
+        <input type="submit" value="Save" class="btn btn-primary">
     </div>
  
     {{ Form::close() }}
- 
-     <script>
-     
-      var toolbar =
-      [
-        { name: 'document', items : [ 'Source'] },
-        { name: 'clipboard', items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] },
-        { name: 'editing', items : [ 'Find','Replace','-','SelectAll','-','SpellChecker' ] },
-        { name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
-        { name: 'paragraph', items : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote','-',
-                                 'JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','BidiLtr','BidiRtl' ] },
-        { name: 'links', items : [ 'Link','Unlink','Anchor' ] },
-        { name: 'insert', items : [ 'Table','HorizontalRule','SpecialChar'] },
-        { name: 'styles', items : [ 'Format','FontSize' ] },
-        { name: 'colors', items : [ 'TextColor','BGColor' ] },
-        { name: 'insert', items : [ 'Image' ]  },
-        { name: 'tools', items : [ 'Maximize'] }
-      ];
-     
-     
-      var ckeditor_parms = {
-        toolbar : toolbar,
-        contentsCss : '/css/lrcstyle.css',
-        disableNativeSpellChecker : false, 
-        allowedContent : true,
-        enterMode : 'CKEDITOR.ENTER_BR'
-      };
-
-      CKEDITOR.replace( 'page_content', ckeditor_parms);
-          
-                
-    </script>
     
 </div>
  

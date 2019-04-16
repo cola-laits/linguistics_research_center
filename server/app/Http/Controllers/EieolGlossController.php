@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\EieolElement;
 use App\EieolGloss;
+use App\EieolGlossedText;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -15,26 +16,22 @@ class EieolGlossController extends Controller
 
     public function filtered_list(Request $request) {
         //this is a search that returns glosses that start with the url parm "gloss"
-        $text = '';
         $glosses = EieolGloss::with('elements.head_word')->where('surface_form', 'LIKE', Normalizer::normalize($request->get('gloss'), Normalizer::FORM_C) . '%')
             ->where('language_id', '=', $request->get('language') . '%')
-            ->take(15)->get()->sortBy('surface_form');
-        foreach ($glosses as $gloss) {
-            $text .= '<a id="' . $gloss->id . '">' .
-                $gloss->getDisplayGloss() .
-                '</a>' .
-                '<br/>';
-        }
-        if (count($glosses) === 0) {
-            return 'No matching glosses found';
-        }
+            ->take(15)->orderBy('surface_form')->get()->map(function($g) {
+                $v = new \stdClass();
+                $v->id = $g['id'];
+                $v->html = $g->getDisplayGloss();
+                return $v;
+            });
 
-        return $text;
-
+        return [
+            'glosses'=>$glosses
+        ];
     }
 
     public function show($id) {
-        $gloss = EieolGloss::with('elements.head_word', 'glossed_texts.lesson')->find($id);
+        $gloss = EieolGloss::with('elements.head_word', 'glossed_text.lesson')->find($id);
         $return_gloss = $gloss->toArray();
 
         $i = 0;
@@ -49,10 +46,9 @@ class EieolGlossController extends Controller
         }
 
         $lessons = array();
-        foreach ($gloss->glossed_texts as $glossed_text) {
-            if (!in_array($glossed_text->lesson->title, $lessons)) {
-                $lessons[] = $glossed_text->lesson->title;
-            }
+        $glossed_text = $gloss->glossed_text;
+        if (!in_array($glossed_text->lesson->title, $lessons)) {
+            $lessons[] = $glossed_text->lesson->title;
         }
         $return_gloss['lessons'] = '';
         foreach ($lessons as $lesson) {
@@ -154,7 +150,10 @@ class EieolGlossController extends Controller
             'message' => 'Gloss was successfully added.',
             'author_comments' => $gloss->author_comments,
             'author_done' => $gloss->author_done,
-            'admin_comments' => $gloss->admin_comments
+            'admin_comments' => $gloss->admin_comments,
+            'glossed_text'=>EieolGlossedText::with('glosses.language', 'glosses.elements.head_word.language')
+                ->where('id', $request->get('glossed_text_id'))
+                ->first()
         ];
 
 
@@ -257,7 +256,10 @@ class EieolGlossController extends Controller
             'gloss_display' => '<br>' . $gloss->getDisplayGloss(),
             'author_comments' => $gloss->author_comments,
             'author_done' => $gloss->author_done,
-            'admin_comments' => $gloss->admin_comments
+            'admin_comments' => $gloss->admin_comments,
+            'glossed_text'=>EieolGlossedText::with('glosses.language', 'glosses.elements.head_word.language')
+                ->where('id', $request->get('glossed_text_id'))
+                ->first()
         ];
 
 

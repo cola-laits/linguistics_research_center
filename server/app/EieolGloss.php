@@ -40,13 +40,18 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGloss whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGloss whereUpdatedBy($value)
  * @mixin \Eloquent
+ * @property int|null $glossed_text_id
+ * @property int|null $order
+ * @property-read \App\EieolGlossedText|null $glossed_text
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGloss whereGlossedTextId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGloss whereOrder($value)
  */
 class EieolGloss extends Model {
 	protected $table = 'eieol_gloss';
 	
-	public function glossed_texts()
+	public function glossed_text()
 	{
-		return $this->belongsToMany('\App\EieolGlossedText', 'eieol_glossed_text_gloss', 'gloss_id', 'glossed_text_id')->withPivot('order', 'id');
+		return $this->belongsTo('\App\EieolGlossedText', 'glossed_text_id');
 	}
 	
 	public function elements()
@@ -135,6 +140,7 @@ class EieolGloss extends Model {
 	/** Deep copy a gloss and its elements. */
 	public function deepCopy() {
 	    // clunky; refactor later
+        // Use replicate() for this, as per https://stackoverflow.com/questions/53408613/copy-record-with-all-relations-laravel-5-4 ?
         $gloss = \DB::select('SELECT * FROM eieol_gloss WHERE id=?', [$this->id])[0];
         \DB::insert('INSERT INTO eieol_gloss '.
             '(surface_form, contextual_gloss,comments,underlying_form,language_id,author_comments,author_done,admin_comments,created_at,updated_at,created_by,updated_by) '.

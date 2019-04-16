@@ -1,3 +1,7 @@
+[v-cloak] {
+    display:none;
+}
+
 @font-face {
     font-family: GentiumPlusW;
     src: url(/fonts/GentiumPlus-R.woff);
@@ -81,14 +85,6 @@ span[lang] {background-color: #DDDDDD;}
 	padding:10px;
 }
 
-.element {
-    display:none;
-}
-
-.show_element {
-	margin-left: 10px;
-}
-
 input[type="text"] {
 	font-family: Times New Roman, Times, serif;
 }
@@ -106,7 +102,6 @@ textarea {
 }
 
 .comment_rows {
-    display:none;
     border: 1px groove #4C4646;
     background: #D1D0CE;
     padding-top: 5px;
@@ -130,4 +125,8 @@ textarea {
 
 .cke_button__eieollanguage_icon {
     background-image:url(/ckeditor-plugins/eieol_language/icons/language.png) !important;
+}
+
+form[dirty] {
+    background-color:#EBAD99;
 }
