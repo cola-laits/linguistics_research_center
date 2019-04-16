@@ -1,0 +1,69 @@
+kind: pipeline
+name: default
+
+rancher_info: &rancher_info
+  url: https://rancher.la.utexas.edu/
+  access_key:
+    from_secret: rancher_access_key
+  secret_key:
+    from_secret: rancher_secret_key
+  confirm: true
+timeout: 180
+
+test_when_condition: &test_when_condition
+  when:
+    branch: [ master ]
+
+prod_when_condition: &prod_when_condition
+  when:
+    ref:
+      - refs/tags/release-*
+
+
+steps:
+- name: prebuild
+  image: node:9
+  pull: always
+  commands:
+    - cd server && npm rebuild && npm run production
+
+
+- name: publish_test
+  image: plugins/docker
+  pull: always
+  settings:
+    repo: docker-registry.la.utexas.edu/lrc
+    tags:
+    - 'test'
+  <<: *test_when_condition
+
+
+- name: deploy_test
+  image: peloton/drone-rancher
+  pull: always
+  settings:
+    <<: *rancher_info
+    service: lrc-test/web
+    docker_image: docker-registry.la.utexas.edu/lrc:test
+  <<: *test_when_condition
+
+
+- name: publish_prod
+  image: plugins/docker
+  pull: always
+  settings:
+    repo: docker-registry.la.utexas.edu/lrc
+    tags:
+    - 'prod'
+  <<: *prod_when_condition
+
+
+- name: deploy_prod
+  image: peloton/drone-rancher
+  pull: always
+  settings:
+    <<: *rancher_info
+    service: lrc/web
+    docker_image: docker-registry.la.utexas.edu/lrc:prod
+  <<: *prod_when_condition
+
