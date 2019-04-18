@@ -88,136 +88,79 @@ class EieolGlossedText extends Model
                 return strlen($a['form']) < strlen($b['form']);
             });
 
+        // There's no regex-based, multibyte string tokenizer in PHP.  So we gotta write one.
+        $str_parts = [];
+        // Regex has a character class for word boundaries that we want to tweak a little.
+        // For us, a word character is a single quote (as in "Margaret's")
+        //         or a hyphen (as in "rain-soaked")
+        //         or an Armenian question mark (՞), which occurs in the middle of words rather than at the end
+        //         or a < or > (since there's still a lot of HTML garbage in our gloss text)
+        //         or anything Unicode considers a letter (category L)
+        //         or anything Unicode considers a (non-punctuation) 'mark' (category M)
+        // A word boundary is anything that's not a word character.
+        $word_bounds = "[^'\-՞<>\p{L}\p{M}]";
+        // walk through the string, looking for word boundaries.  Word boundaries may be one byte long or may be more.
+        mb_ereg_search_init($str, $word_bounds);
+        // Keep track of the position and length of the old word boundary match.
+        $old_posn = 0;
+        $old_len = 0;
+        while (true) {
+            // Do a search for word boundaries, noting the position and length of the match.
+            $search_info = mb_ereg_search_pos();
+            if ($search_info===false) {
+                if ($old_len>0) {
+                    $str_parts [] = substr($str, $old_posn - $old_len, $old_len);
+                }
+                $str_parts []= substr($str, $old_posn);
+                break;
+            }
+            [$posn, $len] = $search_info;
+            // update the internal pointer past this match, so that future searches skip it.
+            mb_ereg_search_setpos($posn+$len);
+            // add the matched word boundary, and the word characters between the old boundary and this one, to a list.
+            if ($old_len>0) {
+                $str_parts [] = substr($str, $old_posn - $old_len, $old_len);
+            }
+            $str_parts []= substr($str, $old_posn, $posn-$old_posn);
+            $old_posn = $posn+$len;
+            $old_len = $len;
+        }
+
+        // At this point, we should have split the string into an array of tokens,
+        // Some, we want to surround with <a></a> tags.  We only wanna do that once,
+        // so mark which ones we've already processed.
+        $replaced = [];
+        foreach ($str_parts as $p) {
+            $replaced []= false;
+        }
+
         foreach ($glosses as $gloss) {
-
             $form = $this->removeFormatting($gloss['form']);
-
-            // spaces between html tag attributes don't delineate words - tokenize them
-            /* $tokenized = preg_replace("/<.*?(\s).*?>/","@@@",$form);*/
-            // $tokenized = str_replace(" size=","@@@size=",$form);
 
             $words = explode(" ", trim($form));
 
             foreach ($words as $word) {
-                // $word = str_replace("@@@"," ",$word); // de-tokenize
-                $str = $this->attachClicks($str, $word, $gloss['id']);
-                $str = $this->attachClicks($str, ucfirst($word), $gloss['id'], True);
+                foreach ($str_parts as $i=>$part) {
+                    if ($replaced[$i]) {
+                        continue;
+                    }
+                    if ($this->mb_stricmp($part, $word)) {
+                        $replaced[$i] = true;
+                        $str_parts[$i] = '<a href="#" onclick="return false;" class="click_gloss" id="pivot_' . $gloss['id'] . '">'.$part."</a>";
+                    }
+                }
             }
 
         }
 
-        return $str;
+        return implode("", $str_parts);
 
     }
 
-    private function attachClicks($str, $g, $id, $i = False) {
-
-        $a = '<a href="#" onclick="return false;" class="click_gloss" id="pivot_' . $id . '">';
-
-        $str = $this->mbReplace(' ' . $g . ' ', ' ' . $a . $g . '</a> ', $str);
-
-        if ($this->startsWith($str, $g)) {
-            $str = $a . mb_substr($str, 0, mb_strlen($g)) . '</a>' . mb_substr($str, mb_strlen($g));
-        }
-
-        if ($this->endsWith($str, $g)) {
-            $str = mb_substr($str, 0, mb_strlen($str) - mb_strlen($g)) . $a . $g . '</a>';
-        }
-
-        // Special-case handling - see issue #51
-        $str = $this->mbReplace('(' . $g . ')', '(' . $a . $g . '</a>' . ') ', $str);
-
-        $punctuation = array(",", ".", "!", "?", ":", "(", ")", "։", "՝", "յ", "`", '"', ";", "·", "̃", "[", "]");
-
-        foreach ($punctuation as $p) {
-
-            $str = $this->mbReplace(' ' . $g . $p, ' ' . $a . $g . '</a>' . $p . ' ', $str);
-            $str = $this->mbReplace($p . $g . ' ', $p . $a . $g . '</a> ', $str);
-
-            if ($this->startsWith($str, $p . $g)) {
-                $str = $p . $a . mb_substr($str, 1, mb_strlen($g)) . '</a>' . mb_substr($str, mb_strlen($g) + 1);
-            }
-
-            if ($this->startsWith($str, $g . $p)) {
-                $str = $a . mb_substr($str, 0, mb_strlen($g)) . '</a>' . $p . mb_substr($str, mb_strlen($g) + 1);
-            }
-
-            if ($this->endsWith($str, $g . $p)) {
-                $str = mb_substr($str, 0, mb_strlen($str) - 1 - mb_strlen($g)) . $a . $g . '</a>' . $p;
-            }
-
-        }
-
-        // hacks for russian
-        $str = $this->mbReplace(',' . $g . '.', ',' . $a . $g . '</a>.', $str);
-        $str = $this->mbReplace('.' . $g . '.', '.' . $a . $g . '</a>.', $str);
-
-        if ($i) $str = $this->mbiReplace(' ' . $g . ' ', ' ' . $a . $g . '</a> ', $str);
-
-        return $str;
-    }
-
-    private function startsWith($haystack, $needle) {
-        preg_match('/' . preg_quote($needle . ' ', '/') . '/ui', $haystack, $matches, PREG_OFFSET_CAPTURE);
-
-        foreach ($matches as $m) {
-            if ($m[1] == 0) return true;
-        }
-
-        return false;
-    }
-
-    private function endsWith($haystack, $needle) {
-        $length = mb_strlen(' ' . $needle);
-
-        return $length === 0 ||
-            (mb_substr($haystack, -$length) === ' ' . $needle);
-    }
-
-    private function mbReplace($search, $replace, $subject, $encoding = 'UTF-8', &$count = 0) {
-
-        $searches = is_array($search) ? array_values($search) : [$search];
-        $replacements = is_array($replace) ? array_values($replace) : [$replace];
-        $replacements = array_pad($replacements, count($searches), '');
-        foreach ($searches as $key => $search) {
-            $replace = $replacements[$key];
-            $search_len = mb_strlen($search, $encoding);
-
-            $sb = [];
-            while (($offset = mb_strpos($subject, $search, 0, $encoding)) !== false) {
-                $sb[] = mb_substr($subject, 0, $offset, $encoding);
-                $subject = mb_substr($subject, $offset + $search_len, null, $encoding);
-                ++$count;
-            }
-            $sb[] = $subject;
-            $subject = implode($replace, $sb);
-        }
-
-        return $subject;
-
-    }
-
-    private function mbiReplace($search, $replace, $subject, $encoding = 'UTF-8', &$count = 0) {
-
-        $searches = is_array($search) ? array_values($search) : [$search];
-        $replacements = is_array($replace) ? array_values($replace) : [$replace];
-        $replacements = array_pad($replacements, count($searches), '');
-        foreach ($searches as $key => $search) {
-            $replace = $replacements[$key];
-            $search_len = mb_strlen($search, $encoding);
-
-            $sb = [];
-            while (($offset = mb_stripos($subject, $search, 0, $encoding)) !== false) {
-                $sb[] = mb_substr($subject, 0, $offset, $encoding);
-                $subject = mb_substr($subject, $offset + $search_len, null, $encoding);
-                ++$count;
-            }
-            $sb[] = $subject;
-            $subject = implode($replace, $sb);
-        }
-
-        return $subject;
-
+    // multibyte case-insensitive string comparison
+    // FIXME can I use mb_ereg_match instead of this?
+    private function mb_stricmp($s1, $s2) {
+        return mb_strlen($s1)===mb_strlen($s2) && mb_stripos($s1,$s2)===0;
     }
 
     private function removeFormatting($str) {
