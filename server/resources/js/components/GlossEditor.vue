@@ -474,7 +474,9 @@
                 this.$refs['head-word-editor'].show();
             },
             headword_selected(evt) {
-                console.log('headword_selected');
+                if (!this.gloss.elements) {
+                    this.gloss.elements = [];
+                }
                 if (!this.gloss.elements[this.element_index_for_headword_edit]) {
                     this.gloss.elements.splice(this.element_index_for_headword_edit, 1, {});
                 }

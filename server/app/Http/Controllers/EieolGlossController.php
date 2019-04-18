@@ -102,8 +102,17 @@ class EieolGlossController extends Controller
             ];
         }
         $gloss_id = DB::transaction(function () use ($request) {
+
+            $highest_order = EieolGloss::where('glossed_text_id',$request->get('glossed_text_id'))->max('order');
+            if (!$highest_order) {
+                $highest_order = 0;
+            }
+            $highest_order += 10;
+
             $gloss = new EieolGloss;
 
+            $gloss->glossed_text_id = $request->get('glossed_text_id');
+            $gloss->order = $highest_order;
             $gloss->surface_form = Normalizer::normalize($request->get('surface_form'), Normalizer::FORM_C);
             $gloss->contextual_gloss = Normalizer::normalize($request->get('contextual_gloss'), Normalizer::FORM_C);
             $gloss->language_id = $request->get('language_id');

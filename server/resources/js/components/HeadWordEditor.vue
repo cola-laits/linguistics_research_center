@@ -148,7 +148,6 @@
                 this.$emit('input',headword);
             },
             save() {
-                console.log("save");
                 var app = this;
                 $(".spinner").show();
                 var url = this.headword.id==='' ? '/admin2/eieol_head_word' : '/admin2/eieol_head_word/'+this.headword.id;
