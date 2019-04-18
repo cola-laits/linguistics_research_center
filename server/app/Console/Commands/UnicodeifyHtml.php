@@ -106,6 +106,21 @@ class UnicodeifyHtml extends Command
                 $row->id
             ]);
         }
+
+        \Log::info('updating language');
+        $rows = DB::select('SELECT * FROM eieol_language');
+        foreach ($rows as $row) {
+            DB::update('update eieol_language'.
+                ' SET substitutions=?'.
+                ' ,custom_sort=?'.
+                ' ,custom_keyboard_layout=?'.
+                ' WHERE id=?',[
+                Normalizer::normalize($this->clean_markup($row->substitutions)),
+                Normalizer::normalize($this->clean_markup($row->custom_sort)),
+                Normalizer::normalize($this->clean_markup($row->custom_keyboard_layout)),
+                $row->id
+            ]);
+        }
     }
 
     protected function clean_markup($str) {
