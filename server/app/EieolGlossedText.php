@@ -147,6 +147,7 @@ class EieolGlossedText extends Model
                     if ($this->mb_stricmp($part, $word)) {
                         $replaced[$i] = true;
                         $str_parts[$i] = '<a href="#" onclick="return false;" class="click_gloss" id="pivot_' . $gloss['id'] . '">'.$part."</a>";
+                        break;
                     }
                 }
             }
