@@ -109,13 +109,17 @@ class UnicodeifyHtml extends Command
     }
 
     protected function clean_markup($str) {
-        $str = str_replace("<sup><font size=\"+1\">́</font></sup>","́", $str);
-        $str = str_replace("<sup><font size=\"+1\">̀</font></sup>", "̀", $str);
-        $str = str_replace("<sup><font size='+1'>̀</font></sup>", "̀", $str);
-        $str = str_replace("<sup><font size='+1'>́</font></sup>","́", $str);
-        $str = str_replace("<sup>́</sup>","́", $str);
-        $str = str_replace("<sup>̀</sup>","̀", $str);
-        $str = str_replace("<sup>̃</sup>","̃", $str);
+        $str = str_replace("ЪӀ","Ꙑ", $str);
+        $str = str_replace("ъӏ","ꙑ", $str);
+        $str = str_replace("ӀА","Ꙗ", $str);
+        $str = str_replace("ӏа","ꙗ", $str);
+        $str = str_replace("ЈА","Ꙗ", $str);
+        $str = str_replace("ја","ꙗ", $str);
+
+        $str = str_replace("Ӏ","І", $str);
+        $str = str_replace("ӏ","і", $str);
+        $str = str_replace("І","Ꙇ", $str);
+        $str = str_replace("і","ꙇ", $str);
         return $str;
     }
 }
