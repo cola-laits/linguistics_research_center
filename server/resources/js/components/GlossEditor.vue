@@ -318,9 +318,12 @@
             <div class='row'>
                 <div class='form-group col-sm-12'>
                     <label for="comments">Comments</label>
-                    <input placeholder="Comments" class="form-control" id="comments" name="comments"
-                           type="text"
-                           v-model="gloss.comments">
+                    <input-custom-keyboard placeholder="Comments"
+                                           id="comments"
+                                           name="comments"
+                                           type="text"
+                                           v-model="gloss.comments"
+                                           :custom_keyboard="custom_keyboard"></input-custom-keyboard>
                     <div id="comments_gloss_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['comments']">{{error}}</div></div>
                 </div>
             </div>
@@ -328,9 +331,12 @@
             <div class='row'>
                 <div class='form-group col-sm-12'>
                     <label for="underlying_form">Underlying Form</label>
-                    <input placeholder="Underlying Form" class="form-control" id="underlying_form"
-                           name="underlying_form" type="text"
-                           v-model="gloss.underlying_form">
+                    <input-custom-keyboard placeholder="Underlying Form"
+                                           id="underlying_form"
+                                           name="underlying_form"
+                                           type="text"
+                                           v-model="gloss.underlying_form"
+                                           :custom_keyboard="custom_keyboard"></input-custom-keyboard>
                     <div id="underlying_form_gloss_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['underlying_form']">{{error}}</div></div>
                 </div>
             </div>
