@@ -179,6 +179,7 @@
             },
             save_grammar(grammar) {
                 var app = this;
+                var is_new = !grammar.id;
                 $(".spinner").show();
                 var url = grammar.id==='' ? '/admin2/eieol_grammar' : '/admin2/eieol_grammar/'+grammar.id;
                 var payload = grammar.id==='' ? grammar : Object.assign(grammar, {_method:'PUT'});
@@ -193,6 +194,9 @@
                             app.error_messages = {};
                             app.flash_modal(response.data.message);
                             app.markFormClean('grammar_form_'+grammar.id);
+                            if (is_new) {
+                                grammar.id = response.data.grammar_id;
+                            }
                         }
                     });
             },
@@ -229,6 +233,7 @@
             },
             save_glossed_text(glossed_text) {
                 var app = this;
+                var is_new = !glossed_text.id;
                 $(".spinner").show();
                 var url = glossed_text.id==='' ? '/admin2/eieol_glossed_text' : '/admin2/eieol_glossed_text/'+glossed_text.id;
                 var payload = glossed_text.id==='' ? glossed_text : Object.assign(glossed_text, {_method:'PUT'});
@@ -243,6 +248,9 @@
                             app.error_messages = {};
                             app.flash_modal(response.data.message);
                             app.markFormClean('glossed_text_form_'+glossed_text.id);
+                            if (is_new) {
+                                glossed_text.id = response.data.glossed_text_id;
+                            }
                         }
                     });
             },

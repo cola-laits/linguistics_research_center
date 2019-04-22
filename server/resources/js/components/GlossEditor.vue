@@ -481,13 +481,13 @@
             },
             headword_selected(evt) {
                 if (!this.gloss.elements) {
-                    this.gloss.elements = [];
+                    Vue.set(this.gloss,'elements',[]);
                 }
                 if (!this.gloss.elements[this.element_index_for_headword_edit]) {
                     this.gloss.elements.splice(this.element_index_for_headword_edit, 1, {});
                 }
-                this.gloss.elements[this.element_index_for_headword_edit].head_word = evt;
-                this.gloss.elements[this.element_index_for_headword_edit].head_word_id = evt.id;
+                Vue.set(this.gloss.elements[this.element_index_for_headword_edit], 'head_word', evt);
+                Vue.set(this.gloss.elements[this.element_index_for_headword_edit], 'head_word_id', evt.id);
                 if (this.element_index_for_headword_edit===0) {
                     this.gloss.element_1_head_word_id = evt.id;
                 }

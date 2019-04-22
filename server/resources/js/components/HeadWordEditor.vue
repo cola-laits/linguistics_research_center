@@ -148,10 +148,10 @@
                 this.$emit('input',headword);
             },
             save() {
-                var app = this;
+                let app = this;
                 $(".spinner").show();
-                var url = this.headword.id==='' ? '/admin2/eieol_head_word' : '/admin2/eieol_head_word/'+this.headword.id;
-                var payload = this.headword.id==='' ? this.headword : Object.assign(this.headword, {_method:'PUT'});
+                let url = this.headword.id==='' ? '/admin2/eieol_head_word' : '/admin2/eieol_head_word/'+this.headword.id;
+                let payload = this.headword.id==='' ? this.headword : Object.assign(this.headword, {_method:'PUT'});
                 axios.post(url, payload)
                     .then(function(response) {
                         $(".spinner").hide();
