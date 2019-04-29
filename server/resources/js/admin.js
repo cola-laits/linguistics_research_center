@@ -257,7 +257,7 @@ var routes = [
 
 var router = new VueRouter({routes});
 
-// FIXME haven't gotten around to building page-level components yet; all this window.admin_app_* stuff
+// FIXME haven't gotten around to building page-level components yet; all this window.admin_app_initial_state stuff
 // can move down into those page-level components once they're written
 const admin_app = new Vue({
     el: '#admin_app',
@@ -269,9 +269,7 @@ const admin_app = new Vue({
         } else {
             return {};
         }
-    },
-    computed: window.admin_app_computed || {},
-    methods: window.admin_app_methods || {}
+    }
 });
 
 window.onhashchange = function() {
