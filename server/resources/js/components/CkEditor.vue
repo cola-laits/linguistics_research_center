@@ -14,6 +14,7 @@
         mounted() {
             CKEDITOR.plugins.addExternal( 'onchange', '/js/', 'onchangeplugin.js' );
             CKEDITOR.plugins.addExternal( 'eieol_language', '/ckeditor-plugins/eieol_language/', 'plugin.js');
+            CKEDITOR.plugins.addExternal( 'html5audio', '/ckeditor-plugins/html5audio/', 'plugin.js');
 
             let ck_config = {
                 toolbar:
@@ -37,13 +38,14 @@
                         {name: 'insert', items: ['Table', 'HorizontalRule', 'SpecialChar']},
                         {name: 'styles', items: ['Format', 'FontSize']},
                         {name: 'colors', items: ['TextColor', 'BGColor']},
-                        {name: 'insert', items: ['Image']},
+                        {name: 'insert', items: ['Image','Html5audio']},
                         {name: 'tools', items: ['Maximize']}
                     ],
                 contentsCss: '/css/lrcstyle.css',
                 disableNativeSpellChecker: false,
                 allowedContent: true,
-                extraPlugins: 'onchange,eieol_language',
+                extraPlugins: 'html5audio,filebrowser,onchange,eieol_language',
+                filebrowserUploadUrl: 'http://localhost:4009/admin2/files/upload',
                 enterMode: 'CKEDITOR.ENTER_BR',
                 entities: false
             };

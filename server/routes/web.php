@@ -68,7 +68,7 @@ Route::group(array('prefix'=> 'admin2', 'middleware' => 'auth'), function() {
     Route::post('/related_languages/attach_language', 'EieolSeriesController@attach_language');
     Route::post('/related_languages/{series_id}/detach_language/{language_id}', 'EieolSeriesController@detach_language');
 
-
+    Route::post('/files/upload', 'FilesController@post_file');
 });
 
 Route::group(array('prefix'=> 'admin2', 'before' => 'auth|admin'), function() {
