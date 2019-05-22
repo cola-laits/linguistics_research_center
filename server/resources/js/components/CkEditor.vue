@@ -45,7 +45,7 @@
                 disableNativeSpellChecker: false,
                 allowedContent: true,
                 extraPlugins: 'html5audio,filebrowser,onchange,eieol_language',
-                filebrowserUploadUrl: 'http://localhost:4009/admin2/files/upload',
+                filebrowserUploadUrl: '/admin2/files/upload',
                 enterMode: 'CKEDITOR.ENTER_BR',
                 entities: false
             };
