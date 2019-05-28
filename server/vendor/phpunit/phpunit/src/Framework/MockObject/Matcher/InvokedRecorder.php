@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -12,10 +12,7 @@ namespace PHPUnit\Framework\MockObject\Matcher;
 use PHPUnit\Framework\MockObject\Invocation as BaseInvocation;
 
 /**
- * Records invocations and provides convenience methods for checking them later
- * on.
- * This abstract class can be implemented by matchers which needs to check the
- * number of times an invocation has occurred.
+ * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
 abstract class InvokedRecorder implements Invocation
 {
@@ -24,10 +21,7 @@ abstract class InvokedRecorder implements Invocation
      */
     private $invocations = [];
 
-    /**
-     * @return int
-     */
-    public function getInvocationCount()
+    public function getInvocationCount(): int
     {
         return \count($this->invocations);
     }
@@ -35,15 +29,12 @@ abstract class InvokedRecorder implements Invocation
     /**
      * @return BaseInvocation[]
      */
-    public function getInvocations()
+    public function getInvocations(): array
     {
         return $this->invocations;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasBeenInvoked()
+    public function hasBeenInvoked(): bool
     {
         return \count($this->invocations) > 0;
     }
@@ -53,10 +44,7 @@ abstract class InvokedRecorder implements Invocation
         $this->invocations[] = $invocation;
     }
 
-    /**
-     * @return bool
-     */
-    public function matches(BaseInvocation $invocation)
+    public function matches(BaseInvocation $invocation): bool
     {
         return true;
     }

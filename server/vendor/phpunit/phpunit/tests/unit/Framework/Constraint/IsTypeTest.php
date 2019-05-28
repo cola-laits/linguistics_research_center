@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -13,7 +13,10 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestFailure;
 
-class IsTypeTest extends ConstraintTestCase
+/**
+ * @small
+ */
+final class IsTypeTest extends ConstraintTestCase
 {
     public function testConstraintIsType(): void
     {

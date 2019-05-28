@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -12,6 +12,9 @@ namespace PHPUnit\Framework\Constraint;
 use PHPUnit\Framework\SelfDescribing;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @small
+ */
 abstract class ConstraintTestCase extends TestCase
 {
     final public function testIsCountable(): void
@@ -36,7 +39,7 @@ abstract class ConstraintTestCase extends TestCase
         $this->assertTrue($reflection->implementsInterface(SelfDescribing::class), \sprintf(
             'Failed to assert that "%s" implements "%s".',
             $className,
-            \Countable::class
+            SelfDescribing::class
         ));
     }
 

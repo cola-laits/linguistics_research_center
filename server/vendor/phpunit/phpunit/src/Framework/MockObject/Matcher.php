@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -19,15 +19,9 @@ use PHPUnit\Framework\MockObject\Matcher\Parameters;
 use PHPUnit\Framework\TestFailure;
 
 /**
- * Main matcher which defines a full expectation using method, parameter and
- * invocation matchers.
- * This matcher encapsulates all the other matchers and allows the builder to
- * set the specific matchers when the appropriate methods are called (once(),
- * where() etc.).
- *
- * All properties are public so that they can easily be accessed by the builder.
+ * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
-class Matcher implements MatcherInvocation
+final class Matcher implements MatcherInvocation
 {
     /**
      * @var MatcherInvocation
@@ -176,10 +170,9 @@ class Matcher implements MatcherInvocation
     /**
      * @throws RuntimeException
      * @throws ExpectationFailedException
-     *
-     * @return bool
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
-    public function matches(Invocation $invocation)
+    public function matches(Invocation $invocation): bool
     {
         if ($this->afterMatchBuilderId !== null) {
             $builder = $invocation->getObject()
@@ -242,6 +235,7 @@ class Matcher implements MatcherInvocation
     /**
      * @throws RuntimeException
      * @throws ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
     public function verify(): void
     {

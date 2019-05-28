@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -9,7 +9,10 @@
  */
 namespace PHPUnit\Framework\Constraint;
 
-class IsJsonTest extends ConstraintTestCase
+/**
+ * @small
+ */
+final class IsJsonTest extends ConstraintTestCase
 {
     public static function evaluateDataprovider(): array
     {
@@ -20,6 +23,7 @@ class IsJsonTest extends ConstraintTestCase
     }
 
     /**
+     * @testdox Evaluate $_dataName
      * @dataProvider evaluateDataprovider
      *
      * @throws \PHPUnit\Framework\ExpectationFailedException

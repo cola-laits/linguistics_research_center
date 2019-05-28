@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -10,10 +10,11 @@
 namespace PHPUnit\Util\TestDox;
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Util\Color;
 use SebastianBergmann\Exporter\Exporter;
 
 /**
- * Prettifies class and method names for use in TestDox documentation.
+ * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
 final class NamePrettifier
 {
@@ -21,6 +22,16 @@ final class NamePrettifier
      * @var array
      */
     private $strings = [];
+
+    /**
+     * @var bool
+     */
+    private $useColor;
+
+    public function __construct($useColor = false)
+    {
+        $this->useColor = $useColor;
+    }
 
     /**
      * Prettifies the name of a test class.
@@ -56,6 +67,7 @@ final class NamePrettifier
     }
 
     /**
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      * @throws \ReflectionException
      */
     public function prettifyTestCase(TestCase $test): string
@@ -83,11 +95,26 @@ final class NamePrettifier
             $result = $this->prettifyTestMethod($test->getName(false));
         }
 
-        if ($test->usesDataProvider() && !$annotationWithPlaceholders) {
-            $result .= $test->getDataSetAsString(false);
+        if (!$annotationWithPlaceholders && $test->usesDataProvider()) {
+            $result .= $this->prettifyDataSet($test);
         }
 
         return $result;
+    }
+
+    public function prettifyDataSet(TestCase $test): string
+    {
+        if (!$this->useColor) {
+            return $test->getDataSetAsString(false);
+        }
+
+        if (\is_int($test->dataName())) {
+            $data = Color::dim(' with data set ') . Color::colorize('fg-cyan', (string) $test->dataName());
+        } else {
+            $data = Color::dim(' with ') . Color::colorize('fg-cyan', Color::visualizeWhitespace($test->dataName()));
+        }
+
+        return $data;
     }
 
     /**
@@ -97,11 +124,11 @@ final class NamePrettifier
     {
         $buffer = '';
 
-        if (!\is_string($name) || $name === '') {
+        if ($name === '') {
             return $buffer;
         }
 
-        $string = \preg_replace('#\d+$#', '', $name, -1, $count);
+        $string = (string) \preg_replace('#\d+$#', '', $name, -1, $count);
 
         if (\in_array($string, $this->strings)) {
             $name = $string;
@@ -151,6 +178,7 @@ final class NamePrettifier
     }
 
     /**
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      * @throws \ReflectionException
      */
     private function mapTestMethodParameterNamesToProvidedDataValues(TestCase $test): array
@@ -159,6 +187,8 @@ final class NamePrettifier
         $providedData       = [];
         $providedDataValues = \array_values($test->getProvidedData());
         $i                  = 0;
+
+        $providedData['$_dataName'] = $test->dataName();
 
         foreach ($reflector->getParameters() as $parameter) {
             if (!\array_key_exists($i, $providedDataValues) && $parameter->isDefaultValueAvailable()) {
@@ -172,6 +202,8 @@ final class NamePrettifier
 
                 if ($reflector->hasMethod('__toString')) {
                     $value = (string) $value;
+                } else {
+                    $value = \get_class($value);
                 }
             }
 
@@ -180,12 +212,24 @@ final class NamePrettifier
             }
 
             if (\is_bool($value) || \is_int($value) || \is_float($value)) {
-                $exporter = new Exporter;
+                $value = (new Exporter)->export($value);
+            }
 
-                $value = $exporter->export($value);
+            if (\is_string($value) && $value === '') {
+                if ($this->useColor) {
+                    $value = Color::colorize('dim,underlined', 'empty');
+                } else {
+                    $value = "''";
+                }
             }
 
             $providedData['$' . $parameter->getName()] = $value;
+        }
+
+        if ($this->useColor) {
+            $providedData = \array_map(function ($value) {
+                return Color::colorize('fg-cyan', Color::visualizeWhitespace((string) $value, true));
+            }, $providedData);
         }
 
         return $providedData;

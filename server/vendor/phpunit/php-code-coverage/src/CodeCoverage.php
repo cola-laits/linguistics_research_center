@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of the php-code-coverage package.
  *
@@ -13,6 +13,7 @@ use PHPUnit\Framework\TestCase;
 use PHPUnit\Runner\PhptTestCase;
 use PHPUnit\Util\Test;
 use SebastianBergmann\CodeCoverage\Driver\Driver;
+use SebastianBergmann\CodeCoverage\Driver\PCOV;
 use SebastianBergmann\CodeCoverage\Driver\PHPDBG;
 use SebastianBergmann\CodeCoverage\Driver\Xdebug;
 use SebastianBergmann\CodeCoverage\Node\Builder;
@@ -696,7 +697,7 @@ final class CodeCoverage
             switch (\get_class($token)) {
                 case \PHP_Token_COMMENT::class:
                 case \PHP_Token_DOC_COMMENT::class:
-                    $_token = \trim($token);
+                    $_token = \trim((string) $token);
                     $_line  = \trim($lines[$token->getLine() - 1]);
 
                     if ($_token === '// @codeCoverageIgnore' ||
@@ -713,7 +714,7 @@ final class CodeCoverage
 
                     if (!$ignore) {
                         $start = $token->getLine();
-                        $end   = $start + \substr_count($token, "\n");
+                        $end   = $start + \substr_count((string) $token, "\n");
 
                         // Do not ignore the first line when there is a token
                         // before the comment
@@ -740,7 +741,7 @@ final class CodeCoverage
                 case \PHP_Token_FUNCTION::class:
                     /* @var \PHP_Token_Interface $token */
 
-                    $docblock = $token->getDocblock();
+                    $docblock = (string) $token->getDocblock();
 
                     $this->ignoredLines[$fileName][] = $token->getLine();
 
@@ -903,6 +904,10 @@ final class CodeCoverage
 
         if ($runtime->hasXdebug()) {
             return new Xdebug($filter);
+        }
+
+        if ($runtime->hasPCOV()) {
+            return new PCOV($filter);
         }
 
         throw new RuntimeException('No code coverage driver available');

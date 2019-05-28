@@ -6,7 +6,7 @@ use LogicException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Contracts\Queue\QueueableEntity;
 use Illuminate\Contracts\Queue\QueueableCollection;
 use Illuminate\Support\Collection as BaseCollection;
 
@@ -141,7 +141,7 @@ class Collection extends BaseCollection implements QueueableCollection
      * @param  array  $path
      * @return void
      */
-    protected function loadMissingRelation(Collection $models, array $path)
+    protected function loadMissingRelation(self $models, array $path)
     {
         $relation = array_shift($path);
 
@@ -185,19 +185,6 @@ class Collection extends BaseCollection implements QueueableCollection
             ->each(function ($models, $className) use ($relations) {
                 static::make($models)->load($relations[$className] ?? []);
             });
-
-        return $this;
-    }
-
-    /**
-     * Add an item to the collection.
-     *
-     * @param  mixed  $item
-     * @return $this
-     */
-    public function add($item)
-    {
-        $this->items[] = $item;
 
         return $this;
     }
@@ -507,6 +494,19 @@ class Collection extends BaseCollection implements QueueableCollection
     }
 
     /**
+     * Get the comparison function to detect duplicates.
+     *
+     * @param  bool  $strict
+     * @return \Closure
+     */
+    protected function duplicateComparator($strict)
+    {
+        return function ($a, $b) {
+            return $a->is($b);
+        };
+    }
+
+    /**
      * Get the type of the entities being queued.
      *
      * @return string|null
@@ -541,7 +541,7 @@ class Collection extends BaseCollection implements QueueableCollection
             return [];
         }
 
-        return $this->first() instanceof Pivot
+        return $this->first() instanceof QueueableEntity
                     ? $this->map->getQueueableId()->all()
                     : $this->modelKeys();
     }

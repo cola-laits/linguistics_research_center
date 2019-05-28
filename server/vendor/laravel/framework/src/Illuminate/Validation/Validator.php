@@ -265,7 +265,7 @@ class Validator implements ValidatorContract
     {
         $this->messages = new MessageBag;
 
-        $this->distinctValues = [];
+        [$this->distinctValues, $this->failedRules] = [[], []];
 
         // We'll spin through each rule, validating the attributes attached to that
         // rule. Any error messages will be added to the containers with each of
@@ -319,7 +319,7 @@ class Validator implements ValidatorContract
     }
 
     /**
-     * Return validated value.
+     * Get the attributes and values that were validated.
      *
      * @return array
      *
@@ -1085,7 +1085,7 @@ class Validator implements ValidatorContract
      *
      * @throws \RuntimeException
      */
-    protected function getPresenceVerifierFor($connection)
+    public function getPresenceVerifierFor($connection)
     {
         return tap($this->getPresenceVerifier(), function ($verifier) use ($connection) {
             $verifier->setConnection($connection);

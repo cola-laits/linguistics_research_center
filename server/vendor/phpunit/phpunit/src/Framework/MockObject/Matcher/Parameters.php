@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -16,13 +16,9 @@ use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\MockObject\Invocation as BaseInvocation;
 
 /**
- * Invocation matcher which looks for specific parameters in the invocations.
- *
- * Checks the parameters of all incoming invocations, the parameter list is
- * checked against the defined constraints in $parameters. If the constraint
- * is met it will return true in matches().
+ * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
-class Parameters extends StatelessInvocation
+final class Parameters extends StatelessInvocation
 {
     /**
      * @var Constraint[]
@@ -72,16 +68,14 @@ class Parameters extends StatelessInvocation
 
     /**
      * @throws \Exception
-     *
-     * @return bool
      */
-    public function matches(BaseInvocation $invocation)
+    public function matches(BaseInvocation $invocation): bool
     {
         $this->invocation                  = $invocation;
         $this->parameterVerificationResult = null;
 
         try {
-            $this->parameterVerificationResult = $this->verify();
+            $this->parameterVerificationResult = $this->doVerify();
 
             return $this->parameterVerificationResult;
         } catch (ExpectationFailedException $e) {
@@ -97,10 +91,18 @@ class Parameters extends StatelessInvocation
      * if an expectation is met.
      *
      * @throws ExpectationFailedException
-     *
-     * @return bool
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
-    public function verify()
+    public function verify(): void
+    {
+        $this->doVerify();
+    }
+
+    /**
+     * @throws ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    private function doVerify(): bool
     {
         if (isset($this->parameterVerificationResult)) {
             return $this->guardAgainstDuplicateEvaluationOfParameterConstraints();
@@ -144,12 +146,10 @@ class Parameters extends StatelessInvocation
 
     /**
      * @throws ExpectationFailedException
-     *
-     * @return bool
      */
-    private function guardAgainstDuplicateEvaluationOfParameterConstraints()
+    private function guardAgainstDuplicateEvaluationOfParameterConstraints(): bool
     {
-        if ($this->parameterVerificationResult instanceof \Exception) {
+        if ($this->parameterVerificationResult instanceof ExpectationFailedException) {
             throw $this->parameterVerificationResult;
         }
 

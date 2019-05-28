@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -11,7 +11,10 @@
 use PHPUnit\Framework\MockObject\MockBuilder;
 use PHPUnit\Framework\TestCase;
 
-class MockBuilderTest extends TestCase
+/**
+ * @small
+ */
+final class MockBuilderTest extends TestCase
 {
     public function testMockBuilderRequiresClassName(): void
     {

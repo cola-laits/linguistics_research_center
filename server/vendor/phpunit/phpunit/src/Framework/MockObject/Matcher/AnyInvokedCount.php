@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -10,10 +10,9 @@
 namespace PHPUnit\Framework\MockObject\Matcher;
 
 /**
- * Invocation matcher which checks if a method has been invoked zero or more
- * times. This matcher will always match.
+ * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
-class AnyInvokedCount extends InvokedRecorder
+final class AnyInvokedCount extends InvokedRecorder
 {
     public function toString(): string
     {

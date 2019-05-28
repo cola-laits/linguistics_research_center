@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -28,156 +28,156 @@ use SebastianBergmann\Timer\Timer;
 use Throwable;
 
 /**
- * A TestResult collects the results of executing a test case.
+ * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
-class TestResult implements Countable
+final class TestResult implements Countable
 {
     /**
      * @var array
      */
-    protected $passed = [];
+    private $passed = [];
 
     /**
-     * @var array
+     * @var TestFailure[]
      */
-    protected $errors = [];
+    private $errors = [];
 
     /**
-     * @var array
+     * @var TestFailure[]
      */
-    protected $failures = [];
+    private $failures = [];
 
     /**
-     * @var array
+     * @var TestFailure[]
      */
-    protected $warnings = [];
+    private $warnings = [];
 
     /**
-     * @var array
+     * @var TestFailure[]
      */
-    protected $notImplemented = [];
+    private $notImplemented = [];
 
     /**
-     * @var array
+     * @var TestFailure[]
      */
-    protected $risky = [];
+    private $risky = [];
 
     /**
-     * @var array
+     * @var TestFailure[]
      */
-    protected $skipped = [];
+    private $skipped = [];
 
     /**
-     * @var array
+     * @var TestListener[]
      */
-    protected $listeners = [];
+    private $listeners = [];
 
     /**
      * @var int
      */
-    protected $runTests = 0;
+    private $runTests = 0;
 
     /**
      * @var float
      */
-    protected $time = 0;
+    private $time = 0;
 
     /**
      * @var TestSuite
      */
-    protected $topTestSuite;
+    private $topTestSuite;
 
     /**
      * Code Coverage information.
      *
      * @var CodeCoverage
      */
-    protected $codeCoverage;
+    private $codeCoverage;
 
     /**
      * @var bool
      */
-    protected $convertErrorsToExceptions = true;
+    private $convertErrorsToExceptions = true;
 
     /**
      * @var bool
      */
-    protected $stop = false;
+    private $stop = false;
 
     /**
      * @var bool
      */
-    protected $stopOnError = false;
+    private $stopOnError = false;
 
     /**
      * @var bool
      */
-    protected $stopOnFailure = false;
+    private $stopOnFailure = false;
 
     /**
      * @var bool
      */
-    protected $stopOnWarning = false;
+    private $stopOnWarning = false;
 
     /**
      * @var bool
      */
-    protected $beStrictAboutTestsThatDoNotTestAnything = true;
+    private $beStrictAboutTestsThatDoNotTestAnything = true;
 
     /**
      * @var bool
      */
-    protected $beStrictAboutOutputDuringTests = false;
+    private $beStrictAboutOutputDuringTests = false;
 
     /**
      * @var bool
      */
-    protected $beStrictAboutTodoAnnotatedTests = false;
+    private $beStrictAboutTodoAnnotatedTests = false;
 
     /**
      * @var bool
      */
-    protected $beStrictAboutResourceUsageDuringSmallTests = false;
+    private $beStrictAboutResourceUsageDuringSmallTests = false;
 
     /**
      * @var bool
      */
-    protected $enforceTimeLimit = false;
+    private $enforceTimeLimit = false;
 
     /**
      * @var int
      */
-    protected $timeoutForSmallTests = 1;
+    private $timeoutForSmallTests = 1;
 
     /**
      * @var int
      */
-    protected $timeoutForMediumTests = 10;
+    private $timeoutForMediumTests = 10;
 
     /**
      * @var int
      */
-    protected $timeoutForLargeTests = 60;
+    private $timeoutForLargeTests = 60;
 
     /**
      * @var bool
      */
-    protected $stopOnRisky = false;
+    private $stopOnRisky = false;
 
     /**
      * @var bool
      */
-    protected $stopOnIncomplete = false;
+    private $stopOnIncomplete = false;
 
     /**
      * @var bool
      */
-    protected $stopOnSkipped = false;
+    private $stopOnSkipped = false;
 
     /**
      * @var bool
      */
-    protected $lastTestFailed = false;
+    private $lastTestFailed = false;
 
     /**
      * @var int
@@ -194,9 +194,15 @@ class TestResult implements Countable
      */
     private $registerMockObjectsFromTestArgumentsRecursively = false;
 
-    public static function isAnyCoverageRequired(TestCase $test)
+    public static function isAnyCoverageRequired(TestCase $test): bool
     {
         $annotations = $test->getAnnotations();
+
+        // If there is a @coversNothing annotation on the test method then code
+        // coverage data does not need to be collected
+        if (isset($annotations['method']['coversNothing'])) {
+            return false;
+        }
 
         // If any methods have covers, coverage must me generated
         if (isset($annotations['method']['covers'])) {
@@ -461,7 +467,9 @@ class TestResult implements Countable
     }
 
     /**
-     * Returns an Enumeration for the risky tests.
+     * Returns an array of TestFailure objects for the risky tests
+     *
+     * @return TestFailure[]
      */
     public function risky(): array
     {
@@ -469,7 +477,9 @@ class TestResult implements Countable
     }
 
     /**
-     * Returns an Enumeration for the incomplete tests.
+     * Returns an array of TestFailure objects for the incomplete tests
+     *
+     * @return TestFailure[]
      */
     public function notImplemented(): array
     {
@@ -493,7 +503,9 @@ class TestResult implements Countable
     }
 
     /**
-     * Returns an Enumeration for the skipped tests.
+     * Returns an array of TestFailure objects for the skipped tests
+     *
+     * @return TestFailure[]
      */
     public function skipped(): array
     {
@@ -509,7 +521,9 @@ class TestResult implements Countable
     }
 
     /**
-     * Returns an Enumeration for the errors.
+     * Returns an array of TestFailure objects for the errors
+     *
+     * @return TestFailure[]
      */
     public function errors(): array
     {
@@ -525,7 +539,9 @@ class TestResult implements Countable
     }
 
     /**
-     * Returns an Enumeration for the failures.
+     * Returns an array of TestFailure objects for the failures
+     *
+     * @return TestFailure[]
      */
     public function failures(): array
     {
@@ -541,7 +557,9 @@ class TestResult implements Countable
     }
 
     /**
-     * Returns an Enumeration for the warnings.
+     * Returns an array of TestFailure objects for the warnings
+     *
+     * @return TestFailure[]
      */
     public function warnings(): array
     {
@@ -587,8 +605,6 @@ class TestResult implements Countable
     public function run(Test $test): void
     {
         Assert::resetCount();
-
-        $coversNothing = false;
 
         if ($test instanceof TestCase) {
             $test->setRegisterMockObjectsFromTestArgumentsRecursively(
@@ -826,15 +842,15 @@ class TestResult implements Countable
             }
         }
 
-        if ($errorHandlerSet === true) {
+        if ($errorHandlerSet) {
             \restore_error_handler();
         }
 
-        if ($error === true) {
+        if ($error) {
             $this->addError($test, $e, $time);
-        } elseif ($failure === true) {
+        } elseif ($failure) {
             $this->addFailure($test, $e, $time);
-        } elseif ($warning === true) {
+        } elseif ($warning) {
             $this->addWarning($test, $e, $time);
         } elseif ($this->beStrictAboutTestsThatDoNotTestAnything &&
             !$test->doesNotPerformAssertions() &&
@@ -1068,7 +1084,12 @@ class TestResult implements Countable
      */
     public function wasSuccessful(): bool
     {
-        return empty($this->errors) && empty($this->failures) && empty($this->warnings);
+        return $this->wasSuccessfulIgnoringWarnings() && empty($this->warnings);
+    }
+
+    public function wasSuccessfulIgnoringWarnings(): bool
+    {
+        return empty($this->errors) && empty($this->failures);
     }
 
     /**

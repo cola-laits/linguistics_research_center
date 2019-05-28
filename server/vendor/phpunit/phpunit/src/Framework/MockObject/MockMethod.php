@@ -14,6 +14,9 @@ use ReflectionException;
 use ReflectionMethod;
 use Text_Template;
 
+/**
+ * @internal This class is not covered by the backward compatibility promise for PHPUnit
+ */
 final class MockMethod
 {
     /**
@@ -81,6 +84,9 @@ final class MockMethod
      */
     private $allowsReturnNull;
 
+    /**
+     * @throws RuntimeException
+     */
     public static function fromReflection(ReflectionMethod $method, bool $callOriginalMethod, bool $cloneArguments): self
     {
         if ($method->isPrivate()) {
@@ -175,7 +181,6 @@ final class MockMethod
     /**
      * @throws \ReflectionException
      * @throws \PHPUnit\Framework\MockObject\RuntimeException
-     * @throws \InvalidArgumentException
      */
     public function generateCode(): string
     {
@@ -201,9 +206,7 @@ final class MockMethod
 
         // @see https://github.com/sebastianbergmann/phpunit-mock-objects/issues/406
         if ($returnType === 'parent') {
-            $reflector = new ReflectionClass($this->className);
-
-            $parentClass = $reflector->getParentClass();
+            $parentClass = (new ReflectionClass($this->className))->getParentClass();
 
             if ($parentClass === false) {
                 throw new RuntimeException(

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -13,14 +13,9 @@ use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\MockObject\Invocation as BaseInvocation;
 
 /**
- * Invocation matcher which checks if a method has been invoked a certain amount
- * of times.
- * If the number of invocations exceeds the value it will immediately throw an
- * exception,
- * If the number is less it will later be checked in verify() and also throw an
- * exception.
+ * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
-class InvokedCount extends InvokedRecorder
+final class InvokedCount extends InvokedRecorder
 {
     /**
      * @var int
@@ -35,10 +30,7 @@ class InvokedCount extends InvokedRecorder
         $this->expectedCount = $expectedCount;
     }
 
-    /**
-     * @return bool
-     */
-    public function isNever()
+    public function isNever(): bool
     {
         return $this->expectedCount === 0;
     }

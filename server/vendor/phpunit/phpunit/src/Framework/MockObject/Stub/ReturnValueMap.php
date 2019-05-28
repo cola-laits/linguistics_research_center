@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -13,9 +13,9 @@ use PHPUnit\Framework\MockObject\Invocation;
 use PHPUnit\Framework\MockObject\Stub;
 
 /**
- * Stubs a method by returning a value from a map.
+ * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
-class ReturnValueMap implements Stub
+final class ReturnValueMap implements Stub
 {
     /**
      * @var array

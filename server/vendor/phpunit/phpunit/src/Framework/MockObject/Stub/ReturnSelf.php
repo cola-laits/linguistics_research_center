@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -15,10 +15,13 @@ use PHPUnit\Framework\MockObject\RuntimeException;
 use PHPUnit\Framework\MockObject\Stub;
 
 /**
- * Stubs a method by returning the current object.
+ * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
-class ReturnSelf implements Stub
+final class ReturnSelf implements Stub
 {
+    /**
+     * @throws RuntimeException
+     */
     public function invoke(Invocation $invocation)
     {
         if (!$invocation instanceof ObjectInvocation) {

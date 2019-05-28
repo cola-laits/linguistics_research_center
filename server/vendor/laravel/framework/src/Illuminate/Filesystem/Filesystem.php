@@ -115,7 +115,7 @@ class Filesystem
      * @param  string  $path
      * @param  string  $contents
      * @param  bool  $lock
-     * @return int
+     * @return int|bool
      */
     public function put($path, $contents, $lock = false)
     {
@@ -254,7 +254,7 @@ class Filesystem
 
         $mode = $this->isDirectory($target) ? 'J' : 'H';
 
-        exec("mklink /{$mode} \"{$link}\" \"{$target}\"");
+        exec("mklink /{$mode} ".escapeshellarg($link).' '.escapeshellarg($target));
     }
 
     /**

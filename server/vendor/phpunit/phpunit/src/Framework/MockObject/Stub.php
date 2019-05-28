@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -12,10 +12,7 @@ namespace PHPUnit\Framework\MockObject;
 use PHPUnit\Framework\SelfDescribing;
 
 /**
- * An object that stubs the process of a normal method for a mock object.
- *
- * The stub object will replace the code for the stubbed method and return a
- * specific value instead of the original value.
+ * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
 interface Stub extends SelfDescribing
 {

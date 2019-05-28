@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -11,7 +11,10 @@
 use PHPUnit\Framework\MockObject\Invocation\ObjectInvocation;
 use PHPUnit\Framework\TestCase;
 
-class ObjectInvocationTest extends TestCase
+/**
+ * @small
+ */
+final class ObjectInvocationTest extends TestCase
 {
     public function testConstructorRequiresClassAndMethodAndParametersAndObject(): void
     {

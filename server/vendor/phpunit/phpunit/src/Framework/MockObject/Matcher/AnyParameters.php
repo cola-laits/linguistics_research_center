@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -12,19 +12,16 @@ namespace PHPUnit\Framework\MockObject\Matcher;
 use PHPUnit\Framework\MockObject\Invocation as BaseInvocation;
 
 /**
- * Invocation matcher which allows any parameters to a method.
+ * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
-class AnyParameters extends StatelessInvocation
+final class AnyParameters extends StatelessInvocation
 {
     public function toString(): string
     {
         return 'with any parameters';
     }
 
-    /**
-     * @return bool
-     */
-    public function matches(BaseInvocation $invocation)
+    public function matches(BaseInvocation $invocation): bool
     {
         return true;
     }

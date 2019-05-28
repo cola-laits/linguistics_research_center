@@ -64,15 +64,15 @@ class AnnotationClassLoaderTest extends AbstractAnnotationLoaderTest
 
     public function provideTestSupportsChecksResource()
     {
-        return array(
-            array('class', true),
-            array('\fully\qualified\class\name', true),
-            array('namespaced\class\without\leading\slash', true),
-            array('ÿClassWithLegalSpecialCharacters', true),
-            array('5', false),
-            array('foo.foo', false),
-            array(null, false),
-        );
+        return [
+            ['class', true],
+            ['\fully\qualified\class\name', true],
+            ['namespaced\class\without\leading\slash', true],
+            ['ÿClassWithLegalSpecialCharacters', true],
+            ['5', false],
+            ['foo.foo', false],
+            [null, false],
+        ];
     }
 
     public function testSupportsChecksTypeIfSpecified()
@@ -105,8 +105,8 @@ class AnnotationClassLoaderTest extends AbstractAnnotationLoaderTest
         $routes = $this->loader->load(InvokableController::class);
         $this->assertCount(1, $routes);
         $this->assertEquals('/here', $routes->get('lol')->getPath());
-        $this->assertEquals(array('GET', 'POST'), $routes->get('lol')->getMethods());
-        $this->assertEquals(array('https'), $routes->get('lol')->getSchemes());
+        $this->assertEquals(['GET', 'POST'], $routes->get('lol')->getMethods());
+        $this->assertEquals(['https'], $routes->get('lol')->getSchemes());
     }
 
     public function testInvokableLocalizedControllerLoading()
@@ -136,9 +136,11 @@ class AnnotationClassLoaderTest extends AbstractAnnotationLoaderTest
     public function testDefaultValuesForMethods()
     {
         $routes = $this->loader->load(DefaultValueController::class);
-        $this->assertCount(1, $routes);
+        $this->assertCount(3, $routes);
         $this->assertEquals('/{default}/path', $routes->get('action')->getPath());
         $this->assertEquals('value', $routes->get('action')->getDefault('default'));
+        $this->assertEquals('Symfony', $routes->get('hello_with_default')->getDefault('name'));
+        $this->assertEquals('World', $routes->get('hello_without_default')->getDefault('name'));
     }
 
     public function testMethodActionControllers()
@@ -185,30 +187,30 @@ class AnnotationClassLoaderTest extends AbstractAnnotationLoaderTest
 
     public function testInvokableClassMultipleRouteLoad()
     {
-        $classRouteData1 = array(
+        $classRouteData1 = [
             'name' => 'route1',
             'path' => '/1',
-            'schemes' => array('https'),
-            'methods' => array('GET'),
-        );
+            'schemes' => ['https'],
+            'methods' => ['GET'],
+        ];
 
-        $classRouteData2 = array(
+        $classRouteData2 = [
             'name' => 'route2',
             'path' => '/2',
-            'schemes' => array('https'),
-            'methods' => array('GET'),
-        );
+            'schemes' => ['https'],
+            'methods' => ['GET'],
+        ];
 
         $reader = $this->getReader();
         $reader
             ->expects($this->exactly(1))
             ->method('getClassAnnotations')
-            ->will($this->returnValue(array(new RouteAnnotation($classRouteData1), new RouteAnnotation($classRouteData2))))
+            ->will($this->returnValue([new RouteAnnotation($classRouteData1), new RouteAnnotation($classRouteData2)]))
         ;
         $reader
             ->expects($this->once())
             ->method('getMethodAnnotations')
-            ->will($this->returnValue(array()))
+            ->will($this->returnValue([]))
         ;
         $loader = new class($reader) extends AnnotationClassLoader {
             protected function configureRoute(Route $route, \ReflectionClass $class, \ReflectionMethod $method, $annot)
@@ -274,6 +276,34 @@ class AnnotationClassLoaderTest extends AbstractAnnotationLoaderTest
         $this->assertCount(2, $routes);
         $this->assertEquals('/en/suffix', $routes->get('action.en')->getPath());
         $this->assertEquals('/nl/suffix', $routes->get('action.nl')->getPath());
+    }
+
+    /**
+     * @requires function mb_strtolower
+     */
+    public function testDefaultRouteName()
+    {
+        $methodRouteData = [
+            'name' => null,
+        ];
+
+        $reader = $this->getReader();
+        $reader
+            ->expects($this->once())
+            ->method('getMethodAnnotations')
+            ->will($this->returnValue([new RouteAnnotation($methodRouteData)]))
+        ;
+
+        $loader = new class($reader) extends AnnotationClassLoader {
+            protected function configureRoute(Route $route, \ReflectionClass $class, \ReflectionMethod $method, $annot)
+            {
+            }
+        };
+        $routeCollection = $loader->load('Symfony\Component\Routing\Tests\Fixtures\AnnotatedClasses\EncodingClass');
+
+        $defaultName = array_keys($routeCollection->all())[0];
+
+        $this->assertSame($defaultName, 'symfony_component_routing_tests_fixtures_annotatedclasses_encodingclass_routeàction');
     }
 
     public function testLoadingRouteWithPrefix()

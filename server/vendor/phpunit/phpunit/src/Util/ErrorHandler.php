@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -15,7 +15,7 @@ use PHPUnit\Framework\Error\Notice;
 use PHPUnit\Framework\Error\Warning;
 
 /**
- * Error handler that converts PHP errors and warnings to exceptions.
+ * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
 final class ErrorHandler
 {
@@ -29,6 +29,12 @@ final class ErrorHandler
         return self::$errorStack;
     }
 
+    /**
+     * @throws \PHPUnit\Framework\Error\Deprecated
+     * @throws \PHPUnit\Framework\Error\Error
+     * @throws \PHPUnit\Framework\Error\Notice
+     * @throws \PHPUnit\Framework\Error\Warning
+     */
     public static function handleError(int $errorNumber, string $errorString, string $errorFile, int $errorLine): bool
     {
         if (!($errorNumber & \error_reporting())) {
@@ -47,19 +53,19 @@ final class ErrorHandler
         }
 
         if ($errorNumber === \E_NOTICE || $errorNumber === \E_USER_NOTICE || $errorNumber === \E_STRICT) {
-            if (Notice::$enabled !== true) {
+            if (!Notice::$enabled) {
                 return false;
             }
 
             $exception = Notice::class;
         } elseif ($errorNumber === \E_WARNING || $errorNumber === \E_USER_WARNING) {
-            if (Warning::$enabled !== true) {
+            if (!Warning::$enabled) {
                 return false;
             }
 
             $exception = Warning::class;
         } elseif ($errorNumber === \E_DEPRECATED || $errorNumber === \E_USER_DEPRECATED) {
-            if (Deprecated::$enabled !== true) {
+            if (!Deprecated::$enabled) {
                 return false;
             }
 

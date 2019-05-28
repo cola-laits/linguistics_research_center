@@ -385,11 +385,11 @@ trait ReplacesAttributes
      */
     protected function replaceBefore($message, $attribute, $rule, $parameters)
     {
-        if (! (strtotime($parameters[0]))) {
+        if (! strtotime($parameters[0])) {
             return str_replace(':date', $this->getDisplayableAttribute($parameters[0]), $message);
         }
 
-        return str_replace(':date', $parameters[0], $message);
+        return str_replace(':date', $this->getDisplayableValue($attribute, $parameters[0]), $message);
     }
 
     /**
@@ -468,6 +468,24 @@ trait ReplacesAttributes
         }
 
         return $message;
+    }
+
+    /**
+     * Replace all place-holders for the ends_with rule.
+     *
+     * @param  string  $message
+     * @param  string  $attribute
+     * @param  string  $rule
+     * @param  array   $parameters
+     * @return string
+     */
+    protected function replaceEndsWith($message, $attribute, $rule, $parameters)
+    {
+        foreach ($parameters as &$parameter) {
+            $parameter = $this->getDisplayableValue($attribute, $parameter);
+        }
+
+        return str_replace(':values', implode(', ', $parameters), $message);
     }
 
     /**

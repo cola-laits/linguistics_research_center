@@ -131,11 +131,7 @@ class Translator extends NamespacedItemResolver implements TranslatorContract
         // If the line doesn't exist, we will return back the key which was requested as
         // that will be quick to spot in the UI if language keys are wrong or missing
         // from the application's language files. Otherwise we can return the line.
-        if (isset($line)) {
-            return $line;
-        }
-
-        return $key;
+        return $line ?? $key;
     }
 
     /**
@@ -244,6 +240,10 @@ class Translator extends NamespacedItemResolver implements TranslatorContract
         if (is_string($line)) {
             return $this->makeReplacements($line, $replace);
         } elseif (is_array($line) && count($line) > 0) {
+            foreach ($line as $key => $value) {
+                $line[$key] = $this->makeReplacements($value, $replace);
+            }
+
             return $line;
         }
     }

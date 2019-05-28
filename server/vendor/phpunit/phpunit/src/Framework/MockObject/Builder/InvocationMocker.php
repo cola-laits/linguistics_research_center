@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -17,14 +17,9 @@ use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\MockObject\Stub\MatcherCollection;
 
 /**
- * Builder for mocked or stubbed invocations.
- *
- * Provides methods for building expectations without having to resort to
- * instantiating the various matchers manually. These methods also form a
- * more natural way of reading the expectation. This class should be together
- * with the test case PHPUnit\Framework\MockObject\TestCase.
+ * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
-class InvocationMocker implements MethodNameMatch
+final class InvocationMocker implements MethodNameMatch
 {
     /**
      * @var MatcherCollection
@@ -51,38 +46,26 @@ class InvocationMocker implements MethodNameMatch
         $this->configurableMethods = $configurableMethods;
     }
 
-    /**
-     * @return Matcher
-     */
-    public function getMatcher()
+    public function getMatcher(): Matcher
     {
         return $this->matcher;
     }
 
-    /**
-     * @return InvocationMocker
-     */
-    public function id($id)
+    public function id($id): self
     {
         $this->collection->registerId($id, $this);
 
         return $this;
     }
 
-    /**
-     * @return InvocationMocker
-     */
-    public function will(Stub $stub)
+    public function will(Stub $stub): Identity
     {
         $this->matcher->setStub($stub);
 
         return $this;
     }
 
-    /**
-     * @return InvocationMocker
-     */
-    public function willReturn($value, ...$nextValues)
+    public function willReturn($value, ...$nextValues): self
     {
         if (\count($nextValues) === 0) {
             $stub = new Stub\ReturnStub($value);
@@ -97,30 +80,22 @@ class InvocationMocker implements MethodNameMatch
 
     /**
      * @param mixed $reference
-     *
-     * @return InvocationMocker
      */
-    public function willReturnReference(&$reference)
+    public function willReturnReference(&$reference): self
     {
         $stub = new Stub\ReturnReference($reference);
 
         return $this->will($stub);
     }
 
-    /**
-     * @return InvocationMocker
-     */
-    public function willReturnMap(array $valueMap)
+    public function willReturnMap(array $valueMap): self
     {
         $stub = new Stub\ReturnValueMap($valueMap);
 
         return $this->will($stub);
     }
 
-    /**
-     * @return InvocationMocker
-     */
-    public function willReturnArgument($argumentIndex)
+    public function willReturnArgument($argumentIndex): self
     {
         $stub = new Stub\ReturnArgument($argumentIndex);
 
@@ -129,50 +104,36 @@ class InvocationMocker implements MethodNameMatch
 
     /**
      * @param callable $callback
-     *
-     * @return InvocationMocker
      */
-    public function willReturnCallback($callback)
+    public function willReturnCallback($callback): self
     {
         $stub = new Stub\ReturnCallback($callback);
 
         return $this->will($stub);
     }
 
-    /**
-     * @return InvocationMocker
-     */
-    public function willReturnSelf()
+    public function willReturnSelf(): self
     {
         $stub = new Stub\ReturnSelf;
 
         return $this->will($stub);
     }
 
-    /**
-     * @return InvocationMocker
-     */
-    public function willReturnOnConsecutiveCalls(...$values)
+    public function willReturnOnConsecutiveCalls(...$values): self
     {
         $stub = new Stub\ConsecutiveCalls($values);
 
         return $this->will($stub);
     }
 
-    /**
-     * @return InvocationMocker
-     */
-    public function willThrowException(\Exception $exception)
+    public function willThrowException(\Throwable $exception): self
     {
         $stub = new Stub\Exception($exception);
 
         return $this->will($stub);
     }
 
-    /**
-     * @return InvocationMocker
-     */
-    public function after($id)
+    public function after($id): self
     {
         $this->matcher->setAfterMatchBuilderId($id);
 
@@ -183,10 +144,8 @@ class InvocationMocker implements MethodNameMatch
      * @param array ...$arguments
      *
      * @throws RuntimeException
-     *
-     * @return InvocationMocker
      */
-    public function with(...$arguments)
+    public function with(...$arguments): self
     {
         $this->canDefineParameters();
 
@@ -199,10 +158,8 @@ class InvocationMocker implements MethodNameMatch
      * @param array ...$arguments
      *
      * @throws RuntimeException
-     *
-     * @return InvocationMocker
      */
-    public function withConsecutive(...$arguments)
+    public function withConsecutive(...$arguments): self
     {
         $this->canDefineParameters();
 
@@ -213,10 +170,8 @@ class InvocationMocker implements MethodNameMatch
 
     /**
      * @throws RuntimeException
-     *
-     * @return InvocationMocker
      */
-    public function withAnyParameters()
+    public function withAnyParameters(): self
     {
         $this->canDefineParameters();
 
@@ -229,10 +184,8 @@ class InvocationMocker implements MethodNameMatch
      * @param Constraint|string $constraint
      *
      * @throws RuntimeException
-     *
-     * @return InvocationMocker
      */
-    public function method($constraint)
+    public function method($constraint): self
     {
         if ($this->matcher->hasMethodNameMatcher()) {
             throw new RuntimeException(

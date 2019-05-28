@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -9,11 +9,16 @@
  */
 namespace PHPUnit\Util;
 
+use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\TestCase;
 
-class JsonTest extends TestCase
+/**
+ * @small
+ */
+final class JsonTest extends TestCase
 {
     /**
+     * @testdox Canonicalize $actual
      * @dataProvider canonicalizeProvider
      *
      * @throws \PHPUnit\Framework\ExpectationFailedException
@@ -39,6 +44,7 @@ class JsonTest extends TestCase
     }
 
     /**
+     * @testdox Prettify $actual to $expected
      * @dataProvider prettifyProvider
      *
      * @throws \PHPUnit\Framework\Exception
@@ -60,11 +66,12 @@ class JsonTest extends TestCase
 
     /**
      * @dataProvider prettifyExceptionProvider
-     * @expectedException \PHPUnit\Framework\Exception
-     * @expectedExceptionMessage Cannot prettify invalid json
      */
     public function testPrettifyException($json): void
     {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Cannot prettify invalid json');
+
         Json::prettify($json);
     }
 

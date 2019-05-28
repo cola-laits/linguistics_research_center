@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -20,7 +20,7 @@ use PHPUnit\Runner\BaseTestRunner;
 use PHPUnit\Util\Printer;
 
 /**
- * Base class for printers of TestDox documentation.
+ * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
 abstract class ResultPrinter extends Printer implements TestListener
 {
@@ -217,6 +217,7 @@ abstract class ResultPrinter extends Printer implements TestListener
      * A test started.
      *
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws \ReflectionException
      */
     public function startTest(Test $test): void
     {

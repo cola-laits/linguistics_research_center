@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -10,7 +10,7 @@
 namespace PHPUnit\Framework;
 
 /**
- * Thrown when an assertion failed.
+ * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
 class AssertionFailedError extends Exception implements SelfDescribing
 {

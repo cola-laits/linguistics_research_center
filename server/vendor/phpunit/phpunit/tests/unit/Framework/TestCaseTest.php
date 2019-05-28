@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -12,9 +12,12 @@ namespace PHPUnit\Framework;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Runner\BaseTestRunner;
 
-class TestCaseTest extends TestCase
+/**
+ * @small
+ */
+final class TestCaseTest extends TestCase
 {
-    protected static $testStatic      = 456;
+    protected static $testStatic = 456;
 
     protected $backupGlobalsBlacklist = ['i', 'singleton'];
 
@@ -175,6 +178,7 @@ class TestCaseTest extends TestCase
         $this->assertTrue($test->assertPostConditions);
         $this->assertTrue($test->tearDown);
         $this->assertEquals(BaseTestRunner::STATUS_ERROR, $test->getStatus());
+        $this->assertSame('throw Exception in tearDown()', $test->getStatusMessage());
     }
 
     public function testExceptionInTestIsDetectedInTeardown(): void
@@ -654,11 +658,13 @@ class TestCaseTest extends TestCase
 
     /**
      * @requires PHP 7
-     * @expectedException \TypeError
      */
     public function testTypeErrorCanBeExpected(): void
     {
         $o = new \ClassWithScalarTypeDeclarations;
+
+        $this->expectException(\TypeError::class);
+
         $o->foo(null, null);
     }
 

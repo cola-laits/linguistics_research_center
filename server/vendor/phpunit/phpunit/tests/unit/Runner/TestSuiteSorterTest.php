@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -13,9 +13,11 @@ use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\TestSuite;
 
 /**
+ * @testdox Reordering test execution
  * @group test-reorder
+ * @small
  */
-class TestSuiteSorterTest extends TestCase
+final class TestSuiteSorterTest extends TestCase
 {
     /**
      * Constants to improve clarity of @dataprovider
@@ -55,6 +57,7 @@ class TestSuiteSorterTest extends TestCase
     }
 
     /**
+     * @testdox Empty TestSuite not affected (order=$order, resolve=$resolveDependencies, defects=$orderDefects)
      * @dataProvider suiteSorterOptionPermutationsProvider
      */
     public function testShouldNotAffectEmptyTestSuite(int $order, bool $resolveDependencies, int $orderDefects): void
@@ -180,7 +183,7 @@ class TestSuiteSorterTest extends TestCase
 
         $suite->addTestSuite(\MultiDependencyTest::class);
 
-        $cache = new TestResultCache;
+        $cache = new DefaultTestResultCache;
 
         foreach ($testTimes as $testName => $time) {
             $cache->setTime(\MultiDependencyTest::class . '::' . $testName, $time);
@@ -280,7 +283,7 @@ class TestSuiteSorterTest extends TestCase
         $suite = new TestSuite;
         $suite->addTestSuite(\MultiDependencyTest::class);
 
-        $cache = new TestResultCache;
+        $cache = new DefaultTestResultCache;
 
         foreach ($runState as $testName => $data) {
             $cache->setState(\MultiDependencyTest::class . '::' . $testName, $data['state']);

@@ -1,7 +1,7 @@
 --TEST--
 Mock method and call original method that has a return type of void
 --FILE--
-<?php
+<?php declare(strict_types=1);
 class Foo
 {
     public function bar():void{}
@@ -37,7 +37,7 @@ print $code;
 
         $this->__phpunit_getInvocationMocker()->invoke(
             new \PHPUnit\Framework\MockObject\Invocation\ObjectInvocation(
-                'Foo', 'bar', $__phpunit_arguments, 'void', $this, false
+                'Foo', 'bar', $__phpunit_arguments, 'void', $this, false, true
             )
         );
 

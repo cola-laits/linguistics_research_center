@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -20,8 +20,10 @@ use Throwable;
  *
  * Unlike PHPUnit\Framework_\Exception, the complete stack of previous Exceptions
  * is processed.
+ *
+ * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
-class ExceptionWrapper extends Exception
+final class ExceptionWrapper extends Exception
 {
     /**
      * @var string
@@ -43,6 +45,7 @@ class ExceptionWrapper extends Exception
 
     /**
      * @throws \InvalidArgumentException
+     * @throws \ReflectionException
      */
     public function __toString(): string
     {

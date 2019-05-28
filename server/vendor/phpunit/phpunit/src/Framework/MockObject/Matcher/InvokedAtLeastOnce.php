@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -12,12 +12,9 @@ namespace PHPUnit\Framework\MockObject\Matcher;
 use PHPUnit\Framework\ExpectationFailedException;
 
 /**
- * Invocation matcher which checks if a method has been invoked at least one
- * time.
- *
- * If the number of invocations is 0 it will throw an exception in verify.
+ * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
-class InvokedAtLeastOnce extends InvokedRecorder
+final class InvokedAtLeastOnce extends InvokedRecorder
 {
     public function toString(): string
     {

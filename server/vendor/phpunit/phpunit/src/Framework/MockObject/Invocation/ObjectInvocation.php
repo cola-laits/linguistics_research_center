@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -10,9 +10,9 @@
 namespace PHPUnit\Framework\MockObject\Invocation;
 
 /**
- * Represents a non-static invocation.
+ * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
-class ObjectInvocation extends StaticInvocation
+final class ObjectInvocation extends StaticInvocation
 {
     /**
      * @var object
@@ -26,9 +26,9 @@ class ObjectInvocation extends StaticInvocation
      * @param object $object
      * @param bool   $cloneObjects
      */
-    public function __construct($className, $methodName, array $parameters, $returnType, $object, $cloneObjects = false)
+    public function __construct($className, $methodName, array $parameters, $returnType, $object, $cloneObjects = false, bool $proxiedCall = false)
     {
-        parent::__construct($className, $methodName, $parameters, $returnType, $cloneObjects);
+        parent::__construct($className, $methodName, $parameters, $returnType, $cloneObjects, $proxiedCall);
 
         $this->object = $object;
     }

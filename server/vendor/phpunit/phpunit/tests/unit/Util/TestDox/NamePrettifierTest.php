@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -11,7 +11,11 @@ namespace PHPUnit\Util\TestDox;
 
 use PHPUnit\Framework\TestCase;
 
-class NamePrettifierTest extends TestCase
+/**
+ * @group testdox
+ * @small
+ */
+final class NamePrettifierTest extends TestCase
 {
     /**
      * @var NamePrettifier

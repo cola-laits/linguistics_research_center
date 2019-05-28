@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -11,7 +11,10 @@
 use PHPUnit\Framework\MockObject\Stub\MatcherCollection;
 use PHPUnit\Framework\TestCase;
 
-class InvocationMockerTest extends TestCase
+/**
+ * @small
+ */
+final class InvocationMockerTest extends TestCase
 {
     public function testWillReturnWithOneValue(): void
     {

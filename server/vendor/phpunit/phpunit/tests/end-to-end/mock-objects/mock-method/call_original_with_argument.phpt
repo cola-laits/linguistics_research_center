@@ -1,7 +1,7 @@
 --TEST--
 Mock method and call original method with argument
 --FILE--
-<?php
+<?php declare(strict_types=1);
 class Foo
 {
     private function bar($arg){}
@@ -37,7 +37,7 @@ private function bar($arg)
 
         $this->__phpunit_getInvocationMocker()->invoke(
             new \PHPUnit\Framework\MockObject\Invocation\ObjectInvocation(
-                'Foo', 'bar', $__phpunit_arguments, '', $this, false
+                'Foo', 'bar', $__phpunit_arguments, '', $this, false, true
             )
         );
 

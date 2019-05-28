@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 $header = <<<'EOF'
 This file is part of PHPUnit.
 
@@ -51,6 +51,7 @@ return PhpCsFixer\Config::create()
             'compact_nullable_typehint' => true,
             'concat_space' => ['spacing' => 'one'],
             'declare_equal_normalize' => ['space' => 'none'],
+            'declare_strict_types' => true,
             'dir_constant' => true,
             'elseif' => true,
             'encoding' => true,
@@ -141,6 +142,10 @@ return PhpCsFixer\Config::create()
                 ],
             ],
             'ordered_imports' => true,
+            'ordered_interfaces' => [
+                'direction' => 'ascend',
+                'order' => 'alpha',
+            ],
             'phpdoc_add_missing_param_annotation' => true,
             'phpdoc_align' => true,
             'phpdoc_annotation_without_dot' => true,
@@ -184,7 +189,7 @@ return PhpCsFixer\Config::create()
                     'property',
                 ],
             ],
-            //'void_return' => true,
+            'void_return' => true,
             'whitespace_after_comma_in_array' => true,
         ]
     )
@@ -195,4 +200,5 @@ return PhpCsFixer\Config::create()
         ->in(__DIR__ . '/src')
         ->in(__DIR__ . '/tests')
         ->notName('*.phpt')
+        ->notName('ClassWithAllPossibleReturnTypes.php')
     );

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -17,8 +17,10 @@ use SebastianBergmann\Comparator\ComparisonFailure;
  * The exception contains the error message and optionally a
  * SebastianBergmann\Comparator\ComparisonFailure which is used to
  * generate diff output of the failed expectations.
+ *
+ * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
-class ExpectationFailedException extends AssertionFailedError
+final class ExpectationFailedException extends AssertionFailedError
 {
     /**
      * @var ComparisonFailure

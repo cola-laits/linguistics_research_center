@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -16,7 +16,7 @@ use ReflectionObject;
 use SebastianBergmann\Exporter\Exporter;
 
 /**
- * Represents a static invocation.
+ * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
 class StaticInvocation implements Invocation, SelfDescribing
 {
@@ -71,16 +71,22 @@ class StaticInvocation implements Invocation, SelfDescribing
     private $isReturnTypeNullable = false;
 
     /**
+     * @var bool
+     */
+    private $proxiedCall;
+
+    /**
      * @param string $className
      * @param string $methodName
      * @param string $returnType
      * @param bool   $cloneObjects
      */
-    public function __construct($className, $methodName, array $parameters, $returnType, $cloneObjects = false)
+    public function __construct($className, $methodName, array $parameters, $returnType, $cloneObjects = false, bool $proxiedCall = false)
     {
-        $this->className  = $className;
-        $this->methodName = $methodName;
-        $this->parameters = $parameters;
+        $this->className   = $className;
+        $this->methodName  = $methodName;
+        $this->parameters  = $parameters;
+        $this->proxiedCall = $proxiedCall;
 
         if (\strtolower($methodName) === '__tostring') {
             $returnType = 'string';
@@ -138,7 +144,7 @@ class StaticInvocation implements Invocation, SelfDescribing
      */
     public function generateReturnValue()
     {
-        if ($this->isReturnTypeNullable) {
+        if ($this->isReturnTypeNullable || $this->proxiedCall) {
             return;
         }
 
@@ -237,8 +243,7 @@ class StaticInvocation implements Invocation, SelfDescribing
         }
 
         if ($cloneable === null && $object->hasMethod('__clone')) {
-            $method    = $object->getMethod('__clone');
-            $cloneable = $method->isPublic();
+            $cloneable = $object->getMethod('__clone')->isPublic();
         }
 
         if ($cloneable === null) {

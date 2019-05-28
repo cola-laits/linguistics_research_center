@@ -1,6 +1,9 @@
 kind: pipeline
 name: default
 
+concurrency:
+  limit: 1
+
 rancher_info: &rancher_info
   url: https://rancher.la.utexas.edu/
   access_key:

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -9,6 +9,9 @@
  */
 namespace PHPUnit\Framework;
 
-class SkippedTestSuiteError extends AssertionFailedError implements SkippedTest
+/**
+ * @internal This class is not covered by the backward compatibility promise for PHPUnit
+ */
+final class SkippedTestSuiteError extends AssertionFailedError implements SkippedTest
 {
 }

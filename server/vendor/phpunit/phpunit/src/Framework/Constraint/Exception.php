@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -12,7 +12,7 @@ namespace PHPUnit\Framework\Constraint;
 use PHPUnit\Util\Filter;
 use Throwable;
 
-class Exception extends Constraint
+final class Exception extends Constraint
 {
     /**
      * @var string
@@ -21,8 +21,6 @@ class Exception extends Constraint
 
     public function __construct(string $className)
     {
-        parent::__construct();
-
         $this->className = $className;
     }
 
@@ -55,6 +53,8 @@ class Exception extends Constraint
      * cases. This method should return the second part of that sentence.
      *
      * @param mixed $other evaluated value or object
+     *
+     * @throws \ReflectionException
      */
     protected function failureDescription($other): string
     {
