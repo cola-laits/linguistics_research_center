@@ -11,7 +11,7 @@ rancher_info: &rancher_info
   secret_key:
     from_secret: rancher_secret_key
   confirm: true
-timeout: 180
+  timeout: 180
 
 test_when_condition: &test_when_condition
   when:
