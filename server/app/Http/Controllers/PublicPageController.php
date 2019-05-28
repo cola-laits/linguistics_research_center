@@ -32,4 +32,9 @@ class PublicPageController
         ]);
     }
 
+    public function lex() {
+        return view('lex', [
+            'content' => Page::whereSlug('lex')->first()->content
+        ]);
+    }
 }

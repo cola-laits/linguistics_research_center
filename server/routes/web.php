@@ -23,7 +23,7 @@ Route::get('eieol_text_list', 'PublicEieolController@eieol_text_list');
 Route::get('eieol_text_toc/{series_id}', 'PublicEieolController@eieol_text_toc');
 Route::get('eieol_text/{series_id}', 'PublicEieolController@eieol_text');
 
-Route::get('lex', 'PublicLexController@lex');
+Route::get('lex', 'PublicPageController@lex');
 
 Route::get('lex_pokorny', function() {return redirect('lex/master', 301);});
 Route::get('lex_semantic_field/{field_id}', array('as' => 'field_redirect', 'uses' =>'PublicLexController@lex_semantic_field_redirect'));
