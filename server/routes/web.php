@@ -1,44 +1,44 @@
 <?php
 
-Route::get('/', 'PublicController@index');
-Route::get('index', 'PublicController@index');
+Route::get('/', 'PublicPageController@index');
+Route::get('index', 'PublicPageController@index');
 
-Route::get('guides/eieol_author', 'PublicController@guide_ea');
-Route::get('guides/eieol_user', 'PublicController@guide_eu');
-Route::get('guides/lex_user', 'PublicController@guide_lu');
+Route::get('guides/eieol_author', 'PublicPageController@guide_ea');
+Route::get('guides/eieol_user', 'PublicPageController@guide_eu');
+Route::get('guides/lex_user', 'PublicPageController@guide_lu');
 
-Route::get('eieol', 'PublicController@eieol');
+Route::get('eieol', 'PublicEieolController@eieol');
 
-Route::get('eieol_lesson/{series_id}', 'PublicController@eieol_lesson_redirect');
-Route::get('eieol/{series_name}', 'PublicController@eieol_first_lesson');
-Route::get('eieol/{series_name}/{lesson_order}', 'PublicController@eieol_lesson');
+Route::get('eieol_lesson/{series_id}', 'PublicEieolController@eieol_lesson_redirect');
+Route::get('eieol/{series_name}', 'PublicEieolController@eieol_first_lesson');
+Route::get('eieol/{series_name}/{lesson_order}', 'PublicEieolController@eieol_lesson');
 
-Route::get('eieol_printable/{series_id}', 'PublicController@eieol_printable');
-Route::get('eieol_toc/{series_id}', 'PublicController@eieol_toc');
-Route::get('eieol_master_gloss/{series_id}/{language_id}', 'PublicController@eieol_master_gloss');
-Route::get('eieol_base_form_dictionary/{series_id}/{language_id}', 'PublicController@eieol_base_form_dictionary');
-Route::get('eieol_english_meaning_index/{series_id}/{language_id}', 'PublicController@eieol_english_meaning_index');
+Route::get('eieol_printable/{series_id}', 'PublicEieolController@eieol_printable');
+Route::get('eieol_toc/{series_id}', 'PublicEieolController@eieol_toc');
+Route::get('eieol_master_gloss/{series_id}/{language_id}', 'PublicEieolController@eieol_master_gloss');
+Route::get('eieol_base_form_dictionary/{series_id}/{language_id}', 'PublicEieolController@eieol_base_form_dictionary');
+Route::get('eieol_english_meaning_index/{series_id}/{language_id}', 'PublicEieolController@eieol_english_meaning_index');
 
-Route::get('eieol_text_list', 'PublicController@eieol_text_list');
-Route::get('eieol_text_toc/{series_id}', 'PublicController@eieol_text_toc');
-Route::get('eieol_text/{series_id}', 'PublicController@eieol_text');
+Route::get('eieol_text_list', 'PublicEieolController@eieol_text_list');
+Route::get('eieol_text_toc/{series_id}', 'PublicEieolController@eieol_text_toc');
+Route::get('eieol_text/{series_id}', 'PublicEieolController@eieol_text');
 
-Route::get('lex', 'PublicController@lex');
+Route::get('lex', 'PublicLexController@lex');
 
 Route::get('lex_pokorny', function() {return redirect('lex/master', 301);});
-Route::get('lex_semantic_field/{field_id}', array('as' => 'field_redirect', 'uses' =>'PublicController@lex_semantic_field_redirect'));
+Route::get('lex_semantic_field/{field_id}', array('as' => 'field_redirect', 'uses' =>'PublicLexController@lex_semantic_field_redirect'));
 Route::get('lex_reflex/{etyma_id}', function() {return redirect('lex/languages/', 301);});
 Route::get('lex_semantic', function() {return redirect('lex/semantic/', 301);});
-Route::get('lex_lang_reflexes/{language_id}', array('as' => 'reflexes_redirect', 'uses' =>'PublicController@lex_lang_reflexes_redirect'));
+Route::get('lex_lang_reflexes/{language_id}', array('as' => 'reflexes_redirect', 'uses' =>'PublicLexController@lex_lang_reflexes_redirect'));
 Route::get('lex_language', function() {return redirect('lex/languages/', 301);});
 
-Route::get('lex/master', 'PublicController@lex_pokorny');
-Route::get('lex/master/{pokorny_number}', 'PublicController@lex_reflex');
-Route::get('lex/languages', 'PublicController@lex_language');
-Route::get('lex/languages/{language_abbr}', 'PublicController@lex_lang_reflexes');
-Route::get('lex/semantic', 'PublicController@lex_semantic');
-Route::get('lex/semantic/category/{cat_abbr}', 'PublicController@lex_semantic_category');
-Route::get('lex/semantic/field/{field_abbr}', 'PublicController@lex_semantic_field');
+Route::get('lex/master', 'PublicLexController@lex_pokorny');
+Route::get('lex/master/{pokorny_number}', 'PublicLexController@lex_reflex');
+Route::get('lex/languages', 'PublicLexController@lex_language');
+Route::get('lex/languages/{language_abbr}', 'PublicLexController@lex_lang_reflexes');
+Route::get('lex/semantic', 'PublicLexController@lex_semantic');
+Route::get('lex/semantic/category/{cat_abbr}', 'PublicLexController@lex_semantic_category');
+Route::get('lex/semantic/field/{field_abbr}', 'PublicLexController@lex_semantic_field');
 
 Route::get('/admin', 'AdminController@index');
 
