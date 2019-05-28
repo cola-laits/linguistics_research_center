@@ -45,14 +45,13 @@ class PublicEieolController
         $series = EieolSeries::findByIdOrSlug($series_name);
 
         $data = [
-            'series' => $series
+            'series' => $series,
+            'printable' => False,
+            'clickable' => True,
         ];
-        $data['printable'] = False;
 
         if ($series['use_old_gloss_ui']) {
             $data['clickable'] = False;
-        } else {
-            $data['clickable'] = True;
         }
 
         $data['lesson'] = EieolLesson::with('grammars', 'language')
@@ -68,11 +67,10 @@ class PublicEieolController
         $series = EieolSeries::findByIdOrSlug($series_id);
 
         $data = [
-            'series' => $series
+            'series' => $series,
+            'printable' => True,
+            'clickable' => False,
         ];
-
-        $data['printable'] = True;
-        $data['clickable'] = False;
 
         $html = view('printable_header_layout');
 
@@ -111,11 +109,10 @@ class PublicEieolController
         $series = EieolSeries::findByIdOrSlug($series_id);
 
         $data = [
-            'series' => $series
+            'series' => $series,
+            'language' => EieolLanguage::find($language_id),
+            'glosses' => [],
         ];
-
-        $data['language'] = EieolLanguage::find($language_id);
-        $data['glosses'] = [];
 
         $lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word.language')
             ->where('series_id', '=', $series->id)
@@ -169,11 +166,10 @@ class PublicEieolController
         $series = EieolSeries::findByIdOrSlug($series_id);
 
         $data = [
-            'series' => $series
+            'series' => $series,
+            'language' => EieolLanguage::findOrFail($language_id),
+            'head_words' => [],
         ];
-
-        $data['language'] = EieolLanguage::findOrFail($language_id);
-        $data['head_words'] = array();
 
         $lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word.language', 'glossed_texts.glosses.elements.head_word.etyma')
             ->where('series_id', '=', $series->id)
@@ -241,10 +237,10 @@ class PublicEieolController
         $series = EieolSeries::findByIdOrSlug($series_id);
 
         $data = [
-            'series' => $series
+            'series' => $series,
+            'language' => EieolLanguage::find($language_id),
+            'keywords' => [],
         ];
-
-        $data['language'] = EieolLanguage::find($language_id);
 
         $lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word.language')
             ->where('series_id', '=', $series->id)
@@ -252,8 +248,6 @@ class PublicEieolController
             ->select(array('id', 'title', 'order'))
             ->get()
             ->sortBy('order');
-
-        $data['keywords'] = array();
 
         //loop through all the lessons, glossed texts and glosses to group like keywords
 
@@ -321,6 +315,7 @@ class PublicEieolController
         $data = [
             'series' => EieolSeries::findByIdOrSlug($series_id)
         ];
+
         if ($request->has('language_id')) {
             $language = EieolLanguage::find($request->get('language_id'));
             $data['language_id'] = $request->get('language_id');
@@ -337,6 +332,7 @@ class PublicEieolController
         $data = [
             'series' => EieolSeries::findByIdOrSlug($series_id)
         ];
+
         if ($request->get('language_id') != 0) {
             $language = EieolLanguage::find($request->get('language_id'));
             $data['series']['title'] .= ' (' . $language['language'] . ')';
