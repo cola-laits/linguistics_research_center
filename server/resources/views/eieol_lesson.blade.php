@@ -51,6 +51,16 @@
         });
 
     });//document ready
+
+    var old_audio_id = '';
+    function playAudio(id) {
+        if (old_audio_id && document.getElementById(old_audio_id)) {
+            document.getElementById(old_audio_id).pause();
+            document.getElementById(old_audio_id).currentTime=0;
+        }
+        document.getElementById(id).play();
+        old_audio_id = id;
+    }
 </script>
 
 @endif
@@ -60,7 +70,13 @@
 <div class="skinny">
 @foreach ($lesson->glossed_texts as $glossed_text)
     @if ($clickable)
-        <div class="glossed_text"><span lang='{{$lesson->language->lang_attribute}}'>{!! $glossed_text->clickable_gloss_text() !!}</span></div>
+            <div class="glossed_text">
+                <span lang='{{$lesson->language->lang_attribute}}'>{!! $glossed_text->clickable_gloss_text() !!}</span>
+                @if (!$printable && $glossed_text->audio_url)
+                <a href="{{$glossed_text->audio_url}}" onclick="playAudio('audio_{{$glossed_text->id}}');return false;"><i class="fa fa-volume-up"></i></a>
+                <audio id="audio_{{$glossed_text->id}}" src="{{$glossed_text->audio_url}}"></audio>
+                @endif
+            </div>
         <div class="boxey">
             <a href="#" onclick="return false" class="expand_all"><i class='fa fa-plus-square-o'></i> Expand All</a>
             <ul>

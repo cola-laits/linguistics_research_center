@@ -12,14 +12,14 @@
         computed: {
             style() {
                 if (this.author_done) {
-                    return 'color:green';
+                    return 'cursor:pointer;color:green;';
                 }
                 if (typeof(this.author_comment)!=='undefined') {
                     if (this.author_comment.trim().length > 0 || this.admin_comment.trim().length > 0) {
-                        return 'color:red';
+                        return 'cursor:pointer;color:red;';
                     }
                 }
-                return '';
+                return 'cursor:pointer;';
             },
             icon_class() {
                 if (this.author_done) {

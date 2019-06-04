@@ -35,6 +35,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGlossedText whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGlossedText whereUpdatedBy($value)
  * @mixin \Eloquent
+ * @property string|null $audio_url
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGlossedText whereAudioUrl($value)
  */
 class EieolGlossedText extends Model
 {

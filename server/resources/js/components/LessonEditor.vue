@@ -163,6 +163,14 @@
                         </div>
 
                         <div class='form-group col-sm-1 comment_button'>
+                            <audio-icon v-model="glossed_text.audio_url"
+                                        :id="'glossed-text-audio-'+glossed_text.id"
+                                        :lang="lesson.language.lang_attribute"
+                                        :text="glossed_text.glossed_text"
+                                        @input="markFormDirty('glossed_text_form_'+glossed_text.id)"
+                            >
+                            </audio-icon>
+
                             <comment-icon :author_comment="glossed_text.author_comments"
                                           :admin_comment="glossed_text.admin_comments"
                                           :author_done="glossed_text.author_done"
@@ -764,7 +772,7 @@
                     });
             }
         },
-        mounted() {
+        created() {
             this.lesson = this.init_lesson;
             this.languages = this.init_languages;
             this.glossed_texts = this.init_glossed_texts;

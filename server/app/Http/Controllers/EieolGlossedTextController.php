@@ -38,6 +38,7 @@ class EieolGlossedTextController extends Controller
         $glossed_text->author_comments = Normalizer::normalize($request->get('author_comments'), Normalizer::FORM_C);
         $glossed_text->author_done = $request->get('author_done');
         $glossed_text->admin_comments = Normalizer::normalize($request->get('admin_comments'), Normalizer::FORM_C);
+        $glossed_text->audio_url = $request->get('audio_url');
         $glossed_text->created_by = Auth::user()->username;
         $glossed_text->updated_by = Auth::user()->username;
 
@@ -73,6 +74,7 @@ class EieolGlossedTextController extends Controller
         $glossed_text->author_comments = Normalizer::normalize($request->get('author_comments'), Normalizer::FORM_C);
         $glossed_text->author_done = $request->get('author_done');
         $glossed_text->admin_comments = Normalizer::normalize($request->get('admin_comments'), Normalizer::FORM_C);
+        $glossed_text->audio_url = $request->get('audio_url');
         $glossed_text->updated_by = Auth::user()->username;
 
         $glossed_text->save();
