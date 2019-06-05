@@ -189,6 +189,5 @@
 
 @section('menu')
     @include('menu_menu')
-    @include('menu_series', array('data'=>'data'))
     @include('menu_resources', array('data'=>'data'))
 @stop

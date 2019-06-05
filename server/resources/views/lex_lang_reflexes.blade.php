@@ -76,5 +76,4 @@ or <i>lie</i>, represent multiple reflexes derived from different PIE etyma.</p>
 
 @section('menu')
     @include('menu_menu')
-    @include('menu_lex')
 @stop

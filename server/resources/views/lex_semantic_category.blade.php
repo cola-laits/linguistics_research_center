@@ -49,6 +49,5 @@ may be added.</blockquote>
 
 @section('menu')
     @include('menu_menu')
-    @include('menu_lex')
     @include('menu_lex_semantic')
 @stop

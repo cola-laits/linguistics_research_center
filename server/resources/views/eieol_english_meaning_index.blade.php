@@ -49,6 +49,5 @@ index; unfortunately this may result in some words, in some contexts, being unfa
 
 @section('menu')
     @include('menu_menu')
-    @include('menu_series', array('data'=>'data'))
     @include('menu_resources', array('data'=>'data'))
 @stop
