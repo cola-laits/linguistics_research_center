@@ -68,5 +68,4 @@ page for links <i>from</i> reflexes (listed by IE language) <i>to</i> their PIE 
 
 @section('menu')
     @include('menu_menu')
-    @include('menu_lex')
 @stop

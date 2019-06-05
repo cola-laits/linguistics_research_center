@@ -64,6 +64,5 @@ the <a title="Spanish &amp; Portuguese Department website" href="https://liberal
 
 @section('menu')
     @include('menu_menu')
-    @include('menu_series', array('data'=>'data'))
     @include('menu_book_links')
 @stop

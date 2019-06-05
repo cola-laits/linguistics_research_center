@@ -21,5 +21,4 @@
 
 @section('menu')
 	@include('menu_menu')
-	@include('menu_lex')
 @stop

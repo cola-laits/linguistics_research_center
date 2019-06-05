@@ -33,6 +33,5 @@ links are provided to every appearance, in every numbered lesson, of the word/gl
 
 @section('menu')
     @include('menu_menu')
-    @include('menu_series', array('data'=>'data'))
     @include('menu_resources', array('data'=>'data'))
 @stop

@@ -51,6 +51,5 @@ of PIE etyma, in any number of IE languages, may be added at any time.</blockquo
 
 @section('menu')
     @include('menu_menu')
-    @include('menu_lex')
     @include('menu_lex_semantic')
 @stop
