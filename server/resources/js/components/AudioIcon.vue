@@ -1,6 +1,6 @@
 <template>
     <div>
-        <i v-if="!value" class="fa fa-volume-off" style="cursor:pointer;" v-b-modal="id+'-modal'"></i>
+        <i v-if="!value" class="fa fa-volume-off" style="cursor:pointer;color:#999;" v-b-modal="id+'-modal'"></i>
         <i v-if="value" class="fa fa-volume-up" style="cursor:pointer;" v-b-modal="id+'-modal'"></i>
         <b-modal :id="id+'-modal'"
                  ok-title="Update"
@@ -25,7 +25,7 @@
             <h5>Upload new audio</h5>
             <form enctype="multipart/form-data">
             <input ref="file" type="file" @change="file_change"><br>
-            <button type="button" class="btn btn-secondary" :disabled="!allow_upload" @click="upload">Upload Selected File</button>
+            <button type="button" :class="'btn '+(allow_upload?'btn-primary':'btn-secondary')" :disabled="!allow_upload" @click="upload">Upload Selected File</button>
             </form>
         </b-modal>
     </div>
