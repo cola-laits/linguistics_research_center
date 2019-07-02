@@ -1,5 +1,15 @@
 <template>
+    <div>
+        <button type="button" class="btn btn-sm btn-warning">
+            Issues <span class="badge badge-light">9</span>
+        </button>
+
+        <button type="button" class="btn btn-sm btn-secondary">
+            Issues <span class="badge badge-light">0</span>
+        </button>
+        <!-- FIXME -->
     <div :style="style" @click="$emit('click')"><i :class="icon_class"></i></div>
+    </div>
 </template>
 
 <script>
