@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Events\IssueSaved;
 use Illuminate\Database\Eloquent\Model;
 
 class Issue extends Model

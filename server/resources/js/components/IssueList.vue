@@ -1,7 +1,8 @@
 <template>
     <div>
         <div class="d-flex" style="padding-top:10px;padding-bottom:10px;">
-            <h2>Issues</h2>
+            <h2 v-show="!pointer">All Issues</h2>
+            <h2 v-show="pointer">Relevant Issues</h2>
             <div class="btn-group" style="padding-left:10px;">
                 <button type="button"
                         class="btn btn-sm"
@@ -45,7 +46,7 @@
 
 <script>
     export default {
-        props: [],
+        props: ['pointer'],
         data() { return {
             highlighted_issue_id:-1,
             issue_statuses: ['open'],
@@ -61,9 +62,11 @@
                 return this.$store.state.issues;
             },
             filtered_issues() {
-                return this.issues.filter(issue => {
-                    return this.issue_statuses.includes(issue.status);
-                });
+                let issues = this.issues.filter(issue => this.issue_statuses.includes(issue.status));
+                if (this.pointer) {
+                    issues = issues.filter(issue => issue.pointer===this.pointer);
+                }
+                return issues;
             },
             sorted_issues() {
                 return this.filtered_issues.sort((a,b) => {

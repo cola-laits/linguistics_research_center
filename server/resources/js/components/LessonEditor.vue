@@ -91,19 +91,10 @@
                 </div>
 
                 <div class='form-group col-sm-2'>
-                    <comment-icon :author_comment="lesson.author_comments"
-                                  :admin_comment="lesson.admin_comments"
-                                  :author_done="lesson.author_done"
-                                  @click="toggleCommentsOpen('lesson_main')"></comment-icon>
+                    <comment-icon :issue_pointer="'/lesson/'+lesson.id+'/intro_text'"></comment-icon>
                 </div>
 
             </div>
-
-            <comment-area v-model="lesson"
-                          :is_user_admin="is_user_admin"
-                          :show_comments_area="areCommentsOpen('lesson_main')"
-                          @input="markFormDirty('update_form')"
-            ></comment-area>
 
             <div class='row'>
                 <div class='form-group col-sm-10 offset-1'>
@@ -171,10 +162,7 @@
                             >
                             </audio-icon>
 
-                            <comment-icon :author_comment="glossed_text.author_comments"
-                                          :admin_comment="glossed_text.admin_comments"
-                                          :author_done="glossed_text.author_done"
-                                          @click="toggleCommentsOpen('glossed_text_'+glossed_text.id)"></comment-icon>
+                            <comment-icon :issue_pointer="'/lesson/'+lesson.id+'/glossed_text/'+glossed_text.id"></comment-icon>
                         </div>
 
                         <div class='form-group col-sm-1 bottom_button'>
@@ -188,13 +176,6 @@
                         </div>
 
                     </div>
-
-
-                    <comment-area v-model="glossed_texts[glossed_text_ix]"
-                                  :is_user_admin="is_user_admin"
-                                  :show_comments_area="areCommentsOpen('glossed_text_'+glossed_text.id)"
-                                  @input="markFormDirty('glossed_text_form_'+glossed_text.id)"
-                    ></comment-area>
 
                 </form>
 
@@ -254,9 +235,7 @@
                                 </div>
 
                                 <div class='col-sm-1 bottom_button gloss_comment_indicator'>
-                                    <comment-icon :author_comment="gloss.author_comments"
-                                                  :admin_comment="gloss.admin_comments"
-                                                  :author_done="gloss.author_done"></comment-icon>
+                                    <comment-icon :issue_pointer="'/lesson/'+lesson.id+'/gloss/'+gloss.id"></comment-icon>
                                 </div>
 
                                 <div class='col-sm-1 bottom_button'>
@@ -337,21 +316,9 @@
                     <div id="lesson_translation_error" class="alert-danger errors"></div>
                 </div>
                 <div class='form-group col-sm-1'>
-                    <comment-icon :author_comment="lesson.translation_author_comments"
-                                  :admin_comment="lesson.translation_admin_comments"
-                                  :author_done="lesson.translation_author_done"
-                                  @click="toggleCommentsOpen('lesson_translation')"></comment-icon>
+                    <comment-icon :issue_pointer="'/lesson/'+lesson.id+'/lesson_translation'"></comment-icon>
                 </div>
             </div>
-
-            <comment-area v-model="lesson"
-                          :is_user_admin="is_user_admin"
-                          author_comments_prop_name="translation_author_comments"
-                          author_done_prop_name="translation_author_done"
-                          admin_comments_prop_name="translation_admin_comments"
-                          :show_comments_area="areCommentsOpen('lesson_translation')"
-                          @input="markFormDirty('update_translation_form')"
-            ></comment-area>
 
             <div class='row'>
                 <div class='form-group col-sm-2 offset-1'>
@@ -415,19 +382,10 @@
                         </div>
 
                         <div class='form-group col-sm-1 comment_button'>
-                            <comment-icon :author_comment="grammar.author_comments"
-                                          :admin_comment="grammar.admin_comments"
-                                          :author_done="grammar.author_done"
-                                          @click="toggleCommentsOpen('grammar_'+grammar.id)"></comment-icon>
+                            <comment-icon :issue_pointer="'/lesson/'+lesson.id+'/grammar/'+grammar.id"></comment-icon>
                         </div>
 
                     </div>
-
-                    <comment-area v-model="grammars[grammar_ix]"
-                                  :is_user_admin="is_user_admin"
-                                  :show_comments_area="areCommentsOpen('grammar_'+grammar.id)"
-                                  @input="markFormDirty('grammar_form_'+grammar.id)"
-                    ></comment-area>
 
                     <div class='row'>
                         <div class='form-group col-sm-10 offset-1'>
@@ -554,18 +512,6 @@
             },
             isFormDirty(id) {
                 return this.dirty_form_ids.indexOf(id) !== -1;
-            },
-            // FIXME use https://bootstrap-vue.js.org/docs/components/collapse/ for this
-            toggleCommentsOpen(id) {
-                let ix = this.open_comment_ids.indexOf(id);
-                if (ix !== -1) {
-                    this.open_comment_ids.splice(ix, 1);
-                } else {
-                    this.open_comment_ids.push(id);
-                }
-            },
-            areCommentsOpen(id) {
-                return this.open_comment_ids.indexOf(id) !== -1;
             },
             save_lesson() {
                 $(".spinner").show();

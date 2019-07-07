@@ -19,6 +19,14 @@ const getters = {
 const mutations = {
     setIssues(state, issues) {
         state.issues = issues;
+    },
+    updateIssue(issue) {
+        let found_posn = this.state.issues.findIndex(this_issue => this_issue.id === issue.id);
+        if (found_posn === -1) {
+            this.state.issues.push(issue);
+        } else {
+            this.state.issues.splice(found_posn, 1, issue);
+        }
     }
 };
 
@@ -31,6 +39,9 @@ const actions = {
             .then(response => {
                 commit('setIssues', response.data.issues);
             });
+    },
+    updateIssue({commit}, issue) {
+        commit('updateIssue', issue);
     }
 };
 

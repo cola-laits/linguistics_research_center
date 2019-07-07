@@ -1,7 +1,6 @@
 <template>
     <div>
-        <router-link to="/issues"><<< back to issue list</router-link>
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12" style="margin-top:10px;margin-bottom:10px;">
                     <div style="display:flex;justify-content:space-between;" v-show="!title_editor_is_open">
@@ -39,8 +38,18 @@
                 <div class="sidebar-col col-md-6">
                     <h5>Comments</h5>
                     <div class="comment-card" v-for="comment in issue.comments">
-                        <div class="comment-card-header"><span style="font-weight: bold;">{{comment.user_logon}}</span> commented on {{formatTimestampForDisplay(comment.created_at)}}</div>
-                        <p v-html="comment.text"></p>
+                        <div v-if="comment.type==='open'">
+                            <div class="comment-card-header"><span style="font-weight: bold;">{{comment.user_logon}}</span> re-opened this issue on {{formatTimestampForDisplay(comment.created_at)}}</div>
+                            <p v-html="comment.text"></p>
+                        </div>
+                        <div v-else-if="comment.type==='close'">
+                            <div class="comment-card-header"><span style="font-weight: bold;">{{comment.user_logon}}</span> closed this issue on {{formatTimestampForDisplay(comment.created_at)}}</div>
+                            <p v-html="comment.text"></p>
+                        </div>
+                        <div v-else>
+                            <div class="comment-card-header"><span style="font-weight: bold;">{{comment.user_logon}}</span> commented on {{formatTimestampForDisplay(comment.created_at)}}</div>
+                            <p v-html="comment.text"></p>
+                        </div>
                     </div>
                     <div class="comment-card" v-show="is_issue_open">
                         <div class="comment-card-header">Add new comment:</div>
@@ -225,6 +234,7 @@
                     {'status':status}
                 ).then((response) => {
                     this.issue.status = response.data.issue.status;
+                    this.$store.dispatch('updateIssue', response.data.issue);
                 }).catch((error) => {
                     console.log(error);
                     alert("Error: Unable to change issue status.  Try again.");
@@ -236,7 +246,8 @@
 
 <style scoped>
     .sidebar-col {
-
+        max-height:500px;
+        overflow: scroll;
     }
 
     .description-card {
@@ -261,8 +272,6 @@
     .text-card {
         border:solid 1px #999999;
         padding: 5px;
-        height:500px;
-        overflow: scroll;
     }
 
     .highlighter-bin {

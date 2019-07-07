@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\EieolLanguage;
 use App\EieolLesson;
 use App\Issue;
+use App\IssueComment;
 use Illuminate\Http\Request;
 use \Auth;
 
@@ -100,7 +101,20 @@ class IssueController extends Controller
      */
     public function update(Request $request, Issue $issue)
     {
+        $new_comment_type = "";
+        if ($request->has('status') && $issue->status !== $request->get('status')) {
+            if ($request->get('status')==='open') { $new_comment_type='open';}
+            if ($request->get('status')==='closed') { $new_comment_type='close';}
+        }
         $issue->update($request->all());
+        if ($new_comment_type) {
+            $comment = new IssueComment();
+            $comment->issue_id = $issue->id;
+            $comment->type = $new_comment_type;
+            $comment->text = "";
+            $comment->user_logon = Auth::user()->username;
+            $comment->save();
+        }
         return response()->json(['issue'=>$issue]);
     }
 
