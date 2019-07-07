@@ -43,6 +43,7 @@ specialChars : [ {{ $lesson->language->custom_keyboard_layout }}]
 }"
     :init_custom_keyboard_layout="[ {{ $lesson->language->custom_keyboard_layout }} ]"
     :init_is_user_admin="{{Auth::user()->isAdmin()}}"
+    :focus="'{{app('request')->input('focus') ?: ''}}'"
 >
 
 </lesson-editor>

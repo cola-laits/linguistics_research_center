@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\EieolLanguage;
 use App\EieolLesson;
+use App\EieolSeries;
 use App\Issue;
 use App\IssueComment;
 use Illuminate\Http\Request;
@@ -22,9 +23,14 @@ class IssueController extends Controller
         if (Auth::user()->isAdmin()) {
             // show 'em all
         } else {
-            $issues = $issues->whereHas('comments', function ($query) {
-                $query->where('user_logon', Auth::user()->username);
-            });
+            $auths = Auth::user()->seriesAuthorizations();
+            $serieses = EieolSeries::whereIn('id', $auths)->get()->sortBy('order');
+            foreach ($serieses as $series) {
+                foreach ($series->lessons as $lesson) {
+                    $issues->orWhere('pointer', 'like', '/lesson/'.$lesson->id.'/%');
+                }
+            }
+            $issues = $issues->distinct();
         }
 
         return response()->json(['issues'=>$issues->get()]);

@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12" style="margin-top:10px;margin-bottom:10px;">
+        <div class="issue-container">
+            <div class="header">
+                <div style="margin-top:10px;margin-bottom:10px;">
                     <div style="display:flex;justify-content:space-between;" v-show="!title_editor_is_open">
                         <h4>#{{issue.id}}: {{issue.name}}</h4>
                         <button class="btn btn-sm btn-secondary" @click="openTitleEdit()">Edit</button>
@@ -21,58 +21,69 @@
                     <hr>
                 </div>
             </div>
-            <div class="row">
-                <div class="sidebar-col col-md-6">
-                    <h5>Text under discussion</h5>
-                    <p><a :href="getIssueLink(issue)" target="_blank">{{issue.pointer_desc}}</a></p>
-                    <div class="text-panel">
-                        <p class="text-card" ref="text_card" v-html="issue.text"></p>
-                        <div class="highlighter-bin" style="float:left;">
-                        <img src="/images/admin/highlighter-1.svg" class="highlighter-icon" @click="highlight(1)" title="highlight selected text blue">
-                        <img src="/images/admin/highlighter-2.svg" class="highlighter-icon" @click="highlight(2)" title="highlight selected text pink">
-                        <img src="/images/admin/highlighter-3.svg" class="highlighter-icon" @click="highlight(3)" title="highlight selected text yellow">
-                        <img src="/images/admin/highlighter-cancel.svg" class="highlighter-icon" @click="highlight(0)" title="un-highlight selected text">
-                        </div>
+            <div class="sidebar text-sidebar">
+                <h5>Text under discussion</h5>
+                <p><a :href="getIssueLink(issue)" target="_blank">{{issue.pointer_desc}}</a></p>
+                <div class="text-panel">
+                    <p class="text-card" ref="text_card" v-html="issue.text"></p>
+                    <div class="highlighter-bin" style="float:left;">
+                        <img src="/images/admin/highlighter-1.svg" class="highlighter-icon" @click="highlight(1)"
+                             title="highlight selected text blue">
+                        <img src="/images/admin/highlighter-2.svg" class="highlighter-icon" @click="highlight(2)"
+                             title="highlight selected text pink">
+                        <img src="/images/admin/highlighter-3.svg" class="highlighter-icon" @click="highlight(3)"
+                             title="highlight selected text yellow">
+                        <img src="/images/admin/highlighter-cancel.svg" class="highlighter-icon" @click="highlight(0)"
+                             title="un-highlight selected text">
                     </div>
                 </div>
-                <div class="sidebar-col col-md-6">
-                    <h5>Comments</h5>
-                    <div class="comment-card" v-for="comment in issue.comments">
-                        <div v-if="comment.type==='open'">
-                            <div class="comment-card-header"><span style="font-weight: bold;">{{comment.user_logon}}</span> re-opened this issue on {{formatTimestampForDisplay(comment.created_at)}}</div>
-                            <p v-html="comment.text"></p>
+            </div>
+            <div class="sidebar comment-sidebar">
+                <h5>Comments</h5>
+                <div class="comment-card" v-for="comment in issue.comments">
+                    <div v-if="comment.type==='open'">
+                        <div class="comment-card-header"><span style="font-weight: bold;">{{comment.user_logon}}</span>
+                            re-opened this issue on {{formatTimestampForDisplay(comment.created_at)}}
                         </div>
-                        <div v-else-if="comment.type==='close'">
-                            <div class="comment-card-header"><span style="font-weight: bold;">{{comment.user_logon}}</span> closed this issue on {{formatTimestampForDisplay(comment.created_at)}}</div>
-                            <p v-html="comment.text"></p>
+                        <p v-html="comment.text"></p>
+                    </div>
+                    <div v-else-if="comment.type==='close'">
+                        <div class="comment-card-header"><span style="font-weight: bold;">{{comment.user_logon}}</span>
+                            closed this issue on {{formatTimestampForDisplay(comment.created_at)}}
                         </div>
-                        <div v-else>
-                            <div class="comment-card-header"><span style="font-weight: bold;">{{comment.user_logon}}</span> commented on {{formatTimestampForDisplay(comment.created_at)}}</div>
-                            <p v-html="comment.text"></p>
+                        <p v-html="comment.text"></p>
+                    </div>
+                    <div v-else>
+                        <div class="comment-card-header"><span style="font-weight: bold;">{{comment.user_logon}}</span>
+                            commented on {{formatTimestampForDisplay(comment.created_at)}}
                         </div>
+                        <p v-html="comment.text"></p>
                     </div>
-                    <div class="comment-card" v-show="is_issue_open">
-                        <div class="comment-card-header">Add new comment:</div>
-                        <ck-editor v-model="new_comment_text"
-                                   :custom_config="ckeditor_customization"
-                        ></ck-editor>
-                    </div>
-                    <div>
-                        <button class="btn btn-primary float-right"
-                                style="margin:5px;"
-                                @click="addComment()"
-                        >Comment</button>
-                        <button class="btn btn-secondary float-right"
-                                style="margin:5px;"
-                                v-show="is_issue_open"
-                                @click="setIssueStatus('closed')"
-                        >Close</button>
-                        <button class="btn btn-secondary float-right"
-                                style="margin:5px;"
-                                v-show="!is_issue_open"
-                                @click="setIssueStatus('open')"
-                        >Re-Open</button>
-                    </div>
+                </div>
+                <div class="comment-card" v-show="is_issue_open">
+                    <div class="comment-card-header">Add new comment:</div>
+                    <ck-editor v-model="new_comment_text"
+                               :custom_config="ckeditor_customization"
+                    ></ck-editor>
+                </div>
+                <div>
+                    <button class="btn btn-primary float-right"
+                            style="margin:5px;"
+                            @click="addComment()"
+                    >Comment
+                    </button>
+                    <button class="btn btn-secondary float-right"
+                            style="margin:5px;"
+                            v-show="is_issue_open"
+                            @click="setIssueStatus('closed')"
+                    >Close
+                    </button>
+                    <button class="btn btn-secondary float-right"
+                            style="margin:5px;"
+                            v-show="!is_issue_open"
+                            @click="setIssueStatus('open')"
+                    >Re-Open
+                    </button>
                 </div>
             </div>
         </div>
@@ -135,6 +146,15 @@
                 })
             },
             getIssueLink(issue) {
+                if (issue && issue.pointer && issue.pointer.indexOf('/lesson/')===0) {
+                    // issue pointer is /lesson/(id)/something.
+                    // Turn that into the URL /admin2/eieol_lesson/(id)/edit?focus=something#/
+                    let temp = issue.pointer.substring(8);
+                    let lesson_id = temp.substring(0,temp.indexOf('/'));
+                    let part = temp.substring(temp.indexOf('/')+1);
+                    return '/admin2/eieol_lesson/'+lesson_id+'/edit?focus='+part+'#/';
+                }
+                return false;
                 /*
                 issue.pointer will be one of...
                 /lesson/id/intro_text
@@ -143,8 +163,6 @@
                 /lesson/id/gloss/id
                 /lesson/id/glossed_text/id
                  */
-                console.log(issue.pointer);
-                return "FIXME"; // FIXME
             },
             getIssueCreatedAtDate(issue) {
                 if (!issue.created_at) {
@@ -245,15 +263,18 @@
 </script>
 
 <style scoped>
-    .sidebar-col {
-        max-height:500px;
-        overflow: scroll;
+    .issue-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: min-content 1fr;
+        grid-template-areas: "header header" "textsidebar commentsidebar";
     }
 
-    .description-card {
-        border:solid 1px #333333;
-        padding: 5px;
-    }
+    .header { grid-area: header; }
+    .sidebar { max-height:70vh;overflow:scroll;padding-left:25px;padding-right:25px; }
+       /** FIXME sidebar max-height is a hack - figure out how to properly get remaining height on page */
+    .text-sidebar { grid-area:textsidebar; }
+    .comment-sidebar { grid-area:commentsidebar; }
 
     .comment-card {
         border:solid 1px #333333;

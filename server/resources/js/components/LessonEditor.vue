@@ -121,9 +121,9 @@
         <hr/>
         <h2>Glossed Texts</h2>
 
-        <div id ="glossed_texts">
+        <div id="glossed_texts">
             <div v-for="(glossed_text, glossed_text_ix) in glossed_texts">
-
+                <a :name="'glossed_text/'+glossed_text.id"></a>
                 <form method="POST"
                       accept-charset="UTF-8"
                       class="form glossed_text_form"
@@ -193,6 +193,7 @@
                     <p></p>
                     <div id="'glossed_text_'+glossed_text.id+'_glosses'">
                         <div v-for="(gloss, gloss_ix) in glossed_text.glosses">
+                            <a :name="'gloss/'+gloss.id"></a>
 
                             <div class='row'>
                                 <div class='col-sm-2'></div>
@@ -296,6 +297,7 @@
             <br/>
         </div>
 
+        <a name="lesson_translation"></a>
         <form method="POST" :action="'/admin2/eieol_lesson/update_translation/'+lesson.id"
               accept-charset="UTF-8"
               class="form"
@@ -339,6 +341,7 @@
         <h2>Grammar</h2>
         <div id ="grammars">
             <div v-for="(grammar, grammar_ix) in grammars">
+                <a :name="'grammar/'+grammar.id"></a>
                 <form method="POST" :action="grammar.id==='' ? '/admin2/eieol_grammar' : '/admin2/eieol_grammar/'+grammar.id"
                       accept-charset="UTF-8"
                       class="form grammar_form"
@@ -445,7 +448,8 @@
             'init_etymas',
             'init_ckeditor_customization',
             'init_custom_keyboard_layout',
-            'init_is_user_admin'
+            'init_is_user_admin',
+            'focus',
         ],
         data: function() {return {
             'lesson': {},
@@ -457,8 +461,6 @@
             'custom_keyboard_layout': {},
             'is_user_admin': false,
             'dirty_form_ids': [],
-            'open_comment_ids': [],
-            'toggled_gloss_ids': [],
             'modal_flash_title': '',
             'modal_flash_body': '',
             'delete_grammar_confirm_grammar_id': '',
@@ -727,6 +729,19 @@
             this.ckeditor_customization = this.init_ckeditor_customization;
             this.custom_keyboard_layout = this.init_custom_keyboard_layout;
             this.is_user_admin = this.init_is_user_admin;
-        }
+        },
+        mounted() {
+            if (this.focus) {
+                if (this.focus.indexOf('gloss/')===0) {
+                    this.glossed_texts.forEach(gt => {
+                        this.$root.$emit('bv::toggle::collapse', 'glosses-'+gt.id)
+                    });
+                }
+                const element = document.querySelector("a[name='"+this.focus+"']");
+                window.setTimeout(function() {
+                    element.scrollIntoView();
+                }, 500);
+            }
+        },
     }
 </script>
