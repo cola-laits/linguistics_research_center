@@ -91,19 +91,10 @@
                 </div>
 
                 <div class='form-group col-sm-2'>
-                    <comment-icon :author_comment="lesson.author_comments"
-                                  :admin_comment="lesson.admin_comments"
-                                  :author_done="lesson.author_done"
-                                  @click="toggleCommentsOpen('lesson_main')"></comment-icon>
+                    <comment-icon :issue_pointer="'/lesson/'+lesson.id+'/intro_text'"></comment-icon>
                 </div>
 
             </div>
-
-            <comment-area v-model="lesson"
-                          :is_user_admin="is_user_admin"
-                          :show_comments_area="areCommentsOpen('lesson_main')"
-                          @input="markFormDirty('update_form')"
-            ></comment-area>
 
             <div class='row'>
                 <div class='form-group col-sm-10 offset-1'>
@@ -130,9 +121,9 @@
         <hr/>
         <h2>Glossed Texts</h2>
 
-        <div id ="glossed_texts">
+        <div id="glossed_texts">
             <div v-for="(glossed_text, glossed_text_ix) in glossed_texts">
-
+                <a :name="'glossed_text/'+glossed_text.id"></a>
                 <form method="POST"
                       accept-charset="UTF-8"
                       class="form glossed_text_form"
@@ -171,10 +162,7 @@
                             >
                             </audio-icon>
 
-                            <comment-icon :author_comment="glossed_text.author_comments"
-                                          :admin_comment="glossed_text.admin_comments"
-                                          :author_done="glossed_text.author_done"
-                                          @click="toggleCommentsOpen('glossed_text_'+glossed_text.id)"></comment-icon>
+                            <comment-icon :issue_pointer="'/lesson/'+lesson.id+'/glossed_text/'+glossed_text.id"></comment-icon>
                         </div>
 
                         <div class='form-group col-sm-1 bottom_button'>
@@ -188,13 +176,6 @@
                         </div>
 
                     </div>
-
-
-                    <comment-area v-model="glossed_texts[glossed_text_ix]"
-                                  :is_user_admin="is_user_admin"
-                                  :show_comments_area="areCommentsOpen('glossed_text_'+glossed_text.id)"
-                                  @input="markFormDirty('glossed_text_form_'+glossed_text.id)"
-                    ></comment-area>
 
                 </form>
 
@@ -212,6 +193,7 @@
                     <p></p>
                     <div id="'glossed_text_'+glossed_text.id+'_glosses'">
                         <div v-for="(gloss, gloss_ix) in glossed_text.glosses">
+                            <a :name="'gloss/'+gloss.id"></a>
 
                             <div class='row'>
                                 <div class='col-sm-2'></div>
@@ -254,9 +236,7 @@
                                 </div>
 
                                 <div class='col-sm-1 bottom_button gloss_comment_indicator'>
-                                    <comment-icon :author_comment="gloss.author_comments"
-                                                  :admin_comment="gloss.admin_comments"
-                                                  :author_done="gloss.author_done"></comment-icon>
+                                    <comment-icon :issue_pointer="'/lesson/'+lesson.id+'/gloss/'+gloss.id"></comment-icon>
                                 </div>
 
                                 <div class='col-sm-1 bottom_button'>
@@ -317,6 +297,7 @@
             <br/>
         </div>
 
+        <a name="lesson_translation"></a>
         <form method="POST" :action="'/admin2/eieol_lesson/update_translation/'+lesson.id"
               accept-charset="UTF-8"
               class="form"
@@ -337,21 +318,9 @@
                     <div id="lesson_translation_error" class="alert-danger errors"></div>
                 </div>
                 <div class='form-group col-sm-1'>
-                    <comment-icon :author_comment="lesson.translation_author_comments"
-                                  :admin_comment="lesson.translation_admin_comments"
-                                  :author_done="lesson.translation_author_done"
-                                  @click="toggleCommentsOpen('lesson_translation')"></comment-icon>
+                    <comment-icon :issue_pointer="'/lesson/'+lesson.id+'/lesson_translation'"></comment-icon>
                 </div>
             </div>
-
-            <comment-area v-model="lesson"
-                          :is_user_admin="is_user_admin"
-                          author_comments_prop_name="translation_author_comments"
-                          author_done_prop_name="translation_author_done"
-                          admin_comments_prop_name="translation_admin_comments"
-                          :show_comments_area="areCommentsOpen('lesson_translation')"
-                          @input="markFormDirty('update_translation_form')"
-            ></comment-area>
 
             <div class='row'>
                 <div class='form-group col-sm-2 offset-1'>
@@ -372,6 +341,7 @@
         <h2>Grammar</h2>
         <div id ="grammars">
             <div v-for="(grammar, grammar_ix) in grammars">
+                <a :name="'grammar/'+grammar.id"></a>
                 <form method="POST" :action="grammar.id==='' ? '/admin2/eieol_grammar' : '/admin2/eieol_grammar/'+grammar.id"
                       accept-charset="UTF-8"
                       class="form grammar_form"
@@ -415,19 +385,10 @@
                         </div>
 
                         <div class='form-group col-sm-1 comment_button'>
-                            <comment-icon :author_comment="grammar.author_comments"
-                                          :admin_comment="grammar.admin_comments"
-                                          :author_done="grammar.author_done"
-                                          @click="toggleCommentsOpen('grammar_'+grammar.id)"></comment-icon>
+                            <comment-icon :issue_pointer="'/lesson/'+lesson.id+'/grammar/'+grammar.id"></comment-icon>
                         </div>
 
                     </div>
-
-                    <comment-area v-model="grammars[grammar_ix]"
-                                  :is_user_admin="is_user_admin"
-                                  :show_comments_area="areCommentsOpen('grammar_'+grammar.id)"
-                                  @input="markFormDirty('grammar_form_'+grammar.id)"
-                    ></comment-area>
 
                     <div class='row'>
                         <div class='form-group col-sm-10 offset-1'>
@@ -487,7 +448,8 @@
             'init_etymas',
             'init_ckeditor_customization',
             'init_custom_keyboard_layout',
-            'init_is_user_admin'
+            'init_is_user_admin',
+            'focus',
         ],
         data: function() {return {
             'lesson': {},
@@ -499,8 +461,6 @@
             'custom_keyboard_layout': {},
             'is_user_admin': false,
             'dirty_form_ids': [],
-            'open_comment_ids': [],
-            'toggled_gloss_ids': [],
             'modal_flash_title': '',
             'modal_flash_body': '',
             'delete_grammar_confirm_grammar_id': '',
@@ -554,18 +514,6 @@
             },
             isFormDirty(id) {
                 return this.dirty_form_ids.indexOf(id) !== -1;
-            },
-            // FIXME use https://bootstrap-vue.js.org/docs/components/collapse/ for this
-            toggleCommentsOpen(id) {
-                let ix = this.open_comment_ids.indexOf(id);
-                if (ix !== -1) {
-                    this.open_comment_ids.splice(ix, 1);
-                } else {
-                    this.open_comment_ids.push(id);
-                }
-            },
-            areCommentsOpen(id) {
-                return this.open_comment_ids.indexOf(id) !== -1;
             },
             save_lesson() {
                 $(".spinner").show();
@@ -781,6 +729,19 @@
             this.ckeditor_customization = this.init_ckeditor_customization;
             this.custom_keyboard_layout = this.init_custom_keyboard_layout;
             this.is_user_admin = this.init_is_user_admin;
-        }
+        },
+        mounted() {
+            if (this.focus) {
+                if (this.focus.indexOf('gloss/')===0) {
+                    this.glossed_texts.forEach(gt => {
+                        this.$root.$emit('bv::toggle::collapse', 'glosses-'+gt.id)
+                    });
+                }
+                const element = document.querySelector("a[name='"+this.focus+"']");
+                window.setTimeout(function() {
+                    element.scrollIntoView();
+                }, 500);
+            }
+        },
     }
 </script>

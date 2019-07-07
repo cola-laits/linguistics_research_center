@@ -341,15 +341,6 @@
                 </div>
             </div>
 
-            <div class='row'>
-                <div class='col-sm-12'>
-                    <comment-area v-model="gloss"
-                                  :is_user_admin="is_user_admin"
-                                  :show_comments_area="comments_are_open"
-                    ></comment-area>
-                </div>
-            </div>
-
         </form>
 
         <div slot="modal-footer"><!-- no ok or cancel buttons --></div>

@@ -42,10 +42,18 @@ Route::get('lex/semantic/field/{field_abbr}', 'PublicLexController@lex_semantic_
 
 Route::get('/admin', 'AdminController@index');
 
+Route::group(array('prefix'=> 'admin/api/v1', 'middleware' => 'auth'), function() {
+    Route::resource('/issue', 'IssueController');
+    Route::resource('/issue_comment', 'IssueCommentController');
+    Route::get('/issue/{id}/languages', 'IssueController@getLanguages');
+});
+
 Route::group(array('prefix'=> 'admin2', 'middleware' => 'auth'), function() {
     Route::get('admin_error', function() {
         return View::make('admin_error');
     });
+
+    Route::get('admin_app', 'AdminController@app');
 
     Route::resource('/eieol_series', 'EieolSeriesController');
     Route::put('/eieol_lesson/update_translation/{id}', 'EieolLessonController@update_translation');

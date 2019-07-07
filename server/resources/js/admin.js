@@ -252,7 +252,10 @@ var routes = [
             'fields':[
                 {name:'code',label:'Code', type:'text'},
                 {name:'display',label:'Display', type:'text'}
-            ]})}
+            ]})},
+
+    {path: '/issues', component:Vue.component('IssueList'), props:(route)=>({pointer:route.query.pointer})},
+    {path: '/issue/:id', component:Vue.component('IssueDisplay'), props:true}
 ];
 
 var router = new VueRouter({routes});
@@ -265,12 +268,26 @@ const admin_app = new Vue({
     store,
     data() {
         if (window.admin_app_initial_state) {
+            console.log("FIXME: initial_state is still being used.  Track it down and remove it.");
             return window.admin_app_initial_state;
         } else {
             return {};
         }
+    },
+    methods: {
+        countOpenIssues() {
+            return this.$store.getters.getIssuesByStatus('open').length;
+        },
+        getIssueBadgeClass() {
+            if (this.countOpenIssues() === 0) {
+                return 'd-none';
+            }
+            return 'badge-warning';
+        }
     }
 });
+
+store.dispatch('init');
 
 window.onhashchange = function() {
     // nav links to get here aren't expressed via the Vue <router-link>

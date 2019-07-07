@@ -1,36 +1,29 @@
 <template>
-    <div :style="style" @click="$emit('click')"><i :class="icon_class"></i></div>
+    <div>
+        <a class="btn btn-sm" :class="button_class"
+           :href="'/admin2/admin_app#/issues?pointer='+issue_pointer"
+        >
+            Issues <span class="badge badge-light">{{issue_count}}</span>
+        </a>
+    </div>
 </template>
 
 <script>
     export default {
         props: [
-            'author_comment',
-            'admin_comment',
-            'author_done'
+            'issue_pointer'
         ],
         computed: {
-            style() {
-                if (this.author_done) {
-                    return 'cursor:pointer;color:green;';
-                }
-                if (typeof(this.author_comment)!=='undefined') {
-                    if (this.author_comment.trim().length > 0 || this.admin_comment.trim().length > 0) {
-                        return 'cursor:pointer;color:red;';
-                    }
-                }
-                return 'cursor:pointer;';
+            issue_count() {
+                return this.$store.getters.getIssuesByStatus('open')
+                    .filter(issue => issue.pointer===this.issue_pointer)
+                    .length;
             },
-            icon_class() {
-                if (this.author_done) {
-                    return 'fa fa-comment';
+            button_class() {
+                if (this.issue_count>0) {
+                    return 'btn-warning';
                 }
-                if (typeof(this.author_comment)!=='undefined') {
-                    if (this.author_comment.trim().length > 0 || this.admin_comment.trim().length > 0) {
-                        return 'fa fa-comment';
-                    }
-                }
-                return 'fa fa-comment-o';
+                return 'btn-secondary';
             }
         },
         mounted() {

@@ -24,11 +24,15 @@
     </head>
     <body onload="top.scrollTo(0,0)">
 
+    <div v-cloak id="admin_app">
     <nav class="navbar navbar-light bg-light navbar-expand-md">
         <a class="navbar-brand" href="/admin">Admin</a>
 
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
+                @verbatim
+                <li class="nav-item"><a class="nav-link" href="/admin2/admin_app#/issues">Issues <span class="badge badge-pill" :class="getIssueBadgeClass()">{{countOpenIssues()}}</span></a></li>
+                @endverbatim
                 <li class="dropdown nav-item">
                     <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">EIEOL <span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -67,8 +71,9 @@
         </div>
     </nav>
 
-    <div class="container-fluid" v-cloak id="admin_app">
+    <div class="container-fluid">
         @yield('content')
+    </div>
     </div>
 
     <script src="/js/vue-search-select.js"></script>
