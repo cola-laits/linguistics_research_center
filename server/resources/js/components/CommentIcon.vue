@@ -5,6 +5,9 @@
         >
             Issues <span class="badge badge-light">{{issue_count}}</span>
         </a>
+        <a class="btn btn-sm btn-outline-secondary"
+            :href="'/admin2/admin_app#/issues/new?pointer='+issue_pointer"
+        >New Issue</a>
     </div>
 </template>
 

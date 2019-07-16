@@ -255,6 +255,7 @@ var routes = [
             ]})},
 
     {path: '/issues', component:Vue.component('IssueList'), props:(route)=>({pointer:route.query.pointer})},
+    {path: '/issues/new', component:Vue.component('IssueCreate')},
     {path: '/issue/:id', component:Vue.component('IssueDisplay'), props:true}
 ];
 

@@ -38,8 +38,14 @@ class IssueController extends Controller
 
     public function getLanguages($id) {
         $issue = Issue::findOrFail($id);
+        $pointer = $issue->pointer;
+        $languages = self::getLanguagesForPointer($pointer);
+        return response()->json(['languages'=>$languages]);
+    }
+
+    protected static function getLanguagesForPointer($pointer) {
         $re = '/^\/lesson\/(\d*)\/.*/m';
-        preg_match_all($re, $issue->pointer, $matches, PREG_SET_ORDER);
+        preg_match_all($re, $pointer, $matches, PREG_SET_ORDER);
         $lesson = EieolLesson::findOrFail($matches[0][1]);
         $language_id = $lesson->language_id;
         $language = EieolLanguage::findOrFail($language_id);
@@ -51,7 +57,7 @@ class IssueController extends Controller
             explode(',', $language->custom_keyboard_layout)
         );
         $languages = [$language];
-        return response()->json(['languages'=>$languages]);
+        return $languages;
     }
 
     /**
@@ -59,9 +65,17 @@ class IssueController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $pointer = $request->get('pointer');
+        $issue = new Issue();
+        $issue->name = 'New Issue';
+        $issue->text = Issue::getTextFromPointer($pointer);
+        $issue->pointer = $pointer;
+        $issue->pointer_desc = Issue::getPointerDescFromPointer($pointer);
+        $issue->status = 'open';
+        $languages = self::getLanguagesForPointer($pointer);
+        return response()->json(['issue'=>$issue, 'languages'=>$languages]);
     }
 
     /**
@@ -72,7 +86,26 @@ class IssueController extends Controller
      */
     public function store(Request $request)
     {
-        // add a 'created by' comment too
+        $issue = new Issue();
+        $issue->name = $request->get('name');
+        $issue->text = $request->get('text');
+        $issue->pointer = $request->get('pointer');
+        $issue->pointer_desc = $request->get('pointer_desc');
+        $issue->status = 'open';
+        $issue->save();
+
+        $comment_text = $request->get('comment_text');
+        if (!$comment_text) {
+            $comment_text = 'Issue created';
+        }
+        $comment = new IssueComment();
+        $comment->issue_id = $issue->id;
+        $comment->type = 'comment';
+        $comment->text = $comment_text;
+        $comment->user_logon = Auth::user()->username;
+        $comment->save();
+
+        return response()->json(['issue'=>$issue]);
     }
 
     /**

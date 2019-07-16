@@ -155,14 +155,6 @@
                     return '/admin2/eieol_lesson/'+lesson_id+'/edit?focus='+part+'#/';
                 }
                 return false;
-                /*
-                issue.pointer will be one of...
-                /lesson/id/intro_text
-                /lesson/id/lesson_translation
-                /lesson/id/grammar/id
-                /lesson/id/gloss/id
-                /lesson/id/glossed_text/id
-                 */
             },
             getIssueCreatedAtDate(issue) {
                 if (!issue.created_at) {
