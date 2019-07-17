@@ -126,6 +126,7 @@ class UnicodeifyHtml extends Command
     protected function clean_markup($str) {
         $str = str_replace("ЪӀ","Ꙑ", $str);
         $str = str_replace("ъӏ","ꙑ", $str);
+        $str = str_replace("ъі","ꙑ", $str);
         $str = str_replace("ӀА","Ꙗ", $str);
         $str = str_replace("ӏа","ꙗ", $str);
         $str = str_replace("ЈА","Ꙗ", $str);
