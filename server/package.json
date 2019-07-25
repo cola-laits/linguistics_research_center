@@ -11,6 +11,7 @@
   },
   "devDependencies": {
     "@johmun/vue-tags-input": "^2.0.1",
+    "@tinymce/tinymce-vue": "^2.1.0",
     "axios": "^0.18",
     "bootstrap": "^4.0.0",
     "bootstrap-vue": "^2.0.0-rc.16",
@@ -22,13 +23,12 @@
     "resolve-url-loader": "^2.3.1",
     "sass": "^1.15.2",
     "sass-loader": "^7.1.0",
+    "tinymce": "^5.0.12",
     "vue": "^2.5.17",
     "vue-bootstrap-typeahead": "^0.2.6",
     "vue-router": "^3.0.2",
     "vue-template-compiler": "^2.6.8",
     "vuex": "^3.1.0"
   },
-  "dependencies": {
-
-  }
+  "dependencies": {}
 }

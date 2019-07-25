@@ -13,17 +13,10 @@
                 <h5>Text under discussion</h5>
                 <p><a :href="getIssueLink(issue)" target="_blank">{{issue.pointer_desc}}</a></p>
                 <div class="text-panel">
-                    <p class="text-card" ref="text_card" v-html="issue.text"></p>
-                    <div class="highlighter-bin" style="float:left;">
-                        <img src="/images/admin/highlighter-1.svg" class="highlighter-icon" @click="highlight(1)"
-                             title="highlight selected text blue">
-                        <img src="/images/admin/highlighter-2.svg" class="highlighter-icon" @click="highlight(2)"
-                             title="highlight selected text pink">
-                        <img src="/images/admin/highlighter-3.svg" class="highlighter-icon" @click="highlight(3)"
-                             title="highlight selected text yellow">
-                        <img src="/images/admin/highlighter-cancel.svg" class="highlighter-icon" @click="highlight(0)"
-                             title="un-highlight selected text">
-                    </div>
+                    <tinymce-editor
+                        :init="tinymce_settings"
+                        v-model="issue.text"
+                    ></tinymce-editor>
                 </div>
             </div>
             <div class="sidebar comment-sidebar">
@@ -49,11 +42,30 @@
 </template>
 
 <script>
+    import tinymce from 'tinymce';
+    import 'tinymce/themes/silver';
+    import Editor from '@tinymce/tinymce-vue';
+
     export default {
+        components: {
+            'tinymce-editor': Editor
+        },
         data() { return {
             ckeditor_customization: {language_list : [],
                 language_lang : '',
                 specialChars : []
+            },
+            tinymce_settings: {
+                branding: false,
+                width:"100%",
+                height:"500px",
+                menubar: '',
+                toolbar: "backcolor",
+                init_instance_callback: function (editor) {
+                    editor.on('keydown', function (e) {
+                        e.preventDefault();
+                    });
+                }
             },
             issue: {},
             comment_text: '',
@@ -106,48 +118,6 @@
                 }
                 return false;
             },
-            highlight(marker_num) {
-                let sel = window.getSelection();
-                let range = sel.getRangeAt(0);
-
-                // FIXME error message if no range chosen
-
-                // Check to make sure you selected something that's highlightable
-                let rangeParent = range.commonAncestorContainer;
-                while (rangeParent !== null) {
-                    if (rangeParent.className === 'text-card') {
-                        break;
-                    }
-                    rangeParent = rangeParent.parentNode;
-                }
-                if (rangeParent === null) {
-                    // You're not in text-card; abort
-                    // FIXME error message alert here
-                    return;
-                }
-
-                let highlight_color = 'white';
-                if (marker_num===1) {
-                    highlight_color = '#a6fffe';
-                } else if (marker_num===2) {
-                    highlight_color = '#fea6ff';
-                } else if (marker_num===3) {
-                    highlight_color = '#e3ff50';
-                }
-
-                let html = '<span style="background-color:'+highlight_color+'">' + range + '</span>';
-                let el = document.createElement("div");
-                el.innerHTML = html;
-                let frag = document.createDocumentFragment(), node, lastNode;
-                while ( (node = el.firstChild) ) {
-                    lastNode = frag.appendChild(node);
-                }
-                range.deleteContents();
-                range.insertNode(frag);
-                sel.removeAllRanges();
-
-                this.issue.text = this.$refs['text_card'].innerHTML;
-            },
         }
     }
 </script>
@@ -178,20 +148,5 @@
 
     .text-panel {
         display: flex;
-    }
-
-    .text-card {
-        border:solid 1px #999999;
-        padding: 5px;
-    }
-
-    .highlighter-bin {
-        margin-left:5px;
-    }
-
-    .highlighter-icon {
-        margin-bottom:10px;
-        width:30px;
-        height:30px;
     }
 </style>
