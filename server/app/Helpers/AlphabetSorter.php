@@ -73,8 +73,10 @@ class AlphabetSorter {
             }
         }
 
-        //if you get here, you didn't match
-        throw new \RuntimeException("couldn't find a character in " . $string);
+        return [
+            'first' => mb_substr($string,0,1,'UTF-8'),
+            'remainder' => mb_substr($string,1,Null,'UTF-8')
+        ];
     } //get_first_character_value
 
     public function alphabet_sorter($a, $b): int {
