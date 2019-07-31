@@ -70,7 +70,7 @@
             },
             sorted_issues() {
                 return this.filtered_issues.sort((a,b) => {
-                    return ('' + a.created_at).localeCompare('' + b.created_at);
+                    return ('' + this.get_last_issue_comment(b).created_at).localeCompare('' + this.get_last_issue_comment(a).created_at);
                 });
             }
         },
