@@ -120,7 +120,7 @@ class PublicLexController
 
     public function lex_semantic_field($field_abbr) {
         $field = LexSemanticField::with('etymas', 'semantic_category')
-            ->where("abbr", $field_abbr)->first();
+            ->where("abbr", $field_abbr)->firstOrFail();
         $alpha_cats = LexSemanticCategory::get()->sortBy('text');
 
         return view('lex_semantic_field')->with([
