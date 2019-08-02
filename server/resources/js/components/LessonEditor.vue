@@ -35,7 +35,6 @@
 
     <gloss-editor ref="gloss_editor"
                   :gloss="gloss_for_edit"
-                  :is_user_admin="is_user_admin"
                   :lesson_lang_attribute="lesson.language.lang_attribute"
                   :language="lesson.language"
                   :etymas="etymas"
@@ -448,7 +447,6 @@
             'init_etymas',
             'init_ckeditor_customization',
             'init_custom_keyboard_layout',
-            'init_is_user_admin',
             'focus',
         ],
         data: function() {return {
@@ -459,7 +457,6 @@
             'etymas': {},
             'ckeditor_customization': {},
             'custom_keyboard_layout': {},
-            'is_user_admin': false,
             'dirty_form_ids': [],
             'modal_flash_title': '',
             'modal_flash_body': '',
@@ -728,7 +725,6 @@
             this.etymas = this.init_etymas;
             this.ckeditor_customization = this.init_ckeditor_customization;
             this.custom_keyboard_layout = this.init_custom_keyboard_layout;
-            this.is_user_admin = this.init_is_user_admin;
         },
         mounted() {
             if (this.focus) {

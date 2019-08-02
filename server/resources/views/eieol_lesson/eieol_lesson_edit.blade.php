@@ -1,5 +1,5 @@
 @extends('admin_layout')
- 
+
 @section('title') Edit Lesson @stop
 
 @section('head_extra')
@@ -42,7 +42,6 @@ language_lang : '{{$lesson->language->lang_attribute}}',
 specialChars : [ {{ $lesson->language->custom_keyboard_layout }}]
 }"
     :init_custom_keyboard_layout="[ {{ $lesson->language->custom_keyboard_layout }} ]"
-    :init_is_user_admin="{{Auth::user()->isAdmin()}}"
     :focus="'{{app('request')->input('focus') ?: ''}}'"
 >
 

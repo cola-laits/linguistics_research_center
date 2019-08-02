@@ -362,7 +362,6 @@
             'lesson_lang_attribute',
             'language',
             'etymas',
-            'is_user_admin',
             'custom_keyboard'
         ],
         data: function() { return {
