@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title') 
+@section('title')
 {{$series->title}}
 @stop
 
@@ -17,7 +17,7 @@
     @if ($lesson->order == 0 || strstr($lesson->title, 'Bibliography') == true || strstr($lesson->title, 'Appendix') == true)
 
     @else
-        <li><a href='/eieol_text/{{$series->id}}?id={{$lesson->id}}&language_id={{$language_id}}'>{{$lesson->title}}</a></li>
+        <li><a href='/eieol_text/{{$series->id}}?id={{$lesson->id}}&language_id={{$language_id}}'>{!! $lesson->title !!}</a></li>
     @endif
 @endforeach
 </ol>
