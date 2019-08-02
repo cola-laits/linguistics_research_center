@@ -5,6 +5,31 @@ namespace App;
 use App\Events\IssueSaved;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Issue
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $text
+ * @property string $pointer
+ * @property string $pointer_desc
+ * @property string $status
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\IssueComment[] $comments
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Issue newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Issue newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Issue query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Issue whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Issue whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Issue whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Issue wherePointer($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Issue wherePointerDesc($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Issue whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Issue whereText($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Issue whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Issue extends Model
 {
     protected $table = 'issue';
