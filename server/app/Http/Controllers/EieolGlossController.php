@@ -118,9 +118,6 @@ class EieolGlossController extends Controller
             $gloss->language_id = $request->get('language_id');
             $gloss->comments = Normalizer::normalize($request->get('comments'), Normalizer::FORM_C);
             $gloss->underlying_form = Normalizer::normalize($request->get('underlying_form'), Normalizer::FORM_C);
-            $gloss->author_comments = Normalizer::normalize($request->get('author_comments'), Normalizer::FORM_C);
-            $gloss->author_done = $request->get('author_done');
-            $gloss->admin_comments = Normalizer::normalize($request->get('admin_comments'), Normalizer::FORM_C);
             $gloss->created_by = Auth::user()->username;
             $gloss->updated_by = Auth::user()->username;
 
@@ -157,9 +154,6 @@ class EieolGlossController extends Controller
             'gloss_id' => $gloss->id,
             'gloss_display' => $gloss->getDisplayGloss(),
             'message' => 'Gloss was successfully added.',
-            'author_comments' => $gloss->author_comments,
-            'author_done' => $gloss->author_done,
-            'admin_comments' => $gloss->admin_comments,
             'glossed_text'=>EieolGlossedText::with('glosses.language', 'glosses.elements.head_word.language')
                 ->where('id', $request->get('glossed_text_id'))
                 ->first()
@@ -215,9 +209,6 @@ class EieolGlossController extends Controller
             $gloss->contextual_gloss = Normalizer::normalize($request->get('contextual_gloss'), Normalizer::FORM_C);
             $gloss->comments = Normalizer::normalize($request->get('comments'), Normalizer::FORM_C);
             $gloss->underlying_form = Normalizer::normalize($request->get('underlying_form'), Normalizer::FORM_C);
-            $gloss->author_comments = Normalizer::normalize($request->get('author_comments'), Normalizer::FORM_C);
-            $gloss->author_done = $request->get('author_done');
-            $gloss->admin_comments = Normalizer::normalize($request->get('admin_comments'), Normalizer::FORM_C);
 
             $gloss->updated_by = Auth::user()->username;
 
@@ -263,9 +254,6 @@ class EieolGlossController extends Controller
             'message' => 'Gloss was successfully updated.',
             'gloss_id' => $gloss->id,
             'gloss_display' => '<br>' . $gloss->getDisplayGloss(),
-            'author_comments' => $gloss->author_comments,
-            'author_done' => $gloss->author_done,
-            'admin_comments' => $gloss->admin_comments,
             'glossed_text'=>EieolGlossedText::with('glosses.language', 'glosses.elements.head_word.language')
                 ->where('id', $request->get('glossed_text_id'))
                 ->first()

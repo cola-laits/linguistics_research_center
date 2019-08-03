@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 /**
  * App\EieolGrammar
  *
@@ -13,20 +14,14 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $order
  * @property string|null $grammar_text
  * @property string|null $section_number
- * @property string|null $author_comments
- * @property int|null $author_done
- * @property string|null $admin_comments
- * @property \Illuminate\Support\Carbon $created_at
- * @property \Illuminate\Support\Carbon $updated_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $created_by
  * @property string|null $updated_by
  * @property-read \App\EieolLesson $lesson
  * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGrammar newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGrammar newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGrammar query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGrammar whereAdminComments($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGrammar whereAuthorComments($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGrammar whereAuthorDone($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGrammar whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGrammar whereCreatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGrammar whereGrammarText($value)
@@ -41,7 +36,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class EieolGrammar extends Model {
 	protected $table = 'eieol_grammar';
-	
+
 	public function lesson()
 	{
 		return $this->belongsTo('\App\EieolLesson');

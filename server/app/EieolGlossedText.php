@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 /**
  * App\EieolGlossedText
  *
@@ -11,21 +12,17 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $lesson_id
  * @property string|null $glossed_text
  * @property int $order
- * @property string|null $author_comments
- * @property int|null $author_done
- * @property string|null $admin_comments
- * @property \Illuminate\Support\Carbon $created_at
- * @property \Illuminate\Support\Carbon $updated_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $created_by
  * @property string|null $updated_by
+ * @property string|null $audio_url
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\EieolGloss[] $glosses
  * @property-read \App\EieolLesson $lesson
  * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGlossedText newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGlossedText newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGlossedText query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGlossedText whereAdminComments($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGlossedText whereAuthorComments($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGlossedText whereAuthorDone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGlossedText whereAudioUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGlossedText whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGlossedText whereCreatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGlossedText whereGlossedText($value)
@@ -35,8 +32,6 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGlossedText whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGlossedText whereUpdatedBy($value)
  * @mixin \Eloquent
- * @property string|null $audio_url
- * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGlossedText whereAudioUrl($value)
  */
 class EieolGlossedText extends Model
 {
