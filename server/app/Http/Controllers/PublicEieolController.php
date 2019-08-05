@@ -238,7 +238,7 @@ class PublicEieolController
 
         $data = [
             'series' => $series,
-            'language' => EieolLanguage::find($language_id),
+            'language' => EieolLanguage::findOrFail($language_id),
             'keywords' => [],
         ];
 

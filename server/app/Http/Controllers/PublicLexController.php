@@ -104,7 +104,7 @@ class PublicLexController
     }
 
     public function lex_semantic_category($cat_abbr) {
-        $category = LexSemanticCategory::whereAbbr($cat_abbr)->first();
+        $category = LexSemanticCategory::whereAbbr($cat_abbr)->firstOrFail();
         $alpha_cats = LexSemanticCategory::get()->sortBy('text');
         $fields = LexSemanticField::withCount('etymas')
             ->where('semantic_category_id', '=', $category->id)
