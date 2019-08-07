@@ -15,13 +15,13 @@
 .left { text-align: left }
     .right { text-align: right }
    .center { text-align: center }
-  
+
 span[lang]
 {
    font-style: italic;
 }
 
-span[lang=ru], span[lang=orv], span[lang=cu], span[lang=grc], span[lang=xcl], span[lang=chu], div.glossed_text span[lang], div.boxey span[lang], blockquote span[lang]
+span[lang=ru], span[lang=orv], span[lang=cu], span[lang=grc], span[lang=xcl], span[lang=chu], div.glossed_text span[lang], div.boxey span[lang]
 {
    font-style: normal;
 }
@@ -148,13 +148,13 @@ a.clicked:focus {
 }
 
 
-@page  
-{ 
-    size: auto;   /* auto is the initial value */ 
+@page
+{
+    size: auto;   /* auto is the initial value */
 
-    /* this affects the margin in the printer settings */ 
-    margin: 25mm 15mm 25mm 15mm;  
-} 
+    /* this affects the margin in the printer settings */
+    margin: 25mm 15mm 25mm 15mm;
+}
 
 .printable_footer {
 	page-break-after: always;
@@ -165,7 +165,7 @@ a.clicked:focus {
 /*  Adding Donate Button  */
 
 #donate-button {
-	padding: 15px 75px 4px 75px;	
+	padding: 15px 75px 4px 75px;
 	text-align: center;
 }
 
