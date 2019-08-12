@@ -86,6 +86,7 @@
 <script>
     import tinymce from 'tinymce';
     import 'tinymce/themes/silver';
+    import 'tinymce/plugins/code';
     import Editor from '@tinymce/tinymce-vue';
 
     export default {
@@ -102,12 +103,12 @@
                 branding: false,
                 width:"100%",
                 height:"500px",
+                plugins: "code",
                 menubar: '',
-                toolbar: "backcolor",
+                toolbar: "backcolor code",
                 init_instance_callback: function (editor) {
                     editor.on('keydown', function (e) {
                         e.preventDefault();
-                        console.log('Element clicked:', e.target.nodeName);
                     });
                 }
             },
