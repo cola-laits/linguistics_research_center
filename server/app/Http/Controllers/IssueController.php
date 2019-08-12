@@ -69,7 +69,7 @@ class IssueController extends Controller
     {
         $pointer = $request->get('pointer');
         $issue = new Issue();
-        $issue->name = 'New Issue';
+        $issue->name = '';
         $issue->text = Issue::getTextFromPointer($pointer);
         $issue->pointer = $pointer;
         $issue->pointer_desc = Issue::getPointerDescFromPointer($pointer);

@@ -4,7 +4,10 @@
             <div class="header">
                 <div style="margin-top:10px;margin-bottom:10px;">
                     <div style="display:flex;justify-content:space-between;">
-                        <h5>Issue Title: <input type="text" ref="issue_title" v-model="issue.name" style="width:400px;"></h5>
+                        <h5>
+                            Issue Title: <b-form-input type="text" ref="issue_title" v-model="issue.name" style="width:400px;"
+                                                       :state="this.validate_title_ok"/>
+                        </h5>
                     </div>
                     <hr>
                 </div>
@@ -91,10 +94,20 @@
             });
         },
         computed: {
-
+            validate_title_ok() {
+                if (!this.issue || !this.issue.name) {
+                    return false;
+                }
+                return this.issue.name.length > 0;
+            }
         },
         methods: {
             save() {
+                if (!this.validate_title_ok) {
+                    alert("Please enter a title.");
+                    this.$refs['issue_title'].focus();
+                    return;
+                }
                 let data = Object.assign({}, this.issue);
                 data.comment_text = this.comment_text;
                 window.axios.post('/admin/api/v1/issue',
@@ -104,7 +117,7 @@
                     this.$router.push('/issues');
                 }).catch((error) => {
                     console.log(error);
-                    alert("Error: Unable to save title.  Try again.");
+                    alert("Error: Unable to save issue.  Try again.");
                 })
             },
             getIssueLink(issue) {
