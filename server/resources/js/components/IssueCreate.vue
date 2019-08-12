@@ -26,7 +26,6 @@
                 <h5>Comments</h5>
                 <div class="comment-card">
                     <div class="comment-card-header">Add comment:</div>
-                    {{comment_text}}
                     <ck-editor v-model="comment_text"
                                :custom_config="ckeditor_customization"
                                v-if="ckeditor_data_ready"
