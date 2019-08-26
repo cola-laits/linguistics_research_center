@@ -4,15 +4,6 @@ name: default
 concurrency:
   limit: 1
 
-rancher_info: &rancher_info
-  url: https://rancher.la.utexas.edu/
-  access_key:
-    from_secret: rancher_access_key
-  secret_key:
-    from_secret: rancher_secret_key
-  confirm: true
-  timeout: 180
-
 test_when_condition: &test_when_condition
   when:
     branch: [ master ]
@@ -42,12 +33,14 @@ steps:
 
 
 - name: deploy_test
-  image: peloton/drone-rancher
-  pull: always
+  image: docker-registry.la.utexas.edu/drone-k8s-redeploy
   settings:
-    <<: *rancher_info
-    service: lrc-test/web
-    docker_image: docker-registry.la.utexas.edu/lrc:test
+    kubernetes_token:                                                                   
+      from_secret: kubernetes_token
+    kubernetes_server:                                                    
+      from_secret: kubernetes_server
+    namespace: lrc-test
+    workload: test
   <<: *test_when_condition
 
 
@@ -62,11 +55,13 @@ steps:
 
 
 - name: deploy_prod
-  image: peloton/drone-rancher
-  pull: always
+  image: docker-registry.la.utexas.edu/drone-k8s-redeploy
   settings:
-    <<: *rancher_info
-    service: lrc/web
-    docker_image: docker-registry.la.utexas.edu/lrc:prod
+    kubernetes_token:                                                                   
+      from_secret: kubernetes_token
+    kubernetes_server:                                                    
+      from_secret: kubernetes_server
+    namespace: lrc
+    workload: web
   <<: *prod_when_condition
 
