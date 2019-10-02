@@ -40,7 +40,7 @@ steps:
     kubernetes_server:                                                    
       from_secret: kubernetes_server
     namespace: lrc-test
-    workload: test
+    workload: web
   <<: *test_when_condition
 
 
