@@ -102,7 +102,6 @@ final class PhptTestCase implements SelfDescribing, Test
      * Runs a test and collects its result in a TestResult instance.
      *
      * @throws Exception
-     * @throws \ReflectionException
      * @throws \SebastianBergmann\CodeCoverage\CoveredCodeNotExecutedException
      * @throws \SebastianBergmann\CodeCoverage\InvalidArgumentException
      * @throws \SebastianBergmann\CodeCoverage\MissingCoversAnnotationException
@@ -579,7 +578,7 @@ final class PhptTestCase implements SelfDescribing, Test
             $globals = '$GLOBALS[\'__PHPUNIT_BOOTSTRAP\'] = ' . \var_export(
                 $GLOBALS['__PHPUNIT_BOOTSTRAP'],
                 true
-                ) . ";\n";
+            ) . ";\n";
         }
 
         $template->setVar(

@@ -1,8 +1,14 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" class="no-js" lang="en">
 <head>
+    @if (env('SENTRY_JS_DSN'))
+        <script src="https://browser.sentry-cdn.com/5.6.3/bundle.min.js" integrity="sha384-/Cqa/8kaWn7emdqIBLk3AkFMAHBk0LObErtMhO+hr52CntkaurEnihPmqYj3uJho" crossorigin="anonymous"></script>
+        <script>
+            Sentry.init({ dsn: '{{env('SENTRY_JS_DSN')}}' });
+        </script>
+    @endif
 
-<!--  This is a separate file so it can be called from layout.blade, 
+    <!--  This is a separate file so it can be called from layout.blade,
 but also used to make printable lessons in the public controller -->
 
 <meta charset="utf-8"/>

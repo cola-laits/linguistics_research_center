@@ -10,8 +10,8 @@
 namespace PHPUnit\Framework\MockObject\Matcher;
 
 use PHPUnit\Framework\Constraint\Constraint;
-use PHPUnit\Framework\Constraint\IsEqual;
 use PHPUnit\Framework\MockObject\Invocation as BaseInvocation;
+use PHPUnit\Framework\MockObject\MethodNameConstraint;
 use PHPUnit\Util\InvalidArgumentHelper;
 
 /**
@@ -37,13 +37,7 @@ final class MethodName extends StatelessInvocation
                 throw InvalidArgumentHelper::factory(1, 'string');
             }
 
-            $constraint = new IsEqual(
-                $constraint,
-                0,
-                10,
-                false,
-                true
-            );
+            $constraint = new MethodNameConstraint($constraint);
         }
 
         $this->constraint = $constraint;
@@ -60,6 +54,11 @@ final class MethodName extends StatelessInvocation
      */
     public function matches(BaseInvocation $invocation): bool
     {
-        return $this->constraint->evaluate($invocation->getMethodName(), '', true);
+        return $this->matchesName($invocation->getMethodName());
+    }
+
+    public function matchesName(string $methodName): bool
+    {
+        return $this->constraint->evaluate($methodName, '', true);
     }
 }

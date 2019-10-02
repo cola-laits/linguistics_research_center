@@ -11,7 +11,7 @@
 
 namespace Symfony\Component\HttpKernel;
 
-use Symfony\Component\BrowserKit\Client as BaseClient;
+use Symfony\Component\BrowserKit\AbstractBrowser;
 use Symfony\Component\BrowserKit\CookieJar;
 use Symfony\Component\BrowserKit\History;
 use Symfony\Component\BrowserKit\Request as DomRequest;
@@ -21,14 +21,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Client simulates a browser and makes requests to a Kernel object.
- *
- * @author Fabien Potencier <fabien@symfony.com>
+ * Client simulates a browser and makes requests to an HttpKernel instance.
  *
  * @method Request  getRequest()  A Request instance
  * @method Response getResponse() A Response instance
+ *
+ * @deprecated since Symfony 4.3, use HttpKernelBrowser instead.
  */
-class Client extends BaseClient
+class Client extends AbstractBrowser
 {
     protected $kernel;
     private $catchExceptions = true;

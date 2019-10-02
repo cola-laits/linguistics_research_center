@@ -36,7 +36,7 @@ return [
     'channels' => [
         'server' => [
             'driver' => 'stack',
-            'channels' => ['errorlog', 'slack'],
+            'channels' => ['errorlog'],
         ],
 
         'stack' => [

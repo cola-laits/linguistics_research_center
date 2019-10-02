@@ -1,7 +1,5 @@
 language: php
 
-sudo: false
-
 php:
   - 7.2
   - 7.3
@@ -32,9 +30,8 @@ before_script:
   - |
      if [[ "$DRIVER" = 'pcov' ]]; then
        echo > $HOME/.phpenv/versions/$TRAVIS_PHP_VERSION/etc/conf.d/xdebug.ini
-       git clone https://github.com/krakjoe/pcov
+       git clone --single-branch --branch=v1.0.6 --depth=1 https://github.com/krakjoe/pcov
        cd pcov
-       git checkout v1.0.0
        phpize
        ./configure
        make clean install

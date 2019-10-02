@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang='en'>
     <head>
+        @if (env('SENTRY_JS_DSN'))
+            <script src="https://browser.sentry-cdn.com/5.6.3/bundle.min.js" integrity="sha384-/Cqa/8kaWn7emdqIBLk3AkFMAHBk0LObErtMhO+hr52CntkaurEnihPmqYj3uJho" crossorigin="anonymous"></script>
+            <script>
+                Sentry.init({ dsn: '{{env('SENTRY_JS_DSN')}}' });
+            </script>
+        @endif
+
         <meta name='viewport' content='width=device-width, initial-scale=1'>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -105,6 +112,6 @@
 
     <br><br>
     </body>
-</html>	
+</html>
 
 
