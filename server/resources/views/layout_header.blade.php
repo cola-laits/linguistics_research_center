@@ -44,26 +44,10 @@ but also used to make printable lessons in the public controller -->
 
     <link media="all" type="text/css" rel="stylesheet" href="/css/lrcstyle.css">
 
-    <link media="all" type="text/css" rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-
-    <link media="all" type="text/css" rel="stylesheet" href="//cdn.datatables.net/1.10.6/css/jquery.dataTables.min.css">
-
-    <link media="all" type="text/css" rel="stylesheet" href="/css/demo_table_jui.css">
 
 <!-- END CSS LOADING -->
 
-<!--  "Must Have in the Header" Javascript -->
-    <script src="//jwpsrv.com/library/1O4izvC8EeKppRIxOQulpA.js" type="text/javascript"></script> <!-- JW PLAYER -->
-    <script src="https://liberalarts.utexas.edu/_internal/js/modernizr.js" type="text/javascript"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" type="text/javascript"></script>
-    <script src="//cdn.datatables.net/1.10.6/js/jquery.dataTables.min.js" type="text/javascript"></script>
-
-    <!-- QUALTRICS survey popup - Feb 27 2017 -->
-    <script language="JavaScript" src="https://liberalarts.utexas.edu/lrc/_files/scripts/survey.js" type="text/javascript">// <![CDATA[ // ]]></script>
-
-    <noscript>Take <a href="https://liberalarts.utexas.edu/lrc/_files/scripts/survey" title="LRC Visitor Survey">our survey</a></noscript>
-    <!-- End QUALTRICS survey popup -->
-<!-- END "Must Have in the Header" Javascript -->
+    <script src="/js/jquery-1.11.1.min.js" type="text/javascript"></script>
 
 </head>
 <body>

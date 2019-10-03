@@ -2,7 +2,7 @@
 @section('page')
 
 <!-- Google Tag Manager - Removed Google Analytics Script - Now managing through GTM 'GA Page Tracker CLA' and 'GA Page Tracker UT' -->
- 
+
     <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-MWRKVL"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -10,13 +10,13 @@
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-MWRKVL');</script>
-    
+
 <!-- End Google Tag Manager -->
 
-<!--    
+<!--
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-All the content is wrapped in "off-canvas-wrap" and inner-wrap" 
-the page content is in <section class="main-section"> 
+All the content is wrapped in "off-canvas-wrap" and inner-wrap"
+the page content is in <section class="main-section">
 - this makes Phone Nav Possible
 *************************************************************** -->
 
@@ -57,7 +57,7 @@ the page content is in <section class="main-section">
 
                 <aside class="right-off-canvas-menu">
                     <ul class="off-canvas-list">
-                
+
                         <!-- COLLEGE WIDE NAV - STATIC CONTENT -->
                         <li class="college closed">
                             <a class="off-canvas-submenu-call" href="#">
@@ -91,20 +91,20 @@ the page content is in <section class="main-section">
 
                         <!-- UNIT NAV - DYNAMIC -->
                         <!-- Unit Name and Dynamic Nav -->
-                        
+
                         <!-- SYSTEM-REGION NAV-SM-UNIT -->
                         <li class="office"><h2><a href="http://www.utexas.edu/cola/centers/lrc/">Linguistics Research Center</a></h2></li>
-                        
+
                         <!-- END SYSTEM-REGION NAV-SM-UNIT -->
                     </ul> <!-- close ul class="off-canvas-list" -->
                     <!-- END UNIT NAV - DYNAMIC -->
-                        
+
                     <!-- Office Contacts and Maps Pages -->
                     <!-- SYSTEM-REGION NAV-SM-OFFICE -->
-                    
+
                     @yield('menu')
-                    
-                    
+
+
                     <ul class="side-nav">
                         <li><label>Office</label></li>
                         <li><a href="http://liberalarts.utexas.edu/lrc/staff.php">Staff List</a></li>
@@ -203,7 +203,7 @@ the page content is in <section class="main-section">
                 ***********************************************
                 END DESKTOP ORANGE BAR LINKS - TOP BAR
                 *********************************************** -->
-            </div> <!-- Close <div class="row"> --> 
+            </div> <!-- Close <div class="row"> -->
         </div> <!-- Close <div id="texas-bar"> -->
 
         <section class="main-section">
@@ -243,7 +243,7 @@ the page content is in <section class="main-section">
             </div>
 
             <div class="row content-secondary-page">
-                <!--    
+                <!--
                 ***************************************
                 BODY CONTENT - "content-secondary-page"
                 *************************************** -->
@@ -267,7 +267,7 @@ the page content is in <section class="main-section">
                             @yield('content')
                         </div>
 
-     
+
                         <!-- END SYSTEM-REGION PAGE-BODY  -->
 
                     </div>  <!-- END div class="row"  -->
@@ -278,11 +278,11 @@ the page content is in <section class="main-section">
                 END BODY CONTENT
                 **************** -->
 
-                <!--    
+                <!--
                 ***********************************************************************************
                 OFFICE NAVIGATION = [MEDIUM UP ONLY] + RELATED LINKS + OFFICE + ADDRESS + SOC MEDIA
                 *********************************************************************************** -->
-            
+
                 <div class="hide-for-small-only medium-3 medium-pull-9 columns content-unit-page-navigation">
                     <!-- Office Navigation -->
                     <hr class="show-for-small-only"/>
@@ -290,7 +290,7 @@ the page content is in <section class="main-section">
                     <!-- Unit Medium Up Navigation -->
                     <!-- Unit Links -->
                     <!-- SYSTEM-REGION NAV-MD-UP-UNIT -->
-                        
+
                     @yield('menu')
 
                     <!-- Address -->
@@ -346,9 +346,9 @@ the page content is in <section class="main-section">
             </div>
             <!-- End Body Content <div class="medium-9 medium-push-3 columns"> -->
 
-            <!--    
+            <!--
             *************************
-            FOOTER 
+            FOOTER
             ************************* -->
 
             <!-- SYSTEM-REGION FOOTER -->
@@ -520,7 +520,7 @@ the page content is in <section class="main-section">
 </ul>
 <p class="address"><a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cio/policies/web-privacy">Web Privacy Policy</a><br/>
  <a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/cio/policies/web-accessibility">Web Accessibility Policy</a><br/>
- <a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/policies/dmca.html">&#169; Copyright</a> <span id="year">TEXT</span></p>
+ <a data-gtm-event="nav-college-footer" href="http://www.utexas.edu/policies/dmca.html">&#169; Copyright</a> <span id="year">{{date('Y')}}</span></p>
 </div>
 </div>
 </div>
@@ -533,10 +533,8 @@ the page content is in <section class="main-section">
 
     </div>  <!-- Close <div class="inner-wrap"> -->
 </div> <!-- Close <div class="off-canvas-wrap" data-offcanvas=""> -->
-<script src="https://liberalarts.utexas.edu/_internal/js/foundation.min.js" type="text/javascript"></script>
-<script src="https://liberalarts.utexas.edu/_internal/js/foundation.offcanvas.js"></script>
-<script src="//cdn.jsdelivr.net/jquery.slick/1.4.1/slick.min.js" type="text/javascript"></script>
-<script src="https://liberalarts.utexas.edu/_internal/js/app.js" type="text/javascript"></script>
+
+
 </body>
 </html>
 @stop
