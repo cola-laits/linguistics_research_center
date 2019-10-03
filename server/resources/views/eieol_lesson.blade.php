@@ -5,7 +5,7 @@
 @section('meta') {{$lesson->series->meta_tags}} @stop
 
 @section('content')
-@if (!$printable) 
+@if (!$printable)
 
 <script type="text/javascript">
     $(document).ready(function(){
@@ -13,12 +13,16 @@
         //if the came from the gloss, dictionary or meaning index, we need to open that gloss
         var anchor = window.location.hash.substring(1);
         if (anchor != '') {
-            splits = anchor.split("_");
-            id = splits[splits.length - 1];
-            var temp_id = '#gloss_pivot_' + id;
-            $(temp_id).slideToggle('fast');
-            var temp_id = '#pivot_' + id;
-            $(temp_id).toggleClass("clicked");
+            var splits = anchor.split("_");
+            var id = splits[splits.length - 1];
+            var temp_el = document.getElementById('gloss_pivot_' + id);
+            if (temp_el) {
+                $(temp_el).slideToggle('fast');
+            }
+            temp_el = document.getElementById('pivot_' + id);
+            if (temp_el) {
+                $(temp_el).toggleClass("clicked");
+            }
         }
 
         $(".click_gloss").click(function(e){
@@ -115,7 +119,7 @@
     </div>
 @endif
 
-@if ($lesson->lesson_translation != '')	        
+@if ($lesson->lesson_translation != '')
     <h2>Translation</h2>
     <div class='unbreakable'>
         {!! $lesson->lesson_translation !!}
@@ -133,7 +137,7 @@
 
 
 <!-- If intro, display the list of lessons -->
-@if ($lesson->order == 0 and !$printable) 
+@if ($lesson->order == 0 and !$printable)
     <h5>The {{$series->menu_name}} Lessons</h5>
     <ol>
     @foreach ($series->lessons as $temp_lesson)
@@ -165,7 +169,7 @@
 
 
 
-@if (!$printable) 
+@if (!$printable)
 
     <p class='center'>
         @if ($lesson->prevLesson())
