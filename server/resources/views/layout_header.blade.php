@@ -4,7 +4,10 @@
     @if (env('SENTRY_JS_DSN'))
         <script src="https://browser.sentry-cdn.com/5.6.3/bundle.min.js" integrity="sha384-/Cqa/8kaWn7emdqIBLk3AkFMAHBk0LObErtMhO+hr52CntkaurEnihPmqYj3uJho" crossorigin="anonymous"></script>
         <script>
-            Sentry.init({ dsn: '{{env('SENTRY_JS_DSN')}}' });
+            Sentry.init({
+                dsn: '{{env('SENTRY_JS_DSN')}}',
+                integrations: [new Sentry.Integrations.GlobalHandlers({ onerror: true, onunhandledrejection: false })]
+            });
         </script>
     @endif
 
