@@ -6,7 +6,8 @@
         <script>
             Sentry.init({
                 dsn: '{{env('SENTRY_JS_DSN')}}',
-                integrations: [new Sentry.Integrations.GlobalHandlers({ onerror: true, onunhandledrejection: false })]
+                integrations: [new Sentry.Integrations.GlobalHandlers({ onerror: true, onunhandledrejection: false })],
+                whitelistUrls: [/.*\.utexas\.edu/]
             });
         </script>
     @endif
