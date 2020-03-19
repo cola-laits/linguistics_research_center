@@ -81,10 +81,9 @@
             window.axios.get('/admin/api/v1/issue/create?pointer='+pointer).then((response) => {
                 this.issue = response.data.issue;
 
-                let lang = response.data.languages[0];
-                this.ckeditor_customization.language_list = [lang.lang_attribute+':'+lang.language];
-                this.ckeditor_customization.language_lang = [lang.lang_attribute];
-                this.ckeditor_customization.specialChars = lang.custom_keyboard_layout;
+                this.ckeditor_customization.language_list = response.data.languages.language_list;
+                this.ckeditor_customization.language_lang = response.data.languages.language_lang;
+                this.ckeditor_customization.specialChars = response.data.languages.specialChars;
 
                 this.ckeditor_data_ready = true;
             }).catch((error) => {

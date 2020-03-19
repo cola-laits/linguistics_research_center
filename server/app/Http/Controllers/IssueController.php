@@ -47,8 +47,7 @@ class IssueController extends Controller
         $re = '/^\/lesson\/(\d*)\/.*/m';
         preg_match_all($re, $pointer, $matches, PREG_SET_ORDER);
         $lesson = EieolLesson::findOrFail($matches[0][1]);
-        $language_id = $lesson->language_id;
-        $language = EieolLanguage::findOrFail($language_id);
+        $language = EieolLanguage::findOrFail($lesson->language_id);
         // convert CSV of quoted entries to an array of unquoted ones
         $language->custom_keyboard_layout = array_map(
             function($item) {
@@ -56,8 +55,16 @@ class IssueController extends Controller
             },
             explode(',', $language->custom_keyboard_layout)
         );
-        $languages = [$language];
-        return $languages;
+        $result = new \stdClass;
+        $result->language_list = [$language->lang_attribute.':'.$language->language];
+        $result->language_lang = [$language->lang_attribute];
+        $result->specialChars = $language->custom_keyboard_layout;
+
+        foreach ($lesson->series->languages as $add_lang) {
+            $result->language_list []= $add_lang->lang.':'.$add_lang->display;
+            $result->language_lang []= $add_lang->lang;
+        }
+        return $result;
     }
 
     /**
