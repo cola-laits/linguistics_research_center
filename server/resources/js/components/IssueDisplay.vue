@@ -57,6 +57,7 @@
                     <div class="comment-card-header">Add new comment:</div>
                     <ck-editor v-model="new_comment_text"
                                :custom_config="ckeditor_customization"
+                               v-if="ckeditor_data_ready"
                     ></ck-editor>
                 </div>
                 <div>
@@ -95,10 +96,8 @@
             'tinymce-editor': Editor
         },
         data() { return {
-            ckeditor_customization: {language_list : [],
-                language_lang : '',
-                specialChars : []
-            },
+            ckeditor_customization: {},
+            ckeditor_data_ready: false,
             tinymce_settings: {
                 branding: false,
                 width:"100%",
@@ -125,10 +124,11 @@
                 this.issue = response.data.issue;
 
                 window.axios.get('/admin/api/v1/issue/'+this.id+'/languages').then((response) => {
-                    let lang = response.data.languages[0];
-                    this.ckeditor_customization.language_list = [lang.lang_attribute+':'+lang.language];
-                    this.ckeditor_customization.language_lang = [lang.lang_attribute];
-                    this.ckeditor_customization.specialChars = lang.custom_keyboard_layout;
+                    this.ckeditor_customization.language_list = response.data.languages.language_list;
+                    this.ckeditor_customization.language_lang = response.data.languages.language_lang;
+                    this.ckeditor_customization.specialChars = response.data.languages.specialChars;
+
+                    this.ckeditor_data_ready = true;
                 });
             }).catch((error) => {
                 console.log(error);
