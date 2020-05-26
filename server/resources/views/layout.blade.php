@@ -119,9 +119,9 @@
                 }
             }
 
-            if ("{{Cookie::get('donation_page_ctr')}}" == "") {
+            //if ("{{Cookie::get('donation_page_ctr')}}" == "") {
                 modal.style.display = "block";
-            }
+            //}
         });
     </script>
     <!-- end COVID donation box modal -->
