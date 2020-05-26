@@ -86,9 +86,10 @@
                 <p></p>
 
                 <p>The financial crunch brought on by the global pandemic means that
-                    the LRC might lose University funding.</p>
+                    the LRC might lose University funding. This will mean that the
+                    LRC will close and our online resources will be removed.</p>
 
-                <p>Please help us stay afloat. Make a donation this week.</p>
+                <p>If you would like to help us stay afloat, please make a donation this week.</p>
 
                 <p>$5, $10, $20… anything helps.</p>
 
@@ -119,9 +120,9 @@
                 }
             }
 
-            //if ("{{Cookie::get('donation_page_ctr')}}" == "") {
+            if ("{{Cookie::get('donation_page_ctr')}}" == "") {
                 modal.style.display = "block";
-            //}
+            }
         });
     </script>
     <!-- end COVID donation box modal -->
