@@ -80,7 +80,7 @@
         <div class="donation-modal-content">
             <div class="donation-modal-header">
                 <span class="donation-modal-close">&times;</span>
-                <h2 style="color:white;">Donate to the Linguistics Research Center</h2>
+                <h2 style="color:white;">Donate to Linguistics Research Center</h2>
             </div>
             <div class="donation-modal-body">
                 <p></p>
