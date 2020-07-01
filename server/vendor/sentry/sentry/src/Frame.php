@@ -11,6 +11,8 @@ namespace Sentry;
  */
 final class Frame implements \JsonSerializable
 {
+    private const INTERNAL_FRAME_FILENAME = '[internal]';
+
     /**
      * @var string|null The name of the function being called
      */
@@ -20,6 +22,11 @@ final class Frame implements \JsonSerializable
      * @var string The file where the frame originated
      */
     private $file;
+
+    /**
+     * @var string The absolute path to the source file
+     */
+    private $absoluteFilePath;
 
     /**
      * @var int The line at which the frame originated
@@ -48,32 +55,39 @@ final class Frame implements \JsonSerializable
      * @var bool Flag telling whether the frame is related to the execution of
      *           the relevant code in this stacktrace
      */
-    private $inApp = true;
+    private $inApp;
 
     /**
-     * @var array A mapping of variables which were available within this
-     *            frame (usually context-locals)
+     * @var array<string, mixed> A mapping of variables which were available within
+     *                    this frame (usually context-locals)
      */
     private $vars = [];
 
     /**
      * Initializes a new instance of this class using the provided information.
      *
-     * @param string|null $functionName The name of the function being called
-     * @param string      $file         The file where the frame originated
-     * @param int         $line         The line at which the frame originated
+     * @param string|null          $functionName     The name of the function being called
+     * @param string               $file             The file where the frame originated
+     * @param string|null          $absoluteFilePath The absolute path to the source file
+     * @param int                  $line             The line at which the frame originated
+     * @param array<string, mixed> $vars             A mapping of variables which were available
+     *                                               within the frame
+     * @param bool                 $inApp            Whether the frame is related to the
+     *                                               execution of code relevant to the
+     *                                               application
      */
-    public function __construct(?string $functionName, string $file, int $line)
+    public function __construct(?string $functionName, string $file, int $line, ?string $absoluteFilePath = null, array $vars = [], bool $inApp = true)
     {
         $this->functionName = $functionName;
         $this->file = $file;
+        $this->absoluteFilePath = $absoluteFilePath ?? $file;
         $this->line = $line;
+        $this->vars = $vars;
+        $this->inApp = $inApp;
     }
 
     /**
      * Gets the name of the function being called.
-     *
-     * @return string|null
      */
     public function getFunctionName(): ?string
     {
@@ -82,8 +96,6 @@ final class Frame implements \JsonSerializable
 
     /**
      * Gets the file where the frame originated.
-     *
-     * @return string
      */
     public function getFile(): string
     {
@@ -91,9 +103,15 @@ final class Frame implements \JsonSerializable
     }
 
     /**
+     * Gets the absolute path to the source file.
+     */
+    public function getAbsoluteFilePath(): string
+    {
+        return $this->absoluteFilePath;
+    }
+
+    /**
      * Gets the line at which the frame originated.
-     *
-     * @return int
      */
     public function getLine(): int
     {
@@ -123,8 +141,6 @@ final class Frame implements \JsonSerializable
     /**
      * Gets the source code written at the line number of the file that originated
      * this frame.
-     *
-     * @return string|null
      */
     public function getContextLine(): ?string
     {
@@ -165,8 +181,6 @@ final class Frame implements \JsonSerializable
     /**
      * Gets whether the frame is related to the execution of the relevant code
      * in this stacktrace.
-     *
-     * @return bool
      */
     public function isInApp(): bool
     {
@@ -188,7 +202,7 @@ final class Frame implements \JsonSerializable
      * Gets a mapping of variables which were available within this frame
      * (usually context-locals).
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getVars(): array
     {
@@ -199,7 +213,7 @@ final class Frame implements \JsonSerializable
      * Sets a mapping of variables which were available within this frame
      * (usually context-locals).
      *
-     * @param array $vars The variables
+     * @param array<string, mixed> $vars The variables
      */
     public function setVars(array $vars): void
     {
@@ -207,10 +221,28 @@ final class Frame implements \JsonSerializable
     }
 
     /**
+     * Gets whether the frame is internal.
+     */
+    public function isInternal(): bool
+    {
+        return self::INTERNAL_FRAME_FILENAME === $this->file;
+    }
+
+    /**
      * Returns an array representation of the data of this frame modeled according
      * to the specifications of the Sentry SDK Stacktrace Interface.
      *
-     * @return array
+     * @psalm-return array{
+     *     function: string|null,
+     *     filename: string,
+     *     lineno: int,
+     *     in_app: bool,
+     *     abs_path: string,
+     *     pre_context?: string[],
+     *     context_line?: string,
+     *     post_context?: string[],
+     *     vars?: array<string, mixed>
+     * }
      */
     public function toArray(): array
     {
@@ -219,6 +251,7 @@ final class Frame implements \JsonSerializable
             'filename' => $this->file,
             'lineno' => $this->line,
             'in_app' => $this->inApp,
+            'abs_path' => $this->absoluteFilePath,
         ];
 
         if (0 !== \count($this->preContext)) {
@@ -242,6 +275,8 @@ final class Frame implements \JsonSerializable
 
     /**
      * {@inheritdoc}
+     *
+     * @return array<string, mixed>
      */
     public function jsonSerialize(): array
     {

@@ -2,12 +2,14 @@
 
 namespace Sentry\Laravel;
 
+use Sentry\SentrySdk;
 use Sentry\State\Hub;
 use Sentry\ClientBuilder;
 use Sentry\State\HubInterface;
 use Illuminate\Log\LogManager;
+use Sentry\ClientBuilderInterface;
 use Laravel\Lumen\Application as Lumen;
-use Sentry\Integration\IntegrationInterface;
+use Sentry\Integration as SdkIntegration;
 use Illuminate\Foundation\Application as Laravel;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 
@@ -73,7 +75,9 @@ class ServiceProvider extends IlluminateServiceProvider
 
         $handler->subscribe();
 
-        $handler->subscribeQueueEvents($this->app->queue);
+        if ($this->app->bound('queue')) {
+            $handler->subscribeQueueEvents($this->app->queue);
+        }
 
         if (isset($userConfig['send_default_pii']) && $userConfig['send_default_pii'] !== false) {
             $handler->subscribeAuthEvents();
@@ -95,14 +99,16 @@ class ServiceProvider extends IlluminateServiceProvider
      */
     protected function configureAndRegisterClient(): void
     {
-        $this->app->singleton(static::$abstract, function () {
+        $this->app->bind(ClientBuilderInterface::class, function () {
             $basePath = base_path();
             $userConfig = $this->getUserConfig();
 
-            // We do not want this setting to hit our main client because it's Laravel specific
             unset(
+                // We do not want this setting to hit our main client because it's Laravel specific
                 $userConfig['breadcrumbs'],
-                // this is kept for backwards compatibilty and can be dropped in a breaking release
+                // We resolve the integrations through the container later, so we initially do not pass it to the SDK yet
+                $userConfig['integrations'],
+                // This is kept for backwards compatibility and can be dropped in a future breaking release
                 $userConfig['breadcrumbs.sql_bindings']
             );
 
@@ -110,22 +116,58 @@ class ServiceProvider extends IlluminateServiceProvider
                 [
                     'environment' => $this->app->environment(),
                     'prefixes' => [$basePath],
-                    'project_root' => $basePath,
-                    'in_app_exclude' => [$basePath . '/vendor'],
+                    'in_app_exclude' => ["{$basePath}/vendor"],
                 ],
-                $userConfig,
-                [
-                    'integrations' => $this->getIntegrations(),
-                ]
+                $userConfig
             );
 
             $clientBuilder = ClientBuilder::create($options);
+
+            // Set the Laravel SDK identifier and version
             $clientBuilder->setSdkIdentifier(Version::SDK_IDENTIFIER);
             $clientBuilder->setSdkVersion(Version::SDK_VERSION);
 
+            return $clientBuilder;
+        });
+
+        $this->app->singleton(static::$abstract, function () {
+            /** @var \Sentry\ClientBuilderInterface $clientBuilder */
+            $clientBuilder = $this->app->make(ClientBuilderInterface::class);
+
+            $options = $clientBuilder->getOptions();
+
+            $userIntegrations = $this->resolveIntegrationsFromUserConfig();
+
+            $options->setIntegrations(static function (array $integrations) use ($options, $userIntegrations) {
+                $allIntegrations = array_merge($integrations, $userIntegrations);
+
+                if (!$options->hasDefaultIntegrations()) {
+                    return $allIntegrations;
+                }
+
+                // Remove the default error and fatal exception listeners to let Laravel handle those
+                // itself. These event are still bubbling up through the documented changes in the users
+                // `ExceptionHandler` of their application or through the log channel integration to Sentry
+                return array_filter($allIntegrations, static function (SdkIntegration\IntegrationInterface $integration): bool {
+                    if ($integration instanceof SdkIntegration\ErrorListenerIntegration) {
+                        return false;
+                    }
+
+                    if ($integration instanceof SdkIntegration\ExceptionListenerIntegration) {
+                        return false;
+                    }
+
+                    if ($integration instanceof SdkIntegration\FatalErrorListenerIntegration) {
+                        return false;
+                    }
+
+                    return true;
+                });
+            });
+
             $hub = new Hub($clientBuilder->getClient());
 
-            Integration::setCurrentHub($hub);
+            SentrySdk::setCurrentHub($hub);
 
             return $hub;
         });
@@ -150,17 +192,23 @@ class ServiceProvider extends IlluminateServiceProvider
      *
      * @return array
      */
-    private function getIntegrations(): array
+    private function resolveIntegrationsFromUserConfig(): array
     {
         $integrations = [new Integration];
 
         $userIntegrations = $this->getUserConfig()['integrations'] ?? [];
 
         foreach ($userIntegrations as $userIntegration) {
-            if ($userIntegration instanceof IntegrationInterface) {
+            if ($userIntegration instanceof SdkIntegration\IntegrationInterface) {
                 $integrations[] = $userIntegration;
             } elseif (\is_string($userIntegration)) {
-                $integrations[] = $this->app->make($userIntegration);
+                $resolvedIntegration = $this->app->make($userIntegration);
+
+                if (!($resolvedIntegration instanceof SdkIntegration\IntegrationInterface)) {
+                    throw new \RuntimeException('Sentry integrations should a instance of `\Sentry\Integration\IntegrationInterface`.');
+                }
+
+                $integrations[] = $resolvedIntegration;
             } else {
                 throw new \RuntimeException('Sentry integrations should either be a container reference or a instance of `\Sentry\Integration\IntegrationInterface`.');
             }
@@ -176,7 +224,9 @@ class ServiceProvider extends IlluminateServiceProvider
      */
     private function getUserConfig(): array
     {
-        return $this->app['config'][static::$abstract];
+        $config = $this->app['config'][static::$abstract];
+
+        return empty($config) ? [] : $config;
     }
 
     /**

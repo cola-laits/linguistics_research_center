@@ -10,6 +10,7 @@
 
 namespace Barryvdh\LaravelIdeHelper\Console;
 
+use Barryvdh\LaravelIdeHelper\Factories;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -77,6 +78,9 @@ class MetaCommand extends Command
      */
     public function handle()
     {
+        // Needs to run before exception handler is registered
+        $factories = $this->config->get('ide-helper.include_factory_builders') ? Factories::all() : [];
+
         $this->registerClassAutoloadExceptions();
 
         $bindings = array();
@@ -99,9 +103,12 @@ class MetaCommand extends Command
             }
         }
 
+        $this->unregisterClassAutoloadExceptions();
+
         $content = $this->view->make('meta', [
           'bindings' => $bindings,
           'methods' => $this->methods,
+          'factories' => $factories,
         ])->render();
 
         $filename = $this->option('filename');
@@ -153,5 +160,15 @@ class MetaCommand extends Command
         return array(
             array('filename', 'F', InputOption::VALUE_OPTIONAL, 'The path to the meta file', $filename),
         );
+    }
+
+    /**
+     * Remove our custom autoloader that we pushed onto the autoload stack
+     */
+    private function unregisterClassAutoloadExceptions()
+    {
+        $autoloadFunctions = spl_autoload_functions();
+        $ourAutoloader = array_pop($autoloadFunctions);
+        spl_autoload_unregister($ourAutoloader);
     }
 }

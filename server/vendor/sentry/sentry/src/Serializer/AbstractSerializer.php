@@ -20,6 +20,7 @@ declare(strict_types=1);
 
 namespace Sentry\Serializer;
 
+use Sentry\Exception\InvalidArgumentException;
 use Sentry\Options;
 
 /**
@@ -70,9 +71,7 @@ abstract class AbstractSerializer
     /**
      * AbstractSerializer constructor.
      *
-     * @param Options     $options       The SDK configuration options
-     * @param int         $maxDepth
-     * @param string|null $mbDetectOrder
+     * @param Options $options The SDK configuration options
      */
     public function __construct(Options $options, int $maxDepth = 3, ?string $mbDetectOrder = null)
     {
@@ -90,9 +89,8 @@ abstract class AbstractSerializer
      * sanitization and encoding.
      *
      * @param mixed $value
-     * @param int   $_depth
      *
-     * @return string|bool|float|int|array|null
+     * @return string|bool|float|int|mixed[]|null
      */
     protected function serializeRecursively($value, int $_depth = 0)
     {
@@ -102,10 +100,10 @@ abstract class AbstractSerializer
             }
 
             if (\is_callable($value)) {
-                return $this->serializeCallable($value);
+                return $this->serializeCallableWithoutTypeHint($value);
             }
 
-            if (\is_array($value)) {
+            if (is_iterable($value)) {
                 $serializedArray = [];
 
                 foreach ($value as $k => $v) {
@@ -157,7 +155,7 @@ abstract class AbstractSerializer
      *
      * @param object $object
      *
-     * @return array
+     * @return array<int, callable>
      */
     protected function resolveClassSerializers($object): array
     {
@@ -180,10 +178,9 @@ abstract class AbstractSerializer
 
     /**
      * @param object   $object
-     * @param int      $_depth
      * @param string[] $hashes
      *
-     * @return array|string|bool|float|int|null
+     * @return mixed[]|string|bool|float|int|null
      */
     protected function serializeObject($object, int $_depth = 0, array $hashes = [])
     {
@@ -209,8 +206,6 @@ abstract class AbstractSerializer
      * Serializes the given value to a string.
      *
      * @param mixed $value The value to serialize
-     *
-     * @return string
      */
     protected function serializeString($value): string
     {
@@ -250,7 +245,7 @@ abstract class AbstractSerializer
         }
 
         if (\is_callable($value)) {
-            return $this->serializeCallable($value);
+            return $this->serializeCallableWithoutTypeHint($value);
         }
 
         if (\is_array($value)) {
@@ -261,9 +256,30 @@ abstract class AbstractSerializer
     }
 
     /**
-     * @param callable $callable
+     * This method is provided as a non-BC upgrade of serializeCallable,
+     * since using the callable type raises a deprecation in some cases.
      *
-     * @return string
+     * @param callable|mixed $callable
+     */
+    protected function serializeCallableWithoutTypeHint($callable): string
+    {
+        if (\is_string($callable) && !\function_exists($callable)) {
+            return $callable;
+        }
+
+        if (!\is_callable($callable)) {
+            throw new InvalidArgumentException(sprintf('Expecting callable, got %s', \is_object($callable) ? \get_class($callable) : \gettype($callable)));
+        }
+
+        return $this->serializeCallable($callable);
+    }
+
+    /**
+     * Use serializeCallableWithoutTypeHint instead (no type in argument).
+     *
+     * @see https://github.com/getsentry/sentry-php/pull/821
+     *
+     * @param callable $callable callable type to be removed in 3.0, see #821
      */
     protected function serializeCallable(callable $callable): string
     {
@@ -271,7 +287,7 @@ abstract class AbstractSerializer
             if (\is_array($callable)) {
                 $reflection = new \ReflectionMethod($callable[0], $callable[1]);
                 $class = $reflection->getDeclaringClass();
-            } elseif ($callable instanceof \Closure || \is_string($callable)) {
+            } elseif ($callable instanceof \Closure || (\is_string($callable) && \function_exists($callable))) {
                 $reflection = new \ReflectionFunction($callable);
                 $class = null;
             } elseif (\is_object($callable) && method_exists($callable, '__invoke')) {
@@ -287,8 +303,8 @@ abstract class AbstractSerializer
         $callableType = $reflection->isClosure() ? 'Lambda ' : 'Callable ';
         $callableReturnType = $reflection->getReturnType();
 
-        if (null !== $callableReturnType) {
-            $callableType .= $callableReturnType . ' ';
+        if ($callableReturnType instanceof \ReflectionNamedType) {
+            $callableType .= $callableReturnType->getName() . ' ';
         }
 
         if ($class) {
@@ -298,16 +314,16 @@ abstract class AbstractSerializer
         return $callableType . $reflection->getName() . ' ' . $this->serializeCallableParameters($reflection);
     }
 
-    /**
-     * @param \ReflectionFunctionAbstract $reflection
-     *
-     * @return string
-     */
     private function serializeCallableParameters(\ReflectionFunctionAbstract $reflection): string
     {
         $params = [];
         foreach ($reflection->getParameters() as &$param) {
-            $paramType = $param->getType() ?? 'mixed';
+            $reflectionType = $param->getType();
+            if ($reflectionType instanceof \ReflectionNamedType) {
+                $paramType = $reflectionType->getName();
+            } else {
+                $paramType = 'mixed';
+            }
 
             if ($param->allowsNull()) {
                 $paramType .= '|null';
@@ -331,8 +347,6 @@ abstract class AbstractSerializer
     }
 
     /**
-     * @param string $mbDetectOrder
-     *
      * @return $this
      */
     public function setMbDetectOrder(string $mbDetectOrder): self
@@ -342,17 +356,11 @@ abstract class AbstractSerializer
         return $this;
     }
 
-    /**
-     * @param bool $value
-     */
     public function setSerializeAllObjects(bool $value): void
     {
         $this->serializeAllObjects = $value;
     }
 
-    /**
-     * @return bool
-     */
     public function getSerializeAllObjects(): bool
     {
         return $this->serializeAllObjects;

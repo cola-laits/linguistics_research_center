@@ -6,7 +6,11 @@ namespace Sentry;
 
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Promise\PromiseInterface;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
+use Sentry\Integration\FrameContextifierIntegration;
 use Sentry\Integration\Handler;
+use Sentry\Integration\IgnoreErrorsIntegration;
 use Sentry\Integration\IntegrationInterface;
 use Sentry\State\Scope;
 use Sentry\Transport\ClosableTransportInterface;
@@ -45,7 +49,14 @@ final class Client implements FlushableClientInterface
     private $eventFactory;
 
     /**
-     * @var IntegrationInterface[] The stack of integrations
+     * @var LoggerInterface The PSR-3 logger
+     */
+    private $logger;
+
+    /**
+     * @var array<string, IntegrationInterface> The stack of integrations
+     *
+     * @psalm-var array<class-string<IntegrationInterface>, IntegrationInterface>
      */
     private $integrations;
 
@@ -55,13 +66,15 @@ final class Client implements FlushableClientInterface
      * @param Options               $options      The client configuration
      * @param TransportInterface    $transport    The transport
      * @param EventFactoryInterface $eventFactory The factory for events
+     * @param LoggerInterface|null  $logger       The PSR-3 logger
      */
-    public function __construct(Options $options, TransportInterface $transport, EventFactoryInterface $eventFactory)
+    public function __construct(Options $options, TransportInterface $transport, EventFactoryInterface $eventFactory, ?LoggerInterface $logger = null)
     {
         $this->options = $options;
         $this->transport = $transport;
         $this->eventFactory = $eventFactory;
         $this->integrations = Handler::setupIntegrations($options->getIntegrations());
+        $this->logger = $logger ?? new NullLogger();
     }
 
     /**
@@ -82,13 +95,7 @@ final class Client implements FlushableClientInterface
             'level' => $level,
         ];
 
-        $event = $this->prepareEvent($payload, $scope, $this->options->shouldAttachStacktrace());
-
-        if (null === $event) {
-            return null;
-        }
-
-        return $this->transport->send($event);
+        return $this->captureEvent($payload, $scope);
     }
 
     /**
@@ -96,7 +103,7 @@ final class Client implements FlushableClientInterface
      */
     public function captureException(\Throwable $exception, ?Scope $scope = null): ?string
     {
-        if ($this->options->isExcludedException($exception)) {
+        if (!isset($this->integrations[IgnoreErrorsIntegration::class]) && $this->options->isExcludedException($exception, false)) {
             return null;
         }
 
@@ -135,9 +142,12 @@ final class Client implements FlushableClientInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @psalm-template T of IntegrationInterface
      */
     public function getIntegration(string $className): ?IntegrationInterface
     {
+        /** @psalm-var T|null */
         return $this->integrations[$className] ?? null;
     }
 
@@ -156,30 +166,49 @@ final class Client implements FlushableClientInterface
     /**
      * Assembles an event and prepares it to be sent of to Sentry.
      *
-     * @param array      $payload        the payload that will be converted to an Event
-     * @param Scope|null $scope          optional scope which enriches the Event
-     * @param bool       $withStacktrace True if the event should have and attached stacktrace
+     * @param array<string, mixed> $payload The payload that will be converted to an Event
+     * @param Scope|null           $scope   Optional scope which enriches the Event
      *
-     * @return Event|null returns ready to send Event, however depending on options it can be discarded
+     * @return Event|null The prepared event object or null if it must be discarded
      */
-    private function prepareEvent(array $payload, ?Scope $scope = null, bool $withStacktrace = false): ?Event
+    private function prepareEvent(array $payload, ?Scope $scope = null): ?Event
     {
-        $sampleRate = $this->getOptions()->getSampleRate();
+        $shouldReadSourceCodeExcerpts = !isset($this->integrations[FrameContextifierIntegration::class]) && null !== $this->options->getContextLines();
+
+        if ($this->options->shouldAttachStacktrace() && !isset($payload['exception']) && !isset($payload['stacktrace'])) {
+            /** @psalm-suppress TooManyArguments */
+            $event = $this->eventFactory->createWithStacktrace($payload, $shouldReadSourceCodeExcerpts);
+        } else {
+            /** @psalm-suppress TooManyArguments */
+            $event = $this->eventFactory->create($payload, $shouldReadSourceCodeExcerpts);
+        }
+
+        $sampleRate = $this->options->getSampleRate();
 
         if ($sampleRate < 1 && mt_rand(1, 100) / 100.0 > $sampleRate) {
+            $this->logger->info('The event will be discarded because it has been sampled.', ['event' => $event]);
+
             return null;
         }
 
-        if ($withStacktrace) {
-            $event = $this->eventFactory->createWithStacktrace($payload);
-        } else {
-            $event = $this->eventFactory->create($payload);
-        }
-
         if (null !== $scope) {
+            $previousEvent = $event;
             $event = $scope->applyToEvent($event, $payload);
+
+            if (null === $event) {
+                $this->logger->info('The event will be discarded because one of the event processors returned `null`.', ['event' => $previousEvent]);
+
+                return null;
+            }
         }
 
-        return \call_user_func($this->options->getBeforeSendCallback(), $event);
+        $previousEvent = $event;
+        $event = ($this->options->getBeforeSendCallback())($event);
+
+        if (null === $event) {
+            $this->logger->info('The event will be discarded because the "before_send" callback returned `null`.', ['event' => $previousEvent]);
+        }
+
+        return $event;
     }
 }

@@ -104,7 +104,7 @@ class XdebugHandler
     }
 
     /**
-     * Persist the settings to keep xdebug out of sub-processes
+     * Persist the settings to keep Xdebug out of sub-processes
      *
      * @return $this
      */
@@ -115,7 +115,7 @@ class XdebugHandler
     }
 
     /**
-     * Checks if xdebug is loaded and the process needs to be restarted
+     * Checks if Xdebug is loaded and the process needs to be restarted
      *
      * This behaviour can be disabled by setting the MYAPP_ALLOW_XDEBUG
      * environment variable to 1. This variable is used internally so that
@@ -146,7 +146,7 @@ class XdebugHandler
             self::$inRestart = true;
 
             if (!$this->loaded) {
-                // Skipped version is only set if xdebug is not loaded
+                // Skipped version is only set if Xdebug is not loaded
                 self::$skipped = $envArgs[1];
             }
 
@@ -218,7 +218,7 @@ class XdebugHandler
     }
 
     /**
-     * Returns the xdebug version that triggered a successful restart
+     * Returns the Xdebug version that triggered a successful restart
      *
      * @return string
      */
@@ -228,9 +228,9 @@ class XdebugHandler
     }
 
     /**
-     * Returns true if xdebug is loaded, or as directed by an extending class
+     * Returns true if Xdebug is loaded, or as directed by an extending class
      *
-     * @param bool $isLoaded Whether xdebug is loaded
+     * @param bool $isLoaded Whether Xdebug is loaded
      *
      * @return bool
      */
@@ -256,6 +256,13 @@ class XdebugHandler
      */
     private function doRestart($command)
     {
+        // Ignore SIGINTs here so the child process can handle them. To replicate this
+        // on Windows we would need to use proc_open (PHP 7.4+) rather than passthru.
+        if (function_exists('pcntl_async_signals') && function_exists('pcntl_signal')) {
+            pcntl_async_signals(true);
+            pcntl_signal(SIGINT, SIG_IGN);
+        }
+
         passthru($command, $exitCode);
         $this->notify(Status::INFO, 'Restarted process exited '.$exitCode);
 
@@ -333,7 +340,7 @@ class XdebugHandler
 
         foreach ($iniFiles as $file) {
             // Check for inaccessible ini files
-            if (!$data = @file_get_contents($file)) {
+            if (($data = @file_get_contents($file)) === false) {
                 $error = 'Unable to read ini: '.$file;
                 return false;
             }
@@ -550,7 +557,7 @@ class XdebugHandler
             return false;
         }
 
-        if (extension_loaded('uopz')) {
+        if (extension_loaded('uopz') && !ini_get('uopz.disable')) {
             // uopz works at opcode level and disables exit calls
             if (function_exists('uopz_allow_exit')) {
                 @uopz_allow_exit(true);

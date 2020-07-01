@@ -11,9 +11,25 @@ use Sentry\Serializer\SerializerInterface;
  * This class contains all the information about an error stacktrace.
  *
  * @author Stefano Arlandini <sarlandini@alice.it>
+ *
+ * @final since version 2.3
  */
 class Stacktrace implements \JsonSerializable
 {
+    private const INTERNAL_FRAME_FILENAME = '[internal]';
+
+    private const ANONYMOUS_CLASS_PREFIX = "class@anonymous\x00";
+
+    /**
+     * @var bool Flag indicating whether it's responsibility of this class to
+     *           read the source code excerpts for each frame
+     *
+     * @internal
+     *
+     * @deprecated since version 2.4, to be removed in 3.0
+     */
+    protected $shouldReadSourceCodeExcerpts = false;
+
     /**
      * @var Options The client options
      */
@@ -21,6 +37,8 @@ class Stacktrace implements \JsonSerializable
 
     /**
      * @var SerializerInterface The serializer
+     *
+     * @deprecated since version 2.4, to be removed in 3.0
      */
     protected $serializer;
 
@@ -45,14 +63,20 @@ class Stacktrace implements \JsonSerializable
     ];
 
     /**
-     * Stacktrace constructor.
+     * Constructor.
      *
      * @param Options                           $options                  The client options
      * @param SerializerInterface               $serializer               The serializer
      * @param RepresentationSerializerInterface $representationSerializer The representation serializer
      */
-    public function __construct(Options $options, SerializerInterface $serializer, RepresentationSerializerInterface $representationSerializer)
+    public function __construct(Options $options, SerializerInterface $serializer, RepresentationSerializerInterface $representationSerializer/*, bool $shouldReadSourceCodeExcerpts = true*/)
     {
+        if (\func_num_args() <= 3 || false !== func_get_arg(3)) {
+            @trigger_error(sprintf('Relying on the "%s" class to contexify the frames of the stacktrace is deprecated since version 2.4 and will stop working in 3.0. Set the $shouldReadSourceCodeExcerpts parameter to "false" and use the "Sentry\Integration\FrameContextifierIntegration" integration instead.', self::class), E_USER_DEPRECATED);
+
+            $this->shouldReadSourceCodeExcerpts = true;
+        }
+
         $this->options = $options;
         $this->serializer = $serializer;
         $this->representationSerializer = $representationSerializer;
@@ -64,20 +88,20 @@ class Stacktrace implements \JsonSerializable
      * @param Options                           $options                  The client options
      * @param SerializerInterface               $serializer               The serializer
      * @param RepresentationSerializerInterface $representationSerializer The representation serializer
-     * @param array                             $backtrace                The backtrace
+     * @param array[]                           $backtrace                The backtrace
      * @param string                            $file                     The file that originated the backtrace
      * @param int                               $line                     The line at which the backtrace originated
      *
      * @return static
      */
-    public static function createFromBacktrace(Options $options, SerializerInterface $serializer, RepresentationSerializerInterface $representationSerializer, array $backtrace, string $file, int $line)
+    public static function createFromBacktrace(Options $options, SerializerInterface $serializer, RepresentationSerializerInterface $representationSerializer, array $backtrace, string $file, int $line/*, bool $shouldReadSourceCodeExcerpts = true*/)
     {
-        $stacktrace = new static($options, $serializer, $representationSerializer);
+        $stacktrace = new static($options, $serializer, $representationSerializer, \func_num_args() > 6 ? func_get_arg(6) : true);
 
         foreach ($backtrace as $frame) {
             $stacktrace->addFrame($file, $line, $frame);
 
-            $file = $frame['file'] ?? '[internal]';
+            $file = $frame['file'] ?? self::INTERNAL_FRAME_FILENAME;
             $line = $frame['line'] ?? 0;
         }
 
@@ -98,11 +122,27 @@ class Stacktrace implements \JsonSerializable
     }
 
     /**
+     * Gets the frame at the given index.
+     *
+     * @param int $index The index from which the frame should be get
+     *
+     * @throws \OutOfBoundsException
+     */
+    public function getFrame(int $index): Frame
+    {
+        if ($index < 0 || $index >= \count($this->frames)) {
+            throw new \OutOfBoundsException();
+        }
+
+        return $this->frames[$index];
+    }
+
+    /**
      * Adds a new frame to the stacktrace.
      *
-     * @param string $file           The file where the frame originated
-     * @param int    $line           The line at which the frame originated
-     * @param array  $backtraceFrame The data of the frame to add
+     * @param string               $file           The file where the frame originated
+     * @param int                  $line           The line at which the frame originated
+     * @param array<string, mixed> $backtraceFrame The data of the frame to add
      */
     public function addFrame(string $file, int $line, array $backtraceFrame): void
     {
@@ -116,63 +156,56 @@ class Stacktrace implements \JsonSerializable
         }
 
         if (isset($backtraceFrame['class']) && isset($backtraceFrame['function'])) {
-            $functionName = sprintf('%s::%s', $backtraceFrame['class'], $backtraceFrame['function']);
+            if (0 === strpos($backtraceFrame['class'], self::ANONYMOUS_CLASS_PREFIX)) {
+                $backtraceFrame['class'] = self::ANONYMOUS_CLASS_PREFIX . $this->stripPrefixFromFilePath(substr($backtraceFrame['class'], \strlen(self::ANONYMOUS_CLASS_PREFIX)));
+            }
+
+            $functionName = sprintf(
+                '%s::%s',
+                preg_replace('/0x[a-fA-F0-9]+$/', '', $backtraceFrame['class']),
+                $backtraceFrame['function']
+            );
         } elseif (isset($backtraceFrame['function'])) {
             $functionName = $backtraceFrame['function'];
         } else {
             $functionName = null;
         }
 
-        $frame = new Frame($functionName, $this->stripPrefixFromFilePath($file), $line);
-        $sourceCodeExcerpt = $this->getSourceCodeExcerpt($file, $line, $this->options->getContextLines());
-
-        if (isset($sourceCodeExcerpt['pre_context'])) {
-            $frame->setPreContext($sourceCodeExcerpt['pre_context']);
-        }
-
-        if (isset($sourceCodeExcerpt['context_line'])) {
-            $frame->setContextLine($sourceCodeExcerpt['context_line']);
-        }
-
-        if (isset($sourceCodeExcerpt['post_context'])) {
-            $frame->setPostContext($sourceCodeExcerpt['post_context']);
-        }
-
-        // In case it's an Sentry internal frame, we mark it as in_app false
-        if (null !== $functionName && 0 === strpos($functionName, 'Sentry\\')) {
-            $frame->setIsInApp(false);
-        }
-
-        if (null !== $this->options->getProjectRoot()) {
-            $excludedAppPaths = $this->options->getInAppExcludedPaths();
-            $absoluteFilePath = @realpath($file) ?: $file;
-            $isApplicationFile = 0 === strpos($absoluteFilePath, $this->options->getProjectRoot());
-
-            if ($isApplicationFile && !empty($excludedAppPaths)) {
-                foreach ($excludedAppPaths as $path) {
-                    if (0 === mb_strpos($absoluteFilePath, $path)) {
-                        $frame->setIsInApp(false);
-
-                        break;
-                    }
-                }
-            }
-        }
-
         $frameArguments = $this->getFrameArguments($backtraceFrame);
 
-        if (!empty($frameArguments)) {
-            foreach ($frameArguments as $argumentName => $argumentValue) {
-                $argumentValue = $this->representationSerializer->representationSerialize($argumentValue);
+        foreach ($frameArguments as $argumentName => $argumentValue) {
+            $argumentValue = $this->representationSerializer->representationSerialize($argumentValue);
 
-                if (is_numeric($argumentValue) || \is_string($argumentValue)) {
-                    $frameArguments[(string) $argumentName] = mb_substr((string) $argumentValue, 0, $this->options->getMaxValueLength());
-                } else {
-                    $frameArguments[(string) $argumentName] = $argumentValue;
-                }
+            if (\is_string($argumentValue)) {
+                $frameArguments[(string) $argumentName] = mb_substr($argumentValue, 0, $this->options->getMaxValueLength());
+            } else {
+                $frameArguments[(string) $argumentName] = $argumentValue;
+            }
+        }
+
+        $frame = new Frame(
+            $functionName,
+            $this->stripPrefixFromFilePath($file),
+            $line,
+            $file,
+            $frameArguments,
+            $this->isFrameInApp($file, $functionName)
+        );
+
+        if ($this->shouldReadSourceCodeExcerpts && null !== $this->options->getContextLines()) {
+            $sourceCodeExcerpt = $this->getSourceCodeExcerpt($file, $line, $this->options->getContextLines());
+
+            if (isset($sourceCodeExcerpt['pre_context'])) {
+                $frame->setPreContext($sourceCodeExcerpt['pre_context']);
             }
 
-            $frame->setVars($frameArguments);
+            if (isset($sourceCodeExcerpt['context_line'])) {
+                $frame->setContextLine($sourceCodeExcerpt['context_line']);
+            }
+
+            if (isset($sourceCodeExcerpt['post_context'])) {
+                $frame->setPostContext($sourceCodeExcerpt['post_context']);
+            }
         }
 
         array_unshift($this->frames, $frame);
@@ -207,6 +240,8 @@ class Stacktrace implements \JsonSerializable
 
     /**
      * {@inheritdoc}
+     *
+     * @return Frame[]
      */
     public function jsonSerialize()
     {
@@ -220,7 +255,15 @@ class Stacktrace implements \JsonSerializable
      * @param int    $lineNumber      The line to centre about
      * @param int    $maxLinesToFetch The maximum number of lines to fetch
      *
-     * @return array
+     * @return array<string, string|string[]>
+     *
+     * @deprecated since version 2.4, to be removed in 3.0
+     *
+     * @psalm-return array{
+     *     pre_context?: string[],
+     *     context_line?: string,
+     *     post_context?: string[]
+     * }
      */
     protected function getSourceCodeExcerpt(string $path, int $lineNumber, int $maxLinesToFetch): array
     {
@@ -267,10 +310,6 @@ class Stacktrace implements \JsonSerializable
             // it's not a drama
         }
 
-        $frame['pre_context'] = $this->serializer->serialize($frame['pre_context']);
-        $frame['context_line'] = $this->serializer->serialize($frame['context_line']);
-        $frame['post_context'] = $this->serializer->serialize($frame['post_context']);
-
         return $frame;
     }
 
@@ -278,8 +317,6 @@ class Stacktrace implements \JsonSerializable
      * Removes from the given file path the specified prefixes.
      *
      * @param string $filePath The path to the file
-     *
-     * @return string
      */
     protected function stripPrefixFromFilePath(string $filePath): string
     {
@@ -295,9 +332,9 @@ class Stacktrace implements \JsonSerializable
     /**
      * Gets the values of the arguments of the given stackframe.
      *
-     * @param array $frame The frame from where arguments are retrieved
+     * @param array<string, mixed> $frame The frame from where arguments are retrieved
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getFrameArgumentsValues(array $frame): array
     {
@@ -310,8 +347,9 @@ class Stacktrace implements \JsonSerializable
         if (\is_string(array_keys($frame['args'])[0])) {
             $result = array_map([$this, 'serializeArgument'], $frame['args']);
         } else {
-            foreach (array_values($frame['args']) as $index => $argument) {
-                $result['param' . ($index + 1)] = $this->serializeArgument($argument);
+            $index = 0;
+            foreach (array_values($frame['args']) as $argument) {
+                $result['param' . (++$index)] = $this->serializeArgument($argument);
             }
         }
 
@@ -321,9 +359,9 @@ class Stacktrace implements \JsonSerializable
     /**
      * Gets the arguments of the given stackframe.
      *
-     * @param array $frame The frame from where arguments are retrieved
+     * @param array<string, mixed> $frame The frame from where arguments are retrieved
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getFrameArguments(array $frame): array
     {
@@ -385,7 +423,7 @@ class Stacktrace implements \JsonSerializable
 
             if (isset($params[$index])) {
                 // Assign the argument by the parameter name
-                $args[$params[$index]->name] = $arg;
+                $args[$params[$index]->getName()] = $arg;
             } else {
                 $args['param' . $index] = $arg;
             }
@@ -422,5 +460,50 @@ class Stacktrace implements \JsonSerializable
         } else {
             return $arg;
         }
+    }
+
+    /**
+     * Checks whether a certain frame should be marked as "in app" or not.
+     *
+     * @param string      $file         The file to check
+     * @param string|null $functionName The name of the function
+     */
+    private function isFrameInApp(string $file, ?string $functionName): bool
+    {
+        if (self::INTERNAL_FRAME_FILENAME === $file) {
+            return false;
+        }
+
+        if (null !== $functionName && 0 === strpos($functionName, 'Sentry\\')) {
+            return false;
+        }
+
+        $projectRoot = $this->options->getProjectRoot();
+        $excludedAppPaths = $this->options->getInAppExcludedPaths();
+        $includedAppPaths = $this->options->getInAppIncludedPaths();
+        $absoluteFilePath = @realpath($file) ?: $file;
+        $isInApp = true;
+
+        if (null !== $projectRoot) {
+            $isInApp = 0 === mb_strpos($absoluteFilePath, $projectRoot);
+        }
+
+        foreach ($excludedAppPaths as $excludedAppPath) {
+            if (0 === mb_strpos($absoluteFilePath, $excludedAppPath)) {
+                $isInApp = false;
+
+                break;
+            }
+        }
+
+        foreach ($includedAppPaths as $includedAppPath) {
+            if (0 === mb_strpos($absoluteFilePath, $includedAppPath)) {
+                $isInApp = true;
+
+                break;
+            }
+        }
+
+        return $isInApp;
     }
 }

@@ -37,6 +37,10 @@ class Standard extends PrettyPrinterAbstract
         return '?' . $this->p($node->type);
     }
 
+    protected function pUnionType(Node\UnionType $node) {
+        return $this->pImplode($node->types, '|');
+    }
+
     protected function pIdentifier(Node\Identifier $node) {
         return $node->name;
     }
@@ -813,8 +817,8 @@ class Standard extends PrettyPrinterAbstract
     }
 
     protected function pStmt_Catch(Stmt\Catch_ $node) {
-        return 'catch (' . $this->pImplode($node->types, '|') . ' '
-             . $this->p($node->var)
+        return 'catch (' . $this->pImplode($node->types, '|')
+             . ($node->var !== null ? ' ' . $this->p($node->var) : '')
              . ') {' . $this->pStmts($node->stmts) . $this->nl . '}';
     }
 

@@ -5,10 +5,8 @@ namespace Illuminate\Support\Facades;
 use Illuminate\Contracts\Auth\PasswordBroker;
 
 /**
- * @method static string sendResetLink(array $credentials)
  * @method static mixed reset(array $credentials, \Closure $callback)
- * @method static void validator(\Closure $callback)
- * @method static bool validateNewPassword(array $credentials)
+ * @method static string sendResetLink(array $credentials)
  *
  * @see \Illuminate\Auth\Passwords\PasswordBroker
  */
@@ -34,13 +32,6 @@ class Password extends Facade
      * @var string
      */
     const INVALID_USER = PasswordBroker::INVALID_USER;
-
-    /**
-     * Constant representing an invalid password.
-     *
-     * @var string
-     */
-    const INVALID_PASSWORD = PasswordBroker::INVALID_PASSWORD;
 
     /**
      * Constant representing an invalid token.

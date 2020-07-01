@@ -13,7 +13,7 @@ return array(
 
     'filename'  => '_ide_helper',
     'format'    => 'php',
-    
+
     'meta_filename' => '.phpstorm.meta.php',
 
     /*
@@ -26,6 +26,18 @@ return array(
     */
 
     'include_fluent' => false,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Factory Builders
+    |--------------------------------------------------------------------------
+    |
+    | Set to true to generate factory generators for better factory()
+    | method auto-completion.
+    |
+    */
+
+    'include_factory_builders' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -83,6 +95,18 @@ return array(
         'app',
     ),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Models to ignore
+    |--------------------------------------------------------------------------
+    |
+    | Define which models should be ignored.
+    |
+    */
+
+    'ignored_models' => array(
+
+    ),
 
     /*
     |--------------------------------------------------------------------------

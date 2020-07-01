@@ -33,8 +33,6 @@ use Symfony\Component\Mime\Exception\LogicException;
  *     $guesser->registerGuesser(new FileinfoMimeTypeGuesser('/path/to/magic/file'));
  *
  * @author Fabien Potencier <fabien@symfony.com>
- *
- * @experimental in 4.3
  */
 final class MimeTypes implements MimeTypesInterface
 {
@@ -53,7 +51,7 @@ final class MimeTypes implements MimeTypesInterface
             $this->extensions[$mimeType] = $extensions;
 
             foreach ($extensions as $extension) {
-                $this->mimeTypes[$extension] = $mimeType;
+                $this->mimeTypes[$extension][] = $mimeType;
             }
         }
         $this->registerGuesser(new FileBinaryMimeTypeGuesser());
@@ -528,6 +526,7 @@ final class MimeTypes implements MimeTypesInterface
         'application/vnd.ms-ims' => ['ims'],
         'application/vnd.ms-lrm' => ['lrm'],
         'application/vnd.ms-officetheme' => ['thmx'],
+        'application/vnd.ms-outlook' => ['msg'],
         'application/vnd.ms-pki.seccat' => ['cat'],
         'application/vnd.ms-pki.stl' => ['stl'],
         'application/vnd.ms-powerpoint' => ['ppt', 'pps', 'pot', 'ppz'],
@@ -1253,6 +1252,7 @@ final class MimeTypes implements MimeTypesInterface
         'image/psd' => ['psd'],
         'image/rle' => ['rle'],
         'image/sgi' => ['sgi'],
+        'image/svg' => ['svg'],
         'image/svg+xml' => ['svg', 'svgz'],
         'image/svg+xml-compressed' => ['svgz'],
         'image/tiff' => ['tiff', 'tif'],
@@ -2375,6 +2375,7 @@ final class MimeTypes implements MimeTypesInterface
         'mseed' => ['application/vnd.fdsn.mseed'],
         'mseq' => ['application/vnd.mseq'],
         'msf' => ['application/vnd.epson.msf'],
+        'msg' => ['application/vnd.ms-outlook'],
         'msh' => ['model/mesh'],
         'msi' => ['application/x-msdownload', 'application/x-msi'],
         'msl' => ['application/vnd.mobius.msl'],
@@ -2810,7 +2811,7 @@ final class MimeTypes implements MimeTypesInterface
         'sv4crc' => ['application/x-sv4crc'],
         'svc' => ['application/vnd.dvb.service'],
         'svd' => ['application/vnd.svd'],
-        'svg' => ['image/svg+xml'],
+        'svg' => ['image/svg+xml', 'image/svg'],
         'svgz' => ['image/svg+xml', 'image/svg+xml-compressed'],
         'svh' => ['text/x-svhdr'],
         'swa' => ['application/x-director'],

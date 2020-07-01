@@ -5,9 +5,6 @@ declare(strict_types=1);
 namespace Sentry;
 
 use Jean85\PrettyVersions;
-use Ramsey\Uuid\Exception\UnsatisfiedDependencyException;
-use Ramsey\Uuid\Uuid;
-use Ramsey\Uuid\UuidInterface;
 use Sentry\Context\Context;
 use Sentry\Context\RuntimeContext;
 use Sentry\Context\ServerOsContext;
@@ -22,7 +19,7 @@ use Sentry\Context\UserContext;
 final class Event implements \JsonSerializable
 {
     /**
-     * @var UuidInterface The UUID
+     * @var EventId The ID
      */
     private $id;
 
@@ -102,7 +99,12 @@ final class Event implements \JsonSerializable
     private $userContext;
 
     /**
-     * @var Context An arbitrary mapping of additional metadata
+     * @var array<string, array<string, mixed>> An arbitrary mapping of additional contexts associated to this event
+     */
+    private $contexts = [];
+
+    /**
+     * @var Context<mixed> An arbitrary mapping of additional metadata
      */
     private $extraContext;
 
@@ -124,7 +126,7 @@ final class Event implements \JsonSerializable
     /**
      * @var array<int, array<string, mixed>> The exceptions
      *
-     * @psalm-var array<int, array{
+     * @psalm-var list<array{
      *     type: class-string,
      *     value: string,
      *     stacktrace: Stacktrace
@@ -148,15 +150,13 @@ final class Event implements \JsonSerializable
     private $sdkVersion;
 
     /**
-     * Event constructor.
+     * Class constructor.
      *
-     * @throws UnsatisfiedDependencyException if `Moontoast\Math\BigNumber` is not present
-     * @throws \InvalidArgumentException
-     * @throws \Exception
+     * @param EventId|null $eventId The ID of the event
      */
-    public function __construct()
+    public function __construct(?EventId $eventId = null)
     {
-        $this->id = Uuid::uuid4();
+        $this->id = $eventId ?? EventId::generate();
         $this->timestamp = gmdate('Y-m-d\TH:i:s\Z');
         $this->level = Severity::error();
         $this->serverOsContext = new ServerOsContext();
@@ -170,17 +170,21 @@ final class Event implements \JsonSerializable
     /**
      * Gets the UUID of this event.
      *
-     * @return string
+     * @return string|EventId
      */
-    public function getId(): string
+    public function getId(bool $returnAsString = true)
     {
-        return str_replace('-', '', $this->id->toString());
+        if ($returnAsString) {
+            @trigger_error(sprintf('Calling the method %s() and expecting it to return a string is deprecated since version 2.4 and will stop working in 3.0.', __METHOD__), E_USER_DEPRECATED);
+
+            return (string) $this->id;
+        }
+
+        return $this->id;
     }
 
     /**
      * Gets the identifier of the SDK package that generated this event.
-     *
-     * @return string
      *
      * @internal
      */
@@ -192,8 +196,6 @@ final class Event implements \JsonSerializable
     /**
      * Sets the identifier of the SDK package that generated this event.
      *
-     * @param string $sdkIdentifier
-     *
      * @internal
      */
     public function setSdkIdentifier(string $sdkIdentifier): void
@@ -203,8 +205,6 @@ final class Event implements \JsonSerializable
 
     /**
      * Gets the version of the SDK package that generated this Event.
-     *
-     * @return string
      *
      * @internal
      */
@@ -216,8 +216,6 @@ final class Event implements \JsonSerializable
     /**
      * Sets the version of the SDK package that generated this Event.
      *
-     * @param string $sdkVersion
-     *
      * @internal
      */
     public function setSdkVersion(string $sdkVersion): void
@@ -227,8 +225,6 @@ final class Event implements \JsonSerializable
 
     /**
      * Gets the timestamp of when this event was generated.
-     *
-     * @return string
      */
     public function getTimestamp(): string
     {
@@ -237,8 +233,6 @@ final class Event implements \JsonSerializable
 
     /**
      * Gets the severity of this event.
-     *
-     * @return Severity
      */
     public function getLevel(): Severity
     {
@@ -257,8 +251,6 @@ final class Event implements \JsonSerializable
 
     /**
      * Gets the name of the logger which created the event.
-     *
-     * @return string|null
      */
     public function getLogger(): ?string
     {
@@ -278,8 +270,6 @@ final class Event implements \JsonSerializable
     /**
      * Gets the name of the transaction (or culprit) which caused this
      * exception.
-     *
-     * @return string|null
      */
     public function getTransaction(): ?string
     {
@@ -299,8 +289,6 @@ final class Event implements \JsonSerializable
 
     /**
      * Gets the name of the server.
-     *
-     * @return string|null
      */
     public function getServerName(): ?string
     {
@@ -319,8 +307,6 @@ final class Event implements \JsonSerializable
 
     /**
      * Gets the release of the program.
-     *
-     * @return string|null
      */
     public function getRelease(): ?string
     {
@@ -339,8 +325,6 @@ final class Event implements \JsonSerializable
 
     /**
      * Gets the error message.
-     *
-     * @return string|null
      */
     public function getMessage(): ?string
     {
@@ -349,8 +333,6 @@ final class Event implements \JsonSerializable
 
     /**
      * Gets the formatted message.
-     *
-     * @return string|null
      */
     public function getMessageFormatted(): ?string
     {
@@ -404,7 +386,7 @@ final class Event implements \JsonSerializable
     /**
      * Gets the request data.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getRequest(): array
     {
@@ -422,9 +404,32 @@ final class Event implements \JsonSerializable
     }
 
     /**
+     * Gets an arbitrary mapping of additional contexts.
+     *
+     * @return array<string, array<string, mixed>>
+     */
+    public function getContexts(): array
+    {
+        return $this->contexts;
+    }
+
+    /**
+     * Sets the data of the context with the given name.
+     *
+     * @param string               $name The name that uniquely identifies the context
+     * @param array<string, mixed> $data The data of the context
+     */
+    public function setContext(string $name, array $data): self
+    {
+        $this->contexts[$name] = $data;
+
+        return $this;
+    }
+
+    /**
      * Gets an arbitrary mapping of additional metadata.
      *
-     * @return Context
+     * @return Context<mixed>
      */
     public function getExtraContext(): Context
     {
@@ -433,8 +438,6 @@ final class Event implements \JsonSerializable
 
     /**
      * Gets a list of tags.
-     *
-     * @return TagsContext
      */
     public function getTagsContext(): TagsContext
     {
@@ -443,8 +446,6 @@ final class Event implements \JsonSerializable
 
     /**
      * Gets the user context.
-     *
-     * @return UserContext
      */
     public function getUserContext(): UserContext
     {
@@ -453,8 +454,6 @@ final class Event implements \JsonSerializable
 
     /**
      * Gets the server OS context.
-     *
-     * @return ServerOsContext
      */
     public function getServerOsContext(): ServerOsContext
     {
@@ -463,8 +462,6 @@ final class Event implements \JsonSerializable
 
     /**
      * Gets the runtime context data.
-     *
-     * @return RuntimeContext
      */
     public function getRuntimeContext(): RuntimeContext
     {
@@ -495,8 +492,6 @@ final class Event implements \JsonSerializable
 
     /**
      * Gets the environment in which this event was generated.
-     *
-     * @return string|null
      */
     public function getEnvironment(): ?string
     {
@@ -536,7 +531,13 @@ final class Event implements \JsonSerializable
     /**
      * Gets the exception.
      *
-     * @return array
+     * @return array<int, array<string, mixed>>
+     *
+     * @psalm-return list<array{
+     *     type: class-string,
+     *     value: string,
+     *     stacktrace: Stacktrace
+     * }>
      */
     public function getExceptions(): array
     {
@@ -544,11 +545,11 @@ final class Event implements \JsonSerializable
     }
 
     /**
-     * Sets the exception.
+     * Sets the exceptions.
      *
-     * @param array<int, array<string, mixed>> $exceptions The exception
+     * @param array<int, array<string, mixed>> $exceptions The exceptions
      *
-     * @psalm-param array<int, array{
+     * @psalm-param list<array{
      *     type: class-string,
      *     value: string,
      *     stacktrace: Stacktrace
@@ -561,8 +562,6 @@ final class Event implements \JsonSerializable
 
     /**
      * Gets the stacktrace that generated this event.
-     *
-     * @return Stacktrace|null
      */
     public function getStacktrace(): ?Stacktrace
     {
@@ -572,9 +571,9 @@ final class Event implements \JsonSerializable
     /**
      * Sets the stacktrace that generated this event.
      *
-     * @param Stacktrace $stacktrace The stacktrace instance
+     * @param Stacktrace|null $stacktrace The stacktrace instance
      */
-    public function setStacktrace(Stacktrace $stacktrace): void
+    public function setStacktrace(?Stacktrace $stacktrace): void
     {
         $this->stacktrace = $stacktrace;
     }
@@ -582,55 +581,12 @@ final class Event implements \JsonSerializable
     /**
      * Gets the event as an array.
      *
-     * @return array
-     *
-     * @psalm-return array{
-     *     event_id: string,
-     *     timestamp: string,
-     *     level: string,
-     *     platform: string,
-     *     sdk: array{
-     *         name: string,
-     *         version: string
-     *     },
-     *     logger?: string,
-     *     transaction?: string,
-     *     server_name?: string,
-     *     release?: string,
-     *     environment?: string,
-     *     fingerprint?: string[],
-     *     modules?: array<string, string>,
-     *     extra?: mixed[],
-     *     tags?: mixed[],
-     *     user?: mixed[],
-     *     contexts?: array{
-     *         os?: mixed[],
-     *         runtime?: mixed[]
-     *     },
-     *     breadcrumbs?: array{
-     *         values: Breadcrumb[]
-     *     },
-     *     exception?: array{
-     *         values: array{
-     *             type: class-string,
-     *             value: string,
-     *             stacktrace?: array{
-     *                 frames: Frame[]
-     *             }
-     *         }[]
-     *     },
-     *     request?: array<string, mixed>,
-     *     message?: string|array{
-     *         message: string,
-     *         params: mixed[],
-     *         formatted: string
-     *     }
-     * }
+     * @return array<string, mixed>
      */
     public function toArray(): array
     {
         $data = [
-            'event_id' => str_replace('-', '', $this->id->toString()),
+            'event_id' => (string) $this->id,
             'timestamp' => $this->timestamp,
             'level' => (string) $this->level,
             'platform' => 'php',
@@ -688,6 +644,10 @@ final class Event implements \JsonSerializable
             $data['contexts']['runtime'] = $this->runtimeContext->toArray();
         }
 
+        if (!empty($this->contexts)) {
+            $data['contexts'] = array_merge($data['contexts'] ?? [], $this->contexts);
+        }
+
         if (!empty($this->breadcrumbs)) {
             $data['breadcrumbs']['values'] = $this->breadcrumbs;
         }
@@ -734,6 +694,8 @@ final class Event implements \JsonSerializable
 
     /**
      * {@inheritdoc}
+     *
+     * @return array<string, mixed>
      */
     public function jsonSerialize(): array
     {

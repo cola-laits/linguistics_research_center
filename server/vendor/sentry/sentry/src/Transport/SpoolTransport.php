@@ -31,8 +31,6 @@ final class SpoolTransport implements TransportInterface
 
     /**
      * Gets the spool.
-     *
-     * @return SpoolInterface
      */
     public function getSpool(): SpoolInterface
     {
@@ -45,7 +43,7 @@ final class SpoolTransport implements TransportInterface
     public function send(Event $event): ?string
     {
         if ($this->spool->queueEvent($event)) {
-            return $event->getId();
+            return (string) $event->getId(false);
         }
 
         return null;

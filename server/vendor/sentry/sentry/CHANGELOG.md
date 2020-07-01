@@ -2,6 +2,72 @@
 
 ## Unreleased
 
+### 2.4.0 (2020-05-21)
+
+- Enforce a timeout for connecting to the server and for the requests instead of waiting indefinitely (#979)
+- Add `RequestFetcherInterface` to allow customizing the request data attached to the logged event (#984)
+- Log internal debug and error messages to a PSR-3 compatible logger (#989)
+- Make `AbstractSerializer` to accept `Traversable` values using `is_iterable` instead of `is_array` (#991)
+- Refactor the `ModulesIntegration` integration to improve its code and its tests (#990)
+- Extract the parsing and validation logic of the DSN into its own value object (#995)
+- Support passing either a Httplug or PSR-17 stream factory to the `GzipEncoderPlugin` class (#1012)
+- Add the `FrameContextifierIntegration` integration (#1011)
+- Add missing validation for the `context_lines` option and fix its behavior when passing `null` to make it working as described in the documentation (#1003)
+- Trim the file path from the anonymous class name in the stacktrace according to the `prefixes` option (#1016)
+
+## 2.3.2 (2020-03-06)
+
+- Hard-limit concurrent requests in `HttpTransport` and removed pre-init of promises (fixes "too many open files" errors) (#981)
+- Fix `http_proxy` option not being applied (#978)
+- Fix the error handler rethrowing the captured exception when previous handler didn't (#974)
+
+## 2.3.1 (2020-01-23)
+
+- Allow unsetting the stack trace on an `Event` by calling `Event::setStacktrace(null)` (#961)
+- Fix sending of both `event.stacktrace` and `event.exceptions` when `attach_stacktrace = true` (#960)
+- Fix regression that set all frames of a stacktrace as not in app by default (#958)
+- Fix issues with memory addresses in anonymous class stack traces (#956)
+- Fix exception thrown regardless of whether the HTTP client was instantiated when using the `http_proxy option` (#951)
+
+## 2.3.0 (2020-01-08)
+
+- Add `in_app_include` option to whitelist paths that should be marked as part of the app (#909)
+- Fix `Client::captureEvent` not considering the `attach_stacktrace` option (#940)
+- Replace `ramsey/uuid` dependency with `uuid_create` from the PECL [`uuid`](https://pecl.php.net/package/uuid) extension or [`symfony/polyfill-uuid`](https://github.com/symfony/polyfill-uuid) (#937)
+- Deprecate `Scope::setUser` behaviour of replacing user data. (#929)
+- Add the `$merge` parameter on `Scope::setUser` to allow merging user context. (#929)
+- Make the `integrations` option accept a `callable` that will receive the list of default integrations and returns a customized list (#919)
+- Add the `IgnoreErrorsIntegration` integration to deprecate and replace the `exclude_exceptions` option (#928)
+- Allow setting custom contexts on the scope and on the event (#839)
+- Replace dependency to `zendframework/zend-diactoros` with `guzzlehttp/psr7` (#945)
+
+## 2.2.6 (2019-12-18)
+
+- Fix remaining PHP 7.4 deprecations (#930)
+- Fix error thrown during JSON encoding if a string contains invalid UTF-8 characters (#934)
+
+## 2.2.5 (2019-11-27)
+
+- Add compatibility with Symfony 5 (#925)
+- Ensure compatibility with PHP 7.4 (#894, #926)
+
+## 2.2.4 (2019-11-04)
+
+- Suggest installing Monolog to send log messages directly to Sentry (#908)
+- Make the `$errcontext` argument of the `ErrorHandler::handleError()` method `nullable` (#917)
+
+## 2.2.3 (2019-10-31)
+
+- Fix deprecation raised when serializing callable in certain circumstances (#821)
+- Fix incorrect `critical` breadcrumb level by replacing it with the `fatal` level (#901)
+- Fix regression on default sending behavior of the `HttpTransport` transport (#905)
+- Fix stacktrace frame inApp detection: all paths outside the project_root are now considered as not in app (#911)
+
+## 2.2.2 (2019-10-10)
+
+- Fix handling of fifth argument in the error handler (#892)
+- Catch exception from vendors in `Sentry\Transport\HttpTransport` (#899)
+
 ## 2.2.1 (2019-09-23)
 
 - Disable default deprecation warning `Sentry\Transport\HttpTransport` (#884)

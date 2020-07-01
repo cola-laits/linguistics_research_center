@@ -14,6 +14,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * stores information about the current runtime.
  *
  * @author Stefano Arlandini <sarlandini@alice.it>
+ *
+ * @final since version 2.3
+ *
+ * @template-extends Context<string>
  */
 class RuntimeContext extends Context
 {
@@ -101,8 +105,6 @@ class RuntimeContext extends Context
 
     /**
      * Gets the name of the runtime.
-     *
-     * @return string
      */
     public function getName(): string
     {
@@ -121,8 +123,6 @@ class RuntimeContext extends Context
 
     /**
      * Gets the version of the runtime.
-     *
-     * @return string
      */
     public function getVersion(): string
     {

@@ -28,12 +28,17 @@ final class Scope
     private $user;
 
     /**
+     * @var array<string, array<string, mixed>> The list of contexts associated to this scope
+     */
+    private $contexts = [];
+
+    /**
      * @var TagsContext The list of tags associated to this scope
      */
     private $tags;
 
     /**
-     * @var Context A set of extra data associated to this scope
+     * @var Context<mixed> A set of extra data associated to this scope
      */
     private $extra;
 
@@ -67,6 +72,7 @@ final class Scope
         $this->user = new UserContext();
         $this->tags = new TagsContext();
         $this->extra = new Context();
+        $this->contexts = [];
     }
 
     /**
@@ -94,6 +100,35 @@ final class Scope
     public function setTags(array $tags): self
     {
         $this->tags->merge($tags);
+
+        return $this;
+    }
+
+    /**
+     * Sets context data with the given name.
+     *
+     * @param string               $name  The name that uniquely identifies the context
+     * @param array<string, mixed> $value The value
+     *
+     * @return $this
+     */
+    public function setContext(string $name, array $value): self
+    {
+        $this->contexts[$name] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Removes the context from the scope.
+     *
+     * @param string $name The name that uniquely identifies the context
+     *
+     * @return $this
+     */
+    public function removeContext(string $name): self
+    {
+        unset($this->contexts[$name]);
 
         return $this;
     }
@@ -130,12 +165,21 @@ final class Scope
     /**
      * Sets the given data in the user context.
      *
-     * @param array $data The data
+     * @param array<string, mixed> $data  The data
+     * @param bool                 $merge If true, $data will be merged into user context instead of replacing it
      *
      * @return $this
      */
-    public function setUser(array $data): self
+    public function setUser(array $data, bool $merge = false): self
     {
+        if ($merge) {
+            $this->user->merge($data);
+
+            return $this;
+        }
+
+        @trigger_error('Replacing the data is deprecated since version 2.3 and will stop working from version 3.0. Set the second argument to `true` to merge the data instead.', E_USER_DEPRECATED);
+
         $this->user->replaceData($data);
 
         return $this;
@@ -237,6 +281,7 @@ final class Scope
         $this->level = null;
         $this->fingerprint = [];
         $this->breadcrumbs = [];
+        $this->contexts = [];
 
         return $this;
     }
@@ -245,10 +290,8 @@ final class Scope
      * Applies the current context and fingerprint to the event. If the event has
      * already some breadcrumbs on it, the ones from this scope won't get merged.
      *
-     * @param Event $event   The event object that will be enriched with scope data
-     * @param array $payload The raw payload of the event that will be propagated to the event processors
-     *
-     * @return Event|null
+     * @param Event                $event   The event object that will be enriched with scope data
+     * @param array<string, mixed> $payload The raw payload of the event that will be propagated to the event processors
      */
     public function applyToEvent(Event $event, array $payload): ?Event
     {
@@ -268,8 +311,12 @@ final class Scope
         $event->getExtraContext()->merge($this->extra->toArray());
         $event->getUserContext()->merge($this->user->toArray());
 
+        foreach (array_merge($this->contexts, $event->getContexts()) as $name => $data) {
+            $event->setContext($name, $data);
+        }
+
         foreach (array_merge(self::$globalEventProcessors, $this->eventProcessors) as $processor) {
-            $event = \call_user_func($processor, $event, $payload);
+            $event = $processor($event, $payload);
 
             if (null === $event) {
                 return null;

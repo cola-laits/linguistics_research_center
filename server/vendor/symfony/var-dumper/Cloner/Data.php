@@ -12,6 +12,7 @@
 namespace Symfony\Component\VarDumper\Cloner;
 
 use Symfony\Component\VarDumper\Caster\Caster;
+use Symfony\Component\VarDumper\Dumper\ContextProvider\SourceContextProvider;
 
 /**
  * @author Nicolas Grekas <p@tchwork.com>
@@ -24,6 +25,7 @@ class Data implements \ArrayAccess, \Countable, \IteratorAggregate
     private $maxDepth = 20;
     private $maxItemsPerDepth = -1;
     private $useRefHandles = -1;
+    private $context = [];
 
     /**
      * @param array $data An array as returned by ClonerInterface::cloneVar()
@@ -106,21 +108,27 @@ class Data implements \ArrayAccess, \Countable, \IteratorAggregate
         return $children;
     }
 
+    /**
+     * @return int
+     */
     public function count()
     {
         return \count($this->getValue());
     }
 
+    /**
+     * @return \Traversable
+     */
     public function getIterator()
     {
         if (!\is_array($value = $this->getValue())) {
-            throw new \LogicException(sprintf('%s object holds non-iterable type "%s".', self::class, \gettype($value)));
+            throw new \LogicException(sprintf('"%s" object holds non-iterable type "%s".', self::class, get_debug_type($value)));
         }
 
         yield from $value;
     }
 
-    public function __get($key)
+    public function __get(string $key)
     {
         if (null !== $data = $this->seek($key)) {
             $item = $this->getStub($data->data[$data->position][$data->key]);
@@ -131,11 +139,17 @@ class Data implements \ArrayAccess, \Countable, \IteratorAggregate
         return null;
     }
 
-    public function __isset($key)
+    /**
+     * @return bool
+     */
+    public function __isset(string $key)
     {
         return null !== $this->seek($key);
     }
 
+    /**
+     * @return bool
+     */
     public function offsetExists($key)
     {
         return $this->__isset($key);
@@ -156,6 +170,9 @@ class Data implements \ArrayAccess, \Countable, \IteratorAggregate
         throw new \BadMethodCallException(self::class.' objects are immutable.');
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         $value = $this->getValue();
@@ -170,11 +187,9 @@ class Data implements \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Returns a depth limited clone of $this.
      *
-     * @param int $maxDepth The max dumped depth level
-     *
      * @return static
      */
-    public function withMaxDepth($maxDepth)
+    public function withMaxDepth(int $maxDepth)
     {
         $data = clone $this;
         $data->maxDepth = (int) $maxDepth;
@@ -185,11 +200,9 @@ class Data implements \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Limits the number of elements per depth level.
      *
-     * @param int $maxItemsPerDepth The max number of items dumped per depth level
-     *
      * @return static
      */
-    public function withMaxItemsPerDepth($maxItemsPerDepth)
+    public function withMaxItemsPerDepth(int $maxItemsPerDepth)
     {
         $data = clone $this;
         $data->maxItemsPerDepth = (int) $maxItemsPerDepth;
@@ -204,10 +217,21 @@ class Data implements \ArrayAccess, \Countable, \IteratorAggregate
      *
      * @return static
      */
-    public function withRefHandles($useRefHandles)
+    public function withRefHandles(bool $useRefHandles)
     {
         $data = clone $this;
         $data->useRefHandles = $useRefHandles ? -1 : 0;
+
+        return $data;
+    }
+
+    /**
+     * @return static
+     */
+    public function withContext(array $context)
+    {
+        $data = clone $this;
+        $data->context = $context;
 
         return $data;
     }
@@ -266,18 +290,26 @@ class Data implements \ArrayAccess, \Countable, \IteratorAggregate
     public function dump(DumperInterface $dumper)
     {
         $refs = [0];
-        $this->dumpItem($dumper, new Cursor(), $refs, $this->data[$this->position][$this->key]);
+        $cursor = new Cursor();
+
+        if ($cursor->attr = $this->context[SourceContextProvider::class] ?? []) {
+            $cursor->attr['if_links'] = true;
+            $cursor->hashType = -1;
+            $dumper->dumpScalar($cursor, 'default', '^');
+            $cursor->attr = ['if_links' => true];
+            $dumper->dumpScalar($cursor, 'default', ' ');
+            $cursor->hashType = 0;
+        }
+
+        $this->dumpItem($dumper, $cursor, $refs, $this->data[$this->position][$this->key]);
     }
 
     /**
      * Depth-first dumping of items.
      *
-     * @param DumperInterface $dumper The dumper being used for dumping
-     * @param Cursor          $cursor A cursor used for tracking dumper state position
-     * @param array           &$refs  A map of all references discovered while dumping
-     * @param mixed           $item   A Stub object or the original value being dumped
+     * @param mixed $item A Stub object or the original value being dumped
      */
-    private function dumpItem($dumper, $cursor, &$refs, $item)
+    private function dumpItem(DumperInterface $dumper, Cursor $cursor, array &$refs, $item)
     {
         $cursor->refIndex = 0;
         $cursor->softRefTo = $cursor->softRefHandle = $cursor->softRefCount = 0;
@@ -360,7 +392,7 @@ class Data implements \ArrayAccess, \Countable, \IteratorAggregate
                     break;
 
                 default:
-                    throw new \RuntimeException(sprintf('Unexpected Stub type: %s', $item->type));
+                    throw new \RuntimeException(sprintf('Unexpected Stub type: "%s".', $item->type));
             }
         } elseif ('array' === $type) {
             $dumper->enterHash($cursor, Cursor::HASH_INDEXED, 0, false);
@@ -375,17 +407,9 @@ class Data implements \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Dumps children of hash structures.
      *
-     * @param DumperInterface $dumper
-     * @param Cursor          $parentCursor The cursor of the parent hash
-     * @param array           &$refs        A map of all references discovered while dumping
-     * @param array           $children     The children to dump
-     * @param int             $hashCut      The number of items removed from the original hash
-     * @param string          $hashType     A Cursor::HASH_* const
-     * @param bool            $dumpKeys     Whether keys should be dumped or not
-     *
      * @return int The final number of removed items
      */
-    private function dumpChildren($dumper, $parentCursor, &$refs, $children, $hashCut, $hashType, $dumpKeys)
+    private function dumpChildren(DumperInterface $dumper, Cursor $parentCursor, array &$refs, array $children, int $hashCut, int $hashType, bool $dumpKeys): int
     {
         $cursor = clone $parentCursor;
         ++$cursor->depth;

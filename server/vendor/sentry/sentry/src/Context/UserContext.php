@@ -7,13 +7,13 @@ namespace Sentry\Context;
 /**
  * This class is a specialized version of the base `Context` adapted to work
  * for the user context.
+ *
+ * @template-extends Context<mixed>
  */
 final class UserContext extends Context
 {
     /**
      * Gets the ID of the user.
-     *
-     * @return string|null
      */
     public function getId(): ?string
     {
@@ -32,8 +32,6 @@ final class UserContext extends Context
 
     /**
      * Gets the username of the user.
-     *
-     * @return string|null
      */
     public function getUsername(): ?string
     {
@@ -52,8 +50,6 @@ final class UserContext extends Context
 
     /**
      * Gets the email of the user.
-     *
-     * @return string|null
      */
     public function getEmail(): ?string
     {
@@ -72,8 +68,6 @@ final class UserContext extends Context
 
     /**
      * Gets the ip address of the user.
-     *
-     * @return string|null
      */
     public function getIpAddress(): ?string
     {

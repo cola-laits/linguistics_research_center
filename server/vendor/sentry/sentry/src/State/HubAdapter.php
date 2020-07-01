@@ -17,7 +17,7 @@ use Sentry\Severity;
 final class HubAdapter implements HubInterface
 {
     /**
-     * @var self The single instance which forwards all calls to {@see SentrySdk}
+     * @var self|null The single instance which forwards all calls to {@see SentrySdk}
      */
     private static $instance;
 
@@ -31,8 +31,6 @@ final class HubAdapter implements HubInterface
     /**
      * Gets the instance of this class. This is a singleton, so once initialized
      * you will always get the same instance.
-     *
-     * @return self
      */
     public static function getInstance(): self
     {
