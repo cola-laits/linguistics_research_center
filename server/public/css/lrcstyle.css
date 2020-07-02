@@ -9,7 +9,11 @@
 }
 @font-face {
     font-family: Miklosic2;
-    src: url(/fonts/miklosic2-webfont.woff)
+    src: url("/fonts/Miklosic2.woff")
+}
+@font-face {
+    font-family: Miklosic2;
+    src: url("/fonts/Miklosic2.ttf") /* TTF file for CSS3 browsers */
 }
 
 .left { text-align: left }
