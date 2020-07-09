@@ -14,6 +14,8 @@ public/css/admin.css
 public/js/admin.js
 public/js/manifest.js
 public/js/vendor.js
+public/js/*.js.map
+public/js/icons
 public/mix-manifest.json
 
 node_modules/gifsicle/vendor/

@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Events\IssueSaved;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -35,6 +36,10 @@ class Issue extends Model
     protected $table = 'issue';
 
     protected $guarded = ['id','created_at','updated_at'];
+
+    protected function serializeDate(DateTimeInterface $date) {
+        return $date->format('Y-m-d H:i:s');
+    }
 
     public static function getTextFromPointer($pointer) {
         if (strpos($pointer,'/')===0) {
