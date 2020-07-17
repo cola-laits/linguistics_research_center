@@ -60,9 +60,9 @@
                     contentsCss: '/css/lrcstyle.css',
                     disableNativeSpellChecker: false,
                     allowedContent: true,
-                    extraPlugins: 'html5audio,filebrowser,onchange,eieol_language',
+                    removePlugins: 'image',
+                    extraPlugins: 'html5audio,filebrowser,onchange,eieol_language,image2',
                     filebrowserUploadUrl: '/admin2/files/upload',
-                    enterMode: 'CKEDITOR.ENTER_BR',
                     entities: false
                 };
                 if (this.custom_config) {

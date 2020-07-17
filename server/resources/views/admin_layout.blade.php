@@ -84,7 +84,7 @@
     </div>
 
     <script src="/js/vue-search-select.js"></script>
-    <script src="https://cdn.la.utexas.edu/ckeditor/ckeditor_4.11.4_full/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/4.14.1/full-all/ckeditor.js"></script>
 
     <script src="{{ mix('/js/admin.js') }}"></script>
 
