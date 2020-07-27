@@ -8181,11 +8181,9 @@ th.hide-for-touch{
 	}
 }
 .content-secondary-page img{
-	width:auto;
 	border:none;
 	padding:.5rem 1.5625rem .625rem 0;
 	margin:0px;
-	float:left
 }
 .content-secondary-page .header-image{
 	padding:.625rem 0 1.875rem 0;
@@ -8941,11 +8939,9 @@ th.hide-for-touch{
 	margin:.25rem 0 2rem 0
 }
 .content-secondary-page img{
-	width:auto;
 	border:none;
 	padding:0.5rem 1.5625rem 0.625rem 0;
 	margin:0px;
-	float:left
 }
 .unit-home-page-news{
 	padding-top:.3125rem;
@@ -9587,4 +9583,3 @@ th.hide-for-touch{
 	font-size:.875rem;
 	margin:0 0 0 .625rem
 }
- 
