@@ -228,3 +228,14 @@ white-space: pre-wrap;
   .boxey { page-break-inside: avoid}
   .unbreakable { page-break-inside: avoid}
 }
+
+figure {
+    display: table;
+}
+
+figcaption {
+    display: table-caption;
+    caption-side: bottom;
+    color: #5B5B5B;
+    font-size: 90%;
+}
