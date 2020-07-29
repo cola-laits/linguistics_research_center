@@ -231,6 +231,8 @@ white-space: pre-wrap;
 
 figure {
     display: table;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 figcaption {
