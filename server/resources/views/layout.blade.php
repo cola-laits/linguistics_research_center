@@ -1,6 +1,135 @@
 @extends('layout_header')
 @section('page')
 
+    @php
+    $show_donation = Session::has('donation_page_ctr_limit') && Session::get('donation_page_ctr') <= Session::get('donation_page_ctr_limit')
+    @endphp
+    @if ($show_donation || Request::get('donate')==='true')
+    <!-- donation box modal -->
+    <style>
+        /* The Modal (background) */
+        .donation-modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        /* Modal Content */
+        .donation-modal-content {
+            position: relative;
+            background-color: #fefefe;
+            margin: auto;
+            padding: 0;
+            border: 1px solid #888;
+            width: 80%;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+            -webkit-animation-name: animatetop;
+            -webkit-animation-duration: 0.4s;
+            animation-name: animatetop;
+            animation-duration: 0.4s
+        }
+
+        /* Add Animation */
+        @-webkit-keyframes animatetop {
+            from {top:-300px; opacity:0}
+            to {top:0; opacity:1}
+        }
+
+        @keyframes animatetop {
+            from {top:-300px; opacity:0}
+            to {top:0; opacity:1}
+        }
+
+        /* The Close Button */
+        .donation-modal-close {
+            color: white;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .donation-modal-close:hover,
+        .donation-modal-close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .donation-modal-header {
+            padding: 2px 16px;
+            background-color: #5cb85c;
+            color: white;
+        }
+
+        .donation-modal-body {padding: 2px 16px;}
+
+        .donation-modal-footer {
+            padding: 2px 16px;
+            background-color: #5cb85c;
+            color: white;
+        }
+    </style>
+
+    <div id="donationModal" class="donation-modal">
+
+        <!-- Modal content -->
+        <div class="donation-modal-content">
+            <div class="donation-modal-header">
+                <span class="donation-modal-close">&times;</span>
+                <h2 style="color:white;">Donate to the Linguistics Research Center</h2>
+            </div>
+            <div class="donation-modal-body">
+                <p></p>
+
+                <h3>40 for Forty is here!</h3>
+
+                <p>UT is asking the community to help support critical projects like the LRC.</p>
+
+                <p>Please consider making a donation today <a href="https://40for40.utexas.edu/giving-day/19787/department/25244" target="_blank">here</a>.</p>
+
+                <p>$5, $10, $20… anything helps.</p>
+
+                <p> Thank you.</p>
+
+                <p>
+                    <div id="donate-button">
+                        <a href="https://40for40.utexas.edu/giving-day/19787/department/25244"><h3>Donate Now</h3></a>
+                <p class="hide-for-medium-down"><a href="https://40for40.utexas.edu/giving-day/19787/department/25244">We need your help to preserve &amp; document ancient languages. Participate today.</a></p>
+            </div>
+            </p>
+        </div>
+    </div>
+
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function(event) {
+            var modal = document.getElementById("donationModal");
+            var span = document.getElementsByClassName("donation-modal-close")[0];
+
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+
+            modal.style.display = "block";
+        });
+    </script>
+    <!-- end donation box modal -->
+    @endif
+
 <!-- Google Tag Manager - Removed Google Analytics Script - Now managing through GTM 'GA Page Tracker CLA' and 'GA Page Tracker UT' -->
 
     <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-MWRKVL"
