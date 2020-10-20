@@ -21,21 +21,57 @@ derived from multiple PIE etyma; or a single spelling may, like English <i>bear<
 or <i>lie</i>, represent multiple reflexes derived from different PIE etyma.</p>
 
 
+<style>
+    .hidden_row {
+        display:none;
+    }
+</style>
+<script>
+    function search(query) {
+        var table = document.getElementById('reflexTable');
+        table.remove();
 
+        query = query.trim();
+        var rows = table.getElementsByClassName('searchable_reflex_row');
+        Array.prototype.forEach.call(rows, function(row) {
+            var cells = row.getElementsByTagName('td');
+            var reflex_text = cells[0].innerText.trim();
+            var etyma_text = cells[1].innerText.trim();
+            if (passes_filter(query, reflex_text, etyma_text)) {
+                row.classList.remove('hidden_row');
+            } else {
+                row.classList.add('hidden_row');
+            }
+        })
 
-<div class = "reflexTableContainer">
-    <table class="reflexTable">
+        document.getElementById('reflexTableContainer').appendChild(table);
+    }
+
+    function passes_filter(query, reflex, etyma) {
+        if (query==="") {
+            return true;
+        }
+        return reflex.indexOf(query) !== -1;
+    }
+</script>
+
+<div id="reflexTableContainer" class="reflexTableContainer">
+    <div style="border:solid 1px #999;border-radius:10px;padding:10px;margin:10px;">
+        Search:
+        <input type="text" name="query" value="" autocomplete="off" style="display:inline;float:none;" onkeyup="search(this.value);">
+    </div>
+    <table id="reflexTable" class="reflexTable" style="width:100%;">
         <caption>{!! $language->name !!} reflex index</caption>
       <thead>
         <tr>
-            <th scope='col'>Reflex</th>
-            <th scope='col'>Etyma</th>
+            <th scope='col' style="width:25%;">Reflex</th>
+            <th scope='col' style="width:75%;">Etyma</th>
         </tr>
       </thead>
 
       <tbody>
       @foreach($display_reflexes as $reflex)
-        <tr>
+        <tr class="searchable_reflex_row">
             <td>
                 <span class='{{$reflex['class_attribute']}}' lang='{{$reflex['lang_attribute']}}'>{!! $reflex['reflex'] !!}</span>
             </td>
