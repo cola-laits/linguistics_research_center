@@ -51,19 +51,31 @@ or <i>lie</i>, represent multiple reflexes derived from different PIE etyma.</p>
 
     function show_help() {
         document.getElementById('help_link').style.display = 'none';
+        document.getElementById('help_link_hide').style.display = 'inline';
         document.getElementById('help').style.display = 'block';
+    }
+
+    function hide_help() {
+        document.getElementById('help_link').style.display = 'inline';
+        document.getElementById('help_link_hide').style.display = 'none';
+        document.getElementById('help').style.display = 'none';
     }
 </script>
 
 <div id="reflexTableContainer" class="reflexTableContainer">
     <div style="border:solid 1px #999;border-radius:10px;padding:10px;margin:10px;">
+        <p>
+            Use the search bar to reduce the number of words displayed.
+        </p>
         Search:
         <input type="text" name="query" value="" autocomplete="off" style="display:inline;float:none;" onkeyup="search(this.value);">
-        <a id="help_link" onclick="show_help()">(help)</a>
+        <a id="help_link" onclick="show_help()">(tips for searching)</a>
+        <a id="help_link_hide" onclick="hide_help()" style="display:none;">(hide tips)</a>
         <div id="help" style="display:none;">
             <hr>
+            <h3>Search tips</h3>
             <p>
-                Use the search bar to reduce the number of words displayed. You can choose from three types of searches.
+                 You can choose from three types of searches.
             </p>
 
             <p>
@@ -80,7 +92,7 @@ or <i>lie</i>, represent multiple reflexes derived from different PIE etyma.</p>
 
             <ul>
                 <li><code>t.p</code> would return words like <i>tip, top, tape, stops,</i> and others.</li>
-                <li><code>t*p</code> would return words like those listed above, but also <i>footpad, tarp, and trample</i>.</li>
+                <li><code>t.*p</code> would return words like those listed above, but also <i>footpad, tarp, and trample</i>.</li>
                 <li><code>^t.p</code> would match words like <i>tip, top, and tops,</i> but not <i>stops</i>.</li>
                 <li><code>sk$</code> would match words like <i>ask</i> and <i>task</i>, but not <i>asked</i> or <i>sky</i>.</li>
             </ul>
