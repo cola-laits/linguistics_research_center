@@ -28,11 +28,16 @@ or <i>lie</i>, represent multiple reflexes derived from different PIE etyma.</p>
 </style>
 <script>
     function search(query) {
+        try {
+            query = query.trim();
+            var re = RegExp(query, 'i');
+        } catch (e) {
+            return;
+        }
+
         var table = document.getElementById('reflexTable');
         table.remove();
 
-        query = query.trim();
-        re = RegExp(query, 'i');
         var rows = table.getElementsByClassName('searchable_reflex_row');
         Array.prototype.forEach.call(rows, function(row) {
             var cells = row.getElementsByTagName('td');
