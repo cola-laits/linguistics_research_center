@@ -32,12 +32,14 @@ or <i>lie</i>, represent multiple reflexes derived from different PIE etyma.</p>
         table.remove();
 
         query = query.trim();
+        re = RegExp(query, 'i');
         var rows = table.getElementsByClassName('searchable_reflex_row');
         Array.prototype.forEach.call(rows, function(row) {
             var cells = row.getElementsByTagName('td');
             var reflex_text = cells[0].innerText.trim();
             var etyma_text = cells[1].innerText.trim();
-            if (passes_filter(query, reflex_text, etyma_text)) {
+            var passes_filter = query==='' || re.test(reflex_text);
+            if (passes_filter) {
                 row.classList.remove('hidden_row');
             } else {
                 row.classList.add('hidden_row');
@@ -47,11 +49,9 @@ or <i>lie</i>, represent multiple reflexes derived from different PIE etyma.</p>
         document.getElementById('reflexTableContainer').appendChild(table);
     }
 
-    function passes_filter(query, reflex, etyma) {
-        if (query==="") {
-            return true;
-        }
-        return reflex.indexOf(query) !== -1;
+    function show_help() {
+        document.getElementById('help_link').style.display = 'none';
+        document.getElementById('help').style.display = 'block';
     }
 </script>
 
@@ -59,6 +59,39 @@ or <i>lie</i>, represent multiple reflexes derived from different PIE etyma.</p>
     <div style="border:solid 1px #999;border-radius:10px;padding:10px;margin:10px;">
         Search:
         <input type="text" name="query" value="" autocomplete="off" style="display:inline;float:none;" onkeyup="search(this.value);">
+        <a id="help_link" onclick="show_help()">(help)</a>
+        <div id="help" style="display:none;">
+            <hr>
+            <p>
+                Use the search bar to reduce the number of words displayed. You can choose from three types of searches.
+            </p>
+
+            <p>
+                <b>Default</b>: type in a string (i.e. list of characters) and the table will display only those words
+                in which that string occurs — anywhere. For example, if you type in <code>sk</code>, the resulting list will include
+                <i>ask, triskelion,</i> and <i>sky</i>, among others.
+            </p>
+
+            <p>
+                <b>Simple Wildcards</b>: type in a string and use <code>.</code> to substitute for a single unspecified character, or
+                <code>.*</code> to substitute for zero or more unspecified characters. Type <code>^</code> at the beginning of your
+                string to say you only want words where the string begins the word, or <code>$</code> at the end of your
+                string for words that end with your string. For example:
+
+            <ul>
+                <li><code>t.p</code> would return words like <i>tip, top, tape, stops,</i> and others.</li>
+                <li><code>t*p</code> would return words like those listed above, but also <i>footpad, tarp, and trample</i>.</li>
+                <li><code>^t.p</code> would match words like <i>tip, top, and tops,</i> but not <i>stops</i>.</li>
+                <li><code>sk$</code> would match words like <i>ask</i> and <i>task</i>, but not <i>asked</i> or <i>sky</i>.</li>
+            </ul>
+            </p>
+
+            <p>
+                <b>Regular Expressions</b>: type in any <b>regular expression</b> as commonly used in programming languages for string searches.
+                See <a href="https://en.wikipedia.org/wiki/Regular_expression" target="_blank">here</a>
+                for a basic explanation of the topic.
+            </p>
+        </div>
     </div>
     <table id="reflexTable" class="reflexTable" style="width:100%;">
         <caption>{!! $language->name !!} reflex index</caption>
