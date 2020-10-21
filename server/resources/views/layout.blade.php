@@ -312,16 +312,6 @@ the page content is in <section class="main-section">
                         <!-- Right Orange Bar Section -->
                         <ul class="right">
                             <li>
-                                <form action="https://liberalarts.utexas.edu/search" id="search-medium-up">
-                                    <input name="cx" type="hidden" value="002688418440466237416:ilehtu0wbts"/>
-                                    <input name="cof" type="hidden" value="FORID:10"/>
-                                    <input name="ie" type="hidden" value="UTF-8"/>
-                                    <label class="hidden-for-medium-up" for="searchMediumUpInput">Search the College of Liberal Arts</label>
-                                    <input id="searchMediumUpInput" name="q" placeholder="Search the College of Liberal Arts..." type="search"/>
-                                </form>
-                            </li>
-                            <li class="pipe-divider">   |   </li>
-                            <li>
                                 <!-- replaced by page-level template -->
                                 <a class="donate-button" href="https://utdirect.utexas.edu/apps/utgiving/online/nlogon/?menu1=LALG" title="GIVE">GIVE</a>
                             </li>
