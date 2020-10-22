@@ -70,7 +70,7 @@ or <i>lie</i>, represent multiple reflexes derived from different PIE etyma.</p>
 <div id="reflexTableContainer" class="reflexTableContainer">
     <div style="border:solid 1px #999;border-radius:10px;padding:10px;margin:10px;">
         <p>
-            Use the search bar to reduce the number of words displayed.
+            Use the search bar to filter the reflexes displayed.
         </p>
         Search:
         <input type="text" name="query" value="" autocomplete="off" style="display:inline;float:none;" onkeyup="search(this.value);">
