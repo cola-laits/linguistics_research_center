@@ -12,7 +12,7 @@
 
 namespace Composer\SelfUpdate;
 
-use Composer\Util\RemoteFilesystem;
+use Composer\Util\HttpDownloader;
 use Composer\Config;
 use Composer\Json\JsonFile;
 
@@ -23,13 +23,14 @@ class Versions
 {
     public static $channels = array('stable', 'preview', 'snapshot', '1', '2');
 
-    private $rfs;
+    private $httpDownloader;
     private $config;
     private $channel;
+    private $versionsData;
 
-    public function __construct(Config $config, RemoteFilesystem $rfs)
+    public function __construct(Config $config, HttpDownloader $httpDownloader)
     {
-        $this->rfs = $rfs;
+        $this->httpDownloader = $httpDownloader;
         $this->config = $config;
     }
 
@@ -63,13 +64,7 @@ class Versions
 
     public function getLatest($channel = null)
     {
-        if ($this->config->get('disable-tls') === true) {
-            $protocol = 'http';
-        } else {
-            $protocol = 'https';
-        }
-
-        $versions = JsonFile::parseJson($this->rfs->getContents('getcomposer.org', $protocol . '://getcomposer.org/versions', false));
+        $versions = $this->getVersionsData();
 
         foreach ($versions[$channel ?: $this->getChannel()] as $version) {
             if ($version['min-php'] <= PHP_VERSION_ID) {
@@ -77,6 +72,21 @@ class Versions
             }
         }
 
-        throw new \LogicException('There is no version of Composer available for your PHP version ('.PHP_VERSION.')');
+        throw new \UnexpectedValueException('There is no version of Composer available for your PHP version ('.PHP_VERSION.')');
+    }
+
+    private function getVersionsData()
+    {
+        if (!$this->versionsData) {
+            if ($this->config->get('disable-tls') === true) {
+                $protocol = 'http';
+            } else {
+                $protocol = 'https';
+            }
+
+            $this->versionsData = $this->httpDownloader->get($protocol . '://getcomposer.org/versions')->decodeJson();
+        }
+
+        return $this->versionsData;
     }
 }

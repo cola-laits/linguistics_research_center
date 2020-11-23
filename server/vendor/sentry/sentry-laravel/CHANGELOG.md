@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 1.9.0
+
+- Respect the `SENTRY_ENVIRONMENT` environment variable to override the Laravel environment (#354)
+- Support for Laravel 8 (#374)
+
 ## 1.8.0
 
 - Add `send_default_pii` option by default to published config file (#340)

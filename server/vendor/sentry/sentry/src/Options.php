@@ -193,9 +193,9 @@ final class Options
     /**
      * Sets the environment.
      *
-     * @param string $environment The environment
+     * @param string|null $environment The environment
      */
-    public function setEnvironment(string $environment): void
+    public function setEnvironment(?string $environment): void
     {
         $options = array_merge($this->options, ['environment' => $environment]);
 
@@ -744,7 +744,7 @@ final class Options
      *                                   captured. It can be set to one of the
      *                                   following values:
      *
-     *                                    - never: request bodies are never sent
+     *                                    - none: request bodies are never sent
      *                                    - small: only small request bodies will
      *                                      be captured where the cutoff for small
      *                                      depends on the SDK (typically 4KB)
