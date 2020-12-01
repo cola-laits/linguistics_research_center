@@ -64,8 +64,6 @@
                             <li><a class="dropdown-item" href="/admin2/lexicon#/pos">Part of Speech</a></li>
                         </ul>
                     </li>
-                <li class="nav-item"><a class="nav-link" href="/admin2/user">Users</a></li>
-                <li class="nav-item"><a class="nav-link" href="/admin2/page">Pages</a></li>
                 @endif
             </ul>
             <ul class="nav navbar-nav ml-auto">

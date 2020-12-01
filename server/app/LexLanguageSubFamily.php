@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,38 +34,41 @@ use Illuminate\Support\Facades\Auth;
  * @mixin \Eloquent
  */
 class LexLanguageSubFamily extends Model {
+
+    use CrudTrait;
+
 	protected $table = 'lex_language_sub_family';
 
-	protected $fillable = ['name','order','family_id'];
+	protected $guarded = ['id'];
 
 	public static function boot() {
 		parent::boot();
-	
+
 		// event to happen on saving
 		static::creating(function($table)  {
 			$table->created_by = Auth::user()->username;
 			$table->updated_by = Auth::user()->username;
 		});
-	
+
 		// event to happen on updating
 		static::updating(function($table)  {
 			$table->updated_by = Auth::user()->username;
 		});
 	}
-	
+
 	public function languages()
 	{
 		return $this->hasMany('\App\LexLanguage', 'sub_family_id', 'id')->orderBy('order');
 	}
-	
+
 	public function language_family()
 	{
 		return $this->belongsTo('\App\LexLanguageFamily','family_id');
 	}
-	
+
 	public function getFamilySubFamilyAttribute()
 	{
 		return strip_tags($this->language_family()->first()->name) . '->' . strip_tags($this->name);
 	}
-	
+
 }

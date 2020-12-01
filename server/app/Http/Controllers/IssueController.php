@@ -23,8 +23,7 @@ class IssueController extends Controller
         if (Auth::user()->isAdmin()) {
             // show 'em all
         } else {
-            $auths = Auth::user()->seriesAuthorizations();
-            $serieses = EieolSeries::whereIn('id', $auths)->get()->sortBy('order');
+            $serieses = Auth::user()->editableSeries->sortBy('order');
             foreach ($serieses as $series) {
                 foreach ($series->lessons as $lesson) {
                     $issues->orWhere('pointer', 'like', '/lesson/'.$lesson->id.'/%');

@@ -12,6 +12,7 @@
         "ext-intl": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
+        "backpack/crud": "4.1.*",
         "barryvdh/laravel-ide-helper": "^2.6",
         "doctrine/dbal": "^2.9",
         "fideloper/proxy": "^4.0",
@@ -23,8 +24,10 @@
         "sentry/sentry-laravel": "^1.8.0"
     },
     "require-dev": {
+        "backpack/generators": "^3.1",
         "filp/whoops": "^2.0",
         "fzaninotto/faker": "^1.4",
+        "laracasts/generators": "^2.0",
         "mockery/mockery": "^1.0",
         "nunomaduro/collision": "^4.1",
         "phpunit/phpunit": "^8.5"

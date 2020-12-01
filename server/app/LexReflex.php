@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
@@ -38,49 +39,53 @@ use Illuminate\Support\Facades\Auth;
  * @mixin \Eloquent
  */
 class LexReflex extends Model {
+
+    use CrudTrait;
+
 	protected $table = 'lex_reflex';
-	
+	protected $guarded = ['id'];
+
 	public static function boot() {
 		parent::boot();
-	
+
 		// event to happen on saving
 		static::creating(function($table)  {
 			$table->created_by = Auth::user()->username;
 			$table->updated_by = Auth::user()->username;
 		});
-	
+
 		// event to happen on updating
 		static::updating(function($table)  {
 			$table->updated_by = Auth::user()->username;
 		});
-	
+
 	}
-	
+
 	public function etymas()
 	{
 		return $this->belongsToMany('\App\LexEtyma', 'lex_etyma_reflex', 'reflex_id', 'etyma_id');
 	}
-		
+
 	public function entries()
 	{
 		return $this->hasMany('\App\LexReflexEntry', 'reflex_id', 'id')->orderBy('order');
-	}	
-		
+	}
+
 	public function language()
 	{
 		return $this->belongsTo('\App\LexLanguage');
 	}
-	
+
 	public function parts_of_speech()
 	{
 		return $this->hasMany('\App\LexReflexPartOfSpeech', 'reflex_id', 'id')->orderBy('order');
 	}
-	
+
 	public function sources()
 	{
 		return $this->belongsToMany('\App\LexSource', 'lex_reflex_source', 'reflex_id', 'source_id')->orderBy('order');
 	}
-	
+
 	public function getDisplayPartsOfSpeech()
 	{
 		$string = "";
@@ -94,7 +99,7 @@ class LexReflex extends Model {
 		}
 		return $string;
 	}
-		
+
 	public function getDisplaySources()
 	{
 		$string = "";
@@ -105,10 +110,10 @@ class LexReflex extends Model {
 			if ($i != count($this->sources)) {
 				$string .= '/';
 			}
-		}	
+		}
 		return $string;
 	}
-	
+
 	public function getReflexListerAttribute()
 	{
 		$text = ($this->language()->first()->name) . ': ';

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,26 +30,29 @@ use Illuminate\Support\Facades\Auth;
  * @mixin \Eloquent
  */
 class LexSource extends Model {
+
+    use CrudTrait;
+
 	protected $table = 'lex_source';
 
-	protected $fillable = ['code','display'];
+	protected $guarded = ['id'];
 
 	public static function boot() {
 		parent::boot();
-	
+
 		// event to happen on saving
 		static::creating(function($table)  {
 			$table->created_by = Auth::user()->username;
 			$table->updated_by = Auth::user()->username;
 		});
-	
+
 		// event to happen on updating
 		static::updating(function($table)  {
 			$table->updated_by = Auth::user()->username;
 		});
-	
+
 	}
-	
+
 	public function reflex()
 	{
 		return $this->hasMany('\App\LexReflex', 'source_id', 'id');

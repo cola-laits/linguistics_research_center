@@ -39,9 +39,8 @@ class EieolLanguageController extends Controller
         if (Auth::user()->isAdmin()) {
             $languages = EieolLanguage::all()->sortBy('language');
         } else {
-            $auths = Auth::user()->seriesAuthorizations();
+            $serieses = Auth::user()->editableSeries->sortBy('order');
             $languages = array();
-            $serieses = EieolSeries::whereIn('id', $auths)->get()->sortBy('order');
             foreach ($serieses as $series) {
                 foreach ($series->lessons as $lesson) {
                     if (!in_array($lesson->language_id, $languages)) {

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -26,12 +27,14 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Page extends Model {
 
+    use CrudTrait;
+
 	/**
 	 * The database table used by the model.
 	 *
 	 * @var string
 	 */
 	protected $table = 'page';
-	
+    protected $guarded = ['id'];
 
 }

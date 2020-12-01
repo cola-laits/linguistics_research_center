@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "af50d581a1dc8391d3df538fa79e21d1",
+    "content-hash": "9a494ce9439d08daaeee3a4cdcf70816",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -90,6 +90,90 @@
                 "sdk"
             ],
             "time": "2020-11-20T19:13:16+00:00"
+        },
+        {
+            "name": "backpack/crud",
+            "version": "4.1.27",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Laravel-Backpack/CRUD.git",
+                "reference": "bd1bab5dde08df20eebd730ca3a2992e1bf334f7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Laravel-Backpack/CRUD/zipball/bd1bab5dde08df20eebd730ca3a2992e1bf334f7",
+                "reference": "bd1bab5dde08df20eebd730ca3a2992e1bf334f7",
+                "shasum": ""
+            },
+            "require": {
+                "composer/package-versions-deprecated": "^1.8",
+                "creativeorange/gravatar": "~1.0",
+                "doctrine/dbal": "^2.5",
+                "guzzlehttp/guzzle": "^7.0|^6.3",
+                "laravel/framework": "^8.0|^7.0|^6.0",
+                "prologue/alerts": "^0.4.1"
+            },
+            "require-dev": {
+                "orchestra/database": "^5.0|^4.0|^3.0",
+                "orchestra/testbench": "^5.0|^4.0|^3.0",
+                "phpunit/phpunit": "~8.0|~7.0|~9.0",
+                "scrutinizer/ocular": "~1.7|~1.1",
+                "spatie/laravel-translatable": "^4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Backpack\\CRUD\\BackpackServiceProvider"
+                    ],
+                    "aliases": {
+                        "CRUD": "Backpack\\CRUD\\app\\Library\\CrudPanel\\CrudPanelFacade",
+                        "Widget": "Backpack\\CRUD\\app\\Library\\Widget"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Backpack\\CRUD\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Cristian Tabacitu",
+                    "email": "hello@tabacitu.ro",
+                    "homepage": "http://www.tabacitu.ro",
+                    "role": "Creator & Maintainer"
+                }
+            ],
+            "description": "Quickly build an admin interfaces using Laravel 7, CoreUI, Boostrap 4 and jQuery.",
+            "homepage": "https://github.com/laravel-backpack/CRUD",
+            "keywords": [
+                "Admin Interface",
+                "Content management system",
+                "admin panel",
+                "admin panel for laravel",
+                "backpack",
+                "base",
+                "bootstrap 4 admin panel laravel",
+                "bread",
+                "cms",
+                "content management framework",
+                "coreui for laravel",
+                "create",
+                "crud",
+                "delete",
+                "laravel admin",
+                "read",
+                "update"
+            ],
+            "time": "2020-11-08T12:56:14+00:00"
         },
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -773,6 +857,65 @@
                 }
             ],
             "time": "2020-11-13T08:04:11+00:00"
+        },
+        {
+            "name": "creativeorange/gravatar",
+            "version": "v1.0.20",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/creativeorange/gravatar.git",
+                "reference": "8c2c1a3a59fdf05f50c9d9413dd9d2d50835e017"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/creativeorange/gravatar/zipball/8c2c1a3a59fdf05f50c9d9413dd9d2d50835e017",
+                "reference": "8c2c1a3a59fdf05f50c9d9413dd9d2d50835e017",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^5|^6|^7|^8",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "nunomaduro/larastan": "^0.6.2",
+                "orchestra/testbench": "^5.4",
+                "php": ">=7.2"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Creativeorange\\Gravatar\\GravatarServiceProvider"
+                    ],
+                    "aliases": {
+                        "Gravatar": "Creativeorange\\Gravatar\\Facades\\Gravatar"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Creativeorange\\Gravatar\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jaco Tijssen",
+                    "email": "jaco@creativeorange.nl",
+                    "homepage": "https://www.creativeorange.nl",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A Laravel Gravatar package for retrieving gravatar image URLs or checking the existance of an image.",
+            "keywords": [
+                "avatar",
+                "gravatar",
+                "laravel"
+            ],
+            "time": "2020-09-09T14:53:57+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -3332,6 +3475,72 @@
                 }
             ],
             "time": "2020-07-20T17:29:33+00:00"
+        },
+        {
+            "name": "prologue/alerts",
+            "version": "0.4.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/prologuephp/alerts.git",
+                "reference": "a6412e318c0171526bc8b25ef597f2cc61f5b800"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/prologuephp/alerts/zipball/a6412e318c0171526bc8b25ef597f2cc61f5b800",
+                "reference": "a6412e318c0171526bc8b25ef597f2cc61f5b800",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/config": "~5|~6|~7|~8",
+                "illuminate/session": "~5|~6|~7|~8",
+                "illuminate/support": "~5|~6|~7|~8",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9",
+                "phpunit/phpunit": "~4.1"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Prologue\\Alerts\\AlertsServiceProvider"
+                    ],
+                    "aliases": {
+                        "Alert": "Prologue\\Alerts\\Facades\\Alert"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Prologue\\Alerts\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dries Vints",
+                    "email": "dries.vints@gmail.com",
+                    "homepage": "http://driesvints.com",
+                    "role": "Creator"
+                },
+                {
+                    "name": "Cristian Tabacitu",
+                    "email": "hello@tabacitu.ro",
+                    "homepage": "http://tabacitu.ro",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "Prologue Alerts is a package that handles global site messages.",
+            "keywords": [
+                "alerts",
+                "laravel",
+                "messages"
+            ],
+            "time": "2020-09-08T14:24:39+00:00"
         },
         {
             "name": "psr/container",
@@ -6933,6 +7142,66 @@
     ],
     "packages-dev": [
         {
+            "name": "backpack/generators",
+            "version": "v3.1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Laravel-Backpack/Generators.git",
+                "reference": "de9f46aee1bfb963907d9c9fe7cd35d5472b3d2d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Laravel-Backpack/Generators/zipball/de9f46aee1bfb963907d9c9fe7cd35d5472b3d2d",
+                "reference": "de9f46aee1bfb963907d9c9fe7cd35d5472b3d2d",
+                "shasum": ""
+            },
+            "require": {
+                "backpack/crud": "4.1.*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.0||^7.0",
+                "scrutinizer/ocular": "~1.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Backpack\\Generators\\GeneratorsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Backpack\\Generators\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Cristian Tone",
+                    "email": "cristitone@outlook.com",
+                    "homepage": "http://updivision.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Generate files for laravel projects",
+            "homepage": "https://github.com/laravel-backpack/generators",
+            "keywords": [
+                "config",
+                "generators",
+                "model",
+                "request",
+                "view"
+            ],
+            "time": "2020-10-13T13:42:05+00:00"
+        },
+        {
             "name": "doctrine/instantiator",
             "version": "1.4.0",
             "source": {
@@ -7204,6 +7473,60 @@
                 "test"
             ],
             "time": "2020-07-09T08:09:16+00:00"
+        },
+        {
+            "name": "laracasts/generators",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laracasts/Laravel-5-Generators-Extended.git",
+                "reference": "0b8b3d300cc948217f7547502b6de5db6fbafa70"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laracasts/Laravel-5-Generators-Extended/zipball/0b8b3d300cc948217f7547502b6de5db6fbafa70",
+                "reference": "0b8b3d300cc948217f7547502b6de5db6fbafa70",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~6.0|~7.0|~8.0"
+            },
+            "require-dev": {
+                "phpspec/phpspec": "~6.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Laracasts\\Generators\\GeneratorsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laracasts\\Generators\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jeffrey Way",
+                    "email": "jeffrey@laracasts.com"
+                },
+                {
+                    "name": "Cristian Tabacitu",
+                    "email": "hello@tabaciu.ro"
+                }
+            ],
+            "description": "Advanced Laravel generators, that include schema information.",
+            "keywords": [
+                "generators",
+                "laravel"
+            ],
+            "time": "2020-09-10T13:49:13+00:00"
         },
         {
             "name": "mockery/mockery",

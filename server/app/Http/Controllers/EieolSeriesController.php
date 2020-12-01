@@ -17,8 +17,7 @@ class EieolSeriesController extends Controller
         if (Auth::user()->isAdmin()) {
             $serieses = EieolSeries::all()->sortBy('order');
         } else {
-            $auths = Auth::user()->seriesAuthorizations();
-            $serieses = EieolSeries::whereIn('id', $auths)->get()->sortBy('order');
+            $serieses = Auth::user()->editableSeries->sortBy('order');
         }
         return view('eieol_series.eieol_series_index', ['serieses' => $serieses]);
     }

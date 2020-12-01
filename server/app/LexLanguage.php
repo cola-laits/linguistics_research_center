@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
@@ -43,56 +44,59 @@ use Illuminate\Support\Facades\Auth;
  * @mixin \Eloquent
  */
 class LexLanguage extends Model {
+
+    use CrudTrait;
+
 	protected $table = 'lex_language';
 
-	protected $fillable = ['name', 'language_sub_family_id', 'order', 'abbr', 'aka', 'override_family', 'custom_sort'];
+	protected $guarded = ['id'];
 
 	public static function boot() {
 		parent::boot();
-	
+
 		// event to happen on saving
 		static::creating(function($table)  {
 			$table->created_by = Auth::user()->username;
 			$table->updated_by = Auth::user()->username;
 		});
-	
+
 		// event to happen on updating
 		static::updating(function($table)  {
 			$table->updated_by = Auth::user()->username;
 		});
 	}
-	
+
 	public function language_sub_family()
 	{
 		return $this->belongsTo('\App\LexLanguageSubFamily','sub_family_id');
 	}
-	
+
 	public function reflexes()
 	{
 		return $this->hasMany('\App\LexReflex', 'language_id', 'id');
 	}
-	
+
 	public function small_reflexes()
 	{
 		return $this->hasMany('\App\LexReflex', 'language_id', 'id');
 	}
-	
+
 	public function reflex_count()
 	{
 		return $this->hasMany('\App\LexReflex', 'language_id', 'id')->select(\DB::raw('language_id, count(*) as count'))->groupBy('language_id');
 	}
-	
+
 	public function getStrippedNameAttribute()
 	{
 		return strip_tags($this->name);
 	}
-	
+
 	public function getWeights()
 	{
 		//each language has a custom sort array.  We are going to re-index it with weights.  ie a->1, b->2
 		$alpha_weights = array();
 		$alphabet = explode(',',$this->custom_sort);
-		
+
 		$ctr = 0;
 		foreach($alphabet as $alpha) {
 			$ctr += 1;
@@ -102,7 +106,7 @@ class LexLanguage extends Model {
 		}
 		return $alpha_weights;
 	}
-	
+
 	public function displayFamily()
 	{
 		if ($this->override_family != '') {

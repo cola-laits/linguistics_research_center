@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -44,14 +45,16 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\EieolLanguage[] $lesson_languages
  */
 class EieolSeries extends Model {
-	
+
+    use CrudTrait;
+
 	protected $table = 'eieol_series';
-	
+
 	public function lessons()
 	{
 		return $this->hasMany('\App\EieolLesson', 'series_id', 'id')->orderBy('order');
 	}
-	
+
 	public function languages()
 	{
 		return $this->hasMany('\App\EieolSeriesLanguage', 'series_id', 'id')->orderBy('display');

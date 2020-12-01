@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -33,5 +34,8 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  */
 class EieolLanguage extends Model {
+
+    use CrudTrait;
+
 	protected $table = 'eieol_language';
 }

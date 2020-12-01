@@ -2,9 +2,11 @@
 
 namespace App;
 
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * App\User
@@ -43,15 +45,14 @@ class User extends Authenticatable
     protected $table = 'user';
 
     use Notifiable;
+    use CrudTrait;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = [
-        'name', 'email', 'password',
-    ];
+    protected $guarded = ['id'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -62,35 +63,12 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function permissions()
-    {
-        return $this->hasMany('\App\UserPermission', 'user_id', 'id');
-    }
-
-    public function getFullName()
-    {
-        return $this->first_name . ' ' . $this->last_name;
+    public function editableSeries() {
+        return $this->belongsToMany('\App\EieolSeries', 'user_permission', 'user_id', 'eieol_series_id');
     }
 
     public function isAdmin()
     {
-        foreach ($this->permissions as $permission) {
-            if ($permission->permission == 'ADMIN') {
-                return True;
-            }
-        }
-        return False;
-    }
-
-    public function seriesAuthorizations()
-    {
-        $auths = array();
-        foreach ($this->permissions as $permission) {
-            if ($permission->permission == 'ADMIN') {
-                continue;
-            }
-            $auths[] = $permission->permission;
-        }
-        return $auths;
+        return $this->is_admin;
     }
 }
