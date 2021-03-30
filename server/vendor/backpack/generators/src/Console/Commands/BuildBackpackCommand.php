@@ -2,7 +2,6 @@
 
 namespace Backpack\Generators\Console\Commands;
 
-use Artisan;
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -34,19 +33,18 @@ class BuildBackpackCommand extends Command
         $models = $this->getModels(base_path().'/app');
 
         if (! count($models)) {
-            $this->info('No models found.');
+            $this->error('No models found.');
 
             return false;
         }
 
         foreach ($models as $key => $model) {
-            $this->info('--- '.$model.' ---');
+            $this->info("--- $model ---");
             // Create the CrudController & Request
             // Attach CrudTrait to Model
             // Add sidebar item
             // Add routes
-            Artisan::call('backpack:crud', ['name' => $model]);
-            echo Artisan::output();
+            $this->call('backpack:crud', ['name' => $model]);
         }
     }
 

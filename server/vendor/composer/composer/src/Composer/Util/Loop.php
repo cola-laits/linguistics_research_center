@@ -12,7 +12,6 @@
 
 namespace Composer\Util;
 
-use Composer\Util\HttpDownloader;
 use React\Promise\Promise;
 use Symfony\Component\Console\Helper\ProgressBar;
 
@@ -63,7 +62,8 @@ class Loop
         $uncaught = null;
 
         \React\Promise\all($promises)->then(
-            function () { },
+            function () {
+            },
             function ($e) use (&$uncaught) {
                 $uncaught = $e;
             }
@@ -85,6 +85,7 @@ class Loop
             $progress->start($totalJobs);
         }
 
+        $lastUpdate = 0;
         while (true) {
             $activeJobs = 0;
 
@@ -95,15 +96,19 @@ class Loop
                 $activeJobs += $this->processExecutor->countActiveJobs();
             }
 
-            if ($progress) {
+            if ($progress && microtime(true) - $lastUpdate > 0.1) {
+                $lastUpdate = microtime(true);
                 $progress->setProgress($progress->getMaxSteps() - $activeJobs);
             }
 
             if (!$activeJobs) {
                 break;
             }
+        }
 
-            usleep(5000);
+        // as we skip progress updates if they are too quick, make sure we do one last one here at 100%
+        if ($progress) {
+            $progress->setProgress($progress->getMaxSteps());
         }
 
         unset($this->currentPromises[$waitIndex]);

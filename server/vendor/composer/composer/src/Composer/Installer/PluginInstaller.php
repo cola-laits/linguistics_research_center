@@ -17,6 +17,7 @@ use Composer\IO\IOInterface;
 use Composer\Repository\InstalledRepositoryInterface;
 use Composer\Package\PackageInterface;
 use Composer\Util\Filesystem;
+use Composer\Installer\InstallationManager;
 use React\Promise\PromiseInterface;
 
 /**
@@ -71,6 +72,7 @@ class PluginInstaller extends LibraryInstaller
 
         $pluginManager = $this->composer->getPluginManager();
         $self = $this;
+
         return $promise->then(function () use ($self, $pluginManager, $package, $repo) {
             try {
                 $pluginManager->registerPackage($package, true);
@@ -92,6 +94,7 @@ class PluginInstaller extends LibraryInstaller
 
         $pluginManager = $this->composer->getPluginManager();
         $self = $this;
+
         return $promise->then(function () use ($self, $pluginManager, $initial, $target, $repo) {
             try {
                 $pluginManager->deactivatePackage($initial, true);

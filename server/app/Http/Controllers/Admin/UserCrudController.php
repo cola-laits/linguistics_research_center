@@ -27,6 +27,8 @@ class UserCrudController extends CrudController
      */
     public function setup()
     {
+        CRUD::removeButton('show');
+
         CRUD::setModel(\App\User::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/user');
         CRUD::setEntityNameStrings('user', 'users');

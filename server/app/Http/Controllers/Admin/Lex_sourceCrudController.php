@@ -39,6 +39,8 @@ class Lex_sourceCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        CRUD::removeButton('show');
+
         CRUD::column('code')->type('text');
         CRUD::column('display')->type('text');
 

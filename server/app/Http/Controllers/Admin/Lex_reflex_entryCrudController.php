@@ -39,6 +39,8 @@ class Lex_reflex_entryCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        CRUD::removeButton('show');
+
         CRUD::setFromDb(); // columns
 
         /**

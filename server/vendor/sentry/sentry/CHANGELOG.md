@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+### 2.5.2 (2021-02-02)
+
+- Allow jean85/pretty-package-versions 2.0 (#1171, backport of #1170 from 3.x)
+
+### 2.5.1 (2020-12-11)
+
+- Fix regression introduced in #1129 (#1143)
+- Fix capturing of the request body in the `RequestIntegration` integration when the stream is empty (#1129)
+- Fix wrong deprecation message when using the `MissingPublicKeyCredentialException` class (#1155)
+
 ### 2.5.0 (2020-09-14)
 
 - Support the `timeout` and `proxy` options for the Symfony HTTP Client (#1084)

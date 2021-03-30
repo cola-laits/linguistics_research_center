@@ -39,6 +39,8 @@ class Eieol_seriesCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        CRUD::removeButton('show');
+
         CRUD::setFromDb(); // columns
 
         /**

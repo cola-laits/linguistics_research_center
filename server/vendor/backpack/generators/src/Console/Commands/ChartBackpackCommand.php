@@ -2,7 +2,6 @@
 
 namespace Backpack\Generators\Console\Commands;
 
-use Artisan;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 
@@ -33,13 +32,11 @@ class ChartBackpackCommand extends Command
         $kebabName = Str::kebab($this->argument('name'));
 
         // Create the ChartController and show output
-        Artisan::call('backpack:chart-controller', ['name' => $studlyName]);
-        echo Artisan::output();
+        $this->call('backpack:chart-controller', ['name' => $studlyName]);
 
         // Create the chart route
-        Artisan::call('backpack:add-custom-route', [
-            'code' => "Route::get('charts/".$kebabName."', 'Charts\\".$studlyName."ChartController@response')->name('charts.$kebabName.index');",
+        $this->call('backpack:add-custom-route', [
+            'code' => "Route::get('charts/{$kebabName}', 'Charts\\{$studlyName}ChartController@response')->name('charts.{$kebabName}.index');",
         ]);
-        echo Artisan::output();
     }
 }

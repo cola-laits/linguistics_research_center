@@ -67,7 +67,7 @@ class ConfigBackpackCommand extends GeneratorCommand
         $path = $this->getPath($name);
 
         if ($this->alreadyExists($this->getNameInput())) {
-            $this->error($this->type.' already exists!');
+            $this->error($this->type.' already existed!');
 
             return false;
         }

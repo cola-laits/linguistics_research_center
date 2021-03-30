@@ -39,6 +39,8 @@ class Lex_semantic_fieldCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        CRUD::removeButton('show');
+
         CRUD::setFromDb(); // columns
 
         /**

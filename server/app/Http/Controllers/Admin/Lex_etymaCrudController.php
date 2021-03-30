@@ -18,6 +18,7 @@ class Lex_etymaCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -28,7 +29,7 @@ class Lex_etymaCrudController extends CrudController
     {
         CRUD::setModel(\App\LexEtyma::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/lex_etyma');
-        CRUD::setEntityNameStrings('Lex Etyma', 'Lex Etymas');
+        CRUD::setEntityNameStrings('Lex Etymon', 'Lex Etyma');
     }
 
     /**
@@ -39,6 +40,8 @@ class Lex_etymaCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        CRUD::removeButton('show');
+
         CRUD::column('old_id')->label('Old Id')->type('number');
         CRUD::column('order')->type('number');
         CRUD::column('page_number')->type('text');
@@ -68,6 +71,13 @@ class Lex_etymaCrudController extends CrudController
         CRUD::field('entry')->type('text');
         CRUD::field('gloss')->type('text');
 
+        /*
+        CRUD::field('reflexes')
+            ->type('relationship')
+            ->ajax(true)
+            ->attribute('langAbbrGloss');
+        */
+
         /**
          * Fields can be defined using the fluent syntax or array syntax:
          * - CRUD::field('price')->type('number');
@@ -84,5 +94,10 @@ class Lex_etymaCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    public function fetchReflexes()
+    {
+        return $this->fetch(\App\LexReflex::class);
     }
 }

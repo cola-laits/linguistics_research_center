@@ -61,7 +61,11 @@ class LexReflex extends Model {
 
 	}
 
-	public function etymas()
+	public function getLangAbbrGlossAttribute() {
+	    return $this->lang_attribute . ': ' . $this->gloss;
+    }
+
+    public function etymas()
 	{
 		return $this->belongsToMany('\App\LexEtyma', 'lex_etyma_reflex', 'reflex_id', 'etyma_id');
 	}

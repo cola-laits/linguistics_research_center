@@ -39,6 +39,8 @@ class Lex_reflexCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        CRUD::removeButton('show');
+
         //CRUD::setFromDb(); // columns
         CRUD::column('gloss')->type('text');
         CRUD::column('language')->label('Language')->type('relationship')->attribute('name');

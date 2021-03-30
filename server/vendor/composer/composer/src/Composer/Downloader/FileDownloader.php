@@ -16,6 +16,7 @@ use Composer\Config;
 use Composer\Cache;
 use Composer\IO\IOInterface;
 use Composer\IO\NullIO;
+use Composer\Exception\IrrecoverableDownloadException;
 use Composer\Package\Comparer\Comparer;
 use Composer\DependencyResolver\Operation\UpdateOperation;
 use Composer\DependencyResolver\Operation\InstallOperation;
@@ -29,7 +30,6 @@ use Composer\Util\Filesystem;
 use Composer\Util\HttpDownloader;
 use Composer\Util\Url as UrlUtil;
 use Composer\Util\ProcessExecutor;
-use Composer\Downloader\TransportException;
 use React\Promise\PromiseInterface;
 
 /**
@@ -65,12 +65,12 @@ class FileDownloader implements DownloaderInterface, ChangeReportInterface
     /**
      * Constructor.
      *
-     * @param IOInterface      $io              The IO instance
-     * @param Config           $config          The config
-     * @param HttpDownloader   $httpDownloader  The remote filesystem
-     * @param EventDispatcher  $eventDispatcher The event dispatcher
-     * @param Cache            $cache           Cache instance
-     * @param Filesystem       $filesystem      The filesystem
+     * @param IOInterface     $io              The IO instance
+     * @param Config          $config          The config
+     * @param HttpDownloader  $httpDownloader  The remote filesystem
+     * @param EventDispatcher $eventDispatcher The event dispatcher
+     * @param Cache           $cache           Cache instance
+     * @param Filesystem      $filesystem      The filesystem
      */
     public function __construct(IOInterface $io, Config $config, HttpDownloader $httpDownloader, EventDispatcher $eventDispatcher = null, Cache $cache = null, Filesystem $filesystem = null, ProcessExecutor $process = null)
     {
@@ -121,7 +121,7 @@ class FileDownloader implements DownloaderInterface, ChangeReportInterface
                 // from different packages, which would potentially allow a given package
                 // in a third party repo to pre-populate the cache for the same package in
                 // packagist for example.
-                'cacheKey' => $cacheKeyGenerator($package, $processedUrl)
+                'cacheKey' => $cacheKeyGenerator($package, $processedUrl),
             );
         }
 
@@ -147,7 +147,7 @@ class FileDownloader implements DownloaderInterface, ChangeReportInterface
                 $eventDispatcher->dispatch($preFileDownloadEvent->getName(), $preFileDownloadEvent);
                 if ($preFileDownloadEvent->getCustomCacheKey() !== null) {
                     $url['cacheKey'] = $cacheKeyGenerator($package, $preFileDownloadEvent->getCustomCacheKey());
-                } else if ($preFileDownloadEvent->getProcessedUrl() !== $url['processed']) {
+                } elseif ($preFileDownloadEvent->getProcessedUrl() !== $url['processed']) {
                     $url['cacheKey'] = $cacheKeyGenerator($package, $preFileDownloadEvent->getProcessedUrl());
                 }
                 $url['processed'] = $preFileDownloadEvent->getProcessedUrl();
@@ -219,6 +219,10 @@ class FileDownloader implements DownloaderInterface, ChangeReportInterface
                 $filesystem->unlink($fileName);
             }
             $self->clearLastCacheWrite($package);
+
+            if ($e instanceof IrrecoverableDownloadException) {
+                throw $e;
+            }
 
             if ($e instanceof TransportException) {
                 // if we got an http response with a proper code, then requesting again will probably not help, abort

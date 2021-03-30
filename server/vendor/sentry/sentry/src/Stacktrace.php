@@ -72,7 +72,7 @@ class Stacktrace implements \JsonSerializable
     public function __construct(Options $options, SerializerInterface $serializer, RepresentationSerializerInterface $representationSerializer/*, bool $shouldReadSourceCodeExcerpts = true*/)
     {
         if (\func_num_args() <= 3 || false !== func_get_arg(3)) {
-            @trigger_error(sprintf('Relying on the "%s" class to contexify the frames of the stacktrace is deprecated since version 2.4 and will stop working in 3.0. Set the $shouldReadSourceCodeExcerpts parameter to "false" and use the "Sentry\Integration\FrameContextifierIntegration" integration instead.', self::class), E_USER_DEPRECATED);
+            @trigger_error(sprintf('Relying on the "%s" class to contexify the frames of the stacktrace is deprecated since version 2.4 and will stop working in 3.0. Set the $shouldReadSourceCodeExcerpts parameter to "false" and use the "Sentry\Integration\FrameContextifierIntegration" integration instead.', self::class), \E_USER_DEPRECATED);
 
             $this->shouldReadSourceCodeExcerpts = true;
         }
@@ -177,9 +177,9 @@ class Stacktrace implements \JsonSerializable
             $argumentValue = $this->representationSerializer->representationSerialize($argumentValue);
 
             if (\is_string($argumentValue)) {
-                $frameArguments[(string) $argumentName] = mb_substr($argumentValue, 0, $this->options->getMaxValueLength());
+                $frameArguments[$argumentName] = mb_substr($argumentValue, 0, $this->options->getMaxValueLength());
             } else {
-                $frameArguments[(string) $argumentName] = $argumentValue;
+                $frameArguments[$argumentName] = $argumentValue;
             }
         }
 
@@ -343,14 +343,14 @@ class Stacktrace implements \JsonSerializable
         }
 
         $result = [];
+        $paramIndex = 0;
 
-        if (\is_string(array_keys($frame['args'])[0])) {
-            $result = array_map([$this, 'serializeArgument'], $frame['args']);
-        } else {
-            $index = 0;
-            foreach (array_values($frame['args']) as $argument) {
-                $result['param' . (++$index)] = $this->serializeArgument($argument);
+        foreach ($frame['args'] as $argumentName => $argumentValue) {
+            if (!\is_string($argumentName)) {
+                $argumentName = 'param' . (++$paramIndex);
             }
+
+            $result[$argumentName] = $this->serializeArgument($argumentValue);
         }
 
         return $result;

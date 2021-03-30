@@ -51,37 +51,63 @@ class CrudModelBackpackCommand extends GeneratorCommand
      */
     public function handle()
     {
-        $name = $this->qualifyClass($this->getNameInput());
+        $name = $this->getNameInput();
+        $namespaceApp = $this->qualifyClass($this->getNameInput());
+        $namespaceModels = $this->qualifyClass('/Models/'.$this->getNameInput());
 
+        // Check if exists on app or models
+        $existsOnApp = $this->alreadyExists($namespaceApp);
+        $existsOnModels = $this->alreadyExists($namespaceModels);
+
+        // If no model was found, we will generate the path to the location where this class file
+        // should be written. Then, we will build the class and make the proper replacements on
+        // the stub files so that it gets the correctly formatted namespace and class name.
+        if (! $existsOnApp && ! $existsOnModels) {
+            $this->makeDirectory($namespaceModels);
+
+            $this->files->put($this->getPath($namespaceModels), $this->sortImports($this->buildClass($namespaceModels)));
+
+            $this->info($this->type.' created successfully.');
+
+            return;
+        }
+
+        // If it was found on both namespaces, we'll ask user to pick one of them
+        if ($existsOnApp && $existsOnModels) {
+            $result = $this->choice('Multiple models with this name were found, which one do you want to use?', [
+                1 => "Use $namespaceApp",
+                2 => "Use $namespaceModels",
+            ]);
+
+            // Disable the namespace not selected
+            $existsOnApp = $result === 1;
+            $existsOnModels = $result === 2;
+        }
+
+        $name = $existsOnApp ? $namespaceApp : $namespaceModels;
         $path = $this->getPath($name);
 
-        // First we will check to see if the class already exists. If it does, we don't want
-        // to create the class and overwrite the user's code. We just make sure it uses CrudTrait
-        // We add that one line. Otherwise, we will continue generating this class' files.
-        if ((! $this->hasOption('force') ||
-             ! $this->option('force')) &&
-             $this->alreadyExists($this->getNameInput())) {
+        // As the class already exists, we don't want to create the class and overwrite the
+        // user's code. We just make sure it uses CrudTrait. We add that one line.
+        if (! $this->hasOption('force') || ! $this->option('force')) {
             $file = $this->files->get($path);
-            $file_array = preg_split('/(\r\n)|\r|\n/', $file);
+            $lines = preg_split('/(\r\n)|\r|\n/', $file);
 
             // check if it already uses CrudTrait
             // if it does, do nothing
-            if (Str::contains($file, [$this->crudTrait])) {
-                $this->info('Model already exists and uses CrudTrait.');
+            if (Str::contains($file, $this->crudTrait)) {
+                $this->comment('Model already used CrudTrait.');
 
-                return false;
+                return;
             }
 
             // if it does not have CrudTrait, add the trait on the Model
-
-            $classDefinition = 'class '.$this->getNameInput().' extends';
-
-            foreach ($file_array as $key => $line) {
-                if (Str::contains($line, $classDefinition)) {
+            foreach ($lines as $key => $line) {
+                if (Str::contains($line, "class {$this->getNameInput()} extends")) {
                     if (Str::endsWith($line, '{')) {
                         // add the trait on the next
                         $position = $key + 1;
-                    } elseif ($file_array[$key + 1] == '{') {
+                    } elseif ($lines[$key + 1] == '{') {
                         // add the trait on the next next line
                         $position = $key + 2;
                     }
@@ -91,31 +117,21 @@ class CrudModelBackpackCommand extends GeneratorCommand
                     // IDEs start counting from 1
 
                     // add CrudTrait
-                    array_splice($file_array, $position, 0, '    use \\'.$this->crudTrait.';');
+                    array_splice($lines, $position, 0, "    use \\{$this->crudTrait};");
 
                     // save the file
-                    $this->files->put($path, implode(PHP_EOL, $file_array));
+                    $this->files->put($path, implode(PHP_EOL, $lines));
 
                     // let the user know what we've done
-                    $this->info('Model already exists! We just added CrudTrait on it.');
+                    $this->info('Model already existed. Added CrudTrait to it.');
 
-                    return false;
+                    return;
                 }
             }
 
-            $this->error('Model already exists! Could not add CrudTrait - please add manually.');
-
-            return false;
+            // In case we couldn't add the CrudTrait
+            $this->error("Model already existed on '$name' and we couldn't add CrudTrait. Please add it manually.");
         }
-
-        // Next, we will generate the path to the location where this class' file should get
-        // written. Then, we will build the class and make the proper replacements on the
-        // stub files so that it gets the correctly formatted namespace and class name.
-        $this->makeDirectory($path);
-
-        $this->files->put($path, $this->sortImports($this->buildClass($name)));
-
-        $this->info($this->type.' created successfully.');
     }
 
     /**
@@ -126,18 +142,6 @@ class CrudModelBackpackCommand extends GeneratorCommand
     protected function getStub()
     {
         return __DIR__.'/../stubs/crud-model.stub';
-    }
-
-    /**
-     * Get the default namespace for the class.
-     *
-     * @param string $rootNamespace
-     *
-     * @return string
-     */
-    protected function getDefaultNamespace($rootNamespace)
-    {
-        return $rootNamespace.'\Models';
     }
 
     /**

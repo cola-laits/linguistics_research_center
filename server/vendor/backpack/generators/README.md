@@ -8,7 +8,7 @@
 [![Style CI](https://styleci.io/repos/53490941/shield)](https://styleci.io/repos/53490941)
 [![Total Downloads](https://img.shields.io/packagist/dt/backpack/generators.svg?style=flat-square)](https://packagist.org/packages/backpack/generators)
 
-Quickly generate Backpack templated Models, Requests, Views and Config files.
+Quickly generate Backpack templated Models, Requests, Views and Config files for projects using [Backpack for Laravel](https://backpackforlaravel.com) as their admin panel.
 
 > ### Security updates and breaking changes
 > Please **[subscribe to the Backpack Newsletter](http://backpackforlaravel.com/newsletter)** so you can find out about any security updates, breaking changes or major features. We send an email every 1-2 months.
@@ -19,20 +19,6 @@ Via Composer
 
 ``` bash
 composer require backpack/generators --dev
-```
-
-For Laravel 7, 6 or 5.5+ - you're done.
-
-For Laravel 5.4 or 5.3 you'll only want to use these generators for ```local``` development, so you don't want to update the ```production``` providers array in ```config/app.php```. Instead, add the provider in ```app/Providers/AppServiceProvider.php```, like so:
-
-```php
-public function register()
-{
-    if ($this->app->environment() == 'local') {
-        // $this->app->register('Laracasts\Generators\GeneratorsServiceProvider'); // you're using Jeffrey way's generators, too, right?
-        $this->app->register('Backpack\Generators\GeneratorsServiceProvider');
-    }
-}
 ```
 
 ## Usage

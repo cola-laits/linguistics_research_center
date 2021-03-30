@@ -2,7 +2,6 @@
 
 namespace Backpack\Generators\Console\Commands;
 
-use Artisan;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 
@@ -31,29 +30,31 @@ class CrudBackpackCommand extends Command
     {
         $name = ucfirst($this->argument('name'));
         $lowerName = strtolower($this->argument('name'));
+        $pluralName = Str::plural($name);
 
         // Create the CRUD Controller and show output
-        Artisan::call('backpack:crud-controller', ['name' => $name]);
-        echo Artisan::output();
+        $this->call('backpack:crud-controller', ['name' => $name]);
 
         // Create the CRUD Model and show output
-        Artisan::call('backpack:crud-model', ['name' => $name]);
-        echo Artisan::output();
+        $this->call('backpack:crud-model', ['name' => $name]);
 
         // Create the CRUD Request and show output
-        Artisan::call('backpack:crud-request', ['name' => $name]);
-        echo Artisan::output();
+        $this->call('backpack:crud-request', ['name' => $name]);
 
         // Create the CRUD route
-        Artisan::call('backpack:add-custom-route', [
-            'code' => "Route::crud('".$lowerName."', '".$name."CrudController');",
+        $this->call('backpack:add-custom-route', [
+            'code' => "Route::crud('$lowerName', '{$name}CrudController');",
         ]);
-        echo Artisan::output();
 
         // Create the sidebar item
-        Artisan::call('backpack:add-sidebar-content', [
-            'code' => "<li class='nav-item'><a class='nav-link' href='{{ backpack_url('".$lowerName."') }}'><i class='nav-icon la la-question'></i> ".Str::plural($name).'</a></li>',
+        $this->call('backpack:add-sidebar-content', [
+            'code' => "<li class='nav-item'><a class='nav-link' href='{{ backpack_url('$lowerName') }}'><i class='nav-icon la la-question'></i> $pluralName</a></li>",
         ]);
-        echo Artisan::output();
+
+        // if the application uses cached routes, we should rebuild the cache so the previous added route will
+        // be acessible without manually clearing the route cache.
+        if (app()->routesAreCached()) {
+            $this->call('route:cache');
+        }
     }
 }

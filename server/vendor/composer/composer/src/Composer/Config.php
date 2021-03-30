@@ -78,8 +78,7 @@ class Config
     public static $defaultRepositories = array(
         'packagist.org' => array(
             'type' => 'composer',
-            'url' => 'https?://repo.packagist.org',
-            'allow_ssl_downgrade' => true,
+            'url' => 'https://repo.packagist.org',
         ),
     );
 
@@ -180,6 +179,11 @@ class Config
                     continue;
                 }
 
+                // auto-deactivate the default packagist.org repo if it gets redefined
+                if (isset($repository['type'], $repository['url']) && $repository['type'] === 'composer' && preg_match('{^https?://(?:[a-z0-9-.]+\.)?packagist.org(/|$)}', $repository['url'])) {
+                    $this->disableRepoByName('packagist.org');
+                }
+
                 // store repo
                 if (is_int($name)) {
                     $this->repositories[] = $repository;
@@ -248,6 +252,7 @@ class Config
                 if (false === $val) {
                     $val = $this->config[$key];
                 }
+
                 return $val !== 'false' && (bool) $val;
 
             // booleans without env var support

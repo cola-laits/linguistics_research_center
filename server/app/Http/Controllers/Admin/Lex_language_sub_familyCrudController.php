@@ -39,6 +39,8 @@ class Lex_language_sub_familyCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        CRUD::removeButton('show');
+
         //CRUD::setFromDb(); // columns
         CRUD::column('name')->type('text');
         CRUD::column('order')->type('number');
