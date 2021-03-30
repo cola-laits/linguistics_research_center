@@ -7,20 +7,20 @@
 <h1>Indo-European Lexicon</h1>
 <h2>PIE Etymon and IE Reflexes</h2>
 
-<p>Below we display: a Proto-Indo-European (PIE) etymon adapted from Pokorny, with our 
-own English gloss; our Semantic Field <span style="white-space: nowrap">assignment(s)</span> for the etymon, linked 
-to information about the <span style="white-space: nowrap">field(s)</span>; an optional Comment; and Reflexes (derived 
-words) in various Indo-European languages, organized by family/group in west-to-east order 
-where Germanic is split into West/North/East families and English, our language of primary 
-emphasis, is artificially separated from West Germanic. IE Reflexes appear most often as 
-single words with any optional <span style="white-space: nowrap">letter(s)</span> enclosed in parentheses; but 
-alternative full spellings are separated by '/' and "principal parts" appear in a standard 
+<p>Below we display: a Proto-Indo-European (PIE) etymon adapted from Pokorny, with our
+own English gloss; our Semantic Field <span style="white-space: nowrap">assignment(s)</span> for the etymon, linked
+to information about the <span style="white-space: nowrap">field(s)</span>; an optional Comment; and Reflexes (derived
+words) in various Indo-European languages, organized by family/group in west-to-east order
+where Germanic is split into West/North/East families and English, our language of primary
+emphasis, is artificially separated from West Germanic. IE Reflexes appear most often as
+single words with any optional <span style="white-space: nowrap">letter(s)</span> enclosed in parentheses; but
+alternative full spellings are separated by '/' and "principal parts" appear in a standard
 order (e.g. masculine, feminine, and neuter forms) separated by commas.</p>
 
-<p>Reflexes are annotated with: Part-of-Speech and/or other Grammatical <span style="white-space: nowrap">feature(s)</span>; 
-a short Gloss which, especially for modern English reflexes, may be confined to the 
-<i>oldest</i> sense; and some Source <span style="white-space: nowrap">citation(s)</span> with 'LRC' <i>always</i> 
-understood as editor. Keys to PoS/Gram feature abbreviations and Source codes appear 
+<p>Reflexes are annotated with: Part-of-Speech and/or other Grammatical <span style="white-space: nowrap">feature(s)</span>;
+a short Gloss which, especially for modern English reflexes, may be confined to the
+<i>oldest</i> sense; and some Source <span style="white-space: nowrap">citation(s)</span> with 'LRC' <i>always</i>
+understood as editor. Keys to PoS/Gram feature abbreviations and Source codes appear
 below the reflexes; at the end are links to the previous/next etyma [in Pokorny's
 alphabetic order] that have reflexes.</p>
 
@@ -31,7 +31,7 @@ corrections may be made and/or more etyma &amp; reflexes may be added.</p>
 
 
 <p><b>Pokorny Etymon</b>: <span class='Unicode' lang='ine'>{!! $etyma->entry !!}</span> &nbsp; '{!! $etyma->gloss !!}'</p>
-<p><b>Semantic Field(s)</b>: 
+<p><b>Semantic Field(s)</b>:
 @foreach($etyma->semantic_fields as $index => $semantic_field)
     <a href="/lex/semantic/field/{{$semantic_field->abbr}}">{{$semantic_field->text}}</a>@if ($index+1 != count($etyma->semantic_fields)),@endif
 @endforeach
@@ -68,8 +68,8 @@ $prev_family=''; @endphp
             @php $prev_lang=$reflex->language->name; @endphp
         @endif
         <td>
-            @foreach($reflex->entries as $index => $entry)
-                <span class='{{$reflex->class_attribute}}' lang='{{$reflex->lang_attribute}}'>{!! $entry->entry !!}</span>@if ($index+1 != count($reflex->entries)),@endif
+            @foreach($reflex->entries as $entry)
+                <span class='{{$reflex->class_attribute}}' lang='{{$reflex->lang_attribute}}'>{!! $entry['text'] !!}</span>@if (!$loop->last),@endif
             @endforeach
         </td>
         <td class='center'>{{$reflex->getDisplayPartsOfSpeech()}}</td>
@@ -97,7 +97,7 @@ $prev_family=''; @endphp
     @endforeach
 </table>
 
-<p class='center'>Nearby etymon: &nbsp;&nbsp; 
+<p class='center'>Nearby etymon: &nbsp;&nbsp;
     @if ($etyma->prevEtyma())
         <a href="/lex/master/{{$etyma->prevEtyma()->old_id}}" title="previous etymon with reflexes">previous</a>
     @else

@@ -70,6 +70,10 @@ class Lex_reflexCrudController extends CrudController
         CRUD::field('lang_attribute')->type('text');
         CRUD::field('class_attribute')->type('text');
 
+        CRUD::field('entries')->type('table')
+            ->entity_singular('entry')
+            ->columns(['text'=>'Text']);
+
         /**
          * Fields can be defined using the fluent syntax or array syntax:
          * - CRUD::field('price')->type('number');

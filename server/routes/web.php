@@ -75,25 +75,6 @@ Route::group(array('prefix'=> 'admin2', 'middleware' => 'auth'), function() {
     Route::post('/files/upload', 'FilesController@post_file');
 });
 
-Route::group(array('prefix'=> 'admin2', 'before' => 'auth|admin'), function() {
-    Route::get('/lexicon', 'AdminLexiconController@getIndex');
-    Route::get('/lexicon/api/etyma', 'AdminLexiconController@getEtymas');
-    Route::get('/lexicon/api/reflex', 'AdminLexiconController@getReflexes');
-    Route::get('/lexicon/api/reflex_entry', 'AdminLexiconController@getReflexEntries');
-    Route::get('/lexicon/api/reflex_pos', 'AdminLexiconController@getReflexPOSes');
-    Route::get('/lexicon/api/sem_cat', 'AdminLexiconController@getSemCats');
-    Route::get('/lexicon/api/sem_field', 'AdminLexiconController@getSemFields');
-    Route::get('/lexicon/api/lang_fam', 'AdminLexiconController@getLangFams');
-    Route::get('/lexicon/api/lang_subfam', 'AdminLexiconController@getLangSubfams');
-    Route::get('/lexicon/api/lang', 'AdminLexiconController@getLangs');
-    Route::get('/lexicon/api/source', 'AdminLexiconController@getSources');
-    Route::get('/lexicon/api/pos', 'AdminLexiconController@getPOSes');
-
-    Route::get('/lexicon/api/action/get', 'AdminLexiconController@getItem');
-    Route::post('/lexicon/api/action/edit', 'AdminLexiconController@postEditItem');
-    Route::post('/lexicon/api/action/delete', 'AdminLexiconController@postDeleteItem');
-});
-
 Auth::routes();
 
 Route::get('/home', 'AdminController@index')->name('home');

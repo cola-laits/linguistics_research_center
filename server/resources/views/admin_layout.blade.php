@@ -49,20 +49,7 @@
                 </li>
                 @if (\Illuminate\Support\Facades\Auth::user()->isAdmin())
                     <li class="dropdown nav-item">
-                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Lexicon <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/admin2/lexicon#/etyma">Etyma</a></li>
-                            <li><a class="dropdown-item" href="/admin2/lexicon#/reflex">Reflex</a></li>
-                            <li><a class="dropdown-item" href="/admin2/lexicon#/reflex_entry">Reflex → Entry</a></li>
-                            <li><a class="dropdown-item" href="/admin2/lexicon#/reflex_pos">Reflex → Part of Speech</a></li>
-                            <li><a class="dropdown-item" href="/admin2/lexicon#/sem_cat">Semantic Category</a></li>
-                            <li><a class="dropdown-item" href="/admin2/lexicon#/sem_field">Semantic Field</a></li>
-                            <li><a class="dropdown-item" href="/admin2/lexicon#/lang_fam">Language Family</a></li>
-                            <li><a class="dropdown-item" href="/admin2/lexicon#/lang_subfam">Language Sub Family</a></li>
-                            <li><a class="dropdown-item" href="/admin2/lexicon#/lang">Language</a></li>
-                            <li><a class="dropdown-item" href="/admin2/lexicon#/source">Source</a></li>
-                            <li><a class="dropdown-item" href="/admin2/lexicon#/pos">Part of Speech</a></li>
-                        </ul>
+                        <a href="/admin_mgr" class="nav-link" role="button" aria-haspopup="true" aria-expanded="false">Lexicon <span class="caret"></span></a>
                     </li>
                 @endif
             </ul>

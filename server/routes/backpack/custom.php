@@ -20,7 +20,6 @@ Route::group([
     Route::crud('eieol_language', 'Eieol_languageCrudController');
     Route::crud('lex_etyma', 'Lex_etymaCrudController');
     Route::crud('lex_reflex', 'Lex_reflexCrudController');
-    Route::crud('lex_reflex_entry', 'Lex_reflex_entryCrudController');
     Route::crud('lex_reflex_part_of_speech', 'Lex_reflex_part_of_speechCrudController');
     Route::crud('lex_semantic_category', 'Lex_semantic_categoryCrudController');
     Route::crud('lex_semantic_field', 'Lex_semantic_fieldCrudController');

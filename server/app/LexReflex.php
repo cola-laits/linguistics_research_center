@@ -45,6 +45,10 @@ class LexReflex extends Model {
 	protected $table = 'lex_reflex';
 	protected $guarded = ['id'];
 
+	protected $casts = [
+	    'entries' => 'array'
+    ];
+
 	public static function boot() {
 		parent::boot();
 
@@ -68,11 +72,6 @@ class LexReflex extends Model {
     public function etymas()
 	{
 		return $this->belongsToMany('\App\LexEtyma', 'lex_etyma_reflex', 'reflex_id', 'etyma_id');
-	}
-
-	public function entries()
-	{
-		return $this->hasMany('\App\LexReflexEntry', 'reflex_id', 'id')->orderBy('order');
 	}
 
 	public function language()
