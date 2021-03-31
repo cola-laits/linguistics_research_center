@@ -12,7 +12,7 @@
 -->
 
 <li class="nav-title">Lexicon</li>
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_etyma') }}'><i class='nav-icon la la-question'></i> Etymas</a></li>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_etyma') }}'><i class='nav-icon la la-question'></i> Etyma</a></li>
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_reflex') }}'><i class='nav-icon la la-question'></i> Reflexes</a></li>
 
 <!--
