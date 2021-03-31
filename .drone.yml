@@ -15,13 +15,6 @@ prod_when_condition: &prod_when_condition
 
 
 steps:
-- name: prebuild
-  image: node:9
-  pull: always
-  commands:
-    - cd server && npm rebuild && npm run production
-
-
 - name: build
   image: plugins/docker
   pull: always
