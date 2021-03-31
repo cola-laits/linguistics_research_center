@@ -4,14 +4,15 @@
 namespace App\Http\Controllers;
 
 
-use App\Http;
 use App\LexEtyma;
 use App\LexLanguage;
 use App\LexLanguageFamily;
-use App\LexReflexEntry;
+use App\LexReflex;
 use App\LexSemanticCategory;
 use App\LexSemanticField;
 use DB;
+
+use const false;
 
 class PublicLexController
 {
@@ -50,47 +51,29 @@ class PublicLexController
         return $keys;
     }
 
-    private static function keys($entry)
-    {
-        $keys = array();
-        //special processing based on whether or not the entry has a ( in it
-        if (mb_strpos($entry, '(', 0, 'UTF-8') === false) {
-            //regular entry
-            $keys[] = $entry;
-        } else {
-            //if a reflex contains characters in (), split into 2, ex (g)nosco = gnosco and nosco in Latin
-            $keys = self::split_entries($entry);
-        }
-
-        return $keys;
-    }
-
     private static function hashKey($key, $alpha_weights)
     {
         //convert the key reflex to a series of numbers based on the weighted alphabet array for easy sorting.
-        $new_key = '';
-
-        //these characters will not be used when sorting the keys of the array
-        $the_unwanted = array("-", "*", "'");
 
         //break string into an array
         $key_array = preg_split('//u', $key, -1, PREG_SPLIT_NO_EMPTY);
 
         //build a hash of entry using weights.  So ab would become something like 00010002
-        foreach ($key_array as $key_char) {
+        $key_parts = array_map(function ($key_char) use ($alpha_weights) {
+            //these characters will not be used when sorting the keys of the array
+            $the_unwanted = ["-", "*", "'"];
             if (in_array($key_char, $the_unwanted)) { //remove any unwanted characters
-                continue;
-            } elseif (array_key_exists($key_char, $alpha_weights)) {
-                $new_key .= str_pad($alpha_weights[$key_char], 4, '0', STR_PAD_LEFT);
-            } else {
-                $new_key .= '0000'; //unknown characters become 0000 so they show up first
+                return '';
             }
-        }
+            if (array_key_exists($key_char, $alpha_weights)) {
+                return str_pad($alpha_weights[$key_char], 4, '0', STR_PAD_LEFT);
+            }
+
+            return '0000'; //unknown characters become 0000 so they show up first
+        }, $key_array);
 
         //Tack the original entry on to the end.  This way the keys remain unique even if it had unwanted chars, but the ending isn't really used for sorting
-        $new_key .= $key;
-
-        return $new_key;
+        return implode('', $key_parts) . $key;
     }
 
     public function lex_pokorny() {
@@ -126,44 +109,42 @@ class PublicLexController
         $language = LexLanguage::where("abbr", $language_abbr)->firstOrFail();
         $display_reflexes = [];
 
-        //get all the reflexes.  The Eloquent ORM is too slow, so we have to write our own SQL
-        $temp_reflexes = DB::select('SELECT lex_reflex.id, lex_reflex.class_attribute, lex_reflex.lang_attribute, lex_reflex.entries,
-													 lex_etyma.entry as etyma_entry, lex_etyma.old_id as etyma_id, lex_etyma.gloss
-				FROM lex_reflex, lex_etyma_reflex, lex_etyma
-				WHERE language_id = ?
-				AND lex_etyma_reflex.reflex_id = lex_reflex.id
-				AND lex_etyma.id = lex_etyma_reflex.etyma_id', [$language->id]);
+        $reflexes = LexReflex::whereLanguageId($language->id)->with('etymas')->get();
 
         //building the list of reflexes is complicated.
-        $alpha_weights = $language->getWeights();
+        $alpha_weights = [];
+        $alphabet = explode(',',$language->custom_sort);
+        foreach($alphabet as $ctr=>$alpha) {
+            foreach (mb_str_split($alpha, 1, 'UTF-8') as $char) {
+                $alpha_weights[$char] = $ctr+1;
+            }
+        }
 
-        foreach ($temp_reflexes as $reflex) {
-            $entries = json_decode($reflex->entries);
-            foreach ($entries as $entry) {
-                //now build array of reflexes, combining where needed.
-                foreach (self::keys($entry->text) as $key) {
-                    $new_key = self::hashKey($key, $alpha_weights);
-
-                    //if 2 reflexes are the same, group them
-                    if (!array_key_exists($new_key, $display_reflexes)) {
-                        $new_reflex = [
-                            'id' => $reflex->id,
-                            'reflex' => $key,
-                            'class_attribute' => $reflex->class_attribute,
-                            'lang_attribute' => $reflex->lang_attribute,
-                            'etymas' => []
+        foreach ($reflexes as $reflex) {
+            if (count($reflex->etymas) === 0) {
+                continue;
+            }
+            foreach ($reflex->entries as $entry) {
+                //special processing based on whether or not the entry has a ( in it
+                $lacks_separator = mb_strpos($entry['text'], '(', 0, 'UTF-8') === false;
+                $keys = $lacks_separator ? [$entry['text']] : self::split_entries($entry['text']);
+                foreach ($keys as $key) {
+                    $etymas = $reflex->etymas->map(function ($etyma) {
+                        return [
+                            'entry' => $etyma->entry,
+                            'gloss' => $etyma->gloss,
+                            'id' => $etyma->old_id
                         ];
-                        $display_reflexes[$new_key] = $new_reflex;
-                    }
+                    })->sortBy('id')->toArray();
 
-                    $temp_etyma = [
-                        'entry' => $reflex->etyma_entry,
-                        'gloss' => $reflex->gloss,
-                        'id' => $reflex->etyma_id
+                    $new_key = self::hashKey($key, $alpha_weights);
+                    $display_reflexes[$new_key] = [
+                        'id' => $reflex->id,
+                        'reflex' => $key,
+                        'class_attribute' => $reflex->class_attribute,
+                        'lang_attribute' => $reflex->lang_attribute,
+                        'etymas' => $etymas
                     ];
-                    $display_reflexes[$new_key]['etymas'][] = $temp_etyma;
-                    ksort($display_reflexes[$new_key]['etymas']); //sort the etymas
-
                 }
             }
         } //foreach reflex

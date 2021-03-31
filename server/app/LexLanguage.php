@@ -91,22 +91,6 @@ class LexLanguage extends Model {
 		return strip_tags($this->name);
 	}
 
-	public function getWeights()
-	{
-		//each language has a custom sort array.  We are going to re-index it with weights.  ie a->1, b->2
-		$alpha_weights = array();
-		$alphabet = explode(',',$this->custom_sort);
-
-		$ctr = 0;
-		foreach($alphabet as $alpha) {
-			$ctr += 1;
-			for( $i = 0; $i <= mb_strlen($alpha, 'UTF-8'); $i++ ) {
-				$alpha_weights[mb_substr($alpha, $i, 1, 'UTF-8')] = $ctr;
-			}
-		}
-		return $alpha_weights;
-	}
-
 	public function displayFamily()
 	{
 		if ($this->override_family != '') {
