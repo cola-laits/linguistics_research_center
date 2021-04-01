@@ -20,9 +20,6 @@ Vue.component('basic-select', VueSearchSelect.BasicSelect); // FIXME this is ava
 
 import store from './admin-store';
 
-let LexTable = Vue.component('LexTable');
-let LexEditor = Vue.component('LexEditor');
-
 var routes = [
     {path: '/issues', component:Vue.component('IssueList'), props:(route)=>({pointer:route.query.pointer})},
     {path: '/issues/new', component:Vue.component('IssueCreate')},
