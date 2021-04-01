@@ -1,6 +1,6 @@
 require('./bootstrap');
-window.Vue = require('vue');
-window.VueRouter = require('vue-router').default;
+import Vue from 'vue';
+import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 window.axios = require('axios').default;
 
