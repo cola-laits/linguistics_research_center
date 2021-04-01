@@ -41,7 +41,6 @@ class Eieol_languageCrudController extends CrudController
     {
         CRUD::removeButton('show');
 
-        // CRUD::setFromDb(); // columns
         CRUD::column('language')->type('string');
         CRUD::column('lang_attribute')->type('string');
 

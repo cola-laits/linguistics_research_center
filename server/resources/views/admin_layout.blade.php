@@ -49,7 +49,7 @@
                 </li>
                 @if (\Illuminate\Support\Facades\Auth::user()->isAdmin())
                     <li class="dropdown nav-item">
-                        <a href="/admin_mgr" class="nav-link" role="button" aria-haspopup="true" aria-expanded="false">Lexicon <span class="caret"></span></a>
+                        <a href="/admin_mgr" class="nav-link" role="button" aria-haspopup="true" aria-expanded="false">Site Mangement <span class="caret"></span></a>
                     </li>
                 @endif
             </ul>

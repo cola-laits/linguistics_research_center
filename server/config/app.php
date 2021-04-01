@@ -165,7 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
-        'Collective\Html\HtmlServiceProvider',
+
 
         /*
          * Application Service Providers...
