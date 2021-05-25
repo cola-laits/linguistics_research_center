@@ -153,18 +153,18 @@ import InputCustomKeyboard from './InputCustomKeyboard'
                 this.$emit('input',headword);
             },
             save() {
-                let app = this;
                 $(".spinner").show();
                 let url = this.headword.id ? '/admin2/eieol_head_word/'+this.headword.id : '/admin2/eieol_head_word';
                 let payload = this.headword.id ? Object.assign(this.headword, {_method:'PUT'}) : this.headword;
                 axios.post(url, payload)
-                    .then(function(response) {
+                    .then((response) => {
                         $(".spinner").hide();
                         if (response.data.fail) {
-                            app.modal_attached_headword_errors = response.data.errors;
+                            this.modal_attached_headword_errors = response.data.errors;
                         } else {
-                            app.modal_attached_headword_errors = {};
-                            app.$emit('input',app.headword);
+                            this.modal_attached_headword_errors = {};
+                            this.headword.id = response.data.head_word_id;
+                            this.$emit('input',this.headword);
                         }
                     });
             },
