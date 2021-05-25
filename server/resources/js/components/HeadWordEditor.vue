@@ -95,7 +95,7 @@
         }},
         computed: {
             is_new_headword() {
-                return typeof this.headword.id === 'undefined';
+                return !this.headword.id;
             },
             autocomplete_items() {
                 return this.keyword_choices.filter(tag => {
@@ -109,7 +109,7 @@
                     .then((response) => {
                         this.keyword_choices = response.data.map((tag) => {return {'text':tag}});
                     });
-                Vue.nextTick(function() {
+                this.$nextTick(function() {
                     this.modal_attached_headword_search = '';
                     this.modal_attached_headword_search_results = [];
                     this.modal_attached_headword_errors = {};
@@ -150,8 +150,8 @@
             save() {
                 let app = this;
                 $(".spinner").show();
-                let url = this.headword.id==='' ? '/admin2/eieol_head_word' : '/admin2/eieol_head_word/'+this.headword.id;
-                let payload = this.headword.id==='' ? this.headword : Object.assign(this.headword, {_method:'PUT'});
+                let url = this.headword.id ? '/admin2/eieol_head_word/'+this.headword.id : '/admin2/eieol_head_word';
+                let payload = this.headword.id ? Object.assign(this.headword, {_method:'PUT'}) : this.headword;
                 axios.post(url, payload)
                     .then(function(response) {
                         $(".spinner").hide();

@@ -380,7 +380,7 @@
         },
         methods: {
             show() {
-                Vue.nextTick(function() {
+                this.$nextTick(function() {
                     this.modal_attached_gloss_search = '';
                     this.modal_attached_gloss_search_results = [];
                     this.modal_attached_gloss_elements_open = [];
@@ -456,7 +456,7 @@
                     });
             },
             pick_head_word(ix) {
-                this.headword_for_edit = {};
+                this.headword_for_edit = {language_id:this.language.id};
                 this.element_index_for_headword_edit = ix;
                 this.$refs['head-word-editor'].show();
             },
@@ -471,13 +471,13 @@
             },
             headword_selected(evt) {
                 if (!this.gloss.elements) {
-                    Vue.set(this.gloss,'elements',[]);
+                    this.$set(this.gloss,'elements',[]);
                 }
                 if (!this.gloss.elements[this.element_index_for_headword_edit]) {
                     this.gloss.elements.splice(this.element_index_for_headword_edit, 1, {});
                 }
-                Vue.set(this.gloss.elements[this.element_index_for_headword_edit], 'head_word', evt);
-                Vue.set(this.gloss.elements[this.element_index_for_headword_edit], 'head_word_id', evt.id);
+                this.$set(this.gloss.elements[this.element_index_for_headword_edit], 'head_word', evt);
+                this.$set(this.gloss.elements[this.element_index_for_headword_edit], 'head_word_id', evt.id);
                 if (this.element_index_for_headword_edit===0) {
                     this.gloss.element_1_head_word_id = evt.id;
                 }
