@@ -13,17 +13,20 @@ Vue.component('tags-input', VueTagsInput);
 
 window.jQuery = window.$ = require('jquery');
 
-const files = require.context('./', true, /\.vue$/i);
-files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
+import LessonEditor from './components/LessonEditor'
+Vue.component('lesson-editor', LessonEditor);
+import IssueList from './components/IssueList'
+import IssueCreate from './components/IssueCreate'
+import IssueDisplay from './components/IssueDisplay'
 
 Vue.component('basic-select', VueSearchSelect.BasicSelect); // FIXME this is available on npm - get it from there
 
 import store from './admin-store';
 
 var routes = [
-    {path: '/issues', component:Vue.component('IssueList'), props:(route)=>({pointer:route.query.pointer})},
-    {path: '/issues/new', component:Vue.component('IssueCreate')},
-    {path: '/issue/:id', component:Vue.component('IssueDisplay'), props:true}
+    {path: '/issues', component:IssueList, props:(route)=>({pointer:route.query.pointer})},
+    {path: '/issues/new', component:IssueCreate},
+    {path: '/issue/:id', component:IssueDisplay, props:true}
 ];
 
 var router = new VueRouter({routes});

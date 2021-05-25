@@ -357,7 +357,18 @@
 </template>
 
 <script>
+import CommentIcon from './CommentIcon'
+import HeadWordEditor from './HeadWordEditor'
+import InputCustomKeyboard from './InputCustomKeyboard'
+import InputTypeaheadAjax from './InputTypeaheadAjax'
+
     export default {
+        components: {
+            'comment-icon': CommentIcon,
+            'head-word-editor': HeadWordEditor,
+            'input-custom-keyboard': InputCustomKeyboard,
+            'input-typeahead-ajax': InputTypeaheadAjax,
+        },
         props: ['gloss',
             'lesson_lang_attribute',
             'language',

@@ -84,7 +84,12 @@
 </template>
 
 <script>
+import InputCustomKeyboard from './InputCustomKeyboard'
+
     export default {
+        components: {
+            'input-custom-keyboard': InputCustomKeyboard,
+        },
         props: ['headword','custom_keyboard','etymas','language'],
         data: function() { return {
             modal_attached_headword_search: '',

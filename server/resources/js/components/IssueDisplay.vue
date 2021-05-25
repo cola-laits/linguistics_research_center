@@ -90,10 +90,13 @@
     import 'tinymce/plugins/code';
     import Editor from '@tinymce/tinymce-vue';
 
+    import CKEditor from './CkEditor'
+
     export default {
         props: ['id'],
         components: {
-            'tinymce-editor': Editor
+            'ck-editor': CKEditor,
+            'tinymce-editor': Editor,
         },
         data() { return {
             ckeditor_customization: {},

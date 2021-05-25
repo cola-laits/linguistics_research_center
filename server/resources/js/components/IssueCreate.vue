@@ -48,9 +48,12 @@
     import 'tinymce/themes/silver';
     import Editor from '@tinymce/tinymce-vue';
 
+    import CKEditor from './CkEditor'
+
     export default {
         components: {
-            'tinymce-editor': Editor
+            'ck-editor': CKEditor,
+            'tinymce-editor': Editor,
         },
         data() { return {
             ckeditor_customization: {language_list : [],
