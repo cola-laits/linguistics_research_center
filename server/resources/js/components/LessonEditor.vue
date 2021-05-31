@@ -126,9 +126,8 @@
                 <form method="POST"
                       accept-charset="UTF-8"
                       class="form glossed_text_form"
-                      :id="'glossed_text_form_'+glossed_text.id"
                       @submit.prevent="save_glossed_text(glossed_text)"
-                      :dirty="isFormDirty('glossed_text_form_'+glossed_text.id)">
+                      :dirty="isFormDirty(glossed_text)">
 
                     <div class='row'>
                         <div class='col-sm-1'></div>
@@ -136,7 +135,7 @@
                         <div class='form-group col-sm-1 '>
                             <label for="order">Order</label>
                             <input placeholder="Order" class="form-control" name="order" type="text"
-                                   @input="markFormDirty('glossed_text_form_'+glossed_text.id)"
+                                   @input="markFormDirty(glossed_text)"
                                    v-model="glossed_text.order">
                             <div class="alert-danger errors">{{get_error_message_html('glossed_text_'+glossed_text.id+'_order')}}</div>
                         </div>
@@ -146,7 +145,7 @@
                             <textarea-custom-keyboard placeholder="Glossed Text"
                                                       name="glossed_text"
                                                       v-model="glossed_text.glossed_text"
-                                                      @input="markFormDirty('glossed_text_form_'+glossed_text.id)"
+                                                      @input="markFormDirty(glossed_text)"
                                                       :lang="lesson.language.lang_attribute"
                                                       :custom_keyboard="custom_keyboard_layout"></textarea-custom-keyboard>
                             <div class="alert-danger errors">{{get_error_message_html('glossed_text_'+glossed_text.id+'_glossed_text')}}</div>
@@ -157,7 +156,7 @@
                                         :id="'glossed-text-audio-'+glossed_text.id"
                                         :lang="lesson.language.lang_attribute"
                                         :text="glossed_text.glossed_text"
-                                        @input="markFormDirty('glossed_text_form_'+glossed_text.id)"
+                                        @input="markFormDirty(glossed_text)"
                             >
                             </audio-icon>
 
@@ -200,15 +199,14 @@
                                 <form method="POST"
                                       accept-charset="UTF-8"
                                       class="form"
-                                      :id="'glossed_text_gloss_form_'+gloss.id"
                                       @submit.prevent="save_gloss_order(gloss)"
-                                      :dirty="isFormDirty('glossed_text_gloss_form_'+gloss.id)">
+                                      :dirty="isFormDirty(gloss)">
                                     <div class='form-group col-sm-1 '>
 
                                         <label for="order">Order</label>
                                         <div class="row">
                                             <input placeholder="Order" name="order" type="text"
-                                                   @input="markFormDirty('glossed_text_gloss_form_'+gloss.id)"
+                                                   @input="markFormDirty(gloss)"
                                                    v-model="gloss.order">
                                             <input type="submit" value="Save Order" class="btn btn-sm btn-primary">
                                         </div>
@@ -344,9 +342,8 @@
                 <form method="POST" :action="grammar.id==='' ? '/admin2/eieol_grammar' : '/admin2/eieol_grammar/'+grammar.id"
                       accept-charset="UTF-8"
                       class="form grammar_form"
-                      :id="'grammar_form_'+grammar.id"
                       @submit.prevent="save_grammar(grammar)"
-                      :dirty="isFormDirty('grammar_form_'+grammar.id)"
+                      :dirty="isFormDirty(grammar)"
                 >
                     <input name="_method" type="hidden" value="PUT" v-if="grammar.id !== ''">
                     <input name="lesson_id" type="hidden" :value="lesson.id">
@@ -358,7 +355,7 @@
                             <label for="order">Order</label>
                             <input placeholder="Order" class="form-control" id="order" name="order" type="text"
                                    v-model="grammar.order"
-                                   @input="markFormDirty('grammar_form_'+grammar.id)"
+                                   @input="markFormDirty(grammar)"
                             >
                             <div class="alert-danger errors">{{get_error_message_html('grammar_'+grammar.id+'_order')}}</div>
                         </div>
@@ -367,7 +364,7 @@
                             <label for="section_number">Section Number</label>
                             <input placeholder="Section Number" class="form-control" name="section_number" type="text" id="section_number"
                                    v-model="grammar.section_number"
-                                   @input="markFormDirty('grammar_form_'+grammar.id)"
+                                   @input="markFormDirty(grammar)"
                             >
                             <div class="alert-danger errors">{{get_error_message_html('grammar_'+grammar.id+'_section_number')}}</div>
                         </div>
@@ -378,7 +375,7 @@
                                                    name="title"
                                                    type="text"
                                                    v-model="grammar.title"
-                                                   @input="markFormDirty('grammar_form_'+grammar.id)"
+                                                   @input="markFormDirty(grammar)"
                                                    :custom_keyboard="custom_keyboard_layout"></input-custom-keyboard>
                             <div class="alert-danger errors">{{get_error_message_html('grammar_'+grammar.id+'_title')}}</div>
                         </div>
@@ -396,7 +393,7 @@
                                        html_name="grammar_text"
                                        v-model="grammar.grammar_text"
                                        :custom_config="ckeditor_customization"
-                                       @input="markFormDirty('grammar_form_'+grammar.id)"
+                                       @input="markFormDirty(grammar)"
                             ></ck-editor>
                             <div class="alert-danger errors">{{get_error_message_html('grammar_'+grammar.id+'_grammar_text')}}</div>
                         </div>
@@ -472,7 +469,7 @@ import TextareaCustomKeyboard from './TextareaCustomKeyboard'
             'etymas': {},
             'ckeditor_customization': {},
             'custom_keyboard_layout': {},
-            'dirty_form_ids': [],
+            'dirty_objects': [],
             'modal_flash_title': '',
             'modal_flash_body': '',
             'delete_grammar_confirm_grammar_id': '',
@@ -512,20 +509,20 @@ import TextareaCustomKeyboard from './TextareaCustomKeyboard'
                     })
                     .join(' + ');
             },
-            markFormDirty(id) {
-                if (this.dirty_form_ids.indexOf(id) !== -1) {
+            markFormDirty(obj) {
+                if (this.dirty_objects.indexOf(obj) !== -1) {
                     return;
                 }
-                this.dirty_form_ids.push(id);
+                this.dirty_objects.push(obj);
             },
-            markFormClean(id) {
-                let ix = this.dirty_form_ids.indexOf(id);
+            markFormClean(obj) {
+                let ix = this.dirty_objects.indexOf(obj);
                 if (ix !== -1) {
-                    this.dirty_form_ids.splice(ix, 1);
+                    this.dirty_objects.splice(ix, 1);
                 }
             },
-            isFormDirty(id) {
-                return this.dirty_form_ids.indexOf(id) !== -1;
+            isFormDirty(obj) {
+                return this.dirty_objects.indexOf(obj) !== -1;
             },
             save_lesson() {
                 $(".spinner").show();
@@ -614,7 +611,7 @@ import TextareaCustomKeyboard from './TextareaCustomKeyboard'
                         } else {
                             this.error_messages = {};
                             this.flash_modal(response.data.message);
-                            this.markFormClean('grammar_form_'+grammar.id);
+                            this.markFormClean(grammar);
                             if (is_new) {
                                 grammar.id = response.data.grammar_id;
                             }
@@ -666,7 +663,7 @@ import TextareaCustomKeyboard from './TextareaCustomKeyboard'
                         } else {
                             this.error_messages = {};
                             this.flash_modal(response.data.message);
-                            this.markFormClean('glossed_text_form_'+glossed_text.id);
+                            this.markFormClean(glossed_text);
                             if (is_new) {
                                 glossed_text.id = response.data.glossed_text_id;
                             }
@@ -727,7 +724,7 @@ import TextareaCustomKeyboard from './TextareaCustomKeyboard'
                         } else {
                             this.error_messages = {};
                             this.flash_modal(response.data.message);
-                            this.markFormClean('glossed_text_gloss_form_'+gloss.id);
+                            this.markFormClean(gloss);
                         }
                     });
             }
