@@ -21,7 +21,7 @@ class PublicEieolController
     }
 
     public function eieol_lesson_redirect(Request $request, $series_id) {
-        $series = EieolSeries::find($series_id);
+        $series = EieolSeries::findOrFail($series_id);
 
         if ($request->has('id')) {
             $lesson = EieolLesson::find($request->get('id'));
