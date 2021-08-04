@@ -42,6 +42,7 @@ class UserCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        CRUD::column('username')->type('text');
         CRUD::column('email')->type('text');
         CRUD::column('name')->type('text');
         CRUD::column('is_admin')->type('boolean');
@@ -64,6 +65,7 @@ class UserCrudController extends CrudController
         CRUD::setValidation(UserRequest::class);
 
         //CRUD::setFromDb(); // fields
+        CRUD::field('username')->type('text');
         CRUD::field('email')->type('text');
         CRUD::field('name')->type('text');
         CRUD::field('password')->type('password');
