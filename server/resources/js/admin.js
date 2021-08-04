@@ -18,6 +18,8 @@ Vue.component('lesson-editor', LessonEditor);
 import IssueList from './components/IssueList'
 import IssueCreate from './components/IssueCreate'
 import IssueDisplay from './components/IssueDisplay'
+import RelatedLanguagesSelect from './components/RelatedLanguagesSelect'
+Vue.component('related-languages-select', RelatedLanguagesSelect)
 
 Vue.component('basic-select', VueSearchSelect.BasicSelect); // FIXME this is available on npm - get it from there
 
