@@ -1,13 +1,7 @@
-FROM ghcr.io/utaustin-laits/laravel-base:8.x-php8.0 as phpbuild
-RUN apt-get update \
-    && apt-get install -y \
-       libicu-dev \
-    && rm -rf /var/lib/apt/lists/*
-RUN docker-php-ext-install intl dom xml mbstring
+FROM composer:2 as phpbuild
 ADD server /var/www/html
-COPY --from=composer /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
-RUN composer install
+RUN composer install --ignore-platform-reqs
 
 
 FROM node:13 as npmbuild

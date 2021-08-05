@@ -7,26 +7,20 @@ use App\EieolLesson;
 use App\EieolSeries;
 use App\Issue;
 use App\IssueComment;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use \Auth;
 
 class IssueController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index() : JsonResponse
     {
         $issues = Issue::with('comments')->orderBy('id');
-        if (Auth::user()->isAdmin()) {
-            // show 'em all
-        } else {
+        if (!Auth::user()?->isAdmin()) {
             $serieses = Auth::user()->editableSeries->sortBy('order');
             foreach ($serieses as $series) {
                 foreach ($series->lessons as $lesson) {
-                    $issues->orWhere('pointer', 'like', '/lesson/'.$lesson->id.'/%');
+                    $issues->orWhere('pointer', 'like', '/lesson/' . $lesson->id . '/%');
                 }
             }
             $issues = $issues->distinct();
@@ -35,7 +29,7 @@ class IssueController extends Controller
         return response()->json(['issues'=>$issues->get()]);
     }
 
-    public function getLanguages($id) {
+    public function getLanguages($id) : JsonResponse {
         $issue = Issue::findOrFail($id);
         $pointer = $issue->pointer;
         $languages = self::getLanguagesForPointer($pointer);
@@ -66,12 +60,7 @@ class IssueController extends Controller
         return $result;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Request $request)
+    public function create(Request $request) : JsonResponse
     {
         $pointer = $request->get('pointer');
         $issue = new Issue();
@@ -84,13 +73,7 @@ class IssueController extends Controller
         return response()->json(['issue'=>$issue, 'languages'=>$languages]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(Request $request) : JsonResponse
     {
         $issue = new Issue();
         $issue->name = $request->get('name');
@@ -114,37 +97,13 @@ class IssueController extends Controller
         return response()->json(['issue'=>$issue]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Issue  $issue
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Issue $issue)
+    public function show(Issue $issue) : JsonResponse
     {
-        $issue->comments = $issue->comments; // eager-load comments
+        $issue->load('comments');
         return response()->json(['issue'=>$issue]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Issue  $issue
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Issue $issue)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Issue  $issue
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Issue $issue)
+    public function update(Request $request, Issue $issue) : JsonResponse
     {
         $new_comment_type = "";
         if ($request->has('status') && $issue->status !== $request->get('status')) {
@@ -161,16 +120,5 @@ class IssueController extends Controller
             $comment->save();
         }
         return response()->json(['issue'=>$issue]);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Issue  $issue
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Issue $issue)
-    {
-        //
     }
 }

@@ -8,9 +8,6 @@
            autocomplete="off"
            :placeholder="placeholder"
            ref="input"
-
-
-
            @keydown="check_mark_shifting($event, true)"
            @keyup="check_mark_shifting($event, false)"
            @focus="on_input_focus()"

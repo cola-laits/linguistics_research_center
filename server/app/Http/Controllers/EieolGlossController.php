@@ -61,7 +61,7 @@ class EieolGlossController extends Controller
 
     public function store(Request $request) {
 
-        $rules = array(
+        $rules = [
             'surface_form' => 'required',
             'contextual_gloss' => 'required',
             'language_id' => 'required',
@@ -77,8 +77,8 @@ class EieolGlossController extends Controller
             'element_5_head_word_id' => 'required_with:element_5_part_of_speech',
             'element_6_part_of_speech' => 'required_with:element_6_head_word_id',
             'element_6_head_word_id' => 'required_with:element_6_part_of_speech',
-        );
-        $messages = array(
+        ];
+        $messages = [
             'element_1_part_of_speech.required' => 'The first Part of Speech is required',
             'element_1_head_word_id.required' => 'The first Head Word is required',
             'element_2_part_of_speech.required_with' => 'Since you picked a Head Word, you must enter a Part of Speech',
@@ -91,7 +91,7 @@ class EieolGlossController extends Controller
             'element_5_head_word_id.required_with' => 'Since you entered a Part of Speech, you must pick a Head Word',
             'element_6_part_of_speech.required_with' => 'Since you picked a Head Word, you must enter a Part of Speech',
             'element_6_head_word_id.required_with' => 'Since you entered a Part of Speech, you must pick a Head Word',
-        );
+        ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
 
