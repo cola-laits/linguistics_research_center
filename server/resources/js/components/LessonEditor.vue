@@ -45,7 +45,7 @@
 
         <h1><i class='fa fa-file-text'></i> Edit Lesson for <a :href="'/admin2/eieol_series/'+lesson.series.id+'/edit'" title="Return to series">{{lesson.series.title}}</a></h1>
         <p><a href="/guides/eieol_author" target=_new>Author Guide</a></p>
-        <p><a :href="'/eieol_lesson/'+lesson.series.id+'?id='+lesson.id" target="_blank">Preview</a></p>
+        <p><a :href="'/eieol/'+lesson.series.slug+'/'+lesson.order" target="_blank">Preview</a></p>
         <div class='alert-warning alert'>
             If you change the order of items on this page, they will not appear in that order until you refresh the page.
         </div>
