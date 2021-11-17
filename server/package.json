@@ -10,7 +10,7 @@
   "devDependencies": {
     "@johmun/vue-tags-input": "^2.1.0",
     "@tinymce/tinymce-vue": "^3.2.8",
-    "axios": "^0.21",
+    "axios": "^0.24",
     "bootstrap": "^4.6.0",
     "bootstrap-vue": "^2.21.2",
     "jquery": "^3.6.0",
@@ -28,6 +28,5 @@
     "vue-router": "^3.5.1",
     "vue-template-compiler": "^2.6.12",
     "vuex": "^3.6.2"
-  },
-  "dependencies": {}
+  }
 }

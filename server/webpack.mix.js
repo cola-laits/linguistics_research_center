@@ -17,7 +17,18 @@ mix
     .copyDirectory('node_modules/tinymce/icons','public/js/icons')
     .sourceMaps()
     .extract([])
-    .disableNotifications();
+    .disableNotifications()
+    .options({
+        terser: {
+            extractComments: false,
+            terserOptions: {
+                output: {
+                    comments: false,
+                },
+            },
+        },
+    })
+;
 
 if (mix.inProduction()) {
     mix.version();
