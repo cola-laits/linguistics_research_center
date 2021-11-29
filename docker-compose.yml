@@ -1,0 +1,52 @@
+version: "3"
+
+services:
+  web:
+    build: .
+    ports:
+      - "80"
+    networks:
+      - nginxproxy
+      - default
+    volumes:
+      - './server:/var/www/html'
+    environment:
+      - VIRTUAL_HOST=lrc.docker
+      - APP_NAME=LRC
+      - APP_ENV=local
+      - APP_KEY=base64:MHLjzpUSRe5Y229TnPpokCQXW/a6l9C769NXRxRRJK8=
+      - APP_DEBUG=true
+      - APP_URL=http://lrc.docker
+      - LOG_CHANNEL=errorlog
+      - DB_CONNECTION=mysql
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=lrc
+      - DB_USERNAME=lrc
+      - DB_PASSWORD=lrc
+      - CACHE_DRIVER=database
+      - SESSION_DRIVER=database
+      - SESSION_LIFETIME=120
+  db:
+    image: mysql:5.7
+    networks:
+      - default
+    environment:
+      MYSQL_DATABASE: 'lrc'
+      MYSQL_USER: 'lrc'
+      MYSQL_PASSWORD: 'lrc'
+      MYSQL_ROOT_PASSWORD: 'lrc'
+    ports:
+      - '13306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - dbdata:/var/lib/mysql
+
+volumes:
+  dbdata:
+
+networks:
+  nginxproxy:
+    external: true
+    name: nginxproxy_lb
