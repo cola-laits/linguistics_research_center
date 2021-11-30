@@ -18,12 +18,9 @@ class EieolGlossController extends Controller
         //this is a search that returns glosses that start with the url parm "gloss"
         $glosses = EieolGloss::with('elements.head_word')->where('surface_form', 'LIKE', Normalizer::normalize($request->get('gloss'), Normalizer::FORM_C) . '%')
             ->where('language_id', '=', $request->get('language') . '%')
-            ->take(15)->orderBy('surface_form')->get()->map(function($g) {
-                $v = new \stdClass();
-                $v->id = $g['id'];
-                $v->html = $g->getDisplayGloss();
-                return $v;
-            });
+            ->take(15)->orderBy('surface_form')
+            ->with(['language', 'elements.head_word.language'])
+            ->get();
 
         return [
             'glosses'=>$glosses
@@ -41,7 +38,6 @@ class EieolGlossController extends Controller
             $return_gloss['element_' . $i . '_part_of_speech'] = $element->part_of_speech;
             $return_gloss['element_' . $i . '_analysis'] = $element->analysis;
             $return_gloss['element_' . $i . '_head_word_id'] = $element->head_word_id;
-            $return_gloss['element_' . $i . '_head_word_display'] = $element->head_word->getDisplayHeadWord();
             $return_gloss['element_' . $i . '_order'] = $element->order;
         }
 

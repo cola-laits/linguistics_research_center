@@ -14,7 +14,10 @@
             </div>
             <div id="head_word_search_result">
                 <div v-for="h in modal_attached_headword_search_results.headwords">
-                    <a href="#" style="cursor:pointer;" @click.prevent="attach_headword(h)" v-html="h.html"></a>
+                    <a href="#" style="cursor:pointer;" @click.prevent="attach_headword(h)">
+                        <span style='white-space: nowrap' :lang='h.language.lang_attribute'>{{h.word}}</span>
+                        {{ h.definition }}
+                    </a>
                 </div>
             </div>
 

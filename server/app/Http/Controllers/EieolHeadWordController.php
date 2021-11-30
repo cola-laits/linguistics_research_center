@@ -16,11 +16,9 @@ class EieolHeadWordController extends Controller
     public function filtered_list(Request $request) {
         $head_words = EieolHeadWord::where('word', 'LIKE', '%' . Normalizer::normalize($request->get('head_word'), Normalizer::FORM_C) . '%')
             ->where('language_id', '=', $request->get('language') . '%')
-            ->take(50)->orderBy('word')->get()->map(function ($h) {
-                $v = $h;
-                $v->html = $h->getDisplayHeadWord();
-                return $v;
-            });
+            ->take(50)->orderBy('word')
+            ->with(['language'])
+            ->get();
 
         return [
             'headwords' => $head_words
@@ -89,7 +87,6 @@ class EieolHeadWordController extends Controller
             'success' => true,
             'added' => true,
             'head_word_id' => $head_word->id,
-            'head_word_display' => $head_word->getDisplayHeadWord(),
             'message' => 'Head Word was successfully added.'
         ];
     }
@@ -133,7 +130,6 @@ class EieolHeadWordController extends Controller
             'success' => true,
             'message' => 'Head Word was successfully updated.',
             'head_word_id' => $head_word->id,
-            'head_word_display' => $head_word->getDisplayHeadWord(),
         ];
     }
 

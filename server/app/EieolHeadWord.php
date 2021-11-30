@@ -53,9 +53,4 @@ class EieolHeadWord extends Model {
 	{
 		return $this->belongsTo('\App\LexEtyma');
 	}
-
-	public function getDisplayHeadWord()
-	{
-		return "<span style='white-space: nowrap' lang='" . $this->language->lang_attribute . "'> &lt;" . substr($this->word,1,-1) .  "&gt;</span> "  . $this->definition;
-	}
 }

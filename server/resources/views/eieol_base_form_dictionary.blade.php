@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title') 
+@section('title')
 {{$series->title}}
 @stop
 
@@ -19,15 +19,16 @@ in texts are constructed from base forms.</p>
 <p>A new, experimental feature is being introduced to these EIEOL lessons, namely the addition
 of pointers to Proto-Indo-European roots identified by Julius Pokorny in his monumental work,
 <i>Indogermanisches Etymologisches W&ouml;rterbuch</i> (2 vols. Bern: Franke, 1959-1969; reprinted
-in 1989).  Because Pokorny is becoming increasingly outdated, we may revise these links in the 
-future; however, for the time being, this information might prove interesting to those who are 
+in 1989).  Because Pokorny is becoming increasingly outdated, we may revise these links in the
+future; however, for the time being, this information might prove interesting to those who are
 curious about Indo-European etymology. Notice of potential error is always welcome.</p>
 
 
 
 <div class="skinny" id="no_bullets">
 @foreach ($head_words as $head_word)
-    {!! $head_word['display'] !!} --
+    <span style='white-space: nowrap' lang='{{$head_word['data']->language->lang_attribute}}'> {{$head_word['data']->word}} </span> {!! $head_word['data']->definition !!}
+    --
     @if($head_word['etyma'] != null)
         [<a href="/lex/master/#P{{$head_word['etyma']['id']}}">Pokorny</a>
         <span class='Unicode' lang='ine'>{!! $head_word['etyma']['entry'] !!} </span> <strong>::</strong> {!! $head_word['etyma']['gloss'] !!}] &nbsp; --

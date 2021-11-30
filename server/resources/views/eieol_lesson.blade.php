@@ -87,7 +87,27 @@
                 @foreach ($glossed_text->glosses as $gloss)
                     <li id='gloss_pivot_{{$gloss->id}}' class='gloss'>
                         <a name='glossed_text_gloss_{{$gloss->id}}'></a>
-                        {!! $gloss->getDisplayGloss() !!}
+
+                        <span lang='{{$gloss->language->lang_attribute}}'>{!! $gloss->surface_form !!}</span>
+                        <span style="white-space: nowrap">--</span>
+                        @foreach ($gloss->elements as $element)
+                            {{$element->part_of_speech}};
+                            {{$element->analysis}}
+                            <span style='white-space: nowrap' lang='{{$element->head_word->language->lang_attribute}}'> {{$element->head_word->word}}</span> {!! $element->head_word->definition !!}
+                            @if (!$loop->last)
+                                +
+                            @endif
+                        @endforeach
+                        <span style="white-space: nowrap">--</span>
+                        <strong>{{$gloss->contextual_gloss}}</strong>
+                        @if ($gloss->comments)
+                            # {!! $gloss->comments !!}
+                        @endif
+
+                        @if ($gloss->underlying_form)
+                            <br/>
+                            <span lang="{{$gloss->language->lang_attribute}}" style="margin-left:10px;">({{$this->underlying_form}})</span>
+                        @endif
                     </li>
                 @endforeach
             </ul>
@@ -99,7 +119,27 @@
                 @foreach ($glossed_text->glosses as $gloss)
                     <li id='old_gloss_pivot_{{$gloss->id}}'>
                         <a name='glossed_text_gloss_{{$gloss->id}}'></a>
-                        {!! $gloss->getDisplayGloss() !!}
+
+                        <span lang='{{$gloss->language->lang_attribute}}'>{!! $gloss->surface_form !!}</span>
+                        <span style="white-space: nowrap">--</span>
+                        @foreach ($gloss->elements as $element)
+                            {{$element->part_of_speech}};
+                            {{$element->analysis}}
+                            <span style='white-space: nowrap' lang='{{$element->head_word->language->lang_attribute}}'> {{$element->head_word->word}}</span> {!! $element->head_word->definition !!}
+                            @if (!$loop->last)
+                                +
+                            @endif
+                        @endforeach
+                        <span style="white-space: nowrap">--</span>
+                        <strong>{{$gloss->contextual_gloss}}</strong>
+                        @if ($gloss->comments)
+                          # {!! $gloss->comments !!}
+                        @endif
+
+                        @if ($gloss->underlying_form)
+                            <br/>
+                            <span lang="{{$gloss->language->lang_attribute}}" style="margin-left:10px;">({{$this->underlying_form}})</span>
+                        @endif
                     </li>
                 @endforeach
             </ul>

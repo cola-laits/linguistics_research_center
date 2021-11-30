@@ -13,7 +13,26 @@
             </div>
             <div id="gloss_search_result">
                 <div v-for="g in modal_attached_gloss_search_results.glosses">
-                    <a href="#" style="cursor:pointer;" @click.prevent="attach_gloss(g.id,gloss.glossed_text_id)" v-html="g.html"></a>
+                    <a href="#" style="cursor:pointer;" @click.prevent="attach_gloss(g.id,gloss.glossed_text_id)">
+
+                        <span :lang="g.language.lang_attribute">{{g.surface_form}}</span>
+                        <span style="white-space: nowrap">--</span>
+                        <span v-for="(el, ix) in g.elements">
+                            {{el.part_of_speech}};
+                            {{el.analysis}}
+                            <span style='white-space: nowrap' :lang="el.head_word.language.lang_attribute">
+                                {{el.head_word.word}}</span> {{ el.head_word.definition }}
+
+                            <span v-if="ix < g.elements.length-1"> + </span>
+                        </span>
+                        <span style="white-space: nowrap">--</span>
+                        <strong>{{g.contextual_gloss}}</strong>
+                        <span v-if="g.comments"># {{g.comments}}</span>
+                        <span v-if="g.underlying_form">
+                            <br/><span :lang="g.language.lang_attribute" style="margin-left:10px;">
+                            ({{ g.underlying_form }})</span>
+                        </span>
+                    </a>
                 </div>
             </div>
 

@@ -200,7 +200,7 @@ class PublicEieolController
 
                             $data['head_words'][$key] = $element->head_word->toArray();
 
-                            $data['head_words'][$key]['display'] = $element->head_word->getDisplayHeadWord();
+                            $data['head_words'][$key]['data'] = $element->head_word;
 
                             $data['head_words'][$key]['glossed_text_gloss_ids'] = array();
 
@@ -266,7 +266,7 @@ class PublicEieolController
                             if (!array_key_exists($key, $data['keywords'])) {
                                 $data['keywords'][$key] = [
                                     'keyword'=>$keyword,
-                                    'head_word'=>$element->head_word->getDisplayHeadWord(),
+                                    'head_word'=>$element->head_word,
                                     'glossed_text_gloss_ids'=>[]
                                 ];
                             }
