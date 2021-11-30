@@ -152,7 +152,6 @@ class EieolGlossController extends Controller
             'success' => true,
             'added' => true,
             'gloss_id' => $gloss->id,
-            'gloss_display' => $gloss->getDisplayGloss(),
             'message' => 'Gloss was successfully added.',
             'glossed_text'=>EieolGlossedText::with('glosses.language', 'glosses.elements.head_word.language')
                 ->where('id', $request->get('glossed_text_id'))
@@ -253,7 +252,6 @@ class EieolGlossController extends Controller
             'success' => true,
             'message' => 'Gloss was successfully updated.',
             'gloss_id' => $gloss->id,
-            'gloss_display' => '<br>' . $gloss->getDisplayGloss(),
             'glossed_text'=>EieolGlossedText::with('glosses.language', 'glosses.elements.head_word.language')
                 ->where('id', $request->get('glossed_text_id'))
                 ->first()
