@@ -94,24 +94,6 @@ class EieolGloss extends Model {
 		return $string;
 	}
 
-
-	public function getDisplayGlossForMasterGloss()
-	{
-		$string = '';
-		$i=0;
-		foreach($this->elements as $element){
-			$i++;
-			if ($i != 1) {
-				$string .= ' + ';
-			}
-
-			$string .= $element->part_of_speech . '; ' .
-					$element->analysis . ' ' .
-					$element->head_word->getDisplayHeadWord();
-		}
-		return $string;
-	}
-
 	/** Deep copy a gloss and its elements. */
 	public function deepCopy() {
 	    // clunky; refactor later

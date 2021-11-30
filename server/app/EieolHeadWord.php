@@ -38,30 +38,24 @@ use Illuminate\Database\Eloquent\Model;
  */
 class EieolHeadWord extends Model {
 	protected $table = 'eieol_head_word';
-	
+
 	public function elements()
 	{
 		return $this->hasMany('\App\EieolElement', 'head_word_id', 'id');
 	}
-	
+
 	public function language()
 	{
 		return $this->belongsTo('\App\EieolLanguage');
 	}
-	
+
 	public function etyma()
 	{
 		return $this->belongsTo('\App\LexEtyma');
 	}
-	
+
 	public function getDisplayHeadWord()
 	{
-		//return headword and definition in the format <span style="white-space: nowrap" lang='cu' class='Cyrillic'>&lt; Ñ¥Ñ�-, Ñ¥Ñ�Ð¼ÑŒ, Ñ¥Ñ�Ð¸&gt;</span> be
-		//trim <>
-		$word = $this->word;
-		$word = substr($word,1);
-		$word = substr($word,0,-1);
-		
-		return "<span style='white-space: nowrap' lang='" . $this->language->lang_attribute . "'> &lt;" . $word .  "&gt;</span> "  . $this->definition;
+		return "<span style='white-space: nowrap' lang='" . $this->language->lang_attribute . "'> &lt;" . substr($this->word,1,-1) .  "&gt;</span> "  . $this->definition;
 	}
 }

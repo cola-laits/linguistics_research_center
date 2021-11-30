@@ -140,7 +140,7 @@ class PublicEieolController
                     if (!array_key_exists($key, $data['glosses'])) {
                         $data['glosses'][$key] = $gloss->toArray();
                         $data['glosses'][$key]['surface_form'] = strip_tags($gloss->surface_form);
-                        $data['glosses'][$key]['displayGlossForMasterGloss'] = $gloss->getDisplayGlossForMasterGloss();
+                        $data['glosses'][$key]['gloss'] = $gloss;
                         $data['glosses'][$key]['glossed_text_gloss_ids'] = [];
                     }
 
