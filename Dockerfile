@@ -11,7 +11,7 @@ RUN npm install && npm run production
 
 
 FROM ghcr.io/utaustin-laits/laravel-base:8.x-php8.0
-RUN docker-php-ext-install intl dom xml mbstring
+RUN docker-php-ext-install intl
 COPY --from=npmbuild /var/www/html /var/www/html
 RUN chmod 777 -R /var/www/html/bootstrap/cache
 RUN chmod 777 -R /var/www/html/storage

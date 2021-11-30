@@ -84,8 +84,7 @@ class EieolGloss extends Model {
 		$string .= ' <span style="white-space: nowrap">--</span> <strong>' . $this->contextual_gloss . '</strong>';
 
 		if ($this->comments) {
-			$string .= ' # ' . $this->cleanHTML($this->comments);
-			//$string .= ' # ' . $this->comments;
+			$string .= ' # ' . $this->comments;
 		}
 
 		if ($this->underlying_form) {
@@ -111,23 +110,6 @@ class EieolGloss extends Model {
 					$element->head_word->getDisplayHeadWord();
 		}
 		return $string;
-	}
-
-	private function cleanHTML($html)
-	{
-
-    libxml_use_internal_errors(true);
-
-    $dom = new \DOMDocument();
-    $dom->loadHTML('<?xml encoding="utf-8" ?><root>' . $html . '</root>', LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-    $xpath = new \DOMXPath($dom);
-
-    foreach( $xpath->query('//*[not(node())]') as $node ) {
-        $node->parentNode->removeChild($node);
-    }
-
-    return $dom->saveHTML();
-
 	}
 
 	/** Deep copy a gloss and its elements. */
