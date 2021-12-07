@@ -36,6 +36,7 @@ class EieolGlossedTextController extends Controller
         $glossed_text->glossed_text = preg_replace('/^<p>(.+?)<\/p>/is', '$1', $text); // remove dumb ckeditor paragraph tags
         $glossed_text->lesson_id = $request->get('lesson_id');
         $glossed_text->audio_url = $request->get('audio_url');
+        $glossed_text->custom_gloss_mapping = $request->get('custom_gloss_mapping');
         $glossed_text->created_by = Auth::user()->username;
         $glossed_text->updated_by = Auth::user()->username;
 
@@ -68,6 +69,7 @@ class EieolGlossedTextController extends Controller
         $glossed_text->order = $request->get('order');
         $text = Normalizer::normalize($request->get('glossed_text'), Normalizer::FORM_C);
         $glossed_text->glossed_text = preg_replace('/^<p>(.+?)<\/p>/is', '$1', $text); // remove dumb ckeditor paragraph tags
+        $glossed_text->custom_gloss_mapping = $request->get('custom_gloss_mapping');
         $glossed_text->audio_url = $request->get('audio_url');
         $glossed_text->updated_by = Auth::user()->username;
 

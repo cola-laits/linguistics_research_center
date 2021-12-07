@@ -26,17 +26,62 @@
         }
 
         $(".click_gloss").click(function(e){
-            //when they click on a word in the glossed_text, this opens the corresponding gloss
-            $(this).toggleClass('clicked');
-            var temp_id = '#gloss_' + $(this).attr('id');
-            $(temp_id).toggleClass('gloss');
+            if (($(this)).hasClass('clicked')) {
+                return;
+            }
+            var this_el = $(this);
+            var this_gloss_ids = this_el.data('gloss-ids');
+            this_el.parent('span').find('.click_gloss').each(function (ix, el) {
+                var that_gloss_ids = $(el).data('gloss-ids');
+                var gloss_ids_in_common = this_gloss_ids.filter(function(id) { return that_gloss_ids.indexOf(id) !== -1; });
+                if (gloss_ids_in_common.length === 0) {
+                    return;
+                }
+                $(el).toggleClass('clicked');
+                this_gloss_ids.forEach(function(id) {
+                    var temp_id = '#gloss_pivot_' + id;
+                    $(temp_id).show();
+                });
+            });
         }); //click_gloss
+
+        $(".click_gloss").mouseenter(function(e) {
+            var this_el = $(this);
+            var this_gloss_ids = this_el.data('gloss-ids');
+            this_el.parent('span').find('.click_gloss').each(function (ix, el) {
+                var that_gloss_ids = $(el).data('gloss-ids');
+                var gloss_ids_in_common = this_gloss_ids.filter(function(id) { return that_gloss_ids.indexOf(id) !== -1; });
+                if (gloss_ids_in_common.length === 0) {
+                    return;
+                }
+                $(el).css('text-decoration','underline');
+                this_gloss_ids.forEach(function(id) {
+                    var temp_id = '#gloss_pivot_' + id;
+                    $(temp_id).css('text-decoration','underline');
+                });
+            });
+        }).mouseleave(function(e) {
+            var this_el = $(this);
+            var this_gloss_ids = this_el.data('gloss-ids');
+            this_el.parent('span').find('.click_gloss').each(function (ix, el) {
+                var that_gloss_ids = $(el).data('gloss-ids');
+                var gloss_ids_in_common = this_gloss_ids.filter(function(id) { return that_gloss_ids.indexOf(id) !== -1; });
+                if (gloss_ids_in_common.length === 0) {
+                    return;
+                }
+                $(el).css('text-decoration','none');
+                this_gloss_ids.forEach(function(id) {
+                    var temp_id = '#gloss_pivot_' + id;
+                    $(temp_id).css('text-decoration','none');
+                });
+            });
+        });
 
         $(".expand_all, collapse_all").click(function(e){
             if ($(this).attr('class') == "expand_all"){
                 $(this).html("<i class='fa fa-minus-square-o'></i> Collapse All");
                 $(this).next('ul').children('li').each(function () {
-                    $(this).removeClass('gloss');
+                    $(this).show();
                 });
                 $(this).parent().prev(".glossed_text").children(":first").children('a').each(function () {
                     $(this).addClass("clicked");
@@ -44,7 +89,7 @@
             } else {
                 $(this).html("<i class='fa fa-plus-square-o'></i> Expand All");
                 $(this).next('ul').children('li').each(function () {
-                    $(this).addClass('gloss');
+                    $(this).hide();
                 });
                 $(this).parent().prev(".glossed_text").children(":first").children('a').each(function () {
                     $(this).removeClass("clicked");

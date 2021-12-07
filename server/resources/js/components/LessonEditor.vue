@@ -179,12 +179,35 @@
 
                 <div class="row">
                     <div class='col-sm-2'></div>
-                    <div class="col-sm-10">
+                    <div class="col-sm-5">
                         <b-button size="sm" variant="secondary"
                                   v-b-toggle="'glosses-'+glossed_text.id"
                                   v-if="glossed_text.id !== ''">Toggle Glosses</b-button>
                     </div>
+                    <div class="col-sm-5">
+                        <b-button size="sm" variant="secondary"
+                                  v-b-toggle="'glossmapper-'+glossed_text.id"
+                                  v-if="glossed_text.id !== ''">Customize Gloss Mapping</b-button>
+                    </div>
                 </div>
+
+                <b-collapse :id="'glossmapper-'+glossed_text.id">
+                    <div>By default, we try to do a simple word-for-word match to find the glosses in this text.  For texts where that doesn't work for some reason, you can override that manually.  For each gloss, click the characters matching it in the glossed text to highlight them.  Then 'Save' the glossed text.</div>
+                    <div v-for="gloss in glossed_text.glosses">
+                        Gloss #{{gloss.order}}: {{gloss.surface_form}}<br>
+                        <div style="overflow:scroll">
+                            <table border="1">
+                                <tr>
+                                    <td v-for="(char, char_ix) in glossed_text.glossed_text"
+                                        style="min-width:1em;cursor:default;"
+                                        :style="is_custom_gloss_mapping_char_selected(glossed_text, gloss.id, char_ix) ? 'background-color:yellow;' : ''"
+                                        @click="toggle_gloss_mapping_char(glossed_text, gloss.id, char_ix)"
+                                    >{{char}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </b-collapse>
 
                 <b-collapse :id="'glosses-'+glossed_text.id">
 
@@ -435,6 +458,7 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import AudioIcon from './AudioIcon'
 import CKEditor from './CkEditor'
 import CommentIcon from './CommentIcon'
@@ -727,7 +751,31 @@ import TextareaCustomKeyboard from './TextareaCustomKeyboard'
                             this.markFormClean(gloss);
                         }
                     });
-            }
+            },
+            toggle_gloss_mapping_char(glossed_text, gloss_id, char_ix) {
+                if (!glossed_text.custom_gloss_mapping) {
+                    glossed_text.custom_gloss_mapping = {};
+                }
+                if (!glossed_text.custom_gloss_mapping[gloss_id]) {
+                    Vue.set(glossed_text.custom_gloss_mapping, gloss_id, []);
+                }
+                if (glossed_text.custom_gloss_mapping[gloss_id].includes(char_ix)) {
+                    glossed_text.custom_gloss_mapping[gloss_id] =
+                        glossed_text.custom_gloss_mapping[gloss_id].filter(i => i != char_ix)
+                } else {
+                    glossed_text.custom_gloss_mapping[gloss_id].push(char_ix);
+                }
+            },
+            is_custom_gloss_mapping_char_selected(glossed_text, gloss_id, char_ix) {
+                if (!glossed_text.custom_gloss_mapping) {
+                    return false
+                }
+                let map = glossed_text.custom_gloss_mapping[gloss_id]
+                if (!map) {
+                    return false
+                }
+                return map.includes(char_ix)
+            },
         },
         created() {
             this.lesson = this.init_lesson;
