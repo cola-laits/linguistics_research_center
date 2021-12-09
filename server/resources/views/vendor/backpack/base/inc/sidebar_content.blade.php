@@ -30,7 +30,6 @@
 <li class="nav-title">Lexicon Coming Soon</li>
 <li class='nav-item'>
     <ul>
-        <li>Etyma cross references</li>
         <li>Etyma Reflexes</li>
         <li>Etyma Semantic Fields</li>
         <li>Semantic Categories</li>

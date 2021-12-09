@@ -27,7 +27,7 @@ class Lex_etymaRequest extends FormRequest
     {
         return [
             'old_id' => 'required',
-            'order' => 'required|unique:\App\LexEtyma',
+            'order' => 'required|unique:\App\LexEtyma,order,'.$this->input('id'),
             'page_number' => 'required',
             'entry' => 'required',
             'gloss' => 'required',
