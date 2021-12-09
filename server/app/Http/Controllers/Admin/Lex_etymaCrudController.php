@@ -71,6 +71,7 @@ class Lex_etymaCrudController extends CrudController
         CRUD::field('entry')->type('text');
         CRUD::field('gloss')->type('text');
         CRUD::field('cross_references')->type('select2_multiple')->model('App\LexEtyma')->attribute('entry')->pivot(true);
+        CRUD::field('semantic_fields')->type('select2_multiple')->model('App\LexSemanticField')->attribute('text')->pivot(true);
 
         /*
         CRUD::field('reflexes')

@@ -41,7 +41,10 @@ class Lex_semantic_fieldCrudController extends CrudController
     {
         CRUD::removeButton('show');
 
-        CRUD::setFromDb(); // columns
+        CRUD::column('text');
+        CRUD::column('number');
+        CRUD::column('abbr');
+        CRUD::column('semantic_category')->type('relationship')->attribute('text');
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -60,7 +63,12 @@ class Lex_semantic_fieldCrudController extends CrudController
     {
         CRUD::setValidation(Lex_semantic_fieldRequest::class);
 
-        CRUD::setFromDb(); // fields
+        //CRUD::setFromDb(); // fields
+
+        CRUD::field('text');
+        CRUD::field('number');
+        CRUD::field('abbr');
+        CRUD::field('semantic_category')->type('select')->attribute('text');
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:

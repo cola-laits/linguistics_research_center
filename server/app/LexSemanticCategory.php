@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
@@ -31,28 +32,31 @@ use Illuminate\Support\Facades\Auth;
  * @mixin \Eloquent
  */
 class LexSemanticCategory extends Model {
+
+    use CrudTrait;
+
 	protected $table = 'lex_semantic_category';
 
 	protected $fillable = ['number','text','abbr'];
 
 	public static function boot() {
 		parent::boot();
-	
+
 		// event to happen on saving
 		static::creating(function($table)  {
 			$table->created_by = Auth::user()->username;
 			$table->updated_by = Auth::user()->username;
 		});
-	
+
 		// event to happen on updating
 		static::updating(function($table)  {
 			$table->updated_by = Auth::user()->username;
 		});
 	}
-	
+
 	public function semantic_fields()
 	{
 		return $this->hasMany('\App\LexSemanticField', 'semantic_category_id', 'id')->orderBy('number');
 	}
-	
+
 }

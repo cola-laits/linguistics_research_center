@@ -25,15 +25,14 @@
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_language_sub_family') }}'><i class='nav-icon la la-question'></i> Language Sub Families</a></li>
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_language') }}'><i class='nav-icon la la-question'></i> Languages</a></li>
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_source') }}'><i class='nav-icon la la-question'></i> Sources</a></li>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_semantic_category') }}'><i class='nav-icon la la-question'></i> Semantic Categories</a></li>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_semantic_field') }}'><i class='nav-icon la la-question'></i> Semantic Fields</a></li>
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_part_of_speech') }}'><i class='nav-icon la la-question'></i> Parts of speech</a></li>
 
 <li class="nav-title">Lexicon Coming Soon</li>
 <li class='nav-item'>
     <ul>
         <li>Etyma Reflexes</li>
-        <li>Etyma Semantic Fields</li>
-        <li>Semantic Categories</li>
-        <li>Semantic Fields</li>
         <li>Reflex Entries</li>
         <li>Reflex Parts of Speech</li>
         <li>Reflex Sources</li>
