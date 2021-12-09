@@ -33,8 +33,6 @@
 <li class='nav-item'>
     <ul>
         <li>Etyma Reflexes</li>
-        <li>Reflex Entries</li>
         <li>Reflex Parts of Speech</li>
-        <li>Reflex Sources</li>
     </ul>
 </li>

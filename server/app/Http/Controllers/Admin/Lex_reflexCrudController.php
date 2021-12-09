@@ -70,6 +70,8 @@ class Lex_reflexCrudController extends CrudController
         CRUD::field('lang_attribute')->type('text');
         CRUD::field('class_attribute')->type('text');
 
+        CRUD::field('sources')->type('select2_multiple')->attribute('code')->pivot(true);
+
         CRUD::field('entries')->type('table')
             ->entity_singular('entry')
             ->columns(['text'=>'Text']);
