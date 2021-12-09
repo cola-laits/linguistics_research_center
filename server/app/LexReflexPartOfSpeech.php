@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Auth;
  * @property int $id
  * @property int $reflex_id
  * @property string|null $text
- * @property int $order
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon $updated_at
  * @property string|null $created_by
@@ -33,28 +32,28 @@ use Illuminate\Support\Facades\Auth;
  */
 class LexReflexPartOfSpeech extends Model {
 	protected $table = 'lex_reflex_part_of_speech';
-	
+
 	public static function boot() {
 		parent::boot();
-	
+
 		// event to happen on saving
 		static::creating(function($table)  {
 			$table->created_by = Auth::user()->username;
 			$table->updated_by = Auth::user()->username;
 		});
-	
+
 		// event to happen on updating
 		static::updating(function($table)  {
 			$table->updated_by = Auth::user()->username;
 		});
-	
+
 	}
-	
+
 	public function reflex()
 	{
 		return $this->belongsTo('\App\LexReflex');
 	}
-	
+
 	public function part_of_speech()
 	{
 		return $this->hasOne('\App\LexPartOfSpeech','id','part_of_speech_id');

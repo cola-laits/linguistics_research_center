@@ -86,7 +86,7 @@ class LexReflex extends Model {
 
 	public function sources()
 	{
-		return $this->belongsToMany('\App\LexSource', 'lex_reflex_source', 'reflex_id', 'source_id')->orderBy('order');
+		return $this->belongsToMany('\App\LexSource', 'lex_reflex_source', 'reflex_id', 'source_id')->orderBy('code');
 	}
 
 	public function getDisplayPartsOfSpeech()
