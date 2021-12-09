@@ -202,7 +202,8 @@
                                         style="min-width:1em;cursor:default;"
                                         :style="is_custom_gloss_mapping_char_selected(glossed_text, gloss.id, char_ix) ? 'background-color:yellow;' : ''"
                                         @click="toggle_gloss_mapping_char(glossed_text, gloss.id, char_ix)"
-                                    >{{char}}</td>
+                                    >{{combining_character_regex.test(char) ? '◌'+char : char}}
+                                    </td>
                                 </tr>
                             </table>
                         </div>
@@ -500,7 +501,8 @@ import TextareaCustomKeyboard from './TextareaCustomKeyboard'
             'delete_glossed_text_confirm_glossed_text_id': '',
             'delete_glossed_text_gloss_confirm_glossed_text_gloss_id': '',
             'gloss_for_edit': {},
-            'error_messages': {}
+            'error_messages': {},
+            'combining_character_regex': /\p{M}/gu,
         };},
         computed: {
             lesson_text: function() {
