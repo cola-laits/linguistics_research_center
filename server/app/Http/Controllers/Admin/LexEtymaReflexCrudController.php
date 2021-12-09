@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\Lex_reflex_part_of_speechRequest;
+use App\Http\Requests\LexEtymaReflexRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class Lex_reflex_part_of_speechCrudController
+ * Class LexEtymaReflexCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class Lex_reflex_part_of_speechCrudController extends CrudController
+class LexEtymaReflexCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -26,9 +26,9 @@ class Lex_reflex_part_of_speechCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\LexReflexPartOfSpeech::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/lex_reflex_part_of_speech');
-        CRUD::setEntityNameStrings('Lex Reflex Part of Speech', 'Lex Reflex Parts of Speech');
+        CRUD::setModel(\App\LexEtymaReflex::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/lex_etyma_reflex');
+        CRUD::setEntityNameStrings('lex etyma reflex', 'lex etyma reflexes');
     }
 
     /**
@@ -42,9 +42,8 @@ class Lex_reflex_part_of_speechCrudController extends CrudController
         CRUD::removeButton('show');
 
         //CRUD::setFromDb(); // columns
+        CRUD::column('etyma')->attribute('gloss');
         CRUD::column('reflex')->attribute('langAbbrGloss');
-        CRUD::column('text');
-        CRUD::column('order');
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -61,12 +60,12 @@ class Lex_reflex_part_of_speechCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(Lex_reflex_part_of_speechRequest::class);
+        CRUD::setValidation(LexEtymaReflexRequest::class);
 
         //CRUD::setFromDb(); // fields
+
+        CRUD::field('etyma_id')->type('number');
         CRUD::field('reflex_id')->type('number');
-        CRUD::field('text');
-        CRUD::field('order');
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:

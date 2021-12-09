@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
@@ -31,7 +32,14 @@ use Illuminate\Support\Facades\Auth;
  * @mixin \Eloquent
  */
 class LexReflexPartOfSpeech extends Model {
+
+    use CrudTrait;
+
 	protected $table = 'lex_reflex_part_of_speech';
+
+    protected $guarded = [
+        'id','created_at','created_by','updated_at','updated_by'
+    ];
 
 	public static function boot() {
 		parent::boot();

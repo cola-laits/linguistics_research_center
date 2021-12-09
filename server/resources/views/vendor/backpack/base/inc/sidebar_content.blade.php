@@ -12,27 +12,16 @@
 -->
 
 <li class="nav-title">Lexicon</li>
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_etyma') }}'><i class='nav-icon la la-question'></i> Etyma</a></li>
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_reflex') }}'><i class='nav-icon la la-question'></i> Reflexes</a></li>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_language_family') }}'><i class='nav-icon la la-language'></i> Language Families</a></li>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_language_sub_family') }}'><i class='nav-icon la la-language'></i> Language Sub Families</a></li>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_language') }}'><i class='nav-icon la la-language'></i> Languages</a></li>
 
-<!--
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_reflex_entry') }}'><i class='nav-icon la la-question'></i> Reflex Entries</a></li>
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_reflex_part_of_speech') }}'><i class='nav-icon la la-question'></i> Reflex Parts of Speech</a></li>
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_semantic_category') }}'><i class='nav-icon la la-question'></i> Semantic Categories</a></li>
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_semantic_field') }}'><i class='nav-icon la la-question'></i> Semantic_Fields</a></li>
--->
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_language_family') }}'><i class='nav-icon la la-question'></i> Language Families</a></li>
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_language_sub_family') }}'><i class='nav-icon la la-question'></i> Language Sub Families</a></li>
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_language') }}'><i class='nav-icon la la-question'></i> Languages</a></li>
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_source') }}'><i class='nav-icon la la-question'></i> Sources</a></li>
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_semantic_category') }}'><i class='nav-icon la la-question'></i> Semantic Categories</a></li>
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_semantic_field') }}'><i class='nav-icon la la-question'></i> Semantic Fields</a></li>
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_part_of_speech') }}'><i class='nav-icon la la-question'></i> Parts of speech</a></li>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_etyma') }}'><i class='nav-icon la la-globe-europe'></i> Etyma</a></li>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_etyma_reflex') }}'><i class='nav-icon la la-globe-europe'></i> Etyma > Reflex</a></li>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_reflex') }}'><i class='nav-icon la la-globe-europe'></i> Reflexes</a></li>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_reflex_part_of_speech') }}'><i class='nav-icon la la-globe-europe'></i> Reflex > Part of Speech</a></li>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_source') }}'><i class='nav-icon la la-book'></i> Sources</a></li>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_semantic_category') }}'><i class='nav-icon la la-book'></i> Semantic Categories</a></li>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_semantic_field') }}'><i class='nav-icon la la-book'></i> Semantic Fields</a></li>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_part_of_speech') }}'><i class='nav-icon la la-book'></i> Parts of speech</a></li>
 
-<li class="nav-title">Lexicon Coming Soon</li>
-<li class='nav-item'>
-    <ul>
-        <li>Etyma Reflexes</li>
-        <li>Reflex Parts of Speech</li>
-    </ul>
-</li>

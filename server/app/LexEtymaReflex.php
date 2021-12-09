@@ -25,13 +25,18 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  */
 class LexEtymaReflex extends Model {
+    use \Backpack\CRUD\app\Models\Traits\CrudTrait;
 	protected $table = 'lex_etyma_reflex';
-	
+
+    protected $guarded = [
+        'id','created_at','created_by','updated_at','updated_by'
+    ];
+
 	public function etyma()
 	{
 		return $this->hasOne('\App\LexEtyma','id','etyma_id');
 	}
-	
+
 	public function reflex()
 	{
 		return $this->hasOne('\App\LexReflex','id','reflex_id');
