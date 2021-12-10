@@ -183,7 +183,7 @@
 
                         @if ($gloss->underlying_form)
                             <br/>
-                            <span lang="{{$gloss->language->lang_attribute}}" style="margin-left:10px;">({{$this->underlying_form}})</span>
+                            <span lang="{{$gloss->language->lang_attribute}}" style="margin-left:10px;">({{$gloss->underlying_form}})</span>
                         @endif
                     </li>
                 @endforeach
