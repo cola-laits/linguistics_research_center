@@ -502,7 +502,7 @@ import TextareaCustomKeyboard from './TextareaCustomKeyboard'
             'delete_glossed_text_gloss_confirm_glossed_text_gloss_id': '',
             'gloss_for_edit': {},
             'error_messages': {},
-            'combining_character_regex': /\p{M}/gu,
+            'combining_character_regex': /\p{Mn}/gu,
         };},
         computed: {
             lesson_text: function() {
