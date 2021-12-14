@@ -8,6 +8,24 @@
 @if (!$printable)
 
 <script type="text/javascript">
+    window.clicked_gloss_ids = new Set();
+    function update_gloss_visibility() {
+        $('.click_gloss').removeClass('clicked');
+        $('.gloss').hide();
+        window.clicked_gloss_ids.forEach(function (id) {
+            $('.click_gloss').each(function (ix, el) {
+                var has_any_clicked_gloss = false;
+                if ($(el).data('gloss-ids').indexOf(id) > -1) {
+                    has_any_clicked_gloss = true;
+                }
+                if (has_any_clicked_gloss) {
+                    $(el).addClass('clicked');
+                    $('#gloss_pivot_' + id).show();
+                }
+            });
+        });
+    }
+
     $(document).ready(function(){
 
         //if the came from the gloss, dictionary or meaning index, we need to open that gloss
@@ -15,34 +33,23 @@
         if (anchor != '') {
             var splits = anchor.split("_");
             var id = splits[splits.length - 1];
-            var temp_el = document.getElementById('gloss_pivot_' + id);
-            if (temp_el) {
-                $(temp_el).slideToggle('fast');
-            }
-            temp_el = document.getElementById('pivot_' + id);
-            if (temp_el) {
-                $(temp_el).toggleClass("clicked");
-            }
+            window.clicked_gloss_ids.add(parseInt(id));
+            update_gloss_visibility();
         }
 
         $(".click_gloss").click(function(e){
-            if (($(this)).hasClass('clicked')) {
-                return;
-            }
-            var this_el = $(this);
-            var this_gloss_ids = this_el.data('gloss-ids');
-            this_el.parent('span').find('.click_gloss').each(function (ix, el) {
-                var that_gloss_ids = $(el).data('gloss-ids');
-                var gloss_ids_in_common = this_gloss_ids.filter(function(id) { return that_gloss_ids.indexOf(id) !== -1; });
-                if (gloss_ids_in_common.length === 0) {
-                    return;
+            // are we trying to open glosses, or close them?
+            var closing = $(this).hasClass('clicked');
+
+            var this_gloss_ids = $(this).data('gloss-ids');
+            this_gloss_ids.forEach(function(id) {
+                if (closing) {
+                    window.clicked_gloss_ids.delete(id);
+                } else {
+                    window.clicked_gloss_ids.add(id);
                 }
-                $(el).toggleClass('clicked');
-                this_gloss_ids.forEach(function(id) {
-                    var temp_id = '#gloss_pivot_' + id;
-                    $(temp_id).show();
-                });
             });
+            update_gloss_visibility();
         }); //click_gloss
 
         $(".click_gloss").mouseenter(function(e) {
