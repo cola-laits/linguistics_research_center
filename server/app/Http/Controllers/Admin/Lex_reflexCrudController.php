@@ -42,10 +42,9 @@ class Lex_reflexCrudController extends CrudController
         CRUD::removeButton('show');
 
         //CRUD::setFromDb(); // columns
+        CRUD::column('entries')->label('Reflexes')->type('model_function')->function_name('getEntriesCSV');
         CRUD::column('gloss')->type('text');
         CRUD::column('language')->label('Language')->type('relationship')->attribute('name');
-        CRUD::column('lang_attribute')->type('text');
-        CRUD::column('class_attribute')->type('text');
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:

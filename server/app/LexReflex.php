@@ -126,8 +126,21 @@ class LexReflex extends Model {
 			if ($ctr > 1){
 				$text .= ', ';
 			}
-			$text .= strip_tags($entry->entry);
+			$text .= strip_tags($entry['text']);
 		}
 		return $text;
 	}
+
+    public function getEntriesCSV() {
+        $text = "";
+        $ctr = 0;
+        foreach($this->entries as $entry) {
+            $ctr += 1;
+            if ($ctr > 1){
+                $text .= ', ';
+            }
+            $text .= strip_tags($entry['text']);
+        }
+        return $text;
+    }
 }
