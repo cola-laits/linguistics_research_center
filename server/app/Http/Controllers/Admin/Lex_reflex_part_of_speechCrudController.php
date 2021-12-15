@@ -43,7 +43,7 @@ class Lex_reflex_part_of_speechCrudController extends CrudController
 
         //CRUD::setFromDb(); // columns
         CRUD::column('reflex')->attribute('langAbbrGloss');
-        CRUD::column('text');
+        CRUD::column('text')->label('Part of Speech');
         CRUD::column('order');
 
         /**
@@ -65,7 +65,7 @@ class Lex_reflex_part_of_speechCrudController extends CrudController
 
         //CRUD::setFromDb(); // fields
         CRUD::field('reflex_id')->type('number');
-        CRUD::field('text');
+        CRUD::field('text')->label('Part of Speech');
         CRUD::field('order');
 
         /**
