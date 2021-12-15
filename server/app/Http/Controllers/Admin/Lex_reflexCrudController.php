@@ -42,7 +42,12 @@ class Lex_reflexCrudController extends CrudController
         CRUD::removeButton('show');
 
         //CRUD::setFromDb(); // columns
-        CRUD::column('entries')->label('Reflexes')->type('model_function')->function_name('getEntriesCSV');
+        CRUD::column('entries')->label('Reflexes')->type('model_function')->function_name('getEntriesCSV')
+            ->searchLogic(function($query, $column, $searchTerm) {
+                // would be better to actually parse the JSON in the DB, but we'll need MySQL 8 for that.
+                // assume a full-text search on the JSON is good enough for now.
+                $query->orWhere('entries', 'like', '%'.$searchTerm.'%');
+            });
         CRUD::column('gloss')->type('text');
         CRUD::column('language')->label('Language')->type('relationship')->attribute('name');
 
