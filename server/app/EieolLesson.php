@@ -40,13 +40,16 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  */
 class EieolLesson extends Model {
+    use \Backpack\CRUD\app\Models\Traits\CrudTrait;
 	protected $table = 'eieol_lesson';
 
 	protected $attributes = array(
 			'lesson_translation' => ' '
 	);
 
-	public function series()
+    protected $guarded = ['id'];
+
+    public function series()
 	{
 		return $this->belongsTo('\App\EieolSeries');
 	}

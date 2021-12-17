@@ -19,6 +19,7 @@ Route::group([
 
     Route::crud('eieol_series', 'Eieol_seriesCrudController');
     Route::crud('eieol_language', 'Eieol_languageCrudController');
+    Route::crud('eieol-lesson', 'EieolLessonCrudController');
 
     Route::get('help_lex', function() { return view('admin/help_lex'); });
     Route::crud('lex_etyma', 'Lex_etymaCrudController');

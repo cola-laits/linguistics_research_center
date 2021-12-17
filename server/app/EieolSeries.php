@@ -50,6 +50,8 @@ class EieolSeries extends Model {
 
 	protected $table = 'eieol_series';
 
+    protected $guarded = ['id'];
+
 	public function lessons()
 	{
 		return $this->hasMany('\App\EieolLesson', 'series_id', 'id')->orderBy('order');

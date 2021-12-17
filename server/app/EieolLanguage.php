@@ -38,4 +38,6 @@ class EieolLanguage extends Model {
     use CrudTrait;
 
 	protected $table = 'eieol_language';
+
+    protected $guarded = ['id'];
 }

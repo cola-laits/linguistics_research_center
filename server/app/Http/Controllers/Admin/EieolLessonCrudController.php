@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\Eieol_seriesRequest;
+use App\EieolLanguage;
+use App\EieolSeries;
+use App\Http\Requests\EieolLessonRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class Eieol_seriesCrudController
+ * Class EieolLessonCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class Eieol_seriesCrudController extends CrudController
+class EieolLessonCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -26,9 +28,9 @@ class Eieol_seriesCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\EieolSeries::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/eieol_series');
-        CRUD::setEntityNameStrings('Eieol Series', 'Eieol Series');
+        CRUD::setModel(\App\EieolLesson::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/eieol-lesson');
+        CRUD::setEntityNameStrings('eieol lesson', 'eieol lessons');
     }
 
     /**
@@ -42,8 +44,9 @@ class Eieol_seriesCrudController extends CrudController
         CRUD::removeButton('show');
 
         //CRUD::setFromDb(); // columns
+        CRUD::column('series')->type('relationship')->attribute('title');
         CRUD::column('title')->type('text');
-        CRUD::column('slug')->type('text');
+        CRUD::column('order')->type('text');
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -60,18 +63,15 @@ class Eieol_seriesCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(Eieol_seriesRequest::class);
+        CRUD::setValidation(EieolLessonRequest::class);
 
         //CRUD::setFromDb(); // fields
+        CRUD::field('series_id')->type('select')->model(EieolSeries::class)->attribute('title');
         CRUD::field('title')->type('text');
-        CRUD::field('expanded_title')->type('text');
-        CRUD::field('menu_name')->type('text');
-        CRUD::field('slug')->type('text');
-        CRUD::field('order')->type('number');
-        CRUD::field('menu_order')->type('number');
-        CRUD::field('published')->type('boolean');
-        CRUD::field('use_old_gloss_ui')->type('boolean');
-        CRUD::field('meta_tags')->type('textarea');
+        CRUD::field('order')->type('text');
+        CRUD::field('language_id')->type('select')->model(EieolLanguage::class)->attribute('language');
+        CRUD::field('intro_text')->type('textarea');
+        CRUD::field('lesson_translation')->type('textarea');
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:
