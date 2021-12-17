@@ -53,12 +53,7 @@
 
     <br/>
 
-    <div class='form-group @if ($errors->has('intro_text')) has-error @endif  '>
-        <label for="intro_text">Intro Text</label>
-        <ck-editor html_id="intro_text" html_name="intro_text"></ck-editor>
-    </div>
-
-	<br/>
+        <input type="hidden" name="intro_text" value="Lesson Intro Text">
 
     <div class='form-group col-sm-1'>
         <input class="btn btn-primary" type="submit" value="Create">
