@@ -46,8 +46,10 @@ class LexReflex extends Model {
 	protected $guarded = ['id'];
 
 	protected $casts = [
-	    'entries' => 'array'
+	    'entries' => 'array',
     ];
+
+    protected $appends = ['langAbbrGloss'];
 
 	public static function boot() {
 		parent::boot();

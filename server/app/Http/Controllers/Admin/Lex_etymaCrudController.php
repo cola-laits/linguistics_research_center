@@ -63,7 +63,6 @@ class Lex_etymaCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        ini_set('memory_limit', '1024M');
         CRUD::setValidation(Lex_etymaRequest::class);
 
         CRUD::field('old_id')->label('Old Id')->type('number');
@@ -73,7 +72,7 @@ class Lex_etymaCrudController extends CrudController
         CRUD::field('gloss')->type('text');
         CRUD::field('cross_references')->type('select2_multiple')->model('App\LexEtyma')->attribute('entry')->pivot(true);
         CRUD::field('semantic_fields')->type('select2_multiple')->model('App\LexSemanticField')->attribute('text')->pivot(true);
-        CRUD::field('reflexes')->type('relationship')->attribute('langAbbrGloss')->pivot(true);
+        CRUD::field('reflexes')->type('relationship')->attribute('langAbbrGloss')->pivot(true)->ajax(true);
 
         /*
         CRUD::field('reflexes')
