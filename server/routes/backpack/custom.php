@@ -16,8 +16,11 @@ Route::group([
 ], function () { // custom admin routes
     Route::crud('page', 'PageCrudController');
     Route::crud('user', 'UserCrudController');
+
     Route::crud('eieol_series', 'Eieol_seriesCrudController');
     Route::crud('eieol_language', 'Eieol_languageCrudController');
+
+    Route::get('help_lex', function() { return view('admin/help_lex'); });
     Route::crud('lex_etyma', 'Lex_etymaCrudController');
     Route::crud('lex_reflex', 'Lex_reflexCrudController');
     Route::crud('lex_reflex_part_of_speech', 'Lex_reflex_part_of_speechCrudController');

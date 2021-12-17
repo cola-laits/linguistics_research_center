@@ -11,7 +11,7 @@
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('eieol_language') }}'><i class='nav-icon la la-question'></i> Languages</a></li>
 -->
 
-<li class="nav-title">Lexicon</li>
+<li class="nav-title">Lexicon (<a href="help_lex"><i class='nav-icon la la-question-circle'></i>  help</a>)</li>
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_language_family') }}'><i class='nav-icon la la-language'></i> Language Families</a></li>
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_language_sub_family') }}'><i class='nav-icon la la-language'></i> Language Sub Families</a></li>
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_language') }}'><i class='nav-icon la la-language'></i> Languages</a></li>
