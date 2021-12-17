@@ -23,8 +23,8 @@
 
         <h4><i class='nav-icon la la-globe-europe'></i> Etyma</h4>
         <p>An Etymon is one of the main lexicon entries listed in the IELEX Master Index (<a href="https://lrc.la.utexas.edu/lex/master/0007" target="_blank">example</a>).
-        Add or edit etyma here.
-        </p>
+            Add or edit etyma here.</p>
+        <p>You can also link an Etymon to one more Reflexes here.</p>
 
         <h4><i class='nav-icon la la-globe-europe'></i> Reflex</h4>
         <p>A Reflex is a language-specific expression of an etyma.  Reflexes are the rows in the 'Indo-European Reflexes' table for an Etymon.</p>
@@ -32,11 +32,6 @@
         <h4><i class='nav-icon la la-globe-europe'></i> Reflex > Part of Speech</h4>
         <p>Individual reflexes represent one or more parts of speech.  These are represented in the databse as pairs of reflexes and PoS'es.
         Here, you can edit those reflex-PoS pairings.  They appear on the site in the order in which you define here.
-        </p>
-
-        <h4><i class='nav-icon la la-globe-europe'></i> Etyma > Reflex</h4>
-        <p>Reflexes can be used in multiple etyma.  (e.g. the Old English reflex <i>æppel-ðorn</i> is linked to two separate etyma for
-        the two parts of the compound word.)  Here, you can add or remove those etymon<->reflex pairings.
         </p>
 
     </div>

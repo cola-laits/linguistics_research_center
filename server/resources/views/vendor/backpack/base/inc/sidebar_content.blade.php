@@ -17,7 +17,6 @@
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_language') }}'><i class='nav-icon la la-language'></i> Languages</a></li>
 
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_etyma') }}'><i class='nav-icon la la-globe-europe'></i> Etyma</a></li>
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_etyma_reflex') }}'><i class='nav-icon la la-globe-europe'></i> Etyma > Reflex</a></li>
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_reflex') }}'><i class='nav-icon la la-globe-europe'></i> Reflexes</a></li>
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_reflex_part_of_speech') }}'><i class='nav-icon la la-globe-europe'></i> Reflex > Part of Speech</a></li>
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_source') }}'><i class='nav-icon la la-book'></i> Sources</a></li>
