@@ -42,11 +42,11 @@ class Lex_etymaCrudController extends CrudController
     {
         CRUD::removeButton('show');
 
+        CRUD::column('entry')->type('text');
+        CRUD::column('gloss')->type('text');
         CRUD::column('old_id')->label('Old Id')->type('number');
         CRUD::column('order')->type('number');
         CRUD::column('page_number')->type('text');
-        CRUD::column('entry')->type('text');
-        CRUD::column('gloss')->type('text');
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -72,7 +72,7 @@ class Lex_etymaCrudController extends CrudController
         CRUD::field('gloss')->type('text');
         CRUD::field('cross_references')->type('select2_multiple')->model('App\LexEtyma')->attribute('entry')->pivot(true);
         CRUD::field('semantic_fields')->type('select2_multiple')->model('App\LexSemanticField')->attribute('text')->pivot(true);
-        CRUD::field('reflexes')->type('relationship')->attribute('langAbbrGloss')->pivot(true)->ajax(true);
+        CRUD::field('reflexes')->type('relationship')->attribute('langAbbrEntriesGloss')->pivot(true)->ajax(true);
 
         /*
         CRUD::field('reflexes')
