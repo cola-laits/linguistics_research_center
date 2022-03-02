@@ -5,18 +5,15 @@ services:
     build: .
     ports:
       - "80"
-    networks:
-      - nginxproxy
-      - default
     volumes:
       - './server:/var/www/html'
     environment:
-      - VIRTUAL_HOST=lrc.docker
+      - VIRTUAL_HOST=lrc.localhost.utexas.edu
       - APP_NAME=LRC
       - APP_ENV=local
       - APP_KEY=base64:MHLjzpUSRe5Y229TnPpokCQXW/a6l9C769NXRxRRJK8=
       - APP_DEBUG=true
-      - APP_URL=http://lrc.docker
+      - APP_URL=http://lrc.localhost.utexas.edu
       - LOG_CHANNEL=errorlog
       - DB_CONNECTION=mysql
       - DB_HOST=db
@@ -29,15 +26,13 @@ services:
       - SESSION_LIFETIME=120
   db:
     image: mysql:5.7
-    networks:
-      - default
     environment:
       MYSQL_DATABASE: 'lrc'
       MYSQL_USER: 'lrc'
       MYSQL_PASSWORD: 'lrc'
       MYSQL_ROOT_PASSWORD: 'lrc'
     ports:
-      - '13306:3306'
+      - '13309:3306'
     expose:
       - '3306'
     volumes:
@@ -45,8 +40,3 @@ services:
 
 volumes:
   dbdata:
-
-networks:
-  nginxproxy:
-    external: true
-    name: nginxproxy_lb
