@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6ac55349bd0debd43aaa4d6f7b7304bf",
+    "content-hash": "dcf6ea833b145dd39f5c73f4411e60ee",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -295,6 +295,74 @@
                 "source": "https://github.com/Laravel-Backpack/CRUD/tree/4.1.60"
             },
             "time": "2021-11-04T09:18:49+00:00"
+        },
+        {
+            "name": "backpack/settings",
+            "version": "3.0.15",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Laravel-Backpack/Settings.git",
+                "reference": "96298995c9f44a3e6473849b06bc26501165bcff"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Laravel-Backpack/Settings/zipball/96298995c9f44a3e6473849b06bc26501165bcff",
+                "reference": "96298995c9f44a3e6473849b06bc26501165bcff",
+                "shasum": ""
+            },
+            "require": {
+                "backpack/crud": "^4.0|^5.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.0||^7.0",
+                "scrutinizer/ocular": "~1.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Backpack\\Settings\\SettingsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Backpack\\Settings\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Cristian Tabacitu",
+                    "email": "tabacitu@backpackforlaravel.com",
+                    "homepage": "https://backpackforlaravel.com",
+                    "role": "Chief Architect & Lead Developer"
+                }
+            ],
+            "description": "Application settings interface for Laravel 5 using Backpack CRUD.",
+            "homepage": "https://github.com/laravel-backpack/settings",
+            "keywords": [
+                "backpack",
+                "backpack settings",
+                "dick",
+                "dick settings",
+                "laravel backpack",
+                "manage settings",
+                "settings admin",
+                "tabacitu",
+                "updivision"
+            ],
+            "support": {
+                "issues": "https://github.com/Laravel-Backpack/Settings/issues",
+                "source": "https://github.com/Laravel-Backpack/Settings/tree/3.0.15"
+            },
+            "time": "2022-02-08T11:51:05+00:00"
         },
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -4505,72 +4573,6 @@
                 }
             ],
             "time": "2021-08-28T21:27:29+00:00"
-        },
-        {
-            "name": "predis/predis",
-            "version": "v1.1.9",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/predis/predis.git",
-                "reference": "c50c3393bb9f47fa012d0cdfb727a266b0818259"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/predis/predis/zipball/c50c3393bb9f47fa012d0cdfb727a266b0818259",
-                "reference": "c50c3393bb9f47fa012d0cdfb727a266b0818259",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.9"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.8"
-            },
-            "suggest": {
-                "ext-curl": "Allows access to Webdis when paired with phpiredis",
-                "ext-phpiredis": "Allows faster serialization and deserialization of the Redis protocol"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Predis\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Daniele Alessandri",
-                    "email": "suppakilla@gmail.com",
-                    "homepage": "http://clorophilla.net",
-                    "role": "Creator & Maintainer"
-                },
-                {
-                    "name": "Till Krüss",
-                    "homepage": "https://till.im",
-                    "role": "Maintainer"
-                }
-            ],
-            "description": "Flexible and feature-complete Redis client for PHP and HHVM",
-            "homepage": "http://github.com/predis/predis",
-            "keywords": [
-                "nosql",
-                "predis",
-                "redis"
-            ],
-            "support": {
-                "issues": "https://github.com/predis/predis/issues",
-                "source": "https://github.com/predis/predis/tree/v1.1.9"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/sponsors/tillkruss",
-                    "type": "github"
-                }
-            ],
-            "time": "2021-10-05T19:02:38+00:00"
         },
         {
             "name": "prologue/alerts",

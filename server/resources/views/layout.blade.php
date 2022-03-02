@@ -89,22 +89,8 @@
             <div class="donation-modal-body">
                 <p></p>
 
-                <h3>40 for Forty is here!</h3>
-
-                <p>UT is asking the community to help support critical projects like the LRC.</p>
-
-                <p>Please consider making a donation today <a href="https://40for40.utexas.edu/giving-day/19787/department/25244" target="_blank">here</a>.</p>
-
-                <p>$5, $10, $20… anything helps.</p>
-
-                <p> Thank you.</p>
-
-                <p>
-                    <div id="donate-button">
-                        <a href="https://40for40.utexas.edu/giving-day/19787/department/25244"><h3>Donate Now</h3></a>
-                <p class="hide-for-medium-down"><a href="https://40for40.utexas.edu/giving-day/19787/department/25244">We need your help to preserve &amp; document ancient languages. Participate today.</a></p>
+                {!! Config::get('settings.donation_popup_text') !!}
             </div>
-            </p>
         </div>
     </div>
 
