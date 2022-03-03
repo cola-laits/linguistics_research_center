@@ -13,27 +13,27 @@
         "ext-intl": "*",
         "ext-libxml": "*",
         "ext-mbstring": "*",
-        "backpack/crud": "4.1.*",
+        "backpack/crud": "^5.0.0",
+        "backpack/pro": "^1.0.0",
         "backpack/settings": "^3.0",
         "barryvdh/laravel-ide-helper": "^2.6",
         "doctrine/dbal": "^2.9",
-        "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
-        "laravel/framework": "^8.12",
+        "laravel/framework": "^9.0",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.0",
-        "league/flysystem-aws-s3-v3": "~1.0",
+        "league/flysystem-aws-s3-v3": "^3.0",
         "sentry/sentry-laravel": "^2.4.2"
     },
     "require-dev": {
         "backpack/generators": "^3.1",
-        "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.2",
-        "nunomaduro/collision": "^5.0",
-        "phpunit/phpunit": "^9.3.3"
+        "nunomaduro/collision": "^6.1",
+        "phpunit/phpunit": "^9.3.3",
+        "spatie/laravel-ignition": "^1.0"
     },
     "config": {
         "optimize-autoloader": true,
@@ -59,6 +59,12 @@
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://repo.backpackforlaravel.com/"
+        }
+    ],
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
