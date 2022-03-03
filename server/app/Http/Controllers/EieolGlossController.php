@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\EieolElement;
-use App\EieolGloss;
-use App\EieolGlossedText;
+use App\Models\EieolElement;
+use App\Models\EieolGloss;
+use App\Models\EieolGlossedText;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;

@@ -4,7 +4,7 @@
 namespace App\Http\Controllers;
 
 
-use App\Page;
+use App\Models\Page;
 
 class PublicPageController
 {

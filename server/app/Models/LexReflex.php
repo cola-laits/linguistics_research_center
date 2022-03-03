@@ -1,41 +1,53 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
+use function collect;
+use App\Models\LexEtyma;
+use App\Models\LexLanguage;
+use App\Models\LexReflexPartOfSpeech;
+use App\Models\LexSource;
+
 /**
- * App\LexReflex
+ * App\Models\LexReflex
  *
  * @property int $id
  * @property int $language_id
  * @property string|null $lang_attribute
  * @property string|null $class_attribute
  * @property string|null $gloss
- * @property \Illuminate\Support\Carbon $created_at
- * @property \Illuminate\Support\Carbon $updated_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $created_by
  * @property string|null $updated_by
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\LexReflexEntry[] $entries
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\LexEtyma[] $etymas
+ * @property array|null $entries
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\LexEtyma[] $etymas
+ * @property-read int|null $etymas_count
+ * @property-read mixed $lang_abbr_entries_gloss
+ * @property-read mixed $lang_abbr_gloss
  * @property-read mixed $reflex_lister
- * @property-read \App\LexLanguage $language
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\LexReflexPartOfSpeech[] $parts_of_speech
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\LexSource[] $sources
- * @method static \Illuminate\Database\Eloquent\Builder|\App\LexReflex newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\LexReflex newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\LexReflex query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\LexReflex whereClassAttribute($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\LexReflex whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\LexReflex whereCreatedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\LexReflex whereGloss($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\LexReflex whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\LexReflex whereLangAttribute($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\LexReflex whereLanguageId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\LexReflex whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\LexReflex whereUpdatedBy($value)
+ * @property-read \App\Models\LexLanguage $language
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\LexReflexPartOfSpeech[] $parts_of_speech
+ * @property-read int|null $parts_of_speech_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\LexSource[] $sources
+ * @property-read int|null $sources_count
+ * @method static \Illuminate\Database\Eloquent\Builder|LexReflex newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|LexReflex newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|LexReflex query()
+ * @method static \Illuminate\Database\Eloquent\Builder|LexReflex whereClassAttribute($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LexReflex whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LexReflex whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LexReflex whereEntries($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LexReflex whereGloss($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LexReflex whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LexReflex whereLangAttribute($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LexReflex whereLanguageId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LexReflex whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LexReflex whereUpdatedBy($value)
  * @mixin \Eloquent
  */
 class LexReflex extends Model {
@@ -78,22 +90,22 @@ class LexReflex extends Model {
 
     public function etymas()
 	{
-		return $this->belongsToMany('\App\LexEtyma', 'lex_etyma_reflex', 'reflex_id', 'etyma_id');
+		return $this->belongsToMany(LexEtyma::class, 'lex_etyma_reflex', 'reflex_id', 'etyma_id');
 	}
 
 	public function language()
 	{
-		return $this->belongsTo('\App\LexLanguage');
+		return $this->belongsTo(LexLanguage::class);
 	}
 
 	public function parts_of_speech()
 	{
-		return $this->hasMany('\App\LexReflexPartOfSpeech', 'reflex_id', 'id')->orderBy('order');
+		return $this->hasMany(LexReflexPartOfSpeech::class, 'reflex_id', 'id')->orderBy('order');
 	}
 
 	public function sources()
 	{
-		return $this->belongsToMany('\App\LexSource', 'lex_reflex_source', 'reflex_id', 'source_id')->orderBy('code');
+		return $this->belongsToMany(LexSource::class, 'lex_reflex_source', 'reflex_id', 'source_id')->orderBy('code');
 	}
 
 	public function getDisplayPartsOfSpeech()

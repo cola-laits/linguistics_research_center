@@ -26,7 +26,7 @@ class Lex_reflex_part_of_speechCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\LexReflexPartOfSpeech::class);
+        CRUD::setModel(\App\Models\LexReflexPartOfSpeech::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/lex_reflex_part_of_speech');
         CRUD::setEntityNameStrings('Lex Reflex Part of Speech', 'Lex Reflex Parts of Speech');
     }

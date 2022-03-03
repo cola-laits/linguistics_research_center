@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\EieolLanguage;
-use App\EieolLesson;
-use App\EieolSeries;
-use App\Issue;
-use App\IssueComment;
+use App\Models\EieolLanguage;
+use App\Models\EieolLesson;
+use App\Models\EieolSeries;
+use App\Models\Issue;
+use App\Models\IssueComment;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use \Auth;

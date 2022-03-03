@@ -16,7 +16,7 @@
             ><a href="/guides/eieol_user">How-To</a></li>
             <li><a href="/eieol">Lessons</a></li>
             <li><ul class="no-bullet">
-                    <?php $lesson_menu = \App\EieolSeries::where('published', '=', True)->get()->sortBy('menu_order'); ?>
+                    <?php $lesson_menu = \App\Models\EieolSeries::where('published', '=', True)->get()->sortBy('menu_order'); ?>
                     @foreach($lesson_menu as $lesson_menu_item)
                     <li
                         @if (Request::is('eieol/'.$lesson_menu_item->slug.'*')

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\IssueComment;
+use App\Models\IssueComment;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -48,7 +48,7 @@ class IssueCommentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\IssueComment  $comment
+     * @param  \App\Models\IssueComment  $comment
      * @return \Illuminate\Http\Response
      */
     public function show(IssueComment $comment)
@@ -59,7 +59,7 @@ class IssueCommentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\IssueComment  $comment
+     * @param  \App\Models\IssueComment  $comment
      * @return \Illuminate\Http\Response
      */
     public function edit(IssueComment $comment)
@@ -71,7 +71,7 @@ class IssueCommentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\IssueComment  $comment
+     * @param  \App\Models\IssueComment  $comment
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, IssueComment $comment)
@@ -82,7 +82,7 @@ class IssueCommentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\IssueComment  $comment
+     * @param  \App\Models\IssueComment  $comment
      * @return \Illuminate\Http\Response
      */
     public function destroy(IssueComment $comment)

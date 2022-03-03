@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\Lex_languageRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use App\Models\LexLanguageSubFamily;
 
 /**
  * Class Lex_languageCrudController
@@ -26,7 +27,7 @@ class Lex_languageCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\LexLanguage::class);
+        CRUD::setModel(\App\Models\LexLanguage::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/lex_language');
         CRUD::setEntityNameStrings('Lex Language', 'Lex Languages');
     }
@@ -66,13 +67,13 @@ class Lex_languageCrudController extends CrudController
         CRUD::field('order')->type('number');
         CRUD::field('abbr')->type('text');
         CRUD::field('aka')->type('text');
-        CRUD::field('sub_family_id')->entity('language_sub_family')->model('\App\LexLanguageSubFamily')->type('select')->attribute('family_sub_family');
+        CRUD::field('language_sub_family')->type('select')->model(LexLanguageSubFamily::class)->attribute('family_sub_family');
         CRUD::field('override_family')->type('text')
             ->hint('This is for the reflex page. This value will show instead of the Family that this Language belongs to.');
         CRUD::field('custom_sort')->type('text')->hint(
             'This is used to set the sort order for the lex_lang_reflexes page and should be a comma separated list of characters in the order they should be sorted. Do not use unicode code points, just paste in unicode characters.<br>'.
             'Example: A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,π,q,r,s,t,u,v,w,x,y,z<br>'.
-            'If character aren\'t separated by a comma, they are considered equal. In the next example, p,P and π are considered the same.<br>'.
+            'If characters aren\'t separated by a comma, they are considered equal. In the next example, p,P and π are considered the same.<br>'.
             'Example: aAÄ,bB,cC,dD,eE,fF,gG,hH,iI,Jj,Kk,Ll,Mm,Nn,Oo,Ppπ,Qq,Rr,Ss,Tt,Uu,Vv,Ww,Xx,Yy,Zz'
         );
 

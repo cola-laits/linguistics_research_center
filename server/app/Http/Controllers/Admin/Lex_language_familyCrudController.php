@@ -26,7 +26,7 @@ class Lex_language_familyCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\LexLanguageFamily::class);
+        CRUD::setModel(\App\Models\LexLanguageFamily::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/lex_language_family');
         CRUD::setEntityNameStrings('Lex Language Family', 'Lex Language Families');
     }
@@ -40,7 +40,7 @@ class Lex_language_familyCrudController extends CrudController
     protected function setupListOperation()
     {
         CRUD::removeButton('show');
-        
+
         //CRUD::setFromDb(); // columns
         CRUD::column('name')->type('text');
         CRUD::column('order')->type('number');

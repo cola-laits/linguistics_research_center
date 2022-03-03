@@ -1,11 +1,14 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\EieolGlossedText;
+use App\Models\EieolElement;
+use App\Models\EieolLanguage;
 
 /**
- * App\EieolGloss
+ * App\Models\EieolGloss
  *
  * @property int $id
  * @property string|null $surface_form
@@ -19,24 +22,25 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $updated_by
  * @property int|null $glossed_text_id
  * @property int|null $order
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\EieolElement[] $elements
- * @property-read \App\EieolGlossedText|null $glossed_text
- * @property-read \App\EieolLanguage $language
- * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGloss newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGloss newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGloss query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGloss whereComments($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGloss whereContextualGloss($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGloss whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGloss whereCreatedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGloss whereGlossedTextId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGloss whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGloss whereLanguageId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGloss whereOrder($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGloss whereSurfaceForm($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGloss whereUnderlyingForm($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGloss whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\EieolGloss whereUpdatedBy($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\EieolElement[] $elements
+ * @property-read int|null $elements_count
+ * @property-read \App\Models\EieolGlossedText|null $glossed_text
+ * @property-read \App\Models\EieolLanguage $language
+ * @method static \Illuminate\Database\Eloquent\Builder|EieolGloss newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|EieolGloss newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|EieolGloss query()
+ * @method static \Illuminate\Database\Eloquent\Builder|EieolGloss whereComments($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EieolGloss whereContextualGloss($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EieolGloss whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EieolGloss whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EieolGloss whereGlossedTextId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EieolGloss whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EieolGloss whereLanguageId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EieolGloss whereOrder($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EieolGloss whereSurfaceForm($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EieolGloss whereUnderlyingForm($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EieolGloss whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EieolGloss whereUpdatedBy($value)
  * @mixin \Eloquent
  */
 class EieolGloss extends Model {
@@ -44,17 +48,17 @@ class EieolGloss extends Model {
 
 	public function glossed_text()
 	{
-		return $this->belongsTo('\App\EieolGlossedText', 'glossed_text_id');
+		return $this->belongsTo(EieolGlossedText::class, 'glossed_text_id');
 	}
 
 	public function elements()
 	{
-		return $this->hasMany('\App\EieolElement', 'gloss_id', 'id')->orderBy('order');
+		return $this->hasMany(EieolElement::class, 'gloss_id', 'id')->orderBy('order');
 	}
 
 	public function language()
 	{
-		return $this->belongsTo('\App\EieolLanguage');
+		return $this->belongsTo(EieolLanguage::class);
 	}
 
 	/** Deep copy a gloss and its elements. */

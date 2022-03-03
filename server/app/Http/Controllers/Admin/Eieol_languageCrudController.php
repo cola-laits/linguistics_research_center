@@ -26,7 +26,7 @@ class Eieol_languageCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\EieolLanguage::class);
+        CRUD::setModel(\App\Models\EieolLanguage::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/eieol_language');
         CRUD::setEntityNameStrings('Eieol Language', 'Eieol Languages');
     }

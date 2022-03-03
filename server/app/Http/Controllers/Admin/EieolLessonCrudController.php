@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\EieolLanguage;
-use App\EieolSeries;
+use App\Models\EieolLanguage;
+use App\Models\EieolSeries;
 use App\Http\Requests\EieolLessonRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
@@ -28,7 +28,7 @@ class EieolLessonCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\EieolLesson::class);
+        CRUD::setModel(\App\Models\EieolLesson::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/eieol-lesson');
         CRUD::setEntityNameStrings('eieol lesson', 'eieol lessons');
     }

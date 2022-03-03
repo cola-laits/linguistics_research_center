@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\EieolGlossedText;
-use App\EieolGrammar;
-use App\EieolLanguage;
-use App\EieolLesson;
-use App\EieolSeries;
-use App\LexEtyma;
+use App\Models\EieolGlossedText;
+use App\Models\EieolGrammar;
+use App\Models\EieolLanguage;
+use App\Models\EieolLesson;
+use App\Models\EieolSeries;
+use App\Models\LexEtyma;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;

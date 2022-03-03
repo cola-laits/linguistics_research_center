@@ -29,7 +29,6 @@ class Lex_languageRequest extends FormRequest
             'name' => 'required',
             'abbr' => 'required',
             'order' => 'required',
-            'sub_family_id' => 'required',
         ];
     }
 

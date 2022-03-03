@@ -26,7 +26,7 @@ class Lex_part_of_speechCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\LexPartOfSpeech::class);
+        CRUD::setModel(\App\Models\LexPartOfSpeech::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/lex_part_of_speech');
         CRUD::setEntityNameStrings('Lex Part of Speech', 'Lex Parts of Speech');
     }

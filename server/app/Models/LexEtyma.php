@@ -1,13 +1,13 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * App\LexEtyma
+ * App\Models\LexEtyma
  *
  * @property int $id
  * @property string|null $old_id
@@ -15,26 +15,29 @@ use Illuminate\Support\Facades\Auth;
  * @property string|null $page_number
  * @property string|null $entry
  * @property string|null $gloss
- * @property \Illuminate\Support\Carbon $created_at
- * @property \Illuminate\Support\Carbon $updated_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $created_by
  * @property string|null $updated_by
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\LexEtyma[] $cross_references
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\LexReflex[] $reflexes
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\LexSemanticField[] $semantic_fields
- * @method static \Illuminate\Database\Eloquent\Builder|\App\LexEtyma newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\LexEtyma newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\LexEtyma query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\LexEtyma whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\LexEtyma whereCreatedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\LexEtyma whereEntry($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\LexEtyma whereGloss($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\LexEtyma whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\LexEtyma whereOldId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\LexEtyma whereOrder($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\LexEtyma wherePageNumber($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\LexEtyma whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\LexEtyma whereUpdatedBy($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|LexEtyma[] $cross_references
+ * @property-read int|null $cross_references_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\LexReflex[] $reflexes
+ * @property-read int|null $reflexes_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\LexSemanticField[] $semantic_fields
+ * @property-read int|null $semantic_fields_count
+ * @method static \Illuminate\Database\Eloquent\Builder|LexEtyma newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|LexEtyma newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|LexEtyma query()
+ * @method static \Illuminate\Database\Eloquent\Builder|LexEtyma whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LexEtyma whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LexEtyma whereEntry($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LexEtyma whereGloss($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LexEtyma whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LexEtyma whereOldId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LexEtyma whereOrder($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LexEtyma wherePageNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LexEtyma whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LexEtyma whereUpdatedBy($value)
  * @mixin \Eloquent
  */
 class LexEtyma extends Model {
@@ -62,17 +65,17 @@ class LexEtyma extends Model {
 
 	public function semantic_fields()
 	{
-		return $this->belongsToMany('\App\LexSemanticField', 'lex_etyma_semantic_field', 'etyma_id', 'semantic_field_id');
+		return $this->belongsToMany(LexSemanticField::class, 'lex_etyma_semantic_field', 'etyma_id', 'semantic_field_id');
 	}
 
 	public function reflexes()
 	{
-		return $this->belongsToMany('\App\LexReflex', 'lex_etyma_reflex', 'etyma_id', 'reflex_id');
+		return $this->belongsToMany(LexReflex::class, 'lex_etyma_reflex', 'etyma_id', 'reflex_id');
 	}
 
 	public function cross_references()
 	{
-		return $this->belongsToMany('\App\LexEtyma', 'lex_etyma_cross_reference', 'from_etyma_id', 'to_etyma_id');
+		return $this->belongsToMany(LexEtyma::class, 'lex_etyma_cross_reference', 'from_etyma_id', 'to_etyma_id');
 	}
 
 
