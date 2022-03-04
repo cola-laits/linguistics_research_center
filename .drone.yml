@@ -15,26 +15,21 @@ prod_when_condition: &prod_when_condition
 
 
 steps:
-- name: composer_auth
-  image: composer
+- name: build
+  image: plugins/docker
+  pull: always
   environment:
     BACKPACK_COMPOSER_USER:
       from_secret: backpack_composer_user
     BACKPACK_COMPOSER_PASS:
       from_secret: backpack_composer_pass
-  commands:
-    - cd server
-    - composer config http-basic.backpackforlaravel.com $BACKPACK_COMPOSER_USER $BACKPACK_COMPOSER_PASS
-  <<: *test_when_condition
-
-
-- name: build
-  image: plugins/docker
-  pull: always
   settings:
     repo: docker-registry.la.utexas.edu/lrc
     tags:
       - 'drone-${DRONE_BUILD_NUMBER}'
+    build_args_from_env:
+      - BACKPACK_COMPOSER_USER
+      - BACKPACK_COMPOSER_PASS
   <<: *test_when_condition
 
 

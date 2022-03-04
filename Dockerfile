@@ -1,6 +1,9 @@
 FROM composer:2 as phpbuild
+ARG BACKPACK_COMPOSER_USER
+ARG BACKPACK_COMPOSER_PASS
 ADD server /var/www/html
 WORKDIR /var/www/html
+RUN test ! -f auth.json && composer config http-basic.backpackforlaravel.com $BACKPACK_COMPOSER_USER $BACKPACK_COMPOSER_PASS
 RUN composer install --ignore-platform-reqs
 
 
