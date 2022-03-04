@@ -4,12 +4,12 @@
 namespace App\Http\Controllers;
 
 
-use App\LexEtyma;
-use App\LexLanguage;
-use App\LexLanguageFamily;
-use App\LexReflex;
-use App\LexSemanticCategory;
-use App\LexSemanticField;
+use App\Models\LexEtyma;
+use App\Models\LexLanguage;
+use App\Models\LexLanguageFamily;
+use App\Models\LexReflex;
+use App\Models\LexSemanticCategory;
+use App\Models\LexSemanticField;
 use DB;
 
 use const false;

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\Lex_language_sub_familyRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use App\Models\LexLanguageFamily;
 
 /**
  * Class Lex_language_sub_familyCrudController
@@ -26,7 +27,7 @@ class Lex_language_sub_familyCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\LexLanguageSubFamily::class);
+        CRUD::setModel(\App\Models\LexLanguageSubFamily::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/lex_language_sub_family');
         CRUD::setEntityNameStrings('Lex Language Sub Family', 'Lex Language Sub Families');
     }
@@ -66,7 +67,7 @@ class Lex_language_sub_familyCrudController extends CrudController
         //CRUD::setFromDb(); // fields
         CRUD::field('name')->type('text');
         CRUD::field('order')->type('number');
-        CRUD::field('family_id')->entity('language_family')->model('\App\LexLanguageFamily')->type('select')->attribute('name');
+        CRUD::field('language_family')->type('select')->model(LexLanguageFamily::class)->attribute('name');
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\EieolGloss;
-use App\EieolGlossedText;
+use App\Models\EieolGloss;
+use App\Models\EieolGlossedText;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\EieolHeadWord;
+use App\Models\EieolHeadWord;
 use Illuminate\Http\Request;
 
 class EieolHeadWordKeywordController extends Controller {
-	
+
 	public function filtered_list(Request $request)
 	{
 	    $keywords = EieolHeadWord::where('language_id',$request->get('language'))
@@ -19,5 +19,5 @@ class EieolHeadWordKeywordController extends Controller {
         ;
 		return $keywords;
 	}
-	
+
 }

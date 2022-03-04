@@ -26,7 +26,7 @@ class Lex_reflexCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\LexReflex::class);
+        CRUD::setModel(\App\Models\LexReflex::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/lex_reflex');
         CRUD::setEntityNameStrings('Lex Reflex', 'Lex Reflexes');
     }

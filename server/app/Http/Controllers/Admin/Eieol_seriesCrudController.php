@@ -26,7 +26,7 @@ class Eieol_seriesCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\EieolSeries::class);
+        CRUD::setModel(\App\Models\EieolSeries::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/eieol_series');
         CRUD::setEntityNameStrings('Eieol Series', 'Eieol Series');
     }

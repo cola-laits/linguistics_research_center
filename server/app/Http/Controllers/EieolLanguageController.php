@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\EieolLanguage;
-use App\EieolLesson;
-use App\EieolSeries;
+use App\Models\EieolLanguage;
+use App\Models\EieolLesson;
+use App\Models\EieolSeries;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;

@@ -28,7 +28,6 @@ class Lex_language_sub_familyRequest extends FormRequest
         return [
             'name' => 'required',
             'order' => 'required',
-            'family_id' => 'required',
         ];
     }
 

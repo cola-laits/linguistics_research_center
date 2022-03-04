@@ -26,7 +26,7 @@ class Lex_semantic_categoryCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\LexSemanticCategory::class);
+        CRUD::setModel(\App\Models\LexSemanticCategory::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/lex_semantic_category');
         CRUD::setEntityNameStrings('Lex Semantic Category', 'Lex Semantic Categories');
     }

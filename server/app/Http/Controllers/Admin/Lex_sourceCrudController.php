@@ -26,7 +26,7 @@ class Lex_sourceCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\LexSource::class);
+        CRUD::setModel(\App\Models\LexSource::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/lex_source');
         CRUD::setEntityNameStrings('Lex Source', 'Lex Sources');
     }

@@ -26,7 +26,7 @@ class Lex_semantic_fieldCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\LexSemanticField::class);
+        CRUD::setModel(\App\Models\LexSemanticField::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/lex_semantic_field');
         CRUD::setEntityNameStrings('Lex Semantic Field', 'Lex Semantic Fields');
     }

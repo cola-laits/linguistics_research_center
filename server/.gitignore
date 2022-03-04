@@ -18,3 +18,5 @@ public/js/vendor.js
 public/js/*.js.map
 public/js/icons
 public/mix-manifest.json
+
+auth.json

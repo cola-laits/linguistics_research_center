@@ -7,9 +7,15 @@
 */
 
 /*!
-  * Bootstrap v4.6.0 (https://getbootstrap.com/)
+  * Bootstrap v4.6.1 (https://getbootstrap.com/)
   * Copyright 2011-2021 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+  */
+
+/*!
+  * CoreUI v2.1.16 (https://coreui.io)
+  * Copyright 2019 Łukasz Holeczek
+  * Licensed under MIT (https://coreui.io)
   */
 
 /*!
@@ -52,8 +58,8 @@
  */
 
 /*!
- * perfect-scrollbar v1.5.0
- * Copyright 2020 Hyunje Jun, MDBootstrap and Contributors
+ * perfect-scrollbar v1.5.3
+ * Copyright 2021 Hyunje Jun, MDBootstrap and Contributors
  * Licensed under MIT
  */
 

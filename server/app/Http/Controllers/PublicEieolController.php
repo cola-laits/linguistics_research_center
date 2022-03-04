@@ -4,11 +4,11 @@
 namespace App\Http\Controllers;
 
 
-use App\EieolLanguage;
-use App\EieolLesson;
-use App\EieolSeries;
+use App\Models\EieolLanguage;
+use App\Models\EieolLesson;
+use App\Models\EieolSeries;
 use App\Helpers\AlphabetSorter;
-use App\Page;
+use App\Models\Page;
 use Illuminate\Http\Request;
 
 class PublicEieolController
