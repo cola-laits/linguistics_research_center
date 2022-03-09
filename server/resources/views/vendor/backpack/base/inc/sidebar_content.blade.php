@@ -2,9 +2,9 @@
 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('dashboard') }}"><i class="la la-home nav-icon"></i> {{ trans('backpack::base.dashboard') }}</a></li>
 
 <li class="nav-title">General</li>
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('page') }}'><i class='nav-icon la la-book-open'></i> Pages</a></li>
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('user') }}'><i class='nav-icon la la-users'></i> Users</a></li>
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('setting') }}'><i class='nav-icon la la-cog'></i> <span>Settings</span></a></li>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('page') }}'><i class='nav-icon la la-file-alt'></i> Pages</a></li>
 
 <li class="nav-title">Lexicon (<a href="help_lex"><i class='nav-icon la la-question-circle'></i>  help</a>)</li>
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_language_family') }}'><i class='nav-icon la la-language'></i> Language Families</a></li>
@@ -24,4 +24,7 @@
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('eieol_series') }}'><i class='nav-icon la la-question'></i> Series</a></li>
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('eieol-lesson') }}'><i class='nav-icon la la-question'></i> Lessons</a></li>
 
+<li class="nav-title">Books</li>
 
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('book') }}'><i class='nav-icon la la-book'></i> Books</a></li>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('book-section') }}'><i class='nav-icon la la-book-open'></i> Book sections</a></li>

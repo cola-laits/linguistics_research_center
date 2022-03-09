@@ -32,4 +32,6 @@ Route::group([
     Route::crud('lex_language', 'Lex_languageCrudController');
     Route::crud('lex_source', 'Lex_sourceCrudController');
     Route::crud('lex_part_of_speech', 'Lex_part_of_speechCrudController');
+    Route::crud('book', 'BookCrudController');
+    Route::crud('book-section', 'BookSectionCrudController');
 }); // this should be the absolute last line of this file

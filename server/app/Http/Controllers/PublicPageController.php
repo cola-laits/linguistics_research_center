@@ -37,4 +37,10 @@ class PublicPageController
             'content' => Page::whereSlug('lex')->first()->content
         ]);
     }
+
+    public function books() {
+        return view('page', [
+            'page' => Page::whereSlug('books')->first()
+        ]);
+    }
 }

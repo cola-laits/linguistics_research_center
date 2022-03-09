@@ -68,5 +68,9 @@
     <li><a href="/lex">IE Lexicon</a></li>
     @endif
 
+    <!--
+    <li><a href="/books">Books</a></li>
+    -->
+
 </ul>
 

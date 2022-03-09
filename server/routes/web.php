@@ -7,6 +7,10 @@ Route::get('guides/eieol_author', 'PublicPageController@guide_ea');
 Route::get('guides/eieol_user', 'PublicPageController@guide_eu');
 Route::get('guides/lex_user', 'PublicPageController@guide_lu');
 
+Route::get('books', [\App\Http\Controllers\PublicPageController::class, 'books']);
+Route::get('books/{book_slug}', [\App\Http\Controllers\PublicBookController::class, 'bookHome']);
+Route::get('books/{book_slug}/{section_slug}', [\App\Http\Controllers\PublicBookController::class, 'bookSection']);
+
 Route::get('eieol', 'PublicEieolController@eieol');
 
 Route::get('eieol_lesson/{series_id}', 'PublicEieolController@eieol_lesson_redirect');
