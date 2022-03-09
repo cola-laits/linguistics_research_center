@@ -13,7 +13,7 @@ class PublicBookController extends Controller
         if (count($sections) === 0) {
             abort(404);
         }
-        return $this->bookSection($bookSlug, $sections[0]->slug);
+        return redirect('/books/' . $bookSlug . '/' . $sections[0]->slug);
     }
 
     public function bookSection($bookSlug, $sectionSlug) {
