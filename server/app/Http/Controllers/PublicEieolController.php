@@ -11,7 +11,7 @@ use App\Helpers\AlphabetSorter;
 use App\Models\Page;
 use Illuminate\Http\Request;
 
-class PublicEieolController
+class PublicEieolController extends Controller
 {
     public function eieol() {
         return view('eieol')->with([

@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Page;
 
-class PublicPageController
+class PublicPageController extends Controller
 {
     public function index() {
         return view('index', [

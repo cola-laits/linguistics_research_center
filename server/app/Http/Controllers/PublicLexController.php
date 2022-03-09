@@ -14,7 +14,7 @@ use DB;
 
 use const false;
 
-class PublicLexController
+class PublicLexController extends Controller
 {
     private static function split_entries($entry)
     {
