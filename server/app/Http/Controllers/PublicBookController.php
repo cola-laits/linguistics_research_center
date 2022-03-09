@@ -18,6 +18,7 @@ class PublicBookController extends Controller
 
     public function bookSection($bookSlug, $sectionSlug) {
         $book = Book::where('slug', $bookSlug)->firstOrFail();
+        $all_sections = $book->sections;
         $section = $book->sections->firstWhere('slug', $sectionSlug);
         if (!$section) {
             abort(404);
@@ -27,6 +28,7 @@ class PublicBookController extends Controller
         return view('book_section', [
             'book'=>$book,
             'section'=>$section,
+            'all_sections'=>$all_sections,
             'prev_section'=>$prev_section,
             'next_section'=>$next_section,
         ]);
