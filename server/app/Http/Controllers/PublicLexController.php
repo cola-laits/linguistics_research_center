@@ -38,7 +38,6 @@ class PublicLexController extends Controller
         if (mb_strpos($short, '(', 0, 'UTF-8') === false) {
             $keys[] = $short;
         } else {
-            //print_r(split_entries($short));
             $keys = array_merge($keys, self::split_entries($short));
         }
 
@@ -129,13 +128,11 @@ class PublicLexController extends Controller
                 $lacks_separator = mb_strpos($entry['text'], '(', 0, 'UTF-8') === false;
                 $keys = $lacks_separator ? [$entry['text']] : self::split_entries($entry['text']);
                 foreach ($keys as $key) {
-                    $etymas = $reflex->etymas->map(function ($etyma) {
-                        return [
-                            'entry' => $etyma->entry,
-                            'gloss' => $etyma->gloss,
-                            'id' => $etyma->old_id
-                        ];
-                    })->sortBy('id')->toArray();
+                    $etymas = $reflex->etymas->map(fn($etyma) => [
+                        'entry' => $etyma->entry,
+                        'gloss' => $etyma->gloss,
+                        'id' => $etyma->old_id
+                    ])->sortBy('id')->toArray();
 
                     $new_key = self::hashKey($key, $alpha_weights);
                     $display_reflexes[$new_key] = [

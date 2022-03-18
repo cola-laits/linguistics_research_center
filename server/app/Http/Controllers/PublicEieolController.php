@@ -107,12 +107,8 @@ class PublicEieolController extends Controller
 
     public function eieol_master_gloss($series_id, $language_id) {
         $series = EieolSeries::findByIdOrSlug($series_id);
-
-        $data = [
-            'series' => $series,
-            'language' => EieolLanguage::findOrFail($language_id),
-            'glosses' => [],
-        ];
+        $language = EieolLanguage::findOrFail($language_id);
+        $glosses = [];
 
         $lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word.language')
             ->where('series_id', '=', $series->id)
@@ -137,14 +133,14 @@ class PublicEieolController extends Controller
                     //remove any tags like sup or sub
                     $key = strip_tags($key);
 
-                    if (!array_key_exists($key, $data['glosses'])) {
-                        $data['glosses'][$key] = $gloss->toArray();
-                        $data['glosses'][$key]['surface_form'] = strip_tags($gloss->surface_form);
-                        $data['glosses'][$key]['gloss'] = $gloss;
-                        $data['glosses'][$key]['glossed_text_gloss_ids'] = [];
+                    if (!array_key_exists($key, $glosses)) {
+                        $glosses[$key] = $gloss->toArray();
+                        $glosses[$key]['surface_form'] = strip_tags($gloss->surface_form);
+                        $glosses[$key]['gloss'] = $gloss;
+                        $glosses[$key]['glossed_text_gloss_ids'] = [];
                     }
 
-                    $data['glosses'][$key]['glossed_text_gloss_ids'][$gloss->id] = $lesson;
+                    $glosses[$key]['glossed_text_gloss_ids'][$gloss->id] = $lesson;
 
                 } //foreach gloss
 
@@ -152,24 +148,24 @@ class PublicEieolController extends Controller
 
         } //foreach lesson
 
-        foreach ($data['glosses'] as $key=>&$value) {
+        foreach ($glosses as $key=>&$value) {
             $value['sortable_key'] = \Normalizer::normalize($value['surface_form'], \Normalizer::FORM_D);
         }
         unset($value);
-        $sorter = new AlphabetSorter($data['language']->substitutions, $data['language']->custom_sort);
-        uasort($data['glosses'], [$sorter, 'alphabet_sorter']);
+        $sorter = new AlphabetSorter($language->substitutions, $language->custom_sort);
+        uasort($glosses, [$sorter, 'alphabet_sorter']);
 
-        return view('eieol_master_gloss')->with($data);
+        return view('eieol_master_gloss')->with([
+            'series' => $series,
+            'language' => $language,
+            'glosses' => $glosses,
+        ]);
     }
 
     public function eieol_base_form_dictionary($series_id, $language_id) {
         $series = EieolSeries::findByIdOrSlug($series_id);
-
-        $data = [
-            'series' => $series,
-            'language' => EieolLanguage::findOrFail($language_id),
-            'head_words' => [],
-        ];
+        $language = EieolLanguage::findOrFail($language_id);
+        $head_words = [];
 
         $lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word.language', 'glossed_texts.glosses.elements.head_word.etyma')
             ->where('series_id', '=', $series->id)
@@ -196,25 +192,25 @@ class PublicEieolController extends Controller
                         $key = strip_tags($key);
 
 
-                        if (!array_key_exists($key, $data['head_words'])) {
+                        if (!array_key_exists($key, $head_words)) {
 
-                            $data['head_words'][$key] = $element->head_word->toArray();
+                            $head_words[$key] = $element->head_word->toArray();
 
-                            $data['head_words'][$key]['data'] = $element->head_word;
+                            $head_words[$key]['data'] = $element->head_word;
 
-                            $data['head_words'][$key]['glossed_text_gloss_ids'] = array();
+                            $head_words[$key]['glossed_text_gloss_ids'] = array();
 
-                            $data['head_words'][$key]['glossed_text_gloss_ids'][$gloss->id] = $lesson;
+                            $head_words[$key]['glossed_text_gloss_ids'][$gloss->id] = $lesson;
 
                             //build sort key
                             //remove first character, because it's a '<
                             $sort_key = mb_substr($element->head_word->word, 1, Null, 'UTF-8');
                             //remove any tags like sup or sub
                             $sort_key = strip_tags($sort_key);
-                            $data['head_words'][$key]['sortable_key'] = \Normalizer::normalize($sort_key, \Normalizer::FORM_D);
+                            $head_words[$key]['sortable_key'] = \Normalizer::normalize($sort_key, \Normalizer::FORM_D);
                         } else {
 
-                            $data['head_words'][$key]['glossed_text_gloss_ids'][$gloss->id] = $lesson;
+                            $head_words[$key]['glossed_text_gloss_ids'][$gloss->id] = $lesson;
 
                         }
 
@@ -226,21 +222,21 @@ class PublicEieolController extends Controller
 
         }
 
-        $sorter = new AlphabetSorter($data['language']->substitutions, $data['language']->custom_sort);
+        $sorter = new AlphabetSorter($language->substitutions, $language->custom_sort);
 
-        uasort($data['head_words'], [$sorter, 'alphabet_sorter']);
+        uasort($head_words, [$sorter, 'alphabet_sorter']);
 
-        return view('eieol_base_form_dictionary')->with($data);
+        return view('eieol_base_form_dictionary')->with([
+            'series' => $series,
+            'language' => $language,
+            'head_words' => $head_words,
+        ]);
     }
 
     public function eieol_english_meaning_index($series_id, $language_id) {
         $series = EieolSeries::findByIdOrSlug($series_id);
-
-        $data = [
-            'series' => $series,
-            'language' => EieolLanguage::findOrFail($language_id),
-            'keywords' => [],
-        ];
+        $language = EieolLanguage::findOrFail($language_id);
+        $keywords = [];
 
         $lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word.language')
             ->where('series_id', '=', $series->id)
@@ -263,15 +259,15 @@ class PublicEieolController extends Controller
                         foreach (explode(',',$element->head_word->keywords) as $keyword) {
                             $key = $keyword . ' -- ' . $element->head_word->word . ' -- ' . $element->head_word->definition;
 
-                            if (!array_key_exists($key, $data['keywords'])) {
-                                $data['keywords'][$key] = [
+                            if (!array_key_exists($key, $keywords)) {
+                                $keywords[$key] = [
                                     'keyword'=>$keyword,
                                     'head_word'=>$element->head_word,
                                     'glossed_text_gloss_ids'=>[]
                                 ];
                             }
 
-                            $data['keywords'][$key]['glossed_text_gloss_ids'][$gloss->id] = $lesson;
+                            $keywords[$key]['glossed_text_gloss_ids'][$gloss->id] = $lesson;
                         }
 
                     }
@@ -279,8 +275,12 @@ class PublicEieolController extends Controller
             }
         }
 
-        ksort($data['keywords']);
+        ksort($keywords);
 
-        return view('eieol_english_meaning_index')->with($data);
+        return view('eieol_english_meaning_index')->with([
+             'series' => $series,
+             'language' => $language,
+             'keywords' => $keywords,
+         ]);
     }
 }

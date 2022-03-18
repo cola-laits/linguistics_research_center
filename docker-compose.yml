@@ -2,7 +2,11 @@ version: "3"
 
 services:
   web:
-    build: .
+    build:
+      context: .
+      args:
+        BACKPACK_COMPOSER_USER: "GET_THIS_FROM_STACHE"
+        BACKPACK_COMPOSER_PASS: "GET_THIS_FROM_STACHE_TOO"
     ports:
       - "80"
     volumes:

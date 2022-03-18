@@ -1,29 +1,36 @@
 <?php
 
-Route::get('/', 'PublicPageController@index');
-Route::get('index', 'PublicPageController@index');
+use App\Http\Controllers\PublicBookController;
+use App\Http\Controllers\PublicEieolController;
+use App\Http\Controllers\PublicLexController;
+use App\Http\Controllers\PublicPageController;
 
-Route::get('guides/eieol_author', 'PublicPageController@guide_ea');
-Route::get('guides/eieol_user', 'PublicPageController@guide_eu');
-Route::get('guides/lex_user', 'PublicPageController@guide_lu');
+Route::controller(PublicPageController::class)->group(function() {
+    Route::get('/', 'index');
+    Route::get('index', 'index');
+    Route::get('books', 'books');
+    Route::get('guides/eieol_author', 'guide_ea');
+    Route::get('guides/eieol_user', 'guide_eu');
+    Route::get('guides/lex_user', 'guide_lu');
+    Route::get('lex', 'lex');
+});
 
-Route::get('books', [\App\Http\Controllers\PublicPageController::class, 'books']);
-Route::get('books/{book_slug}', [\App\Http\Controllers\PublicBookController::class, 'bookHome']);
-Route::get('books/{book_slug}/{section_slug}', [\App\Http\Controllers\PublicBookController::class, 'bookSection']);
+Route::controller(PublicBookController::class)->group(function() {
+    Route::get('books/{book_slug}', 'bookHome');
+    Route::get('books/{book_slug}/{section_slug}', 'bookSection');
+});
 
-Route::get('eieol', 'PublicEieolController@eieol');
-
-Route::get('eieol_lesson/{series_id}', 'PublicEieolController@eieol_lesson_redirect');
-Route::get('eieol/{series_name}', 'PublicEieolController@eieol_first_lesson');
-Route::get('eieol/{series_name}/{lesson_order}', 'PublicEieolController@eieol_lesson');
-
-Route::get('eieol_printable/{series_id}', 'PublicEieolController@eieol_printable');
-Route::get('eieol_toc/{series_id}', 'PublicEieolController@eieol_toc');
-Route::get('eieol_master_gloss/{series_id}/{language_id}', 'PublicEieolController@eieol_master_gloss');
-Route::get('eieol_base_form_dictionary/{series_id}/{language_id}', 'PublicEieolController@eieol_base_form_dictionary');
-Route::get('eieol_english_meaning_index/{series_id}/{language_id}', 'PublicEieolController@eieol_english_meaning_index');
-
-Route::get('lex', 'PublicPageController@lex');
+Route::controller(PublicEieolController::class)->group(function() {
+    Route::get('eieol', 'eieol');
+    Route::get('eieol_lesson/{series_id}', 'eieol_lesson_redirect');
+    Route::get('eieol/{series_name}', 'eieol_first_lesson');
+    Route::get('eieol/{series_name}/{lesson_order}', 'eieol_lesson');
+    Route::get('eieol_printable/{series_id}', 'eieol_printable');
+    Route::get('eieol_toc/{series_id}', 'eieol_toc');
+    Route::get('eieol_master_gloss/{series_id}/{language_id}', 'eieol_master_gloss');
+    Route::get('eieol_base_form_dictionary/{series_id}/{language_id}', 'eieol_base_form_dictionary');
+    Route::get('eieol_english_meaning_index/{series_id}/{language_id}', 'eieol_english_meaning_index');
+});
 
 Route::get('lex_pokorny', function() {return redirect('lex/master', 301);});
 Route::get('lex_semantic_field/{field_id}', array('as' => 'field_redirect', 'uses' =>'PublicLexController@lex_semantic_field_redirect'));
@@ -32,13 +39,15 @@ Route::get('lex_semantic', function() {return redirect('lex/semantic/', 301);});
 Route::get('lex_lang_reflexes/{language_id}', array('as' => 'reflexes_redirect', 'uses' =>'PublicLexController@lex_lang_reflexes_redirect'));
 Route::get('lex_language', function() {return redirect('lex/languages/', 301);});
 
-Route::get('lex/master', 'PublicLexController@lex_pokorny');
-Route::get('lex/master/{pokorny_number}', 'PublicLexController@lex_reflex');
-Route::get('lex/languages', 'PublicLexController@lex_language');
-Route::get('lex/languages/{language_abbr}', 'PublicLexController@lex_lang_reflexes');
-Route::get('lex/semantic', 'PublicLexController@lex_semantic');
-Route::get('lex/semantic/category/{cat_abbr}', 'PublicLexController@lex_semantic_category');
-Route::get('lex/semantic/field/{field_abbr}', 'PublicLexController@lex_semantic_field');
+Route::controller(PublicLexController::class)->group(function() {
+    Route::get('lex/master', 'lex_pokorny');
+    Route::get('lex/master/{pokorny_number}', 'lex_reflex');
+    Route::get('lex/languages', 'lex_language');
+    Route::get('lex/languages/{language_abbr}', 'lex_lang_reflexes');
+    Route::get('lex/semantic', 'lex_semantic');
+    Route::get('lex/semantic/category/{cat_abbr}', 'lex_semantic_category');
+    Route::get('lex/semantic/field/{field_abbr}', 'lex_semantic_field');
+});
 
 Route::get('/admin', 'AdminController@index');
 
