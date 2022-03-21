@@ -14,6 +14,7 @@
         "ext-libxml": "*",
         "ext-mbstring": "*",
         "backpack/crud": "^5.0.0",
+        "backpack/permissionmanager": "^6.0",
         "backpack/pro": "^1.0.0",
         "backpack/settings": "^3.0",
         "doctrine/dbal": "^2.9",

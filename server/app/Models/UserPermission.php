@@ -29,10 +29,20 @@ use App\Models\User;
  * @mixin \Eloquent
  */
 class UserPermission extends Model {
+    use \Backpack\CRUD\app\Models\Traits\CrudTrait;
+    /*
+     * FIXME old table for mapping series edit permissions - replace with Spatie/permissions eventually
+     */
 	protected $table = 'user_permission';
+    protected $fillable = ['user_id','eieol_series_id'];
 
 	public function user()
 	{
 		return $this->belongsTo(User::class);
 	}
+
+    public function eieol_series()
+    {
+        return $this->belongsTo(EieolSeries::class);
+    }
 }

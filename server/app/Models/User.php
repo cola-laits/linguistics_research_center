@@ -6,6 +6,7 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\EieolSeries;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
  * App\Models\User
@@ -47,6 +48,7 @@ class User extends Authenticatable
 
     use Notifiable;
     use CrudTrait;
+    use HasRoles;
 
     /**
      * The attributes that are mass assignable.

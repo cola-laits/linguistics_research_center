@@ -75,6 +75,10 @@ return [
             'connection' => 'cache',
         ],
 
+        'none' => [
+            'driver' => 'null',
+        ],
+
     ],
 
     /*

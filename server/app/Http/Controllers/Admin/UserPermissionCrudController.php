@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\PageRequest;
+use App\Http\Requests\UserPermissionRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class PageCrudController
+ * Class UserPermissionCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class PageCrudController extends CrudController
+class UserPermissionCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -26,11 +26,9 @@ class PageCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::removeButton('show');
-
-        CRUD::setModel(\App\Models\Page::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/page');
-        CRUD::setEntityNameStrings('page', 'pages');
+        CRUD::setModel(\App\Models\UserPermission::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/user-permission');
+        CRUD::setEntityNameStrings('user permission', 'user permissions');
     }
 
     /**
@@ -43,8 +41,8 @@ class PageCrudController extends CrudController
     {
         CRUD::removeButton('show');
 
-        CRUD::column('slug')->type('text');
-        CRUD::column('name')->type('text');
+        CRUD::column('user_id');
+        CRUD::column('eieol_series_id');
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -61,12 +59,10 @@ class PageCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(PageRequest::class);
-        CRUD::setRequiredFields(PageRequest::class);
+        CRUD::setValidation(UserPermissionRequest::class);
 
-        CRUD::field('slug')->type('text');
-        CRUD::field('name')->type('text');
-        CRUD::field('content')->type('ckeditor');
+        CRUD::field('user_id');
+        CRUD::field('eieol_series');
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:

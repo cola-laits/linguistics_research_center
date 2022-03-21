@@ -14,25 +14,40 @@ Route::group([
     ),
     'namespace'  => 'App\Http\Controllers\Admin',
 ], function () { // custom admin routes
-    Route::crud('page', 'PageCrudController');
-    Route::crud('user', 'UserCrudController');
+    Route::middleware(['can:manage_pages'])->group(function() {
+        Route::crud('page', 'PageCrudController');
+    });
+    Route::middleware(['can:manage_menu'])->group(function() {
+        Route::crud('menu-item', 'MenuItemCrudController');
+    });
 
-    Route::crud('eieol_series', 'Eieol_seriesCrudController');
-    Route::crud('eieol_language', 'Eieol_languageCrudController');
-    Route::crud('eieol-lesson', 'EieolLessonCrudController');
+    Route::middleware(['can:manage_eieol'])->group(function() {
+        Route::crud('user-permission', 'UserPermissionCrudController');
 
-    Route::get('help_lex', function() { return view('admin/help_lex'); });
-    Route::crud('lex_etyma', 'Lex_etymaCrudController');
-    Route::crud('lex_reflex', 'Lex_reflexCrudController');
-    Route::crud('lex_reflex_part_of_speech', 'Lex_reflex_part_of_speechCrudController');
-    Route::crud('lex_semantic_category', 'Lex_semantic_categoryCrudController');
-    Route::crud('lex_semantic_field', 'Lex_semantic_fieldCrudController');
-    Route::crud('lex_language_family', 'Lex_language_familyCrudController');
-    Route::crud('lex_language_sub_family', 'Lex_language_sub_familyCrudController');
-    Route::crud('lex_language', 'Lex_languageCrudController');
-    Route::crud('lex_source', 'Lex_sourceCrudController');
-    Route::crud('lex_part_of_speech', 'Lex_part_of_speechCrudController');
-    Route::crud('book', 'BookCrudController');
-    Route::crud('book-section', 'BookSectionCrudController');
-    Route::crud('menu-item', 'MenuItemCrudController');
+        Route::crud('eieol_series', 'Eieol_seriesCrudController');
+        Route::crud('eieol_language', 'Eieol_languageCrudController');
+        Route::crud('eieol-lesson', 'EieolLessonCrudController');
+    });
+
+    Route::middleware(['can:manage_lexicon'])->group(function() {
+        Route::get('help_lex', function () {
+            return view('admin/help_lex');
+        });
+        Route::crud('lex_etyma', 'Lex_etymaCrudController');
+        Route::crud('lex_reflex', 'Lex_reflexCrudController');
+        Route::crud('lex_reflex_part_of_speech', 'Lex_reflex_part_of_speechCrudController');
+        Route::crud('lex_semantic_category', 'Lex_semantic_categoryCrudController');
+        Route::crud('lex_semantic_field', 'Lex_semantic_fieldCrudController');
+        Route::crud('lex_language_family', 'Lex_language_familyCrudController');
+        Route::crud('lex_language_sub_family', 'Lex_language_sub_familyCrudController');
+        Route::crud('lex_language', 'Lex_languageCrudController');
+        Route::crud('lex_source', 'Lex_sourceCrudController');
+        Route::crud('lex_part_of_speech', 'Lex_part_of_speechCrudController');
+    });
+
+    Route::middleware(['can:manage_books'])->group(function() {
+        Route::crud('book', 'BookCrudController');
+        Route::crud('book-section', 'BookSectionCrudController');
+    });
+
 }); // this should be the absolute last line of this file
