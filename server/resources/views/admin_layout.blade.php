@@ -40,13 +40,7 @@
                 @verbatim
                 <li class="nav-item"><a class="nav-link" href="/admin2/admin_app#/issues">Issues <span class="badge badge-pill" :class="getIssueBadgeClass()">{{countOpenIssues()}}</span></a></li>
                 @endverbatim
-                <li class="dropdown nav-item">
-                    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">EIEOL <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/admin2/eieol_series">Series</a></li>
-                        <li><a class="dropdown-item" href="/admin2/eieol_language">Languages</a></li>
-                    </ul>
-                </li>
+                <li class="nav-item"><a class="nav-link" href="/admin2/eieol_series">EIEOL</a></li>
                 @if (\Illuminate\Support\Facades\Auth::user()->isAdmin())
                     <li class="dropdown nav-item">
                         <a href="/admin_mgr" class="nav-link" role="button" aria-haspopup="true" aria-expanded="false">Site Management <span class="caret"></span></a>

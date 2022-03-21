@@ -22,86 +22,10 @@ class EieolSeriesController extends Controller
         return view('eieol_series.eieol_series_index', ['serieses' => $serieses]);
     }
 
-    public function create() {
-        return view('eieol_series.eieol_series_form', ['action' => 'Create']);
-    }
-
-    public function store(Request $request) {
-        $rules = array(
-            'published' => 'boolean',
-            'order' => 'required|integer',
-            'title' => 'required|unique:eieol_series',
-            'menu_name' => 'required',
-            'menu_order' => 'required|integer',
-            'expanded_title' => 'required',
-            'slug' => 'required',
-        );
-        $validator = Validator::make($request->all(), $rules);
-
-        if ($validator->fails()) {
-            return redirect('/admin2/eieol_series/create')
-                ->withErrors($validator->messages())
-                ->withInput();
-        }
-
-        $series = new EieolSeries;
-
-        $series->published = $request->get('published');
-        $series->order = $request->get('order');
-        $series->title = $request->get('title');
-        $series->menu_name = $request->get('menu_name');
-        $series->menu_order = $request->get('menu_order');
-        $series->expanded_title = $request->get('expanded_title');
-        $series->meta_tags = $request->get('meta_tags');
-        $series->slug = $request->get('slug');
-        $series->created_by = Auth::user()->username;
-        $series->updated_by = Auth::user()->username;
-
-        $series->save();
-        $request->session()->flash('message', $series->title . ' has been created');
-        return redirect('/admin2/eieol_series/' . $series->id . '/edit');
-
-    }
-
     public function edit($id) {
         $series = EieolSeries::find($id);
         $lessons = EieolLesson::where('series_id', '=', $id)->get()->sortBy('order');
         return view('eieol_series.eieol_series_form', ['series' => $series, 'lessons' => $lessons, 'action' => 'Edit']);
-    }
-
-    public function update(Request $request, $id) {
-        $rules = array(
-            'order' => 'required|integer',
-            'title' => 'required|unique:eieol_series,title,' . $id,
-            'published' => 'boolean',
-            'menu_name' => 'required',
-            'menu_order' => 'required|integer',
-            'expanded_title' => 'required',
-            'slug' => 'required',
-        );
-        $validator = Validator::make($request->all(), $rules);
-
-        if ($validator->fails()) {
-            return redirect('/admin2/eieol_series/' . $id . '/edit')
-                ->withErrors($validator->messages())
-                ->withInput();
-        }
-
-        $series = EieolSeries::find($id);
-
-        $series->title = $request->get('title');
-        $series->order = $request->get('order');
-        $series->published = $request->get('published');
-        $series->menu_name = $request->get('menu_name');
-        $series->menu_order = $request->get('menu_order');
-        $series->expanded_title = $request->get('expanded_title');
-        $series->meta_tags = $request->get('meta_tags');
-        $series->slug = $request->get('slug');
-        $series->updated_by = Auth::user()->username;
-
-        $series->save();
-        $request->session()->flash('message', $series->title . ' has been updated');
-        return redirect('/admin2/eieol_series/' . $id . '/edit');
     }
 
     public function all_languages() {

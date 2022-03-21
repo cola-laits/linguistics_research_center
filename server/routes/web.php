@@ -64,7 +64,8 @@ Route::group(array('prefix'=> 'admin2', 'middleware' => 'auth'), function() {
 
     Route::get('admin_app', 'AdminController@app');
 
-    Route::resource('/eieol_series', 'EieolSeriesController');
+    Route::get('/eieol_series', 'EieolSeriesController@index');
+    Route::get('/eieol_series/{id}/edit', 'EieolSeriesController@edit');
     Route::put('/eieol_lesson/update_translation/{id}', 'EieolLessonController@update_translation');
     Route::resource('/eieol_lesson', 'EieolLessonController');
     Route::resource('/eieol_grammar', 'EieolGrammarController');
@@ -78,7 +79,6 @@ Route::group(array('prefix'=> 'admin2', 'middleware' => 'auth'), function() {
     Route::get('/eieol_head_word_keyword/filtered_list', 'EieolHeadWordKeywordController@filtered_list');
     Route::get('/part_of_speech/filtered_list', 'EieolPartOfSpeechController@filtered_list');
     Route::get('/eieol_analysis/filtered_list', 'EieolAnalysisController@filtered_list');
-    Route::resource('/eieol_language', 'EieolLanguageController');
 
     Route::get('/related_languages/all_languages', 'EieolSeriesController@all_languages');
     Route::get('/related_languages/attached_languages/{series_id}', 'EieolSeriesController@attached_languages');

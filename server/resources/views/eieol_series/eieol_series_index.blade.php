@@ -16,13 +16,7 @@
 
             <thead>
                 <tr>
-                    <th>Order</th>
                     <th>Title</th>
-                    <th>Published</th>
-                    <th>Menu Name</th>
-                    <th>Menu Order</th>
-                    <th>Expanded Title</th>
-                    <th>Updated</th>
                     <th></th>
                 </tr>
             </thead>
@@ -30,19 +24,7 @@
             <tbody>
                 @foreach ($serieses as $series)
                 <tr>
-                    <td>{{ $series->order }}</td>
                     <td>{{ $series->title }}</td>
-                    <td>
-                    	@if ($series->published == True)
-                    		<i class="fa fa-check" style="color:green"></i>
-                    	@else
-                    		<i class="fa fa-times" style="color:red"></i>
-                    	@endif
-                    </td>
-                    <td>{{ $series->menu_name }}</td>
-                    <td>{{ $series->menu_order }}</td>
-                    <td>{{ $series->expanded_title }}</td>
-                    <td>{{ $series->updated_at->format('m/d/Y h:ia') }} by {{ $series->updated_by }}</td>
                     <td>
                         <a href="/admin2/eieol_series/{{ $series->id }}/edit" class="btn btn-info pull-left" style="margin-right: 3px;">Edit</a>
                     </td>
@@ -52,10 +34,6 @@
 
         </table>
     </div>
-
- 	@if (Auth::user()->isAdmin())
-    	<a href="/admin2/eieol_series/create" class="btn btn-success">Add New Series</a>
- 	@endif
 
 </div>
 
