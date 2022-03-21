@@ -1,25 +1,24 @@
 @extends('admin_layout')
 
 @section('content')
- 
+
 <div class='col-lg-12'>
- 
+
     <h1><i class="fa fa-book"></i> Series Administration</h1>
     <p><a href="/guides/eieol_author" target=_new>Author Guide</a></p>
-    
+
     @if (Session::has('message'))
 	    <div class="alert alert-info">{{ Session::get('message') }}</div>
 	@endif
- 
+
     <div class="table-responsive">
         <table class="table table-bordered table-striped">
-			
+
             <thead>
                 <tr>
                     <th>Order</th>
                     <th>Title</th>
                     <th>Published</th>
-                    <th>Clickable Glosses</th>
                     <th>Menu Name</th>
                     <th>Menu Order</th>
                     <th>Expanded Title</th>
@@ -27,7 +26,7 @@
                     <th></th>
                 </tr>
             </thead>
- 
+
             <tbody>
                 @foreach ($serieses as $series)
                 <tr>
@@ -40,17 +39,6 @@
                     		<i class="fa fa-times" style="color:red"></i>
                     	@endif
                     </td>
-                    <td>
-                    	@if ($series->use_old_gloss_ui == True)
-                    		<i class="fa fa-times" style="color:red"></i>
-                    	@else
-                    	  @if ($series->published == True)
-                    	  <i class="fa fa-check" style="color:green"></i>
-                    	  @else
-                    	  &nbsp;
-                    	  @endif
-                    	@endif
-                    </td>
                     <td>{{ $series->menu_name }}</td>
                     <td>{{ $series->menu_order }}</td>
                     <td>{{ $series->expanded_title }}</td>
@@ -61,14 +49,14 @@
                 </tr>
                 @endforeach
             </tbody>
- 
+
         </table>
     </div>
- 
+
  	@if (Auth::user()->isAdmin())
     	<a href="/admin2/eieol_series/create" class="btn btn-success">Add New Series</a>
  	@endif
- 
+
 </div>
- 
+
 @stop

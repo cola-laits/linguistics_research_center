@@ -34,7 +34,6 @@ class EieolSeriesController extends Controller
             'menu_name' => 'required',
             'menu_order' => 'required|integer',
             'expanded_title' => 'required',
-            'use_old_gloss_ui' => 'boolean',
             'slug' => 'required',
         );
         $validator = Validator::make($request->all(), $rules);
@@ -53,7 +52,6 @@ class EieolSeriesController extends Controller
         $series->menu_name = $request->get('menu_name');
         $series->menu_order = $request->get('menu_order');
         $series->expanded_title = $request->get('expanded_title');
-        $series->use_old_gloss_ui = $request->get('use_old_gloss_ui');
         $series->meta_tags = $request->get('meta_tags');
         $series->slug = $request->get('slug');
         $series->created_by = Auth::user()->username;
@@ -79,7 +77,6 @@ class EieolSeriesController extends Controller
             'menu_name' => 'required',
             'menu_order' => 'required|integer',
             'expanded_title' => 'required',
-            'use_old_gloss_ui' => 'boolean',
             'slug' => 'required',
         );
         $validator = Validator::make($request->all(), $rules);
@@ -98,7 +95,6 @@ class EieolSeriesController extends Controller
         $series->menu_name = $request->get('menu_name');
         $series->menu_order = $request->get('menu_order');
         $series->expanded_title = $request->get('expanded_title');
-        $series->use_old_gloss_ui = $request->get('use_old_gloss_ui');
         $series->meta_tags = $request->get('meta_tags');
         $series->slug = $request->get('slug');
         $series->updated_by = Auth::user()->username;

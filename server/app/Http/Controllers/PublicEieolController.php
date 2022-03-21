@@ -50,10 +50,6 @@ class PublicEieolController extends Controller
             'clickable' => True,
         ];
 
-        if ($series['use_old_gloss_ui']) {
-            $data['clickable'] = False;
-        }
-
         $data['lesson'] = EieolLesson::with('grammars', 'language')
             ->with('glossed_texts.glosses.language', 'glossed_texts.glosses.elements.head_word.language')
             ->where('series_id', '=', $series->id)

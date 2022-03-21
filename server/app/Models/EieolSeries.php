@@ -20,7 +20,6 @@ use App\Models\EieolLanguage;
  * @property string|null $menu_order
  * @property string|null $expanded_title
  * @property int|null $published
- * @property int|null $use_old_gloss_ui
  * @property string|null $meta_tags
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -48,7 +47,6 @@ use App\Models\EieolLanguage;
  * @method static \Illuminate\Database\Eloquent\Builder|EieolSeries whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EieolSeries whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EieolSeries whereUpdatedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolSeries whereUseOldGlossUi($value)
  * @mixin \Eloquent
  */
 class EieolSeries extends Model {

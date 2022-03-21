@@ -37,12 +37,6 @@
         <label for="published" class="form-check-label">Published</label>
     </div>
 
-    <div class='form-group col-sm-1 @if ($errors->has('use_old_gloss_ui')) has-error @endif  '>
-        <input type="checkbox" id="use_old_gloss_ui" name="use_old_gloss_ui" class="form-check-input" value="1"
-               @if (isset($series) && $series->use_old_gloss_ui) checked="checked" @endif>
-        <label for="use_old_gloss_ui" class="form-check-label">Old Gloss UI</label>
-    </div>
-
     <div class='form-group col-sm-1 @if ($errors->has('order')) has-error @endif  '>
         <label for="order">Order</label>
         <input placeholder="" class="form-control" name="order" type="text" value="{{$series->order ?? ''}}">
