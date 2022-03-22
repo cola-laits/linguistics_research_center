@@ -48,6 +48,22 @@ class Lex_etymaCrudController extends CrudController
         CRUD::column('order')->type('number');
         CRUD::column('page_number')->type('text');
 
+        $this->crud->addFilter(
+            ['type'=>'text', 'name'=>'entry', 'label'=>'Entry',],
+            false,
+            function($value) {
+                $this->crud->addClause('where','entry','like', "%$value%");
+            }
+        );
+
+        $this->crud->addFilter(
+            ['type'=>'text', 'name'=>'gloss', 'label'=>'Gloss',],
+            false,
+            function($value) {
+                $this->crud->addClause('where','gloss','like', "%$value%");
+            }
+        );
+
         /**
          * Columns can be defined using the fluent syntax or array syntax:
          * - CRUD::column('price')->type('number');

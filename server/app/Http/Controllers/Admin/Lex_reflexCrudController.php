@@ -3,6 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Lex_reflexRequest;
+use App\Models\LexEtyma;
+use App\Models\LexEtymaReflex;
+use App\Models\LexLanguage;
+use App\Models\LexPartOfSpeech;
+use App\Models\LexReflexPartOfSpeech;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -50,6 +55,63 @@ class Lex_reflexCrudController extends CrudController
             });
         CRUD::column('gloss')->type('text');
         CRUD::column('language')->label('Language')->type('relationship')->attribute('name');
+
+/*
+        Reflexes, or
+    Etyma, or
+    (Reflex) Gloss, or
+    Language, or
+    Part of Speech column.
+    */
+
+        $this->crud->addFilter(
+            ['type'=>'text', 'name'=>'reflexes', 'label'=>'Reflex',],
+            false,
+            function($value) {
+                $this->crud->addClause('where','entries','like', "%$value%");
+            }
+        );
+
+        $this->crud->addFilter(
+            ['type'=>'text', 'name'=>'etyma', 'label'=>'Etymon',],
+            false,
+            function($value) {
+                $etyma_ids = LexEtyma::where('entry', 'like', "%$value%")->pluck('id')->toArray();
+                $reflex_ids = LexEtymaReflex::whereIn('etyma_id', $etyma_ids)->pluck('reflex_id')->toArray();
+                $this->crud->addClause('whereIn','id', $reflex_ids);
+            }
+        );
+
+        $this->crud->addFilter(
+            ['type'=>'text', 'name'=>'gloss', 'label'=>'Gloss',],
+            false,
+            function($value) {
+                $this->crud->addClause('where','gloss','like', "%$value%");
+            }
+        );
+
+        $this->crud->addFilter(
+            ['type'=>'select2', 'name'=>'language', 'label'=>'Language',],
+            function() {
+                return LexLanguage::orderBy('name')->get()->mapWithKeys(function ($item, $key) {
+                    return [$item->id => $item->name];
+                })->toArray();
+            },
+            function($value) {
+                $this->crud->addClause('where','language_id', $value);
+            }
+        );
+
+        $this->crud->addFilter(
+            ['type'=>'text', 'name'=>'part_of_speech', 'label'=>'Part of Speech',],
+            false,
+            function($value) {
+                $reflex_ids = LexReflexPartOfSpeech::where('text',$value)->get()->pluck('id')->toArray();
+                $reflex_id_csv = implode(',',$reflex_ids);
+                $this->crud->addClause('whereIn','id', $reflex_ids);
+            }
+        );
+
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
