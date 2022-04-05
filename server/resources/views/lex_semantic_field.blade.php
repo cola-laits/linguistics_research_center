@@ -9,24 +9,24 @@
 <h2>{{$field->semantic_category->number}}. {!! $field->semantic_category->text !!}</h2>
 <h3>{{$field->number}}. {{$field->text}}</h3>
 
-<p>This page lists Proto-Indo-European lexical entries (PIE etyma) drawn from Julius 
-Pokorny's <i lang='de'>Indogermanisches etymologisches W&ouml;rterbuch</i> (2 vols, 
-1959-69) assigned to the 
+<p>This page lists Proto-Indo-European lexical entries (PIE etyma) drawn from Julius
+Pokorny's <i lang='de'>Indogermanisches etymologisches W&ouml;rterbuch</i> (2 vols,
+1959-69) assigned to the
     <a href="/lex_semantic" title="Semantic Fields">semantic field</a>
 <b>{!! $field->semantic_category->text !!}</b>, subcategory <b>{{$field->number}}. {{$field->text}}</b>. Category numbers are as defined by Carl
-Darling Buck (cf. <i>A Dictionary of Selected Synonyms in the Principal Indo-European 
-Languages</i>, 1949); our field &amp; subcategory labels are sometimes adapted from 
-those of Buck: in our scheme they are brief but globally unique, parentheses may 
-enclose clues (such as part of speech) to interpreting a label, and verb infinitives 
+Darling Buck (cf. <i>A Dictionary of Selected Synonyms in the Principal Indo-European
+Languages</i>, 1949); our field &amp; subcategory labels are sometimes adapted from
+those of Buck: in our scheme they are brief but globally unique, parentheses may
+enclose clues (such as part of speech) to interpreting a label, and verb infinitives
 are introduced by 'to'.</p>
 
-<p>Links to PIE etyma will lead into a monolithic tabular listing of same, which opens in a new 
-window; if available, links are given to separate pages showing etyma and more modern 
+<p>Links to PIE etyma will lead into a monolithic tabular listing of same, which opens in a new
+window; if available, links are given to separate pages showing etyma and more modern
 Indo-European <b>reflexes</b> thereof (i.e. derived words, glossed in English).</p>
 
-<blockquote><b>N.B.</b> These pages are <b>under construction</b>; as time goes on 
-corrections may be made, and more links from this semantic subcategory to lexical 
-entries in it, drawn from Pokorny's etyma, may be added. Finally, derived reflexes 
+<blockquote><b>N.B.</b> These pages are <b>under construction</b>; as time goes on
+corrections may be made, and more links from this semantic subcategory to lexical
+entries in it, drawn from Pokorny's etyma, may be added. Finally, derived reflexes
 of PIE etyma, in any number of IE languages, may be added at any time.</blockquote>
 
 <div class="skinny" id="no_bullets">
@@ -51,5 +51,14 @@ of PIE etyma, in any number of IE languages, may be added at any time.</blockquo
 
 @section('menu')
     @include('menu_menu')
-    @include('menu_lex_semantic')
+    <div style="clear:both;"></div>
+    <ul class="side-nav">
+        <li class="office"><label>Semantic Fields</label></li>
+        @foreach($alpha_cats as $cat)
+            <li>
+                <a href="/lex/semantic/category/{{$cat->abbr}}" title="{{$cat->text}} and subcategories thereof">{{$cat->text}}</a>
+            </li>
+        @endforeach
+    </ul>
+
 @stop

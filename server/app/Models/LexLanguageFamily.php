@@ -64,4 +64,9 @@ class LexLanguageFamily extends Model {
 	{
 		return strip_tags($this->name);
 	}
+
+    public function lexicon()
+    {
+        return $this->belongsTo(LexLexicon::class, 'lexicon_id');
+    }
 }

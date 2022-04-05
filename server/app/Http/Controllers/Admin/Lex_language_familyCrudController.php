@@ -41,7 +41,7 @@ class Lex_language_familyCrudController extends CrudController
     {
         CRUD::removeButton('show');
 
-        //CRUD::setFromDb(); // columns
+        CRUD::column('lexicon_id')->type('select')->attribute('name');
         CRUD::column('name')->type('text');
         CRUD::column('order')->type('number');
 
@@ -62,7 +62,7 @@ class Lex_language_familyCrudController extends CrudController
     {
         CRUD::setValidation(Lex_language_familyRequest::class);
 
-        //CRUD::setFromDb(); // fields
+        CRUD::field('lexicon_id')->type('select');
         CRUD::field('name')->type('text');
         CRUD::field('order')->type('number');
 

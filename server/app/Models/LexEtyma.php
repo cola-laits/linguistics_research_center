@@ -126,4 +126,8 @@ class LexEtyma extends Model {
 		return LexEtyma::where('order', '>', $this->order)->orderBy('order')->first();
 	}
 
+    public function lexicon()
+    {
+        return $this->belongsTo(LexLexicon::class, 'lexicon_id');
+    }
 }

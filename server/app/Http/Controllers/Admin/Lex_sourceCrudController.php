@@ -41,6 +41,7 @@ class Lex_sourceCrudController extends CrudController
     {
         CRUD::removeButton('show');
 
+        CRUD::column('lexicon_id')->type('select')->attribute('name');
         CRUD::column('code')->type('text');
         CRUD::column('display')->type('text');
 
@@ -61,6 +62,7 @@ class Lex_sourceCrudController extends CrudController
     {
         CRUD::setValidation(Lex_sourceRequest::class);
 
+        CRUD::field('lexicon_id')->type('select');
         CRUD::field('code')->type('text');
         CRUD::field('display')->type('text');
 

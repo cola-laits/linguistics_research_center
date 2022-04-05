@@ -59,4 +59,9 @@ class LexSource extends Model {
 	{
 		return $this->hasMany(LexReflex::class, 'source_id', 'id');
 	}
+
+    public function lexicon()
+    {
+        return $this->belongsTo(LexLexicon::class, 'lexicon_id');
+    }
 }

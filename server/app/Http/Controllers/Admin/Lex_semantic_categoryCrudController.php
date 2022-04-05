@@ -41,6 +41,7 @@ class Lex_semantic_categoryCrudController extends CrudController
     {
         CRUD::removeButton('show');
 
+        CRUD::column('lexicon_id')->type('select')->attribute('name');
         CRUD::setFromDb(); // columns
 
         /**
@@ -60,6 +61,7 @@ class Lex_semantic_categoryCrudController extends CrudController
     {
         CRUD::setValidation(Lex_semantic_categoryRequest::class);
 
+        CRUD::field('lexicon_id')->type('select');
         CRUD::setFromDb(); // fields
 
         /**

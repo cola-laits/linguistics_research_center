@@ -61,4 +61,8 @@ class LexSemanticCategory extends Model {
 		return $this->hasMany(LexSemanticField::class, 'semantic_category_id', 'id')->orderBy('number');
 	}
 
+    public function lexicon()
+    {
+        return $this->belongsTo(LexLexicon::class, 'lexicon_id');
+    }
 }

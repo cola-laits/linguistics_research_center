@@ -69,4 +69,9 @@ class LexPartOfSpeech extends Model {
 		}
 		return $pos_lookup;
 	}
+
+    public function lexicon()
+    {
+        return $this->belongsTo(LexLexicon::class, 'lexicon_id');
+    }
 }

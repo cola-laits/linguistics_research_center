@@ -16,6 +16,8 @@ use const false;
 
 class PublicLexController extends Controller
 {
+    const IELEX_ID = 1;
+
     private static function split_entries($entry)
     {
         //entries might have some characters in ().  This means the entry is actually 2 entries, eg: Farv(e) would be Farv and Farve.
@@ -76,14 +78,14 @@ class PublicLexController extends Controller
     }
 
     public function lex_pokorny() {
-        $etymas = LexEtyma::with('cross_references')->withCount('reflexes')->get()->sortBy('order');
+        $etymas = LexEtyma::where('lexicon_id',self::IELEX_ID)->with('cross_references')->withCount('reflexes')->get()->sortBy('order');
         return view('lex_pokorny')->with([
             'etymas' => $etymas
         ]);
     }
 
     public function lex_reflex($pokorny_number) {
-        $etyma = LexEtyma::with(
+        $etyma = LexEtyma::where('lexicon_id',self::IELEX_ID)->with(
             'reflexes.language.language_sub_family.language_family',
             'reflexes.sources',
             'reflexes.parts_of_speech',
@@ -97,7 +99,7 @@ class PublicLexController extends Controller
     }
 
     public function lex_language() {
-        $language_families = LexLanguageFamily::with('language_sub_families.languages.reflex_count')->get()->sortBy('order');
+        $language_families = LexLanguageFamily::where('lexicon_id',self::IELEX_ID)->with('language_sub_families.languages.reflex_count')->get()->sortBy('order');
 
         return view('lex_language')->with([
             'language_families' => $language_families
@@ -157,14 +159,14 @@ class PublicLexController extends Controller
 
     public function lex_semantic() {
         return view('lex_semantic')->with([
-            'cats' => LexSemanticCategory::get()->sortBy('number'),
-            'alpha_cats' => LexSemanticCategory::get()->sortBy('text')
+            'cats' => LexSemanticCategory::where('lexicon_id',self::IELEX_ID)->get()->sortBy('number'),
+            'alpha_cats' => LexSemanticCategory::where('lexicon_id',self::IELEX_ID)->get()->sortBy('text')
         ]);
     }
 
     public function lex_semantic_category($cat_abbr) {
-        $category = LexSemanticCategory::whereAbbr($cat_abbr)->firstOrFail();
-        $alpha_cats = LexSemanticCategory::get()->sortBy('text');
+        $category = LexSemanticCategory::where('lexicon_id',self::IELEX_ID)->whereAbbr($cat_abbr)->firstOrFail();
+        $alpha_cats = LexSemanticCategory::where('lexicon_id',self::IELEX_ID)->get()->sortBy('text');
         $fields = LexSemanticField::withCount('etymas')
             ->where('semantic_category_id', '=', $category->id)
             ->get()
@@ -180,7 +182,7 @@ class PublicLexController extends Controller
     public function lex_semantic_field($field_abbr) {
         $field = LexSemanticField::with('etymas', 'semantic_category')
             ->where("abbr", $field_abbr)->firstOrFail();
-        $alpha_cats = LexSemanticCategory::get()->sortBy('text');
+        $alpha_cats = LexSemanticCategory::where('lexicon_id',self::IELEX_ID)->get()->sortBy('text');
 
         return view('lex_semantic_field')->with([
             'field'=>$field,

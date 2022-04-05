@@ -11,7 +11,7 @@
 in ontological thought, especially at the amateur level: after all, everyone
 categorizes the world in some way, and it seems "so easy and natural." However,
 formally defining a <i>complete</i> and <i>consistent</i> scheme of semantic
-fields and subcategories has proven exceedingly difficult, and it is safe to say 
+fields and subcategories has proven exceedingly difficult, and it is safe to say
 that no one has ever fully satisfied these twin demands -- or not, at least, as
 judged by anyone else. Hence, all semantic category schemes are deficient. Rather
 than inventing yet another deficient scheme, we selected for our use one that has
@@ -25,23 +25,23 @@ Slightly simplifying Buck, we employ a strictly two-level organization; most sem
 subcategories will have lexical entries drawn from the Proto-Indo-European (PIE)
 etyma listed by Julius Pokorny in his monumental work <i lang='de'>Indogermanisches
 etymologisches W&ouml;rterbuch</i> (2 vols, 1959-69). Because Buck's publication
-preceded Pokorny's by a decade or more, Buck was not able to categorize Pokorny's 
-etyma; and although Buck did categorize at least some entries found in earlier volumes 
-authored jointly by Walde &amp; Pokorny (<i lang='de'>Vergleichendes W&ouml;rterbuch der 
-indogermanischen Sprachen</i>, 3 vols, 1926-30), Buck took pains to categorize later 
-Indo-European derivatives according to their <i>evolved</i> meanings, which in many 
-cases differ from the [reconstructed] meanings of their Proto-Indo-European ancestral 
+preceded Pokorny's by a decade or more, Buck was not able to categorize Pokorny's
+etyma; and although Buck did categorize at least some entries found in earlier volumes
+authored jointly by Walde &amp; Pokorny (<i lang='de'>Vergleichendes W&ouml;rterbuch der
+indogermanischen Sprachen</i>, 3 vols, 1926-30), Buck took pains to categorize later
+Indo-European derivatives according to their <i>evolved</i> meanings, which in many
+cases differ from the [reconstructed] meanings of their Proto-Indo-European ancestral
 roots.</p>
 
-<p>We attempt to categorize most if not all of Pokorny's etyma -- possibly not all, 
-because not all PIE etyma have an obvious categorization according to Buck's scheme 
-(especially difficult are, e.g., particles and prepositions). Analogs of Buck's 22 
-top-level categories, each linked to a description of its subcategories, are listed 
+<p>We attempt to categorize most if not all of Pokorny's etyma -- possibly not all,
+because not all PIE etyma have an obvious categorization according to Buck's scheme
+(especially difficult are, e.g., particles and prepositions). Analogs of Buck's 22
+top-level categories, each linked to a description of its subcategories, are listed
 below and alphabetically in the navigation bar to the left.</p>
 
-<blockquote><b>N.B.</b> These pages are <b>under construction</b>; as time goes on 
-corrections may be made, and more links from the semantic subcategories to lexical 
-entries in them, drawn from Pokorny's PIE etyma with or without derived ("reflex") 
+<blockquote><b>N.B.</b> These pages are <b>under construction</b>; as time goes on
+corrections may be made, and more links from the semantic subcategories to lexical
+entries in them, drawn from Pokorny's PIE etyma with or without derived ("reflex")
 words in later IE languages, may be added.</blockquote>
 
 <div class="skinny">
@@ -60,5 +60,14 @@ words in later IE languages, may be added.</blockquote>
 
 @section('menu')
     @include('menu_menu')
-    @include('menu_lex_semantic')
+    <div style="clear:both;"></div>
+    <ul class="side-nav">
+        <li class="office"><label>Semantic Fields</label></li>
+        @foreach($alpha_cats as $cat)
+            <li>
+                <a href="/lex/semantic/category/{{$cat->abbr}}" title="{{$cat->text}} and subcategories thereof">{{$cat->text}}</a>
+            </li>
+        @endforeach
+    </ul>
+
 @stop

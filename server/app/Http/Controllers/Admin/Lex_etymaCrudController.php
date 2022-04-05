@@ -42,6 +42,7 @@ class Lex_etymaCrudController extends CrudController
     {
         CRUD::removeButton('show');
 
+        CRUD::column('lexicon_id')->type('select')->attribute('name');
         CRUD::column('entry')->type('text');
         CRUD::column('gloss')->type('text');
         CRUD::column('old_id')->label('Old Id')->type('number');
@@ -81,6 +82,7 @@ class Lex_etymaCrudController extends CrudController
     {
         CRUD::setValidation(Lex_etymaRequest::class);
 
+        CRUD::field('lexicon_id')->type('select');
         CRUD::field('old_id')->label('Old Id')->type('number');
         CRUD::field('order')->type('number');
         CRUD::field('page_number')->type('text');
