@@ -11,26 +11,6 @@ use Normalizer;
 class EieolHeadWordController extends Controller
 {
 
-    public function show($id) {
-        $head_word = EieolHeadWord::with('elements', 'etyma')->find($id);
-        $return_head_word = $head_word->toArray();
-
-        $glosses = array();
-        foreach ($head_word->elements as $element) {
-            if (!in_array($element->gloss->surface_form, $glosses)) {
-                $glosses[] = $element->gloss->surface_form;
-            }
-        }
-        sort($glosses);
-        $return_head_word['glosses'] = '';
-        foreach ($glosses as $gloss) {
-            $return_head_word['glosses'] .= $gloss . ', ';
-        }
-        $return_head_word['glosses'] = rtrim($return_head_word['glosses'], ', '); //trim off last comma
-
-        return $return_head_word;
-    }
-
     public function store(Request $request) {
 
         $rules = array(
