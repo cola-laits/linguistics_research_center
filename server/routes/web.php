@@ -72,13 +72,13 @@ Route::group(array('prefix'=> 'admin2', 'middleware' => 'auth'), function() {
     Route::resource('/eieol_glossed_text_gloss', 'EieolGlossedTextGlossController');
     Route::post('/eieol_glossed_text_gloss/copy_gloss', 'EieolGlossedTextGlossController@postCopyGloss');
     Route::resource('/eieol_glossed_text', 'EieolGlossedTextController');
-    Route::get('/eieol_gloss/filtered_list', 'EieolGlossController@filtered_list');
+    Route::get('/eieol_gloss/filtered_list', 'AdminController@gloss_typeahead');
     Route::resource('/eieol_gloss', 'EieolGlossController');
-    Route::get('/eieol_head_word/filtered_list', 'EieolHeadWordController@filtered_list');
+    Route::get('/eieol_head_word/filtered_list', 'AdminController@headword_typeahead');
     Route::resource('/eieol_head_word', 'EieolHeadWordController');
-    Route::get('/eieol_head_word_keyword/filtered_list', 'EieolHeadWordKeywordController@filtered_list');
-    Route::get('/part_of_speech/filtered_list', 'EieolPartOfSpeechController@filtered_list');
-    Route::get('/eieol_analysis/filtered_list', 'EieolAnalysisController@filtered_list');
+    Route::get('/eieol_head_word_keyword/filtered_list', 'AdminController@headword_keyword_typeahead');
+    Route::get('/part_of_speech/filtered_list', 'AdminController@part_of_speech_typeahead');
+    Route::get('/eieol_analysis/filtered_list', 'AdminController@analysis_typeahead');
 
     Route::get('/related_languages/all_languages', 'EieolSeriesController@all_languages');
     Route::get('/related_languages/attached_languages/{series_id}', 'EieolSeriesController@attached_languages');

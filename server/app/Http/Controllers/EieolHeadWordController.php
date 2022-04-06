@@ -3,27 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\EieolHeadWord;
-use App\EieolHeadWordKeyword;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Normalizer;
 
 class EieolHeadWordController extends Controller
 {
-
-    public function filtered_list(Request $request) {
-        $head_words = EieolHeadWord::where('word', 'LIKE', '%' . Normalizer::normalize($request->get('head_word'), Normalizer::FORM_C) . '%')
-            ->where('language_id', '=', $request->get('language') . '%')
-            ->take(50)->orderBy('word')
-            ->with(['language'])
-            ->get();
-
-        return [
-            'headwords' => $head_words
-        ];
-    }
 
     public function show($id) {
         $head_word = EieolHeadWord::with('elements', 'etyma')->find($id);

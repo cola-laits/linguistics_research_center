@@ -14,19 +14,6 @@ use Normalizer;
 class EieolGlossController extends Controller
 {
 
-    public function filtered_list(Request $request) {
-        //this is a search that returns glosses that start with the url parm "gloss"
-        $glosses = EieolGloss::with('elements.head_word')->where('surface_form', 'LIKE', Normalizer::normalize($request->get('gloss'), Normalizer::FORM_C) . '%')
-            ->where('language_id', '=', $request->get('language') . '%')
-            ->take(15)->orderBy('surface_form')
-            ->with(['language', 'elements.head_word.language'])
-            ->get();
-
-        return [
-            'glosses'=>$glosses
-        ];
-    }
-
     public function show($id) {
         $gloss = EieolGloss::with('elements.head_word', 'glossed_text.lesson')->find($id);
         $return_gloss = $gloss->toArray();
