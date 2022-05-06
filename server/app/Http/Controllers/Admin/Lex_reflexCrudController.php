@@ -23,6 +23,7 @@ class Lex_reflexCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -56,25 +57,19 @@ class Lex_reflexCrudController extends CrudController
         CRUD::column('gloss')->type('text');
         CRUD::column('language')->label('Language')->type('relationship')->attribute('name');
 
-/*
-        Reflexes, or
-    Etyma, or
-    (Reflex) Gloss, or
-    Language, or
-    Part of Speech column.
-    */
-
         $this->crud->addFilter(
-            ['type'=>'text', 'name'=>'reflexes', 'label'=>'Reflex',],
-            false,
+            ['type'=>'select2_ajax', 'name'=>'reflex', 'label'=>'Reflex', 'method'=>'POST',
+                'select_attribute'=>'entries'],
+            backpack_url('lex_reflex/fetch/entries'),
             function($value) {
                 $this->crud->addClause('where','entries','like', "%$value%");
             }
         );
 
         $this->crud->addFilter(
-            ['type'=>'text', 'name'=>'etyma', 'label'=>'Etymon',],
-            false,
+            ['type'=>'select2_ajax', 'name'=>'etyma', 'label'=>'Etymon', 'method'=>'POST',
+                'select_attribute'=>'etymon'],
+            backpack_url('lex_etyma/fetch/entry'),
             function($value) {
                 $etyma_ids = LexEtyma::where('entry', 'like', "%$value%")->pluck('id')->toArray();
                 $reflex_ids = LexEtymaReflex::whereIn('etyma_id', $etyma_ids)->pluck('reflex_id')->toArray();
@@ -83,8 +78,9 @@ class Lex_reflexCrudController extends CrudController
         );
 
         $this->crud->addFilter(
-            ['type'=>'text', 'name'=>'gloss', 'label'=>'Gloss',],
-            false,
+            ['type'=>'select2_ajax', 'name'=>'gloss', 'label'=>'Gloss', 'method'=>'POST',
+                'select_attribute'=>'gloss'],
+            backpack_url('lex_reflex/fetch/gloss'),
             function($value) {
                 $this->crud->addClause('where','gloss','like', "%$value%");
             }
@@ -142,6 +138,8 @@ class Lex_reflexCrudController extends CrudController
             ->entity_singular('entry')
             ->columns(['text'=>'Text']);
 
+//        CRUD::field('parts_of_speech')->type('table')...
+
         /**
          * Fields can be defined using the fluent syntax or array syntax:
          * - CRUD::field('price')->type('number');
@@ -158,5 +156,32 @@ class Lex_reflexCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    public function fetchEntries()
+    {
+        $table = 'lex_reflex';
+        $field = 'entries';
+        $data = $this->fetchTableLookupByDistinctField($table, $field);
+        $result = $data->map(function ($j) { return json_decode($j); })->flatten()->pluck('text');
+        return $result;
+    }
+
+    public function fetchGloss()
+    {
+        $table = 'lex_reflex';
+        $field = 'gloss';
+        return $this->fetchTableLookupByDistinctField($table, $field);
+    }
+
+    protected function fetchTableLookupByDistinctField($table, $field)
+    {
+        $search_string = request()->input('q');
+        $query = \DB::table($table)
+            ->where($field,'like','%'.$search_string.'%')
+            ->distinct()
+            ->orderBy($field)
+            ->pluck($field);
+        return $query;
     }
 }

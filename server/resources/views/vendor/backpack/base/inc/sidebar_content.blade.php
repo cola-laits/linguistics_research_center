@@ -38,6 +38,9 @@
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('eieol_language') }}'><i class='nav-icon la la-question'></i> Languages</a></li>
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('eieol_series') }}'><i class='nav-icon la la-question'></i> Series</a></li>
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('eieol-lesson') }}'><i class='nav-icon la la-question'></i> Lessons</a></li>
+<li class='nav-item'><a class='nav-link' href='/admin2/eieol_series#' target="_blank"><i class='nav-icon la la-external-link-alt'></i> Full Lesson Editors</a></li>
+<li class='nav-item'><a class='nav-link' href='/admin2/admin_app#/issues' target="_blank"><i class='nav-icon la la-external-link-alt'></i> EIEOL Issues</a></li>
+
 @endcan
 
 @can('manage_books')

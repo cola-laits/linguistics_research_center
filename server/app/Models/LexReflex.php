@@ -61,7 +61,7 @@ class LexReflex extends Model {
 	    'entries' => 'array',
     ];
 
-    protected $appends = ['langAbbrGloss','langAbbrEntriesGloss'];
+    protected $appends = ['langAbbrGloss','langNameEntriesGloss'];
 
 	public static function boot() {
 		parent::boot();
@@ -83,9 +83,9 @@ class LexReflex extends Model {
 	    return $this->lang_attribute . ': ' . $this->gloss;
     }
 
-    public function getLangAbbrEntriesGlossAttribute() {
+    public function getLangNameEntriesGlossAttribute() {
         $entries_csv = collect($this->entries)->pluck('text')->join(', ');
-        return $this->lang_attribute . ': '.$entries_csv.' (' . $this->gloss . ')';
+        return $this->language->name . ': '.$entries_csv.' (' . $this->gloss . ')';
     }
 
     public function etymas()

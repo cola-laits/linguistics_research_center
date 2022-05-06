@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Lex_etymaRequest;
+use App\Models\LexReflex;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -43,25 +44,38 @@ class Lex_etymaCrudController extends CrudController
         CRUD::removeButton('show');
 
         CRUD::column('lexicon_id')->type('select')->attribute('name');
-        CRUD::column('entry')->type('text');
+        CRUD::column('entry')->label('Etyma')->type('text');
         CRUD::column('gloss')->type('text');
         CRUD::column('old_id')->label('Old Id')->type('number');
         CRUD::column('order')->type('number');
         CRUD::column('page_number')->type('text');
 
         $this->crud->addFilter(
-            ['type'=>'text', 'name'=>'entry', 'label'=>'Entry',],
-            false,
+            ['type'=>'select2_ajax', 'name'=>'entry', 'label'=>'Etyma', 'method'=>'POST',
+                'select_attribute'=>'entry'],
+            backpack_url('lex_etyma/fetch/entry'),
             function($value) {
                 $this->crud->addClause('where','entry','like', "%$value%");
             }
         );
 
         $this->crud->addFilter(
-            ['type'=>'text', 'name'=>'gloss', 'label'=>'Gloss',],
-            false,
+            ['type'=>'select2_ajax', 'name'=>'gloss', 'label'=>'Gloss', 'method'=>'POST',
+                'select_attribute'=>'gloss'],
+            backpack_url('lex_etyma/fetch/gloss'),
             function($value) {
                 $this->crud->addClause('where','gloss','like', "%$value%");
+            }
+        );
+
+        $this->crud->addFilter(
+            ['type'=>'select2_ajax', 'name'=>'reflex', 'label'=>'Reflex', 'method'=>'POST',
+                'select_attribute'=>'entries'],
+            backpack_url('lex_reflex/fetch/entries'),
+            function($value) {
+                $this->crud->query = $this->crud->query->whereHas('reflexes', function($query) use ($value) {
+                    return $query->where('entries','like',"%$value%");
+                });
             }
         );
 
@@ -86,11 +100,11 @@ class Lex_etymaCrudController extends CrudController
         CRUD::field('old_id')->label('Old Id')->type('number');
         CRUD::field('order')->type('number');
         CRUD::field('page_number')->type('text');
-        CRUD::field('entry')->type('text');
+        CRUD::field('entry')->label('Etyma')->type('text');
         CRUD::field('gloss')->type('text');
         CRUD::field('cross_references')->type('select2_multiple')->model('App\Models\LexEtyma')->attribute('entry')->pivot(true);
         CRUD::field('semantic_fields')->type('select2_multiple')->model('App\Models\LexSemanticField')->attribute('text')->pivot(true);
-        CRUD::field('reflexes')->type('relationship')->attribute('langAbbrEntriesGloss')->pivot(true)->ajax(true);
+        CRUD::field('reflexes')->type('relationship')->attribute('langNameEntriesGloss')->pivot(true)->ajax(true);
 
         /*
         CRUD::field('reflexes')
@@ -120,9 +134,41 @@ class Lex_etymaCrudController extends CrudController
     public function fetchReflexes()
     {
         return $this->fetch([
-            'model' => \App\Models\LexReflex::class,
-            'searchable_attributes' => ['gloss'],
-            'paginate' => 100,
+            'model'=>LexReflex::class,
+            'searchable_attributes'=>[],
+            'query' => function($model) {
+                $search = request()->input('q') ?? false;
+                if ($search) {
+                    return $model->whereRaw('CONCAT(`gloss`," ",`entries`) LIKE "%' . $search . '%"');
+                } else {
+                    return $model;
+                }
+            },
         ]);
+    }
+
+    public function fetchEntry()
+    {
+        $table = 'lex_etyma';
+        $field = 'entry';
+        return $this->fetchTableLookupByDistinctField($table, $field);
+    }
+
+    public function fetchGloss()
+    {
+        $table = 'lex_etyma';
+        $field = 'gloss';
+        return $this->fetchTableLookupByDistinctField($table, $field);
+    }
+
+    protected function fetchTableLookupByDistinctField($table, $field)
+    {
+        $search_string = request()->input('q');
+        $query = \DB::table($table)
+            ->where($field,'like','%'.$search_string.'%')
+            ->distinct()
+            ->orderBy($field)
+            ->pluck($field);
+        return $query;
     }
 }
