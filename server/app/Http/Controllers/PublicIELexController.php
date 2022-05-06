@@ -14,7 +14,7 @@ use DB;
 
 use const false;
 
-class PublicLexController extends Controller
+class PublicIELexController extends Controller
 {
     const IELEX_ID = 1;
 

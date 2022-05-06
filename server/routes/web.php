@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\PublicBookController;
 use App\Http\Controllers\PublicEieolController;
-use App\Http\Controllers\PublicLexController;
+use App\Http\Controllers\PublicIELexController;
 use App\Http\Controllers\PublicPageController;
 
 Route::controller(PublicPageController::class)->group(function() {
@@ -33,13 +33,13 @@ Route::controller(PublicEieolController::class)->group(function() {
 });
 
 Route::get('lex_pokorny', function() {return redirect('lex/master', 301);});
-Route::get('lex_semantic_field/{field_id}', array('as' => 'field_redirect', 'uses' =>'PublicLexController@lex_semantic_field_redirect'));
+Route::get('lex_semantic_field/{field_id}', array('as' => 'field_redirect', 'uses' =>'PublicIELexController@lex_semantic_field_redirect'));
 Route::get('lex_reflex/{etyma_id}', function() {return redirect('lex/languages/', 301);});
 Route::get('lex_semantic', function() {return redirect('lex/semantic/', 301);});
-Route::get('lex_lang_reflexes/{language_id}', array('as' => 'reflexes_redirect', 'uses' =>'PublicLexController@lex_lang_reflexes_redirect'));
+Route::get('lex_lang_reflexes/{language_id}', array('as' => 'reflexes_redirect', 'uses' =>'PublicIELexController@lex_lang_reflexes_redirect'));
 Route::get('lex_language', function() {return redirect('lex/languages/', 301);});
 
-Route::controller(PublicLexController::class)->group(function() {
+Route::controller(PublicIELexController::class)->group(function() {
     Route::get('lex/master', 'lex_pokorny');
     Route::get('lex/master/{pokorny_number}', 'lex_reflex');
     Route::get('lex/languages', 'lex_language');
