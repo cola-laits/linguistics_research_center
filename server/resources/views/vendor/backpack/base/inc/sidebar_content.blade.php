@@ -20,6 +20,7 @@
 
 @can('manage_lexicon')
 <li class="nav-title">Lexicon (<a href="help_lex"><i class='nav-icon la la-question-circle'></i>  help</a>)</li>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex-lexicon') }}'><i class='nav-icon la la-book-open'></i> Lexicons</a></li>
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_language_family') }}'><i class='nav-icon la la-language'></i> Language Families</a></li>
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_language_sub_family') }}'><i class='nav-icon la la-language'></i> Language Sub Families</a></li>
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('lex_language') }}'><i class='nav-icon la la-language'></i> Languages</a></li>
@@ -48,4 +49,5 @@
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('book') }}'><i class='nav-icon la la-book'></i> Books</a></li>
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('book-section') }}'><i class='nav-icon la la-book-open'></i> Book sections</a></li>
 @endcan
+
 

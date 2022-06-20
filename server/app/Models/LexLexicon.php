@@ -11,6 +11,17 @@ class LexLexicon extends Model
 
     protected $table = 'lex_lexicon';
 
-    protected $guarded = ['id'];
+    protected $guarded = ['id', 'created_at', 'updated_at'];
 
+    public function etyma() {
+        return $this->hasMany(LexEtyma::class, 'lexicon_id');
+    }
+
+    public function semantic_categories() {
+        return $this->hasMany(LexSemanticCategory::class, 'lexicon_id');
+    }
+
+    public function language_families() {
+        return $this->hasMany(LexLanguageFamily::class, 'lexicon_id');
+    }
 }

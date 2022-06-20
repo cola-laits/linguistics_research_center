@@ -1,0 +1,34 @@
+@extends('lexicon.layout')
+
+@section('content')
+
+    <h1>{{$word->language->name}}</h1>
+    <div>
+    <h2>Word: {{$word->getEntriesCSV()}}</h2>
+    <h3>POS: {{$word->getDisplayPartsOfSpeech()}}</h3>
+    <h3>Gloss: {{$word->gloss}}</h3>
+    </div>
+    <div>
+        <h2>Etymology</h2>
+        <div>
+            @foreach ($word->etyma as $etymon)
+                <p><b>{{$etymon->entry}}</b> {{$etymon->gloss}}</p>
+            @endforeach
+        </div>
+        <h2>Cognates</h2>
+        <div>
+            <ul>
+            @foreach ($word->etyma as $etymon)
+                @foreach ($etymon->reflexes as $reflex)
+                    @if ($word->id === $reflex->id)
+                        @continue
+                    @endif
+                    <li>{{$reflex->language->name}}: <a href="/lexicon/{{$lexicon->slug}}/word/{{$reflex->id}}">{{$reflex->getEntriesCSV()}}</a></li>
+                @endforeach
+            @endforeach
+            </ul>
+        </div>
+    </div>
+
+@endsection
+

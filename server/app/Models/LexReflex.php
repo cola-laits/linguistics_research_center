@@ -88,6 +88,12 @@ class LexReflex extends Model {
         return $this->language->name . ': '.$entries_csv.' (' . $this->gloss . ')';
     }
 
+    public function etyma()
+    {
+        return $this->belongsToMany(LexEtyma::class, 'lex_etyma_reflex', 'reflex_id', 'etyma_id');
+    }
+
+    /** @deprecated use etyma() instead */
     public function etymas()
 	{
 		return $this->belongsToMany(LexEtyma::class, 'lex_etyma_reflex', 'reflex_id', 'etyma_id');

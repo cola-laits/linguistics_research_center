@@ -2,24 +2,69 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LexEtyma;
+use App\Models\LexLanguage;
+use App\Models\LexLexicon;
+use App\Models\LexReflex;
+use App\Models\LexSemanticField;
+use App\Models\Page;
 use Illuminate\Http\Request;
 
 class PublicLexiconController extends Controller
 {
-    public function index(Request $request, $lexicon_slug) {
-        //display lexicon, filters for language, etc
+    public function index(Request $request, $lexicon_slug)
+    {
+        $lex = LexLexicon::where('slug', $lexicon_slug)->firstOrFail();
+        return view('lexicon/lex_home', [
+            'lexicon'=>$lex,
+        ]);
     }
 
-    public function language_index() {
-        // list of words for a particular language
+    public function etymon(Request $request, $lexicon_slug, $etymon_id)
+    {
+        $lex = LexLexicon::where('slug', $lexicon_slug)->firstOrFail();
+        $etymon = LexEtyma::findOrFail($etymon_id);
+        return view('lexicon/lex_etymon', [
+            'lexicon'=>$lex,
+            'etymon'=>$etymon,
+        ]);
     }
 
-    public function etymological_index() {
-        // list of roots in the reconstructed language for this lexicon
+    public function field(Request $request, $lexicon_slug, $field_id)
+    {
+        $lex = LexLexicon::where('slug', $lexicon_slug)->firstOrFail();
+        $field = LexSemanticField::findOrFail($field_id);
+        return view('lexicon/lex_field', [
+            'lexicon'=>$lex,
+            'field'=>$field,
+        ]);
     }
 
-    public function semantic_index() {
-        // like IELEX
+    public function word_home(Request $request, $lexicon_slug, $word_id)
+    {
+        $lex = LexLexicon::where('slug', $lexicon_slug)->firstOrFail();
+        $word = LexReflex::findOrFail($word_id);
+        return view('lexicon/lex_word', [
+            'lexicon'=>$lex,
+            'word'=>$word,
+        ]);
     }
 
+    public function lang_home(Request $request, $lexicon_slug, $lang_id)
+    {
+        $lex = LexLexicon::where('slug', $lexicon_slug)->firstOrFail();
+        $language = LexLanguage::findOrFail($lang_id);
+        return view('lexicon/lex_language', [
+            'lexicon'=>$lex,
+            'language'=>$language,
+        ]);
+    }
+
+    public function search(Request $request, $lexicon_slug)
+    {
+        $lex = LexLexicon::where('slug', $lexicon_slug)->firstOrFail();
+        return view('lexicon/lex_search', [
+            'lexicon'=>$lex,
+        ]);
+    }
 }

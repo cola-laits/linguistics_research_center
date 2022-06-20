@@ -50,4 +50,5 @@ Route::group([
         Route::crud('book-section', 'BookSectionCrudController');
     });
 
+    Route::crud('lex-lexicon', 'LexLexiconCrudController');
 }); // this should be the absolute last line of this file

@@ -12,12 +12,12 @@ services:
     volumes:
       - './server:/var/www/html'
     environment:
-      - VIRTUAL_HOST=lrc.localhost.utexas.edu
+      - VIRTUAL_HOST=${VIRTUAL_HOST:-lrc.localhost.utexas.edu}
       - APP_NAME=LRC
       - APP_ENV=local
       - APP_KEY=base64:MHLjzpUSRe5Y229TnPpokCQXW/a6l9C769NXRxRRJK8=
       - APP_DEBUG=true
-      - APP_URL=http://lrc.localhost.utexas.edu
+      - APP_URL=${APP_URL:-https://lrc.localhost.utexas.edu}
       - LOG_CHANNEL=errorlog
       - DB_CONNECTION=mysql
       - DB_HOST=db
@@ -28,6 +28,7 @@ services:
       - CACHE_DRIVER=database
       - SESSION_DRIVER=database
       - SESSION_LIFETIME=120
+      - VIEW_COMPILED_PATH=/tmp/laravel
   db:
     image: mysql:5.7
     environment:
@@ -36,7 +37,7 @@ services:
       MYSQL_PASSWORD: 'lrc'
       MYSQL_ROOT_PASSWORD: 'lrc'
     ports:
-      - '13309:3306'
+      - '${DB_EXPOSED_PORT:-13309}:3306'
     expose:
       - '3306'
     volumes:

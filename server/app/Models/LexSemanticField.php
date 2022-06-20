@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
+use App\Models\LexEtyma;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use App\Models\LexSemanticCategory;
-use App\Models\LexEtyma;
 
 /**
  * App\Models\LexSemanticField
@@ -65,6 +65,13 @@ class LexSemanticField extends Model {
 		return $this->belongsTo(LexSemanticCategory::class);
 	}
 
+    public function etyma()
+    {
+        return $this->belongsToMany(LexEtyma::class, 'lex_etyma_semantic_field', 'semantic_field_id', 'etyma_id')
+            ->orderBy('order');
+    }
+
+    /** @deprecated use etyma() instead */
 	public function etymas()
 	{
 		return $this->belongsToMany(LexEtyma::class, 'lex_etyma_semantic_field', 'semantic_field_id', 'etyma_id')

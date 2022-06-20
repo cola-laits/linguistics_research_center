@@ -3,6 +3,7 @@
 use App\Http\Controllers\PublicBookController;
 use App\Http\Controllers\PublicEieolController;
 use App\Http\Controllers\PublicIELexController;
+use App\Http\Controllers\PublicLexiconController;
 use App\Http\Controllers\PublicPageController;
 
 Route::controller(PublicPageController::class)->group(function() {
@@ -30,6 +31,15 @@ Route::controller(PublicEieolController::class)->group(function() {
     Route::get('eieol_master_gloss/{series_id}/{language_id}', 'eieol_master_gloss');
     Route::get('eieol_base_form_dictionary/{series_id}/{language_id}', 'eieol_base_form_dictionary');
     Route::get('eieol_english_meaning_index/{series_id}/{language_id}', 'eieol_english_meaning_index');
+});
+
+Route::controller(PublicLexiconController::class)->group(function() {
+    Route::get('lexicon/{lex_slug}', 'index');
+    Route::get('lexicon/{lex_slug}/etymon/{etymon_id}', 'etymon');
+    Route::get('lexicon/{lex_slug}/field/{field_id}', 'field');
+    Route::get('lexicon/{lex_slug}/word/{word_id}', 'word_home');
+    Route::get('lexicon/{lex_slug}/language/{lang_id}', 'lang_home');
+    Route::get('lexicon/{lex_slug}/search', 'search');
 });
 
 Route::get('lex_pokorny', function() {return redirect('lex/master', 301);});
