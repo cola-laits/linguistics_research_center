@@ -44,8 +44,10 @@ class PublicLexiconController extends Controller
     {
         $lex = LexLexicon::where('slug', $lexicon_slug)->firstOrFail();
         $word = LexReflex::findOrFail($word_id);
+        $language = $word->language;
         return view('lexicon/lex_word', [
             'lexicon'=>$lex,
+            'language'=>$language,
             'word'=>$word,
         ]);
     }

@@ -1,4 +1,4 @@
-@extends('lexicon.layout')
+@extends('lexicon.layout-etym')
 
 @section('content')
 
