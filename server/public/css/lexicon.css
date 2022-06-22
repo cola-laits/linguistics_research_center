@@ -1,0 +1,24 @@
+@media (min-width: 768px) {
+    .mainrow {
+        height: 100vh;
+    }
+}
+
+.sidebar ul li {
+    list-style-type: none;
+    list-style-position: outside;
+}
+
+.header-lexiconname {
+    font-weight: bold;
+    color: #317094;
+}
+
+.sidebar {
+    background-color: #317094;
+    color: white;
+}
+
+.sidebar a {
+    color:white;
+}

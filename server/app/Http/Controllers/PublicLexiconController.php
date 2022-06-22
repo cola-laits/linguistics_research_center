@@ -17,6 +17,7 @@ class PublicLexiconController extends Controller
         $lex = LexLexicon::where('slug', $lexicon_slug)->firstOrFail();
         return view('lexicon/lex_home', [
             'lexicon'=>$lex,
+            'selected_sidebar'=>'headword',
         ]);
     }
 
@@ -27,6 +28,8 @@ class PublicLexiconController extends Controller
         return view('lexicon/lex_etymon', [
             'lexicon'=>$lex,
             'etymon'=>$etymon,
+            'selected_sidebar'=>'headword',
+            'selected_sidebar_id'=>$etymon->id,
         ]);
     }
 
@@ -37,6 +40,8 @@ class PublicLexiconController extends Controller
         return view('lexicon/lex_field', [
             'lexicon'=>$lex,
             'field'=>$field,
+            'selected_sidebar'=>'category',
+            'selected_sidebar_id'=>$field->id,
         ]);
     }
 
@@ -49,6 +54,8 @@ class PublicLexiconController extends Controller
             'lexicon'=>$lex,
             'language'=>$language,
             'word'=>$word,
+            'selected_sidebar'=>'headword',
+            'selected_sidebar_id'=>$word->id,
         ]);
     }
 
@@ -59,6 +66,7 @@ class PublicLexiconController extends Controller
         return view('lexicon/lex_language', [
             'lexicon'=>$lex,
             'language'=>$language,
+            'selected_sidebar'=>'headword',
         ]);
     }
 

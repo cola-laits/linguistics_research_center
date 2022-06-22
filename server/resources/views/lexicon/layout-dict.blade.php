@@ -1,20 +1,20 @@
 @extends('lexicon.layout')
 
 @section('search-sidebar')
-    <p>[search bar here]</p>
+    <p>[FIXME search bar here]</p>
     <p>
         <a href="#" onclick="choose_selector_type('headword');return false;">Headwords</a>
         |
         <a href="#" onclick="choose_selector_type('category');return false;">Category</a></p>
-    <div style="height:300px;overflow:scroll;">
-        <div class="selector_type" id="selector_type_headword">
+    <div>
+        <div class="selector_type" id="selector_type_headword"@if ($selected_sidebar!=='headword') style="display:none;"@endif>
             <ul>
                 @foreach ($language->reflexes as $reflex)
                     <li><a href="/lexicon/{{$lexicon->slug}}/word/{{$reflex->id}}">{{$reflex->getEntriesCSV()}}</a></li>
                 @endforeach
             </ul>
         </div>
-        <div class="selector_type" id="selector_type_category">
+        <div class="selector_type" id="selector_type_category"@if ($selected_sidebar!=='category') style="display:none;"@endif>
             <ul>
                 @foreach ($lexicon->semantic_categories as $category)
                     <li>
