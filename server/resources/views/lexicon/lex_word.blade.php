@@ -30,5 +30,8 @@
         </div>
     </div>
 
+    <script>
+        highlight_sidebar('headword', {{$word->id}});
+    </script>
 @endsection
 

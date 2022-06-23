@@ -12,5 +12,8 @@
         @endforeach
     </ul>
 
+    <script>
+        highlight_sidebar('headword', {{$etymon->id}});
+    </script>
 @endsection
 

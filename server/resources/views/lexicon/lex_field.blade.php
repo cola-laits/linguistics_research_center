@@ -17,4 +17,8 @@
         <li>FIXME add them here</li>
     </ul>
 
+    <script>
+        highlight_sidebar('category', {{$field->id}});
+    </script>
+
 @endsection

@@ -4,11 +4,6 @@
     }
 }
 
-.sidebar ul li {
-    list-style-type: none;
-    list-style-position: outside;
-}
-
 .header-lexiconname {
     font-weight: bold;
     color: #317094;
@@ -21,4 +16,25 @@
 
 .sidebar a {
     color:white;
+}
+
+.sidebar ul li {
+    list-style-type: none;
+    list-style-position: outside;
+}
+
+.sidebar ul li.highlighted {
+    background-color: red;
+}
+
+.sidebar .sidebar-header {
+    position: sticky;
+    top: 0;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: #18384a;
+}
+
+.sidebar .sidebar-content {
+
 }
