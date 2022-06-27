@@ -40,6 +40,7 @@ Route::controller(PublicLexiconController::class)->group(function() {
     Route::get('lexicon/{lex_slug}/word/{word_id}', 'word_home');
     Route::get('lexicon/{lex_slug}/language/{lang_id}', 'lang_home');
     Route::get('lexicon/{lex_slug}/search', 'search');
+    Route::get('lexicon/{lex_slug}/page/{page_slug_fragment}', 'page');
 });
 
 Route::get('lex_pokorny', function() {return redirect('lex/master', 301);});

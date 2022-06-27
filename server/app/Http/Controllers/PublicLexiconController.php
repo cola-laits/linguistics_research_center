@@ -77,4 +77,15 @@ class PublicLexiconController extends Controller
             'lexicon'=>$lex,
         ]);
     }
+
+    public function page(Request $request, $lexicon_slug, $page_slug_fragment)
+    {
+        $lex = LexLexicon::where('slug', $lexicon_slug)->firstOrFail();
+        $page_url = "lexicon/".$lexicon_slug.'/page/'.$page_slug_fragment;
+        $page = Page::where('slug', $page_url)->firstOrFail();
+        return view('lexicon/lex_page', [
+            'lexicon'=>$lex,
+            'page'=>$page,
+        ]);
+    }
 }
