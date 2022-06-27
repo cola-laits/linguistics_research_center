@@ -8,6 +8,8 @@
     <link href="/css/lexicon.css" rel="stylesheet">
 
     <script>
+        window.lexicon_slug = "{{$lexicon->slug}}";
+
         function choose_selector_type(type) {
             var selectors = document.getElementsByClassName('selector_type');
             for (var i=0; i<selectors.length; i++ ) {
@@ -35,6 +37,14 @@
                 document.getElementById('sidebar').scrollTo(0, scrollToPosn);
             });
         }
+
+        function go_to_dictionary(select) {
+            if (select.selectedIndex===0) {
+                return;
+            }
+            var id = select.options[select.selectedIndex].value;
+            document.location.href = "/lexicon/"+window.lexicon_slug+"/language/"+id;
+        }
     </script>
 </head>
 <body>
@@ -42,23 +52,41 @@
 <div class="container-fluid">
 <div class="mainrow row">
 <div class="col-lg-9 col-md-12 p-3" style="height:100vh;overflow-y:scroll;">
-    <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
-        <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
+    <header class="d-flex align-items-center justify-content-between pb-3 mb-5 border-bottom">
+        <span>
+        <a href="/" class="text-dark text-decoration-none">
             <img height="43" src="/images/lrc-banner.png" alt="Linguistics Research Center - The University of Texas at Austin">
         </a>
-        <a href="/lexicon/{{$lexicon->slug}}" class="d-flex align-items-center text-dark text-decoration-none">
+        <a href="/lexicon/{{$lexicon->slug}}" class="text-dark text-decoration-none">
             <span class="header-lexiconname fs-4">{{$lexicon->name}}</span>
         </a>
+        </span>
+        <form class="d-flex align-items-center">
+            <div class="col-12">
+                <label for="language_select" class="form-label">Jump to a dictionary:</label>
+                <select class="form-select" id="language_select" onchange="go_to_dictionary(this)">
+                    <option value="" selected>choose a language...</option>
+                    @foreach ($lexicon->language_families as $family)
+                        @foreach ($family->language_sub_families as $subfamily)
+                            <optgroup label="{{$family->name}}: {{$subfamily->name}}">
+                                @foreach ($subfamily->languages as $language)
+                                    <option value="{{$language->id}}">{{$language->name}}</option>
+                                @endforeach
+                            </optgroup>
+                        @endforeach
+                    @endforeach
+                </select>
+            </div>
+        </form>
     </header>
 
     <main>
         @yield('content')
     </main>
 
-    <p><pre>
-        TODO:
+    <div><pre style="background-color:#999999;padding:10px;margin:10px;">
+    TODO:
         add page-specific [title] tags
-        add a way of navigating to a language page from anywhere
         sidebar:
            search bar (should filter currently-displayed list, i guess?)
            better styling for highlighted item other than red background
@@ -68,7 +96,7 @@
         responsive (tablet/mobile) testing
         investigate and add SEO tags
         general style/UI/UX once-over
-    </pre></p>
+    </pre></div>
 </div>
 
 <div id="sidebar" class="sidebar col-lg-3 col-md-12 p-0" style="height:100vh;overflow-y:scroll">
