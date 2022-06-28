@@ -11,6 +11,15 @@
         window.lexicon_slug = "{{$lexicon->slug}}";
 
         function choose_selector_type(type) {
+            var selection_links = document.getElementsByClassName('selector_type_link');
+            for (var i=0;i<selection_links.length;i++) {
+                selection_links.item(i).classList.remove('selected');
+            }
+            var selected_selection_link = document.getElementById('selector_type_link_'+type);
+            if (selected_selection_link) {
+                selected_selection_link.classList.add('selected')
+            }
+
             var selectors = document.getElementsByClassName('selector_type');
             for (var i=0; i<selectors.length; i++ ) {
                 var selector = selectors[i];
@@ -20,7 +29,16 @@
                     selector.style.display = 'none';
                 }
             }
+
             document.getElementById('sidebar').scrollTo(0, 0);
+        }
+
+        function show_selected_sidebar_item(element_to_highlight) {
+            var num_lis_above_highlighted = 4;
+            var scrollToPosn = element_to_highlight.offsetTop
+                - document.getElementById('sidebar-header').offsetHeight
+                - (element_to_highlight.offsetHeight * num_lis_above_highlighted);
+            document.getElementById('sidebar').scrollTo(0, scrollToPosn);
         }
 
         function highlight_sidebar(type, id) {
@@ -30,11 +48,17 @@
                 var element_to_highlight = sidebar_list.querySelector('[data-sidebar-id="'+id+'"]');
                 if (!element_to_highlight) { return; }
                 element_to_highlight.classList.add('highlighted');
-                var num_lis_above_highlighted = 4;
-                var scrollToPosn = element_to_highlight.offsetTop
-                                    - document.getElementById('sidebar-header').offsetHeight
-                                    - (element_to_highlight.offsetHeight * num_lis_above_highlighted);
-                document.getElementById('sidebar').scrollTo(0, scrollToPosn);
+
+                // part of an accordion?  open that accordion.
+                var accordion = element_to_highlight.closest('.accordion-collapse');
+                if (accordion) {
+                    accordion.addEventListener('shown.bs.collapse', function () {
+                        show_selected_sidebar_item(element_to_highlight);
+                    });
+                    new bootstrap.Collapse(accordion, {show: true});
+                } else {
+                    show_selected_sidebar_item(element_to_highlight);
+                }
             });
         }
 
@@ -86,16 +110,18 @@
 
     <div><pre style="background-color:#999999;padding:10px;margin:10px;">
     TODO:
-        add page-specific [title] tags
-        sidebar:
-           search bar (should filter currently-displayed list, i guess?)
-           better styling for highlighted item other than red background
-           categories - click categories to reveal fields in that category; current field's category is already revealed
-        display etyma with asterisk prefix
-        display data (reflexes on etyma pages, cognates on reflex pages, items in sidebar, etc) in some sensible order other than database-id order
-        responsive (tablet/mobile) testing
-        investigate and add SEO tags
-        general style/UI/UX once-over
+        all pages:
+            sidebar search bar (should filter currently-displayed list, i guess?)
+            display data (reflexes on etyma pages, cognates on reflex pages, items in sidebar, etc) in some sensible order other than database-id order
+        search page:
+            completely missing for now (probably need actual SEMITILEX data first)
+        semantic field page:
+            descendent words missing - what's the right UI here?
+        general cleanup / prep for release:
+            add page-specific [title] tags
+            investigate and add SEO tags
+            general style/UI/UX once-over
+            responsive (tablet/mobile) testing
     </pre></div>
 </div>
 

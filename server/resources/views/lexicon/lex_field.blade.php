@@ -7,7 +7,7 @@
     <h3>Etyma</h3>
     <ul>
         @forelse ($field->etyma as $etymon)
-            <li><a href="/lexicon/{{$lexicon->slug}}/etymon/{{$etymon->id}}">{{$etymon->entry}}</a> <span>{!! $etymon->gloss !!}</span></li>
+            <li><sup>*</sup><a href="/lexicon/{{$lexicon->slug}}/etymon/{{$etymon->id}}">{{$etymon->entry}}</a> <span>{!! $etymon->gloss !!}</span></li>
         @empty
             <li>No words found.</li>
         @endforelse

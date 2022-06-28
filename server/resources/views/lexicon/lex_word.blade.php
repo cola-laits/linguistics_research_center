@@ -12,7 +12,7 @@
         <h2>Etymology</h2>
         <div>
             @foreach ($word->etyma as $etymon)
-                <p><b>{{$etymon->entry}}</b> {{$etymon->gloss}}</p>
+                <p><b><sup>*</sup>{{$etymon->entry}}</b> {{$etymon->gloss}}</p>
             @endforeach
         </div>
         <h2>Cognates</h2>

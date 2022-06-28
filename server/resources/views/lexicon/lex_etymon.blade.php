@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h1>{{$etymon->entry}}</h1>
+    <h1><sup>*</sup>{{$etymon->entry}}</h1>
     <div>
         {!! $etymon->gloss !!}
     </div>

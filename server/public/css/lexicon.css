@@ -18,13 +18,23 @@
     color:white;
 }
 
+.sidebar a.selector_type_link.selected {
+    text-decoration: none;
+}
+
 .sidebar ul li {
     list-style-type: none;
     list-style-position: outside;
 }
 
 .sidebar ul li.highlighted {
-    background-color: red;
+    margin: 10px;
+    padding: 5px;
+}
+
+.sidebar ul li.highlighted::before {
+    content: "⮞ ";
+    color: white;
 }
 
 .sidebar .sidebar-header {
@@ -33,8 +43,21 @@
     padding: 1rem;
     margin-bottom: 1rem;
     background-color: #18384a;
+    z-index: 100;
 }
 
 .sidebar .sidebar-content {
 
+}
+
+#selector_type_category {
+    padding: 10px;
+}
+
+#selector_type_category .accordion-body a {
+    color: #0d6efd;
+}
+
+#selector_type_category ul li.highlighted::before {
+    color: #0d6efd;
 }

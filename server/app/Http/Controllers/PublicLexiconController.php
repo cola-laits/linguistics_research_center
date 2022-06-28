@@ -86,6 +86,7 @@ class PublicLexiconController extends Controller
         return view('lexicon/lex_page', [
             'lexicon'=>$lex,
             'page'=>$page,
+            'selected_sidebar'=>'headword',
         ]);
     }
 }
