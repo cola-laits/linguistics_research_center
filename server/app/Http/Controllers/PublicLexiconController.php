@@ -14,7 +14,7 @@ class PublicLexiconController extends Controller
 {
     public function index(Request $request, $lexicon_slug)
     {
-        $lex = LexLexicon::where('slug', $lexicon_slug)->firstOrFail();
+        $lex = $this->getLexicon($lexicon_slug);
         return view('lexicon/lex_home', [
             'lexicon'=>$lex,
             'selected_sidebar'=>'headword',
@@ -23,8 +23,11 @@ class PublicLexiconController extends Controller
 
     public function etymon(Request $request, $lexicon_slug, $etymon_id)
     {
-        $lex = LexLexicon::where('slug', $lexicon_slug)->firstOrFail();
-        $etymon = LexEtyma::findOrFail($etymon_id);
+        $lex = $this->getLexicon($lexicon_slug);
+        $etymon = LexEtyma::with([
+            'reflexes',
+            'reflexes.language'
+        ])->findOrFail($etymon_id);
         return view('lexicon/lex_etymon', [
             'lexicon'=>$lex,
             'etymon'=>$etymon,
@@ -35,8 +38,10 @@ class PublicLexiconController extends Controller
 
     public function field(Request $request, $lexicon_slug, $field_id)
     {
-        $lex = LexLexicon::where('slug', $lexicon_slug)->firstOrFail();
-        $field = LexSemanticField::findOrFail($field_id);
+        $lex = $this->getLexicon($lexicon_slug);
+        $field = LexSemanticField::with([
+            'etyma'
+        ])->findOrFail($field_id);
         return view('lexicon/lex_field', [
             'lexicon'=>$lex,
             'field'=>$field,
@@ -47,8 +52,12 @@ class PublicLexiconController extends Controller
 
     public function word_home(Request $request, $lexicon_slug, $word_id)
     {
-        $lex = LexLexicon::where('slug', $lexicon_slug)->firstOrFail();
-        $word = LexReflex::findOrFail($word_id);
+        $lex = $this->getLexicon($lexicon_slug);
+        $word = LexReflex::with([
+            'etyma',
+            'etyma.reflexes',
+            'etyma.reflexes.language',
+        ])->findOrFail($word_id);
         $language = $word->language;
         return view('lexicon/lex_word', [
             'lexicon'=>$lex,
@@ -61,7 +70,7 @@ class PublicLexiconController extends Controller
 
     public function lang_home(Request $request, $lexicon_slug, $lang_id)
     {
-        $lex = LexLexicon::where('slug', $lexicon_slug)->firstOrFail();
+        $lex = $this->getLexicon($lexicon_slug);
         $language = LexLanguage::findOrFail($lang_id);
         return view('lexicon/lex_language', [
             'lexicon'=>$lex,
@@ -72,7 +81,7 @@ class PublicLexiconController extends Controller
 
     public function search(Request $request, $lexicon_slug)
     {
-        $lex = LexLexicon::where('slug', $lexicon_slug)->firstOrFail();
+        $lex = $this->getLexicon($lexicon_slug);
         return view('lexicon/lex_search', [
             'lexicon'=>$lex,
         ]);
@@ -80,7 +89,7 @@ class PublicLexiconController extends Controller
 
     public function page(Request $request, $lexicon_slug, $page_slug_fragment)
     {
-        $lex = LexLexicon::where('slug', $lexicon_slug)->firstOrFail();
+        $lex = $this->getLexicon($lexicon_slug);
         $page_url = "lexicon/".$lexicon_slug.'/page/'.$page_slug_fragment;
         $page = Page::where('slug', $page_url)->firstOrFail();
         return view('lexicon/lex_page', [
@@ -88,5 +97,17 @@ class PublicLexiconController extends Controller
             'page'=>$page,
             'selected_sidebar'=>'headword',
         ]);
+    }
+
+    protected function getLexicon($lexicon_slug)
+    {
+        return LexLexicon::where('slug', $lexicon_slug)
+            ->with([
+                'language_families',
+                'language_families.language_sub_families',
+                'language_families.language_sub_families.languages',
+                'semantic_categories',
+                'semantic_categories.semantic_fields',
+            ])->firstOrFail();
     }
 }

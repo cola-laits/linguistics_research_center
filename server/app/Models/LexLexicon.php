@@ -18,10 +18,12 @@ class LexLexicon extends Model
     }
 
     public function semantic_categories() {
-        return $this->hasMany(LexSemanticCategory::class, 'lexicon_id');
+        return $this->hasMany(LexSemanticCategory::class, 'lexicon_id')
+            ->orderBy('number');
     }
 
     public function language_families() {
-        return $this->hasMany(LexLanguageFamily::class, 'lexicon_id');
+        return $this->hasMany(LexLanguageFamily::class, 'lexicon_id')
+            ->orderBy('order');
     }
 }

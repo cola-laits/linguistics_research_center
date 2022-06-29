@@ -57,7 +57,8 @@ class LexLanguageFamily extends Model {
 
 	public function language_sub_families()
 	{
-		return $this->hasMany(LexLanguageSubFamily::class, 'family_id', 'id')->orderBy('order');
+		return $this->hasMany(LexLanguageSubFamily::class, 'family_id', 'id')
+            ->orderBy('order');
 	}
 
 	public function getFamilyAttribute()

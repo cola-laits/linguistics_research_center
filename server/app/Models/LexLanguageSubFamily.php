@@ -61,7 +61,8 @@ class LexLanguageSubFamily extends Model {
 
 	public function languages()
 	{
-		return $this->hasMany(LexLanguage::class, 'sub_family_id', 'id')->orderBy('order');
+		return $this->hasMany(LexLanguage::class, 'sub_family_id', 'id')
+            ->orderBy('order');
 	}
 
 	public function language_family()
