@@ -1,8 +1,9 @@
 <?php
 
+/** @noinspection PhpMissingReturnTypeInspection */
+/** @noinspection PhpUnused */
 
 namespace App\Http\Controllers;
-
 
 use App\Models\EieolLanguage;
 use App\Models\EieolLesson;
@@ -16,7 +17,9 @@ class PublicEieolController extends Controller
     public function eieol() {
         return view('eieol')->with([
             'content' => Page::whereSlug('eieol')->first()->content,
-            'serieses' => EieolSeries::where('published', '=', True)->get()->sortBy('order')
+            'serieses' => EieolSeries::where('published', '=', True)
+                ->orderBy('order')
+                ->get()
         ]);
     }
 
@@ -24,7 +27,7 @@ class PublicEieolController extends Controller
         $series = EieolSeries::findOrFail($series_id);
 
         if ($request->has('id')) {
-            $lesson = EieolLesson::find($request->get('id'));
+            $lesson = EieolLesson::findOrFail($request->get('id'));
             return redirect('eieol/' . $series->slug . '/' . $lesson->order, 301);
         }
 
@@ -110,8 +113,8 @@ class PublicEieolController extends Controller
             ->where('series_id', '=', $series->id)
             ->where('language_id', '=', $language_id)
             ->select(['id', 'title', 'order'])
-            ->get()
-            ->sortBy('order');
+            ->orderBy('order')
+            ->get();
 
         //loop through all the lessons, glossed texts and glosses to group like glosses
         foreach ($lessons as $lesson) {
@@ -144,7 +147,7 @@ class PublicEieolController extends Controller
 
         } //foreach lesson
 
-        foreach ($glosses as $key=>&$value) {
+        foreach ($glosses as &$value) {
             $value['sortable_key'] = \Normalizer::normalize($value['surface_form'], \Normalizer::FORM_D);
         }
         unset($value);
@@ -167,8 +170,8 @@ class PublicEieolController extends Controller
             ->where('series_id', '=', $series->id)
             ->where('language_id', '=', $language_id)
             ->select(array('id', 'title', 'order'))
-            ->get()
-            ->sortBy('order');
+            ->orderBy('order')
+            ->get();
 
         //loop through all the lessons, glossed texts and glosses to group like head words
 
@@ -238,8 +241,8 @@ class PublicEieolController extends Controller
             ->where('series_id', '=', $series->id)
             ->where('language_id', '=', $language_id)
             ->select(array('id', 'title', 'order'))
-            ->get()
-            ->sortBy('order');
+            ->orderBy('order')
+            ->get();
 
         //loop through all the lessons, glossed texts and glosses to group like keywords
 

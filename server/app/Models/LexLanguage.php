@@ -104,4 +104,16 @@ class LexLanguage extends Model {
 			return $this->language_sub_family->language_family->name;
 		}
 	}
+
+    public function getCharSortWeights(): array
+    {
+        $alpha_weights = [];
+        $alphabet = explode(',', $this->custom_sort);
+        foreach ($alphabet as $ctr => $alpha) {
+            foreach (mb_str_split($alpha, 1, 'UTF-8') as $char) {
+                $alpha_weights[$char] = $ctr + 1;
+            }
+        }
+        return $alpha_weights;
+    }
 }

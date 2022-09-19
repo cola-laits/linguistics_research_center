@@ -1,9 +1,11 @@
 <?php
 
+/** @noinspection PhpUnused */
+/** @noinspection PhpMissingReturnTypeInspection */
+
 namespace App\Http\Controllers;
 
 use App\Models\Book;
-use Illuminate\Http\Request;
 
 class PublicBookController extends Controller
 {

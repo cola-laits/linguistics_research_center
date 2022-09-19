@@ -14,7 +14,8 @@ class LexLexicon extends Model
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
     public function etyma() {
-        return $this->hasMany(LexEtyma::class, 'lexicon_id');
+        return $this->hasMany(LexEtyma::class, 'lexicon_id')
+            ->orderBy('entry');
     }
 
     public function semantic_categories() {
