@@ -140,6 +140,9 @@ class Lex_reflexCrudController extends CrudController
 
 //        CRUD::field('parts_of_speech')->type('table')...
 
+        // for now, show them that the extra data is there without letting them break it
+        CRUD::field('extra_data')->attributes(['readonly'=>'readonly']);
+
         /**
          * Fields can be defined using the fluent syntax or array syntax:
          * - CRUD::field('price')->type('number');

@@ -109,10 +109,13 @@
     </main>
 
     <div><pre style="background-color:#999999;padding:10px;margin:10px;">
+    10/3/2022 - Right now, mostly just focusing on getting all the right information on the page, and working out page-to-page navigation.
+
     TODO:
         all pages:
             sidebar search bar (should filter currently-displayed list, i guess?)
             display data (reflexes on etyma pages, cognates on reflex pages, items in sidebar, etc) in some sensible order other than database-id order
+            Semitilex 'Categories' on right-side bar - for IELEX these are Pokorny's list of 'Semantic Categories'.  What are they here?
         search page:
             completely missing for now (probably need actual SEMITILEX data first)
         semantic field page:

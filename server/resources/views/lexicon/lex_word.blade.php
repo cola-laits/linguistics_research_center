@@ -15,6 +15,16 @@
                 <p><b><sup>*</sup>{{$etymon->entry}}</b> {{$etymon->gloss}}</p>
             @endforeach
         </div>
+        @if ($word->extra_data)
+        <h2>Other info:</h2>
+        <div>
+            <ul>
+            @foreach ($word->extra_data as $name=>$value)
+                    <li>{{$name}}: {{$value}}</li>
+            @endforeach
+            </ul>
+        </div>
+        @endif
         <h2>Cognates</h2>
         <div>
             <ul>

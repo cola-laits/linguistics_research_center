@@ -60,6 +60,7 @@ class LexReflex extends Model {
 
 	protected $casts = [
 	    'entries' => 'array',
+        'extra_data' => 'array',
     ];
 
     protected $appends = ['langAbbrGloss','langNameEntriesGloss'];
@@ -69,13 +70,17 @@ class LexReflex extends Model {
 
 		// event to happen on saving
 		static::creating(function($table)  {
-			$table->created_by = Auth::user()->username;
-			$table->updated_by = Auth::user()->username;
+            if (Auth::user()) {
+                $table->created_by = Auth::user()->username;
+                $table->updated_by = Auth::user()->username;
+            }
 		});
 
 		// event to happen on updating
 		static::updating(function($table)  {
-			$table->updated_by = Auth::user()->username;
+            if (Auth::user()) {
+                $table->updated_by = Auth::user()->username;
+            }
 		});
 
 	}

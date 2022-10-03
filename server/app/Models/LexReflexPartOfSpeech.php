@@ -49,13 +49,17 @@ class LexReflexPartOfSpeech extends Model {
 
 		// event to happen on saving
 		static::creating(function($table)  {
-			$table->created_by = Auth::user()->username;
-			$table->updated_by = Auth::user()->username;
+            if (Auth::user()) {
+                $table->created_by = Auth::user()->username;
+                $table->updated_by = Auth::user()->username;
+            }
 		});
 
 		// event to happen on updating
 		static::updating(function($table)  {
-			$table->updated_by = Auth::user()->username;
+            if (Auth::user()) {
+                $table->updated_by = Auth::user()->username;
+            }
 		});
 
 	}

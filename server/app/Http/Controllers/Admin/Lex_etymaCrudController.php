@@ -106,6 +106,8 @@ class Lex_etymaCrudController extends CrudController
         CRUD::field('semantic_fields')->type('select2_multiple')->model('App\Models\LexSemanticField')->attribute('text')->pivot(true);
         CRUD::field('reflexes')->type('relationship')->attribute('langNameEntriesGloss')->pivot(true)->ajax(true);
 
+        // for now, show them that the extra data is there without letting them break it
+        CRUD::field('extra_data')->attributes(['readonly'=>'readonly']);
         /*
         CRUD::field('reflexes')
             ->type('relationship')

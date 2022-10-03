@@ -46,19 +46,26 @@ class LexEtyma extends Model {
 
 	protected $table = 'lex_etyma';
 	protected $guarded = ['id'];
+    protected $casts = [
+        'extra_data' => 'array'
+    ];
 
 	public static function boot() {
 		parent::boot();
 
 		// event to happen on saving
 		static::creating(function($table)  {
-			$table->created_by = Auth::user()->username;
-			$table->updated_by = Auth::user()->username;
+            if (Auth::user()) {
+                $table->created_by = Auth::user()->username;
+                $table->updated_by = Auth::user()->username;
+            }
 		});
 
 		// event to happen on updating
 		static::updating(function($table)  {
-			$table->updated_by = Auth::user()->username;
+            if (Auth::user()) {
+                $table->updated_by = Auth::user()->username;
+            }
 		});
 
 	}
