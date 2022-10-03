@@ -130,7 +130,7 @@ class ImportProtoSemiticCsv extends Command
                 }
                 $extra_data->{$name} = $value;
             }
-            $lex_etymon->extra_data = json_encode($extra_data);
+            $lex_etymon->extra_data = $extra_data;
             $lex_etymon->save();
             $etyma_dbids[$etymon_id] = $lex_etymon->id;
 
@@ -172,7 +172,7 @@ class ImportProtoSemiticCsv extends Command
                 }
                 $extra_data->{$name} = $value;
             }
-            $lex_reflex->extra_data = json_encode($extra_data);
+            $lex_reflex->extra_data = $extra_data;
             $lex_reflex->save();
             if ($csv_row['Part of Speech']) {
                 $pos_text = strtolower($csv_row['Part of Speech']);
