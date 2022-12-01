@@ -58,7 +58,8 @@ class PublicIELexController extends Controller
         $alpha_weights = $language->getCharSortWeights();
 
         $reflexes = LexReflex::whereLanguageId($language->id)
-            ->with('etymas')
+            ->with('etymas:id,old_id,entry,gloss')
+            ->select(['id', 'language_id', 'lang_attribute', 'class_attribute', 'gloss', 'entries'])
             ->get()
             ->filter(fn ($reflex) => count($reflex->etymas) > 0)
         ;
