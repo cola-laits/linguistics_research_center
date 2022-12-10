@@ -8,8 +8,6 @@
 
 <h2>PIE Etyma and IE Reflexes</h2>
 
-<h3 class="AUTH">Jonathan Slocum</h3>
-
 <div class="skinny">
 
 {!! $content !!}
