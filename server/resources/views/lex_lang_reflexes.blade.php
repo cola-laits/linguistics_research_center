@@ -37,12 +37,13 @@ or <i>lie</i>, represent multiple reflexes derived from different PIE etyma.</p>
 
         var table = document.getElementById('reflexTable');
         table.remove();
+        var table_body = table.getElementsByTagName('tbody')[0];
+        table.removeChild(table_body);
 
-        var rows = table.getElementsByClassName('searchable_reflex_row');
+        var rows = table_body.getElementsByTagName('tr');
         Array.prototype.forEach.call(rows, function(row) {
             var cells = row.getElementsByTagName('td');
             var reflex_text = cells[0].innerText.trim();
-            var etyma_text = cells[1].innerText.trim();
             var passes_filter = query==='' || re.test(reflex_text);
             if (passes_filter) {
                 row.classList.remove('hidden_row');
@@ -50,6 +51,7 @@ or <i>lie</i>, represent multiple reflexes derived from different PIE etyma.</p>
                 row.classList.add('hidden_row');
             }
         })
+        table.appendChild(table_body);
 
         document.getElementById('reflexTableContainer').appendChild(table);
     }
