@@ -47,7 +47,11 @@
 }
 
 .sidebar .sidebar-content {
+    padding: 1rem;
+}
 
+.sidebar .sidebar-search-area {
+    padding-bottom: 1rem;
 }
 
 #selector_type_category {
