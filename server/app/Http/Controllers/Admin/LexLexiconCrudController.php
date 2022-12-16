@@ -61,6 +61,7 @@ class LexLexiconCrudController extends CrudController
 
         CRUD::field('name');
         CRUD::field('slug');
+        CRUD::field('protolang_name')->label('Proto-language name');
         CRUD::field('description')->type('wysiwyg');
 
         /**

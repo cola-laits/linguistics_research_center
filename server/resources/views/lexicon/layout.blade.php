@@ -67,7 +67,11 @@
                 return;
             }
             var id = select.options[select.selectedIndex].value;
-            document.location.href = "/lexicon/"+window.lexicon_slug+"/language/"+id;
+            if (id==='protolang') {
+                document.location.href = "/lexicon/" + window.lexicon_slug;
+            } else {
+                document.location.href = "/lexicon/" + window.lexicon_slug + "/language/" + id;
+            }
         }
 
         function search_word_sidebar(value) {
@@ -107,6 +111,9 @@
                 <label for="language_select" class="form-label">Jump to a dictionary:</label>
                 <select class="form-select" id="language_select" onchange="go_to_dictionary(this)">
                     <option value="" selected>choose a language...</option>
+                    <optgroup label="{{$lexicon->protolang_name}}">
+                        <option value="protolang">{{$lexicon->protolang_name}}</option>
+                    </optgroup>
                     @foreach ($lexicon->language_families as $family)
                         @foreach ($family->language_sub_families as $subfamily)
                             <optgroup label="{{$family->name}}: {{$subfamily->name}}">
