@@ -4,10 +4,13 @@ namespace App\Console\Commands;
 
 use App\Models\LexEtyma;
 use App\Models\LexEtymaReflex;
+use App\Models\LexEtymaSemanticField;
 use App\Models\LexLanguage;
 use App\Models\LexPartOfSpeech;
 use App\Models\LexReflex;
 use App\Models\LexReflexPartOfSpeech;
+use App\Models\LexSemanticCategory;
+use App\Models\LexSemanticField;
 use Illuminate\Console\Command;
 
 class ImportProtoSemiticCsv extends Command
@@ -43,8 +46,11 @@ class ImportProtoSemiticCsv extends Command
      */
     public function handle()
     {
-        \DB::transaction(function() {
         $semitic_lexicon_id = 2;
+
+        $this->copySemantic($semitic_lexicon_id);
+
+        \DB::transaction(function() use ($semitic_lexicon_id) {
 
         // do the languages exist?
         $iso_lang_codes = ['Akkadian'=>'akk', 'Syriac'=>'syr', 'Ethiopic'=>'gez', 'Hebrew'=>'he', 'Arabic'=>'ar'];
@@ -122,7 +128,7 @@ class ImportProtoSemiticCsv extends Command
             $etymon_id = $csv_row['ID'];
             $extra_data = new \stdClass;
             foreach ($csv_row as $name=>$value) {
-                if (in_array($name, ['ID', 'ETYMON ID', 'Etymon', 'root', 'meaning', 'language'])) {
+                if (in_array($name, ['ID', 'ETYMON ID', 'Etymon', 'root', 'meaning', 'language', 'semantic tag'])) {
                     continue;
                 }
                 if (trim($value)==="") {
@@ -133,6 +139,19 @@ class ImportProtoSemiticCsv extends Command
             $lex_etymon->extra_data = $extra_data;
             $lex_etymon->save();
             $etyma_dbids[$etymon_id] = $lex_etymon->id;
+
+            $semantic_fields = \DB::select(
+                'select field.id from lex_semantic_field as field, lex_semantic_category as category'
+                . ' where field.semantic_category_id=category.id and category.lexicon_id=?'
+                . ' and field.abbr=?',
+                [$semitic_lexicon_id, $csv_row['semantic tag']]
+            );
+            if (count($semantic_fields)>0) {
+                $lex_sem = new LexEtymaSemanticField();
+                $lex_sem->etyma_id = $lex_etymon->id;
+                $lex_sem->semantic_field_id = $semantic_fields[0]->id;
+                $lex_sem->save();
+            }
 
             \Log::info($csv_row['ID'].' gloss: '.$lex_etymon->gloss.' | '.$lex_etymon->entry);
         }
@@ -209,6 +228,26 @@ class ImportProtoSemiticCsv extends Command
         });
     }
 
+    protected function copySemantic($lex_id) {
+        if (LexSemanticCategory::where('lexicon_id', $lex_id)->first()) {
+            return;
+        }
+        \DB::transaction(function() use ($lex_id) {
+            $cats = LexSemanticCategory::all();
+            foreach ($cats as $cat) {
+                $newcat = $cat->replicate();
+                $newcat->lexicon_id = $lex_id;
+                $newcat->save();
+
+                foreach ($cat->semantic_fields as $field) {
+                    $newfield = $field->replicate();
+                    $newfield->semantic_category_id = $newcat->id;
+                    $newfield->save();
+                }
+            }
+        });
+    }
+
     // How do I get the etymon entry from the noun spreadsheet?
     protected function getEtymonEntryNoun($csv_row) {
         return $csv_row['Etymon'];
@@ -216,7 +255,7 @@ class ImportProtoSemiticCsv extends Command
 
     // How do I get the etymon entry from the verb spreadsheet?
     protected function getEtymonEntryVerb($csv_row) {
-        return $csv_row['root'];
+        return $csv_row['Etymon'];
     }
 
     // How do I get the etymon gloss from the noun spreadsheet?
