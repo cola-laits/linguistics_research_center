@@ -75,10 +75,11 @@
         }
 
         function search_word_sidebar(value) {
+            value = value.trim();
             var items = document.getElementById('sidebar-word-list').getElementsByTagName('li');
             for (var i=0;i<items.length;i++) {
                 var item = items[i];
-                if (item.innerText.indexOf(value) === -1) {
+                if (item.innerText.toLowerCase().indexOf(value.toLowerCase()) === -1) {
                     item.style.display = 'none';
                 } else {
                     item.style.display = '';
@@ -90,6 +91,48 @@
             document.getElementById('search_word_text').value='';
             search_word_sidebar('');
         }
+
+        function search_category_sidebar(value) {
+            value = value.trim();
+            var items = document.getElementById('accordionCategory').getElementsByClassName('accordion-item');
+            for (var i=0;i<items.length;i++) {
+                var item = items[i];
+                var fields = item.getElementsByTagName('li');
+                var num_fields_shown = 0;
+                Array.from(fields).forEach(function (field) {
+                    if (field.getElementsByTagName('a')[0].innerText.toLowerCase().indexOf(value.toLowerCase()) === -1) {
+                        field.style.display = 'none';
+                    } else {
+                        field.style.display = '';
+                        num_fields_shown++;
+                    }
+                });
+
+                if (num_fields_shown > 0) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+                if (value==='') {
+                    bootstrap.Collapse.getOrCreateInstance(item.getElementsByClassName('accordion-collapse')[0]).hide();
+                } else {
+                    bootstrap.Collapse.getOrCreateInstance(item.getElementsByClassName('accordion-collapse')[0]).show();
+                }
+            }
+        }
+
+        function clear_category_search() {
+            document.getElementById('search_category_text').value='';
+            search_category_sidebar('');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var items = document.getElementById('accordionCategory').getElementsByClassName('accordion-item');
+            for (var i=0;i<items.length;i++) {
+                var item = items[i];
+                bootstrap.Collapse.getOrCreateInstance(item.getElementsByClassName('accordion-collapse')[0], {toggle:false});
+            }
+        })
     </script>
 </head>
 <body>
@@ -138,7 +181,6 @@
     TODO:
         all pages:
             display data (reflexes on etyma pages, cognates on reflex pages, items in sidebar, etc) in some sensible order other than database-id order
-            Semitilex 'Categories' on right-side bar - for IELEX these are Pokorny's list of 'Semantic Categories'.  What are they here?
         search page:
             completely missing for now (probably need actual SEMITILEX data first)
         semantic field page:
@@ -183,6 +225,21 @@
             </ul>
         </div>
         <div class="selector_type" id="selector_type_category"@if ($selected_sidebar!=='category') style="display:none;"@endif>
+            <div class="sidebar-search-area">
+                <form id="search_form" onsubmit="search_category_sidebar(this.text.value);return false;" class="row row-cols-lg-auto align-items-center">
+                    <div class="col-9">
+                        <div class="input-group">
+                            <input type="text" id="search_category_text" name="text" class="form-control">
+                            <button class="btn btn-outline-secondary" style="background-color:white;" type="button" onclick="clear_category_search()">
+                                <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.72 5.72a.75.75 0 011.06 0L12 10.94l5.22-5.22a.75.75 0 111.06 1.06L13.06 12l5.22 5.22a.75.75 0 11-1.06 1.06L12 13.06l-5.22 5.22a.75.75 0 01-1.06-1.06L10.94 12 5.72 6.78a.75.75 0 010-1.06z"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <button type="submit" class="btn btn-light">Search</button>
+                    </div>
+                </form>
+            </div>
             <div class="accordion" id="accordionCategory">
                 @foreach ($lexicon->semantic_categories as $category)
                     <div class="accordion-item">
@@ -191,7 +248,7 @@
                                 {{$category->text}}
                             </button>
                         </h2>
-                        <div id="accordion_category_collapse_{{$category->id}}" class="accordion-collapse collapse" aria-labelledby="accordion_category_heading_{{$category->id}}" data-bs-parent="#accordionCategory">
+                        <div id="accordion_category_collapse_{{$category->id}}" class="accordion-collapse collapse" aria-labelledby="accordion_category_heading_{{$category->id}}">
                             <div class="accordion-body">
                                 <ul>
                                     @foreach ($category->semantic_fields as $field)
