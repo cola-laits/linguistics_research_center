@@ -124,10 +124,10 @@ class PublicEieolController extends Controller
                 foreach ($glossed_text->glosses as $gloss) {
                     //unique key is the surface form with all pos and analysis
 
-                    $key = $gloss->surface_form . ' -- '
+                    $key = sha1($gloss->surface_form . ' -- '
                         . $gloss->elements->map(function($element) {
-                            return $element->part_of_speech . '; ' . $element->analysis;
-                        })->implode(' + ');
+                            return $element->part_of_speech . '; ' . $element->analysis . ':' . $element->head_word_id;
+                        })->implode(' + '));
 
                     //remove any tags like sup or sub
                     $key = strip_tags($key);
