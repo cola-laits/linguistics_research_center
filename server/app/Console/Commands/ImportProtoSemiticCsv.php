@@ -183,7 +183,7 @@ class ImportProtoSemiticCsv extends Command
             $lex_reflex->updated_by = "ps importer";
             $extra_data = new \stdClass;
             foreach ($csv_row as $name=>$value) {
-                if (in_array($name, ['ID', 'ETYMON ID', 'root', 'meaning', 'language', 'Part of Speech'])) {
+                if (in_array($name, ['ID', 'ETYMON ID', 'root', 'meaning', 'language', 'Part of Speech', 'semantic tag'])) {
                     continue;
                 }
                 if (trim($value)==="") {

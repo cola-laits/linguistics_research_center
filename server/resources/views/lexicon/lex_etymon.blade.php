@@ -12,6 +12,14 @@
             <li><a href="/lexicon/{{$lexicon->slug}}/word/{{$reflex->id}}">{{$reflex->getLangNameEntriesGlossAttribute()}}</a></li>
         @endforeach
     </ul>
+
+    @if ($etymon->semantic_fields->count() > 0)
+    <h2>Semantic Field</h2>
+    @foreach ($etymon->semantic_fields as $field)
+    <p>{{$field->semantic_category->text}}: {{$field->text}}</p>
+    @endforeach
+    @endif
+
     @if ($etymon->extra_data)
         <h2>Other info:</h2>
         <div>
