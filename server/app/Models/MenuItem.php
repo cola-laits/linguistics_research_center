@@ -21,7 +21,6 @@ class MenuItem extends Model
     protected $guarded = ['id', 'created_at', 'updated_at'];
     // protected $fillable = [];
     // protected $hidden = [];
-    // protected $dates = [];
 
     /*
     |--------------------------------------------------------------------------

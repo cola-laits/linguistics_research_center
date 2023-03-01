@@ -113,6 +113,8 @@ return [
     // Show powered by Laravel Backpack in the footer? true/false
     'show_powered_by' => false,
 
+    'show_getting_started' => false,
+
     // -------
     // SCRIPTS
     // -------
