@@ -7,7 +7,7 @@ RUN test -f auth.json || composer config http-basic.backpackforlaravel.com $BACK
 RUN composer install --ignore-platform-reqs --no-dev
 
 
-FROM node:13 as npmbuild
+FROM node:18 as npmbuild
 COPY --from=phpbuild /var/www/html /var/www/html
 WORKDIR /var/www/html
 RUN npm ci && npm run production
