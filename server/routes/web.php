@@ -99,6 +99,6 @@ Route::group(array('prefix'=> 'admin2', 'middleware' => 'auth'), function() {
     Route::post('/files/upload', 'FilesController@post_file');
 });
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/home', 'AdminController@index')->name('home');
