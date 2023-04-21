@@ -39,32 +39,24 @@ return new class extends Migration
 
         Schema::table('lex_part_of_speech', function(Blueprint $table) {
             $table->dropUnique(['code']);
-            $table->dropIndex(['code']);
             $table->index(['lexicon_id', 'code']);
         });
         Schema::table('lex_language_family', function(Blueprint $table) {
             $table->dropUnique(['name']);
-            $table->dropUnique(['order']);
-            $table->dropIndex(['order']);
             $table->index(['lexicon_id', 'name', 'order']);
         });
         Schema::table('lex_semantic_category', function(Blueprint $table) {
             $table->dropUnique(['abbr']);
-            $table->dropUnique(['number']);
             $table->dropUnique(['text']);
-            $table->dropIndex(['number']);
             $table->index(['lexicon_id', 'abbr']);
         });
         Schema::table('lex_source', function(Blueprint $table) {
-            $table->dropUnique(['code']);
             $table->dropUnique(['display']);
-            $table->dropIndex(['code']);
             $table->index(['lexicon_id', 'code']);
         });
         Schema::table('lex_etyma', function(Blueprint $table) {
             $table->dropUnique(['order']);
             $table->dropUnique(['old_id']);
-            $table->dropIndex(['order']);
             $table->index(['lexicon_id', 'order']);
         });
 

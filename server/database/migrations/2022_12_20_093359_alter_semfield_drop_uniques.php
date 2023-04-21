@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::table('lex_semantic_field', function(Blueprint $table) {
             $table->dropUnique(['text']);
             $table->dropUnique(['abbr']);
-            $table->dropUnique(['number']);
         });
     }
 
