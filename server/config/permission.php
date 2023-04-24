@@ -30,6 +30,8 @@ return [
 
     'table_names' => [
 
+        'users' => 'user',
+
         /*
          * When using the "HasRoles" trait from this package, we need to know which
          * table should be used to retrieve your roles. We have chosen a basic
