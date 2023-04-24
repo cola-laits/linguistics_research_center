@@ -5,7 +5,6 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
-use App\Models\LexSemanticField;
 
 /**
  * App\Models\LexSemanticCategory
@@ -68,5 +67,10 @@ class LexSemanticCategory extends Model {
     public function lexicon()
     {
         return $this->belongsTo(LexLexicon::class, 'lexicon_id');
+    }
+
+    public function getLexTextAttribute()
+    {
+        return $this->lexicon->name . ' - ' . $this->text;
     }
 }
