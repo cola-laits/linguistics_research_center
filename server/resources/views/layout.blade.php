@@ -116,18 +116,6 @@
     <!-- end donation box modal -->
     @endif
 
-<!-- Google Tag Manager - Removed Google Analytics Script - Now managing through GTM 'GA Page Tracker CLA' and 'GA Page Tracker UT' -->
-
-    <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-MWRKVL"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-MWRKVL');</script>
-
-<!-- End Google Tag Manager -->
-
 <!--
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 All the content is wrapped in "off-canvas-wrap" and inner-wrap"

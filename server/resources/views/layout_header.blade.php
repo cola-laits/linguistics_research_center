@@ -12,8 +12,8 @@
         </script>
     @endif
 
-    <!--  This is a separate file so it can be called from layout.blade,
-but also used to make printable lessons in the public controller -->
+    {{--  This is a separate file so it can be called from layout.blade,
+but also used to make printable lessons in the public controller --}}
 
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0 maximum-scale=1" name="viewport"/>
@@ -52,6 +52,8 @@ but also used to make printable lessons in the public controller -->
 <!-- END CSS LOADING -->
 
     <script src="/js/jquery-1.11.1.min.js" type="text/javascript"></script>
+
+    @include('analytics_bug')
 
 </head>
 <body>

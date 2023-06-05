@@ -134,6 +134,8 @@
             }
         })
     </script>
+
+    @include('analytics_bug')
 </head>
 <body>
 
@@ -176,7 +178,7 @@
     </main>
 
     <div><pre style="background-color:#999999;padding:10px;margin:10px;">
-    10/3/2022 - Right now, mostly just focusing on getting all the right information on the page, and working out page-to-page navigation.
+    Right now, mostly just focusing on getting all the right information on the page, and working out page-to-page navigation.
 
     TODO:
         all pages:
