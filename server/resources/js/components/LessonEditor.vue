@@ -767,6 +767,7 @@ import TextareaCustomKeyboard from './TextareaCustomKeyboard'
                 } else {
                     glossed_text.custom_gloss_mapping[gloss_id].push(char_ix);
                 }
+                this.markFormDirty(glossed_text);
             },
             is_custom_gloss_mapping_char_selected(glossed_text, gloss_id, char_ix) {
                 if (!glossed_text.custom_gloss_mapping) {
