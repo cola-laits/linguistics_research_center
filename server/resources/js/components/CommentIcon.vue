@@ -1,12 +1,12 @@
 <template>
     <div>
         <a class="btn btn-sm" :class="button_class"
-           :href="'/admin2/admin_app#/issues?pointer='+issue_pointer"
+           :href="'/admin2/issues?pointer='+issue_pointer"
         >
             Issues <span class="badge badge-light">{{issue_count}}</span>
         </a>
         <a class="btn btn-sm btn-outline-secondary"
-            :href="'/admin2/admin_app#/issues/new?pointer='+issue_pointer"
+            :href="'/admin2/issues/new?pointer='+issue_pointer"
         >New Issue</a>
     </div>
 </template>

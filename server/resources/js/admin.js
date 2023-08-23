@@ -15,7 +15,6 @@ window.jQuery = window.$ = require('jquery');
 
 import LessonEditor from './components/LessonEditor'
 Vue.component('lesson-editor', LessonEditor);
-import IssueList from './components/IssueList'
 import IssueCreate from './components/IssueCreate'
 import IssueDisplay from './components/IssueDisplay'
 import RelatedLanguagesSelect from './components/RelatedLanguagesSelect'
@@ -26,38 +25,16 @@ Vue.component('basic-select', VueSearchSelect.BasicSelect); // FIXME this is ava
 import store from './admin-store';
 
 var routes = [
-    {path: '/issues', component:IssueList, props:(route)=>({pointer:route.query.pointer})},
     {path: '/issues/new', component:IssueCreate},
     {path: '/issue/:id', component:IssueDisplay, props:true}
 ];
 
 var router = new VueRouter({routes});
 
-// FIXME haven't gotten around to building page-level components yet; all this window.admin_app_initial_state stuff
-// can move down into those page-level components once they're written
 const admin_app = new Vue({
     el: '#admin_app',
     router,
-    store,
-    data() {
-        if (window.admin_app_initial_state) {
-            console.log("FIXME: initial_state is still being used.  Track it down and remove it.");
-            return window.admin_app_initial_state;
-        } else {
-            return {};
-        }
-    },
-    methods: {
-        countOpenIssues() {
-            return this.$store.getters.getIssuesByStatus('open').length;
-        },
-        getIssueBadgeClass() {
-            if (this.countOpenIssues() === 0) {
-                return 'd-none';
-            }
-            return 'badge-warning';
-        }
-    }
+    store
 });
 
 store.dispatch('init');

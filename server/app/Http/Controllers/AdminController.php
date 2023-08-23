@@ -1,9 +1,13 @@
 <?php
+/** @noinspection PhpUnhandledExceptionInspection */
+/** @noinspection PhpMissingReturnTypeInspection */
+/** @noinspection PhpUnused */
 
 namespace App\Http\Controllers;
 
 use App\Models\EieolGloss;
 use App\Models\EieolHeadWord;
+use App\Models\Issue;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Normalizer;

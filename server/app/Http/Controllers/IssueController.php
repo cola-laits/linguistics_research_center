@@ -1,4 +1,6 @@
 <?php
+/** @noinspection PhpUnhandledExceptionInspection */
+/** @noinspection PhpMissingReturnTypeInspection */
 
 namespace App\Http\Controllers;
 
@@ -13,20 +15,28 @@ use \Auth;
 
 class IssueController extends Controller
 {
-    public function index() : JsonResponse
+    public function index()
     {
-        $issues = Issue::with('comments')->orderBy('id');
-        if (!Auth::user()?->isAdmin()) {
-            $serieses = Auth::user()->editableSeries->sortBy('order');
-            foreach ($serieses as $series) {
-                foreach ($series->lessons as $lesson) {
-                    $issues->orWhere('pointer', 'like', '/lesson/' . $lesson->id . '/%');
-                }
-            }
-            $issues = $issues->distinct();
+        $status = request()->get('status', 'open');
+        if (request()->get('status') === 'all') {
+            $issues = Issue::whereIn('status', ['open', 'closed']);
+        } else {
+            $issues = Issue::where('status', $status);
         }
+        if (request()->has('pointer')) {
+            $issues = $issues->where('pointer', request()->get('pointer'));
+        }
+        $issues = $issues->with('comments')->get();
+        $issues = $issues->sortByDesc(function($issue) {
+            return $issue->comments->sortByDesc('created_at')->first()->created_at;
+        });
 
-        return response()->json(['issues'=>$issues->get()]);
+        // sort by last comment created_at date
+        return view('admin/issue_list', [
+            'issues' => $issues,
+            'pointer' => request()->get('pointer'),
+            'status' => $status,
+        ]);
     }
 
     public function getLanguages($id) : JsonResponse {

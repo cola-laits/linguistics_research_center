@@ -31,15 +31,14 @@
     </head>
     <body onload="top.scrollTo(0,0)">
 
-    <div v-cloak id="admin_app">
     <nav class="navbar navbar-light bg-light navbar-expand-md">
         <a class="navbar-brand" href="/admin">Admin</a>
 
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                @verbatim
-                <li class="nav-item"><a class="nav-link" href="/admin2/admin_app#/issues">Issues <span class="badge badge-pill" :class="getIssueBadgeClass()">{{countOpenIssues()}}</span></a></li>
-                @endverbatim
+                <li class="nav-item"><a class="nav-link" href="/admin2/issues">Issues <span
+                        @class(['badge', 'badge-pill', 'd-none'=>($numOpenIssues==0), 'badge-warning'=>($numOpenIssues>0)])
+                        >{{$numOpenIssues}}</span></a></li>
                 <li class="nav-item"><a class="nav-link" href="/admin2/eieol_series">EIEOL</a></li>
                 @if (\Illuminate\Support\Facades\Auth::user()->isAdmin())
                     <li class="dropdown nav-item">
@@ -58,8 +57,9 @@
     </nav>
 
     <div class="container-fluid">
+        <div v-cloak id="admin_app">
         @yield('content')
-    </div>
+        </div>
     </div>
 
     <script src="/js/vue-search-select.js"></script>
