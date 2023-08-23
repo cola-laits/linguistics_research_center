@@ -93,7 +93,11 @@
     import CKEditor from './CkEditor'
 
     export default {
-        props: ['id'],
+        props: [
+            'id',
+            'issue_json',
+            'languages_json'
+        ],
         components: {
             'ck-editor': CKEditor,
             'tinymce-editor': Editor,
@@ -114,7 +118,8 @@
                     });
                 }
             },
-            issue: {},
+            issue: JSON.parse(this.issue_json),
+            languages: JSON.parse(this.languages_json),
             title_editor_is_open: false,
             title_under_edit: '',
             new_comment_text: '',
@@ -123,20 +128,11 @@
 
         },
         created() {
-            window.axios.get('/admin/api/v1/issue/'+this.id).then((response) => {
-                this.issue = response.data.issue;
+            this.ckeditor_customization.language_list = this.languages.language_list;
+            this.ckeditor_customization.language_lang = this.languages.language_lang;
+            this.ckeditor_customization.specialChars = this.languages.specialChars;
 
-                window.axios.get('/admin/api/v1/issue/'+this.id+'/languages').then((response) => {
-                    this.ckeditor_customization.language_list = response.data.languages.language_list;
-                    this.ckeditor_customization.language_lang = response.data.languages.language_lang;
-                    this.ckeditor_customization.specialChars = response.data.languages.specialChars;
-
-                    this.ckeditor_data_ready = true;
-                });
-            }).catch((error) => {
-                console.log(error);
-                alert("Error: Unable to fetch data.  Try again.");
-            });
+            this.ckeditor_data_ready = true;
         },
         computed: {
             is_issue_open() {
@@ -221,7 +217,6 @@
                     {'status':status}
                 ).then((response) => {
                     this.issue.status = response.data.issue.status;
-                    this.$store.dispatch('updateIssue', response.data.issue);
                 }).catch((error) => {
                     console.log(error);
                     alert("Error: Unable to change issue status.  Try again.");

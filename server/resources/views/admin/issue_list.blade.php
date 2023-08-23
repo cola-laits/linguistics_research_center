@@ -9,7 +9,7 @@
 
 @section('title') Issues @endsection
 
-@section('content')
+@section('head_extra')
     <script>
         function setStatusAndRedirect(status) {
             var url = new URL(document.location.href);
@@ -17,6 +17,9 @@
             document.location.href = url.toString();
         }
     </script>
+@endsection
+
+@section('content')
     <div>
         <div class="d-flex" style="padding-top:10px;padding-bottom:10px;">
             @if ($pointer)

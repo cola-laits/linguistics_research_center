@@ -99,11 +99,6 @@
                 </div>
 
                 <div class='form-group col-sm-1 bottom_button'>
-                    <comment-icon :author_comment="gloss.author_comments"
-                                  :admin_comment="gloss.admin_comments"
-                                  :author_done="gloss.author_done"
-                                  @click="comments_are_open = !comments_are_open"></comment-icon>
-                    <br>
                     <input class="btn btn-sm btn-success" type="button" value="Save"
                            @click="new_gloss_form_submit()">
                 </div>
@@ -383,7 +378,6 @@ import InputTypeaheadAjax from './InputTypeaheadAjax'
 
     export default {
         components: {
-            'comment-icon': CommentIcon,
             'head-word-editor': HeadWordEditor,
             'input-custom-keyboard': InputCustomKeyboard,
             'input-typeahead-ajax': InputTypeaheadAjax,

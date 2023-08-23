@@ -7,6 +7,7 @@ use App\Models\EieolGrammar;
 use App\Models\EieolLanguage;
 use App\Models\EieolLesson;
 use App\Models\EieolSeries;
+use App\Models\Issue;
 use App\Models\LexEtyma;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -89,12 +90,18 @@ class EieolLessonController extends Controller
             return [$lang['id'] => $lang['entry']];
         });
 
+        $related_issues = Issue::where('status', 'open')
+            ->where('pointer', 'like', '/lesson/' . $lesson->id . '%')
+            ->get();
+
         return view('eieol_lesson.eieol_lesson_edit', ['lesson' => $lesson,
             'grammars' => $grammars,
             'glossed_texts' => $glossed_texts,
             'languages' => $languages,
             'etymas' => $etymas,
-            'series_languages' => $series_languages]);
+            'series_languages' => $series_languages,
+            'issues'=> $related_issues
+        ]);
     }
 
 

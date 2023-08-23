@@ -3,8 +3,7 @@
 @section('title') LRC Admin @stop
 
 @section('content')
-    <router-view :key="$route.fullPath"></router-view>
-    <br><br><br>
+    Deprecated - remove me FIXME
 
 
 @stop

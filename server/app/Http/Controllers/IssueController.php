@@ -39,13 +39,6 @@ class IssueController extends Controller
         ]);
     }
 
-    public function getLanguages($id) : JsonResponse {
-        $issue = Issue::findOrFail($id);
-        $pointer = $issue->pointer;
-        $languages = self::getLanguagesForPointer($pointer);
-        return response()->json(['languages'=>$languages]);
-    }
-
     protected static function getLanguagesForPointer($pointer) {
         $re = '/^\/lesson\/(\d*)\/.*/m';
         preg_match_all($re, $pointer, $matches, PREG_SET_ORDER);
@@ -70,7 +63,7 @@ class IssueController extends Controller
         return $result;
     }
 
-    public function create(Request $request) : JsonResponse
+    public function create(Request $request)
     {
         $pointer = $request->get('pointer');
         $issue = new Issue();
@@ -80,7 +73,11 @@ class IssueController extends Controller
         $issue->pointer_desc = Issue::getPointerDescFromPointer($pointer);
         $issue->status = 'open';
         $languages = self::getLanguagesForPointer($pointer);
-        return response()->json(['issue'=>$issue, 'languages'=>$languages]);
+        return view('admin/issue_create', [
+            'issue' => $issue,
+            'languages' => $languages,
+            'pointer' => $pointer,
+        ]);
     }
 
     public function store(Request $request) : JsonResponse
@@ -107,10 +104,14 @@ class IssueController extends Controller
         return response()->json(['issue'=>$issue]);
     }
 
-    public function show(Issue $issue) : JsonResponse
+    public function show(Issue $issue)
     {
         $issue->load('comments');
-        return response()->json(['issue'=>$issue]);
+        $languages = self::getLanguagesForPointer($issue->pointer);
+        return view('admin/issue_edit', [
+            'issue' => $issue,
+            'languages' => $languages
+        ]);
     }
 
     public function update(Request $request, Issue $issue) : JsonResponse

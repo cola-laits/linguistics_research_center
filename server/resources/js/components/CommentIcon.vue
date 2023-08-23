@@ -6,7 +6,7 @@
             Issues <span class="badge badge-light">{{issue_count}}</span>
         </a>
         <a class="btn btn-sm btn-outline-secondary"
-            :href="'/admin2/issues/new?pointer='+issue_pointer"
+            :href="'/admin2/issues/create?pointer='+issue_pointer"
         >New Issue</a>
     </div>
 </template>
@@ -14,11 +14,12 @@
 <script>
     export default {
         props: [
-            'issue_pointer'
+            'issue_pointer',
+            'issues'
         ],
         computed: {
             issue_count() {
-                return this.$store.getters.getIssuesByStatus('open')
+                return this.issues
                     .filter(issue => issue.pointer===this.issue_pointer)
                     .length;
             },

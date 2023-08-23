@@ -90,7 +90,7 @@
                 </div>
 
                 <div class='form-group col-sm-2'>
-                    <comment-icon :issue_pointer="'/lesson/'+lesson.id+'/intro_text'"></comment-icon>
+                    <comment-icon :issue_pointer="'/lesson/'+lesson.id+'/intro_text'" :issues="init_issues"></comment-icon>
                 </div>
 
             </div>
@@ -160,7 +160,7 @@
                             >
                             </audio-icon>
 
-                            <comment-icon :issue_pointer="'/lesson/'+lesson.id+'/glossed_text/'+glossed_text.id"></comment-icon>
+                            <comment-icon :issue_pointer="'/lesson/'+lesson.id+'/glossed_text/'+glossed_text.id" :issues="init_issues"></comment-icon>
                         </div>
 
                         <div class='form-group col-sm-1 bottom_button'>
@@ -257,7 +257,7 @@
                                 </div>
 
                                 <div class='col-sm-1 bottom_button gloss_comment_indicator'>
-                                    <comment-icon :issue_pointer="'/lesson/'+lesson.id+'/gloss/'+gloss.id"></comment-icon>
+                                    <comment-icon :issue_pointer="'/lesson/'+lesson.id+'/gloss/'+gloss.id" :issues="init_issues"></comment-icon>
                                 </div>
 
                                 <div class='col-sm-1 bottom_button'>
@@ -339,7 +339,7 @@
                     <div id="lesson_translation_error" class="alert-danger errors"></div>
                 </div>
                 <div class='form-group col-sm-1'>
-                    <comment-icon :issue_pointer="'/lesson/'+lesson.id+'/lesson_translation'"></comment-icon>
+                    <comment-icon :issue_pointer="'/lesson/'+lesson.id+'/lesson_translation'" :issues="init_issues"></comment-icon>
                 </div>
             </div>
 
@@ -405,7 +405,7 @@
                         </div>
 
                         <div class='form-group col-sm-1 comment_button'>
-                            <comment-icon :issue_pointer="'/lesson/'+lesson.id+'/grammar/'+grammar.id"></comment-icon>
+                            <comment-icon :issue_pointer="'/lesson/'+lesson.id+'/grammar/'+grammar.id" :issues="init_issues"></comment-icon>
                         </div>
 
                     </div>
@@ -482,6 +482,7 @@ import TextareaCustomKeyboard from './TextareaCustomKeyboard'
             'init_glossed_texts',
             'init_grammars',
             'init_etymas',
+            'init_issues',
             'init_ckeditor_customization',
             'init_custom_keyboard_layout',
             'focus',

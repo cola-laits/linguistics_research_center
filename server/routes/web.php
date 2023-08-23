@@ -65,7 +65,6 @@ Route::get('/admin', 'AdminController@index');
 Route::group(array('prefix'=> 'admin/api/v1', 'middleware' => 'auth'), function() {
     Route::resource('/issue', 'IssueController');
     Route::resource('/issue_comment', 'IssueCommentController');
-    Route::get('/issue/{id}/languages', 'IssueController@getLanguages');
 });
 
 Route::group(array('prefix'=> 'admin2', 'middleware' => 'auth'), function() {
@@ -74,18 +73,6 @@ Route::group(array('prefix'=> 'admin2', 'middleware' => 'auth'), function() {
     });
 
     Route::get('admin_app', 'AdminController@app');
-    // FIXME temporary shims while we convert Vue Router to Laravel routes
-    Route::get('issues/new', function() {
-        if (request()->has('pointer')) {
-            return redirect('/admin2/admin_app#/issues/new?pointer=' . request()->input('pointer'));
-        } else {
-            return redirect('/admin2/admin_app#/issues/new');
-        }
-    });
-    Route::get('issues/{id}', function() {
-        return redirect('/admin2/admin_app#/issue/' . request()->route('id'));
-    });
-    // FIXME end temp shims
     Route::resource('issues', 'IssueController');
 
     Route::get('/eieol_series', 'EieolSeriesController@index');

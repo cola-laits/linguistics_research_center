@@ -14,7 +14,6 @@
             </div>
             <div class="sidebar text-sidebar">
                 <h5>Text under discussion</h5>
-                <p><a :href="getIssueLink(issue)" target="_blank">{{issue.pointer_desc}}</a></p>
                 <div class="text-panel">
                     <tinymce-editor
                         :init="tinymce_settings"
@@ -51,6 +50,11 @@
     import CKEditor from './CkEditor'
 
     export default {
+        props: [
+            'pointer',
+            'issue_json',
+            'languages_json'
+        ],
         components: {
             'ck-editor': CKEditor,
             'tinymce-editor': Editor,
@@ -72,7 +76,8 @@
                     });
                 }
             },
-            issue: {},
+            issue: JSON.parse(this.issue_json),
+            languages: JSON.parse(this.languages_json),
             comment_text: '',
             ckeditor_data_ready: false,
         }},
@@ -80,19 +85,11 @@
 
         },
         created() {
-            let pointer = this.$route.query.pointer;
-            window.axios.get('/admin/api/v1/issue/create?pointer='+pointer).then((response) => {
-                this.issue = response.data.issue;
+            this.ckeditor_customization.language_list = this.languages.language_list;
+            this.ckeditor_customization.language_lang = this.languages.language_lang;
+            this.ckeditor_customization.specialChars = this.languages.specialChars;
 
-                this.ckeditor_customization.language_list = response.data.languages.language_list;
-                this.ckeditor_customization.language_lang = response.data.languages.language_lang;
-                this.ckeditor_customization.specialChars = response.data.languages.specialChars;
-
-                this.ckeditor_data_ready = true;
-            }).catch((error) => {
-                console.log(error);
-                alert("Error: Unable to fetch data.  Try again.");
-            });
+            this.ckeditor_data_ready = true;
         },
         computed: {
             validate_title_ok() {
@@ -115,22 +112,11 @@
                     data
                 ).then((response) => {
                     alert("Issue created.");
-                    this.$router.push('/issues');
+                    document.location.href = '/admin2/issues';
                 }).catch((error) => {
                     console.log(error);
                     alert("Error: Unable to save issue.  Try again.");
                 })
-            },
-            getIssueLink(issue) {
-                if (issue && issue.pointer && issue.pointer.indexOf('/lesson/')===0) {
-                    // issue pointer is /lesson/(id)/something.
-                    // Turn that into the URL /admin2/eieol_lesson/(id)/edit?focus=something#/
-                    let temp = issue.pointer.substring(8);
-                    let lesson_id = temp.substring(0,temp.indexOf('/'));
-                    let part = temp.substring(temp.indexOf('/')+1);
-                    return '/admin2/eieol_lesson/'+lesson_id+'/edit?focus='+part+'#/';
-                }
-                return false;
             },
         }
     }

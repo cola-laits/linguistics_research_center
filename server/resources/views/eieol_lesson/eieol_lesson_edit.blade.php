@@ -2,18 +2,6 @@
 
 @section('title') Edit Lesson @stop
 
-@section('head_extra')
-    <script type="text/javascript">
-        // FIXME are these needed anymore?
-        window.lesson_language_id = {{$lesson->language_id}};
-        @if (Auth::user()->isAdmin())
-            window.isAdmin = true;
-        @else
-            window.isAdmin = false;
-        @endif
-    </script>
-@endsection
-
 @section('foot_extra')
     <script>
         window.onbeforeunload = function() {
@@ -32,6 +20,7 @@
     :init_glossed_texts="{{ json_encode($glossed_texts) }}"
     :init_grammars="{{ json_encode($grammars) }}"
     :init_etymas="{{ json_encode($etymas) }}"
+    :init_issues="{{ json_encode($issues) }}"
     :init_ckeditor_customization="{language_list :
 [
 @foreach ($series_languages as $series_language)
