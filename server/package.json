@@ -23,7 +23,7 @@
     "sass-loader": "^10.1.1",
     "tinymce": "^5.7.1",
     "vue": "^2.6.12",
-    "vue-bootstrap-typeahead": "^0.2.6",
+    "@vue-bootstrap-components/vue-bootstrap-autocomplete": "^2.15.3",
     "vue-loader": "^15.9.6",
     "vue-router": "^3.5.1",
     "vue-template-compiler": "^2.6.12",

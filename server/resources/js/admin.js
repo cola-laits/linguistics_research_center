@@ -6,8 +6,8 @@ window.axios = require('axios').default;
 
 import BootstrapVue from 'bootstrap-vue'
 Vue.use(BootstrapVue);
-import VueBootstrapTypeahead from 'vue-bootstrap-typeahead'
-Vue.component('vue-bootstrap-typeahead', VueBootstrapTypeahead);
+import VueBootstrapAutocomplete from '@vue-bootstrap-components/vue-bootstrap-autocomplete'
+Vue.component('vue-bootstrap-typeahead', VueBootstrapAutocomplete);
 import VueTagsInput from '@johmun/vue-tags-input';
 Vue.component('tags-input', VueTagsInput);
 
