@@ -10,7 +10,7 @@ RUN composer install --ignore-platform-reqs --no-dev
 FROM node:18 as npmbuild
 COPY --from=phpbuild /var/www/html /var/www/html
 WORKDIR /var/www/html
-RUN npm ci && npm run production
+RUN npm ci && npm run production && rm -rf node_modules
 
 
 FROM ghcr.io/utaustin-laits/laravel-base:9.x-php8.1
