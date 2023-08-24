@@ -91,8 +91,6 @@ Route::group(array('prefix'=> 'admin2', 'middleware' => 'auth'), function() {
     Route::get('/part_of_speech/filtered_list', 'AdminController@part_of_speech_typeahead');
     Route::get('/eieol_analysis/filtered_list', 'AdminController@analysis_typeahead');
 
-    Route::get('/related_languages/all_languages', 'EieolSeriesController@all_languages');
-    Route::get('/related_languages/attached_languages/{series_id}', 'EieolSeriesController@attached_languages');
     Route::post('/related_languages/attach_language', 'EieolSeriesController@attach_language');
     Route::post('/related_languages/{series_id}/detach_language/{language_id}', 'EieolSeriesController@detach_language');
 

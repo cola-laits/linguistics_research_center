@@ -25,10 +25,21 @@ class EieolSeriesController extends Controller
     public function edit($id) {
         $series = EieolSeries::findOrFail($id);
         $lessons = $series->lessons;
-        return view('eieol_series.eieol_series_form', ['series' => $series, 'lessons' => $lessons, 'action' => 'Edit']);
+        $attached_languages = $series->languages->map(fn ($language) => [
+            'id' => $language->id,
+            'text' => $language->display,
+            'value' => $language->lang,
+        ]);
+        return view('eieol_series.eieol_series_form', [
+            'series' => $series,
+            'lessons' => $lessons,
+            'languages' => $this->all_languages(),
+            'attached_languages' => $attached_languages,
+            'action' => 'Edit'
+        ]);
     }
 
-    public function all_languages() {
+    protected function all_languages() {
         $languages = IsoLanguage::whereIn('Language_Type', array('E', 'A', 'H', 'G'))
             ->orWhere('Part1', '!=', '')
             ->orWhere('Part2B', '!=', '')
@@ -49,34 +60,21 @@ class EieolSeriesController extends Controller
         return $languages;
     }
 
-    public function attached_languages($series_id) {
-        $series = EieolSeries::with('languages')->find($series_id);
-        $languages = $series->languages->map(fn ($language) => [
-            'text' => $language->display,
-            'value' => $language->lang,
-        ]);
-        return $languages;
-    }
-
     public function attach_language(Request $request) {
-
         $language = new EieolSeriesLanguage;
         $language->series_id = $request->get('id');
         $language->lang = $request->get('lang');
-        $language->display = $request->get('display');
+        $language->display = IsoLanguage::where('iso_id', '=', $language->lang)->firstOrFail()->Ref_Name;
         $language->save();
 
-        return ['text' => $language->display, 'value' => $language->lang];
+        return redirect('/admin2/eieol_series/' . $language->series_id . '/edit');
     }
 
     public function detach_language($series_id, $language_id) {
-
-        $language = EieolSeriesLanguage::where('series_id', '=', $series_id)->where('lang', '=', $language_id)->firstOrFail();
-        $arr_lang = array('text' => $language->display, 'value' => $language->lang);
-
+        $language = EieolSeriesLanguage::where('series_id', '=', $series_id)->where('id', '=', $language_id)->firstOrFail();
         $language->delete();
 
-        return $arr_lang;
+        return redirect('/admin2/eieol_series/' . $series_id . '/edit');
     }
 
 }

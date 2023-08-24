@@ -1,5 +1,39 @@
 @extends('admin_layout')
 
+@section('head_extra')
+    <script>
+        function relatedLanguagesSelectChange() {
+            var select = document.getElementById('relatedLanguagesSelect');
+            var submit = document.getElementById('relatedLanguagesSubmit');
+            if (select.selectedIndex === 0) {
+                submit.setAttribute('disabled', 'disabled');
+            } else {
+                submit.removeAttribute('disabled');
+            }
+            return false;
+        }
+
+        function removeLanguage(id) {
+            var form = document.getElementById('deleteRelatedLangForm');
+            form.setAttribute('action', '/admin2/related_languages/{{$series->id}}/detach_language/' + id);
+            form.submit();
+        }
+
+        /*
+        function  removeLanguage(l) {
+
+            axios.post('/admin2/related_languages/{{$series->id}}/detach_language/' + l.value).then(function(response){
+
+                window.fetchlanguages();
+
+            }).catch(function(error){console.log(error);});
+
+        }
+        */
+
+    </script>
+@endsection
+
 @section('content')
 
 <div class='col-lg-12'>
@@ -27,7 +61,47 @@
 
     <hr/>
 
-    <related-languages-select series_id="{{$series->id}}"></related-languages-select>
+        <div id="related_languages" class='row'>
+            <div class='form-group col-sm-4'>
+
+                <h2>Related Languages</h2>
+
+                <form class="form" method="POST" action="/admin2/related_languages/attach_language">
+                    @csrf
+                    <input type="hidden" name="id" value="{{ $series->id }}"/>
+                <select class="form-control" id="relatedLanguagesSelect"
+                        name="lang"
+                    onchange="relatedLanguagesSelectChange()">
+                    <option value="">Choose language</option>
+                    @foreach ($languages as $language)
+                        <option value="{{ $language['value'] }}">{{ $language['text'] }}</option>
+                    @endforeach
+                </select>
+
+                <br/>
+
+                <button type="submit"
+                        id="relatedLanguagesSubmit"
+                        disabled="disabled"
+                        class="btn btn-sm btn-primary">Attach</button>
+                </form>
+
+            </div>
+
+            <div class='col-sm-4'>
+                <form method="POST" action="" id="deleteRelatedLangForm">
+                    @csrf
+                </form>
+                <ul>
+                    @foreach ($attached_languages as $att_lang)
+                    <li>
+                        {{ $att_lang['text'] }}
+                        &nbsp;<a onclick="removeLanguage({{$att_lang['id']}})" href="#">remove</a>
+                    </li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
 
     <h2>Lessons</h2>
 
