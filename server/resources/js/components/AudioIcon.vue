@@ -25,7 +25,13 @@
             <h5>Upload new audio</h5>
             <form enctype="multipart/form-data">
             <input ref="file" type="file" @change="file_change"><br>
-            <button type="button" :class="'btn '+(allow_upload?'btn-primary':'btn-secondary')" :disabled="!allow_upload" @click="upload">Upload Selected File</button>
+            <button type="button"
+                    :class="'btn '+(allow_upload?'btn-primary':'btn-secondary')"
+                    :disabled="!allow_upload || upload_in_progress"
+                    @click="upload"
+            >
+                {{upload_in_progress ? "Uploading..." : "Upload Selected File"}}
+            </button>
             </form>
         </b-modal>
     </div>
@@ -43,6 +49,7 @@
             url: '',
             allow_upload: false,
             allow_save: false,
+            upload_in_progress: false,
         }},
         computed: {
 
@@ -65,10 +72,12 @@
                 this.allow_upload = true;
             },
             upload() {
+                this.upload_in_progress = true;
                 let formData = new FormData();
                 formData.append('upload',this.$refs.file.files[0]);
                 axios.post('/admin2/files/upload', formData, {headers:{'Content-Type':'multipart/form-data'}})
                     .then((response)=>{
+                        this.upload_in_progress = false;
                         this.url=response.data.url;
                         alert("Successfully uploaded!  Now click 'update' to save.");
                         this.allow_save = true;
