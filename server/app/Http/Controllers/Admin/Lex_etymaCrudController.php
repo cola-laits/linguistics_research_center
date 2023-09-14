@@ -106,10 +106,13 @@ class Lex_etymaCrudController extends CrudController
         CRUD::field('semantic_fields')->type('select2_multiple')->model('App\Models\LexSemanticField')->attribute('text')->pivot(true);
         CRUD::field('reflexes')->type('relationship')->attribute('langNameEntriesGloss')->pivot(true)->ajax(true);
 
-        // for now, show them that the extra data is there without letting them break it
-        CRUD::field('extra_data')->type('custom_html')->value("'Extra Data' is freeform info that may depend on which specific lexicon you're talking about.  This is a temporary placeholder which will eventually display that data.");
+        CRUD::field('extra_data')
+            ->type('json')
+            ->view_namespace('json-field-for-backpack::fields')
+            ->modes(['form','tree','code'])
+            ->default([])
+            ->hint("'Extra Data' is freeform info that may vary between lexicons.");
 
-        //CRUD::field('extra_data')->attributes(['readonly'=>'readonly']);
         /*
         CRUD::field('reflexes')
             ->type('relationship')

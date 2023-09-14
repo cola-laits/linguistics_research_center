@@ -140,10 +140,12 @@ class Lex_reflexCrudController extends CrudController
 
 //        CRUD::field('parts_of_speech')->type('table')...
 
-        // for now, show them that the extra data is there without letting them break it
-        CRUD::field('extra_data')->type('custom_html')->value("'Extra Data' is freeform info that may depend on which specific lexicon you're talking about.  This is a temporary placeholder which will eventually display that data.");
-//        CRUD::field('extra_data')->type('repeatable')->attributes(['readonly'=>'readonly'])
-//            ->hint("'Extra Data' is freeform info that may depend on which lexicon you're talking about.  The above is a temporary placeholder.");
+        CRUD::field('extra_data')
+            ->type('json')
+            ->view_namespace('json-field-for-backpack::fields')
+            ->modes(['form','tree','code'])
+            ->default([])
+            ->hint("'Extra Data' is freeform info that may vary between lexicons.");
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:

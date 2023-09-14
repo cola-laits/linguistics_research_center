@@ -22,7 +22,8 @@
         "laravel/framework": "^10.0",
         "laravel/ui": "^4.0",
         "league/flysystem-aws-s3-v3": "^3.0",
-        "sentry/sentry-laravel": "^3.0"
+        "sentry/sentry-laravel": "^3.0",
+        "ziming/json-field-for-backpack": "^1.2"
     },
     "require-dev": {
         "backpack/generators": "^3.1",
