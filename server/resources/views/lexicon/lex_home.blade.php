@@ -8,6 +8,6 @@
     </div>
 
     <div>
-        <a href="/lexicon/{{$lexicon->slug}}/search">Search this lexicon.</a>
+        <a href="/lexicon/{{$lexicon->slug}}/data">Search this lexicon.</a>
     </div>
 @endsection

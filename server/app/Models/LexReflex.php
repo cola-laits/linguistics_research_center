@@ -179,6 +179,14 @@ class LexReflex extends Model {
 		return $this->belongsToMany(LexSource::class, 'lex_reflex_source', 'reflex_id', 'source_id')->orderBy('code');
 	}
 
+    public function etymaSemanticTags() {
+        $tags = collect();
+        foreach ($this->etymas as $etyma) {
+            $tags = $tags->merge($etyma->semantic_fields);
+        }
+        return $tags;
+    }
+
 	public function getDisplayPartsOfSpeech()
 	{
 		$string = "";
