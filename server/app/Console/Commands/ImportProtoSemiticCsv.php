@@ -82,9 +82,12 @@ class ImportProtoSemiticCsv extends Command
                 if ($header == 'pS root') {
                     return 'root';
                 }
-                if ($header == 'Etymon ID') {
-                    return 'ETYMON ID';
-                }
+                $header = strtolower($header);
+                // remove parentheticals
+                $header = preg_replace('/\s*\([^)]*\)/', '', $header);
+                // replace spaces with underscores
+                $header = str_replace(' ', '_', $header);
+                $header = trim($header);
                 return $header;
             });
         $contents = collect();
@@ -97,9 +100,9 @@ class ImportProtoSemiticCsv extends Command
         }
 
         // Split CSV data into etyma and reflex batches, then process them in that order
-        $contents = $contents->filter(fn ($row) => $row['ID']);
-        $etyma = $contents->filter(fn($value) => str_contains($value['ID'], 'ETYMON'));
-        $reflexes = $contents->filter(fn($value) => !str_contains($value['ID'], 'ETYMON'));
+        $contents = $contents->filter(fn ($row) => $row['id']);
+        $etyma = $contents->filter(fn($value) => str_contains($value['id'], 'ETYMON'));
+        $reflexes = $contents->filter(fn($value) => !str_contains($value['id'], 'ETYMON'));
         $etyma_dbids = [];
 
         // store the etyma
@@ -109,26 +112,26 @@ class ImportProtoSemiticCsv extends Command
             $lex_etymon = new LexEtyma();
             $lex_etymon->order = $order;
             if ($file_is_nouns) {
-                $lex_etymon->entry = $this->getEtymonEntryNoun($csv_row);
-                $lex_etymon->gloss = $this->getEtymonGlossNoun($csv_row);
+                $lex_etymon->entry = $csv_row['etymon'];
+                $lex_etymon->gloss = $csv_row['meaning'];
             } else if ($file_is_verbs) {
-                $lex_etymon->entry = $this->getEtymonEntryVerb($csv_row);
-                $lex_etymon->gloss = $this->getEtymonGlossVerb($csv_row);
+                $lex_etymon->entry = $csv_row['etymon'];
+                $lex_etymon->gloss = $csv_row['meaning'];
             }
             if (!$lex_etymon->entry) {
-                $lex_etymon->entry = 'No text for '.$csv_row['ID'];
+                $lex_etymon->entry = 'No text for '.$csv_row['id'];
             }
             if (!$lex_etymon->gloss) {
-                $lex_etymon->gloss = 'No meaning/gloss for '.$csv_row['ID'];
+                $lex_etymon->gloss = 'No meaning/gloss for '.$csv_row['id'];
             }
 
             $lex_etymon->created_by = "ps importer";
             $lex_etymon->updated_by = "ps importer";
             $lex_etymon->lexicon_id = $semitic_lexicon_id;
-            $etymon_id = $csv_row['ID'];
+            $etymon_id = $csv_row['id'];
             $extra_data = new \stdClass;
             foreach ($csv_row as $name=>$value) {
-                if (in_array($name, ['ID', 'ETYMON ID', 'Etymon', 'root', 'meaning', 'language', 'semantic tag'])) {
+                if (in_array($name, ['id', 'etymon_id', 'etymon', 'root', 'meaning', 'language', 'semantic_tag'])) {
                     continue;
                 }
                 if (trim($value)==="") {
@@ -144,7 +147,7 @@ class ImportProtoSemiticCsv extends Command
                 'select field.id from lex_semantic_field as field, lex_semantic_category as category'
                 . ' where field.semantic_category_id=category.id and category.lexicon_id=?'
                 . ' and field.abbr=?',
-                [$semitic_lexicon_id, $csv_row['semantic tag']]
+                [$semitic_lexicon_id, $csv_row['semantic_tag']]
             );
             if (count($semantic_fields)>0) {
                 $lex_sem = new LexEtymaSemanticField();
@@ -153,12 +156,12 @@ class ImportProtoSemiticCsv extends Command
                 $lex_sem->save();
             }
 
-            \Log::info($csv_row['ID'].' gloss: '.$lex_etymon->gloss.' | '.$lex_etymon->entry);
+            \Log::info($csv_row['id'].' gloss: '.$lex_etymon->gloss.' | '.$lex_etymon->entry);
         }
 
         // store the reflexes
         foreach ($reflexes as $csv_row) {
-            $csv_row['ETYMON ID'] = str_replace('?','',$csv_row['ETYMON ID']);
+            $csv_row['etymon_id'] = str_replace('?','',$csv_row['etymon_id']);
             $lang = LexLanguage::where('name', $csv_row['language'])->first();
             $lex_reflex = new LexReflex();
             $lex_reflex->language_id = $lang->id;
@@ -166,16 +169,16 @@ class ImportProtoSemiticCsv extends Command
             $lex_reflex->class_attribute = 'Unicode';
             if ($file_is_nouns) {
                 $entry = $this->getReflexEntryNoun($csv_row);
-                $lex_reflex->gloss = $this->getReflexGlossNoun($csv_row);
+                $lex_reflex->gloss = $csv_row['meaning'];
             } else if ($file_is_verbs) {
                 $entry = $this->getReflexEntryVerb($csv_row);
-                $lex_reflex->gloss = $this->getReflexGlossVerb($csv_row);
+                $lex_reflex->gloss = $csv_row['meaning'];
             }
             if (!$entry) {
-                $entry = 'No text for '.$csv_row['ID'];
+                $entry = 'No text for '.$csv_row['id'];
             }
             if (!$lex_etymon->gloss) {
-                $lex_etymon->gloss = 'No meaning/gloss for '.$csv_row['ID'];
+                $lex_etymon->gloss = 'No meaning/gloss for '.$csv_row['id'];
             }
             $entries = array(['text'=>$entry]);
             $lex_reflex->entries = $entries;
@@ -183,7 +186,7 @@ class ImportProtoSemiticCsv extends Command
             $lex_reflex->updated_by = "ps importer";
             $extra_data = new \stdClass;
             foreach ($csv_row as $name=>$value) {
-                if (in_array($name, ['ID', 'ETYMON ID', 'root', 'meaning', 'language', 'Part of Speech', 'semantic tag'])) {
+                if (in_array($name, ['id', 'etymon_id', 'etymon', 'root', 'meaning', 'language', 'part_of_speech', 'semantic_tag'])) {
                     continue;
                 }
                 if (trim($value)==="") {
@@ -193,8 +196,8 @@ class ImportProtoSemiticCsv extends Command
             }
             $lex_reflex->extra_data = $extra_data;
             $lex_reflex->save();
-            if ($csv_row['Part of Speech']) {
-                $pos_text = strtolower($csv_row['Part of Speech']);
+            if ($csv_row['part_of_speech']) {
+                $pos_text = strtolower($csv_row['part_of_speech']);
                 $lexpos = LexPartOfSpeech::where('lexicon_id', $semitic_lexicon_id)
                     ->where('code', $pos_text)
                     ->first();
@@ -215,14 +218,14 @@ class ImportProtoSemiticCsv extends Command
                 $lrpos->updated_by = "ps importer";
                 $lrpos->save();
             }
-            if ($csv_row['ETYMON ID']) {
+            if ($csv_row['etymon_id']) {
                 $lex_etyma_reflex = new LexEtymaReflex();
                 $lex_etyma_reflex->reflex_id = $lex_reflex->id;
-                $lex_etyma_reflex->etyma_id = $etyma_dbids[$csv_row['ETYMON ID']];
+                $lex_etyma_reflex->etyma_id = $etyma_dbids[$csv_row['etymon_id']];
                 $lex_etyma_reflex->save();
             }
 
-            \Log::info($csv_row['ID'].' gloss: '.$lex_reflex->gloss.' | '.json_encode($lex_reflex->entries));
+            \Log::info($csv_row['id'].' gloss: '.$lex_reflex->gloss.' | '.json_encode($lex_reflex->entries));
         }
 
         });
@@ -248,31 +251,11 @@ class ImportProtoSemiticCsv extends Command
         });
     }
 
-    // How do I get the etymon entry from the noun spreadsheet?
-    protected function getEtymonEntryNoun($csv_row) {
-        return $csv_row['Etymon'];
-    }
-
-    // How do I get the etymon entry from the verb spreadsheet?
-    protected function getEtymonEntryVerb($csv_row) {
-        return $csv_row['Etymon'];
-    }
-
-    // How do I get the etymon gloss from the noun spreadsheet?
-    protected function getEtymonGlossNoun($csv_row) {
-        return $csv_row['meaning'];
-    }
-
-    // How do I get the etymon gloss from the verb spreadsheet?
-    protected function getEtymonGlossVerb($csv_row) {
-        return $csv_row['meaning'];
-    }
-
     // How do I get the reflex entry from the noun spreadsheet?
     protected function getReflexEntryNoun($csv_row) {
         $translit = $csv_row['transliteration'];
         $script = $csv_row['script'];
-        $sem_nor = $csv_row['Sem normalization'];
+        $sem_nor = $csv_row['sem_normalization'];
         $entry = $translit;
         if ($script) {
             $entry .= ' (' . $script .')';
@@ -287,8 +270,8 @@ class ImportProtoSemiticCsv extends Command
     // How do I get the reflex entry from the verb spreadsheet?
     protected function getReflexEntryVerb($csv_row) {
         $root = $csv_row['root'];
-        $root_in_script = $csv_row['root in script'];
-        $prefix_conj = $csv_row['prefix Conj 1'];
+        $root_in_script = $csv_row['root_in_script'];
+        $prefix_conj = $csv_row['prefix_conj_1'];
         $entry = $root;
         if ($root_in_script) {
             $entry .= ' (' . $root_in_script .')';
@@ -298,15 +281,5 @@ class ImportProtoSemiticCsv extends Command
             $entry = $prefix_conj;
         }
         return $entry;
-    }
-
-    // How do I get the reflex gloss from the noun spreadsheet?
-    protected function getReflexGlossNoun($csv_row) {
-        return $csv_row['meaning'];
-    }
-
-    // How do I get the reflex gloss from the verb spreadsheet?
-    protected function getReflexGlossVerb($csv_row) {
-        return $csv_row['meaning'];
     }
 }
