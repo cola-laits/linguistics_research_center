@@ -27,7 +27,7 @@
             <td class="text-end" style="white-space:nowrap;">Etymology:</td>
             <td>
                 @foreach ($word->etyma as $etymon)
-                    <p><b><sup>*</sup>{{$etymon->entry}}</b> {{$etymon->gloss}}</p>
+                    <p><a href="/lexicon/{{$lexicon->slug}}/etymon/{{$etymon->id}}"><b><sup>*</sup>{{$etymon->entry}}</b> {{$etymon->gloss}}</a></p>
                 @endforeach
             </td>
         </tr>

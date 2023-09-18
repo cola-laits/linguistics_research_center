@@ -9,7 +9,7 @@
     <table class="table table-bordered table-responsive">
         <tr>
             <td class="text-end" style="white-space:nowrap;">Etymon:</td>
-            <td class="vw-100">{{$etymon->entry}}</td>
+            <td class="vw-100"><sup>*</sup>{{$etymon->entry}}</td>
         </tr>
         <tr>
             <td class="text-end" style="white-space:nowrap;">Gloss:</td>
