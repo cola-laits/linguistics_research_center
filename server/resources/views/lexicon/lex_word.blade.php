@@ -55,20 +55,29 @@
             </ul>
         </div>
         @endif
+
+        @php
+        // 'cognates' are other words that share the same etymon
+        $cognates = collect();
+        foreach ($word->etyma as $etymon) {
+            foreach ($etymon->reflexes as $reflex) {
+                if ($word->id === $reflex->id) {
+                    continue;
+                }
+                $cognates->push($reflex);
+            }
+        }
+        @endphp
+        @if ($cognates->count() > 0)
         <h2>Cognates</h2>
         <div>
-            FIXME: skip if no cognates
             <ul>
-            @foreach ($word->etyma as $etymon)
-                @foreach ($etymon->reflexes as $reflex)
-                    @if ($word->id === $reflex->id)
-                        @continue
-                    @endif
-                    <li>{{$reflex->language->name}}: <a href="/lexicon/{{$lexicon->slug}}/word/{{$reflex->id}}">{{$reflex->getEntriesCSV()}}</a></li>
-                @endforeach
+            @foreach ($cognates as $reflex)
+                <li>{{$reflex->language->name}}: <a href="/lexicon/{{$lexicon->slug}}/word/{{$reflex->id}}">{{$reflex->getEntriesCSV()}}</a></li>
             @endforeach
             </ul>
         </div>
+        @endif
     </div>
 
     <script>
