@@ -73,6 +73,9 @@
 
     <script>
         highlight_sidebar('headword', {{$word->id}});
+        @foreach ($word->etymaSemanticTags() as $tag)
+        highlight_sidebar('category', {{$tag->id}});
+        @endforeach
     </script>
 @endsection
 

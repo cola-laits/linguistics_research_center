@@ -51,6 +51,9 @@
 
     <script>
         highlight_sidebar('headword', {{$etymon->id}});
+        @foreach ($etymon->semantic_fields as $field)
+        highlight_sidebar('category', {{$field->id}});
+        @endforeach
     </script>
 @endsection
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Lex_etymaRequest;
+use App\Models\LexLexicon;
 use App\Models\LexReflex;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
@@ -49,6 +50,13 @@ class Lex_etymaCrudController extends CrudController
         CRUD::column('old_id')->label('Old Id')->type('number');
         CRUD::column('order')->type('number');
         CRUD::column('page_number')->type('text');
+
+        CRUD::filter('lexicon_id')
+            ->type('dropdown')
+            ->values(LexLexicon::all()->pluck('name', 'id')->toArray())
+            ->whenActive(function($value) {
+                CRUD::addClause('where','lexicon_id',$value);
+            });
 
         $this->crud->addFilter(
             ['type'=>'select2_ajax', 'name'=>'entry', 'label'=>'Etyma', 'method'=>'POST',
