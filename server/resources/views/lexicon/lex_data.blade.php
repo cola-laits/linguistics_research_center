@@ -11,7 +11,10 @@ LRC {{$lexicon->name}}: Data
 
     <style>
         .column-text-search {
-
+            width: 100%;
+            border-left-width: 0;
+            border-right-width: 0;
+            border-top-width: 0;
         }
     </style>
     <script>
@@ -39,7 +42,21 @@ LRC {{$lexicon->name}}: Data
                     },
                     {
                         extend: 'colvis',
+                        text: 'Select Columns',
+                        collectionLayout: 'dropdown columns',
                         columns: 'th:not(:first-child)'
+                    },
+                    {
+                        text: 'Clear Search',
+                        action: function() {
+                            console.log($('.column-text-search'));
+                            var table = $('#datatable').DataTable();
+                            table
+                                .search('')
+                                .columns()
+                                .search('')
+                                .draw();
+                        }
                     }
                 ],
                 initComplete: function () {
@@ -59,7 +76,7 @@ LRC {{$lexicon->name}}: Data
                                 $(api.column(colIdx).header()).index()
                             );
                             var title = $(cell).text();
-                            $(cell).html('<input type="text" class="column-text-search" placeholder="' + title + '" />');
+                            $(cell).html('<div class="column-text-search-holder d-flex"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M 5 4 L 5 6.34375 L 5.21875 6.625 L 13 16.34375 L 13 28 L 14.59375 26.8125 L 18.59375 23.8125 L 19 23.5 L 19 16.34375 L 26.78125 6.625 L 27 6.34375 L 27 4 Z M 7.28125 6 L 24.71875 6 L 17.53125 15 L 14.46875 15 Z M 15 17 L 17 17 L 17 22.5 L 15 24 Z"/></svg> <input type="text" class="column-text-search" /></div>');
 
                             // On every keypress in this input
                             $(
@@ -89,9 +106,6 @@ LRC {{$lexicon->name}}: Data
                                     e.stopPropagation();
 
                                     $(this).trigger('change');
-                                    $(this)
-                                        .focus()[0]
-                                        .setSelectionRange(cursorPosition, cursorPosition);
                                 });
                         });
                 },
