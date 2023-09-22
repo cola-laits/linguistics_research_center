@@ -6,8 +6,8 @@ LRC {{$lexicon->name}}: Data
 
 @section('header_extras')
     <!-- datatables (bootstrap 5 styling), jquery 3, buttons/colvis/export, fixedcolumns, fixedheader -->
-    <link href="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-1.13.6/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/fc-4.3.0/fh-3.4.0/datatables.min.css" rel="stylesheet">
-    <script src="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-1.13.6/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/fc-4.3.0/fh-3.4.0/datatables.min.js"></script>
+    <link href="/assets/datatables/datatables.min.css" rel="stylesheet">
+    <script src="/assets/datatables/datatables.min.js"></script>
 
     <style>
         .column-text-search {
@@ -15,6 +15,14 @@ LRC {{$lexicon->name}}: Data
             border-left-width: 0;
             border-right-width: 0;
             border-top-width: 0;
+        }
+
+        .colvis-control-button {
+            background-color: lightgrey;
+        }
+
+        .colvis-control-button:hover {
+            background-color: lightgrey;
         }
     </style>
     <script>
@@ -30,7 +38,7 @@ LRC {{$lexicon->name}}: Data
                 fixedHeader: true,
                 scrollY: true,
                 scrollX: true,
-                'paging': false,
+                paging: true,
                 columnDefs: [
                     { orderable: false, targets: 0 }
                 ],
@@ -44,12 +52,25 @@ LRC {{$lexicon->name}}: Data
                         extend: 'colvis',
                         text: 'Select Columns',
                         collectionLayout: 'dropdown columns',
-                        columns: 'th:not(:first-child)'
+                        columns: 'th:not(:first-child)',
+                        prefixButtons: [{
+                            text: 'Show all',
+                            className: 'colvis-control-button',
+                            action: function(e, dt) {
+                                dt.columns().visible(true);
+                            }
+                        }, {
+                            text: 'Hide all',
+                            className: 'colvis-control-button',
+                            action: function(e, dt) {
+                                dt.columns().visible(false);
+                            }
+                        }]
                     },
                     {
                         text: 'Clear Search',
                         action: function() {
-                            console.log($('.column-text-search'));
+                            $('.column-text-search').val('');
                             var table = $('#datatable').DataTable();
                             table
                                 .search('')
@@ -118,12 +139,15 @@ LRC {{$lexicon->name}}: Data
         });
 
         function recalcDatatableScrollY() {
-            var table = $('#datatable').DataTable();
-            var tableTop = $('.dataTables_scrollBody').offset().top;
-            var windowHeight = document.documentElement.clientHeight;
-            var newHeight = windowHeight - tableTop - 60;
-            $('.dataTables_scrollBody').css('height', newHeight + 'px');
-            table.draw(false);
+            var dataTablesScrollBody = $('.dataTables_scrollBody');
+            // set the height of the scrollable area to the remaining vertical space after the scrollable area starts,
+            // minus height of the info and pagination elements, minus a little extra for padding
+            var newHeight = document.documentElement.clientHeight
+                - dataTablesScrollBody.offset().top
+                - $('#datatable_info').outerHeight()
+                - $('#datatable_paginate').outerHeight()
+                - 20;
+            dataTablesScrollBody.css('height', newHeight + 'px');
         }
     </script>
 @endsection
