@@ -63,7 +63,12 @@ LRC {{$lexicon->name}}: Data
                             text: 'Hide all',
                             className: 'colvis-control-button',
                             action: function(e, dt) {
-                                dt.columns().visible(false);
+                                var cols = dt.columns()[0];
+                                cols = cols.filter(function (ix) {
+                                    // leave the 'show column' and at least one data column visible
+                                    return ix > 1;
+                                });
+                                dt.columns(cols).visible(false);
                             }
                         }]
                     },

@@ -144,7 +144,7 @@
 <body>
 
 <div class="d-flex">
-<div class="" style="height:100vh;overflow-y:scroll;padding:15px;">
+<div class="" style="height:100vh;overflow-y:scroll;padding:15px;width:100%;">
     <header class="d-flex align-items-center justify-content-between pb-3 mb-5 border-bottom">
         <span>
         <a href="/" class="text-dark text-decoration-none">
