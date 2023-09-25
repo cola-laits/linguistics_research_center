@@ -6,6 +6,8 @@
 
 @section('content')
 
+    <h1>{{$word->language->name}} Dictionary</h1>
+
     <table class="table table-bordered table-responsive">
         <tr>
             <td class="text-end" style="white-space:nowrap;">Language:</td>
@@ -27,7 +29,7 @@
             <td class="text-end" style="white-space:nowrap;">Etymology:</td>
             <td>
                 @foreach ($word->etyma as $etymon)
-                    <p><a href="/lexicon/{{$lexicon->slug}}/etymon/{{$etymon->id}}"><b><sup>*</sup>{{$etymon->entry}}</b> {{$etymon->gloss}}</a></p>
+                    <p>From {{$etymon->lexicon->protolang_name}} <a href="/lexicon/{{$etymon->lexicon->slug}}/etymon/{{$etymon->id}}"><b><sup>*</sup>{{$etymon->entry}}</b> {{$etymon->gloss}}</a></p>
                 @endforeach
             </td>
         </tr>
