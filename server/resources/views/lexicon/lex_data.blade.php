@@ -93,15 +93,14 @@ LRC {{$lexicon->name}}: Data
                         .columns()
                         .eq(0)
                         .each(function (colIdx) {
-                            if (colIdx === 0) {
-                                $(cell).html('');
-                                return;
-                            }
                             // Set the header cell to contain the input element
                             var cell = $('.filters th').eq(
                                 $(api.column(colIdx).header()).index()
                             );
-                            var title = $(cell).text();
+                            if (colIdx === 0) {
+                                $(cell).html('');
+                                return;
+                            }
                             $(cell).html('<div class="column-text-search-holder d-flex"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M 5 4 L 5 6.34375 L 5.21875 6.625 L 13 16.34375 L 13 28 L 14.59375 26.8125 L 18.59375 23.8125 L 19 23.5 L 19 16.34375 L 26.78125 6.625 L 27 6.34375 L 27 4 Z M 7.28125 6 L 24.71875 6 L 17.53125 15 L 14.46875 15 Z M 15 17 L 17 17 L 17 22.5 L 15 24 Z"/></svg> <input type="text" class="column-text-search" /></div>');
 
                             // On every keypress in this input
@@ -110,19 +109,11 @@ LRC {{$lexicon->name}}: Data
                                 $('.filters th').eq($(api.column(colIdx).header()).index())
                             )
                                 .off('keyup change')
-                                .on('change', function (e) {
-                                    // Get the search value
-                                    $(this).attr('title', $(this).val());
-                                    var regexr = '({search})'; //$(this).parents('th').find('select').val();
-
-                                    var cursorPosition = this.selectionStart;
-                                    // Search the column for that value
+                                .on('change', function () {
                                     api
                                         .column(colIdx)
                                         .search(
-                                            this.value != ''
-                                                ? regexr.replace('{search}', '(((' + this.value + ')))')
-                                                : '',
+                                            this.value,
                                             this.value != '',
                                             this.value == ''
                                         )
