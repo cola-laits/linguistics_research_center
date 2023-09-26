@@ -4,10 +4,11 @@
     LRC {{$lexicon->name}}: {{$word->language->name}} {{$word->getEntriesCSV()}}
 @endsection
 
+@section('page-title')
+    {{$word->language->name}} Dictionary
+@endsection
+
 @section('content')
-
-    <h1>{{$word->language->name}} Dictionary</h1>
-
     <table class="table table-bordered table-responsive">
         <tr>
             <td class="text-end" style="white-space:nowrap;">Language:</td>

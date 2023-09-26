@@ -4,10 +4,11 @@
     LRC {{$lexicon->name}}: {{$etymon->entry}}
 @endsection
 
+@section('page-title')
+    {{$lexicon->protolang_name}} Dictionary
+@endsection
+
 @section('content')
-
-    <h1>{{$lexicon->protolang_name}} Dictionary</h1>
-
     <table class="table table-bordered table-responsive">
         <tr>
             <td class="text-end" style="white-space:nowrap;">Etymon:</td>

@@ -158,6 +158,8 @@
     </header>
 
     <main>
+        <h1>@yield('page-title')</h1>
+
         @yield('content')
     </main>
 

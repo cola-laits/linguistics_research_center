@@ -1,8 +1,10 @@
 @extends('lexicon.layout-dict')
 
-@section('content')
+@section('page-title')
+    {{$language->name}}
+@endsection
 
-    <h1>{{$language->name}}</h1>
+@section('content')
     <h2>Family: {{$language->language_sub_family->name}} > {{$language->language_sub_family->language_family->name}}</h2>
     <div>
         {!! $language->description !!}

@@ -1,8 +1,10 @@
 @extends('lexicon.layout-etym')
 
-@section('content')
+@section('page-title')
+    {{$page->name}}
+@endsection
 
-    <h1>{{$page->name}}</h1>
+@section('content')
     <div>
         {!! $page->content !!}
     </div>

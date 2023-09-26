@@ -4,10 +4,11 @@
     LRC {{$lexicon->name}}: {{$field->semantic_category->text}}: {{$field->text}}
 @endsection
 
+@section('page-title')
+    Semantic Field
+@endsection
+
 @section('content')
-
-    <h1>Semantic Field</h1>
-
     <table class="table table-bordered table-responsive">
         <tr>
             <td class="text-end" style="white-space:nowrap;">Semantic Category:</td>

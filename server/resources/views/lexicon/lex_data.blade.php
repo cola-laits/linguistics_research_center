@@ -4,6 +4,10 @@
 LRC {{$lexicon->name}}: Data
 @endsection
 
+@section('page-title')
+    Data
+@endsection
+
 @section('header_extras')
     <!-- datatables (bootstrap 5 styling), jquery 3, buttons/colvis/export, fixedcolumns, fixedheader -->
     <link href="/assets/datatables/datatables.min.css" rel="stylesheet">
@@ -151,7 +155,6 @@ LRC {{$lexicon->name}}: Data
 @section('content')
 
     <div>
-        <h1>Data</h1>
         <div>
 <table id="datatable" class="table table-bordered">
     <thead>
