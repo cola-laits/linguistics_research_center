@@ -55,36 +55,26 @@ class Lex_reflexCrudController extends CrudController
                 $query->orWhere('entries', 'like', '%'.$searchTerm.'%');
             });
         CRUD::column('gloss')->type('text');
-        CRUD::column('language')->label('Language')->type('relationship')->attribute('name');
+        CRUD::column('language')->label('Language')->type('relationship')->attribute('name')
+            ->searchLogic(function ($query, $column, $searchTerm) {
+                $query->orWhereHas('language', function ($query) use ($searchTerm) {
+                    $query->where('name', 'like', '%' . $searchTerm . '%');
+                });
+            });
 
-        $this->crud->addFilter(
-            ['type'=>'select2_ajax', 'name'=>'reflex', 'label'=>'Reflex', 'method'=>'POST',
-                'select_attribute'=>'entries'],
-            backpack_url('lex_reflex/fetch/entries'),
-            function($value) {
+        CRUD::filter('reflex')
+            ->type('text')
+            ->label('Reflex')
+            ->whenActive(function($value) {
                 $this->crud->addClause('where','entries','like', "%$value%");
-            }
-        );
+            });
 
-        $this->crud->addFilter(
-            ['type'=>'select2_ajax', 'name'=>'etyma', 'label'=>'Etymon', 'method'=>'POST',
-                'select_attribute'=>'etymon'],
-            backpack_url('lex_etyma/fetch/entry'),
-            function($value) {
-                $etyma_ids = LexEtyma::where('entry', 'like', "%$value%")->pluck('id')->toArray();
-                $reflex_ids = LexEtymaReflex::whereIn('etyma_id', $etyma_ids)->pluck('reflex_id')->toArray();
-                $this->crud->addClause('whereIn','id', $reflex_ids);
-            }
-        );
-
-        $this->crud->addFilter(
-            ['type'=>'select2_ajax', 'name'=>'gloss', 'label'=>'Gloss', 'method'=>'POST',
-                'select_attribute'=>'gloss'],
-            backpack_url('lex_reflex/fetch/gloss'),
-            function($value) {
+        CRUD::filter('gloss')
+            ->type('text')
+            ->label('Gloss')
+            ->whenActive(function($value) {
                 $this->crud->addClause('where','gloss','like', "%$value%");
-            }
-        );
+            });
 
         $this->crud->addFilter(
             ['type'=>'select2', 'name'=>'language', 'label'=>'Language',],
@@ -126,7 +116,6 @@ class Lex_reflexCrudController extends CrudController
     {
         CRUD::setValidation(Lex_reflexRequest::class);
 
-        //CRUD::setFromDb(); // fields
         CRUD::field('gloss')->type('text');
         CRUD::field('language_id')->label('Language')->type('relationship')->attribute('name');
         CRUD::field('lang_attribute')->type('text');
@@ -138,7 +127,11 @@ class Lex_reflexCrudController extends CrudController
             ->entity_singular('entry')
             ->columns(['text'=>'Text']);
 
-//        CRUD::field('parts_of_speech')->type('table')...
+        CRUD::field('parts_of_speech')->type('relationship')
+            ->subfields([
+                ['name'=>'text', 'label'=>'Part of Speech', 'wrapper'=>['class'=>'form-group col-md-9']],
+                ['name'=>'order', 'label'=>'Order', 'wrapper'=>['class'=>'form-group col-md-3']],
+            ]);
 
         CRUD::field('extra_data')
             ->type('json')

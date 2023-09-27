@@ -58,34 +58,29 @@ class Lex_etymaCrudController extends CrudController
                 CRUD::addClause('where','lexicon_id',$value);
             });
 
-        $this->crud->addFilter(
-            ['type'=>'select2_ajax', 'name'=>'entry', 'label'=>'Etyma', 'method'=>'POST',
-                'select_attribute'=>'entry'],
-            backpack_url('lex_etyma/fetch/entry'),
-            function($value) {
-                $this->crud->addClause('where','entry','like', "%$value%");
-            }
-        );
+        CRUD::filter('entry')
+            ->label('Etyma')
+            ->type('text')
+            ->whenActive(function($value) {
+                CRUD::addClause('where','entry','like', "%$value%");
+            });
 
-        $this->crud->addFilter(
-            ['type'=>'select2_ajax', 'name'=>'gloss', 'label'=>'Gloss', 'method'=>'POST',
-                'select_attribute'=>'gloss'],
-            backpack_url('lex_etyma/fetch/gloss'),
-            function($value) {
-                $this->crud->addClause('where','gloss','like', "%$value%");
-            }
-        );
 
-        $this->crud->addFilter(
-            ['type'=>'select2_ajax', 'name'=>'reflex', 'label'=>'Reflex', 'method'=>'POST',
-                'select_attribute'=>'entries'],
-            backpack_url('lex_reflex/fetch/entries'),
-            function($value) {
-                $this->crud->query = $this->crud->query->whereHas('reflexes', function($query) use ($value) {
+        CRUD::filter('gloss')
+            ->label('Gloss')
+            ->type('text')
+            ->whenActive(function($value) {
+                CRUD::addClause('where','gloss','like', "%$value%");
+            });
+
+        CRUD::filter('reflex')
+            ->label('Reflex')
+            ->type('text')
+            ->whenActive(function($value) {
+                CRUD::addClause('whereHas','reflexes', function($query) use ($value) {
                     return $query->where('entries','like',"%$value%");
                 });
-            }
-        );
+            });
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:

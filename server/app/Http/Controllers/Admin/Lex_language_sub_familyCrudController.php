@@ -45,7 +45,12 @@ class Lex_language_sub_familyCrudController extends CrudController
         //CRUD::setFromDb(); // columns
         CRUD::column('name')->type('text');
         CRUD::column('order')->type('number');
-        CRUD::column('language_family')->type('relationship');
+        CRUD::column('language_family')->type('relationship')
+            ->searchLogic(function ($query, $column, $searchTerm) {
+                $query->orWhereHas('language_family', function ($query) use ($searchTerm) {
+                    $query->where('name', 'like', '%' . $searchTerm . '%');
+                });
+            });
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:

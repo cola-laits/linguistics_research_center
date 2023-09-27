@@ -73,4 +73,16 @@ class LexReflexPartOfSpeech extends Model {
 	{
 		return $this->hasOne(LexPartOfSpeech::class, 'id', 'part_of_speech_id');
 	}
+
+    public function language()
+    {
+        return $this->hasOneThrough(
+            LexLanguage::class,
+            LexReflex::class,
+            'id',
+            'id',
+            'reflex_id',
+            'language_id'
+        );
+    }
 }

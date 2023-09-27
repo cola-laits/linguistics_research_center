@@ -69,6 +69,11 @@ class LexSemanticField extends Model {
 		return $this->belongsTo(LexSemanticCategory::class);
 	}
 
+    public function lexicon()
+    {
+        return $this->hasOneThrough(LexLexicon::class, LexSemanticCategory::class, 'id', 'id', 'semantic_category_id', 'lexicon_id');
+    }
+
     public function etyma()
     {
         return $this->belongsToMany(LexEtyma::class, 'lex_etyma_semantic_field', 'semantic_field_id', 'etyma_id')

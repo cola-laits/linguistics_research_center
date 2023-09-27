@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Lex_semantic_fieldRequest;
+use App\Models\LexLexicon;
 use App\Models\LexSemanticCategory;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
@@ -42,17 +43,44 @@ class Lex_semantic_fieldCrudController extends CrudController
     {
         CRUD::removeButton('show');
 
+        CRUD::column('lexicon_id')->type('relationship')->attribute('name')
+            ->searchLogic(function ($query, $column, $searchTerm) {
+                $query->orWhereHas('lexicon', function ($query) use ($searchTerm) {
+                    $query->where('name', 'like', '%'.$searchTerm.'%');
+                });
+            });
         CRUD::column('text');
         CRUD::column('number');
         CRUD::column('abbr');
-        CRUD::column('semantic_category')->type('relationship')->attribute('lex_text');
+        CRUD::column('semantic_category')->type('select')->attribute('text')
+            ->searchLogic(function ($query, $column, $searchTerm) {
+                $query->orWhereHas('semantic_category', function ($query) use ($searchTerm) {
+                    $query->where('text', 'like', '%'.$searchTerm.'%');
+                });
+            });
+
+        CRUD::filter('lexicon_id')
+            ->type('dropdown')
+            ->values(LexLexicon::all()->pluck('name', 'id')->toArray())
+            ->whenActive(function($value) {
+                CRUD::addClause('whereHas','semantic_category',function ($query) use ($value) {
+                    $query->where('lexicon_id', $value);
+                });
+            });
+
+        /*
+        CRUD::addFilter('lexicon_id', function () {
+            return LexLexicon::all()->pluck('name', 'id')->toArray();
+        }, 'select2', function ($value) { // if the filter is active
+            $this->crud->addClause('where', 'lexicon_id', $value);
+        });*/
 
         CRUD::addFilter([
             'name'  => 'semantic_category',
             'type'  => 'select2',
             'label' => 'Semantic Category',
         ], function () {
-            return LexSemanticCategory::orderBy('text')->get()->mapWithKeys(function ($item, $key) {
+            return LexSemanticCategory::orderBy('lexicon_id')->orderBy('text')->get()->mapWithKeys(function ($item, $key) {
                 return [$item->id => $item->lex_text];
             })->toArray();
         }, function ($value) {

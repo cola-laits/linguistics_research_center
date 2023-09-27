@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Http\Controllers\PublicIELexController;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Auth;
 
 use function collect;
@@ -169,9 +170,9 @@ class LexReflex extends Model {
 		return $this->belongsTo(LexLanguage::class);
 	}
 
-	public function parts_of_speech()
+	public function parts_of_speech(): HasMany
 	{
-		return $this->hasMany(LexReflexPartOfSpeech::class, 'reflex_id', 'id')->orderBy('order');
+        return $this->hasMany(LexReflexPartOfSpeech::class, 'reflex_id')->orderBy('order');
 	}
 
 	public function sources()

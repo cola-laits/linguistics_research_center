@@ -35,7 +35,6 @@ Route::group([
         });
         Route::crud('lex_etyma', 'Lex_etymaCrudController');
         Route::crud('lex_reflex', 'Lex_reflexCrudController');
-        Route::crud('lex_reflex_part_of_speech', 'Lex_reflex_part_of_speechCrudController');
         Route::crud('lex_semantic_category', 'Lex_semantic_categoryCrudController');
         Route::crud('lex_semantic_field', 'Lex_semantic_fieldCrudController');
         Route::crud('lex_language_family', 'Lex_language_familyCrudController');
