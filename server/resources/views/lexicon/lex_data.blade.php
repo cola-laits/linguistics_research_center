@@ -43,12 +43,19 @@ LRC {{$lexicon->name}}: Data
                 scrollY: true,
                 scrollX: true,
                 paging: true,
+                lengthMenu: [
+                    [ 10, 25, 50, -1 ],
+                    [ '10 rows', '25 rows', '50 rows', 'Show all' ]
+                ],
                 columnDefs: [
                     { orderable: false, targets: 0 }
                 ],
                 order: [[1, 'asc']],
                 dom: 'Bfrtip',
                 buttons: [
+                    {
+                        extend: 'pageLength',
+                    },
                     {
                         extend: 'csv',
                     },
