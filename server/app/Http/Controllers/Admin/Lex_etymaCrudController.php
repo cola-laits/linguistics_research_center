@@ -116,13 +116,6 @@ class Lex_etymaCrudController extends CrudController
             ->default([])
             ->hint("'Extra Data' is freeform info that may vary between lexicons.");
 
-        /*
-        CRUD::field('reflexes')
-            ->type('relationship')
-            ->ajax(true)
-            ->attribute('langAbbrGloss');
-        */
-
         /**
          * Fields can be defined using the fluent syntax or array syntax:
          * - CRUD::field('price')->type('number');
@@ -155,30 +148,5 @@ class Lex_etymaCrudController extends CrudController
                 }
             },
         ]);
-    }
-
-    public function fetchEntry()
-    {
-        $table = 'lex_etyma';
-        $field = 'entry';
-        return $this->fetchTableLookupByDistinctField($table, $field);
-    }
-
-    public function fetchGloss()
-    {
-        $table = 'lex_etyma';
-        $field = 'gloss';
-        return $this->fetchTableLookupByDistinctField($table, $field);
-    }
-
-    protected function fetchTableLookupByDistinctField($table, $field)
-    {
-        $search_string = request()->input('q');
-        $query = \DB::table($table)
-            ->where($field,'like','%'.$search_string.'%')
-            ->distinct()
-            ->orderBy($field)
-            ->pluck($field);
-        return $query;
     }
 }

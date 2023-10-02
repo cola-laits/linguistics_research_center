@@ -48,6 +48,22 @@
 
     <div>
 
+        @if ($word->cross_references->count() > 0)
+            <h2>Related Words:</h2>
+            <div>
+                <ul>
+                    @foreach ($word->cross_references as $crossref)
+                        <li>
+                            {{$crossref->language->name}}: {{$crossref->getEntriesCSV()}} "{{$crossref->gloss}}"
+                            @if ($crossref->pivot->relationship)
+                            ({{$crossref->pivot->relationship}})
+                            @endif
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         @if ($word->extra_data)
         <h2>Other info:</h2>
         <div>

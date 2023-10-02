@@ -181,7 +181,8 @@ class LexReflex extends Model {
 
     public function cross_references()
     {
-        return $this->belongsToMany(LexReflex::class, 'lex_reflex_cross_reference', 'from_reflex_id', 'to_reflex_id');
+        return $this->belongsToMany(LexReflex::class, 'lex_reflex_cross_reference', 'from_reflex_id', 'to_reflex_id')
+            ->withPivot(['relationship']);
     }
 
     public function etymaSemanticTags() {

@@ -131,22 +131,19 @@ class Lex_reflexCrudController extends CrudController
                 ['name'=>'order', 'label'=>'Order', 'wrapper'=>['class'=>'form-group col-md-3']],
             ]);
 
+        CRUD::field('cross_references')
+            ->type('relationship')
+            //->subfields([
+            //    ['name'=>'relationship', 'type'=>'text', 'label'=>'Relationship'],
+            //])
+            ->ajax(true);
+
         CRUD::field('extra_data')
             ->type('json')
             ->view_namespace('json-field-for-backpack::fields')
             ->modes(['form','tree','code'])
             ->default([])
             ->hint("'Extra Data' is freeform info that may vary between lexicons.");
-
-        /*
-        CRUD::field('cross_references')
-            ->type('select2_from_ajax_multiple')
-            ->data_source(backpack_url('lex_reflex/fetch/entries'))
-            ->method('POST')
-            ->model('App\Models\LexReflex')
-            ->attribute('entries')
-            ->pivot(true);
-        */
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:
@@ -166,30 +163,8 @@ class Lex_reflexCrudController extends CrudController
         $this->setupCreateOperation();
     }
 
-    public function fetchEntries()
+    public function fetchCrossReferences()
     {
-        $table = 'lex_reflex';
-        $field = 'entries';
-        $data = $this->fetchTableLookupByDistinctField($table, $field);
-        $result = $data->map(function ($j) { return json_decode($j); })->flatten()->pluck('text');
-        return $result;
-    }
-
-    public function fetchGloss()
-    {
-        $table = 'lex_reflex';
-        $field = 'gloss';
-        return $this->fetchTableLookupByDistinctField($table, $field);
-    }
-
-    protected function fetchTableLookupByDistinctField($table, $field)
-    {
-        $search_string = request()->input('q');
-        $query = \DB::table($table)
-            ->where($field,'like','%'.$search_string.'%')
-            ->distinct()
-            ->orderBy($field)
-            ->pluck($field);
-        return $query;
+        return $this->fetch(\App\Models\LexReflex::class);
     }
 }
