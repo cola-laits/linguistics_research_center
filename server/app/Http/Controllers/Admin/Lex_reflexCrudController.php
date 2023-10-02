@@ -140,11 +140,14 @@ class Lex_reflexCrudController extends CrudController
             ->hint("'Extra Data' is freeform info that may vary between lexicons.");
 
         /*
-        CRUD::field('reflexes_related_to')
-            ->type('select2_ajax')
-            //->entity('getLangAbbrGlossAttribute')
-            ->label('Related To Reflexes');
-*/
+        CRUD::field('cross_references')
+            ->type('select2_from_ajax_multiple')
+            ->data_source(backpack_url('lex_reflex/fetch/entries'))
+            ->method('POST')
+            ->model('App\Models\LexReflex')
+            ->attribute('entries')
+            ->pivot(true);
+        */
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:

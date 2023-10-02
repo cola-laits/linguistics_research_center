@@ -180,6 +180,11 @@ class LexReflex extends Model {
 		return $this->belongsToMany(LexSource::class, 'lex_reflex_source', 'reflex_id', 'source_id')->orderBy('code');
 	}
 
+    public function cross_references()
+    {
+        return $this->belongsToMany(LexReflex::class, 'lex_reflex_cross_reference', 'from_reflex_id', 'to_reflex_id');
+    }
+
     public function etymaSemanticTags() {
         $tags = collect();
         foreach ($this->etymas as $etyma) {
