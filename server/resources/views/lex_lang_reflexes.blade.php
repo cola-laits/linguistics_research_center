@@ -125,7 +125,7 @@ or <i>lie</i>, represent multiple reflexes derived from different PIE etyma.</p>
       @foreach($display_reflexes as $reflex)
         <tr class="searchable_reflex_row">
             <td>
-                <span class='{{$reflex['class_attribute']}}' lang='{{$reflex['lang_attribute']}}'>{!! $reflex['reflex'] !!}</span>
+                <span lang='{{$reflex['lang_attribute']}}'>{!! $reflex['reflex'] !!}</span>
             </td>
             <td>
                 @foreach($reflex['etymas'] as $index => $temp_etyma)

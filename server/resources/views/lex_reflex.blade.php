@@ -69,7 +69,7 @@ $prev_family=''; @endphp
         @endif
         <td>
             @foreach($reflex->entries as $entry)
-                <span class='{{$reflex->class_attribute}}' lang='{{$reflex->lang_attribute}}'>{!! $entry['text'] !!}</span>@if (!$loop->last),@endif
+                <span lang='{{$reflex->lang_attribute}}'>{!! $entry['text'] !!}</span>@if (!$loop->last),@endif
             @endforeach
         </td>
         <td class='center'>{{$reflex->getDisplayPartsOfSpeech()}}</td>

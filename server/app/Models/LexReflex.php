@@ -20,7 +20,6 @@ use App\Models\LexSource;
  * @property int $id
  * @property int $language_id
  * @property string|null $lang_attribute
- * @property string|null $class_attribute
  * @property string|null $gloss
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -266,7 +265,6 @@ class LexReflex extends Model {
                 $these_reflexes[$new_key] = [
                     'id' => $this->id,
                     'reflex' => $key,
-                    'class_attribute' => $this->class_attribute,
                     'lang_attribute' => $this->lang_attribute,
                     'etymas' => $etymas
                 ];

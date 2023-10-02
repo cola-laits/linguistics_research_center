@@ -166,7 +166,6 @@ class ImportProtoSemiticCsv extends Command
             $lex_reflex = new LexReflex();
             $lex_reflex->language_id = $lang->id;
             $lex_reflex->lang_attribute = $iso_lang_codes[$csv_row['language']];
-            $lex_reflex->class_attribute = 'Unicode';
             if ($file_is_nouns) {
                 $entry = $this->getReflexEntryNoun($csv_row);
                 $lex_reflex->gloss = $csv_row['meaning'];
