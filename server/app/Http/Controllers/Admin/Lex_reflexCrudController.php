@@ -77,7 +77,7 @@ class Lex_reflexCrudController extends CrudController
             });
 
         $this->crud->addFilter(
-            ['type'=>'select2', 'name'=>'language', 'label'=>'Language',],
+            ['type'=>'select2_multiple', 'name'=>'language', 'label'=>'Language',],
             function() {
                 return LexLanguage::orderBy('name')->get()->mapWithKeys(function ($item, $key) {
                     return [$item->id => $item->name];
@@ -92,8 +92,7 @@ class Lex_reflexCrudController extends CrudController
             ['type'=>'text', 'name'=>'part_of_speech', 'label'=>'Part of Speech',],
             false,
             function($value) {
-                $reflex_ids = LexReflexPartOfSpeech::where('text',$value)->get()->pluck('id')->toArray();
-                $reflex_id_csv = implode(',',$reflex_ids);
+                $reflex_ids = LexReflexPartOfSpeech::where('text',$value)->get()->pluck('reflex_id')->toArray();
                 $this->crud->addClause('whereIn','id', $reflex_ids);
             }
         );
@@ -139,6 +138,13 @@ class Lex_reflexCrudController extends CrudController
             ->modes(['form','tree','code'])
             ->default([])
             ->hint("'Extra Data' is freeform info that may vary between lexicons.");
+
+        /*
+        CRUD::field('reflexes_related_to')
+            ->type('select2_ajax')
+            //->entity('getLangAbbrGlossAttribute')
+            ->label('Related To Reflexes');
+*/
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:
