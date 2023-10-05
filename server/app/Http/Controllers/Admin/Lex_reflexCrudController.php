@@ -142,7 +142,7 @@ class Lex_reflexCrudController extends CrudController
             ->label('Cross References')
             ->subfields([
                 [
-                    'name' => 'id', 'type' => 'text', 'label' => 'Related Reflex ID',
+                    'name' => 'id', 'type' => 'text', 'label' => 'leads to Reflex ID',
                     'wrapper' => ['class' => 'form-group col-md-3'],
                 ],
                 [
