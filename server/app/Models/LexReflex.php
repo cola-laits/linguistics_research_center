@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use App\Http\Controllers\PublicIELexController;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Attribute;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Auth;
 
@@ -151,6 +151,19 @@ class LexReflex extends Model {
     public function getLangNameEntriesGlossAttribute() {
         $entries_csv = collect($this->entries)->pluck('text')->join(', ');
         return $this->language->name . ': '.$entries_csv.' (' . $this->gloss . ')';
+    }
+
+    public function getCrossReferencesArrayAttribute() {
+        $cross_refs = $this->cross_references;
+        $cross_refs_array = [];
+        foreach ($cross_refs as $cross_ref) {
+            $cross_refs_array[] = [
+                'id' => $cross_ref->id,
+                'description' => $cross_ref->reflex_lister,
+                'relationship' => $cross_ref->pivot->relationship
+            ];
+        }
+        return $cross_refs_array;
     }
 
     public function etyma()

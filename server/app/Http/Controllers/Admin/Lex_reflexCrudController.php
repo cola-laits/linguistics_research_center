@@ -19,8 +19,8 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 class Lex_reflexCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation { store as traitStore; }
+    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation { update as traitUpdate; }
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
@@ -115,6 +115,8 @@ class Lex_reflexCrudController extends CrudController
     {
         CRUD::setValidation(Lex_reflexRequest::class);
 
+        CRUD::field('id')->type('text')->attributes(['readonly'=>'readonly']);
+
         CRUD::field('gloss')->type('text');
         CRUD::field('language_id')->label('Language')->type('relationship')->attribute('name');
         CRUD::field('lang_attribute')->type('text');
@@ -131,12 +133,28 @@ class Lex_reflexCrudController extends CrudController
                 ['name'=>'order', 'label'=>'Order', 'wrapper'=>['class'=>'form-group col-md-3']],
             ]);
 
-        CRUD::field('cross_references')
-            ->type('relationship')
-            //->subfields([
-            //    ['name'=>'relationship', 'type'=>'text', 'label'=>'Relationship'],
-            //])
-            ->ajax(true);
+        // Backpack lacks something like an inline search field, which is what we really want here.
+        // Barring that, create an array of the many-to-many data in the model, use that to populate the field,
+        // and then unwind the array back into the model on save (in the store() and update() methods here).
+        // Following example from https://cybrarist.com/programming/how-to-use-many-to-many-relationship-in-a-repeater-field-in-laravel-backpack/
+        CRUD::field('crossReferencesArray')
+            ->type('repeatable')
+            ->label('Cross References')
+            ->subfields([
+                [
+                    'name' => 'id', 'type' => 'text', 'label' => 'Related Reflex ID',
+                    'wrapper' => ['class' => 'form-group col-md-3'],
+                ],
+                [
+                    'name' => 'description', 'type' => 'text', 'label' => 'Description', 'attribute' => 'langNameEntriesGloss',
+                    'attributes' => ['readonly' => 'readonly'],
+                    'wrapper' => ['class' => 'form-group col-md-3'],
+                ],
+                [
+                    'name' => 'relationship', 'type' => 'text', 'label' => 'Relationship',
+                    'wrapper' => ['class' => 'form-group col-md-6'],
+                ],
+            ]);
 
         CRUD::field('extra_data')
             ->type('json')
@@ -163,8 +181,23 @@ class Lex_reflexCrudController extends CrudController
         $this->setupCreateOperation();
     }
 
-    public function fetchCrossReferences()
-    {
-        return $this->fetch(\App\Models\LexReflex::class);
+    public function store() {
+        $response = $this->traitStore();
+        $this->updateCrossReferencesArray(request()->get('crossReferencesArray'));
+        return $response;
+    }
+
+    public function update() {
+        $response = $this->traitUpdate();
+        $this->updateCrossReferencesArray(request()->get('crossReferencesArray'));
+        return $response;
+    }
+
+    protected function updateCrossReferencesArray($arr) {
+        $reflex = $this->crud->getCurrentEntry();
+        $reflex->cross_references()->detach();
+        foreach ($arr as $item) {
+            $reflex->cross_references()->attach($item['id'], ['relationship'=>$item['relationship']]);
+        }
     }
 }

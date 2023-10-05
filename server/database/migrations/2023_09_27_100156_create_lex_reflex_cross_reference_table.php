@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedInteger('from_reflex_id');
             $table->unsignedInteger('to_reflex_id');
-            $table->text('relationship');
+            $table->text('relationship')->nullable();
             $table->timestamps();
 
             $table->foreign('from_reflex_id')->references('id')->on('lex_reflex');
