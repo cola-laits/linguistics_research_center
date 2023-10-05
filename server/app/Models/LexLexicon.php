@@ -27,4 +27,13 @@ class LexLexicon extends Model
         return $this->hasMany(LexLanguageFamily::class, 'lexicon_id')
             ->orderBy('order');
     }
+
+    public function getViewerLangsArray() {
+        if ($this->viewer_lang_options == null) {
+            return [];
+        }
+        return str($this->viewer_lang_options)->explode(',')->map(function($lang_code) {
+            return trim($lang_code);
+        });
+    }
 }

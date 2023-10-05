@@ -2,10 +2,10 @@
     <div id="sidebar-header" class="sidebar-header">
         <p>
             <a href="#" class="selector_type_link{{$selected_sidebar=='headword' ? ' selected' : ''}}"
-               onclick="choose_selector_type('headword');return false;" id="selector_type_link_headword">Headwords</a>
+               onclick="choose_selector_type('headword');return false;" id="selector_type_link_headword">{{__('lexicon.sidebar.title_headwords')}}</a>
             |
             <a href="#" class="selector_type_link{{$selected_sidebar=='category' ? ' selected' : ''}}"
-               onclick="choose_selector_type('category');return false;" id="selector_type_link_category">Categories</a>
+               onclick="choose_selector_type('category');return false;" id="selector_type_link_category">{{__('lexicon.sidebar.title_categories')}}</a>
         </p>
     </div>
     <div id="sidebar-content" class="sidebar-content">
@@ -21,7 +21,7 @@
                         </div>
                     </div>
                     <div class="col-3">
-                        <button type="submit" class="btn btn-light">Search</button>
+                        <button type="submit" class="btn btn-light">{{__('lexicon.sidebar.button_label_search')}}</button>
                     </div>
                 </form>
             </div>
@@ -41,7 +41,7 @@
                         </div>
                     </div>
                     <div class="col-3">
-                        <button type="submit" class="btn btn-light">Search</button>
+                        <button type="submit" class="btn btn-light">{{__('lexicon.sidebar.button_label_search')}}</button>
                     </div>
                 </form>
             </div>

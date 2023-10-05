@@ -12,11 +12,16 @@ use App\Models\LexReflex;
 use App\Models\LexSemanticField;
 use App\Models\Page;
 use Illuminate\Http\Request;
+use Session;
 
 class PublicLexiconController extends Controller
 {
     public function index(Request $request, $lexicon_slug)
     {
+        if ($request->has('switchlang')) {
+            Session::put('viewer_lang_code', $request->input('switchlang'));
+            return redirect('/lexicon/'.$lexicon_slug);
+        }
         $lex = $this->getLexicon($lexicon_slug);
         return view('lexicon/lex_home', [
             'lexicon'=>$lex,

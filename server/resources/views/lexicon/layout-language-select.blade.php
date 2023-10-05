@@ -1,8 +1,8 @@
 <form class="d-flex align-items-center">
     <div class="col-12">
-        <label for="language_select" class="form-label">Jump to a dictionary:</label>
+        <label for="language_select" class="form-label">{{__('lexicon.menu.dictionary_jump_label')}}:</label>
         <select class="form-select" id="language_select" onchange="go_to_dictionary(this)">
-            <option value="" selected>choose a language...</option>
+            <option value="" selected>{{__('lexicon.menu.dictionary_choose_language_prompt')}}</option>
             <optgroup label="{{$lexicon->protolang_name}}">
                 <option value="protolang">{{$lexicon->protolang_name}}</option>
             </optgroup>
