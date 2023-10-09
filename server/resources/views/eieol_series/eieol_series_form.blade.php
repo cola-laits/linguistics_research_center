@@ -19,18 +19,6 @@
             form.submit();
         }
 
-        /*
-        function  removeLanguage(l) {
-
-            axios.post('/admin2/related_languages/{{$series->id}}/detach_language/' + l.value).then(function(response){
-
-                window.fetchlanguages();
-
-            }).catch(function(error){console.log(error);});
-
-        }
-        */
-
     </script>
 @endsection
 

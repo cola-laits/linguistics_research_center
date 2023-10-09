@@ -460,22 +460,8 @@
 
 <script>
 import Vue from 'vue';
-import AudioIcon from './AudioIcon'
-import CKEditor from './CkEditor'
-import CommentIcon from './CommentIcon'
-import GlossEditor from './GlossEditor'
-import InputCustomKeyboard from './InputCustomKeyboard'
-import TextareaCustomKeyboard from './TextareaCustomKeyboard'
 
     export default {
-        components: {
-            'audio-icon': AudioIcon,
-            'ck-editor': CKEditor,
-            'comment-icon': CommentIcon,
-            'gloss-editor': GlossEditor,
-            'input-custom-keyboard': InputCustomKeyboard,
-            'textarea-custom-keyboard': TextareaCustomKeyboard,
-        },
         props: [
             'init_lesson',
             'init_languages',

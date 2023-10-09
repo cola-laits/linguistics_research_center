@@ -57,18 +57,12 @@
     </nav>
 
     <div class="container-fluid">
-        <div v-cloak id="admin_app">
         @yield('content')
-        </div>
     </div>
 
-    <script src="/js/vue-search-select.js"></script>
     <script src="https://cdn.ckeditor.com/4.14.1/full-all/ckeditor.js"></script>
 
     <script src="{{ mix('/js/admin.js') }}"></script>
-
-    <script src="//code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
-
 
     <script type="text/javascript">
         window.axios.defaults.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content');

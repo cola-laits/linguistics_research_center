@@ -10,11 +10,16 @@
             }
         };
 
+        new window.Vue({
+            el: '#admin_app'
+        });
     </script>
 @endsection
 
 @section('content')
-<lesson-editor
+    <div v-cloak id="admin_app">
+
+    <lesson-editor
     :init_lesson="{{ json_encode($lesson) }}"
     :init_languages="{{ json_encode($languages) }}"
     :init_glossed_texts="{{ json_encode($glossed_texts) }}"
@@ -35,4 +40,6 @@ specialChars : [ {{ $lesson->language->custom_keyboard_layout }}]
 >
 
 </lesson-editor>
+
+    </div>
 @endsection
