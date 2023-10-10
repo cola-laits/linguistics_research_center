@@ -19,11 +19,6 @@ Vue.component('tags-input', VueTagsInput);
 
 window.jQuery = window.$ = require('jquery');
 
-import tinymce from 'tinymce';
-import 'tinymce/themes/silver';
-import Editor from '@tinymce/tinymce-vue';
-Vue.component('tinymce-editor', Editor);
-
 import CKEditor from './components/CkEditor';
 Vue.component('ck-editor', CKEditor);
 
