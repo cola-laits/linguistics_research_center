@@ -85,6 +85,15 @@ class LexEtyma extends Model {
 		return $this->belongsToMany(LexEtyma::class, 'lex_etyma_cross_reference', 'from_etyma_id', 'to_etyma_id');
 	}
 
+    public function getReflexesLangNameEntriesGloss() {
+        $text = $this->reflexes->map(function($reflex) {
+            return $reflex->langNameEntriesGloss;
+        })->implode(', ');
+        if (strlen($text) > 30) {
+            $text = substr($text, 0, 30) . '...';
+        }
+        return $text;
+    }
 
 	public function getSources()
 	{

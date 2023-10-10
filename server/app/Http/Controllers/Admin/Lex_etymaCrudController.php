@@ -47,9 +47,8 @@ class Lex_etymaCrudController extends CrudController
         CRUD::column('lexicon_id')->type('select')->attribute('name');
         CRUD::column('entry')->label('Etyma')->type('text');
         CRUD::column('gloss')->type('text');
-        CRUD::column('old_id')->label('Old Id')->type('number');
-        CRUD::column('order')->type('number');
-        CRUD::column('page_number')->type('text');
+        CRUD::column('reflexes_display')->label('Reflexes')->type('model_function')
+            ->function_name('getReflexesLangNameEntriesGloss');
 
         CRUD::filter('lexicon_id')
             ->type('dropdown')
