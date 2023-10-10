@@ -128,6 +128,7 @@ class Lex_reflexCrudController extends CrudController
             ->columns(['text'=>'Text']);
 
         CRUD::field('parts_of_speech')->type('relationship')
+            ->new_item_label('New Part of Speech')
             ->subfields([
                 ['name'=>'text', 'label'=>'Part of Speech', 'wrapper'=>['class'=>'form-group col-md-9']],
                 ['name'=>'order', 'label'=>'Order', 'wrapper'=>['class'=>'form-group col-md-3']],
@@ -140,6 +141,8 @@ class Lex_reflexCrudController extends CrudController
         CRUD::field('crossReferencesArray')
             ->type('repeatable')
             ->label('Cross References')
+            ->hint("The word whose entry you're editing is the <i>borrowed</i> (original, or <b>From</b>) word. The cross-reference you add will be the <i>borrowing</i>, or <i>calqued</i> word (<i>new</i>, or <b>To</b>), as this word was taken into another language.")
+            ->new_item_label('New cross-reference')
             ->subfields([
                 [
                     'name' => 'id', 'type' => 'text', 'label' => 'leads to Reflex ID',
