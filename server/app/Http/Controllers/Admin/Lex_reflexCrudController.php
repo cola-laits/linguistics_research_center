@@ -84,7 +84,7 @@ class Lex_reflexCrudController extends CrudController
                 })->toArray();
             },
             function($value) {
-                $this->crud->addClause('where','language_id', $value);
+                $this->crud->addClause('whereIn','language_id', json_decode($value));
             }
         );
 
