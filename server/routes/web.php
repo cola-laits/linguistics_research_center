@@ -62,7 +62,7 @@ Route::controller(PublicIELexController::class)->group(function() {
 
 Route::get('/admin', 'AdminController@index');
 
-Route::group(array('prefix'=> 'admin/api/v1', 'middleware' => 'auth'), function() {
+Route::group(array('prefix'=> 'admin', 'middleware' => 'auth'), function() {
     Route::resource('/issue', 'IssueController');
     Route::resource('/issue_comment', 'IssueCommentController');
 });

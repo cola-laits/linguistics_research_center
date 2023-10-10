@@ -1,5 +1,7 @@
 <template>
-    <b-modal ref="attach_headword_modal" :title="is_new_headword ? 'Attach Head Word' : 'Edit Head Word'" size="xl">
+    <b-modal ref="attach_headword_modal" :title="is_new_headword ? 'Attach Head Word' : 'Edit Head Word'" size="xl"
+        hide-footer
+    >
         <div v-if="is_new_headword">
             <div class='col-lg-12'>
                 <label>Search Head Word</label>
@@ -81,8 +83,6 @@
                 </form>
             </div>
         </div>
-
-        <div slot="modal-footer"><!-- no ok or cancel buttons --></div>
     </b-modal>
 </template>
 

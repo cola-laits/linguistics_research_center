@@ -1,6 +1,6 @@
 <template>
     <div>
-    <b-modal ref="attach_gloss_modal" :title="is_new_gloss ? 'Attach Gloss' : 'Edit Gloss'" size="xxl">
+    <b-modal ref="attach_gloss_modal" :title="is_new_gloss ? 'Attach Gloss' : 'Edit Gloss'" size="xxl" hide-footer>
         <div v-if="is_new_gloss">
             <div class='col-lg-12'>
                 <label for="gloss_search_input">Search Gloss</label>
@@ -356,8 +356,6 @@
             </div>
 
         </form>
-
-        <div slot="modal-footer"><!-- no ok or cancel buttons --></div>
     </b-modal>
 
         <head-word-editor ref="head-word-editor"

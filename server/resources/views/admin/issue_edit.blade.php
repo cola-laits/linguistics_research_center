@@ -49,226 +49,194 @@
 @endsection
 
 @section('content')
+    @php
+        $issue_pointer_link = null;
+        if (str_starts_with($issue->pointer, '/lesson/')) {
+            // issue pointer is /lesson/(id)/something.
+            // Turn that into the URL /admin2/eieol_lesson/(id)/edit?focus=something#/
+            $pointer_parts = explode('/', $issue->pointer, 4);
+            $issue_pointer_link = '/admin2/eieol_lesson/'.$pointer_parts[2].'/edit?focus='.$pointer_parts[3].'#/';
+        }
+    @endphp
 
-    <div v-cloak id="admin_app">
+    <form method="POST" onsubmit="return checkForm(this);">
+        <input type="hidden" name="_method" value="PUT">
+        @csrf
+    <div>
 
         <div>
             <div class="issue-container">
                 <div class="header">
                     <div style="margin-top:10px;margin-bottom:10px;">
-                        <div style="display:flex;justify-content:space-between;" v-show="!title_editor_is_open">
-                            <h4>#{(issue.id)}: {(issue.name)}</h4>
-                            <button class="btn btn-sm btn-secondary" @click="openTitleEdit()">Edit</button>
+                        <div id="issue_title" style="display:flex;justify-content:space-between;">
+                            <h4>#{{$issue->id}}: {{$issue->name}}</h4>
+                            <button type="button" id="title_editor_show_button" class="btn btn-sm btn-secondary" @click="openTitleEdit()"
+                                onclick="document.getElementById('issue_title').style.display='none';document.getElementById('issue_title_editor').style.display='flex';"
+                            >Edit Title</button>
                         </div>
-                        <div style="display:flex;justify-content:space-between;" v-show="title_editor_is_open">
-                            <span>#{(issue.id)}:
-                                <input type="text" v-model="title_under_edit" style="width:400px;">
+                        <div id="issue_title_editor" style="display:none;justify-content:space-between;">
+                            <span>#{{$issue->id}}:
+                                 <input id="name" name="name" type="text" value="{{$issue->name}}">
                             </span>
                             <span>
-                        <button class="btn btn-sm btn-secondary" @click="cancelTitleEdit()">Cancel</button>
-                        <button class="btn btn-sm btn-primary" @click="saveTitleEdit()">Save</button>
-                        </span>
+                            </span>
                         </div>
                         <div style="padding-left:10px;padding-right:10px;padding-bottom:10px;">
-                            <span :class="badge_css_class(issue)">{(issue.status)}</span>
-                            Created {(getIssueCreatedAtDate(issue))}
+                            <span @class([
+                                'badge badge-success' => $issue->status==='open',
+                                'badge badge-danger' => $issue->status==='closed'
+                            ])>{{$issue->status}}</span>
+                            Created {{$issue->created_at}}
                         </div>
                         <hr>
                     </div>
                 </div>
                 <div class="sidebar text-sidebar">
                     <h5>Text under discussion</h5>
-                    <p><a :href="getIssueLink(issue)" target="_blank">{(issue.pointer_desc)}</a></p>
+                    <p><a href="{{$issue_pointer_link}}" target="_blank">{{$issue->pointer_desc}}</a></p>
                     <div class="text-panel">
-                        <tinymce-editor
-                            :init="tinymce_settings"
-                            v-model="issue.text"
-                        ></tinymce-editor>
+                        <textarea name="text" id="text">{!! $issue->text !!}</textarea>
                     </div>
                 </div>
                 <div class="sidebar comment-sidebar">
                     <h5>Comments</h5>
-                    <div class="comment-card" v-for="comment in issue.comments">
-                        <div v-if="comment.type==='open'">
-                            <div class="comment-card-header"><span style="font-weight: bold;">{(comment.user_logon)}</span>
-                                re-opened this issue on {(formatTimestampForDisplay(comment.created_at))}
+                    @foreach ($issue->comments as $comment)
+                    <div class="comment-card">
+                        @if ($comment->type==='open')
+                        <div>
+                            <div class="comment-card-header"><span style="font-weight: bold;">{{$comment->user_logon}}</span>
+                                re-opened this issue on {{$comment->created_at}}
                             </div>
-                            <p v-html="comment.text"></p>
+                            <p>{!! $comment->text !!}</p>
                         </div>
-                        <div v-else-if="comment.type==='close'">
-                            <div class="comment-card-header"><span style="font-weight: bold;">{(comment.user_logon)}</span>
-                                closed this issue on {(formatTimestampForDisplay(comment.created_at))}
+                        @elseif ($comment->type==='close')
+                        <div>
+                            <div class="comment-card-header"><span style="font-weight: bold;">{{$comment->user_logon}}</span>
+                                closed this issue on {{$comment->created_at}}
                             </div>
-                            <p v-html="comment.text"></p>
+                            <p>{!! $comment->text !!}</p>
                         </div>
-                        <div v-else>
-                            <div class="comment-card-header"><span style="font-weight: bold;">{(comment.user_logon)}</span>
-                                commented on {(formatTimestampForDisplay(comment.created_at))}
+                        @else
+                        <div>
+                            <div class="comment-card-header"><span style="font-weight: bold;">{{$comment->user_logon}}</span>
+                                commented on {{$comment->created_at}}
                             </div>
-                            <p v-html="comment.text"></p>
+                            <p>{!! $comment->text !!}</p>
                         </div>
+                        @endif
                     </div>
-                    <div class="comment-card" v-show="is_issue_open">
+                    @endforeach
+                    @if ($issue->status==='open')
+                    <div class="comment-card">
                         <div class="comment-card-header">Add new comment:</div>
-                        <ck-editor v-model="new_comment_text"
-                                   :custom_config="ckeditor_customization"
-                                   v-if="ckeditor_data_ready"
-                        ></ck-editor>
+                        <textarea name="comment_text" id="comment_text"></textarea>
                     </div>
+                    @endif
                     <div>
                         <button class="btn btn-primary float-right"
                                 style="margin:5px;"
-                                @click="addComment()"
+                                onclick="this.form.elements.comment_type.value='comment';this.form.submit();"
                         >Comment
                         </button>
+                        @if ($issue->status==='open')
                         <button class="btn btn-secondary float-right"
                                 style="margin:5px;"
-                                v-show="is_issue_open"
-                                @click="setIssueStatus('closed')"
+                                onclick="this.form.elements.comment_type.value='close';this.form.elements.status.value='closed';this.form.submit();"
                         >Close
                         </button>
+                        @else
                         <button class="btn btn-secondary float-right"
                                 style="margin:5px;"
-                                v-show="!is_issue_open"
-                                @click="setIssueStatus('open')"
+                                onclick="this.form.elements.comment_type.value='open';this.form.elements.status.value='open';this.form.submit();"
                         >Re-Open
                         </button>
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
 
     </div>
+        <input type="hidden" name="comment_type" value="">
+        <input type="hidden" name="status" value="{{$issue->status}}">
+    </form>
 @endsection
 
 @section('foot_extra')
     <script>
-        var issue = {!! json_encode($issue) !!};
-        var languages = {!! json_encode($languages) !!};
-        new window.Vue({
-            el: '#admin_app',
-            delimiters: ['{(', ')}'],
-            data() { return {
-                ckeditor_customization: {},
-                ckeditor_data_ready: false,
-                tinymce_settings: {
-                    branding: false,
-                    width:"100%",
-                    height:"500px",
-                    plugins: "code",
-                    menubar: '',
-                    toolbar: "backcolor code",
-                    init_instance_callback: function (editor) {
-                        editor.on('keydown', function (e) {
-                            e.preventDefault();
-                        });
-                    }
-                },
-                issue: issue,
-                languages: languages,
-                title_editor_is_open: false,
-                title_under_edit: '',
-                new_comment_text: '',
-            }},
-            mounted() {
-
-            },
-            created() {
-                this.ckeditor_customization.language_list = this.languages.language_list;
-                this.ckeditor_customization.language_lang = this.languages.language_lang;
-                this.ckeditor_customization.specialChars = this.languages.specialChars;
-
-                this.ckeditor_data_ready = true;
-            },
-            computed: {
-                is_issue_open() {
-                    return this.issue.status === 'open';
-                }
-            },
-            methods: {
-                openTitleEdit() {
-                    this.title_under_edit = this.issue.name;
-                    this.title_editor_is_open = true;
-                },
-                cancelTitleEdit() {
-                    this.title_editor_is_open = false;
-                },
-                saveTitleEdit() {
-                    window.axios.put('/admin/api/v1/issue/'+this.issue.id,
-                        {'name':this.title_under_edit}
-                    ).then((response) => {
-                        this.issue.name = response.data.issue.name;
-                        this.title_editor_is_open = false;
-                    }).catch((error) => {
-                        console.log(error);
-                        alert("Error: Unable to save title.  Try again.");
-                    })
-                },
-                getIssueLink(issue) {
-                    if (issue && issue.pointer && issue.pointer.indexOf('/lesson/')===0) {
-                        // issue pointer is /lesson/(id)/something.
-                        // Turn that into the URL /admin2/eieol_lesson/(id)/edit?focus=something#/
-                        let temp = issue.pointer.substring(8);
-                        let lesson_id = temp.substring(0,temp.indexOf('/'));
-                        let part = temp.substring(temp.indexOf('/')+1);
-                        return '/admin2/eieol_lesson/'+lesson_id+'/edit?focus='+part+'#/';
-                    }
-                    return false;
-                },
-                getIssueCreatedAtDate(issue) {
-                    if (!issue.created_at) {
-                        return '';
-                    }
-                    return issue.created_at.split(' ')[0];
-                },
-                formatTimestampForDisplay(ts) {
-                    return ts.split(' ')[0];
-                },
-                badge_css_class(issue) {
-                    if (issue.status==='open') {
-                        return 'badge badge-success';
-                    } else {
-                        return 'badge badge-danger';
-                    }
-                },
-                addComment() {
-                    window.axios.put('/admin/api/v1/issue/'+this.issue.id,
-                        {'text':this.issue.text}
-                    ).then((response) => {
-                        this.issue.text = response.data.issue.text;
-                    }).catch((error) => {
-                        console.log(error);
-                        alert("Error: Unable to save highlight.  Try again.");
-                    });
-
-                    if (this.new_comment_text.trim()==='' || this.new_comment_text.trim()==='<p></p>') {
-                        return;
-                    }
-
-                    window.axios.post('/admin/api/v1/issue_comment', {
-                        'issue_id':this.issue.id,
-                        'type':'comment',
-                        'text':this.new_comment_text
-                    }).then((response) => {
-                        this.issue.comments.push(response.data);
-                        this.new_comment_text = '';
-                    }).catch((error) => {
-                        console.log(error);
-                        alert("Error: Unable to add comments.  Try again.");
-                    })
-                },
-                setIssueStatus(status) {
-                    this.addComment();
-                    window.axios.put('/admin/api/v1/issue/'+this.issue.id,
-                        {'status':status}
-                    ).then((response) => {
-                        this.issue.status = response.data.issue.status;
-                    }).catch((error) => {
-                        console.log(error);
-                        alert("Error: Unable to change issue status.  Try again.");
-                    })
-                }
+        function validate_title_ok(el) {
+            if (el.value.length > 0) {
+                el.classList.remove('is-invalid');
+                return true;
+            } else {
+                el.classList.add('is-invalid');
+                return false;
             }
-        });
+        }
+
+        function checkForm(form) {
+            if (!validate_title_ok(form.elements.name)) {
+                alert("Please enter a title.");
+                return false;
+            }
+            return true;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            tinymce.init({
+                selector: 'textarea#text',
+                branding: false,
+                width:"100%",
+                height:"500px",
+                plugins: "code",
+                menubar: '',
+                toolbar: "backcolor code",
+                init_instance_callback: function (editor) {
+                    editor.on('keydown', function (e) {
+                        e.preventDefault();
+                    });
+                }
+            })
+
+            CKEDITOR.plugins.addExternal( 'onchange', '/js/', 'onchangeplugin.js' );
+            CKEDITOR.plugins.addExternal( 'eieol_language', '/ckeditor-plugins/eieol_language/', 'plugin.js');
+            CKEDITOR.plugins.addExternal( 'html5audio', '/ckeditor-plugins/html5audio/', 'plugin.js');
+            CKEDITOR.replace('comment_text', {
+                toolbar:
+                    [
+                        {name: 'document', items: ['Source', 'EieolLanguage']},
+                        {
+                            name: 'clipboard',
+                            items: ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']
+                        },
+                        {name: 'editing', items: ['Find', 'Replace', '-', 'SelectAll', '-', 'SpellChecker']},
+                        {
+                            name: 'basicstyles',
+                            items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']
+                        },
+                        {
+                            name: 'paragraph',
+                            items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', '-',
+                                'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl']
+                        },
+                        {name: 'links', items: ['Link', 'Unlink', 'Anchor']},
+                        {name: 'insert', items: ['Table', 'HorizontalRule', 'SpecialChar']},
+                        {name: 'styles', items: ['Format', 'FontSize']},
+                        {name: 'colors', items: ['TextColor', 'BGColor']},
+                        {name: 'insert', items: ['Image','Html5audio']},
+                        {name: 'tools', items: ['Maximize']}
+                    ],
+                contentsCss: '/css/lrcstyle.css',
+                disableNativeSpellChecker: false,
+                allowedContent: true,
+                removePlugins: 'image',
+                extraPlugins: 'html5audio,filebrowser,onchange,eieol_language,image2',
+                filebrowserUploadUrl: '/admin2/files/upload',
+                entities: false,
+                language_list : {!! json_encode($languages->language_list) !!},
+                language_lang : {!! json_encode($languages->language_lang) !!} ,
+                specialChars : {!! json_encode($languages->specialChars) !!},
+            })
+        })
     </script>
 @endsection

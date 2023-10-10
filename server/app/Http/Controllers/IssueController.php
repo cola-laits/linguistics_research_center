@@ -80,7 +80,7 @@ class IssueController extends Controller
         ]);
     }
 
-    public function store(Request $request) : JsonResponse
+    public function store(Request $request)
     {
         $issue = new Issue();
         $issue->name = $request->get('name');
@@ -101,7 +101,7 @@ class IssueController extends Controller
         $comment->user_logon = Auth::user()->username;
         $comment->save();
 
-        return response()->json(['issue'=>$issue]);
+        return redirect('/admin2/issues');
     }
 
     public function show(Issue $issue)
@@ -114,22 +114,17 @@ class IssueController extends Controller
         ]);
     }
 
-    public function update(Request $request, Issue $issue) : JsonResponse
+    public function update(Request $request, Issue $issue)
     {
-        $new_comment_type = "";
-        if ($request->has('status') && $issue->status !== $request->get('status')) {
-            if ($request->get('status')==='open') { $new_comment_type='open';}
-            if ($request->get('status')==='closed') { $new_comment_type='close';}
-        }
         $issue->update($request->all());
-        if ($new_comment_type) {
+        if ($request->get('comment_type')) {
             $comment = new IssueComment();
             $comment->issue_id = $issue->id;
-            $comment->type = $new_comment_type;
-            $comment->text = "";
+            $comment->type = $request->get('comment_type');
+            $comment->text = $request->get('comment_text') ?: '';
             $comment->user_logon = Auth::user()->username;
             $comment->save();
         }
-        return response()->json(['issue'=>$issue]);
+        return redirect('/admin2/issues/'.$issue->id);
     }
 }
