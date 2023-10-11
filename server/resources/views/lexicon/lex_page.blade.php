@@ -1,7 +1,11 @@
 @extends('lexicon.layout-etym')
 
+@section('title')
+    {{__('lexicon.general.html_head_title', ['lexicon_name'=>$lexicon->name, 'page_title'=>$page->name])}}
+@endsection
+
 @section('page-title')
-    {{$page->name}}
+    {{__('lexicon.general.html_head_title', ['lexicon_name'=>$lexicon->name, 'page_title'=>$page->name])}}
 @endsection
 
 @section('content')

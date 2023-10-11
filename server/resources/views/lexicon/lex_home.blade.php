@@ -1,11 +1,11 @@
 @extends('lexicon.layout-etym')
 
 @section('title')
-    LRC {{$lexicon->name}}
+    {{__('lexicon.pages.home.html_head_title', ['lexicon_name'=>$lexicon->name])}}
 @endsection
 
 @section('page-title')
-    {{$lexicon->name}}
+    {{__('lexicon.pages.home.page_title', ['lexicon_name'=>$lexicon->name])}}
 @endsection
 
 @section('content')
@@ -39,7 +39,7 @@
     </div>
 
     <div>
-        <a href="/lexicon/{{$lexicon->slug}}/data">Search this lexicon.</a>
+        <a href="/lexicon/{{$lexicon->slug}}/data">{{__('lexicon.pages.home.search_lexicon_link_text')}}</a>
     </div>
 
     <div><pre style="background-color:#999999;padding:10px;margin:10px;">

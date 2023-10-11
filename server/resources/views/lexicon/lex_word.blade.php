@@ -1,33 +1,37 @@
 @extends('lexicon.layout-dict')
 
 @section('title')
-    LRC {{$lexicon->name}}: {{$word->language->name}} {{$word->getEntriesCSV()}}
+    {{__('lexicon.general.html_head_title', ['lexicon_name'=>$lexicon->name, 'page_title'=>$word->language->name."".$word->getEntriesCSV()])}}
 @endsection
 
 @section('page-title')
-    {{$word->language->name}} Dictionary
+    {{__('lexicon.pages.word.page_title', [
+        'lexicon_name'=>$lexicon->name,
+        'language_name'=>$word->language->name,
+        'word'=>$word->getEntriesCSV()
+    ])}}
 @endsection
 
 @section('content')
     <table class="table table-bordered table-responsive">
         <tr>
-            <td class="text-end" style="white-space:nowrap;">Language:</td>
+            <td class="text-end" style="white-space:nowrap;">{{__('lexicon.pages.word.table_header.Language')}}:</td>
             <td class="vw-100">{{$word->language->name}}</td>
         </tr>
         <tr>
-            <td class="text-end" style="white-space:nowrap;">Word:</td>
+            <td class="text-end" style="white-space:nowrap;">{{__('lexicon.pages.word.table_header.Word')}}:</td>
             <td>{{$word->getEntriesCSV()}}</td>
         </tr>
         <tr>
-            <td class="text-end" style="white-space:nowrap;">Part of Speech:</td>
+            <td class="text-end" style="white-space:nowrap;">{{__('lexicon.pages.word.table_header.Part of Speech')}}:</td>
             <td>{{$word->getDisplayPartsOfSpeech()}}</td>
         </tr>
         <tr>
-            <td class="text-end" style="white-space:nowrap;">Gloss:</td>
+            <td class="text-end" style="white-space:nowrap;">{{__('lexicon.pages.word.table_header.Gloss')}}:</td>
             <td>{{$word->gloss}}</td>
         </tr>
         <tr>
-            <td class="text-end" style="white-space:nowrap;">Etymology:</td>
+            <td class="text-end" style="white-space:nowrap;">{{__('lexicon.pages.word.table_header.Etymology')}}:</td>
             <td>
                 @foreach ($word->etyma as $etymon)
                     <p>From {{$etymon->lexicon->protolang_name}} <a href="/lexicon/{{$etymon->lexicon->slug}}/etymon/{{$etymon->id}}"><b><sup>*</sup>{{$etymon->entry}}</b> {{$etymon->gloss}}</a></p>
@@ -36,7 +40,7 @@
         </tr>
         @if ($word->etymaSemanticTags()->count() > 0)
         <tr>
-            <td class="text-end" style="white-space:nowrap;">Semantic Tag:</td>
+            <td class="text-end" style="white-space:nowrap;">{{__('lexicon.pages.word.table_header.Semantic Tag')}}:</td>
             <td>
                 @foreach ($word->etymaSemanticTags() as $tag)
                     <a href="/lexicon/{{$lexicon->slug}}/field/{{$tag->id}}">{{$tag->text}}</a>
@@ -49,7 +53,7 @@
     <div>
 
         @if ($word->cross_references->count() > 0)
-            <h2>Related Words:</h2>
+            <h2>{{__('lexicon.pages.word.table_header.Related Words')}}:</h2>
             <div>
                 <ul>
                     @foreach ($word->cross_references as $crossref)
@@ -65,7 +69,7 @@
         @endif
 
         @if ($word->extra_data)
-        <h2>Other info:</h2>
+        <h2>{{__('lexicon.pages.word.table_header.Other info')}}:</h2>
         <div>
             <ul>
             @foreach ($word->extra_data as $name=>$value)
@@ -88,7 +92,7 @@
         }
         @endphp
         @if ($cognates->count() > 0)
-        <h2>Cognates</h2>
+        <h2>{{__('lexicon.pages.word.table_header.Cognates')}}</h2>
         <div>
             <ul>
             @foreach ($cognates as $reflex)

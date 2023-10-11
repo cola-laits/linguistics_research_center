@@ -1,11 +1,11 @@
 @extends('lexicon.layout')
 
 @section('title')
-LRC {{$lexicon->name}}: Data
+    {{__('lexicon.pages.data.html_head_title', ['lexicon_name'=>$lexicon->name])}}
 @endsection
 
 @section('page-title')
-    Data
+    {{__('lexicon.pages.data.page_title', ['lexicon_name'=>$lexicon->name])}}
 @endsection
 
 @section('header_extras')
@@ -37,6 +37,12 @@ LRC {{$lexicon->name}}: Data
                 .appendTo('#datatable thead');
 
             var table = new DataTable('#datatable', {
+                @if (Lang::get('lexicon.pages.data.datatables_translation_file')!=="en-US.json")
+                    {{-- if the translation file is not the default (US English), load it --}}
+                language: {
+                    url: '/assets/datatables/plugins/i18n/{{__('lexicon.pages.data.datatables_translation_file')}}',
+                },
+                @endif
                 orderCellsTop: true,
                 fixedColumns: true,
                 fixedHeader: true,
@@ -45,7 +51,12 @@ LRC {{$lexicon->name}}: Data
                 paging: true,
                 lengthMenu: [
                     [ 10, 25, 50, -1 ],
-                    [ '10 rows', '25 rows', '50 rows', 'Show all' ]
+                    [
+                        '{{__('lexicon.pages.data.show_n_rows_option', ['num'=>10])}}',
+                        '{{__('lexicon.pages.data.show_n_rows_option', ['num'=>25])}}',
+                        '{{__('lexicon.pages.data.show_n_rows_option', ['num'=>50])}}',
+                        '{{__('lexicon.pages.data.show_all_rows_option')}}',
+                    ]
                 ],
                 columnDefs: [
                     { orderable: false, targets: 0 }
@@ -57,21 +68,22 @@ LRC {{$lexicon->name}}: Data
                         extend: 'pageLength',
                     },
                     {
+                        text: '{{__('lexicon.pages.data.csv_export_button_label')}}',
                         extend: 'csv',
                     },
                     {
                         extend: 'colvis',
-                        text: 'Select Columns',
+                        text: '{{__('lexicon.pages.data.column_visibility_button_label')}}',
                         collectionLayout: 'dropdown columns',
                         columns: 'th:not(:first-child)',
                         prefixButtons: [{
-                            text: 'Show all',
+                            text: '{{__('lexicon.pages.data.show_all_columns_button_label')}}',
                             className: 'colvis-control-button',
                             action: function(e, dt) {
                                 dt.columns().visible(true);
                             }
                         }, {
-                            text: 'Hide all',
+                            text: '{{__('lexicon.pages.data.hide_all_columns_button_label')}}',
                             className: 'colvis-control-button',
                             action: function(e, dt) {
                                 var cols = dt.columns()[0];
@@ -84,7 +96,7 @@ LRC {{$lexicon->name}}: Data
                         }]
                     },
                     {
-                        text: 'Clear Search',
+                        text: '{{__('lexicon.pages.data.clear_search_button_label')}}',
                         action: function() {
                             $('.column-text-search').val('');
                             var table = $('#datatable').DataTable();
@@ -138,7 +150,10 @@ LRC {{$lexicon->name}}: Data
                         });
                 },
             });
-            recalcDatatableScrollY();
+
+            window.setTimeout(function() {
+                recalcDatatableScrollY();
+            }, 0);
         });
 
         $(window).resize(function() {
@@ -168,7 +183,7 @@ LRC {{$lexicon->name}}: Data
     <tr>
         <th></th>
         @foreach ($columns as $column)
-        <th>{{$column->display_name}}</th>
+        <th>{{__('lexicon.pages.data.column_header_'.$column->display_name)}}</th>
         @endforeach
     </tr>
     </thead>

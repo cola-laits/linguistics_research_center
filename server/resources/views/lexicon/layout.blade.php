@@ -148,7 +148,7 @@
     <header class="d-flex align-items-center justify-content-between pb-3 mb-5 border-bottom">
         <span>
         <a href="/" class="text-dark text-decoration-none">
-            <img height="43" src="/images/lrc-banner.png" alt="Linguistics Research Center - The University of Texas at Austin">
+            <img height="43" src="{{__('lexicon.header.banner.image_url')}}" alt="{{__('lexicon.header.banner.alt_text')}}">
         </a>
         <a href="/lexicon/{{$lexicon->slug}}" class="text-dark text-decoration-none">
             <span class="header-lexiconname fs-4">{{$lexicon->name}}</span>

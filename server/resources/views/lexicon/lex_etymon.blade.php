@@ -1,25 +1,25 @@
 @extends('lexicon.layout-etym')
 
 @section('title')
-    LRC {{$lexicon->name}}: {{$etymon->entry}}
+    {{__('lexicon.general.html_head_title', ['lexicon_name'=>$lexicon->name, 'page_title'=>$etymon->entry])}}
 @endsection
 
 @section('page-title')
-    {{$lexicon->protolang_name}} Dictionary
+    {{__('lexicon.pages.etymon.page_title', ['lexicon_name'=>$lexicon->name, 'lexicon_protolang_name'=>$lexicon->protolang_name])}}
 @endsection
 
 @section('content')
     <table class="table table-bordered table-responsive">
         <tr>
-            <td class="text-end" style="white-space:nowrap;">Etymon:</td>
+            <td class="text-end" style="white-space:nowrap;">{{__('lexicon.pages.etymon.table_header.Etymon')}}:</td>
             <td class="vw-100"><sup>*</sup>{{$etymon->entry}}</td>
         </tr>
         <tr>
-            <td class="text-end" style="white-space:nowrap;">Gloss:</td>
+            <td class="text-end" style="white-space:nowrap;">{{__('lexicon.pages.etymon.table_header.Gloss')}}:</td>
             <td class="vw-100">{!! $etymon->gloss !!}</td>
         </tr>
         <tr>
-            <td class="text-end" style="white-space:nowrap;">Derived Words:</td>
+            <td class="text-end" style="white-space:nowrap;">{{__('lexicon.pages.etymon.table_header.Derived Words')}}:</td>
             <td class="vw-100">
                 <ul>
                 @foreach ($etymon->reflexes as $reflex)
@@ -30,7 +30,7 @@
         </tr>
         @if ($etymon->semantic_fields->count() > 0)
         <tr>
-            <td class="text-end" style="white-space:nowrap;">Semantic Field:</td>
+            <td class="text-end" style="white-space:nowrap;">{{__('lexicon.pages.etymon.table_header.Semantic Field')}}:</td>
             <td class="vw-100">
                 @foreach ($etymon->semantic_fields as $field)
                     <p><a href="/lexicon/{{$lexicon->slug}}/field/{{$field->id}}">{{$field->semantic_category->text}}: {{$field->text}}</a></p>
@@ -41,7 +41,7 @@
     </table>
 
         @if ($etymon->extra_data)
-            <h2>Other info:</h2>
+            <h2>{{__('lexicon.pages.etymon.table_header.Other info')}}:</h2>
             <div>
                 <ul>
                     @foreach ($etymon->extra_data as $name=>$value)
