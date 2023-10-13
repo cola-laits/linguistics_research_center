@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\LexEtyma;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use App\Models\LexSemanticCategory;
@@ -40,10 +41,13 @@ use App\Models\LexSemanticCategory;
 class LexSemanticField extends Model {
 
     use CrudTrait;
+    use HasTranslations;
 
 	protected $table = 'lex_semantic_field';
 
 	protected $fillable = ['text','number','abbr','semantic_category_id'];
+
+    protected $translatable = ['text'];
 
 	public static function boot() {
 		parent::boot();

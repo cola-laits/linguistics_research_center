@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -28,6 +29,7 @@ use Illuminate\Database\Eloquent\Model;
 class Page extends Model {
 
     use CrudTrait;
+    use HasTranslations;
 
 	/**
 	 * The database table used by the model.
@@ -36,5 +38,6 @@ class Page extends Model {
 	 */
 	protected $table = 'page';
     protected $guarded = ['id'];
+    protected $translatable = ['name', 'content'];
 
 }

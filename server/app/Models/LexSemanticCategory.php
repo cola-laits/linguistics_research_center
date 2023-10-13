@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
@@ -35,10 +36,13 @@ use Illuminate\Support\Facades\Auth;
 class LexSemanticCategory extends Model {
 
     use CrudTrait;
+    use HasTranslations;
 
 	protected $table = 'lex_semantic_category';
 
 	protected $fillable = ['number','text','abbr'];
+
+    protected $translatable = ['text'];
 
 	public static function boot() {
 		parent::boot();

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use App\Models\LexLanguageSubFamily;
@@ -51,10 +52,13 @@ use App\Models\LexReflex;
 class LexLanguage extends Model {
 
     use CrudTrait;
+    use HasTranslations;
 
 	protected $table = 'lex_language';
 
 	protected $guarded = ['id'];
+
+    protected $translatable = ['name', 'description'];
 
 	public static function boot() {
 		parent::boot();

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Attribute;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -54,9 +55,11 @@ use App\Models\LexSource;
 class LexReflex extends Model {
 
     use CrudTrait;
+    use HasTranslations;
 
 	protected $table = 'lex_reflex';
 	protected $guarded = ['id'];
+    protected $translatable = ['gloss'];
 
 	protected $casts = [
 	    'entries' => 'array',

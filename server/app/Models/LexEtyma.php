@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
@@ -43,12 +44,14 @@ use Illuminate\Support\Facades\Auth;
 class LexEtyma extends Model {
 
     use CrudTrait;
+    use HasTranslations;
 
 	protected $table = 'lex_etyma';
 	protected $guarded = ['id'];
     protected $casts = [
         'extra_data' => 'array'
     ];
+    protected $translatable = ['gloss'];
 
 	public static function boot() {
 		parent::boot();
