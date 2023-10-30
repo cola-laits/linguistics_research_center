@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use App\Models\LexReflex;
@@ -34,10 +35,13 @@ use App\Models\LexReflex;
 class LexPartOfSpeech extends Model {
 
     use CrudTrait;
+    use HasTranslations;
 
 	protected $table = 'lex_part_of_speech';
 
 	protected $guarded = ['id'];
+
+    protected $translatable = ['display'];
 
 	public static function boot() {
 		parent::boot();

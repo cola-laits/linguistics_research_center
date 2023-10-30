@@ -40,12 +40,13 @@ return new class extends Migration
         $this->update_to_json('lex_semantic_category','text');
         $this->update_to_json('lex_semantic_field','text');
 
+        $this->update_to_json('lex_part_of_speech', 'display');
+
     /*
      * FIXME decide how to handle these
      *
      * FIXME how to express lex_reflex cross ref relationships as translatable?  Do we need an eloquent model?
-     * lex_reflex->part_of_speech
-     * lex_part_of_speech->display (maybe this is a good reason not to do #157 ?)
+     * lex_reflex->crossref->relationship
      * lex_etyma-> extra_data
      * lex_reflex-> extra_data
 */
