@@ -66,13 +66,6 @@ return new class extends Migration
         $this->update_to_json('lex_semantic_field','text');
 
         $this->update_to_json('lex_part_of_speech', 'display');
-
-    /*
-     * FIXME decide how to handle these
-     *
-     * FIXME how to express lex_reflex cross ref relationships as translatable?  Do we need an eloquent model?
-     * lex_reflex->crossref->relationship
-*/
     }
 
     public function update_to_json($table, $column) {

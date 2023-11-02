@@ -187,6 +187,11 @@ class LexReflex extends Model {
             ->withPivot(['relationship']);
     }
 
+    public function cross_reference_pivots()
+    {
+        return $this->hasMany(LexReflexCrossReference::class, 'from_reflex_id');
+    }
+
     public function extra_data() : hasMany
     {
         return $this->hasMany(LexReflexExtraData::class, 'reflex_id');

@@ -44,8 +44,8 @@
             <h2>{{__('lexicon.pages.etymon.table_header.Other info')}}:</h2>
             <div>
                 <ul>
-                    @foreach ($etymon->extra_data as $name=>$value)
-                        <li>{{$name}}: {{$value}}</li>
+                    @foreach ($etymon->extra_data as $extra_datum)
+                        <li>{{$extra_datum->key}}: {{$extra_datum->value}}</li>
                     @endforeach
                 </ul>
             </div>

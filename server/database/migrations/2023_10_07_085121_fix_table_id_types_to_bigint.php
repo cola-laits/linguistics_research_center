@@ -196,7 +196,6 @@ return new class extends Migration {
         });
 
         // restore fks
-        // drop existing fks
         Schema::table('eieol_element', function (Blueprint $table) {
             $table->foreign('gloss_id')->references('id')->on('eieol_gloss');
             $table->foreign('head_word_id')->references('id')->on('eieol_head_word');

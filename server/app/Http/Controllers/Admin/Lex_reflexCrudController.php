@@ -134,32 +134,24 @@ class Lex_reflexCrudController extends CrudController
                 ['name'=>'order', 'label'=>'Order', 'wrapper'=>['class'=>'form-group col-md-3']],
             ]);
 
-        // Backpack lacks something like an inline search field, which is what we really want here.
-        // Barring that, create an array of the many-to-many data in the model, use that to populate the field,
-        // and then unwind the array back into the model on save (in the store() and update() methods here).
-        // Following example from https://cybrarist.com/programming/how-to-use-many-to-many-relationship-in-a-repeater-field-in-laravel-backpack/
-        /*
-        CRUD::field('crossReferencesArray')
-            ->type('repeatable')
-            ->label('Cross References')
+        ini_set('memory_limit', '1024M');
+        CRUD::field('cross_reference_pivots')
+            ->type('relationship')
+            ->label('Cross Reference')
+            ->new_item_label('New Cross-Reference')
             ->hint("The word whose entry you're editing is the <i>borrowed</i> (original, or <b>From</b>) word. The cross-reference you add will be the <i>borrowing</i>, or <i>calqued</i> word (<i>new</i>, or <b>To</b>), as this word was taken into another language.")
-            ->new_item_label('New cross-reference')
             ->subfields([
-                [
-                    'name' => 'id', 'type' => 'text', 'label' => 'leads to Reflex ID',
-                    'wrapper' => ['class' => 'form-group col-md-3'],
-                ],
-                [
-                    'name' => 'description', 'type' => 'text', 'label' => 'Description', 'attribute' => 'langNameEntriesGloss',
-                    'attributes' => ['readonly' => 'readonly'],
-                    'wrapper' => ['class' => 'form-group col-md-3'],
-                ],
-                [
-                    'name' => 'relationship', 'type' => 'text', 'label' => 'Relationship',
-                    'wrapper' => ['class' => 'form-group col-md-6'],
-                ],
-            ]);
-        */
+                ['name'=>'to_reflex_id', 'label'=>'Reflex',
+                    'type'=>'select2_from_ajax',
+                    'data_source'=>backpack_url("lex_reflex/fetch/crossrefpivot"),
+                    'method'=>'POST',
+                    'attribute'=>'langNameEntriesGloss',
+                    'wrapper'=>['class'=>'form-group col-md-6']],
+                ['name'=>'relationship',
+                    'label'=>'Relationship <i class="la la-flag-checkered pull-right" style="margin-top: 3px;" title="This field is translatable."></i>',
+                    'wrapper'=>['class'=>'form-group col-md-6']],
+            ])
+            ;
 
         CRUD::field('extra_data')
             ->type('relationship')
@@ -186,5 +178,15 @@ class Lex_reflexCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    protected function fetchCrossrefpivot()
+    {
+        return $this->fetch([
+            'model' => \App\Models\LexReflex::class,
+            'searchable_attributes' => ['entries', 'gloss'],
+            'paginate' => 100,
+            'searchOperator' => 'LIKE'
+        ]);
     }
 }
