@@ -138,6 +138,7 @@ class Lex_reflexCrudController extends CrudController
         // Barring that, create an array of the many-to-many data in the model, use that to populate the field,
         // and then unwind the array back into the model on save (in the store() and update() methods here).
         // Following example from https://cybrarist.com/programming/how-to-use-many-to-many-relationship-in-a-repeater-field-in-laravel-backpack/
+        /*
         CRUD::field('crossReferencesArray')
             ->type('repeatable')
             ->label('Cross References')
@@ -158,12 +159,15 @@ class Lex_reflexCrudController extends CrudController
                     'wrapper' => ['class' => 'form-group col-md-6'],
                 ],
             ]);
+        */
 
         CRUD::field('extra_data')
-            ->type('json')
-            ->view_namespace('json-field-for-backpack::fields')
-            ->modes(['form','tree','code'])
-            ->default([])
+            ->type('relationship')
+            ->subfields([
+                ['name'=>'key', 'label'=>'Key', 'wrapper'=>['class'=>'form-group col-md-3']],
+                ['name'=>'value', 'label'=>'Value <i class="la la-flag-checkered pull-right" style="margin-top: 3px;" title="This field is translatable."></i>', 'wrapper'=>['class'=>'form-group col-md-9']]
+            ])
+            ->new_item_label('New Extra Data')
             ->hint("'Extra Data' is freeform info that may vary between lexicons.");
 
         /**
@@ -182,25 +186,5 @@ class Lex_reflexCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
-    }
-
-    public function store() {
-        $response = $this->traitStore();
-        $this->updateCrossReferencesArray(request()->get('crossReferencesArray'));
-        return $response;
-    }
-
-    public function update() {
-        $response = $this->traitUpdate();
-        $this->updateCrossReferencesArray(request()->get('crossReferencesArray'));
-        return $response;
-    }
-
-    protected function updateCrossReferencesArray($arr) {
-        $reflex = $this->crud->getCurrentEntry();
-        $reflex->cross_references()->detach();
-        foreach ($arr as $item) {
-            $reflex->cross_references()->attach($item['id'], ['relationship'=>$item['relationship']]);
-        }
     }
 }

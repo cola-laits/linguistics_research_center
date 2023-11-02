@@ -5,6 +5,7 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -48,9 +49,6 @@ class LexEtyma extends Model {
 
 	protected $table = 'lex_etyma';
 	protected $guarded = ['id'];
-    protected $casts = [
-        'extra_data' => 'array'
-    ];
     protected $translatable = ['gloss'];
 
 	public static function boot() {
@@ -87,6 +85,11 @@ class LexEtyma extends Model {
 	{
 		return $this->belongsToMany(LexEtyma::class, 'lex_etyma_cross_reference', 'from_etyma_id', 'to_etyma_id');
 	}
+
+    public function extra_data() : HasMany
+    {
+        return $this->hasMany(LexEtymaExtraData::class, 'etyma_id');
+    }
 
     public function getReflexesLangNameEntriesGloss() {
         $text = $this->reflexes->map(function($reflex) {

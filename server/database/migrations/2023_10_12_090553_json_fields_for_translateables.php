@@ -11,6 +11,31 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::create('lex_reflex_extra_data', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('reflex_id')->constrained('lex_reflex');
+            $table->string('key');
+            $table->json('value');
+            $table->timestamps();
+        });
+
+        Schema::create('lex_etyma_extra_data', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('etyma_id')->constrained('lex_etyma');
+            $table->string('key');
+            $table->json('value');
+            $table->timestamps();
+        });
+
+        Schema::table('lex_reflex', function (Blueprint $table) {
+            $table->dropColumn('extra_data');
+        });
+
+        Schema::table('lex_etyma', function (Blueprint $table) {
+            $table->dropColumn('extra_data');
+        });
+
+
         Schema::table('lex_language_family', function (Blueprint $table) {
             $table->dropForeign(['lexicon_id']);
             $table->dropIndex(['lexicon_id', 'name', 'order']);
@@ -47,8 +72,6 @@ return new class extends Migration
      *
      * FIXME how to express lex_reflex cross ref relationships as translatable?  Do we need an eloquent model?
      * lex_reflex->crossref->relationship
-     * lex_etyma-> extra_data
-     * lex_reflex-> extra_data
 */
     }
 

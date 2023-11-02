@@ -63,7 +63,6 @@ class LexReflex extends Model {
 
 	protected $casts = [
 	    'entries' => 'array',
-        'extra_data' => 'array',
     ];
 
     protected $appends = ['langAbbrGloss','langNameEntriesGloss'];
@@ -156,19 +155,6 @@ class LexReflex extends Model {
         return $this->language->name . ': '.$entries_csv.' (' . $this->gloss . ')';
     }
 
-    public function getCrossReferencesArrayAttribute() {
-        $cross_refs = $this->cross_references;
-        $cross_refs_array = [];
-        foreach ($cross_refs as $cross_ref) {
-            $cross_refs_array[] = [
-                'id' => $cross_ref->id,
-                'description' => $cross_ref->reflex_lister,
-                'relationship' => $cross_ref->pivot->relationship
-            ];
-        }
-        return $cross_refs_array;
-    }
-
     public function etyma()
     {
         return $this->belongsToMany(LexEtyma::class, 'lex_etyma_reflex', 'reflex_id', 'etyma_id');
@@ -199,6 +185,11 @@ class LexReflex extends Model {
     {
         return $this->belongsToMany(LexReflex::class, 'lex_reflex_cross_reference', 'from_reflex_id', 'to_reflex_id')
             ->withPivot(['relationship']);
+    }
+
+    public function extra_data() : hasMany
+    {
+        return $this->hasMany(LexReflexExtraData::class, 'reflex_id');
     }
 
     public function etymaSemanticTags() {
