@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\EieolLesson;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\EieolGrammar
@@ -14,25 +17,25 @@ use App\Models\EieolLesson;
  * @property int $order
  * @property string|null $grammar_text
  * @property string|null $section_number
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property string|null $created_by
  * @property string|null $updated_by
  * @property-read \App\Models\EieolLesson $lesson
- * @method static \Illuminate\Database\Eloquent\Builder|EieolGrammar newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|EieolGrammar newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|EieolGrammar query()
- * @method static \Illuminate\Database\Eloquent\Builder|EieolGrammar whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolGrammar whereCreatedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolGrammar whereGrammarText($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolGrammar whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolGrammar whereLessonId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolGrammar whereOrder($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolGrammar whereSectionNumber($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolGrammar whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolGrammar whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolGrammar whereUpdatedBy($value)
- * @mixin \Eloquent
+ * @method static Builder|EieolGrammar newModelQuery()
+ * @method static Builder|EieolGrammar newQuery()
+ * @method static Builder|EieolGrammar query()
+ * @method static Builder|EieolGrammar whereCreatedAt($value)
+ * @method static Builder|EieolGrammar whereCreatedBy($value)
+ * @method static Builder|EieolGrammar whereGrammarText($value)
+ * @method static Builder|EieolGrammar whereId($value)
+ * @method static Builder|EieolGrammar whereLessonId($value)
+ * @method static Builder|EieolGrammar whereOrder($value)
+ * @method static Builder|EieolGrammar whereSectionNumber($value)
+ * @method static Builder|EieolGrammar whereTitle($value)
+ * @method static Builder|EieolGrammar whereUpdatedAt($value)
+ * @method static Builder|EieolGrammar whereUpdatedBy($value)
+ * @mixin Eloquent
  */
 class EieolGrammar extends Model {
 	protected $table = 'eieol_grammar';

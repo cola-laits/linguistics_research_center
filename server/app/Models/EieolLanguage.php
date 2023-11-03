@@ -3,7 +3,10 @@
 namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\EieolLanguage
@@ -14,24 +17,24 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $substitutions
  * @property string|null $custom_sort
  * @property string|null $lang_attribute
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property string|null $created_by
  * @property string|null $updated_by
- * @method static \Illuminate\Database\Eloquent\Builder|EieolLanguage newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|EieolLanguage newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|EieolLanguage query()
- * @method static \Illuminate\Database\Eloquent\Builder|EieolLanguage whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolLanguage whereCreatedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolLanguage whereCustomKeyboardLayout($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolLanguage whereCustomSort($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolLanguage whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolLanguage whereLangAttribute($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolLanguage whereLanguage($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolLanguage whereSubstitutions($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolLanguage whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolLanguage whereUpdatedBy($value)
- * @mixin \Eloquent
+ * @method static Builder|EieolLanguage newModelQuery()
+ * @method static Builder|EieolLanguage newQuery()
+ * @method static Builder|EieolLanguage query()
+ * @method static Builder|EieolLanguage whereCreatedAt($value)
+ * @method static Builder|EieolLanguage whereCreatedBy($value)
+ * @method static Builder|EieolLanguage whereCustomKeyboardLayout($value)
+ * @method static Builder|EieolLanguage whereCustomSort($value)
+ * @method static Builder|EieolLanguage whereId($value)
+ * @method static Builder|EieolLanguage whereLangAttribute($value)
+ * @method static Builder|EieolLanguage whereLanguage($value)
+ * @method static Builder|EieolLanguage whereSubstitutions($value)
+ * @method static Builder|EieolLanguage whereUpdatedAt($value)
+ * @method static Builder|EieolLanguage whereUpdatedBy($value)
+ * @mixin Eloquent
  */
 class EieolLanguage extends Model {
 

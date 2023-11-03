@@ -23,8 +23,7 @@
         "laravel/ui": "^4.0",
         "league/flysystem-aws-s3-v3": "^3.0",
         "sentry/sentry-laravel": "^3.0",
-        "spatie/laravel-translatable": "^6.5",
-        "ziming/json-field-for-backpack": "^1.2"
+        "spatie/laravel-translatable": "^6.5"
     },
     "require-dev": {
         "backpack/generators": "^3.1",

@@ -4,10 +4,14 @@ namespace App\Models;
 
 use App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\EieolLesson;
 use App\Models\EieolSeriesLanguage;
 use App\Models\EieolLanguage;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\EieolSeries
@@ -21,33 +25,33 @@ use App\Models\EieolLanguage;
  * @property string|null $expanded_title
  * @property int|null $published
  * @property string|null $meta_tags
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property string|null $created_by
  * @property string|null $updated_by
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\EieolSeriesLanguage[] $languages
+ * @property-read Collection|\App\Models\EieolSeriesLanguage[] $languages
  * @property-read int|null $languages_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\EieolLanguage[] $lesson_languages
+ * @property-read Collection|\App\Models\EieolLanguage[] $lesson_languages
  * @property-read int|null $lesson_languages_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\EieolLesson[] $lessons
+ * @property-read Collection|\App\Models\EieolLesson[] $lessons
  * @property-read int|null $lessons_count
- * @method static \Illuminate\Database\Eloquent\Builder|EieolSeries newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|EieolSeries newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|EieolSeries query()
- * @method static \Illuminate\Database\Eloquent\Builder|EieolSeries whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolSeries whereCreatedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolSeries whereExpandedTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolSeries whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolSeries whereMenuName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolSeries whereMenuOrder($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolSeries whereMetaTags($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolSeries whereOrder($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolSeries wherePublished($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolSeries whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolSeries whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolSeries whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolSeries whereUpdatedBy($value)
- * @mixin \Eloquent
+ * @method static Builder|EieolSeries newModelQuery()
+ * @method static Builder|EieolSeries newQuery()
+ * @method static Builder|EieolSeries query()
+ * @method static Builder|EieolSeries whereCreatedAt($value)
+ * @method static Builder|EieolSeries whereCreatedBy($value)
+ * @method static Builder|EieolSeries whereExpandedTitle($value)
+ * @method static Builder|EieolSeries whereId($value)
+ * @method static Builder|EieolSeries whereMenuName($value)
+ * @method static Builder|EieolSeries whereMenuOrder($value)
+ * @method static Builder|EieolSeries whereMetaTags($value)
+ * @method static Builder|EieolSeries whereOrder($value)
+ * @method static Builder|EieolSeries wherePublished($value)
+ * @method static Builder|EieolSeries whereSlug($value)
+ * @method static Builder|EieolSeries whereTitle($value)
+ * @method static Builder|EieolSeries whereUpdatedAt($value)
+ * @method static Builder|EieolSeries whereUpdatedBy($value)
+ * @mixin Eloquent
  */
 class EieolSeries extends Model {
 

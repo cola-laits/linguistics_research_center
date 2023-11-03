@@ -134,7 +134,6 @@ class Lex_reflexCrudController extends CrudController
                 ['name'=>'order', 'label'=>'Order', 'wrapper'=>['class'=>'form-group col-md-3']],
             ]);
 
-        ini_set('memory_limit', '1024M');
         CRUD::field('cross_reference_pivots')
             ->type('relationship')
             ->label('Cross Reference')
