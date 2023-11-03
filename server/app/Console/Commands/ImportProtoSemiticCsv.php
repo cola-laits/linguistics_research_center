@@ -3,11 +3,13 @@
 namespace App\Console\Commands;
 
 use App\Models\LexEtyma;
+use App\Models\LexEtymaExtraData;
 use App\Models\LexEtymaReflex;
 use App\Models\LexEtymaSemanticField;
 use App\Models\LexLanguage;
 use App\Models\LexPartOfSpeech;
 use App\Models\LexReflex;
+use App\Models\LexReflexExtraData;
 use App\Models\LexReflexPartOfSpeech;
 use App\Models\LexSemanticCategory;
 use App\Models\LexSemanticField;
@@ -54,9 +56,12 @@ class ImportProtoSemiticCsv extends Command
 
         // do the languages exist?
         $iso_lang_codes = ['Akkadian'=>'akk', 'Syriac'=>'syr', 'Ethiopic'=>'gez', 'Hebrew'=>'he', 'Arabic'=>'ar'];
+        $db_lang_ids = [];
+        foreach (LexLanguage::all() as $lang) {
+            $db_lang_ids[$lang->name] = $lang->id;
+        }
         foreach (['Akkadian', 'Syriac', 'Ethiopic', 'Hebrew', 'Arabic'] as $lang) {
-            $lang = LexLanguage::where('name', $lang)->first();
-            if (!$lang) {
+            if (!isset($db_lang_ids[$lang])) {
                 die("Can't find lang ".$lang);
             }
         }
@@ -139,8 +144,14 @@ class ImportProtoSemiticCsv extends Command
                 }
                 $extra_data->{$name} = $value;
             }
-            $lex_etymon->extra_data = $extra_data;
             $lex_etymon->save();
+            foreach ($extra_data as $k=>$v) {
+                $ext = new LexEtymaExtraData();
+                $ext->key = $k;
+                $ext->value = $v;
+                $ext->etyma_id = $lex_etymon->id;
+                $ext->save();
+            }
             $etyma_dbids[$etymon_id] = $lex_etymon->id;
 
             $semantic_fields = \DB::select(
@@ -162,9 +173,8 @@ class ImportProtoSemiticCsv extends Command
         // store the reflexes
         foreach ($reflexes as $csv_row) {
             $csv_row['etymon_id'] = str_replace('?','',$csv_row['etymon_id']);
-            $lang = LexLanguage::where('name', $csv_row['language'])->first();
             $lex_reflex = new LexReflex();
-            $lex_reflex->language_id = $lang->id;
+            $lex_reflex->language_id = $db_lang_ids[$csv_row['language']];
             $lex_reflex->lang_attribute = $iso_lang_codes[$csv_row['language']];
             if ($file_is_nouns) {
                 $entry = $this->getReflexEntryNoun($csv_row);
@@ -193,8 +203,14 @@ class ImportProtoSemiticCsv extends Command
                 }
                 $extra_data->{$name} = $value;
             }
-            $lex_reflex->extra_data = $extra_data;
             $lex_reflex->save();
+            foreach ($extra_data as $k=>$v) {
+                $ext = new LexReflexExtraData();
+                $ext->key = $k;
+                $ext->value = $v;
+                $ext->reflex_id = $lex_reflex->id;
+                $ext->save();
+            }
             if ($csv_row['part_of_speech']) {
                 $pos_text = strtolower($csv_row['part_of_speech']);
                 $lexpos = LexPartOfSpeech::where('lexicon_id', $semitic_lexicon_id)

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\EieolSeries;
 
@@ -13,14 +15,14 @@ use App\Models\EieolSeries;
  * @property string $lang
  * @property string $display
  * @property-read \App\Models\EieolSeries $series
- * @method static \Illuminate\Database\Eloquent\Builder|EieolSeriesLanguage newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|EieolSeriesLanguage newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|EieolSeriesLanguage query()
- * @method static \Illuminate\Database\Eloquent\Builder|EieolSeriesLanguage whereDisplay($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolSeriesLanguage whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolSeriesLanguage whereLang($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolSeriesLanguage whereSeriesId($value)
- * @mixin \Eloquent
+ * @method static Builder|EieolSeriesLanguage newModelQuery()
+ * @method static Builder|EieolSeriesLanguage newQuery()
+ * @method static Builder|EieolSeriesLanguage query()
+ * @method static Builder|EieolSeriesLanguage whereDisplay($value)
+ * @method static Builder|EieolSeriesLanguage whereId($value)
+ * @method static Builder|EieolSeriesLanguage whereLang($value)
+ * @method static Builder|EieolSeriesLanguage whereSeriesId($value)
+ * @mixin Eloquent
  */
 class EieolSeriesLanguage extends Model {
 

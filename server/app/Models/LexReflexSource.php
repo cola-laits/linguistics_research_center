@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\LexReflex;
 use App\Models\LexSource;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\LexReflexSource
@@ -12,19 +15,19 @@ use App\Models\LexSource;
  * @property int $id
  * @property int $reflex_id
  * @property int $source_id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property-read \App\Models\LexReflex|null $reflex
  * @property-read \App\Models\LexSource|null $source
- * @method static \Illuminate\Database\Eloquent\Builder|LexReflexSource newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|LexReflexSource newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|LexReflexSource query()
- * @method static \Illuminate\Database\Eloquent\Builder|LexReflexSource whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexReflexSource whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexReflexSource whereReflexId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexReflexSource whereSourceId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexReflexSource whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @method static Builder|LexReflexSource newModelQuery()
+ * @method static Builder|LexReflexSource newQuery()
+ * @method static Builder|LexReflexSource query()
+ * @method static Builder|LexReflexSource whereCreatedAt($value)
+ * @method static Builder|LexReflexSource whereId($value)
+ * @method static Builder|LexReflexSource whereReflexId($value)
+ * @method static Builder|LexReflexSource whereSourceId($value)
+ * @method static Builder|LexReflexSource whereUpdatedAt($value)
+ * @mixin Eloquent
  */
 class LexReflexSource extends Model {
 	protected $table = 'lex_reflex_source';

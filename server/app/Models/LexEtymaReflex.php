@@ -2,9 +2,13 @@
 
 namespace App\Models;
 
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\LexEtyma;
 use App\Models\LexReflex;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\LexEtymaReflex
@@ -12,22 +16,22 @@ use App\Models\LexReflex;
  * @property int $id
  * @property int $etyma_id
  * @property int $reflex_id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property-read \App\Models\LexEtyma|null $etyma
  * @property-read \App\Models\LexReflex|null $reflex
- * @method static \Illuminate\Database\Eloquent\Builder|LexEtymaReflex newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|LexEtymaReflex newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|LexEtymaReflex query()
- * @method static \Illuminate\Database\Eloquent\Builder|LexEtymaReflex whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexEtymaReflex whereEtymaId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexEtymaReflex whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexEtymaReflex whereReflexId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexEtymaReflex whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @method static Builder|LexEtymaReflex newModelQuery()
+ * @method static Builder|LexEtymaReflex newQuery()
+ * @method static Builder|LexEtymaReflex query()
+ * @method static Builder|LexEtymaReflex whereCreatedAt($value)
+ * @method static Builder|LexEtymaReflex whereEtymaId($value)
+ * @method static Builder|LexEtymaReflex whereId($value)
+ * @method static Builder|LexEtymaReflex whereReflexId($value)
+ * @method static Builder|LexEtymaReflex whereUpdatedAt($value)
+ * @mixin Eloquent
  */
 class LexEtymaReflex extends Model {
-    use \Backpack\CRUD\app\Models\Traits\CrudTrait;
+    use CrudTrait;
 	protected $table = 'lex_etyma_reflex';
 
     protected $guarded = [

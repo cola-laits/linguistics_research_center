@@ -3,8 +3,12 @@
 namespace App\Models;
 
 use DateTimeInterface;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\IssueComment;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\Issue
@@ -15,22 +19,22 @@ use App\Models\IssueComment;
  * @property string $pointer
  * @property string $pointer_desc
  * @property string $status
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\IssueComment[] $comments
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read Collection|\App\Models\IssueComment[] $comments
  * @property-read int|null $comments_count
- * @method static \Illuminate\Database\Eloquent\Builder|Issue newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Issue newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Issue query()
- * @method static \Illuminate\Database\Eloquent\Builder|Issue whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Issue whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Issue whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Issue wherePointer($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Issue wherePointerDesc($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Issue whereStatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Issue whereText($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Issue whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @method static Builder|Issue newModelQuery()
+ * @method static Builder|Issue newQuery()
+ * @method static Builder|Issue query()
+ * @method static Builder|Issue whereCreatedAt($value)
+ * @method static Builder|Issue whereId($value)
+ * @method static Builder|Issue whereName($value)
+ * @method static Builder|Issue wherePointer($value)
+ * @method static Builder|Issue wherePointerDesc($value)
+ * @method static Builder|Issue whereStatus($value)
+ * @method static Builder|Issue whereText($value)
+ * @method static Builder|Issue whereUpdatedAt($value)
+ * @mixin Eloquent
  */
 class Issue extends Model
 {

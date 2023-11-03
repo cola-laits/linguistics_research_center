@@ -2,10 +2,15 @@
 
 namespace App\Models;
 
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\EieolGlossedText;
 use App\Models\EieolGrammar;
 use App\Models\EieolSeries;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\EieolLesson
@@ -17,34 +22,34 @@ use App\Models\EieolSeries;
  * @property int $language_id
  * @property string|null $intro_text
  * @property string|null $lesson_translation
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property string|null $created_by
  * @property string|null $updated_by
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\EieolGlossedText[] $glossed_texts
+ * @property-read Collection|\App\Models\EieolGlossedText[] $glossed_texts
  * @property-read int|null $glossed_texts_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\EieolGrammar[] $grammars
+ * @property-read Collection|\App\Models\EieolGrammar[] $grammars
  * @property-read int|null $grammars_count
- * @property-read \App\Models\EieolLanguage|null $language
+ * @property-read EieolLanguage|null $language
  * @property-read \App\Models\EieolSeries $series
- * @method static \Illuminate\Database\Eloquent\Builder|EieolLesson newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|EieolLesson newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|EieolLesson query()
- * @method static \Illuminate\Database\Eloquent\Builder|EieolLesson whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolLesson whereCreatedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolLesson whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolLesson whereIntroText($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolLesson whereLanguageId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolLesson whereLessonTranslation($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolLesson whereOrder($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolLesson whereSeriesId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolLesson whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolLesson whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolLesson whereUpdatedBy($value)
- * @mixin \Eloquent
+ * @method static Builder|EieolLesson newModelQuery()
+ * @method static Builder|EieolLesson newQuery()
+ * @method static Builder|EieolLesson query()
+ * @method static Builder|EieolLesson whereCreatedAt($value)
+ * @method static Builder|EieolLesson whereCreatedBy($value)
+ * @method static Builder|EieolLesson whereId($value)
+ * @method static Builder|EieolLesson whereIntroText($value)
+ * @method static Builder|EieolLesson whereLanguageId($value)
+ * @method static Builder|EieolLesson whereLessonTranslation($value)
+ * @method static Builder|EieolLesson whereOrder($value)
+ * @method static Builder|EieolLesson whereSeriesId($value)
+ * @method static Builder|EieolLesson whereTitle($value)
+ * @method static Builder|EieolLesson whereUpdatedAt($value)
+ * @method static Builder|EieolLesson whereUpdatedBy($value)
+ * @mixin Eloquent
  */
 class EieolLesson extends Model {
-    use \Backpack\CRUD\app\Models\Traits\CrudTrait;
+    use CrudTrait;
 	protected $table = 'eieol_lesson';
 
 	protected $attributes = array(

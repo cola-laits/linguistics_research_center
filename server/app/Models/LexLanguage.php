@@ -3,7 +3,13 @@
 namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
+use DB;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Models\LexLanguageSubFamily;
 use App\Models\LexReflex;
@@ -19,42 +25,45 @@ use App\Models\LexReflex;
  * @property int $sub_family_id
  * @property string|null $override_family
  * @property string|null $custom_sort
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property string|null $created_by
  * @property string|null $updated_by
  * @property-read mixed $stripped_name
  * @property-read \App\Models\LexLanguageSubFamily $language_sub_family
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\LexReflex[] $reflex_count
+ * @property-read Collection|\App\Models\LexReflex[] $reflex_count
  * @property-read int|null $reflex_count_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\LexReflex[] $reflexes
+ * @property-read Collection|\App\Models\LexReflex[] $reflexes
  * @property-read int|null $reflexes_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\LexReflex[] $small_reflexes
+ * @property-read Collection|\App\Models\LexReflex[] $small_reflexes
  * @property-read int|null $small_reflexes_count
- * @method static \Illuminate\Database\Eloquent\Builder|LexLanguage newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|LexLanguage newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|LexLanguage query()
- * @method static \Illuminate\Database\Eloquent\Builder|LexLanguage whereAbbr($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexLanguage whereAka($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexLanguage whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexLanguage whereCreatedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexLanguage whereCustomSort($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexLanguage whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexLanguage whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexLanguage whereOrder($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexLanguage whereOverrideFamily($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexLanguage whereSubFamilyId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexLanguage whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexLanguage whereUpdatedBy($value)
- * @mixin \Eloquent
+ * @method static Builder|LexLanguage newModelQuery()
+ * @method static Builder|LexLanguage newQuery()
+ * @method static Builder|LexLanguage query()
+ * @method static Builder|LexLanguage whereAbbr($value)
+ * @method static Builder|LexLanguage whereAka($value)
+ * @method static Builder|LexLanguage whereCreatedAt($value)
+ * @method static Builder|LexLanguage whereCreatedBy($value)
+ * @method static Builder|LexLanguage whereCustomSort($value)
+ * @method static Builder|LexLanguage whereId($value)
+ * @method static Builder|LexLanguage whereName($value)
+ * @method static Builder|LexLanguage whereOrder($value)
+ * @method static Builder|LexLanguage whereOverrideFamily($value)
+ * @method static Builder|LexLanguage whereSubFamilyId($value)
+ * @method static Builder|LexLanguage whereUpdatedAt($value)
+ * @method static Builder|LexLanguage whereUpdatedBy($value)
+ * @mixin Eloquent
  */
 class LexLanguage extends Model {
 
     use CrudTrait;
+    use HasTranslations;
 
 	protected $table = 'lex_language';
 
 	protected $guarded = ['id'];
+
+    protected $translatable = ['name', 'description'];
 
 	public static function boot() {
 		parent::boot();
@@ -92,7 +101,7 @@ class LexLanguage extends Model {
 
 	public function reflex_count()
 	{
-		return $this->hasMany(LexReflex::class, 'language_id', 'id')->select(\DB::raw('language_id, count(*) as count'))->groupBy('language_id');
+		return $this->hasMany(LexReflex::class, 'language_id', 'id')->select(DB::raw('language_id, count(*) as count'))->groupBy('language_id');
 	}
 
 	public function getStrippedNameAttribute()

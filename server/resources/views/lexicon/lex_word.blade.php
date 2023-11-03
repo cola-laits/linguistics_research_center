@@ -56,11 +56,11 @@
             <h2>{{__('lexicon.pages.word.table_header.Related Words')}}:</h2>
             <div>
                 <ul>
-                    @foreach ($word->cross_references as $crossref)
+                    @foreach ($word->cross_reference_pivots as $crossref)
                         <li>
-                            {{$crossref->language->name}}: {{$crossref->getEntriesCSV()}} "{{$crossref->gloss}}"
-                            @if ($crossref->pivot->relationship)
-                            ({{$crossref->pivot->relationship}})
+                            {{$crossref->to_reflex->language->name}}: {{$crossref->to_reflex->getEntriesCSV()}} "{{$crossref->to_reflex->gloss}}"
+                            @if ($crossref->relationship)
+                            ({{$crossref->relationship}})
                             @endif
                         </li>
                     @endforeach
@@ -72,8 +72,8 @@
         <h2>{{__('lexicon.pages.word.table_header.Other info')}}:</h2>
         <div>
             <ul>
-            @foreach ($word->extra_data as $name=>$value)
-                    <li>{{$name}}: {{$value}}</li>
+            @foreach ($word->extra_data as $extra_datum)
+                <li>{{$extra_datum->key}}: {{$extra_datum->value}}</li>
             @endforeach
             </ul>
         </div>

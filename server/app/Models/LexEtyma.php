@@ -3,7 +3,13 @@
 namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -15,40 +21,39 @@ use Illuminate\Support\Facades\Auth;
  * @property string|null $page_number
  * @property string|null $entry
  * @property string|null $gloss
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property string|null $created_by
  * @property string|null $updated_by
- * @property-read \Illuminate\Database\Eloquent\Collection|LexEtyma[] $cross_references
+ * @property-read Collection|LexEtyma[] $cross_references
  * @property-read int|null $cross_references_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\LexReflex[] $reflexes
+ * @property-read Collection|LexReflex[] $reflexes
  * @property-read int|null $reflexes_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\LexSemanticField[] $semantic_fields
+ * @property-read Collection|LexSemanticField[] $semantic_fields
  * @property-read int|null $semantic_fields_count
- * @method static \Illuminate\Database\Eloquent\Builder|LexEtyma newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|LexEtyma newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|LexEtyma query()
- * @method static \Illuminate\Database\Eloquent\Builder|LexEtyma whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexEtyma whereCreatedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexEtyma whereEntry($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexEtyma whereGloss($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexEtyma whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexEtyma whereOldId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexEtyma whereOrder($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexEtyma wherePageNumber($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexEtyma whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexEtyma whereUpdatedBy($value)
- * @mixin \Eloquent
+ * @method static Builder|LexEtyma newModelQuery()
+ * @method static Builder|LexEtyma newQuery()
+ * @method static Builder|LexEtyma query()
+ * @method static Builder|LexEtyma whereCreatedAt($value)
+ * @method static Builder|LexEtyma whereCreatedBy($value)
+ * @method static Builder|LexEtyma whereEntry($value)
+ * @method static Builder|LexEtyma whereGloss($value)
+ * @method static Builder|LexEtyma whereId($value)
+ * @method static Builder|LexEtyma whereOldId($value)
+ * @method static Builder|LexEtyma whereOrder($value)
+ * @method static Builder|LexEtyma wherePageNumber($value)
+ * @method static Builder|LexEtyma whereUpdatedAt($value)
+ * @method static Builder|LexEtyma whereUpdatedBy($value)
+ * @mixin Eloquent
  */
 class LexEtyma extends Model {
 
     use CrudTrait;
+    use HasTranslations;
 
 	protected $table = 'lex_etyma';
 	protected $guarded = ['id'];
-    protected $casts = [
-        'extra_data' => 'array'
-    ];
+    protected $translatable = ['gloss'];
 
 	public static function boot() {
 		parent::boot();
@@ -84,6 +89,11 @@ class LexEtyma extends Model {
 	{
 		return $this->belongsToMany(LexEtyma::class, 'lex_etyma_cross_reference', 'from_etyma_id', 'to_etyma_id');
 	}
+
+    public function extra_data() : HasMany
+    {
+        return $this->hasMany(LexEtymaExtraData::class, 'etyma_id');
+    }
 
     public function getReflexesLangNameEntriesGloss() {
         $text = $this->reflexes->map(function($reflex) {

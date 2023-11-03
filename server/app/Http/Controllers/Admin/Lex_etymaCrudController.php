@@ -109,10 +109,12 @@ class Lex_etymaCrudController extends CrudController
         CRUD::field('reflexes')->type('relationship')->attribute('langNameEntriesGloss')->pivot(true)->ajax(true);
 
         CRUD::field('extra_data')
-            ->type('json')
-            ->view_namespace('json-field-for-backpack::fields')
-            ->modes(['form','tree','code'])
-            ->default([])
+            ->type('relationship')
+            ->subfields([
+                ['name'=>'key', 'label'=>'Key', 'wrapper'=>['class'=>'form-group col-md-3']],
+                ['name'=>'value', 'label'=>'Value <i class="la la-flag-checkered pull-right" style="margin-top: 3px;" title="This field is translatable."></i>', 'wrapper'=>['class'=>'form-group col-md-9']]
+            ])
+            ->new_item_label('New Extra Data')
             ->hint("'Extra Data' is freeform info that may vary between lexicons.");
 
         /**

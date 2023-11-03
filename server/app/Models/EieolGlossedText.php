@@ -2,9 +2,13 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\EieolLesson;
 use App\Models\EieolGloss;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\EieolGlossedText
@@ -13,29 +17,29 @@ use App\Models\EieolGloss;
  * @property int $lesson_id
  * @property string|null $glossed_text
  * @property int $order
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property string|null $created_by
  * @property string|null $updated_by
  * @property string|null $audio_url
  * @property array|null $custom_gloss_mapping
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\EieolGloss[] $glosses
+ * @property-read Collection|\App\Models\EieolGloss[] $glosses
  * @property-read int|null $glosses_count
  * @property-read \App\Models\EieolLesson $lesson
- * @method static \Illuminate\Database\Eloquent\Builder|EieolGlossedText newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|EieolGlossedText newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|EieolGlossedText query()
- * @method static \Illuminate\Database\Eloquent\Builder|EieolGlossedText whereAudioUrl($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolGlossedText whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolGlossedText whereCreatedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolGlossedText whereCustomGlossMapping($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolGlossedText whereGlossedText($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolGlossedText whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolGlossedText whereLessonId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolGlossedText whereOrder($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolGlossedText whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EieolGlossedText whereUpdatedBy($value)
- * @mixin \Eloquent
+ * @method static Builder|EieolGlossedText newModelQuery()
+ * @method static Builder|EieolGlossedText newQuery()
+ * @method static Builder|EieolGlossedText query()
+ * @method static Builder|EieolGlossedText whereAudioUrl($value)
+ * @method static Builder|EieolGlossedText whereCreatedAt($value)
+ * @method static Builder|EieolGlossedText whereCreatedBy($value)
+ * @method static Builder|EieolGlossedText whereCustomGlossMapping($value)
+ * @method static Builder|EieolGlossedText whereGlossedText($value)
+ * @method static Builder|EieolGlossedText whereId($value)
+ * @method static Builder|EieolGlossedText whereLessonId($value)
+ * @method static Builder|EieolGlossedText whereOrder($value)
+ * @method static Builder|EieolGlossedText whereUpdatedAt($value)
+ * @method static Builder|EieolGlossedText whereUpdatedBy($value)
+ * @mixin Eloquent
  */
 class EieolGlossedText extends Model
 {

@@ -3,7 +3,12 @@
 namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Models\LexLanguageSubFamily;
 
@@ -13,32 +18,35 @@ use App\Models\LexLanguageSubFamily;
  * @property int $id
  * @property string|null $name
  * @property int $order
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property string|null $created_by
  * @property string|null $updated_by
  * @property-read mixed $family
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\LexLanguageSubFamily[] $language_sub_families
+ * @property-read Collection|\App\Models\LexLanguageSubFamily[] $language_sub_families
  * @property-read int|null $language_sub_families_count
- * @method static \Illuminate\Database\Eloquent\Builder|LexLanguageFamily newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|LexLanguageFamily newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|LexLanguageFamily query()
- * @method static \Illuminate\Database\Eloquent\Builder|LexLanguageFamily whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexLanguageFamily whereCreatedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexLanguageFamily whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexLanguageFamily whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexLanguageFamily whereOrder($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexLanguageFamily whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexLanguageFamily whereUpdatedBy($value)
- * @mixin \Eloquent
+ * @method static Builder|LexLanguageFamily newModelQuery()
+ * @method static Builder|LexLanguageFamily newQuery()
+ * @method static Builder|LexLanguageFamily query()
+ * @method static Builder|LexLanguageFamily whereCreatedAt($value)
+ * @method static Builder|LexLanguageFamily whereCreatedBy($value)
+ * @method static Builder|LexLanguageFamily whereId($value)
+ * @method static Builder|LexLanguageFamily whereName($value)
+ * @method static Builder|LexLanguageFamily whereOrder($value)
+ * @method static Builder|LexLanguageFamily whereUpdatedAt($value)
+ * @method static Builder|LexLanguageFamily whereUpdatedBy($value)
+ * @mixin Eloquent
  */
 class LexLanguageFamily extends Model {
 
     use CrudTrait;
+    use HasTranslations;
 
 	protected $table = 'lex_language_family';
 
 	protected $guarded = ['id'];
+
+    protected $translatable = ['name'];
 
 	public static function boot() {
 		parent::boot();

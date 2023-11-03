@@ -3,15 +3,19 @@
 namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
 use Illuminate\Database\Eloquent\Model;
 
 class LexLexicon extends Model
 {
     use CrudTrait;
+    use HasTranslations;
 
     protected $table = 'lex_lexicon';
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
+
+    protected $translatable = ['protolang_name', 'description'];
 
     public function etyma() {
         return $this->hasMany(LexEtyma::class, 'lexicon_id')

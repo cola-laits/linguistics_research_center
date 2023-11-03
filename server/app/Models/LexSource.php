@@ -3,7 +3,11 @@
 namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Models\LexReflex;
 
@@ -13,23 +17,23 @@ use App\Models\LexReflex;
  * @property int $id
  * @property string|null $code
  * @property string|null $display
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property string|null $created_by
  * @property string|null $updated_by
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\LexReflex[] $reflex
+ * @property-read Collection|\App\Models\LexReflex[] $reflex
  * @property-read int|null $reflex_count
- * @method static \Illuminate\Database\Eloquent\Builder|LexSource newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|LexSource newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|LexSource query()
- * @method static \Illuminate\Database\Eloquent\Builder|LexSource whereCode($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexSource whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexSource whereCreatedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexSource whereDisplay($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexSource whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexSource whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexSource whereUpdatedBy($value)
- * @mixin \Eloquent
+ * @method static Builder|LexSource newModelQuery()
+ * @method static Builder|LexSource newQuery()
+ * @method static Builder|LexSource query()
+ * @method static Builder|LexSource whereCode($value)
+ * @method static Builder|LexSource whereCreatedAt($value)
+ * @method static Builder|LexSource whereCreatedBy($value)
+ * @method static Builder|LexSource whereDisplay($value)
+ * @method static Builder|LexSource whereId($value)
+ * @method static Builder|LexSource whereUpdatedAt($value)
+ * @method static Builder|LexSource whereUpdatedBy($value)
+ * @mixin Eloquent
  */
 class LexSource extends Model {
 

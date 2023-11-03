@@ -3,7 +3,12 @@
 namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -13,56 +18,61 @@ use Illuminate\Support\Facades\Auth;
  * @property string|null $text
  * @property string|null $number
  * @property string|null $abbr
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property string|null $created_by
  * @property string|null $updated_by
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\LexSemanticField[] $semantic_fields
+ * @property-read Collection|LexSemanticField[] $semantic_fields
  * @property-read int|null $semantic_fields_count
- * @method static \Illuminate\Database\Eloquent\Builder|LexSemanticCategory newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|LexSemanticCategory newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|LexSemanticCategory query()
- * @method static \Illuminate\Database\Eloquent\Builder|LexSemanticCategory whereAbbr($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexSemanticCategory whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexSemanticCategory whereCreatedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexSemanticCategory whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexSemanticCategory whereNumber($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexSemanticCategory whereText($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexSemanticCategory whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexSemanticCategory whereUpdatedBy($value)
- * @mixin \Eloquent
+ * @method static Builder|LexSemanticCategory newModelQuery()
+ * @method static Builder|LexSemanticCategory newQuery()
+ * @method static Builder|LexSemanticCategory query()
+ * @method static Builder|LexSemanticCategory whereAbbr($value)
+ * @method static Builder|LexSemanticCategory whereCreatedAt($value)
+ * @method static Builder|LexSemanticCategory whereCreatedBy($value)
+ * @method static Builder|LexSemanticCategory whereId($value)
+ * @method static Builder|LexSemanticCategory whereNumber($value)
+ * @method static Builder|LexSemanticCategory whereText($value)
+ * @method static Builder|LexSemanticCategory whereUpdatedAt($value)
+ * @method static Builder|LexSemanticCategory whereUpdatedBy($value)
+ * @mixin Eloquent
  */
-class LexSemanticCategory extends Model {
+class LexSemanticCategory extends Model
+{
 
     use CrudTrait;
+    use HasTranslations;
 
-	protected $table = 'lex_semantic_category';
+    protected $table = 'lex_semantic_category';
 
-	protected $fillable = ['number','text','abbr'];
+    protected $fillable = ['number', 'text', 'abbr'];
 
-	public static function boot() {
-		parent::boot();
+    protected $translatable = ['text'];
 
-		// event to happen on saving
-		static::creating(function($table)  {
+    public static function boot()
+    {
+        parent::boot();
+
+        // event to happen on saving
+        static::creating(function ($table) {
             if (Auth::user()) {
                 $table->created_by = Auth::user()->username;
                 $table->updated_by = Auth::user()->username;
             }
-		});
+        });
 
-		// event to happen on updating
-		static::updating(function($table)  {
+        // event to happen on updating
+        static::updating(function ($table) {
             if (Auth::user()) {
                 $table->updated_by = Auth::user()->username;
             }
-		});
-	}
+        });
+    }
 
-	public function semantic_fields()
-	{
-		return $this->hasMany(LexSemanticField::class, 'semantic_category_id', 'id')->orderBy('number');
-	}
+    public function semantic_fields()
+    {
+        return $this->hasMany(LexSemanticField::class, 'semantic_category_id', 'id')->orderBy('number');
+    }
 
     public function lexicon()
     {

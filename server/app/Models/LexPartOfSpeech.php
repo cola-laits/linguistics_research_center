@@ -3,7 +3,12 @@
 namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Models\LexReflex;
 
@@ -13,31 +18,34 @@ use App\Models\LexReflex;
  * @property int $id
  * @property string|null $code
  * @property string|null $display
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property string|null $created_by
  * @property string|null $updated_by
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\LexReflex[] $reflex
+ * @property-read Collection|\App\Models\LexReflex[] $reflex
  * @property-read int|null $reflex_count
- * @method static \Illuminate\Database\Eloquent\Builder|LexPartOfSpeech newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|LexPartOfSpeech newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|LexPartOfSpeech query()
- * @method static \Illuminate\Database\Eloquent\Builder|LexPartOfSpeech whereCode($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexPartOfSpeech whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexPartOfSpeech whereCreatedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexPartOfSpeech whereDisplay($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexPartOfSpeech whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexPartOfSpeech whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LexPartOfSpeech whereUpdatedBy($value)
- * @mixin \Eloquent
+ * @method static Builder|LexPartOfSpeech newModelQuery()
+ * @method static Builder|LexPartOfSpeech newQuery()
+ * @method static Builder|LexPartOfSpeech query()
+ * @method static Builder|LexPartOfSpeech whereCode($value)
+ * @method static Builder|LexPartOfSpeech whereCreatedAt($value)
+ * @method static Builder|LexPartOfSpeech whereCreatedBy($value)
+ * @method static Builder|LexPartOfSpeech whereDisplay($value)
+ * @method static Builder|LexPartOfSpeech whereId($value)
+ * @method static Builder|LexPartOfSpeech whereUpdatedAt($value)
+ * @method static Builder|LexPartOfSpeech whereUpdatedBy($value)
+ * @mixin Eloquent
  */
 class LexPartOfSpeech extends Model {
 
     use CrudTrait;
+    use HasTranslations;
 
 	protected $table = 'lex_part_of_speech';
 
 	protected $guarded = ['id'];
+
+    protected $translatable = ['display'];
 
 	public static function boot() {
 		parent::boot();
