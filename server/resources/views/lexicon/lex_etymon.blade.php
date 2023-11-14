@@ -41,7 +41,7 @@
     </table>
 
         @if ($etymon->extra_data)
-            <h2>{{__('lexicon.pages.etymon.table_header.Other info')}}:</h2>
+            <h2>{{__('lexicon.pages.etymon.table_header.Other Info')}}:</h2>
             <div>
                 <ul>
                     @foreach ($etymon->extra_data as $extra_datum)
