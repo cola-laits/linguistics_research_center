@@ -61,7 +61,7 @@ class LexLexiconCrudController extends CrudController
 
         CRUD::field('name');
         CRUD::field('slug');
-        CRUD::field('protolang_name')->label('Proto-language name');
+        CRUD::field('protolang_name')->type('text')->label('Proto-language name');
         CRUD::field('description')->type('wysiwyg');
         CRUD::field('viewer_lang_options')->label('Viewer language options')->hint('Comma-separated list of language codes to offered to the user.  ex: "en, es"');
 
