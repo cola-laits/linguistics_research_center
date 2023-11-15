@@ -5,4 +5,13 @@
     "lexicon.sidebar.title_categories": "Categorías",
     "lexicon.sidebar.button_label_search": "Buscar",
     "": ""
+    "lexicon.general.html_head_title": "LRC :lexicon_name: :page_title",
+    "lexicon.pages.data.html_head_title": "LRC :lexicon_name: Datos",
+    "lexicon.pages.home.html_head_title": "LRC :lexicon_name: Inicio",
+    "lexicon.pages.data.page_title": "Datos",
+    "lexicon.pages.etymon.page_title": "Diccionario de :lexicon_protolang_name",
+    "lexicon.pages.field.page_title": "Campo Semántico",
+    "lexicon.pages.home.page_title": ":lexicon_name",
+    "lexicon.pages.language.page_title": "LRC :lexicon_name: :language_name",
+    "lexicon.pages.word.page_title": "Diccionario de :language_name",
 }
