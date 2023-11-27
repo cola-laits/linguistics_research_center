@@ -49,7 +49,6 @@
         all pages:
             display data (reflexes on etyma pages, cognates on reflex pages, items in sidebar, etc) in some sensible order other than database-id order
         general cleanup / prep for release:
-            add page-specific [title] tags
             investigate and add SEO tags
             general style/UI/UX once-over
             responsive (tablet/mobile) testing
