@@ -55,7 +55,13 @@ class PublicIELexController extends Controller
     public function lex_lang_reflexes($language_abbr) {
         $language = LexLanguage::where("abbr", $language_abbr)->firstOrFail();
 
-        $alpha_weights = $language->getCharSortWeights();
+        $alpha_weights = [];
+        $alphabet = explode(',', 'aAàǣ,ā,bB,cC,dD,eEēÉe̐,é,fF,gG,hH,iIīí,jJ,kK,lL,mM,nN,oOò,ō,ð,pP,qQ,rR,sS,tT,uUúū,vV,wW,xX,yY,zZ');
+        foreach ($alphabet as $ctr => $alpha) {
+            foreach (mb_str_split($alpha, 1, 'UTF-8') as $char) {
+                $alpha_weights[$char] = $ctr + 1;
+            }
+        }
 
         $reflexes = LexReflex::whereLanguageId($language->id)
             ->with('etymas:id,old_id,entry,gloss')

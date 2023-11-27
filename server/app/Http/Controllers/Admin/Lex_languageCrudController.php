@@ -76,12 +76,6 @@ class Lex_languageCrudController extends CrudController
         CRUD::field('language_sub_family')->type('select')->model(LexLanguageSubFamily::class)->attribute('family_sub_family');
         CRUD::field('override_family')->type('text')
             ->hint('This is for the reflex page. This value will show instead of the Family that this Language belongs to.');
-        CRUD::field('custom_sort')->type('text')->hint(
-            'This is used to set the sort order for the lex_lang_reflexes page and should be a comma separated list of characters in the order they should be sorted. Do not use unicode code points, just paste in unicode characters.<br>'.
-            'Example: A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,π,q,r,s,t,u,v,w,x,y,z<br>'.
-            'If characters aren\'t separated by a comma, they are considered equal. In the next example, p,P and π are considered the same.<br>'.
-            'Example: aAÄ,bB,cC,dD,eE,fF,gG,hH,iI,Jj,Kk,Ll,Mm,Nn,Oo,Ppπ,Qq,Rr,Ss,Tt,Uu,Vv,Ww,Xx,Yy,Zz'
-        );
         CRUD::field('description')->type('wysiwyg');
 
         /**

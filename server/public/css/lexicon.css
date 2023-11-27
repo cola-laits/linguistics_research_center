@@ -4,6 +4,14 @@
     }
 }
 
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
 .header-lexiconname {
     font-weight: bold;
     color: #317094;

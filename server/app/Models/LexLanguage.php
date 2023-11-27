@@ -24,7 +24,6 @@ use App\Models\LexReflex;
  * @property string|null $aka
  * @property int $sub_family_id
  * @property string|null $override_family
- * @property string|null $custom_sort
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property string|null $created_by
@@ -91,7 +90,8 @@ class LexLanguage extends Model {
 
 	public function reflexes()
 	{
-		return $this->hasMany(LexReflex::class, 'language_id', 'id');
+		return $this->hasMany(LexReflex::class, 'language_id', 'id')
+            ->orderBy('entries');
 	}
 
 	public function small_reflexes()
@@ -117,16 +117,4 @@ class LexLanguage extends Model {
 			return $this->language_sub_family->language_family->name;
 		}
 	}
-
-    public function getCharSortWeights(): array
-    {
-        $alpha_weights = [];
-        $alphabet = explode(',', $this->custom_sort);
-        foreach ($alphabet as $ctr => $alpha) {
-            foreach (mb_str_split($alpha, 1, 'UTF-8') as $char) {
-                $alpha_weights[$char] = $ctr + 1;
-            }
-        }
-        return $alpha_weights;
-    }
 }
