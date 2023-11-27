@@ -48,7 +48,9 @@ class PublicLexiconController extends Controller
     {
         $lex = $this->getLexicon($lexicon_slug);
         $field = LexSemanticField::with([
-            'etyma'
+            'etyma',
+            'etyma.reflexes',
+            'etyma.reflexes.language',
         ])->findOrFail($field_id);
         return view('lexicon/lex_field', [
             'lexicon'=>$lex,
