@@ -34,7 +34,8 @@ class PublicLexiconController extends Controller
         $lex = $this->getLexicon($lexicon_slug);
         $etymon = LexEtyma::with([
             'reflexes',
-            'reflexes.language'
+            'reflexes.language',
+            'extra_data'
         ])->findOrFail($etymon_id);
         return view('lexicon/lex_etymon', [
             'lexicon'=>$lex,

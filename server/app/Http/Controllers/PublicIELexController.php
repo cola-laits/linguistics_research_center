@@ -32,7 +32,8 @@ class PublicIELexController extends Controller
             'reflexes.language.language_sub_family.language_family',
             'reflexes.sources',
             'reflexes.parts_of_speech',
-            'semantic_fields.semantic_category')
+            'semantic_fields.semantic_category',
+            'extra_data')
             ->where('old_id', '=', $pokorny_number)
             ->firstOrFail();
 

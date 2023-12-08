@@ -15,6 +15,14 @@ class RenormalizeUnicode extends Migration
     public function up()
     {
         // Removed to command NormalizeUnicodeText
+
+        DB::table($table)->orderBy('id')->lazy()->each(function ($row) use ($table, $column) {
+            DB::table($table)
+                ->where('id', $row->id)
+                ->update([
+                    'name' => 'thing'
+                ]);
+        });
     }
 
     /**
