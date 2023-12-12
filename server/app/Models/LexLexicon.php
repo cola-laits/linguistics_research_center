@@ -40,4 +40,9 @@ class LexLexicon extends Model
             return trim($lang_code);
         });
     }
+
+    public static function getDisplayTextViewerLang($lang_code) {
+        $lang_names = ['en'=>'English','es'=>'Español'];
+        return $lang_names[$lang_code] ?? ('Unknown: '.$lang_code);
+    }
 }

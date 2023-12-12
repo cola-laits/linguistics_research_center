@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title')</title>
     <link href="/assets/bootstrap/bootstrap-5.0.2-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.la.utexas.edu/fontawesome/fontawesome-pro-5.12.0/css/all.min.css" rel="stylesheet">
     <link href="/css/lexicon.css" rel="stylesheet">
 
     @yield('header_extras')
@@ -144,17 +145,49 @@
 <body>
 
 <div class="d-flex">
-<div class="" style="height:100vh;overflow-y:scroll;padding:15px;width:100%;">
-    <header class="d-flex align-items-center justify-content-between pb-3 mb-5 border-bottom">
-        <span>
-        <a href="/" class="text-dark text-decoration-none">
+<div class="container" style="height:100vh;overflow-y:scroll;padding:15px;width:100%;">
+    <header class="d-flex flex-wrap justify-content-between py-3 mb-4 border-bottom">
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
             <img height="43" src="{{__('lexicon.header.banner.image_url')}}" alt="{{__('lexicon.header.banner.alt_text')}}">
         </a>
-        <a href="/lexicon/{{$lexicon->slug}}" class="text-dark text-decoration-none">
+
+        <a href="/lexicon/{{$lexicon->slug}}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
             <span class="header-lexiconname fs-4">{{$lexicon->name}}</span>
         </a>
-        </span>
+
+        @forelse ($lexicon->getViewerLangsArray() as $viewer_lang)
+            @if ($loop->first)
+                <div class="d-flex align-items-center mb-3 mb-md-0 me-md-auto">
+            @endif
+
+            @if (App::getLocale() === $viewer_lang)
+                <button type="button" class="btn btn-primary"
+                        disabled
+                >{{$lexicon->getDisplayTextViewerLang($viewer_lang)}}</button>
+            @else
+                <button type="button" class="btn btn-primary"
+                        onclick="document.location.href='/lexicon/{{$lexicon->slug}}?switchlang={{$viewer_lang}}'"
+                >{{$lexicon->getDisplayTextViewerLang($viewer_lang)}}</button>
+            @endif
+
+            @if ($loop->last)
+                </div>
+            @endif
+
+        @empty
+            @if (App::getLocale() !== 'en')
+                <div class="d-flex align-items-center mb-3 mb-md-0 me-md-auto">
+                    {{-- Offer an emergency 'back to English' button in case you land an a lexicon without language choices --}}
+                    <button type="button" class="btn btn-primary"
+                            onclick="document.location.href='/lexicon/{{$lexicon->slug}}?switchlang=en'"
+                    >$lexicon->getDisplayTextViewerLang('en')</button>
+                </div>
+            @endif
+        @endforelse
+
+        <div class="d-flex align-items-center mb-3 mb-md-0">
         @yield('language-select')
+        </div>
     </header>
 
     <main>

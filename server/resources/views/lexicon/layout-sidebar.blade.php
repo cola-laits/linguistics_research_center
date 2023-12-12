@@ -1,4 +1,9 @@
 <div id="sidebar" class="sidebar" style="height:100vh;overflow-y:scroll">
+    <div id="sidebar-explorer-header" class="sidebar-header d-flex justify-content-center">
+        <a class="btn btn-outline-secondary" href="/lexicon/{{$lexicon->slug}}/data">
+            <i class="far fa-table"></i> <span class="ps-1">{{__('lexicon.pages.home.search_lexicon_link_text')}}</span>
+        </a>
+    </div>
     <div id="sidebar-header" class="sidebar-header">
         <p>
             <a href="#" class="selector_type_link{{$selected_sidebar=='headword' ? ' selected' : ''}}"
