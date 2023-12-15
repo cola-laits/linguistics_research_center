@@ -19,6 +19,8 @@ class PageCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 
+    use TinyMceConfig;
+
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      *
@@ -66,7 +68,7 @@ class PageCrudController extends CrudController
 
         CRUD::field('slug')->type('text');
         CRUD::field('name')->type('text');
-        CRUD::field('content')->type('ckeditor');
+        CRUD::field('content')->type('tinymce')->options($this->getDefaultTinyMceOptions());
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:

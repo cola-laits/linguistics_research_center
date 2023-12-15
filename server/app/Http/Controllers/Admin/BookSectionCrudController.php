@@ -19,6 +19,8 @@ class BookSectionCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 
+    use TinyMceConfig;
+
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      *
@@ -65,7 +67,7 @@ class BookSectionCrudController extends CrudController
         CRUD::field('name');
         CRUD::field('slug');
         CRUD::field('order');
-        CRUD::field('content');
+        CRUD::field('content')->type('tinymce')->options($this->getDefaultTinyMceOptions());
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:

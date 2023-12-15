@@ -19,6 +19,8 @@ class LexLexiconCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 
+    use TinyMceConfig;
+
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      *
@@ -62,7 +64,7 @@ class LexLexiconCrudController extends CrudController
         CRUD::field('name');
         CRUD::field('slug');
         CRUD::field('protolang_name')->type('text')->label('Proto-language name');
-        CRUD::field('description')->type('wysiwyg');
+        CRUD::field('description')->type('tinymce')->options($this->getDefaultTinyMceOptions());
         CRUD::field('viewer_lang_options')->label('Viewer language options')->hint('Comma-separated list of language codes to offered to the user.  ex: "en, es"');
 
         /**

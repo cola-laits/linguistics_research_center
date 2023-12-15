@@ -21,6 +21,8 @@ class EieolLessonCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 
+    use TinyMceConfig;
+
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      *
@@ -70,8 +72,8 @@ class EieolLessonCrudController extends CrudController
         CRUD::field('title')->type('text');
         CRUD::field('order')->type('text');
         CRUD::field('language_id')->type('select')->model(EieolLanguage::class)->attribute('language');
-        CRUD::field('intro_text')->type('textarea');
-        CRUD::field('lesson_translation')->type('textarea');
+        CRUD::field('intro_text')->type('tinymce')->options($this->getDefaultTinyMceOptions());
+        CRUD::field('lesson_translation')->type('tinymce')->options($this->getDefaultTinyMceOptions());
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:

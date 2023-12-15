@@ -20,6 +20,8 @@ class Lex_languageCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 
+    use TinyMceConfig;
+
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      *
@@ -76,7 +78,7 @@ class Lex_languageCrudController extends CrudController
         CRUD::field('language_sub_family')->type('select')->model(LexLanguageSubFamily::class)->attribute('family_sub_family');
         CRUD::field('override_family')->type('text')
             ->hint('This is for the reflex page. This value will show instead of the Family that this Language belongs to.');
-        CRUD::field('description')->type('wysiwyg');
+        CRUD::field('description')->type('tinymce')->options($this->getDefaultTinyMceOptions());
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:
