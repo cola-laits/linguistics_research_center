@@ -6,6 +6,21 @@ use App\Http\Controllers\PublicIELexController;
 use App\Http\Controllers\PublicLexiconController;
 use App\Http\Controllers\PublicPageController;
 
+Route::get('robots.txt', function() {
+    if (env('APP_ENV') === 'production') {
+        return response(
+            "User-agent: *
+Disallow: /eieol_printable/"
+        )->header('Content-Type', 'text/plain');
+    } else {
+        return response(
+            "User-agent: *
+Disallow: /"
+        )->header('Content-Type', 'text/plain');
+    }
+
+});
+
 Route::controller(PublicPageController::class)->group(function() {
     Route::get('/', 'index');
     Route::get('index', 'index');
