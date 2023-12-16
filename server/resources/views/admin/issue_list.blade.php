@@ -28,14 +28,20 @@
                 <h2>All Issues</h2>
             @endif
             <div class="btn-group" style="padding-left:10px;">
-                @php($statuses = ['open'=>'Open', 'closed'=>'Closed', 'all'=>'All'])
-                @foreach ($statuses as $status_key=>$status_label)
-                    @php($status_matches = ($status_key==$status))
-                    <button type="button"
-                            @class(['btn', 'btn-sm', 'btn-secondary'=>($status_matches), 'btn-outline-secondary'=>(!$status_matches)])
-                            onclick="setStatusAndRedirect('{{$status_key}}')"
-                    >{{$status_label}}</button>
-                @endforeach
+                <button type="button"
+                        @class(['btn', 'btn-sm', 'btn-secondary'=>('open'==$status), 'btn-outline-secondary'=>('open'!=$status)])
+                        onclick="setStatusAndRedirect('open')"
+                >Open</button>
+
+                <button type="button"
+                        @class(['btn', 'btn-sm', 'btn-secondary'=>('closed'==$status), 'btn-outline-secondary'=>('closed'!=$status)])
+                        onclick="setStatusAndRedirect('closed')"
+                >Closed</button>
+
+                <button type="button"
+                        @class(['btn', 'btn-sm', 'btn-secondary'=>('all'==$status), 'btn-outline-secondary'=>('all'!=$status)])
+                        onclick="setStatusAndRedirect('all')"
+                >All</button>
             </div>
         </div>
         <div class="issue_list">
