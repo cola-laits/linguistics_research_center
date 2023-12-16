@@ -3,6 +3,7 @@
 @section('title') Issue #{{$issue->id}} @endsection
 
 @section('head_extra')
+    <script src="/assets/tinymce/tinymce-6.8.2/tinymce.min.js" referrerpolicy="origin"></script>
     <style>
         .issue-container {
             display: grid;
@@ -191,6 +192,7 @@
                 plugins: "code",
                 menubar: '',
                 toolbar: "backcolor code",
+                promotion: false,
                 init_instance_callback: function (editor) {
                     editor.on('keydown', function (e) {
                         e.preventDefault();
