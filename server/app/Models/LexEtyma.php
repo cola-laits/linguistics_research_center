@@ -105,20 +105,15 @@ class LexEtyma extends Model {
         return $text;
     }
 
-	public function getSources()
-	{
-		//build list of sources used by all relfexes for this etyma reflexes
-		$sources = array();
-		foreach ($this->reflexes as $reflex) {
-			foreach($reflex->sources as $source) {
-				if (!array_key_exists($source->code,$sources)) {
-					$sources[$source->code] = $source->display;
-				}
-			}
-		}
-		ksort($sources);
-		return $sources;
-	}
+    public function getSources()
+    {
+        return $this->reflexes->pluck('sources')
+            ->flatten()
+            ->unique('code')
+            ->sortBy('code')
+            ->pluck('display', 'code')
+            ->toArray();
+    }
 
 	public function getPOSes()
 	{
@@ -128,15 +123,13 @@ class LexEtyma extends Model {
 		$pos_lookup = LexPartOfSpeech::posLookup();
 
 		$poses = array();
-		foreach ($this->reflexes as $reflex) {
-			foreach($reflex->parts_of_speech as $pos) {
-				$sub_poses = explode('.',$pos->text);
-				foreach($sub_poses as $sub_pos) {
-					if (!array_key_exists($sub_pos,$poses) && array_key_exists($sub_pos, $pos_lookup)) {
-						$poses[$sub_pos] = $pos_lookup[$sub_pos];
-					}
-				}
-			}
+        foreach ($this->reflexes->pluck('parts_of_speech')->flatten() as $pos) {
+            $sub_poses = explode('.',$pos->text);
+            foreach($sub_poses as $sub_pos) {
+                if (!array_key_exists($sub_pos,$poses) && array_key_exists($sub_pos, $pos_lookup)) {
+                    $poses[$sub_pos] = $pos_lookup[$sub_pos];
+                }
+            }
 		}
 		ksort($poses);
 		return $poses;

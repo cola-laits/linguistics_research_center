@@ -34,7 +34,6 @@ use App\Models\LexSource;
  * @property-read int|null $etymas_count
  * @property-read mixed $lang_abbr_entries_gloss
  * @property-read mixed $lang_abbr_gloss
- * @property-read mixed $reflex_lister
  * @property-read \App\Models\LexLanguage $language
  * @property-read Collection|\App\Models\LexReflexPartOfSpeech[] $parts_of_speech
  * @property-read int|null $parts_of_speech_count
@@ -201,66 +200,24 @@ class LexReflex extends Model {
     }
 
     public function etymaSemanticTags() {
-        $tags = collect();
-        foreach ($this->etymas as $etyma) {
-            $tags = $tags->merge($etyma->semantic_fields);
-        }
-        return $tags;
+        return $this->etymas->pluck('semantic_fields')->flatten();
     }
 
 	public function getDisplayPartsOfSpeech()
 	{
-		$string = "";
-		$i=0;
-		foreach($this->parts_of_speech as $pos){
-			$string .= $pos->text;
-			$i++;
-			if ($i != count($this->parts_of_speech)) {
-				$string .= '/';
-			}
-		}
-		return $string;
+        return $this->parts_of_speech->pluck('text')->join('/');
 	}
 
-	public function getDisplaySources()
-	{
-		$string = "";
-		$i=0;
-		foreach($this->sources as $source){
-			$string .= $source->code;
-			$i++;
-			if ($i != count($this->sources)) {
-				$string .= '/';
-			}
-		}
-		return $string;
-	}
-
-	public function getReflexListerAttribute()
-	{
-		$text = ($this->language()->first()->name) . ': ';
-		$ctr = 0;
-		foreach($this->entries as $entry) {
-			$ctr += 1;
-			if ($ctr > 1){
-				$text .= ', ';
-			}
-			$text .= strip_tags($entry['text']);
-		}
-		return $text;
-	}
+    public function getDisplaySources()
+    {
+        return $this->sources->pluck('code')->join('/');
+    }
 
     public function getEntriesCSV() {
-        $text = "";
-        $ctr = 0;
-        foreach($this->entries as $entry) {
-            $ctr += 1;
-            if ($ctr > 1){
-                $text .= ', ';
-            }
-            $text .= strip_tags($entry['text']);
-        }
-        return $text;
+        return collect($this->entries)
+            ->pluck('text')
+            ->map(fn($text) => strip_tags($text))
+            ->join(', ');
     }
 
     public function get_collatable_entries(array $alpha_weights): array
