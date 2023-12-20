@@ -1,7 +1,7 @@
 @extends('lexicon.layout-dict')
 
 @section('title')
-    {{__('lexicon.general.html_head_title', ['lexicon_name'=>$lexicon->name, 'page_title'=>$word->language->name."".$word->getEntriesCSV()])}}
+    {{__('lexicon.general.html_head_title', ['lexicon_name'=>$lexicon->name, 'page_title'=>$word->language->name.": ".$word->getEntriesCSV()])}}
 @endsection
 
 @section('page-title')
