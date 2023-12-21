@@ -1,5 +1,16 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\EieolGlossController;
+use App\Http\Controllers\EieolGlossedTextController;
+use App\Http\Controllers\EieolGlossedTextGlossController;
+use App\Http\Controllers\EieolGrammarController;
+use App\Http\Controllers\EieolHeadWordController;
+use App\Http\Controllers\EieolLessonController;
+use App\Http\Controllers\EieolSeriesController;
+use App\Http\Controllers\FilesController;
+use App\Http\Controllers\IssueCommentController;
+use App\Http\Controllers\IssueController;
 use App\Http\Controllers\PublicBookController;
 use App\Http\Controllers\PublicEieolController;
 use App\Http\Controllers\PublicIELexController;
@@ -75,11 +86,11 @@ Route::controller(PublicIELexController::class)->group(function() {
     Route::get('lex/semantic/field/{field_abbr}', 'lex_semantic_field');
 });
 
-Route::get('/admin', 'AdminController@index');
+Route::get('/admin', [AdminController::class, 'index']);
 
 Route::group(array('prefix'=> 'admin', 'middleware' => 'auth'), function() {
-    Route::resource('/issue', 'IssueController');
-    Route::resource('/issue_comment', 'IssueCommentController');
+    Route::resource('/issue', IssueController::class);
+    Route::resource('/issue_comment', IssueCommentController::class);
 });
 
 Route::group(array('prefix'=> 'admin2', 'middleware' => 'auth'), function() {
@@ -88,30 +99,31 @@ Route::group(array('prefix'=> 'admin2', 'middleware' => 'auth'), function() {
     });
 
     Route::get('admin_app', 'AdminController@app');
-    Route::resource('issues', 'IssueController');
+    Route::resource('issues', IssueController::class);
 
-    Route::get('/eieol_series', 'EieolSeriesController@index');
-    Route::get('/eieol_series/{id}/edit', 'EieolSeriesController@edit');
-    Route::put('/eieol_lesson/update_translation/{id}', 'EieolLessonController@update_translation');
-    Route::resource('/eieol_lesson', 'EieolLessonController');
-    Route::resource('/eieol_grammar', 'EieolGrammarController');
-    Route::resource('/eieol_glossed_text_gloss', 'EieolGlossedTextGlossController');
-    Route::post('/eieol_glossed_text_gloss/copy_gloss', 'EieolGlossedTextGlossController@postCopyGloss');
-    Route::resource('/eieol_glossed_text', 'EieolGlossedTextController');
-    Route::get('/eieol_gloss/filtered_list', 'AdminController@gloss_typeahead');
-    Route::resource('/eieol_gloss', 'EieolGlossController');
-    Route::get('/eieol_head_word/filtered_list', 'AdminController@headword_typeahead');
-    Route::resource('/eieol_head_word', 'EieolHeadWordController');
-    Route::get('/eieol_head_word_keyword/filtered_list', 'AdminController@headword_keyword_typeahead');
-    Route::get('/part_of_speech/filtered_list', 'AdminController@part_of_speech_typeahead');
-    Route::get('/eieol_analysis/filtered_list', 'AdminController@analysis_typeahead');
+    Route::get('/eieol_series', [EieolSeriesController::class, 'index']);
 
-    Route::post('/related_languages/attach_language', 'EieolSeriesController@attach_language');
-    Route::post('/related_languages/{series_id}/detach_language/{language_id}', 'EieolSeriesController@detach_language');
+    Route::get('/eieol_series/{id}/edit', [EieolSeriesController::class, 'edit']);
+    Route::put('/eieol_lesson/update_translation/{id}', [EieolLessonController::class, 'update_translation']);
+    Route::resource('/eieol_lesson', EieolLessonController::class);
+    Route::resource('/eieol_grammar', EieolGrammarController::class);
+    Route::resource('/eieol_glossed_text_gloss', EieolGlossedTextGlossController::class);
+    Route::post('/eieol_glossed_text_gloss/copy_gloss', [EieolGlossedTextGlossController::class, 'postCopyGloss']);
+    Route::resource('/eieol_glossed_text', EieolGlossedTextController::class);
+    Route::get('/eieol_gloss/filtered_list', [AdminController::class, 'gloss_typeahead']);
+    Route::resource('/eieol_gloss', EieolGlossController::class);
+    Route::get('/eieol_head_word/filtered_list', [AdminController::class, 'headword_typeahead']);
+    Route::resource('/eieol_head_word', EieolHeadWordController::class);
+    Route::get('/eieol_head_word_keyword/filtered_list', [AdminController::class, 'headword_keyword_typeahead']);
+    Route::get('/part_of_speech/filtered_list', [AdminController::class, 'part_of_speech_typeahead']);
+    Route::get('/eieol_analysis/filtered_list', [AdminController::class, 'analysis_typeahead']);
 
-    Route::post('/files/upload', 'FilesController@post_file');
+    Route::post('/related_languages/attach_language', [EieolSeriesController::class, 'attach_language']);
+    Route::post('/related_languages/{series_id}/detach_language/{language_id}', [EieolSeriesController::class, 'detach_language']);
+
+    Route::post('/files/upload', [FilesController::class, 'post_file']);
 });
 
 Auth::routes(['register' => false]);
 
-Route::get('/home', 'AdminController@index')->name('home');
+Route::get('/home', [AdminController::class,'index'])->name('home');
