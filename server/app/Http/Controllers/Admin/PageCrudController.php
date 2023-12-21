@@ -66,7 +66,9 @@ class PageCrudController extends CrudController
         CRUD::setValidation(PageRequest::class);
         CRUD::setRequiredFields(PageRequest::class);
 
-        CRUD::field('slug')->type('text');
+        CRUD::field('slug')->type('text')
+            ->hint("<b>Hardcoded pages:</b> index, books, guides/eieol_author, guides/eieol_user, guides/lex_user, lex, eieol.<br>"
+                   . "<b>Dynamic pages:</b> lexicon/{lexicon_slug}/page/{page_slug} <i>(e.g. lexicon/ielex/page/about_pokorny)</i>");
         CRUD::field('name')->type('text');
         CRUD::field('content')->type('tinymce')->options($this->getDefaultTinyMceOptions());
 
