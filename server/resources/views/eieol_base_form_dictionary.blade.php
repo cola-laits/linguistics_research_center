@@ -26,16 +26,17 @@ curious about Indo-European etymology. Notice of potential error is always welco
 
 
 <div class="skinny" id="no_bullets">
-@foreach ($head_words as $head_word)
-    <span style='white-space: nowrap' lang='{{$head_word['data']->language->lang_attribute}}'> {{$head_word['data']->word}} </span> {!! $head_word['data']->definition !!}
+@foreach ($head_words as $head_word_info)
+    @php $head_word = $head_word_info['model']; @endphp
+    <span style='white-space: nowrap' lang='{{$head_word->language->lang_attribute}}'> {{$head_word->word}} </span> {!! $head_word->definition !!}
     --
-    @if($head_word['etyma'] != null)
-        [<a href="/lex/master/#P{{$head_word['etyma']['id']}}">Pokorny</a>
-        <span class='Unicode' lang='ine'>{!! $head_word['etyma']['entry'] !!} </span> <strong>::</strong> {!! $head_word['etyma']['gloss'] !!}] &nbsp; --
+    @if($head_word->etyma != null)
+        [<a href="/lex/master/#P{{$head_word->etyma->id}}">Pokorny</a>
+        <span class='Unicode' lang='ine'>{!! $head_word->etyma->entry !!} </span> <strong>::</strong> {!! $head_word->etyma->gloss !!}] &nbsp; --
     @endif
 
     <ul>
-        @foreach ($head_word['glossed_text_gloss_ids'] as $id => $lesson)
+        @foreach ($head_word_info['glossed_text_gloss_ids'] as $id => $lesson)
             <li>
                 <a href='/eieol/{{$series->slug}}/{{$lesson->order}}#glossed_text_gloss_{{$id}}'>{!! $lesson->title !!}</a>
             </li>

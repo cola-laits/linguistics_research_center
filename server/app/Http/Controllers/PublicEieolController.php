@@ -176,11 +176,8 @@ class PublicEieolController extends Controller
         //loop through all the lessons, glossed texts and glosses to group like head words
 
         foreach ($lessons as $lesson) {
-
             foreach ($lesson->glossed_texts as $glossed_text) {
-
                 foreach ($glossed_text->glosses as $gloss) {
-
                     foreach ($gloss->elements as $element) {
                         //unique key is head word plus definition
 
@@ -192,33 +189,25 @@ class PublicEieolController extends Controller
 
 
                         if (!array_key_exists($key, $head_words)) {
-
-                            $head_words[$key] = $element->head_word->toArray();
-
-                            $head_words[$key]['data'] = $element->head_word;
-
-                            $head_words[$key]['glossed_text_gloss_ids'] = array();
-
-                            $head_words[$key]['glossed_text_gloss_ids'][$gloss->id] = $lesson;
-
                             //build sort key
                             //remove first character, because it's a '<
                             $sort_key = mb_substr($element->head_word->word, 1, Null, 'UTF-8');
                             //remove any tags like sup or sub
                             $sort_key = strip_tags($sort_key);
-                            $head_words[$key]['sortable_key'] = \Normalizer::normalize($sort_key, \Normalizer::FORM_D);
-                        } else {
+                            $sort_key = \Normalizer::normalize($sort_key, \Normalizer::FORM_D);
 
-                            $head_words[$key]['glossed_text_gloss_ids'][$gloss->id] = $lesson;
-
+                            $head_words[$key] = [
+                                'model' => $element->head_word,
+                                'glossed_text_gloss_ids' => [],
+                                'sortable_key' => $sort_key,
+                            ];
                         }
 
+                        $head_words[$key]['glossed_text_gloss_ids'][$gloss->id] = $lesson;
+
                     }
-
                 }
-
             }
-
         }
 
         $sorter = new AlphabetSorter($language->substitutions, $language->custom_sort);
