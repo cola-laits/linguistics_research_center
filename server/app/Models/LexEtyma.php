@@ -95,16 +95,6 @@ class LexEtyma extends Model {
         return $this->hasMany(LexEtymaExtraData::class, 'etyma_id');
     }
 
-    public function getReflexesLangNameEntriesGloss() {
-        $text = $this->reflexes->map(function($reflex) {
-            return $reflex->langNameEntriesGloss;
-        })->implode(', ');
-        if (strlen($text) > 30) {
-            $text = substr($text, 0, 30) . '...';
-        }
-        return $text;
-    }
-
     public function getSources()
     {
         return $this->reflexes->pluck('sources')

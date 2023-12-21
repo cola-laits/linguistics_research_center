@@ -43,12 +43,27 @@ class Lex_etymaCrudController extends CrudController
     protected function setupListOperation()
     {
         CRUD::removeButton('show');
+        CRUD::enableDetailsRow();
+        CRUD::setDetailsRowView('vendor.backpack.lrc.lex_etyma_details_row');
 
         CRUD::column('lexicon_id')->type('select')->attribute('name');
         CRUD::column('entry')->label('Etyma')->type('text');
         CRUD::column('gloss')->type('text');
-        CRUD::column('reflexes_display')->label('Reflexes')->type('model_function')
+        CRUD::column('reflexes_display')->label('Reflexes')
+            ->type('text')
+            ->value(function($entry) {
+                $text = $entry->reflexes
+                    ->pluck('langNameEntriesGloss')
+                    ->implode(', ');
+                if (strlen($text) > 30) {
+                    $text = substr($text, 0, 30) . '...';
+                }
+                return $text;
+            });
+            /*
+            ->type('model_function')
             ->function_name('getReflexesLangNameEntriesGloss');
+            */
 
         CRUD::filter('lexicon_id')
             ->type('dropdown')

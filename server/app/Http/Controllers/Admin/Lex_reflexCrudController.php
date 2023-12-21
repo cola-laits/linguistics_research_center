@@ -46,6 +46,8 @@ class Lex_reflexCrudController extends CrudController
     protected function setupListOperation()
     {
         CRUD::removeButton('show');
+        CRUD::enableDetailsRow();
+        CRUD::setDetailsRowView('vendor.backpack.lrc.lex_reflex_details_row');
 
         //CRUD::setFromDb(); // columns
         CRUD::column('entries')->label('Reflexes')->type('model_function')->function_name('getEntriesCSV')
