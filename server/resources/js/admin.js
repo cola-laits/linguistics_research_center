@@ -3,13 +3,9 @@ import Vue from 'vue';
 window.Vue = Vue;
 window.axios = require('axios').default;
 
-import { BModal, VBModal, BButton, VBToggle, BCollapse, BFormSelect } from 'bootstrap-vue'
+import { BModal, VBModal } from 'bootstrap-vue'
 Vue.component('b-modal', BModal);
-Vue.component('b-button', BButton);
-Vue.component('b-collapse', BCollapse);
-Vue.component('b-form-select', BFormSelect);
 Vue.directive('b-modal', VBModal);
-Vue.directive('b-toggle', VBToggle);
 
 
 import VueBootstrapAutocomplete from '@vue-bootstrap-components/vue-bootstrap-autocomplete'

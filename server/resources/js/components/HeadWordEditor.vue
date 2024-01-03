@@ -52,12 +52,12 @@
 
                 <div class='form-group'>
                     <label for="etyma_id">Etyma</label>
-                    <b-form-select id="etyma_id" name="etyma_id"
+                    <select id="etyma_id" name="etyma_id" class="form-control"
                                    v-model="headword.etyma_id"
-                                   :options="etymas"
                     >
                         <option :value="null">Select an etymon</option>
-                    </b-form-select>
+                        <option v-for="(etyma, etyma_id) in etymas" :value="etyma_id">{{etyma}}</option>
+                    </select>
                     <div class="alert-danger errors">{{get_error_message_html('etyma_id')}}</div>
                 </div>
 

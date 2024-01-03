@@ -180,18 +180,18 @@
                 <div class="row">
                     <div class='col-sm-2'></div>
                     <div class="col-sm-5">
-                        <b-button size="sm" variant="secondary"
-                                  v-b-toggle="'glosses-'+glossed_text.id"
-                                  v-if="glossed_text.id !== ''">Toggle Glosses</b-button>
+                        <button class="btn btn-sm btn-secondary"
+                                @click="toggled_gloss_id===null ? toggled_gloss_id=glossed_text.id : toggled_gloss_id=null"
+                                v-if="glossed_text.id !== ''">Toggle Glosses</button>
                     </div>
                     <div class="col-sm-5">
-                        <b-button size="sm" variant="secondary"
-                                  v-b-toggle="'glossmapper-'+glossed_text.id"
-                                  v-if="glossed_text.id !== ''">Customize Gloss Mapping</b-button>
+                        <button class="btn btn-sm btn-secondary"
+                                @click="toggled_glossmapper_id===null ? toggled_glossmapper_id=glossed_text.id : toggled_glossmapper_id=null"
+                                v-if="glossed_text.id !== ''">Customize Gloss Mapping</button>
                     </div>
                 </div>
 
-                <b-collapse :id="'glossmapper-'+glossed_text.id">
+                <div v-if="toggled_glossmapper_id===glossed_text.id" :id="'glossmapper-'+glossed_text.id">
                     <div>By default, we try to do a simple word-for-word match to find the glosses in this text.  For texts where that doesn't work for some reason, you can override that manually.  For each gloss, click the characters matching it in the glossed text to highlight them.  Then 'Save' the glossed text.</div>
                     <div v-for="gloss in glossed_text.glosses">
                         Gloss #{{gloss.order}}: {{gloss.surface_form}}<br>
@@ -208,10 +208,9 @@
                             </table>
                         </div>
                     </div>
-                </b-collapse>
+                </div>
 
-                <b-collapse :id="'glosses-'+glossed_text.id">
-
+                <div v-if="toggled_gloss_id===glossed_text.id" :id="'glosses-'+glossed_text.id">
                     <p></p>
                     <div id="'glossed_text_'+glossed_text.id+'_glosses'">
                         <div v-for="(gloss, gloss_ix) in glossed_text.glosses">
@@ -286,7 +285,7 @@
                         </div>
                     </div>
 
-                </b-collapse>
+                </div>
 
                 <hr/>
             </div>
@@ -490,6 +489,8 @@ import Vue from 'vue';
             'gloss_for_edit': {},
             'error_messages': {},
             'combining_character_regex': /\p{Mn}/gu,
+            'toggled_gloss_id': null,
+            'toggled_glossmapper_id': null,
         };},
         computed: {
             lesson_text: function() {
