@@ -3,7 +3,7 @@
         <a class="btn btn-sm" :class="button_class"
            :href="'/admin2/issues?pointer='+issue_pointer"
         >
-            Issues <span class="badge badge-light">{{issue_count}}</span>
+            Issues <span class="badge bg-secondary">{{issue_count}}</span>
         </a>
         <a class="btn btn-sm btn-outline-secondary"
             :href="'/admin2/issues/create?pointer='+issue_pointer"
@@ -25,13 +25,10 @@
             },
             button_class() {
                 if (this.issue_count>0) {
-                    return 'btn-warning';
+                    return 'bg-warning';
                 }
-                return 'btn-secondary';
+                return 'bg-secondary';
             }
         },
-        mounted() {
-
-        }
     }
 </script>

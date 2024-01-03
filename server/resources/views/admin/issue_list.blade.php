@@ -55,7 +55,7 @@
                     <div class="card-header">
                         <h5>
                     <span
-                        @class(['badge', 'badge-success'=>($issue->status==='open'), 'badge-danger'=>($issue->status!=='open')])
+                        @class(['badge', 'bg-success'=>($issue->status==='open'), 'bg-danger'=>($issue->status!=='open')])
                     >{{$issue->status}}</span>
                             #{{$issue->id}}:
                             {{$issue->name}}

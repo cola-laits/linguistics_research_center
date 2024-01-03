@@ -1,6 +1,7 @@
 <template>
     <div>
     <b-modal ref="attach_gloss_modal" :title="is_new_gloss ? 'Attach Gloss' : 'Edit Gloss'" size="xxl" hide-footer>
+        <template v-slot:body>
         <div v-if="is_new_gloss">
             <div class='col-lg-12'>
                 <label for="gloss_search_input">Search Gloss</label>
@@ -45,7 +46,7 @@
               class="form">
 
             <div class='row'>
-                <div class='form-group col-sm-2'>
+                <div class='col-sm-2'>
                     <label>Surface Form</label>
                     <input-custom-keyboard placeholder="Surface Form"
                                            id="surface_form"
@@ -56,7 +57,7 @@
                     <div id ="surface_form_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['surface_form']">{{error}}</div></div>
                 </div>
 
-                <div class='form-group col-sm-2'>
+                <div class='col-sm-2'>
                     <label>Part Of Speech</label>
                     <input-typeahead-ajax
                         placeholder="Part Of Speech"
@@ -66,7 +67,7 @@
                     <div id ="element_1_part_of_speech_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_1_part_of_speech']">{{error}}</div></div>
                 </div>
 
-                <div class='form-group col-sm-3'>
+                <div class='col-sm-3'>
                     <label>Analysis</label>
                     <input-typeahead-ajax
                         placeholder="Analysis"
@@ -76,7 +77,7 @@
                     <div id ="element_1_analysis_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_1_analysis']">{{error}}</div></div>
                 </div>
 
-                <div class='form-group col-sm-2'>
+                <div class='col-sm-2'>
                     <label>Head Word</label><br>
                     <div id="element_1_head_word_display" v-if="gloss.elements && gloss.elements[0]">
                         <span style='white-space: nowrap' :lang='lesson_lang_attribute'>{{gloss.elements[0].head_word.word}}</span>
@@ -91,14 +92,14 @@
                     <div id ="element_1_head_word_id_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_1_head_word_id']">{{error}}</div></div>
                 </div>
 
-                <div class='form-group col-sm-2'>
+                <div class='col-sm-2'>
                     <label for="contextual_gloss">Contextual Gloss</label>
                     <input placeholder="Contextual Gloss" class="form-control" id="contextual_gloss" name="contextual_gloss" type="text"
                            v-model="gloss.contextual_gloss">
                     <div id ="contextual_gloss_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['contextual_gloss']">{{error}}</div></div>
                 </div>
 
-                <div class='form-group col-sm-1 bottom_button'>
+                <div class='col-sm-1 bottom_button'>
                     <input class="btn btn-sm btn-success" type="button" value="Save"
                            @click="new_gloss_form_submit()">
                 </div>
@@ -111,9 +112,9 @@
             </div>
 
             <div class='row' v-if="isAttachGlossElementOpen(2)">
-                <div class='form-group col-sm-2'></div>
+                <div class='col-sm-2'></div>
 
-                <div class='form-group col-sm-2'>
+                <div class='col-sm-2'>
                     <label>Part Of Speech</label>
                     <input-typeahead-ajax
                         placeholder="Part Of Speech"
@@ -123,7 +124,7 @@
                     <div id="element_2_part_of_speech_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_2_part_of_speech']">{{error}}</div></div>
                 </div>
 
-                <div class='form-group col-sm-3'>
+                <div class='col-sm-3'>
                     <label>Analysis</label>
                     <input-typeahead-ajax
                         placeholder="Analysis"
@@ -133,7 +134,7 @@
                     <div id="element_2_analysis_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_2_analysis']">{{error}}</div></div>
                 </div>
 
-                <div class='form-group col-sm-2'>
+                <div class='col-sm-2'>
                     <label>Head Word</label><br>
                     <div id="element_2_head_word_display" v-if="gloss.elements && gloss.elements[1]">
                         <span style='white-space: nowrap' :lang='lesson_lang_attribute'>{{gloss.elements[1].head_word.word}}</span>
@@ -156,9 +157,9 @@
             </div>
 
             <div class='row' v-if="isAttachGlossElementOpen(3)">
-                <div class='form-group col-sm-2'></div>
+                <div class='col-sm-2'></div>
 
-                <div class='form-group col-sm-2'>
+                <div class='col-sm-2'>
                     <label>Part Of Speech</label>
                     <input-typeahead-ajax
                         placeholder="Part Of Speech"
@@ -168,7 +169,7 @@
                     <div id="element_3_part_of_speech_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_3_part_of_speech']">{{error}}</div></div>
                 </div>
 
-                <div class='form-group col-sm-3'>
+                <div class='col-sm-3'>
                     <label>Analysis</label>
                     <input-typeahead-ajax
                         placeholder="Analysis"
@@ -178,7 +179,7 @@
                     <div id="element_3_analysis_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_3_analysis']">{{error}}</div></div>
                 </div>
 
-                <div class='form-group col-sm-2'>
+                <div class='col-sm-2'>
                     <label>Head Word</label><br>
                     <div id="element_3_head_word_display" v-if="gloss.elements && gloss.elements[2]">
                         <span style='white-space: nowrap' :lang='lesson_lang_attribute'>{{gloss.elements[2].head_word.word}}</span>
@@ -201,9 +202,9 @@
             </div>
 
             <div class='row' v-if="isAttachGlossElementOpen(4)">
-                <div class='form-group col-sm-2'></div>
+                <div class='col-sm-2'></div>
 
-                <div class='form-group col-sm-2'>
+                <div class='col-sm-2'>
                     <label>Part Of Speech</label>
                     <input-typeahead-ajax
                         placeholder="Part Of Speech"
@@ -213,7 +214,7 @@
                     <div id="element_4_part_of_speech_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_4_part_of_speech']">{{error}}</div></div>
                 </div>
 
-                <div class='form-group col-sm-3'>
+                <div class='col-sm-3'>
                     <label>Analysis</label>
                     <input-typeahead-ajax
                         placeholder="Analysis"
@@ -223,7 +224,7 @@
                     <div id="element_4_analysis_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_4_analysis']">{{error}}</div></div>
                 </div>
 
-                <div class='form-group col-sm-2'>
+                <div class='col-sm-2'>
                     <label>Head Word</label><br>
                     <div id="element_4_head_word_display" v-if="gloss.elements && gloss.elements[3]">
                         <span style='white-space: nowrap' :lang='lesson_lang_attribute'>{{gloss.elements[3].head_word.word}}</span>
@@ -246,9 +247,9 @@
             </div>
 
             <div class='row' v-if="isAttachGlossElementOpen(5)">
-                <div class='form-group col-sm-2'></div>
+                <div class='col-sm-2'></div>
 
-                <div class='form-group col-sm-2'>
+                <div class='col-sm-2'>
                     <label>Part Of Speech</label>
                     <input-typeahead-ajax
                         placeholder="Part Of Speech"
@@ -258,7 +259,7 @@
                     <div id="element_5_part_of_speech_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_5_part_of_speech']">{{error}}</div></div>
                 </div>
 
-                <div class='form-group col-sm-3'>
+                <div class='col-sm-3'>
                     <label>Analysis</label>
                     <input-typeahead-ajax
                         placeholder="Analysis"
@@ -268,7 +269,7 @@
                     <div id="element_5_analysis_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_5_analysis']">{{error}}</div></div>
                 </div>
 
-                <div class='form-group col-sm-2'>
+                <div class='col-sm-2'>
                     <label>Head Word</label><br>
                     <div id="element_5_head_word_display" v-if="gloss.elements && gloss.elements[4]">
                         <span style='white-space: nowrap' :lang='lesson_lang_attribute'>{{gloss.elements[4].head_word.word}}</span>
@@ -291,9 +292,9 @@
             </div>
 
             <div class='row' v-if="isAttachGlossElementOpen(6)">
-                <div class='form-group col-sm-2'></div>
+                <div class='col-sm-2'></div>
 
-                <div class='form-group col-sm-2'>
+                <div class='col-sm-2'>
                     <label>Part Of Speech</label>
                     <input-typeahead-ajax
                         placeholder="Part Of Speech"
@@ -303,7 +304,7 @@
                     <div id="element_6_part_of_speech_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_6_part_of_speech']">{{error}}</div></div>
                 </div>
 
-                <div class='form-group col-sm-3'>
+                <div class='col-sm-3'>
                     <label>Analysis</label>
                     <input-typeahead-ajax
                         placeholder="Analysis"
@@ -313,7 +314,7 @@
                     <div id="element_6_analysis_error" class="alert-danger errors"><div v-for="error in modal_attached_gloss_errors['element_6_analysis']">{{error}}</div></div>
                 </div>
 
-                <div class='form-group col-sm-2'>
+                <div class='col-sm-2'>
                     <label>Head Word</label><br>
                     <div id="element_6_head_word_display" v-if="gloss.elements && gloss.elements[5]">
                         <span style='white-space: nowrap' :lang='lesson_lang_attribute'>{{gloss.elements[5].head_word.word}}</span>
@@ -330,7 +331,7 @@
             </div>
 
             <div class='row'>
-                <div class='form-group col-sm-12'>
+                <div class='col-sm-12'>
                     <label for="comments">Comments</label>
                     <input-custom-keyboard placeholder="Comments"
                                            id="comments"
@@ -343,7 +344,7 @@
             </div>
 
             <div class='row'>
-                <div class='form-group col-sm-12'>
+                <div class='col-sm-12'>
                     <label for="underlying_form">Underlying Form</label>
                     <input-custom-keyboard placeholder="Underlying Form"
                                            id="underlying_form"
@@ -356,6 +357,7 @@
             </div>
 
         </form>
+        </template>
     </b-modal>
 
         <head-word-editor ref="head-word-editor"
@@ -369,16 +371,17 @@
 </template>
 
 <script>
-import CommentIcon from './CommentIcon'
-import HeadWordEditor from './HeadWordEditor'
-import InputCustomKeyboard from './InputCustomKeyboard'
-import InputTypeaheadAjax from './InputTypeaheadAjax'
+import HeadWordEditor from './HeadWordEditor.vue'
+import InputCustomKeyboard from './InputCustomKeyboard.vue'
+import InputTypeaheadAjax from './InputTypeaheadAjax.vue'
+import Modal from './Modal.vue'
 
     export default {
         components: {
             'head-word-editor': HeadWordEditor,
             'input-custom-keyboard': InputCustomKeyboard,
             'input-typeahead-ajax': InputTypeaheadAjax,
+            'b-modal': Modal,
         },
         props: ['gloss',
             'lesson_lang_attribute',
@@ -493,13 +496,13 @@ import InputTypeaheadAjax from './InputTypeaheadAjax'
             },
             headword_selected(evt) {
                 if (!this.gloss.elements) {
-                    this.$set(this.gloss,'elements',[]);
+                    this.gloss['elements'] = [];
                 }
                 if (!this.gloss.elements[this.element_index_for_headword_edit]) {
                     this.gloss.elements.splice(this.element_index_for_headword_edit, 1, {});
                 }
-                this.$set(this.gloss.elements[this.element_index_for_headword_edit], 'head_word', evt);
-                this.$set(this.gloss.elements[this.element_index_for_headword_edit], 'head_word_id', evt.id);
+                this.gloss.elements[this.element_index_for_headword_edit]['head_word'] = evt;
+                this.gloss.elements[this.element_index_for_headword_edit]['head_word_id'] = evt.id;
                 if (this.element_index_for_headword_edit===0) {
                     this.gloss.element_1_head_word_id = evt.id;
                 }

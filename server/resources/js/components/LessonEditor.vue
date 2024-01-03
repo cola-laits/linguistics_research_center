@@ -7,30 +7,36 @@
 
     <!-- ---------------------------------------------------------------------------------------- -->
 
-    <b-modal ref="flash_modal" :title="modal_flash_title" :ok-only="true" size="md"><div v-html="modal_flash_body"></div></b-modal>
+    <b-modal ref="flash_modal" :title="modal_flash_title" :ok-only="true" size="md"><template v-slot:body><div v-html="modal_flash_body"></div></template></b-modal>
 
     <b-modal ref="delete_grammar_confirm" title="Delete Confirmation" @ok="delete_grammar_after_confirmation(delete_grammar_confirm_grammar_id)">
+        <template v-slot:body>
         Are you sure you want to delete this Grammar lesson? <br/><br/>
         <div class="alert alert-warning">
             This action can not be undone later. The contents of this grammar will be deleted.
         </div>
+        </template>
     </b-modal>
 
     <b-modal ref="delete_glossed_text_confirm" title="Delete Confirmation" @ok="delete_glossed_text_after_confirmation(delete_glossed_text_confirm_glossed_text_id)">
+        <template v-slot:body>
         Are you sure you want to delete this Glossed Text? <br/><br/>
         <div class="alert alert-warning">
             This action can not be undone later. The contents of this glossed text will be deleted.<br/>
             All attached glosses will be unattached, though they will still be on file.
         </div>
+        </template>
     </b-modal>
 
     <b-modal ref="delete_glossed_text_gloss_confirm" title="Delete Confirmation" @ok="delete_glossed_text_gloss_after_confirmation(delete_glossed_text_gloss_confirm_glossed_text_gloss_id)">
+        <template v-slot:body>
         Are you sure you want to remove this gloss? <br/><br/>
         <div class="alert alert-warning">
             This action can not be undone later. The contents of this gloss will be unattached from this
             glossed text.<br/><br/>
             The gloss will still be on file.
         </div>
+        </template>
     </b-modal>
 
     <gloss-editor ref="gloss_editor"
@@ -59,10 +65,10 @@
 
             <input name="series_id" type="hidden" :value="lesson.series_id">
 
-            <div class='form-row'>
-                <div class='col-sm-1'></div>
+            <div class='row g-3'>
+                <div class='col-1'></div>
 
-                <div class='form-group col-sm-1 '>
+                <div class='mb-3 col-1'>
                     <label for="order">Order</label>
                     <input placeholder="Order" class="form-control" name="order" type="text"
                            v-model="lesson.order"
@@ -72,7 +78,7 @@
                     <div id="order_error" class="alert-danger errors">{{get_error_message_html('order')}}</div>
                 </div>
 
-                <div class='form-group col-sm-3'>
+                <div class='mb-3 col-3'>
                     <label>Title</label>
                     <input-custom-keyboard placeholder="Title"
                                            name="title"
@@ -84,19 +90,19 @@
                     <div id="title_error" class="alert-danger errors"></div>
                 </div>
 
-                <div class='form-group col-sm-2'>
+                <div class='mb-3 col-2'>
                     <label for="language">Language</label><br/>
                     <input type="text" disabled id="language" class="form-control" :value="lesson.language.language"/>
                 </div>
 
-                <div class='form-group col-sm-2'>
+                <div class='mb-3 col-2'>
                     <comment-icon :issue_pointer="'/lesson/'+lesson.id+'/intro_text'" :issues="init_issues"></comment-icon>
                 </div>
 
             </div>
 
             <div class='row'>
-                <div class='form-group col-sm-10 offset-1'>
+                <div class='col-sm-10 offset-1'>
                     <label>Intro Text</label>
                     <ck-editor html_id="intro_text"
                                html_name="intro_text"
@@ -106,9 +112,9 @@
                     ></ck-editor>
                     <div id="intro_text_error" class="alert-danger errors"></div>
                     <input class="btn btn-sm btn-primary" type="submit" value="Save">
-                    <button type="button" class="btn btn-sm btn-secondary" v-b-modal.intro_text_preview>Preview</button>
-                    <b-modal id="intro_text_preview" title="Intro Text"  :ok-only="true"
-                             size="xl"><div v-html="lesson.intro_text"></div></b-modal>
+                    <button type="button" class="btn btn-sm btn-secondary" @click="this.$refs['intro_text_preview'].show()">Preview</button>
+                    <b-modal id="intro_text_preview" title="Intro Text" ref="intro_text_preview" :ok-only="true"
+                             size="xl"><template v-slot:body><div v-html="lesson.intro_text"></div></template></b-modal>
                 </div>
             </div>
 
@@ -127,12 +133,13 @@
                       accept-charset="UTF-8"
                       class="form glossed_text_form"
                       @submit.prevent="save_glossed_text(glossed_text)"
-                      :dirty="isFormDirty(glossed_text)">
+                      :dirty="isFormDirty(glossed_text)"
+                >
 
                     <div class='row'>
                         <div class='col-sm-1'></div>
 
-                        <div class='form-group col-sm-1 '>
+                        <div class='col-sm-1 '>
                             <label for="order">Order</label>
                             <input placeholder="Order" class="form-control" name="order" type="text"
                                    @input="markFormDirty(glossed_text)"
@@ -140,7 +147,7 @@
                             <div class="alert-danger errors">{{get_error_message_html('glossed_text_'+glossed_text.id+'_order')}}</div>
                         </div>
 
-                        <div class='form-group col-sm-7'>
+                        <div class='col-sm-7'>
                             <label>Glossed Text</label>
                             <textarea-custom-keyboard placeholder="Glossed Text"
                                                       name="glossed_text"
@@ -151,7 +158,7 @@
                             <div class="alert-danger errors">{{get_error_message_html('glossed_text_'+glossed_text.id+'_glossed_text')}}</div>
                         </div>
 
-                        <div class='form-group col-sm-1 comment_button'>
+                        <div class='col-sm-1 comment_button'>
                             <audio-icon v-model="glossed_text.audio_url"
                                         :id="'glossed-text-audio-'+glossed_text.id"
                                         :lang="lesson.language.lang_attribute"
@@ -163,11 +170,11 @@
                             <comment-icon :issue_pointer="'/lesson/'+lesson.id+'/glossed_text/'+glossed_text.id" :issues="init_issues"></comment-icon>
                         </div>
 
-                        <div class='form-group col-sm-1 bottom_button'>
+                        <div class='col-sm-1 bottom_button'>
                             <input class="btn btn-sm btn-primary" type="submit" value="Save">
                         </div>
 
-                        <div class='form-group col-sm-1 bottom_button'>
+                        <div class='col-sm-1 bottom_button'>
                             <button class="btn btn-sm btn-danger delete_glossed_text" type="button"
                                     @click="delete_glossed_text(glossed_text.id)"
                                     v-if="glossed_text.id !== ''">Delete</button>
@@ -217,28 +224,30 @@
                             <a :name="'gloss/'+gloss.id"></a>
 
                             <div class='row'>
-                                <div class='col-sm-2'></div>
+                                <div class='col-2'></div>
 
-                                <form method="POST"
-                                      accept-charset="UTF-8"
-                                      class="form"
-                                      @submit.prevent="save_gloss_order(gloss)"
-                                      :dirty="isFormDirty(gloss)">
-                                    <div class='form-group col-sm-1 '>
 
+                                    <div class='col-1'>
+                                        <form method="POST"
+                                              accept-charset="UTF-8"
+                                              class="form"
+                                              @submit.prevent="save_gloss_order(gloss)"
+                                              :dirty="isFormDirty(gloss)"
+                                        >
                                         <label for="order">Order</label>
                                         <div class="row">
                                             <input placeholder="Order" name="order" type="text"
                                                    @input="markFormDirty(gloss)"
-                                                   v-model="gloss.order">
+                                                   v-model="gloss.order" class="form-control">
                                             <input type="submit" value="Save Order" class="btn btn-sm btn-primary">
                                         </div>
                                         <div class="alert-danger errors">{{get_error_message_html('gloss_'+gloss.id+'_order')}}</div>
+                                        </form>
                                     </div>
 
-                                </form>
 
-                                <div class='col-sm-4'>
+
+                                <div class='col-4'>
                                     <br>
                                     <span :lang="gloss.language.lang_attribute">{{gloss.surface_form}}</span>
                                     <span style="white-space: nowrap">--</span>
@@ -255,11 +264,11 @@
                                     </span>
                                 </div>
 
-                                <div class='col-sm-1 bottom_button gloss_comment_indicator'>
+                                <div class='col-1 bottom_button gloss_comment_indicator'>
                                     <comment-icon :issue_pointer="'/lesson/'+lesson.id+'/gloss/'+gloss.id" :issues="init_issues"></comment-icon>
                                 </div>
 
-                                <div class='col-sm-1 bottom_button'>
+                                <div class='col-1 bottom_button'>
                                     <form class="edit_gloss" :id="'edit_gloss_form_' + gloss.id">
                                         <input type="hidden" name="gloss_id" :value="gloss.id">
                                         <input type="button" value="Edit Gloss" class="btn btn-sm btn-primary"
@@ -267,7 +276,7 @@
                                     </form>
                                 </div>
 
-                                <div class='form-group col-sm-1 bottom_button'>
+                                <div class='col-1 bottom_button'>
                                     <input type="button" value="Remove" class="btn btn-sm btn-danger"
                                            @click="delete_glossed_text_gloss(gloss.id)">
                                 </div>
@@ -278,8 +287,8 @@
 
                     <!-- this will open a modal to attach a gloss to the glossed text -->
                     <div class='row'>
-                        <div class='col-sm-2'></div>
-                        <div class='form-group col-sm-1 '>
+                        <div class='col-2'></div>
+                        <div class='col-1 '>
                             <input class="btn btn-sm btn-success" type="button" value="Attach Gloss"
                                    @click="open_attach_gloss_modal(glossed_text.id)">
                         </div>
@@ -323,11 +332,12 @@
               class="form"
               id="update_translation_form"
               @submit.prevent="save_lesson_translation()"
-              :dirty="isFormDirty('update_translation_form')">
+              :dirty="isFormDirty('update_translation_form')"
+        >
             <input name="_method" type="hidden" value="PUT">
 
             <div class='row'>
-                <div class='form-group col-sm-10 offset-1'>
+                <div class='col-sm-10 offset-1'>
                     <label>Lesson Translation</label>
                     <ck-editor html_id="lesson_translation"
                                html_name="lesson_translation"
@@ -337,17 +347,17 @@
                     ></ck-editor>
                     <div id="lesson_translation_error" class="alert-danger errors"></div>
                 </div>
-                <div class='form-group col-sm-1'>
+                <div class='col-sm-1'>
                     <comment-icon :issue_pointer="'/lesson/'+lesson.id+'/lesson_translation'" :issues="init_issues"></comment-icon>
                 </div>
             </div>
 
             <div class='row'>
-                <div class='form-group col-sm-2 offset-1'>
+                <div class='col-sm-2 offset-1'>
                     <input class="btn btn-sm btn-primary" type="submit" value="Save Translation">
-                    <button type="button" class="btn btn-sm btn-secondary" v-b-modal.lesson_translation_preview>Preview</button>
-                    <b-modal id="lesson_translation_preview" title="Lesson Translation" :ok-only="true"
-                             size="xl"><div v-html="lesson.lesson_translation"></div></b-modal>
+                    <button type="button" class="btn btn-sm btn-secondary" @click="this.$refs['lesson_translation_preview'].show()">Preview</button>
+                    <b-modal id="lesson_translation_preview" title="Lesson Translation" ref="lesson_translation_preview" :ok-only="true"
+                             size="xl"><template v-slot:body><div v-html="lesson.lesson_translation"></div></template></b-modal>
                 </div>
             </div>
 
@@ -368,13 +378,14 @@
                       @submit.prevent="save_grammar(grammar)"
                       :dirty="isFormDirty(grammar)"
                 >
+
                     <input name="_method" type="hidden" value="PUT" v-if="grammar.id !== ''">
                     <input name="lesson_id" type="hidden" :value="lesson.id">
 
                     <div class='row'>
                         <div class='col-sm-1'></div>
 
-                        <div class='form-group col-sm-1 '>
+                        <div class='col-1'>
                             <label for="order">Order</label>
                             <input placeholder="Order" class="form-control" id="order" name="order" type="text"
                                    v-model="grammar.order"
@@ -383,7 +394,7 @@
                             <div class="alert-danger errors">{{get_error_message_html('grammar_'+grammar.id+'_order')}}</div>
                         </div>
 
-                        <div class='form-group col-sm-1 '>
+                        <div class='col-2'>
                             <label for="section_number">Section Number</label>
                             <input placeholder="Section Number" class="form-control" name="section_number" type="text" id="section_number"
                                    v-model="grammar.section_number"
@@ -392,7 +403,7 @@
                             <div class="alert-danger errors">{{get_error_message_html('grammar_'+grammar.id+'_section_number')}}</div>
                         </div>
 
-                        <div class='form-group col-sm-3'>
+                        <div class='col-3'>
                             <label>Title</label>
                             <input-custom-keyboard placeholder="Title"
                                                    name="title"
@@ -403,14 +414,14 @@
                             <div class="alert-danger errors">{{get_error_message_html('grammar_'+grammar.id+'_title')}}</div>
                         </div>
 
-                        <div class='form-group col-sm-1 comment_button'>
+                        <div class='col-2 comment_button'>
                             <comment-icon :issue_pointer="'/lesson/'+lesson.id+'/grammar/'+grammar.id" :issues="init_issues"></comment-icon>
                         </div>
 
                     </div>
 
                     <div class='row'>
-                        <div class='form-group col-sm-10 offset-1'>
+                        <div class='col-sm-10 offset-1'>
                             <label>Grammar Text</label>
                             <ck-editor :html_id="'grammar_text_'+grammar.id"
                                        html_name="grammar_text"
@@ -423,16 +434,16 @@
                     </div>
 
                     <div class='row'>
-                        <div class='form-group col-sm-1 '></div>
-                        <div class='form-group col-sm-2 '>
+                        <div class='col-sm-1 '></div>
+                        <div class='col-sm-2 '>
                             <input class="btn btn-sm btn-primary" type="submit" value="Save">
-                            <button type="button" class="btn btn-sm btn-secondary" v-b-modal="'grammar_text_preview_'+grammar.id">Preview</button>
-                            <b-modal :id="'grammar_text_preview_'+grammar.id" :ok-only="true"
-                                     title="Grammar" size="xl"><div v-html="grammar.grammar_text"></div></b-modal>
+                            <button type="button" class="btn btn-sm btn-secondary" @click="this.$refs['grammar_text_preview_'+grammar.id][0].show()">Preview</button>
+                            <b-modal :id="'grammar_text_preview_'+grammar.id" :ref="'grammar_text_preview_'+grammar.id" :ok-only="true"
+                                     title="Grammar" size="xl"><template v-slot:body><div v-html="grammar.grammar_text"></div></template></b-modal>
                         </div>
 
-                        <div class='form-group col-sm-8 '></div>
-                        <div class='form-group col-sm-1 '>
+                        <div class='col-sm-8 '></div>
+                        <div class='col-sm-1 '>
                             <button class="btn btn-sm btn-danger delete_grammar" type="button"
                                     v-if="grammar.id !== ''"
                                     @click.prevent="delete_grammar(grammar.id)">Delete</button>
@@ -458,7 +469,13 @@
 </template>
 
 <script>
-import Vue from 'vue';
+import Modal from './Modal.vue';
+import AudioIcon from './AudioIcon.vue';
+import CKEditor from './CkEditor.vue';
+import CommentIcon from './CommentIcon.vue';
+import GlossEditor from './GlossEditor.vue';
+import InputCustomKeyboard from './InputCustomKeyboard.vue';
+import TextareaCustomKeyboard from "./TextareaCustomKeyboard.vue";
 
     export default {
         props: [
@@ -492,6 +509,15 @@ import Vue from 'vue';
             'toggled_gloss_id': null,
             'toggled_glossmapper_id': null,
         };},
+        components: {
+            'b-modal': Modal,
+            'audio-icon': AudioIcon,
+            'ck-editor': CKEditor,
+            'comment-icon': CommentIcon,
+            'gloss-editor': GlossEditor,
+            'input-custom-keyboard': InputCustomKeyboard,
+            'textarea-custom-keyboard': TextareaCustomKeyboard,
+        },
         computed: {
             lesson_text: function() {
                 let lesson_text = '';
@@ -536,10 +562,13 @@ import Vue from 'vue';
                 }
             },
             isFormDirty(obj) {
-                return this.dirty_objects.indexOf(obj) !== -1;
+                if (this.dirty_objects.indexOf(obj) !== -1) {
+                    return true;
+                }
+                return null;
             },
             save_lesson() {
-                $(".spinner").show();
+                document.querySelector(".spinner").style.display = "block";
                 axios.post('/admin2/eieol_lesson/'+this.lesson.id, {
                     _method:'PUT',
                     title:this.lesson.title,
@@ -547,7 +576,7 @@ import Vue from 'vue';
                     intro_text:this.lesson.intro_text
                 })
                     .then((response) => {
-                        $(".spinner").hide();
+                        document.querySelector(".spinner").style.display = "none";
                         if (response.data.fail) {
                             this.error_messages = response.data.errors;
                         } else {
@@ -558,13 +587,13 @@ import Vue from 'vue';
                     });
             },
             save_lesson_translation() {
-                $(".spinner").show();
+                document.querySelector(".spinner").style.display = "block";
                 axios.post('/admin2/eieol_lesson/update_translation/'+this.lesson.id, {
                     _method:'PUT',
                     lesson_translation:this.lesson.lesson_translation,
                 })
                     .then((response) => {
-                        $(".spinner").hide();
+                        document.querySelector(".spinner").style.display = "none";
                         if (response.data.fail) {
                             this.error_messages = response.data.errors;
                         } else {
@@ -612,12 +641,12 @@ import Vue from 'vue';
             },
             save_grammar(grammar) {
                 let is_new = !grammar.id;
-                $(".spinner").show();
+                document.querySelector(".spinner").style.display = "block";
                 let url = grammar.id==='' ? '/admin2/eieol_grammar' : '/admin2/eieol_grammar/'+grammar.id;
                 let payload = grammar.id==='' ? grammar : Object.assign(grammar, {_method:'PUT'});
                 axios.post(url, payload)
                     .then((response) => {
-                        $(".spinner").hide();
+                        document.querySelector(".spinner").style.display = "none";
                         if (response.data.fail) {
                             this.error_messages = _.mapKeys(response.data.errors, function(value,key) {
                                 return 'grammar_'+grammar.id+'_'+key;
@@ -664,12 +693,12 @@ import Vue from 'vue';
             },
             save_glossed_text(glossed_text) {
                 let is_new = !glossed_text.id;
-                $(".spinner").show();
+                document.querySelector(".spinner").style.display = "block";
                 let url = glossed_text.id==='' ? '/admin2/eieol_glossed_text' : '/admin2/eieol_glossed_text/'+glossed_text.id;
                 let payload = glossed_text.id==='' ? glossed_text : Object.assign(glossed_text, {_method:'PUT'});
                 axios.post(url, payload)
                     .then((response) => {
-                        $(".spinner").hide();
+                        document.querySelector(".spinner").style.display = "none";
                         if (response.data.fail) {
                             this.error_messages = _.mapKeys(response.data.errors, function(value,key) {
                                 return 'glossed_text_'+glossed_text.id+'_'+key;
@@ -725,12 +754,12 @@ import Vue from 'vue';
                     });
             },
             save_gloss_order(gloss) {
-                $(".spinner").show();
+                document.querySelector(".spinner").style.display = "block";
                 let url = gloss.id==='' ? '/admin2/eieol_glossed_text_gloss' : '/admin2/eieol_glossed_text_gloss/'+gloss.id;
                 let payload = gloss.id==='' ? gloss : Object.assign(gloss, {_method:'PUT'});
                 axios.post(url, payload)
                     .then((response) => {
-                        $(".spinner").hide();
+                        document.querySelector(".spinner").style.display = "none";
                         if (response.data.fail) {
                             this.error_messages = _.mapKeys(response.data.errors, function(value,key) {
                                 return 'gloss_'+gloss.id+'_'+key;
@@ -747,7 +776,7 @@ import Vue from 'vue';
                     glossed_text.custom_gloss_mapping = {};
                 }
                 if (!glossed_text.custom_gloss_mapping[gloss_id]) {
-                    Vue.set(glossed_text.custom_gloss_mapping, gloss_id, []);
+                    glossed_text.custom_gloss_mapping[gloss_id] = [];
                 }
                 if (glossed_text.custom_gloss_mapping[gloss_id].includes(char_ix)) {
                     glossed_text.custom_gloss_mapping[gloss_id] =

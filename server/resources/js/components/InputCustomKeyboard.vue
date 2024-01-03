@@ -3,7 +3,7 @@
     <input class="form-control"
            :name="name"
            :type="type"
-           :value="value"
+           :value="modelValue"
            @input="input"
            autocomplete="off"
            :placeholder="placeholder"
@@ -32,7 +32,7 @@
     export default {
         props: [
             'name',
-            'value',
+            'modelValue',
             'type',
             'placeholder',
             'custom_keyboard'
@@ -43,7 +43,7 @@
         }},
         methods: {
             input(event) {
-                this.$emit('input', event.target.value);
+                this.$emit('update:modelValue', event.target.value);
             },
             get_display_char(c) {
                 if (this.shifting) {

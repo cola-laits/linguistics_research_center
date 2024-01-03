@@ -84,8 +84,8 @@
                         </div>
                         <div style="padding-left:10px;padding-right:10px;padding-bottom:10px;">
                             <span @class([
-                                'badge badge-success' => $issue->status==='open',
-                                'badge badge-danger' => $issue->status==='closed'
+                                'badge bg-success' => $issue->status==='open',
+                                'badge bg-danger' => $issue->status==='closed'
                             ])>{{$issue->status}}</span>
                             Created {{$issue->created_at}}
                         </div>

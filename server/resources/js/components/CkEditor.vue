@@ -1,5 +1,5 @@
 <template>
-    <textarea class="form-control" :name="html_name" cols="100" rows="10" :id="html_id">{{value}}</textarea>
+    <textarea class="form-control" :name="html_name" cols="100" rows="10" :id="html_id">{{modelValue}}</textarea>
 </template>
 
 <script>
@@ -8,7 +8,7 @@
         props: [
             'html_id',
             'html_name',
-            'value',
+            'modelValue',
             'custom_config'
         ],
         data() { return {
@@ -28,7 +28,7 @@
                 this.editor_instance = CKEDITOR.replace(this.$el,ck_config);
 
                 this.editor_instance.on('change', (evt) => {
-                    this.$emit('input', this.editor_instance.getData());
+                    this.$emit('update:modelValue', this.editor_instance.getData());
                 });
             },
             calc_config() {

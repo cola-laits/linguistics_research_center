@@ -1,13 +1,15 @@
 <template>
     <div>
-        <i v-if="!value" class="fa fa-volume-off" style="cursor:pointer;color:#999;" v-b-modal="id+'-modal'"></i>
-        <i v-if="value" class="fa fa-volume-up" style="cursor:pointer;" v-b-modal="id+'-modal'"></i>
+        <i v-if="!value" class="fa fa-volume-off" style="cursor:pointer;color:#999;" @click="this.$refs[id+'-modal'].show()"></i>
+        <i v-if="value" class="fa fa-volume-up" style="cursor:pointer;" @click="this.$refs[id+'-modal'].show()"></i>
         <b-modal :id="id+'-modal'"
+                 :ref="id+'-modal'"
                  ok-title="Update"
                  @ok="ok"
                  :ok-disabled="!allow_save"
                  @hide="hide"
         >
+            <template v-slot:body>
             <h5>Text</h5>
             <div :lang="lang">{{text}}</div>
             <hr>
@@ -33,11 +35,14 @@
                 {{upload_in_progress ? "Uploading..." : "Upload Selected File"}}
             </button>
             </form>
+            </template>
         </b-modal>
     </div>
 </template>
 
 <script>
+import Modal from './Modal.vue';
+
     export default {
         props: [
             'id',
@@ -51,6 +56,9 @@
             allow_save: false,
             upload_in_progress: false,
         }},
+        components: {
+            'b-modal': Modal
+        },
         computed: {
 
         },

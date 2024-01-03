@@ -149,7 +149,7 @@ class EieolLessonController extends Controller
         $lesson->save();
         return [
             'success' => true,
-            'message' => 'Translation was udated successfully'
+            'message' => 'Translation was updated successfully'
         ];
     }
 

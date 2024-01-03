@@ -5,19 +5,15 @@
 @section('foot_extra')
     <script>
         window.onbeforeunload = function() {
-            if ($("form[dirty]").length > 0) {
+            if (document.querySelectorAll('form[dirty]').length > 0) {
                 return 'You have unsaved changes!  Would you like to leave this page anyway?';
             }
         };
-
-        new window.Vue({
-            el: '#admin_app'
-        });
     </script>
 @endsection
 
 @section('content')
-    <div v-cloak id="admin_app">
+    <div id="admin_app">
 
     <lesson-editor
     :init_lesson="{{ json_encode($lesson) }}"

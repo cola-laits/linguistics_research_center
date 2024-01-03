@@ -14,7 +14,7 @@
         @keyup="check_mark_shifting($event, false)"
         @focus="on_input_focus()"
         @blur="on_input_blur()"
-    >{{value}}</textarea>
+    >{{modelValue}}</textarea>
 
         <transition name="keyboard-fade">
 
@@ -35,7 +35,7 @@
     export default {
         props: [
             'name',
-            'value',
+            'modelValue',
             'type',
             'lang',
             'placeholder',
@@ -47,7 +47,7 @@
         }},
         methods: {
             input(event) {
-                this.$emit('input', event.target.value);
+                this.$emit('update:modelValue', event.target.value);
             },
             get_display_char(c) {
                 if (this.shifting) {

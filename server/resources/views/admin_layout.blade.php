@@ -13,13 +13,10 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>LRC Admin - @yield('title')</title>
 
-        <script src="{{ mix('/js/manifest.js') }}"></script>
-        <script src="{{ mix('/js/vendor.js') }}"></script>
+        @vite(['resources/sass/admin.scss', 'resources/js/admin.js'])
 
-        <link media="all" type="text/css" rel="stylesheet" href="{{ mix('/css/admin.css') }}">
         <link media="all" type="text/css" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
         <link media="all" type="text/css" rel="stylesheet" href="/css/adminstyle.css">
-        <link media="all" type="text/css" rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
 
         <style>
             body {
@@ -31,28 +28,30 @@
     </head>
     <body onload="top.scrollTo(0,0)">
 
-    <nav class="navbar navbar-light bg-light navbar-expand-md">
-        <a class="navbar-brand" href="/admin">Admin</a>
+    <nav class="navbar navbar-light navbar-expand-md bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/admin">Admin</a>
 
-        <div class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li class="nav-item"><a class="nav-link" href="/admin2/issues">Issues <span
-                        @class(['badge', 'badge-pill', 'd-none'=>($numOpenIssues==0), 'badge-warning'=>($numOpenIssues>0)])
-                        >{{$numOpenIssues}}</span></a></li>
-                <li class="nav-item"><a class="nav-link" href="/admin2/eieol_series">EIEOL</a></li>
-                @if (\Illuminate\Support\Facades\Auth::user()->isAdmin())
-                    <li class="dropdown nav-item">
-                        <a href="/admin_mgr" class="nav-link" role="button" aria-haspopup="true" aria-expanded="false">Site Management <span class="caret"></span></a>
-                    </li>
-                @endif
-            </ul>
-            <ul class="nav navbar-nav ml-auto">
-                <li class="nav-item"><a class="nav-link" href="/">Back to Site</a></li>
-                <li class="nav-item"><form class="navbar-form" method="POST" action="/logout">
-                        @csrf
-                        <button type="submit" class="btn btn-secondary">Log Out</button>
-                    </form></li>
-            </ul>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="/admin2/issues">Issues <span
+                            @class(['badge', 'rounded-pill', 'd-none'=>($numOpenIssues==0), 'bg-warning'=>($numOpenIssues>0)])
+                            >{{$numOpenIssues}}</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="/admin2/eieol_series">EIEOL</a></li>
+                    @if (\Illuminate\Support\Facades\Auth::user()->isAdmin())
+                        <li class="dropdown nav-item">
+                            <a href="/admin_mgr" class="nav-link" role="button" aria-haspopup="true" aria-expanded="false">Site Management <span class="caret"></span></a>
+                        </li>
+                    @endif
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="/">Back to Site</a></li>
+                    <li class="nav-item"><form class="navbar-form" method="POST" action="/logout">
+                            @csrf
+                            <button type="submit" class="btn btn-secondary">Log Out</button>
+                        </form></li>
+                </ul>
+            </div>
         </div>
     </nav>
 
@@ -62,22 +61,16 @@
 
     <script src="https://cdn.ckeditor.com/4.14.1/full-all/ckeditor.js"></script>
 
-    <script src="{{ mix('/js/admin.js') }}"></script>
-
     <script type="text/javascript">
-        window.axios.defaults.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content');
-        axios.interceptors.response.use(function(response) {
-            return response;
-        }, function(error) {
-            alert("Sorry, an error occurred.  Refresh the page and try again.");
-            return Promise.reject(error);
-        });
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+        if (window.axios) {
+            window.axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            window.axios.interceptors.response.use(function (response) {
+                return response;
+            }, function (error) {
+                alert("Sorry, an error occurred.  Refresh the page and try again.");
+                return Promise.reject(error);
+            });
+        }
 
     </script>
 

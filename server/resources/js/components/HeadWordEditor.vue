@@ -2,6 +2,7 @@
     <b-modal ref="attach_headword_modal" :title="is_new_headword ? 'Attach Head Word' : 'Edit Head Word'" size="xl"
         hide-footer
     >
+        <template v-slot:body>
         <div v-if="is_new_headword">
             <div class='col-lg-12'>
                 <label>Search Head Word</label>
@@ -31,7 +32,7 @@
             <div class='col-sm-12'>
                 <form>
 
-                <div class='form-group'>
+                <div>
                     <label>Word</label>
                     <input-custom-keyboard placeholder="Word"
                                            name="word"
@@ -42,7 +43,7 @@
                     <div class="alert-danger errors">{{get_error_message_html('word')}}</div>
                 </div>
 
-                <div class='form-group'>
+                <div>
                     <label for="definition">Definition</label>
                     <input placeholder="Definition" class="form-control" id="definition" name="definition" type="text"
                         v-model="headword.definition"
@@ -50,7 +51,7 @@
                     <div class="alert-danger errors">{{get_error_message_html('definition')}}</div>
                 </div>
 
-                <div class='form-group'>
+                <div>
                     <label for="etyma_id">Etyma</label>
                     <select id="etyma_id" name="etyma_id" class="form-control"
                                    v-model="headword.etyma_id"
@@ -61,7 +62,7 @@
                     <div class="alert-danger errors">{{get_error_message_html('etyma_id')}}</div>
                 </div>
 
-                <div class='form-group'>
+                <div>
                     <label for="keywords">Keywords</label>
                     <tags-input
                         :add-on-key="[13,',']"
@@ -77,21 +78,26 @@
                     <div class="alert-danger errors">{{get_error_message_html('keywords')}}</div>
                 </div>
 
-                <div class='form-group bottom_button'>
+                <div class='bottom_button'>
                     <input class="btn btn-xs btn-success" type="button" @click="save()" value="Save">
                 </div>
                 </form>
             </div>
         </div>
+        </template>
     </b-modal>
 </template>
 
 <script>
-import InputCustomKeyboard from './InputCustomKeyboard'
+import InputCustomKeyboard from './InputCustomKeyboard.vue'
+import Modal from './Modal.vue';
+import { VueTagsInput } from '@vojtechlanka/vue-tags-input';
 
     export default {
         components: {
             'input-custom-keyboard': InputCustomKeyboard,
+            'b-modal': Modal,
+            'tags-input': VueTagsInput,
         },
         props: ['headword','custom_keyboard','etymas','language'],
         data: function() { return {
@@ -156,12 +162,12 @@ import InputCustomKeyboard from './InputCustomKeyboard'
                 this.$emit('input',headword);
             },
             save() {
-                $(".spinner").show();
+                document.querySelector(".spinner").style.display = "block";
                 let url = this.headword.id ? '/admin2/eieol_head_word/'+this.headword.id : '/admin2/eieol_head_word';
                 let payload = this.headword.id ? Object.assign(this.headword, {_method:'PUT'}) : this.headword;
                 axios.post(url, payload)
                     .then((response) => {
-                        $(".spinner").hide();
+                        document.querySelector(".spinner").style.display = "none";
                         if (response.data.fail) {
                             this.modal_attached_headword_errors = response.data.errors;
                         } else {
