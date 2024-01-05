@@ -6,9 +6,6 @@ use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\EieolElement;
-use App\Models\EieolLanguage;
-use App\Models\LexEtyma;
 use Illuminate\Support\Carbon;
 
 /**
@@ -60,4 +57,8 @@ class EieolHeadWord extends Model {
 	{
 		return $this->belongsTo(LexEtyma::class);
 	}
+
+    protected function getWordWithoutSurroundingAngleBracketsAttribute() {
+        return preg_replace('/^<(.*)>$/', '$1', $this->word);
+    }
 }

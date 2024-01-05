@@ -35,7 +35,7 @@ index; unfortunately this may result in some words, in some contexts, being unfa
 <div class="skinny" id="no_bullets">
 @foreach ($keywords as $keyword)
     <strong>{{$keyword['keyword']}}</strong> :
-        <span style='white-space: nowrap' lang='{{$keyword['head_word']->language->lang_attribute}}'> {{$keyword['head_word']->word}} </span> {!! $keyword['head_word']->definition !!}
+        <span style='white-space: nowrap' lang='{{$keyword['head_word']->language->lang_attribute}}'> &lt;{!! $keyword['head_word']->word_without_surrounding_angle_brackets !!}&gt; </span> {!! $keyword['head_word']->definition !!}
         --
     <ul>
         @foreach ($keyword['glossed_text_gloss_ids'] as $id => $lesson)

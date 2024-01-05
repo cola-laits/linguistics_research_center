@@ -28,7 +28,7 @@ curious about Indo-European etymology. Notice of potential error is always welco
 <div class="skinny" id="no_bullets">
 @foreach ($head_words as $head_word_info)
     @php $head_word = $head_word_info['model']; @endphp
-    <span style='white-space: nowrap' lang='{{$head_word->language->lang_attribute}}'> {{$head_word->word}} </span> {!! $head_word->definition !!}
+    <span style='white-space: nowrap' lang='{{$head_word->language->lang_attribute}}'> &lt;{!! $head_word->word_without_surrounding_angle_brackets !!}&gt; </span> {!! $head_word->definition !!}
     --
     @if($head_word->etyma != null)
         [<a href="/lex/master/#P{{$head_word->etyma->id}}">Pokorny</a>

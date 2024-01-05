@@ -21,7 +21,7 @@ links are provided to every appearance, in every numbered lesson, of the word/gl
     @foreach ($gloss['gloss']->elements as $element)
             {{$element->part_of_speech}};
             {{$element->analysis}}
-            <span style='white-space: nowrap' lang='{{$element->head_word->language->lang_attribute}}'> &lt; {{ substr($element->head_word->word,1,-1) }} &gt;</span> {!! $element->head_word->definition !!}
+            <span style='white-space: nowrap' lang='{{$element->head_word->language->lang_attribute}}'> &lt;{!! $element->head_word->word_without_surrounding_angle_brackets !!}&gt;</span> {!! $element->head_word->definition !!}
           @if (!$loop->last)
               +
           @endif
