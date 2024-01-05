@@ -25,7 +25,6 @@ class AlphabetSorter {
         $this->alphabet['>'] = 0;
         $alphabet_groups = explode(',',$custom_sort);
         foreach ($alphabet_groups as $key => $group) {
-            //print $key . ' ' . $group . ' ' . mb_strlen($group,'UTF-8') . '<br/>';
             $values = explode('=',$group);
             foreach ($values as $value) {
                 $this->alphabet[$value] = $key+1;
@@ -34,7 +33,7 @@ class AlphabetSorter {
 
         //Now sort the array by length.
         uksort($this->alphabet, [$this, 'length_compare']);
-    } //arrayify_customsort
+    }
 
     protected function arrayify_substitutions($substitutions) {
         //convert substitutions into an array
@@ -44,14 +43,13 @@ class AlphabetSorter {
 
         $substitutions_groups = explode(',',$substitutions);
         foreach ($substitutions_groups as $key => $group) {
-            //print $key . ' ' . $group . ' ' . mb_strlen($group,'UTF-8') . '<br/>';
             $values = explode('>',$group);
             $this->subs[$values[0]] = $values[1];
         }
 
         //Now sort the array by length.
         uksort($this->subs, [$this, 'length_compare']);
-    } //arrayify_substitutions
+    }
 
     protected function sub_it($string,$substitutions) {
         //substitue any chars they may have defined.
@@ -60,7 +58,7 @@ class AlphabetSorter {
 
         }
         return $string;
-    } //sub_it
+    }
 
     protected function get_first_character_value($string) {
         //Used by alphabet_sort to get first character/sort value and remainder of a string.
@@ -77,7 +75,7 @@ class AlphabetSorter {
             'first' => mb_substr($string,0,1,'UTF-8'),
             'remainder' => mb_substr($string,1,Null,'UTF-8')
         ];
-    } //get_first_character_value
+    }
 
     public function alphabet_sorter($a, $b): int {
         //key_compare_func for uasort of gloss and dictionary.
@@ -92,7 +90,7 @@ class AlphabetSorter {
         }
 
         return $this->actual_sorter($a,$b);
-    } //alphabet_sorter
+    }
 
     protected function actual_sorter($a, $b): int {
         //key_compare_func for uasort of gloss and dictionary.
@@ -116,5 +114,5 @@ class AlphabetSorter {
         }
         //if you get here, they are equal, recurse
         return $this->actual_sorter($a_split['remainder'],$b_split['remainder']);
-    } //alphabet_sorter
+    }
 }

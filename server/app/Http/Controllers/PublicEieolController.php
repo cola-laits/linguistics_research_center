@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 class PublicEieolController extends Controller
 {
     public function eieol() {
-        return view('eieol')->with([
+        return view('eieol', [
             'content' => Page::whereSlug('eieol')->first()->content,
             'serieses' => EieolSeries::where('published', '=', True)
                 ->orderBy('order')
@@ -47,29 +47,22 @@ class PublicEieolController extends Controller
     public function eieol_lesson($series_name, $lesson_order) {
         $series = EieolSeries::findByIdOrSlug($series_name);
 
-        $data = [
-            'series' => $series,
-            'printable' => False,
-            'clickable' => True,
-        ];
-
-        $data['lesson'] = EieolLesson::with('grammars', 'language')
+        $lesson = EieolLesson::with('grammars', 'language')
             ->with('glossed_texts.glosses.language', 'glossed_texts.glosses.elements.head_word.language')
             ->where('series_id', '=', $series->id)
             ->where('order', '=', $lesson_order)
             ->firstOrFail();
 
-        return view('eieol_lesson')->with($data);
+        return view('eieol_lesson', [
+            'series' => $series,
+            'printable' => False,
+            'clickable' => True,
+            'lesson' => $lesson
+        ]);
     }
 
     public function eieol_printable($series_id) {
         $series = EieolSeries::findByIdOrSlug($series_id);
-
-        $data = [
-            'series' => $series,
-            'printable' => True,
-            'clickable' => False,
-        ];
 
         $html = view('printable_header_layout');
 
@@ -79,16 +72,17 @@ class PublicEieolController extends Controller
             ->orderBy('order')
             ->get();
 
-        $first = True;
-        foreach ($lessons as $lesson) {
-            if ($first) {
-                $first = False;
-            } else {
+        foreach ($lessons as $index => $lesson) {
+            if ($index != 0) {
                 $html .= '<div class="printable_footer"></div>';
             }
 
-            $data['lesson'] = $lesson;
-            $html .= view('eieol_lesson', $data);
+            $html .= view('eieol_lesson', [
+                'series' => $series,
+                'printable' => True,
+                'clickable' => False,
+                'lesson' => $lesson
+            ]);
         }
 
         $html .= view('printable_footer_layout');
@@ -99,7 +93,7 @@ class PublicEieolController extends Controller
     public function eieol_toc($series_id) {
         $series = EieolSeries::findByIdOrSlug($series_id);
 
-        return view('eieol_toc')->with([
+        return view('eieol_toc', [
             'series' => $series
         ]);
     }
@@ -116,11 +110,8 @@ class PublicEieolController extends Controller
             ->orderBy('order')
             ->get();
 
-        //loop through all the lessons, glossed texts and glosses to group like glosses
         foreach ($lessons as $lesson) {
-
             foreach ($lesson->glossed_texts as $glossed_text) {
-
                 foreach ($glossed_text->glosses as $gloss) {
                     //unique key is the surface form with all pos and analysis
 
@@ -129,10 +120,7 @@ class PublicEieolController extends Controller
                             return $element->part_of_speech . '; ' . $element->analysis . ':' . $element->head_word_id;
                         })->implode(' + '));
 
-                    //remove any tags like sup or sub
-                    $key = strip_tags($key);
-
-                    if (!array_key_exists($key, $glosses)) {
+                    if (!isset($glosses[$key])) {
                         $glosses[$key] = $gloss->toArray();
                         $glosses[$key]['surface_form'] = strip_tags($gloss->surface_form);
                         $glosses[$key]['gloss'] = $gloss;
@@ -141,20 +129,17 @@ class PublicEieolController extends Controller
 
                     $glosses[$key]['glossed_text_gloss_ids'][$gloss->id] = $lesson;
 
-                } //foreach gloss
-
-            } //foreach glossed text
-
-        } //foreach lesson
-
-        foreach ($glosses as &$value) {
-            $value['sortable_key'] = \Normalizer::normalize($value['surface_form'], \Normalizer::FORM_D);
+                }
+            }
         }
-        unset($value);
+
+        array_walk($glosses, fn(&$value) =>
+            $value['sortable_key'] = \Normalizer::normalize($value['surface_form'], \Normalizer::FORM_D)
+        );
         $sorter = new AlphabetSorter($language->substitutions, $language->custom_sort);
         uasort($glosses, [$sorter, 'alphabet_sorter']);
 
-        return view('eieol_master_gloss')->with([
+        return view('eieol_master_gloss', [
             'series' => $series,
             'language' => $language,
             'glosses' => $glosses,
@@ -169,11 +154,9 @@ class PublicEieolController extends Controller
         $lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word.language', 'glossed_texts.glosses.elements.head_word.etyma')
             ->where('series_id', '=', $series->id)
             ->where('language_id', '=', $language_id)
-            ->select(array('id', 'title', 'order'))
+            ->select(['id', 'title', 'order'])
             ->orderBy('order')
             ->get();
-
-        //loop through all the lessons, glossed texts and glosses to group like head words
 
         foreach ($lessons as $lesson) {
             foreach ($lesson->glossed_texts as $glossed_text) {
@@ -187,8 +170,7 @@ class PublicEieolController extends Controller
                         //remove any tags like sup or sub
                         $key = strip_tags($key);
 
-
-                        if (!array_key_exists($key, $head_words)) {
+                        if (!isset($head_words[$key])) {
                             //build sort key
                             //remove first character, because it's a '<
                             $sort_key = mb_substr($element->head_word->word, 1, Null, 'UTF-8');
@@ -214,7 +196,7 @@ class PublicEieolController extends Controller
 
         uasort($head_words, [$sorter, 'alphabet_sorter']);
 
-        return view('eieol_base_form_dictionary')->with([
+        return view('eieol_base_form_dictionary', [
             'series' => $series,
             'language' => $language,
             'head_words' => $head_words,
@@ -229,7 +211,7 @@ class PublicEieolController extends Controller
         $lessons = EieolLesson::with('glossed_texts.glosses.elements.head_word.language')
             ->where('series_id', '=', $series->id)
             ->where('language_id', '=', $language_id)
-            ->select(array('id', 'title', 'order'))
+            ->select(['id', 'title', 'order'])
             ->orderBy('order')
             ->get();
 
@@ -244,16 +226,15 @@ class PublicEieolController extends Controller
                             continue;
                         }
 
-                        foreach (explode(',',$element->head_word->keywords) as $keyword) {
-                            $key = $keyword . ' -- ' . $element->head_word->word . ' -- ' . $element->head_word->definition;
+                        $keywordsArray = explode(',', $element->head_word->keywords);
+                        foreach ($keywordsArray as $keyword) {
+                            $key = "$keyword -- {$element->head_word->word} -- {$element->head_word->definition}";
 
-                            if (!array_key_exists($key, $keywords)) {
-                                $keywords[$key] = [
-                                    'keyword'=>$keyword,
-                                    'head_word'=>$element->head_word,
-                                    'glossed_text_gloss_ids'=>[]
-                                ];
-                            }
+                            $keywords[$key] = $keywords[$key] ?? [
+                                'keyword' => $keyword,
+                                'head_word' => $element->head_word,
+                                'glossed_text_gloss_ids' => []
+                            ];
 
                             $keywords[$key]['glossed_text_gloss_ids'][$gloss->id] = $lesson;
                         }
@@ -265,7 +246,7 @@ class PublicEieolController extends Controller
 
         ksort($keywords);
 
-        return view('eieol_english_meaning_index')->with([
+        return view('eieol_english_meaning_index', [
              'series' => $series,
              'language' => $language,
              'keywords' => $keywords,
