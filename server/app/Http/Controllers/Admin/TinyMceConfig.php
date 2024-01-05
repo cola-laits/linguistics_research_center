@@ -19,6 +19,7 @@ trait TinyMceConfig
             'images_upload_url' => '/admin2/files/upload?uploader=tinymce',
             'menubar' => 'edit insert view format table',
             'toolbar' => 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code',
+            'image_advtab' => true,
         ];
     }
 }
