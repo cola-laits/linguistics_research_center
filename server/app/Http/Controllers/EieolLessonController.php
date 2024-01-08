@@ -18,26 +18,25 @@ use Normalizer;
 class EieolLessonController extends Controller
 {
 
-    public function create(Request $request) {
+    public function create(Request $request)
+    {
         $series = EieolSeries::find($request->get('series_id'));
-        $languages = EieolLanguage::all()->mapWithKeys(function ($lang) {
-            return [$lang['id'] => $lang['language']];
-        });
+        $languages = EieolLanguage::pluck('language', 'id');
         return view('eieol_lesson.eieol_lesson_create', [
             'series' => $series,
             'languages' => $languages
         ]);
     }
 
-    public function store(Request $request) {
-
-        $rules = array(
+    public function store(Request $request)
+    {
+        $rules = [
             'order' => 'required|integer|unique:eieol_lesson,order,null,id,series_id,' . $request->get('series_id'),
             'title' => 'required|unique:eieol_lesson,title,null,id,series_id,' . $request->get('series_id'),
             'language' => 'required',
             'intro_text' => 'required',
             'series_id' => 'required|exists:eieol_series,id'
-        );
+        ];
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
@@ -46,49 +45,33 @@ class EieolLessonController extends Controller
                 ->withInput();
         }
 
-        $lesson = new EieolLesson;
+        $lesson = EieolLesson::create([
+            'title' => Normalizer::normalize($request->get('title'), Normalizer::FORM_C),
+            'order' => $request->get('order'),
+            'series_id' => $request->get('series_id'),
+            'language_id' => $request->get('language'),
+            'intro_text' => Normalizer::normalize($request->get('intro_text'), Normalizer::FORM_C),
+            'created_by' => Auth::user()->username,
+            'updated_by' => Auth::user()->username,
+        ]);
 
-        $lesson->title = \Normalizer::normalize($request->get('title'), Normalizer::FORM_C);
-        $lesson->order = $request->get('order');
-        $lesson->series_id = $request->get('series_id');
-        $lesson->language_id = $request->get('language');
-        $lesson->intro_text = \Normalizer::normalize($request->get('intro_text'), Normalizer::FORM_C);
-        $lesson->created_by = Auth::user()->username;
-        $lesson->updated_by = Auth::user()->username;
-
-        $lesson->save();
         $request->session()->flash('message', $lesson->title . ' has been created');
         return redirect('/admin2/eieol_lesson/' . $lesson->id . '/edit');
-
-
     }
 
-    public function edit($id) {
-        $lesson = EieolLesson::with('series', 'language')->find($id);
+    public function edit($id)
+    {
+        $lesson = EieolLesson::with(['series', 'language' ,'series.languages'])->find($id);
+        $grammars = EieolGrammar::where('lesson_id', '=', $id)->orderBy('order')->get();
+        $glossed_texts = EieolGlossedText::with('glosses.language', 'glosses.elements.head_word.language')
+            ->where('lesson_id', '=', $id)->orderBy('order')->get();
 
-        $grammars = EieolGrammar::where('lesson_id', '=', $id)->get()->sortBy('order');
-
-        $glossed_texts = EieolGlossedText::with('glosses.language', 'glosses.elements.head_word.language')->where('lesson_id', '=', $id)->get()->sortBy('order');
-
-        $series = EieolSeries::with('languages')->find($lesson->series_id);
-
-        $series_languages = array();
-
-        $series_languages[] = $lesson->language->lang_attribute . ':' . $lesson->language->language;
-
-        foreach ($series->languages as $l) {
+        $series_languages = [$lesson->language->lang_attribute . ':' . $lesson->language->language];
+        foreach ($lesson->series->languages as $l) {
             $series_languages[] = $l->lang . ':' . $l->display;
         }
 
-        //get languages for pulldown
-        $languages = EieolLanguage::all()->mapWithKeys(function ($lang) {
-            return [$lang['id'] => $lang['language']];
-        });
-
-        //get etymas for pulldown
-        $etymas = LexEtyma::all()->mapWithKeys(function ($lang) {
-            return [$lang['id'] => $lang['entry']];
-        });
+        $etymas = LexEtyma::pluck('entry', 'id');
 
         $related_issues = Issue::where('status', 'open')
             ->where('pointer', 'like', '/lesson/' . $lesson->id . '%')
@@ -97,20 +80,20 @@ class EieolLessonController extends Controller
         return view('eieol_lesson.eieol_lesson_edit', ['lesson' => $lesson,
             'grammars' => $grammars,
             'glossed_texts' => $glossed_texts,
-            'languages' => $languages,
             'etymas' => $etymas,
             'series_languages' => $series_languages,
-            'issues'=> $related_issues
+            'issues' => $related_issues
         ]);
     }
 
 
-    public function update(Request $request, $id) {
-        $rules = array(
+    public function update(Request $request, $id)
+    {
+        $rules = [
             'order' => 'required|integer|unique:eieol_lesson,order,' . $id . ',id,series_id,' . $request->get('series_id'),
             'title' => 'required|unique:eieol_lesson,title,' . $id . ',id,series_id,' . $request->get('series_id'),
             'intro_text' => 'required'
-        );
+        ];
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
@@ -120,33 +103,29 @@ class EieolLessonController extends Controller
             ];
         }
 
-        DB::transaction(function () use ($id, $request) {
-            $lesson = EieolLesson::find($id);
-
-            $lesson->title = Normalizer::normalize($request->get('title'), Normalizer::FORM_C);
-            $lesson->order = $request->get('order');
-            $lesson->intro_text = Normalizer::normalize($request->get('intro_text'), Normalizer::FORM_C);
-            $lesson->updated_by = Auth::user()->username;
-            $lesson->save();
-        });
+        $lesson = EieolLesson::find($id);
+        $lesson->update([
+            'title' => Normalizer::normalize($request->get('title'), Normalizer::FORM_C),
+            'order' => $request->get('order'),
+            'intro_text' => Normalizer::normalize($request->get('intro_text'), Normalizer::FORM_C),
+            'updated_by' => Auth::user()->username,
+        ]);
 
         return [
             'success' => true,
             'message' => 'Update was successful',
             'language_id' => $request->get('language'),
         ];
-
-
     }
 
-
-    public function update_translation(Request $request, $id) {
+    public function update_translation(Request $request, $id)
+    {
         $lesson = EieolLesson::find($id);
+        $lesson->update([
+            'lesson_translation' => Normalizer::normalize($request->get('lesson_translation'), Normalizer::FORM_C),
+            'updated_by' => Auth::user()->username,
+        ]);
 
-        $lesson->lesson_translation = Normalizer::normalize($request->get('lesson_translation'), Normalizer::FORM_C);
-        $lesson->updated_by = Auth::user()->username;
-
-        $lesson->save();
         return [
             'success' => true,
             'message' => 'Translation was updated successfully'

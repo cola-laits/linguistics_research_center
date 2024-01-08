@@ -17,7 +17,6 @@
 
     <lesson-editor
     :init_lesson="{{ json_encode($lesson) }}"
-    :init_languages="{{ json_encode($languages) }}"
     :init_glossed_texts="{{ json_encode($glossed_texts) }}"
     :init_grammars="{{ json_encode($grammars) }}"
     :init_etymas="{{ json_encode($etymas) }}"

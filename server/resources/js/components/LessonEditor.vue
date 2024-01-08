@@ -480,7 +480,6 @@ import TextareaCustomKeyboard from "./TextareaCustomKeyboard.vue";
     export default {
         props: [
             'init_lesson',
-            'init_languages',
             'init_glossed_texts',
             'init_grammars',
             'init_etymas',
@@ -491,7 +490,6 @@ import TextareaCustomKeyboard from "./TextareaCustomKeyboard.vue";
         ],
         data: function() {return {
             'lesson': {},
-            'languages': {},
             'glossed_texts': {},
             'grammars': {},
             'etymas': {},
@@ -799,7 +797,6 @@ import TextareaCustomKeyboard from "./TextareaCustomKeyboard.vue";
         },
         created() {
             this.lesson = this.init_lesson;
-            this.languages = this.init_languages;
             this.glossed_texts = this.init_glossed_texts;
             this.grammars = this.init_grammars;
             this.etymas = this.init_etymas;
