@@ -119,66 +119,50 @@ class PublicLexiconController extends Controller
             'parts_of_speech',
         ])->whereIn('language_id', $lex_language_ids)->get();
 
-        $column_order_string = null;
+        $column_descs = [];
+        $column_descs []= (object) ['display_name'=>'Meaning', 'name'=>'meaning'];
+        $column_descs []= (object) ['display_name'=>'Semantic Tag', 'name'=>'semantic_tag'];
+        $column_descs []= (object) ['display_name'=>'Etymon', 'name'=>'etymon'];
+
         // FIXME make this database-driven at some point
         if ($lexicon_slug === 'semitilex') {
-            $column_order_string = <<<END
-[
-{"display_name": "Meaning", "name": "meaning"},
-{"display_name": "Semantic Tag", "name": "semantic_tag"},
-{"display_name": "Etymon", "name": "etymon"},
-{"display_name": "pS Root", "name": "root"},
-{"display_name": "Part of Speech", "name": "part_of_speech"},
-{"display_name": "Language", "name": "language"},
-{"display_name": "Verb Root", "name": "verb_root"},
-{"display_name": "Verb Root Script", "name": "verb_root_script"},
-{"display_name": "Script", "name": "script"},
-{"display_name": "Transliteration", "name":"transliteration"},
-{"display_name": "Sem Normalization", "name": "sem_normalization"},
-{"display_name": "IPA Singular", "name": "ipa_singular"},
-{"display_name": "Gender", "name":"gender"},
-{"display_name": "Tag", "name": "tag"},
-{"display_name": "Donor Language", "name": "donor_language"},
-{"display_name": "Donor Word", "name": "donor_word"},
-{"display_name": "Data Source", "name": "data_source"},
-{"display_name": "Notes", "name": "notes"},
-{"display_name": "f Markedness", "name": "f_markedness"},
-{"display_name": "pS Pattern", "name": "ps_pattern"},
-{"display_name": "Sem Normalization Pl", "name": "sem_normalization_pl"},
-{"display_name": "IPA Plural", "name": "ipa_plural"},
-{"display_name": "pS Plural Pattern", "name": "ps_plural_pattern"},
-{"display_name": "pS Plural Suffix", "name": "ps_plural_suffix"},
-{"display_name": "Deptotic", "name": "deptotic"},
-{"display_name": "Prefix Conj 1", "name": "prefix_conj_1"},
-{"display_name": "Prefix Conj 1 IPA", "name": "prefix_conj_1_ipa"},
-{"display_name": "Prefix Conj 2", "name": "prefix_conj_2"},
-{"display_name": "Prefix Conj 2 IPA", "name": "prefix_conj_2_ipa"},
-{"display_name": "Suffix Conj", "name": "suffix_conj"},
-{"display_name": "Suffix Conj IPA", "name": "suffix_conj_ipa"},
-{"display_name": "Infinitive", "name": "infinitive"},
-{"display_name": "Infinitive IPA", "name": "infinitive_ipa"},
-{"display_name": "Participle", "name": "participle"},
-{"display_name": "Participle IPA", "name": "participle_ipa"},
-{"display_name": "PC Thematic Vowel", "name": "pc_thematic_vowel"},
-{"display_name": "SC Thematic Vowel", "name": "sc_thematic_vowel"},
-{"display_name": "Stem", "name": "stem"},
-{"display_name": "Complement", "name": "complement"}
-]
-END;
-
+            $column_descs []= (object) ['display_name'=>'pS Root', 'name'=>'root'];
+            $column_descs []= (object) ['display_name'=>'Part of Speech', 'name'=>'part_of_speech'];
+            $column_descs []= (object) ['display_name'=>'Language', 'name'=>'language'];
+            $column_descs []= (object) ['display_name'=>'Verb Root', 'name'=>'verb_root'];
+            $column_descs []= (object) ['display_name'=>'Verb Root Script', 'name'=>'verb_root_script'];
+            $column_descs []= (object) ['display_name'=>'Script', 'name'=>'script'];
+            $column_descs []= (object) ['display_name'=>'Transliteration', 'name'=>'transliteration'];
+            $column_descs []= (object) ['display_name'=>'Sem Normalization', 'name'=>'sem_normalization'];
+            $column_descs []= (object) ['display_name'=>'IPA Singular', 'name'=>'ipa_singular'];
+            $column_descs []= (object) ['display_name'=>'Gender', 'name'=>'gender'];
+            $column_descs []= (object) ['display_name'=>'Tag', 'name'=>'tag'];
+            $column_descs []= (object) ['display_name'=>'Donor Language', 'name'=>'donor_language'];
+            $column_descs []= (object) ['display_name'=>'Donor Word', 'name'=>'donor_word'];
+            $column_descs []= (object) ['display_name'=>'Data Source', 'name'=>'data_source'];
+            $column_descs []= (object) ['display_name'=>'Notes', 'name'=>'notes'];
+            $column_descs []= (object) ['display_name'=>'f Markedness', 'name'=>'f_markedness'];
+            $column_descs []= (object) ['display_name'=>'pS Pattern', 'name'=>'ps_pattern'];
+            $column_descs []= (object) ['display_name'=>'Sem Normalization Pl', 'name'=>'sem_normalization_pl'];
+            $column_descs []= (object) ['display_name'=>'IPA Plural', 'name'=>'ipa_plural'];
+            $column_descs []= (object) ['display_name'=>'pS Plural Pattern', 'name'=>'ps_plural_pattern'];
+            $column_descs []= (object) ['display_name'=>'pS Plural Suffix', 'name'=>'ps_plural_suffix'];
+            $column_descs []= (object) ['display_name'=>'Deptotic', 'name'=>'deptotic'];
+            $column_descs []= (object) ['display_name'=>'Prefix Conj 1', 'name'=>'prefix_conj_1'];
+            $column_descs []= (object) ['display_name'=>'Prefix Conj 1 IPA', 'name'=>'prefix_conj_1_ipa'];
+            $column_descs []= (object) ['display_name'=>'Prefix Conj 2', 'name'=>'prefix_conj_2'];
+            $column_descs []= (object) ['display_name'=>'Prefix Conj 2 IPA', 'name'=>'prefix_conj_2_ipa'];
+            $column_descs []= (object) ['display_name'=>'Suffix Conj', 'name'=>'suffix_conj'];
+            $column_descs []= (object) ['display_name'=>'Suffix Conj IPA', 'name'=>'suffix_conj_ipa'];
+            $column_descs []= (object) ['display_name'=>'Infinitive', 'name'=>'infinitive'];
+            $column_descs []= (object) ['display_name'=>'Infinitive IPA', 'name'=>'infinitive_ipa'];
+            $column_descs []= (object) ['display_name'=>'Participle', 'name'=>'participle'];
+            $column_descs []= (object) ['display_name'=>'Participle IPA', 'name'=>'participle_ipa'];
+            $column_descs []= (object) ['display_name'=>'PC Thematic Vowel', 'name'=>'pc_thematic_vowel'];
+            $column_descs []= (object) ['display_name'=>'SC Thematic Vowel', 'name'=>'sc_thematic_vowel'];
+            $column_descs []= (object) ['display_name'=>'Stem', 'name'=>'stem'];
+            $column_descs []= (object) ['display_name'=>'Complement', 'name'=>'complement'];
         }
-
-        if ($column_order_string === null) {
-            $column_order_string = <<<END
-[
-{"display_name": "Meaning", "name": "meaning"},
-{"display_name": "Semantic Tag", "name": "semantic_tag"},
-{"display_name": "Etymon", "name": "etymon"}
-]
-END;
-        }
-
-        $column_descs = json_decode($column_order_string);
 
         $lookup_fn = function ($reflex, $column_name) use ($column_descs) {
             if ($column_name == 'meaning') { return $reflex->gloss; }
