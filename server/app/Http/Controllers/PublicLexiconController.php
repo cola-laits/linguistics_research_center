@@ -104,13 +104,11 @@ class PublicLexiconController extends Controller
     public function data(Request $request, $lexicon_slug)
     {
         $lex = LexLexicon::where('slug', $lexicon_slug)->firstOrFail();
-        $lex_language_ids = \DB::select(<<<EOQ
-        SELECT lex_language.id FROM lex_language,lex_language_sub_family,lex_language_family
-        WHERE lex_language_sub_family.id=lex_language.sub_family_id
-        AND lex_language_family.id=lex_language_sub_family.family_id
-        AND lex_language_family.lexicon_id=?
-        EOQ, [$lex->id]);
-        $lex_language_ids = array_column($lex_language_ids, 'id');
+        $lex_language_ids = \DB::table('lex_language')
+            ->join('lex_language_sub_family', 'lex_language.sub_family_id', '=', 'lex_language_sub_family.id')
+            ->join('lex_language_family', 'lex_language_sub_family.family_id', '=', 'lex_language_family.id')
+            ->where('lex_language_family.lexicon_id', $lex->id)
+            ->pluck('lex_language.id');
 
         $reflexes = LexReflex::with([
             'language',
@@ -164,22 +162,25 @@ class PublicLexiconController extends Controller
             $column_descs []= (object) ['display_name'=>'Complement', 'name'=>'complement'];
         }
 
-        $lookup_fn = function ($reflex, $column_name) use ($column_descs) {
-            if ($column_name == 'meaning') { return $reflex->gloss; }
-            if ($column_name == 'part_of_speech') { return $reflex->parts_of_speech->pluck('text')->join(', '); }
-            if ($column_name == 'semantic_tag') {
-                $tags = [];
-                foreach ($reflex->etyma as $etymon) {
-                    foreach ($etymon->semantic_fields as $field) {
-                        $tags[] = $field->text;
-                    }
-                }
-                return implode(', ', $tags);
+        $lookup_fn = function ($reflex, $column_name) {
+            switch ($column_name) {
+                case 'meaning':
+                    return $reflex->gloss;
+                case 'part_of_speech':
+                    return $reflex->parts_of_speech->pluck('text')->join(', ');
+                case 'semantic_tag':
+                    return $reflex->etyma->flatMap(function ($etymon) {
+                        return $etymon->semantic_fields->pluck('text');
+                    })->join(', ');
+                case 'root':
+                    return collect($reflex->entries)->pluck('text')->join(', ');
+                case 'etymon':
+                    return $reflex->etyma->pluck('entry')->join(', ');
+                case 'language':
+                    return $reflex->language->name;
+                default:
+                    return $reflex->extra_data[$column_name] ?? "";
             }
-            if ($column_name == 'root') { return collect($reflex->entries)->pluck('text')->join(', '); }
-            if ($column_name == 'etymon') { return $reflex->etyma->pluck('entry')->join(', '); }
-            if ($column_name == 'language') { return $reflex->language->name; }
-            return $reflex->extra_data[$column_name] ?? "";
         };
 
         return view('lexicon/lex_data', [
