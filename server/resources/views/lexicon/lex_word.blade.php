@@ -51,21 +51,38 @@
     </table>
 
     <div>
-
-        @if ($word->cross_references->count() > 0)
+        @if ($word->cross_references_to->count() > 0 || $word->cross_references_from->count() > 0)
             <h2>{{__('lexicon.pages.word.table_header.Related Words')}}:</h2>
+            @if ($word->cross_references_from->count() > 0)
             <div>
+                <h3>{{__('lexicon.pages.word.table_header.Related Words Borrowed From')}}:</h3>
                 <ul>
-                    @foreach ($word->cross_reference_pivots as $crossref)
+                    @foreach ($word->cross_references_from as $crossref)
                         <li>
-                            {{$crossref->to_reflex->language->name}}: {{$crossref->to_reflex->getEntriesCSV()}} "{{$crossref->to_reflex->gloss}}"
-                            @if ($crossref->relationship)
-                            ({{$crossref->relationship}})
+                            {{$crossref->language->name}}: <a href="/lexicon/{{$crossref->language->language_sub_family->language_family->lexicon->slug}}/word/{{$crossref->id}}">{{$crossref->getEntriesCSV()}}</a> "{{$crossref->gloss}}"
+                            @if ($crossref->pivot->relationship)
+                                ({{$crossref->pivot->relationship}})
                             @endif
                         </li>
                     @endforeach
                 </ul>
             </div>
+            @endif
+            @if ($word->cross_references_to->count() > 0)
+            <div>
+                <h3>{{__('lexicon.pages.word.table_header.Related Words Borrowed Into')}}:</h3>
+                <ul>
+                    @foreach ($word->cross_references_to as $crossref)
+                        <li>
+                            {{$crossref->language->name}}: <a href="/lexicon/{{$crossref->language->language_sub_family->language_family->lexicon->slug}}/word/{{$crossref->id}}">{{$crossref->getEntriesCSV()}}</a> "{{$crossref->gloss}}"
+                            @if ($crossref->pivot->relationship)
+                                ({{$crossref->pivot->relationship}})
+                            @endif
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
         @endif
 
         @if ($word->extra_data)

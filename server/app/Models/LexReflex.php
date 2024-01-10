@@ -183,18 +183,26 @@ class LexReflex extends Model {
 		return $this->belongsToMany(LexSource::class, 'lex_reflex_source', 'reflex_id', 'source_id')->orderBy('code');
 	}
 
-    public function cross_references()
+    public function cross_references_to()
     {
         return $this->belongsToMany(LexReflex::class, 'lex_reflex_cross_reference', 'from_reflex_id', 'to_reflex_id')
-            ->withPivot(['relationship']);
+            ->withPivot(['relationship'])
+            ->using(LexReflexCrossReference::class);
     }
 
-    public function cross_reference_pivots()
+    public function cross_references_from()
     {
-        return $this->hasMany(LexReflexCrossReference::class, 'from_reflex_id');
+        return $this->belongsToMany(LexReflex::class, 'lex_reflex_cross_reference', 'to_reflex_id', 'from_reflex_id')
+            ->withPivot(['relationship'])
+            ->using(LexReflexCrossReference::class);
     }
 
-    public function extra_data() : hasMany
+    public function cross_reference_to_pivots()
+    {
+        return $this->hasMany(LexReflexCrossReference::class, 'to_reflex_id');
+    }
+
+    public function extra_data() : HasMany
     {
         return $this->hasMany(LexReflexExtraData::class, 'reflex_id');
     }

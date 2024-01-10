@@ -81,6 +81,8 @@
     "lexicon.pages.word.table_header.Etymology": "Etymology",
     "lexicon.pages.word.table_header.Semantic Tag": "Semantic Tag",
     "lexicon.pages.word.table_header.Related Words": "Related Words",
+    "lexicon.pages.word.table_header.Related Words Borrowed From": "Borrowed From",
+    "lexicon.pages.word.table_header.Related Words Borrowed Into": "Borrowed Into",
     "lexicon.pages.word.table_header.Other Info": "Other Info",
     "lexicon.pages.word.table_header.Cognates": "Cognates",
 

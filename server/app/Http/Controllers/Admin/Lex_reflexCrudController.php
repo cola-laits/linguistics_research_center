@@ -136,21 +136,28 @@ class Lex_reflexCrudController extends CrudController
                 ['name'=>'order', 'label'=>'Order', 'wrapper'=>['class'=>'form-group col-md-3']],
             ]);
 
-        CRUD::field('cross_reference_pivots')
+        CRUD::field('cross_reference_to_pivots')
             ->type('relationship')
             ->label('Cross Reference')
             ->new_item_label('New Cross-Reference')
-            ->hint("The word whose entry you're editing is the <i>borrowed</i> (original, or <b>From</b>) word. The cross-reference you add will be the <i>borrowing</i>, or <i>calqued</i> word (<i>new</i>, or <b>To</b>), as this word was taken into another language.")
+            ->hint("If the LexReflex entry you're editing is borrowed or calqued from another language, click here to add its source from another dictionary.")
             ->subfields([
-                ['name'=>'to_reflex_id', 'label'=>'Reflex',
+                [
+                    'name'=>'from_reflex',
+                    'label'=>'Source',
+                    'wrapper'=>['class'=>'form-group col-md-6'],
                     'type'=>'select2_from_ajax',
                     'data_source'=>backpack_url("lex_reflex/fetch/crossrefpivot"),
                     'method'=>'POST',
                     'attribute'=>'langNameEntriesGloss',
-                    'wrapper'=>['class'=>'form-group col-md-6']],
-                ['name'=>'relationship',
+                    'hint'=>'the current entry comes from...'
+                ],
+                [
+                    'name'=>'relationship',
                     'label'=>'Relationship <i class="la la-flag-checkered pull-right" style="margin-top: 3px;" title="This field is translatable."></i>',
-                    'wrapper'=>['class'=>'form-group col-md-6']],
+                    'hint'=>'e.g. borrowing, calque, ...',
+                    'wrapper'=>['class'=>'form-group col-md-6']
+                ],
             ])
             ;
 

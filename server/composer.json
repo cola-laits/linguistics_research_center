@@ -13,10 +13,11 @@
         "ext-intl": "*",
         "ext-libxml": "*",
         "ext-mbstring": "*",
-        "backpack/crud": "^5.0.0",
-        "backpack/permissionmanager": "^6.0",
-        "backpack/pro": "^1.0.0",
+        "backpack/crud": "^6.0",
+        "backpack/permissionmanager": "^7.0",
+        "backpack/pro": "^2.0",
         "backpack/settings": "^3.0",
+        "backpack/theme-tabler": "^1.2",
         "doctrine/dbal": "^3.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^10.0",
@@ -27,7 +28,7 @@
         "spatie/laravel-translatable": "^6.5"
     },
     "require-dev": {
-        "backpack/generators": "^3.1",
+        "backpack/generators": "^4.0",
         "barryvdh/laravel-debugbar": "^3.6",
         "barryvdh/laravel-ide-helper": "^2.6",
         "fakerphp/faker": "^1.9.1",
