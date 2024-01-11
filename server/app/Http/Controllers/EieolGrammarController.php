@@ -36,8 +36,6 @@ class EieolGrammarController extends Controller
         $grammar->section_number = $request->get('section_number');
         $grammar->grammar_text = Normalizer::normalize($request->get('grammar_text'), Normalizer::FORM_C);
         $grammar->lesson_id = $request->get('lesson_id');
-        $grammar->created_by = Auth::user()->username;
-        $grammar->updated_by = Auth::user()->username;
 
         $grammar->save();
         return [
@@ -72,7 +70,6 @@ class EieolGrammarController extends Controller
         $grammar->order = $request->get('order');
         $grammar->section_number = $request->get('section_number');
         $grammar->grammar_text = Normalizer::normalize($request->get('grammar_text'), Normalizer::FORM_C);
-        $grammar->updated_by = Auth::user()->username;
 
         $grammar->save();
         return [

@@ -24,8 +24,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string|null $remember_token
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property string|null $created_by
- * @property string|null $updated_by
  * @property int $is_admin
  * @property string $name
  * @property-read Collection|\App\Models\EieolSeries[] $editableSeries

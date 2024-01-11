@@ -44,8 +44,6 @@ class EieolHeadWordController extends Controller
         }
         $head_word->keywords = $request->get('keywords');
         $head_word->language_id = $request->get('language_id');
-        $head_word->created_by = Auth::user()->username;
-        $head_word->updated_by = Auth::user()->username;
 
         $head_word->save();
 
@@ -86,7 +84,6 @@ class EieolHeadWordController extends Controller
         }
         $head_word->keywords = $request->get('keywords');
         $head_word->definition = Normalizer::normalize($request->get('definition'), Normalizer::FORM_C);
-        $head_word->updated_by = Auth::user()->username;
 
         $head_word->save();
 

@@ -20,8 +20,6 @@ use App\Models\LexPartOfSpeech;
  * @property int $order
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property string|null $created_by
- * @property string|null $updated_by
  * @property-read \App\Models\LexPartOfSpeech|null $part_of_speech
  * @property-read \App\Models\LexReflex $reflex
  * @method static Builder|LexReflexPartOfSpeech newModelQuery()
@@ -44,28 +42,8 @@ class LexReflexPartOfSpeech extends Model {
 	protected $table = 'lex_reflex_part_of_speech';
 
     protected $guarded = [
-        'id','created_at','created_by','updated_at','updated_by'
+        'id','created_at','updated_at'
     ];
-
-	public static function boot() {
-		parent::boot();
-
-		// event to happen on saving
-		static::creating(function($table)  {
-            if (Auth::user()) {
-                $table->created_by = Auth::user()->username;
-                $table->updated_by = Auth::user()->username;
-            }
-		});
-
-		// event to happen on updating
-		static::updating(function($table)  {
-            if (Auth::user()) {
-                $table->updated_by = Auth::user()->username;
-            }
-		});
-
-	}
 
 	public function reflex()
 	{

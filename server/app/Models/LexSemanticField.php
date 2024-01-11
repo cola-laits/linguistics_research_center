@@ -23,8 +23,6 @@ use App\Models\LexSemanticCategory;
  * @property int $semantic_category_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property string|null $created_by
- * @property string|null $updated_by
  * @property-read Collection|\App\Models\LexEtyma[] $etymas
  * @property-read int|null $etymas_count
  * @property-read \App\Models\LexSemanticCategory $semantic_category
@@ -52,25 +50,6 @@ class LexSemanticField extends Model {
 	protected $fillable = ['text','number','abbr','semantic_category_id'];
 
     protected $translatable = ['text'];
-
-	public static function boot() {
-		parent::boot();
-
-		// event to happen on saving
-		static::creating(function($table)  {
-            if (Auth::user()) {
-                $table->created_by = Auth::user()->username;
-                $table->updated_by = Auth::user()->username;
-            }
-		});
-
-		// event to happen on updating
-		static::updating(function($table)  {
-            if (Auth::user()) {
-                $table->updated_by = Auth::user()->username;
-            }
-		});
-	}
 
 	public function semantic_category()
 	{

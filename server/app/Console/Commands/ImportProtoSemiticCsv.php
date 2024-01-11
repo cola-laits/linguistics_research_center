@@ -130,8 +130,6 @@ class ImportProtoSemiticCsv extends Command
                 $lex_etymon->gloss = 'No meaning/gloss for '.$csv_row['id'];
             }
 
-            $lex_etymon->created_by = "ps importer";
-            $lex_etymon->updated_by = "ps importer";
             $lex_etymon->lexicon_id = $semitic_lexicon_id;
             $etymon_id = $csv_row['id'];
             $extra_data = new \stdClass;
@@ -191,8 +189,6 @@ class ImportProtoSemiticCsv extends Command
             }
             $entries = array(['text'=>$entry]);
             $lex_reflex->entries = $entries;
-            $lex_reflex->created_by = "ps importer";
-            $lex_reflex->updated_by = "ps importer";
             $extra_data = new \stdClass;
             foreach ($csv_row as $name=>$value) {
                 if (in_array($name, ['id', 'etymon_id', 'etymon', 'root', 'meaning', 'language', 'part_of_speech', 'semantic_tag'])) {
@@ -221,16 +217,12 @@ class ImportProtoSemiticCsv extends Command
                     $lexpos->lexicon_id = $semitic_lexicon_id;
                     $lexpos->code = $pos_text;
                     $lexpos->display = $pos_text;
-                    $lexpos->created_by = "ps importer";
-                    $lexpos->updated_by = "ps importer";
                     $lexpos->save();
                 }
                 $lrpos = new LexReflexPartOfSpeech();
                 $lrpos->reflex_id = $lex_reflex->id;
                 $lrpos->text = $pos_text;
                 $lrpos->order = 10;
-                $lrpos->created_by = "ps importer";
-                $lrpos->updated_by = "ps importer";
                 $lrpos->save();
             }
             if ($csv_row['etymon_id']) {

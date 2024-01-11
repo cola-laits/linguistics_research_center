@@ -23,8 +23,6 @@ use Illuminate\Support\Facades\Auth;
  * @property string|null $gloss
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property string|null $created_by
- * @property string|null $updated_by
  * @property-read Collection|LexEtyma[] $cross_references
  * @property-read int|null $cross_references_count
  * @property-read Collection|LexReflex[] $reflexes
@@ -54,26 +52,6 @@ class LexEtyma extends Model {
 	protected $table = 'lex_etyma';
 	protected $guarded = ['id'];
     protected $translatable = ['gloss'];
-
-	public static function boot() {
-		parent::boot();
-
-		// event to happen on saving
-		static::creating(function($table)  {
-            if (Auth::user()) {
-                $table->created_by = Auth::user()->username;
-                $table->updated_by = Auth::user()->username;
-            }
-		});
-
-		// event to happen on updating
-		static::updating(function($table)  {
-            if (Auth::user()) {
-                $table->updated_by = Auth::user()->username;
-            }
-		});
-
-	}
 
 	public function semantic_fields()
 	{

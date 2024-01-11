@@ -35,7 +35,7 @@ class LexEtymaReflex extends Model {
 	protected $table = 'lex_etyma_reflex';
 
     protected $guarded = [
-        'id','created_at','created_by','updated_at','updated_by'
+        'id','created_at','updated_at'
     ];
 
 	public function etyma()

@@ -19,8 +19,6 @@ use Illuminate\Support\Carbon;
  * @property string|null $lang_attribute
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property string|null $created_by
- * @property string|null $updated_by
  * @method static Builder|EieolLanguage newModelQuery()
  * @method static Builder|EieolLanguage newQuery()
  * @method static Builder|EieolLanguage query()

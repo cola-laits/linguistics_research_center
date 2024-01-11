@@ -20,8 +20,6 @@ use Illuminate\Support\Carbon;
  * @property int $order
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property string|null $created_by
- * @property string|null $updated_by
  * @property-read \App\Models\EieolGloss $gloss
  * @property-read \App\Models\EieolHeadWord $head_word
  * @method static Builder|EieolElement newModelQuery()

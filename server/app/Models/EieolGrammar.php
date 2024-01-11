@@ -19,8 +19,6 @@ use Illuminate\Support\Carbon;
  * @property string|null $section_number
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property string|null $created_by
- * @property string|null $updated_by
  * @property-read \App\Models\EieolLesson $lesson
  * @method static Builder|EieolGrammar newModelQuery()
  * @method static Builder|EieolGrammar newQuery()

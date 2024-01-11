@@ -22,8 +22,6 @@ use App\Models\LexLanguage;
  * @property int $family_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property string|null $created_by
- * @property string|null $updated_by
  * @property-read mixed $family_sub_family
  * @property-read \App\Models\LexLanguageFamily $language_family
  * @property-read Collection|\App\Models\LexLanguage[] $languages
@@ -51,21 +49,6 @@ class LexLanguageSubFamily extends Model {
 	protected $guarded = ['id'];
 
     protected $translatable = ['name'];
-
-	public static function boot() {
-		parent::boot();
-
-		// event to happen on saving
-		static::creating(function($table)  {
-			$table->created_by = Auth::user()->username;
-			$table->updated_by = Auth::user()->username;
-		});
-
-		// event to happen on updating
-		static::updating(function($table)  {
-			$table->updated_by = Auth::user()->username;
-		});
-	}
 
 	public function languages()
 	{

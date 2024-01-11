@@ -51,8 +51,6 @@ class EieolLessonController extends Controller
             'series_id' => $request->get('series_id'),
             'language_id' => $request->get('language'),
             'intro_text' => Normalizer::normalize($request->get('intro_text'), Normalizer::FORM_C),
-            'created_by' => Auth::user()->username,
-            'updated_by' => Auth::user()->username,
         ]);
 
         $request->session()->flash('message', $lesson->title . ' has been created');
@@ -108,7 +106,6 @@ class EieolLessonController extends Controller
             'title' => Normalizer::normalize($request->get('title'), Normalizer::FORM_C),
             'order' => $request->get('order'),
             'intro_text' => Normalizer::normalize($request->get('intro_text'), Normalizer::FORM_C),
-            'updated_by' => Auth::user()->username,
         ]);
 
         return [
@@ -123,7 +120,6 @@ class EieolLessonController extends Controller
         $lesson = EieolLesson::find($id);
         $lesson->update([
             'lesson_translation' => Normalizer::normalize($request->get('lesson_translation'), Normalizer::FORM_C),
-            'updated_by' => Auth::user()->username,
         ]);
 
         return [

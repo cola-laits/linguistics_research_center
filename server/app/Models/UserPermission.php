@@ -16,8 +16,6 @@ use Illuminate\Support\Carbon;
  * @property int $user_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property string|null $created_by
- * @property string|null $updated_by
  * @property int $eieol_series_id
  * @property-read \App\Models\User $user
  * @method static Builder|UserPermission newModelQuery()

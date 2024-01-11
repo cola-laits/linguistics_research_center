@@ -41,7 +41,6 @@ class EieolGlossedTextGlossController extends Controller
         $gloss = EieolGloss::findOrFail($request->get('gloss_id'));
         $gloss->order = $request->get('order');
         $gloss->glossed_text_id = $request->get('glossed_text_id');
-        $gloss->updated_by = Auth::user()->username;
 
         $gloss->save();
 
@@ -67,7 +66,6 @@ class EieolGlossedTextGlossController extends Controller
         $gloss = EieolGloss::findOrFail($id);
 
         $gloss->order = $request->get('order');
-        $gloss->updated_by = Auth::user()->username;
 
         $gloss->save();
         return [
@@ -80,7 +78,6 @@ class EieolGlossedTextGlossController extends Controller
         $gloss = EieolGloss::findOrFail($id);
         $gloss->glossed_text_id = null;
         $gloss->order = null;
-        $gloss->updated_by = Auth::user()->username;
         $gloss->save();
     }
 

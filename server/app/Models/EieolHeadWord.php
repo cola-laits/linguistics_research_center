@@ -18,8 +18,6 @@ use Illuminate\Support\Carbon;
  * @property int|null $etyma_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property string|null $created_by
- * @property string|null $updated_by
  * @property string $keywords
  * @property-read Collection|\App\Models\EieolElement[] $elements
  * @property-read int|null $elements_count

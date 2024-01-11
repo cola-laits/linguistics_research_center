@@ -27,8 +27,6 @@ use Illuminate\Support\Carbon;
  * @property string|null $meta_tags
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property string|null $created_by
- * @property string|null $updated_by
  * @property-read Collection|\App\Models\EieolSeriesLanguage[] $languages
  * @property-read int|null $languages_count
  * @property-read Collection|\App\Models\EieolLanguage[] $lesson_languages

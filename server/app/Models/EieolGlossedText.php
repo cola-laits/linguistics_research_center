@@ -19,8 +19,6 @@ use Illuminate\Support\Carbon;
  * @property int $order
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property string|null $created_by
- * @property string|null $updated_by
  * @property string|null $audio_url
  * @property array|null $custom_gloss_mapping
  * @property-read Collection|\App\Models\EieolGloss[] $glosses

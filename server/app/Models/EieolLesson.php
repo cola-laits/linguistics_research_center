@@ -24,8 +24,6 @@ use Illuminate\Support\Carbon;
  * @property string|null $lesson_translation
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property string|null $created_by
- * @property string|null $updated_by
  * @property-read Collection|\App\Models\EieolGlossedText[] $glossed_texts
  * @property-read int|null $glossed_texts_count
  * @property-read Collection|\App\Models\EieolGrammar[] $grammars

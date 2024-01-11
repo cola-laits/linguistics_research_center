@@ -101,8 +101,6 @@ class EieolGlossController extends Controller
             $gloss->language_id = $request->get('language_id');
             $gloss->comments = Normalizer::normalize($request->get('comments'), Normalizer::FORM_C);
             $gloss->underlying_form = Normalizer::normalize($request->get('underlying_form'), Normalizer::FORM_C);
-            $gloss->created_by = Auth::user()->username;
-            $gloss->updated_by = Auth::user()->username;
 
             $gloss->save();
 
@@ -117,8 +115,6 @@ class EieolGlossController extends Controller
                     $element->analysis = $request->get('element_' . $i . '_analysis');
                     $element->head_word_id = $request->get('element_' . $i . '_head_word_id');
                     $element->order = $i;
-                    $element->created_by = Auth::user()->username;
-                    $element->updated_by = Auth::user()->username;
 
                     $element->save();
                 }
@@ -192,8 +188,6 @@ class EieolGlossController extends Controller
             $gloss->comments = Normalizer::normalize($request->get('comments'), Normalizer::FORM_C);
             $gloss->underlying_form = Normalizer::normalize($request->get('underlying_form'), Normalizer::FORM_C);
 
-            $gloss->updated_by = Auth::user()->username;
-
             $gloss->save();
 
             //loop through element elements
@@ -207,7 +201,6 @@ class EieolGlossController extends Controller
                         $element->part_of_speech = $request->get('element_' . $i . '_part_of_speech');
                         $element->analysis = $request->get('element_' . $i . '_analysis');
                         $element->head_word_id = $request->get('element_' . $i . '_head_word_id');
-                        $element->updated_by = Auth::user()->username;
 
                         $element->save();
                     } else {
@@ -218,8 +211,6 @@ class EieolGlossController extends Controller
                         $element->analysis = $request->get('element_' . $i . '_analysis');
                         $element->head_word_id = $request->get('element_' . $i . '_head_word_id');
                         $element->order = $i;
-                        $element->created_by = Auth::user()->username;
-                        $element->updated_by = Auth::user()->username;
 
                         $element->save();
                     }

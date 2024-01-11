@@ -20,8 +20,6 @@ use App\Models\LexLanguageSubFamily;
  * @property int $order
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property string|null $created_by
- * @property string|null $updated_by
  * @property-read mixed $family
  * @property-read Collection|\App\Models\LexLanguageSubFamily[] $language_sub_families
  * @property-read int|null $language_sub_families_count
@@ -47,21 +45,6 @@ class LexLanguageFamily extends Model {
 	protected $guarded = ['id'];
 
     protected $translatable = ['name'];
-
-	public static function boot() {
-		parent::boot();
-
-		// event to happen on saving
-		static::creating(function($table)  {
-			$table->created_by = Auth::user()->username;
-			$table->updated_by = Auth::user()->username;
-		});
-
-		// event to happen on updating
-		static::updating(function($table)  {
-			$table->updated_by = Auth::user()->username;
-		});
-	}
 
 	public function language_sub_families()
 	{

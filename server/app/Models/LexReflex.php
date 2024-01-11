@@ -27,8 +27,6 @@ use App\Models\LexSource;
  * @property string|null $gloss
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property string|null $created_by
- * @property string|null $updated_by
  * @property array|null $entries
  * @property-read Collection|\App\Models\LexEtyma[] $etymas
  * @property-read int|null $etymas_count
@@ -68,26 +66,6 @@ class LexReflex extends Model {
     ];
 
     protected $appends = ['langAbbrGloss','langNameEntriesGloss'];
-
-	public static function boot() {
-		parent::boot();
-
-		// event to happen on saving
-		static::creating(function($table)  {
-            if (Auth::user()) {
-                $table->created_by = Auth::user()->username;
-                $table->updated_by = Auth::user()->username;
-            }
-		});
-
-		// event to happen on updating
-		static::updating(function($table)  {
-            if (Auth::user()) {
-                $table->updated_by = Auth::user()->username;
-            }
-		});
-
-	}
 
     private static function split_entries($entry)
     {
