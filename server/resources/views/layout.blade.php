@@ -131,12 +131,7 @@ the page content is in <section class="main-section">
 
                 <!-- Phone "Tab" Bar Navigation-->
 
-                <nav class="tab-bar show-for-small-only"><!-- ADD BACK show-for-small to remove from desktop -->
-                  <section class="right-small">
-                    <a class="right-off-canvas-toggle menu-icon"><span></span></a>
-                  </section>
-
-
+                <nav class="tab-bar show-for-small-only">
                   <section class="left tab-bar-section">
                     <a href="http://www.utexas.edu/">
                     <img alt="The University of Texas at Austin" class="texas" onerror="this.onerror=null;this.src='https://liberalarts.utexas.edu/_internal/images/2015_TEXAS_wordmark_white.png'" src="https://liberalarts.utexas.edu/_internal/images/2015_cola_texas3.svg"/></a>
