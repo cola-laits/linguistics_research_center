@@ -91,8 +91,10 @@ class Lex_etymaCrudController extends CrudController
             ->label('Reflex')
             ->type('text')
             ->whenActive(function($value) {
-                CRUD::addClause('whereHas','reflexes', function($query) use ($value) {
-                    return $query->where('entries','like',"%$value%");
+                $this->crud->query = $this->crud->query->whereHas('reflexes', function($query) use ($value) {
+                    // FIXME figure out how to do the whereRaw using native eloquent, something like:
+                    //$this->crud->query = $this->crud->query->where('entries->text', 'like', "%$value%");
+                    $query->whereRaw("JSON_UNQUOTE(JSON_EXTRACT(`entries`, '$[*].\"text\"')) LIKE ?", ["%".$value."%"]);
                 });
             });
 

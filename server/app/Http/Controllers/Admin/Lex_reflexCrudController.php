@@ -68,7 +68,9 @@ class Lex_reflexCrudController extends CrudController
             ->type('text')
             ->label('Reflex')
             ->whenActive(function($value) {
-                $this->crud->addClause('where','entries','like', "%$value%");
+                // FIXME figure out how to do the whereRaw using native eloquent, something like:
+                //$this->crud->query = $this->crud->query->where('entries->text', 'like', "%$value%");
+                $this->crud->query->whereRaw("JSON_UNQUOTE(JSON_EXTRACT(`entries`, '$[*].\"text\"')) LIKE ?", ["%".$value."%"]);
             });
 
         CRUD::filter('gloss')
