@@ -9,7 +9,7 @@
     "lexicon.pages.language.page_title": "LRC :lexicon_name: :language_name",
     "lexicon.pages.word.page_title": "Diccionario de :language_name",
 
-    "lexicon.pages.data.datatables_translation_file": "en-US.json",
+    "lexicon.pages.data.datatables_translation_file": "es-MX.json",
     "lexicon.pages.data.column_visibility_button_label": "Seleccionar columnas",
     "lexicon.pages.data.clear_search_button_label": "Borrar la búsqueda",
     "lexicon.pages.data.csv_export_button_label": "CSV",
