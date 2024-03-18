@@ -159,7 +159,7 @@
 
         <div>
 
-            @if ($lexicon->getViewerLangsArray()->count() > 1)
+            @if (count($lexicon->getViewerLangsArray()) > 1)
                 <div class="dropdown">
                     <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                         {{$lexicon->getDisplayTextViewerLang(App::getLocale())}}

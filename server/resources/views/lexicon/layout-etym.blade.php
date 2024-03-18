@@ -2,7 +2,7 @@
 
 @section('search-item-list')
     @foreach ($lexicon->etyma as $etymon)
-        <li data-sidebar-id="{{$etymon->id}}"><sup>*</sup><a href="/lexicon/{{$lexicon->slug}}/etymon/{{$etymon->id}}">{{$etymon->entry}}</a></li>
+        <li data-sidebar-id="{{$etymon->id}}"><sup>*</sup><a href="/lexicon/{{$lexicon->slug}}/etymon/{{$etymon->id}}">{!! $etymon->entry !!}</a></li>
     @endforeach
 @endsection
 
