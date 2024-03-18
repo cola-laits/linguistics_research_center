@@ -171,10 +171,40 @@
                 - 20;
             dataTablesScrollBody.css('height', newHeight + 'px');
         }
+
+        $(document).ready(function() {
+            var instructions_modal = new bootstrap.Modal(document.getElementById('instructions_modal'), {
+                keyboard: false
+            });
+            instructions_modal.show();
+        });
     </script>
 @endsection
 
 @section('content')
+
+    <div class="modal" id="instructions_modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{__('lexicon.pages.data.help.modal.title')}}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>{!! __('lexicon.pages.data.help.modal.content', [
+                        'lexicon_name'=>$lexicon->name,
+                        'filter_icon'=><<<END
+<svg fill="#000000" width="24px" height="24px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M 5 4 L 5 6.34375 L 5.21875 6.625 L 13 16.34375 L 13 28 L 14.59375 26.8125 L 18.59375 23.8125 L 19 23.5 L 19 16.34375 L 26.78125 6.625 L 27 6.34375 L 27 4 Z M 7.28125 6 L 24.71875 6 L 17.53125 15 L 14.46875 15 Z M 15 17 L 17 17 L 17 22.5 L 15 24 Z"></path></svg>
+END
+                        ]) !!}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__('lexicon.pages.data.help.modal.close')}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <div>
         <div>
