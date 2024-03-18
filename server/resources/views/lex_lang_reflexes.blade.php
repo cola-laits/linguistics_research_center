@@ -130,7 +130,7 @@ or <i>lie</i>, represent multiple reflexes derived from different PIE etyma.</p>
             <td>
                 @foreach($reflex['etymas'] as $index => $temp_etyma)
                     <a title="{!! strip_tags($temp_etyma['gloss']) !!}" href='/lex/master/{{$temp_etyma['id']}}#{{$language['abbr']}}'>
-                        <span class='Unicode' lang='ine'>{!! explode(":",explode(",",$temp_etyma['entry'])[0])[0] !!}</span>
+                        <span class='Unicode' lang='ine'>@homograph_number_ielex($temp_etyma['homograph_number']) {!! explode(":",explode(",",$temp_etyma['entry'])[0])[0] !!}</span>
                     </a>@if ($index+1 != count($reflex['etymas'])),@endif
                 @endforeach
 

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -24,7 +25,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // for running against mysql < 5.7
-        Schema::defaultStringLength(191);
+        Blade::directive('homograph_number', function (string $val) {
+            return "<?php echo ($val) ? \"(\".($val).\")\" : \"\"; ?>";
+        });
+
+        Blade::directive('homograph_number_ielex', function (string $val) {
+            return "<?php echo ($val) ? ($val).\".\" : \"\"; ?>";
+        });
     }
 }

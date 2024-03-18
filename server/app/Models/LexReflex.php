@@ -217,7 +217,8 @@ class LexReflex extends Model {
                 $etymas = $this->etymas->map(fn($etyma) => [
                     'entry' => $etyma->entry,
                     'gloss' => $etyma->gloss,
-                    'id' => $etyma->old_id
+                    'id' => $etyma->old_id,
+                    'homograph_number' => $etyma->homograph_number,
                 ])->sortBy('id')->toArray();
 
                 $new_key = LexReflex::hashKey($key, $alpha_weights);

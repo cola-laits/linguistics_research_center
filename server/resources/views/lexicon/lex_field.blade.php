@@ -27,7 +27,7 @@
             <td class="vw-100">
                 <ul>
                     @forelse ($field->etyma as $etymon)
-                        <li><sup>*</sup><a href="/lexicon/{{$lexicon->slug}}/etymon/{{$etymon->id}}">{{$etymon->entry}}</a> <span>{!! $etymon->gloss !!}</span></li>
+                        <li><sup>*</sup><a href="/lexicon/{{$lexicon->slug}}/etymon/{{$etymon->id}}">{{$etymon->entry}} @homograph_number($etymon->homograph_number)</a> <span>{!! $etymon->gloss !!}</span></li>
                     @empty
                         <li>{{__('lexicon.pages.field.no_etyma_found_message')}}</li>
                     @endforelse

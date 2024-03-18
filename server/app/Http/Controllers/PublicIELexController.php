@@ -64,7 +64,7 @@ class PublicIELexController extends Controller
         }
 
         $reflexes = LexReflex::whereLanguageId($language->id)
-            ->with('etymas:id,old_id,entry,gloss')
+            ->with('etymas:id,old_id,entry,gloss,homograph_number')
             ->select(['id', 'language_id', 'lang_attribute', 'gloss', 'entries'])
             ->get()
             ->filter(fn ($reflex) => count($reflex->etymas) > 0)

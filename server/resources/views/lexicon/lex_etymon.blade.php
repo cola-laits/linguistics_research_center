@@ -12,7 +12,7 @@
     <table class="table table-bordered table-responsive">
         <tr>
             <td class="text-end" style="white-space:nowrap;">{{__('lexicon.pages.etymon.table_header.Etymon')}}:</td>
-            <td class="vw-100"><sup>*</sup>{!! $etymon->entry !!}</td>
+            <td class="vw-100"><sup>*</sup>{!! $etymon->entry !!} @homograph_number($etymon->homograph_number)</td>
         </tr>
         <tr>
             <td class="text-end" style="white-space:nowrap;">{{__('lexicon.pages.etymon.table_header.Gloss')}}:</td>

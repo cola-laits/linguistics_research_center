@@ -120,6 +120,7 @@ class Lex_etymaCrudController extends CrudController
         CRUD::field('order')->type('number');
         CRUD::field('page_number')->type('text');
         CRUD::field('entry')->label('Etyma')->type('text');
+        CRUD::field('homograph_number')->type('text');
         CRUD::field('gloss')->type('text');
         CRUD::field('cross_references')->type('select2_multiple')->model('App\Models\LexEtyma')->attribute('entry')->pivot(true);
         CRUD::field('semantic_fields')->type('select2_multiple')->model('App\Models\LexSemanticField')->attribute('text')->pivot(true);

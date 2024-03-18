@@ -32,7 +32,7 @@ curious about Indo-European etymology. Notice of potential error is always welco
     --
     @if($head_word->etyma != null)
         [<a href="/lex/master/#P{{$head_word->etyma->id}}">Pokorny</a>
-        <span class='Unicode' lang='ine'>{!! $head_word->etyma->entry !!} </span> <strong>::</strong> {!! $head_word->etyma->gloss !!}] &nbsp; --
+        <span class='Unicode' lang='ine'>@homograph_number_ielex($head_word->etyma->homograph_number) {!! $head_word->etyma->entry !!} </span> <strong>::</strong> {!! $head_word->etyma->gloss !!}] &nbsp; --
     @endif
 
     <ul>

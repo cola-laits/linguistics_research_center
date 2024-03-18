@@ -30,7 +30,7 @@ corrections may be made and/or more etyma &amp; reflexes may be added.</p>
 
 
 
-<p><b>Pokorny Etymon</b>: <span class='Unicode' lang='ine'>{!! $etyma->entry !!}</span> &nbsp; '{!! $etyma->gloss !!}'</p>
+<p><b>Pokorny Etymon</b>: <span class='Unicode' lang='ine'>@homograph_number_ielex($etyma->homograph_number) {!! $etyma->entry !!}</span> &nbsp; '{!! $etyma->gloss !!}'</p>
 <p><b>Semantic Field(s)</b>:
 @foreach($etyma->semantic_fields as $index => $semantic_field)
     <a href="/lex/semantic/field/{{$semantic_field->abbr}}">{{$semantic_field->text}}</a>@if ($index+1 != count($etyma->semantic_fields)),@endif

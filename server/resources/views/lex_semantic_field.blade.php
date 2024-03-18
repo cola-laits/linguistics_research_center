@@ -34,7 +34,7 @@ of PIE etyma, in any number of IE languages, may be added at any time.</blockquo
 
 @foreach($field->etymas as $etyma)
     <li>
-        <span class='Unicode' lang='ine'>{!! explode(",",$etyma['entry'])[0] !!}</span>
+        <span class='Unicode' lang='ine'>@homograph_number_ielex($etyma->homograph_number) {!! explode(",",$etyma['entry'])[0] !!}</span>
         &nbsp;
         <a href="/lex/master/#P{{$etyma->id}}" title="Pokorny PIE Data" target="new">'{!! $etyma->gloss !!}'</a>
         @if (count($etyma->reflexes) > 0)
