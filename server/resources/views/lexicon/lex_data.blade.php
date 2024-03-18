@@ -43,6 +43,9 @@
                     url: '/assets/datatables/plugins/i18n/{{__('lexicon.pages.data.datatables_translation_file')}}',
                 },
                 @endif
+                search: {
+                    regex: true
+                },
                 orderCellsTop: true,
                 fixedColumns: true,
                 fixedHeader: true,
@@ -137,8 +140,8 @@
                                         .column(colIdx)
                                         .search(
                                             this.value,
-                                            this.value != '',
-                                            this.value == ''
+                                            true,
+                                            false
                                         )
                                         .draw();
                                 })
