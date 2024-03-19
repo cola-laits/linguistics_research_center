@@ -18,7 +18,3 @@
 @section('sidebar')
     @include('lexicon.layout-sidebar')
 @endsection
-
-@section('language-select')
-    @include('lexicon.layout-language-select')
-@endsection

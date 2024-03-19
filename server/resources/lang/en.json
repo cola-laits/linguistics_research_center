@@ -99,6 +99,8 @@
     "lexicon.sidebar.title_headwords": "Headwords",
     "lexicon.sidebar.title_categories": "Categories",
     "lexicon.sidebar.button_label_search": "Search",
+    "lexicon.sidebar.search_placeholder_headwords": "Search words",
+    "lexicon.sidebar.search_placeholder_categories": "Search categories",
 
     "": ""
 }

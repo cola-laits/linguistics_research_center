@@ -15,14 +15,12 @@ a:hover {
 .sidebar {
     background-color: #317094;
     color: white;
+    height: 100vh;
+    min-width: 20vw;
 }
 
 .sidebar a {
     color:white;
-}
-
-.sidebar a.selector_type_link.selected {
-    text-decoration: none;
 }
 
 .sidebar ul li {
@@ -43,28 +41,38 @@ a:hover {
 .sidebar .sidebar-header {
     position: sticky;
     top: 0;
-    padding: 1rem;
-    margin-bottom: 1rem;
+    padding-top: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    background-color: #18384a;
+    z-index: 100;
+}
+
+.sidebar .sidebar-footer {
+    position: sticky;
+    bottom: 0;
+    height: 120px;
     background-color: #18384a;
     z-index: 100;
 }
 
 .sidebar .sidebar-content {
     padding: 1rem;
+    overflow-y: scroll;
 }
 
 .sidebar .sidebar-search-area {
     padding-bottom: 1rem;
 }
 
-#selector_type_category {
+#accordionCategory {
     padding: 10px;
 }
 
-#selector_type_category .accordion-body a {
+#accordionCategory .accordion-body a {
     color: #0d6efd;
 }
 
-#selector_type_category ul li.highlighted::before {
+#accordionCategorys ul li.highlighted::before {
     color: #0d6efd;
 }

@@ -16,11 +16,11 @@
         function choose_selector_type(type) {
             var selection_links = document.getElementsByClassName('selector_type_link');
             for (var i=0;i<selection_links.length;i++) {
-                selection_links.item(i).classList.remove('selected');
+                selection_links.item(i).classList.remove('active');
             }
             var selected_selection_link = document.getElementById('selector_type_link_'+type);
             if (selected_selection_link) {
-                selected_selection_link.classList.add('selected')
+                selected_selection_link.classList.add('active')
             }
 
             var selectors = document.getElementsByClassName('selector_type');
@@ -154,7 +154,7 @@
         </div>
 
         <div class="d-flex align-items-center mb-3 mb-md-0">
-            @yield('language-select')
+
         </div>
 
         <div>
@@ -173,7 +173,7 @@
             @else
                 @if (App::getLocale() !== 'en')
                     <div class="d-flex align-items-center mb-3 mb-md-0 me-md-auto">
-                        {{-- Offer an emergency 'back to English' button in case you land an a lexicon without language choices --}}
+                        {{-- Offer an emergency 'back to English' button in case you land on a lexicon without language choices --}}
                         <button type="button" class="btn btn-primary"
                                 onclick="document.location.href='/lexicon/{{$lexicon->slug}}?switchlang=en'"
                         >{{$lexicon->getDisplayTextViewerLang('en')}}</button>
