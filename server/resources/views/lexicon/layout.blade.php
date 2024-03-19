@@ -36,12 +36,15 @@
             document.getElementById('sidebar').scrollTo(0, 0);
         }
 
-        function show_selected_sidebar_item(element_to_highlight) {
+        function show_selected_sidebar_item(sidebar_list, element_to_highlight) {
+            if (sidebar_list.style.display === "none") {
+                return;
+            }
             var num_lis_above_highlighted = 4;
             var scrollToPosn = element_to_highlight.offsetTop
                 - document.getElementById('sidebar-header').offsetHeight
                 - (element_to_highlight.offsetHeight * num_lis_above_highlighted);
-            document.getElementById('sidebar').scrollTo(0, scrollToPosn);
+            document.getElementById('sidebar-content').scrollTo(0, scrollToPosn);
         }
 
         function highlight_sidebar(type, id) {
@@ -56,11 +59,11 @@
                 var accordion = element_to_highlight.closest('.accordion-collapse');
                 if (accordion) {
                     accordion.addEventListener('shown.bs.collapse', function () {
-                        show_selected_sidebar_item(element_to_highlight);
+                        show_selected_sidebar_item(sidebar_list, element_to_highlight);
                     });
                     new bootstrap.Collapse(accordion, {show: true});
                 } else {
-                    show_selected_sidebar_item(element_to_highlight);
+                    show_selected_sidebar_item(sidebar_list, element_to_highlight);
                 }
             });
         }
@@ -147,10 +150,15 @@
 <div class="d-flex">
 <div class="container-fluid" style="height:100vh;overflow-y:scroll;padding:15px;width:100%;">
     <header class="d-flex flex-wrap justify-content-between py-3 mb-4 border-bottom">
-        <div>
+        <div class="d-flex">
+            <div>
         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
             <img height="43" src="{{__('lexicon.header.banner.image_url')}}" alt="{{__('lexicon.header.banner.alt_text')}}">
         </a>
+            </div>
+            <div class="p-2 ps-5">
+                <a class="header-lexiconname fs-4" href="/lexicon/{{$lexicon->slug}}">{{$lexicon->name}}</a>
+            </div>
         </div>
 
         <div class="d-flex align-items-center mb-3 mb-md-0">

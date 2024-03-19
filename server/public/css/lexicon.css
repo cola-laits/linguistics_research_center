@@ -12,6 +12,11 @@ a:hover {
     text-decoration: underline;
 }
 
+.header-lexiconname {
+    font-weight: bold;
+    color: #317094;
+}
+
 .sidebar {
     background-color: #317094;
     color: white;
@@ -46,6 +51,20 @@ a:hover {
     padding-right: 1rem;
     background-color: #18384a;
     z-index: 100;
+}
+
+.sidebar .sidebar-header .nav-tabs {
+    border-bottom: 0;
+}
+
+.sidebar .sidebar-header .nav-tabs .active {
+    color: white;
+    background-color: #317094;
+    border-bottom-width: 0;
+}
+
+.sidebar .sidebar-header .nav-link:hover {
+    color: white;
 }
 
 .sidebar .sidebar-footer {

@@ -1,4 +1,4 @@
-@extends('lexicon.layout-etym')
+@extends('lexicon.layout')
 
 @section('title')
     {{__('lexicon.general.html_head_title', ['lexicon_name'=>$lexicon->name, 'page_title'=>$page->name])}}
