@@ -25,6 +25,16 @@ class PublicLexiconController extends Controller
         $lex = $this->getLexicon($lexicon_slug);
         return view('lexicon/lex_home', [
             'lexicon'=>$lex,
+            'selected_sidebar'=>'languages',
+        ]);
+    }
+
+    public function protolanguage_home(Request $request, $lexicon_slug)
+    {
+        $lex = $this->getLexicon($lexicon_slug);
+        return view('lexicon/lex_protolanguage_home', [
+            'lexicon'=>$lex,
+            'protolang'=>true,
             'selected_sidebar'=>'headword',
         ]);
     }

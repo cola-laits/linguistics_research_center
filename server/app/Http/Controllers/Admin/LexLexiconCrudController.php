@@ -64,7 +64,8 @@ class LexLexiconCrudController extends CrudController
         CRUD::field('name');
         CRUD::field('slug');
         CRUD::field('protolang_name')->type('text')->label('Proto-language name');
-        CRUD::field('description')->type('tinymce')->options($this->getDefaultTinyMceOptions());
+        CRUD::field('landing_page_content')->type('tinymce')->options($this->getDefaultTinyMceOptions());
+        CRUD::field('protolanguage_page_content')->type('tinymce')->options($this->getDefaultTinyMceOptions());
         CRUD::field('viewer_lang_options')->label('Viewer language options')->hint('Comma-separated list of language codes to offered to the user.  ex: "en, es"');
 
         /**

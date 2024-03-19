@@ -92,6 +92,7 @@
 
     "lexicon.header.banner.alt_text": "Linguistics Research Center - The University of Texas at Austin",
     "lexicon.header.banner.image_url": "/images/lrc-banner-trim.png",
+    "lexicon.header.lex_home.text": ":lexicon_name Home",
 
     "lexicon.menu.dictionary_jump_label": "Jump to a dictionary",
     "lexicon.menu.dictionary_choose_language_prompt": "choose a language...",

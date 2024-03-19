@@ -74,7 +74,7 @@
             }
             var id = select.options[select.selectedIndex].value;
             if (id==='protolang') {
-                document.location.href = "/lexicon/" + window.lexicon_slug;
+                document.location.href = "/lexicon/" + window.lexicon_slug + '/language/protolanguage';
             } else {
                 document.location.href = "/lexicon/" + window.lexicon_slug + "/language/" + id;
             }
@@ -157,7 +157,7 @@
         </a>
             </div>
             <div class="p-2 ps-5">
-                <a class="header-lexiconname fs-4" href="/lexicon/{{$lexicon->slug}}">{{$lexicon->name}}</a>
+                <a class="header-lexiconname fs-4" href="/lexicon/{{$lexicon->slug}}">{{__('lexicon.header.lex_home.text', ['lexicon_name'=>$lexicon->name])}}</a>
             </div>
         </div>
 

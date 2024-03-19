@@ -1,4 +1,4 @@
-@extends('lexicon.layout-home')
+@extends('lexicon.layout-etym')
 
 @section('title')
     {{__('lexicon.pages.home.html_head_title', ['lexicon_name'=>$lexicon->name])}}
@@ -10,6 +10,6 @@
 
 @section('content')
     <div>
-        {!! $lexicon->landing_page_content !!}
+        {!! $lexicon->protolanguage_page_content !!}
     </div>
 @endsection

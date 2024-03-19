@@ -64,6 +64,7 @@ Route::controller(PublicLexiconController::class)->group(function() {
     Route::get('lexicon/{lex_slug}/etymon/{etymon_id}', 'etymon');
     Route::get('lexicon/{lex_slug}/field/{field_id}', 'field');
     Route::get('lexicon/{lex_slug}/word/{word_id}', 'word_home');
+    Route::get('lexicon/{lex_slug}/language/protolanguage', 'protolanguage_home');
     Route::get('lexicon/{lex_slug}/language/{lang_id}', 'lang_home');
     Route::get('lexicon/{lex_slug}/page/{page_slug_fragment}', 'page');
     Route::get('lexicon/{lex_slug}/data', 'data');
