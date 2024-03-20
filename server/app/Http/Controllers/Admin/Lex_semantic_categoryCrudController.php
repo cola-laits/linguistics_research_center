@@ -42,6 +42,12 @@ class Lex_semantic_categoryCrudController extends CrudController
         CRUD::removeButton('show');
 
         CRUD::column('lexicon_id')->type('select')->attribute('name');
+        CRUD::column('text')->type('text')
+            ->searchLogic(function ($query, $column, $searchTerm) {
+                $query->orWhereRaw("JSON_EXTRACT(text, '$.en') like ? collate utf8mb4_unicode_ci", ['%'.$searchTerm.'%']);
+            });;
+        CRUD::column('number')->type('text');
+        CRUD::column('abbr')->type('text');
         CRUD::setFromDb(); // columns
 
         /**
@@ -62,6 +68,9 @@ class Lex_semantic_categoryCrudController extends CrudController
         CRUD::setValidation(Lex_semantic_categoryRequest::class);
 
         CRUD::field('lexicon_id')->type('select');
+        CRUD::field('text')->type('text');
+        CRUD::field('number')->type('text');
+        CRUD::field('abbr')->type('text');
         CRUD::setFromDb(); // fields
 
         /**

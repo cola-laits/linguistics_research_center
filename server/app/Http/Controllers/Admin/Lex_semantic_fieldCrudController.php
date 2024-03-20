@@ -43,13 +43,16 @@ class Lex_semantic_fieldCrudController extends CrudController
     {
         CRUD::removeButton('show');
 
-        CRUD::column('lexicon_id')->type('relationship')->attribute('name')
+        CRUD::column('lexicon')->type('select')->attribute('name')
             ->searchLogic(function ($query, $column, $searchTerm) {
                 $query->orWhereHas('lexicon', function ($query) use ($searchTerm) {
                     $query->where('name', 'like', '%'.$searchTerm.'%');
                 });
             });
-        CRUD::column('text');
+        CRUD::column('text')
+            ->searchLogic(function ($query, $column, $searchTerm) {
+                $query->orWhereRaw("JSON_EXTRACT(text, '$.en') like ? collate utf8mb4_unicode_ci", ['%'.$searchTerm.'%']);
+            });
         CRUD::column('number');
         CRUD::column('abbr');
         CRUD::column('semantic_category')->type('select')->attribute('text')
@@ -106,9 +109,9 @@ class Lex_semantic_fieldCrudController extends CrudController
 
         //CRUD::setFromDb(); // fields
 
-        CRUD::field('text');
-        CRUD::field('number');
-        CRUD::field('abbr');
+        CRUD::field('text')->type('text');
+        CRUD::field('number')->type('text');
+        CRUD::field('abbr')->type('text');
         CRUD::field('semantic_category')->type('select')->attribute('lex_text');
 
         /**

@@ -42,13 +42,15 @@ class Lex_language_sub_familyCrudController extends CrudController
     {
         CRUD::removeButton('show');
 
-        //CRUD::setFromDb(); // columns
-        CRUD::column('name')->type('text');
+        CRUD::column('name')->type('text')
+            ->searchLogic(function ($query, $column, $searchTerm) {
+                $query->orWhereRaw("JSON_EXTRACT(name, '$.en') like ? collate utf8mb4_unicode_ci", ['%'.$searchTerm.'%']);
+            });
         CRUD::column('order')->type('number');
         CRUD::column('language_family')->type('relationship')
             ->searchLogic(function ($query, $column, $searchTerm) {
                 $query->orWhereHas('language_family', function ($query) use ($searchTerm) {
-                    $query->where('name', 'like', '%' . $searchTerm . '%');
+                    $query->whereRaw("JSON_EXTRACT(name, '$.en') like ? collate utf8mb4_unicode_ci", ['%'.$searchTerm.'%']);
                 });
             });
 

@@ -42,7 +42,10 @@ class Lex_language_familyCrudController extends CrudController
         CRUD::removeButton('show');
 
         CRUD::column('lexicon_id')->type('select')->attribute('name');
-        CRUD::column('name')->type('text');
+        CRUD::column('name')->type('text')
+            ->searchLogic(function ($query, $column, $searchTerm) {
+                $query->orWhereRaw("JSON_EXTRACT(name, '$.en') like ? collate utf8mb4_unicode_ci", ['%'.$searchTerm.'%']);
+            });
         CRUD::column('order')->type('number');
 
         /**
