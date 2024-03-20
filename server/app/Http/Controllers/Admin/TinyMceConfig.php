@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 trait TinyMceConfig
 {
-    protected function getDefaultTinyMceOptions()
+    protected function getDefaultTinyMceOptions($style='default') : array
     {
-        return [
+        $config = [
             'plugins' => [
                 'advlist',
                 'autolink',
@@ -42,5 +42,9 @@ trait TinyMceConfig
             'image_advtab' => true,
             'file_picker_callback'=>null,
         ];
+        if ($style === 'lexicon') {
+            $config['content_css'] = '/css/lexicon.css';
+        }
+        return $config;
     }
 }
