@@ -9,13 +9,10 @@
                     <li><a href="/lexicon/{{$lexicon->slug}}/language/protolanguage">{{$lexicon->protolang_name}}</a></li>
                     @foreach ($lexicon->language_families as $family)
                         @foreach ($family->language_sub_families as $subfamily)
-                            <li>{{$family->name}}: {{$subfamily->name}}
+                            <li>{{$family->name}}: {{strip_tags($subfamily->name)}}
                                 <ul>
                                     @foreach ($subfamily->languages as $s_language)
                                         <li><a href="/lexicon/{{$lexicon->slug}}/language/{{$s_language->id}}">{{$s_language->name}}</a></li>
-                                        <!--
-                                        <option value="{{$s_language->id}}" @selected(isset($language) && $language->id===$s_language->id)>{{$s_language->name}}</option>
-                                        -->
                                     @endforeach
                                 </ul>
                             </li>

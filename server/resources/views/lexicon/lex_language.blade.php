@@ -9,7 +9,7 @@
 @endsection
 
 @section('content')
-    <h2>{{__('lexicon.pages.language.table_header.Family')}}: {{$language->language_sub_family->language_family->name}} > {{$language->language_sub_family->name}}</h2>
+    <h2>{{__('lexicon.pages.language.table_header.Family')}}: {{$language->language_sub_family->language_family->name}} > {{strip_tags($language->language_sub_family->name)}}</h2>
     <div>
         {!! $language->description !!}
     </div>

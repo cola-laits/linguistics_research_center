@@ -11,7 +11,7 @@
                         </optgroup>
                         @foreach ($lexicon->language_families as $family)
                             @foreach ($family->language_sub_families as $subfamily)
-                                <optgroup label="{{$family->name}}: {{$subfamily->name}}">
+                                <optgroup label="{{$family->name}}: {{strip_tags($subfamily->name)}}">
                                     @foreach ($subfamily->languages as $s_language)
                                         <option value="{{$s_language->id}}" @selected(isset($language) && $language->id===$s_language->id)>{{$s_language->name}}</option>
                                     @endforeach
