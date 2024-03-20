@@ -25,7 +25,7 @@ class PublicLexiconController extends Controller
         $lex = $this->getLexicon($lexicon_slug);
         return view('lexicon/lex_home', [
             'lexicon'=>$lex,
-            'selected_sidebar'=>'languages',
+            'selected_sidebar'=>'language',
         ]);
     }
 

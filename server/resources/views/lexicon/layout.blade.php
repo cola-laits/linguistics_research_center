@@ -132,6 +132,24 @@
             search_category_sidebar('');
         }
 
+        function search_language_sidebar(value) {
+            value = value.trim();
+            var items = document.getElementById('sidebar-word-list').getElementsByTagName('li');
+            for (var i=0;i<items.length;i++) {
+                var item = items[i];
+                if (item.innerText.toLowerCase().indexOf(value.toLowerCase()) === -1) {
+                    item.style.display = 'none';
+                } else {
+                    item.style.display = '';
+                }
+            }
+        }
+
+        function clear_language_search() {
+            document.getElementById('search_language_text').value='';
+            search_language_sidebar('');
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             if (document.getElementById('accordionCategory')) {
                 var items = document.getElementById('accordionCategory').getElementsByClassName('accordion-item');

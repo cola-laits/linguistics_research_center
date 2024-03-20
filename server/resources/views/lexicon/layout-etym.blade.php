@@ -16,5 +16,5 @@
 @endsection
 
 @section('sidebar')
-    @include('lexicon.layout-sidebar')
+    @include('lexicon.layout-sidebar', ['search_types'=>['headword', 'category']])
 @endsection
