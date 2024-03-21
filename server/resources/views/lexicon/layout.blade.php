@@ -170,6 +170,15 @@
             }, 3000);
         }
 
+        function toggle_sidebar() {
+            let sidebar = document.getElementById('sidebar');
+            if (sidebar.classList.contains('expanded')) {
+                sidebar.classList.remove('expanded');
+            } else {
+                sidebar.classList.add('expanded');
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             if (document.getElementById('accordionCategory')) {
                 var items = document.getElementById('accordionCategory').getElementsByClassName('accordion-item');
@@ -191,9 +200,16 @@
         <div class="d-flex flex-wrap justify-content-between py-3 border-bottom">
             <div class="d-flex">
                 <div>
+                    <div class="d-none d-sm-block">
                     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
                         <img height="43" src="{{__('lexicon.header.banner.image_url')}}" alt="{{__('lexicon.header.banner.alt_text')}}">
                     </a>
+                    </div>
+                    <div class="d-sm-none">
+                    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+                        <img height="30" src="{{__('lexicon.header.banner.image_url')}}" alt="{{__('lexicon.header.banner.alt_text')}}">
+                    </a>
+                    </div>
                 </div>
             </div>
 
@@ -201,7 +217,7 @@
 
             </div>
 
-            <div>
+            <div class="me-4">
 
                 @if (count($lexicon->getViewerLangsArray()) > 1)
                     <div class="dropdown">

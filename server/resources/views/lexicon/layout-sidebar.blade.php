@@ -1,4 +1,11 @@
 <div id="sidebar" class="sidebar d-flex flex-column">
+    <div class="position-relative d-md-none">
+        <div class="sidebar-menu-handle position-absolute top-0 left-0 d-flex flex-row align-items-center" onclick="toggle_sidebar()">
+            <div class="sidebar-menu-handle-icon d-flex justify-content-center align-items-center">
+                <i class="far fa-bars"></i>
+            </div>
+        </div>
+    </div>
     <div id="sidebar-header" class="sidebar-header d-flex flex-column">
         <div style="padding-bottom: 1rem;" id="sidebar-jump-to-dictionary-container">
             <form class="d-flex align-items-center">
