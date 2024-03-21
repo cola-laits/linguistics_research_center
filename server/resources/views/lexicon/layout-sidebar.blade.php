@@ -167,10 +167,13 @@
                 </div>
             </div>
         @endif
+        @if ($lexicon->slug !== 'ielex')
+        {{-- IELEX is way too big to get away with only client-side procesing --}}
         <div class="d-flex justify-content-center pb-2" id="sidebar-advanced-search-container">
             <a class="btn btn-outline-secondary" href="/lexicon/{{$lexicon->slug}}/data">
                 <i class="far fa-table me-1"></i><span class="ps-1">{{__('lexicon.pages.home.search_lexicon_link_text')}}</span>
             </a>
         </div>
+        @endif
     </div>
 </div>
