@@ -23,6 +23,7 @@
     "lexicon.pages.data.column_visibility_button_label": "Select Columns",
     "lexicon.pages.data.clear_search_button_label": "Clear Search",
     "lexicon.pages.data.csv_export_button_label": "CSV",
+    "lexicon.pages.data.help_button_label": "Help",
     "lexicon.pages.data.show_n_rows_option": ":num rows",
     "lexicon.pages.data.show_all_rows_option": "Show all",
     "lexicon.pages.data.show_all_columns_button_label": "Show all",

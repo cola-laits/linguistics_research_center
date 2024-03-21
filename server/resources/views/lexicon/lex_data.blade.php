@@ -111,6 +111,15 @@
                                 .search('')
                                 .draw();
                         }
+                    },
+                    {
+                        text: '<i class="fas fa-question"></i> {{__('lexicon.pages.data.help_button_label')}}',
+                        action: function() {
+                            var instructions_modal = new bootstrap.Modal(document.getElementById('instructions_modal'), {
+                                keyboard: false
+                            });
+                            instructions_modal.show();
+                        }
                     }
                 ],
                 initComplete: function () {
@@ -192,7 +201,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">{{__('lexicon.pages.data.help.modal.title')}}</h5>
+                    <h5 class="modal-title">{{__('lexicon.pages.data.help.modal.title')}}</i></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
