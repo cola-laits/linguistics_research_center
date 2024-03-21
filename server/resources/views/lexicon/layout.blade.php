@@ -162,6 +162,14 @@
             search_language_sidebar('');
         }
 
+        function show_me_highlight(id) {
+            let element = document.getElementById(id);
+            element.classList.add('show-me-highlighted');
+            window.setTimeout(function() {
+                element.classList.remove('show-me-highlighted');
+            }, 3000);
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             if (document.getElementById('accordionCategory')) {
                 var items = document.getElementById('accordionCategory').getElementsByClassName('accordion-item');

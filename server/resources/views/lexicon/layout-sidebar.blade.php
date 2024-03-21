@@ -1,6 +1,6 @@
 <div id="sidebar" class="sidebar d-flex flex-column">
     <div id="sidebar-header" class="sidebar-header d-flex flex-column">
-        <div style="padding-bottom: 1rem;">
+        <div style="padding-bottom: 1rem;" id="sidebar-jump-to-dictionary-container">
             <form class="d-flex align-items-center">
                 <div class="col-12">
                     <label for="language_select" class="form-label">{{__('lexicon.menu.dictionary_jump_label')}}:</label>
@@ -22,7 +22,7 @@
                 </div>
             </form>
         </div>
-        <ul class="nav nav-tabs">
+        <ul class="nav nav-tabs" id="sidebar-nav-tabs-container">
             @if (in_array('headword', $search_types))
             <li class="nav-item">
                 <a @class(["nav-link", "selector_type_link", "active" => $selected_sidebar=='headword'])
@@ -138,7 +138,7 @@
         @endif
         @if (in_array('language', $search_types))
             <div class="selector_type p-1" id="selector_type_language"@if ($selected_sidebar!=='language') style="display:none;"@endif>
-                <div class="sidebar-search-area">
+                <div class="sidebar-search-area" id="sidebar-search-area">
                     <form id="search_form" onsubmit="search_language_sidebar(this.text.value);return false;" class="align-items-center d-flex justify-content-between">
                         <div>
                             <div class="input-group">
@@ -160,7 +160,7 @@
                 </div>
             </div>
         @endif
-        <div class="d-flex justify-content-center pb-2">
+        <div class="d-flex justify-content-center pb-2" id="sidebar-advanced-search-container">
             <a class="btn btn-outline-secondary" href="/lexicon/{{$lexicon->slug}}/data">
                 <i class="far fa-table me-1"></i><span class="ps-1">{{__('lexicon.pages.home.search_lexicon_link_text')}}</span>
             </a>

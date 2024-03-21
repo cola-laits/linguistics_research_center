@@ -90,3 +90,16 @@ a:hover {
 #accordionCategorys ul li.highlighted::before {
     color: #0d6efd;
 }
+
+.show-me-highlighted {
+    animation: pulse-white 2s 2;
+}
+
+@keyframes pulse-white {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
