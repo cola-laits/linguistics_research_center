@@ -161,8 +161,8 @@
             </div>
         @endif
         <div class="d-flex justify-content-center pb-2">
-            <a href="/lexicon/{{$lexicon->slug}}/data">
-                <i class="far fa-table"></i> <span class="ps-1">{{__('lexicon.pages.home.search_lexicon_link_text')}}</span>
+            <a class="btn btn-outline-secondary" href="/lexicon/{{$lexicon->slug}}/data">
+                <i class="far fa-table me-1"></i><span class="ps-1">{{__('lexicon.pages.home.search_lexicon_link_text')}}</span>
             </a>
         </div>
     </div>

@@ -149,7 +149,6 @@
                 let this_item_parent_text = get_directly_contained_text(item.parentElement.parentElement);
                 let is_matched_item = this_item_text.toLowerCase().indexOf(value.toLowerCase()) !== -1;
                 let is_child_of_matched_item = this_item_parent_text.toLowerCase().indexOf(value.toLowerCase()) !== -1;
-                console.log([this_item_text, this_item_parent_text, is_matched_item, is_child_of_matched_item]);
                 if (is_matched_item || is_child_of_matched_item) {
                     item.style.display = '';
                 } else {
