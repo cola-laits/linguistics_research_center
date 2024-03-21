@@ -162,12 +162,14 @@
             search_language_sidebar('');
         }
 
-        function show_me_highlight(id) {
-            let element = document.getElementById(id);
-            element.classList.add('show-me-highlighted');
-            window.setTimeout(function() {
-                element.classList.remove('show-me-highlighted');
-            }, 3000);
+        function show_me_highlight(ids) {
+            for (let id of ids.split(',')) {
+                let element = document.getElementById(id);
+                element.classList.add('show-me-highlighted');
+                window.setTimeout(function() {
+                    element.classList.remove('show-me-highlighted');
+                }, 3000);
+            }
         }
 
         function toggle_sidebar() {

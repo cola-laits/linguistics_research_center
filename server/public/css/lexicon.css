@@ -125,12 +125,15 @@ a:hover {
 }
 
 .show-me-highlighted {
-    animation: pulse-white 2s 2;
+    animation: pulse-white 1s 2;
 }
 
 @keyframes pulse-white {
     0% {
-        opacity: 0;
+        opacity: 1;
+    }
+    20% {
+        opacity: 0.1;
     }
     100% {
         opacity: 1;
