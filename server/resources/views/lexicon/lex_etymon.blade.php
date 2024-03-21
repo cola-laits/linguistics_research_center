@@ -1,4 +1,7 @@
-@extends('lexicon.layout-etym')
+@extends('lexicon.layout-etym', ['breadcrumb_segments' => [
+    ['text'=>__('lexicon.pages.protolang.breadcrumb_title', ['lexicon_protolang_name'=>$lexicon->protolang_name]), 'url'=>'/lexicon/'.$lexicon->slug.'/language/protolanguage'],
+    ['text'=>__('lexicon.pages.etymon.breadcrumb_title', ['lexicon_protolang_name'=>$lexicon->protolang_name, 'entry'=>$etymon->entry])]
+]])
 
 @section('title')
     {{__('lexicon.general.html_head_title', ['lexicon_name'=>$lexicon->name, 'page_title'=>$etymon->entry])}}

@@ -1,4 +1,16 @@
-@extends('lexicon.layout-dict')
+@extends('lexicon.layout-dict', ['breadcrumb_segments' => [
+    [
+        'text'=>__('lexicon.pages.language.breadcrumb_title', ['language_name'=>$word->language->name]),
+        'url'=>'/lexicon/'.$lexicon->slug.'/language/'.$word->language->id
+    ],
+    [
+        'text'=>__('lexicon.pages.word.breadcrumb_title', [
+                    'lexicon_name'=>$lexicon->name,
+                    'language_name'=>$word->language->name,
+                    'word'=>$word->getEntriesCSV()])
+    ]
+]]
+)
 
 @section('title')
     {{__('lexicon.general.html_head_title', ['lexicon_name'=>$lexicon->name, 'page_title'=>$word->language->name.": ".$word->getEntriesCSV()])}}

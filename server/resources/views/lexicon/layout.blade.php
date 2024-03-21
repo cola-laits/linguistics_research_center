@@ -167,46 +167,57 @@
 
 <div class="d-flex">
 <div class="container-fluid" style="height:100vh;overflow-y:scroll;padding:15px;width:100%;">
-    <header class="d-flex flex-wrap justify-content-between py-3 mb-4 border-bottom">
-        <div class="d-flex">
-            <div>
-        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-            <img height="43" src="{{__('lexicon.header.banner.image_url')}}" alt="{{__('lexicon.header.banner.alt_text')}}">
-        </a>
-            </div>
-            <div class="p-2 ps-5">
-                <a class="header-lexiconname fs-4" href="/lexicon/{{$lexicon->slug}}">{{__('lexicon.header.lex_home.text', ['lexicon_name'=>$lexicon->name])}}</a>
-            </div>
-        </div>
-
-        <div class="d-flex align-items-center mb-3 mb-md-0">
-
-        </div>
-
-        <div>
-
-            @if (count($lexicon->getViewerLangsArray()) > 1)
-                <div class="dropdown">
-                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                        {{$lexicon->getDisplayTextViewerLang(App::getLocale())}}
+    <header class="mb-4">
+        <div class="d-flex flex-wrap justify-content-between py-3 border-bottom">
+            <div class="d-flex">
+                <div>
+                    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+                        <img height="43" src="{{__('lexicon.header.banner.image_url')}}" alt="{{__('lexicon.header.banner.alt_text')}}">
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        @foreach ($lexicon->getViewerLangsArray() as $viewer_lang)
-                            <a class="dropdown-item" href="/lexicon/{{$lexicon->slug}}?switchlang={{$viewer_lang}}">{{$lexicon->getDisplayTextViewerLang($viewer_lang)}}</a>
-                        @endforeach
-                    </div>
                 </div>
-            @else
-                @if (App::getLocale() !== 'en')
-                    <div class="d-flex align-items-center mb-3 mb-md-0 me-md-auto">
-                        {{-- Offer an emergency 'back to English' button in case you land on a lexicon without language choices --}}
-                        <button type="button" class="btn btn-primary"
-                                onclick="document.location.href='/lexicon/{{$lexicon->slug}}?switchlang=en'"
-                        >{{$lexicon->getDisplayTextViewerLang('en')}}</button>
+            </div>
+
+            <div class="d-flex align-items-center mb-3 mb-md-0">
+
+            </div>
+
+            <div>
+
+                @if (count($lexicon->getViewerLangsArray()) > 1)
+                    <div class="dropdown">
+                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{$lexicon->getDisplayTextViewerLang(App::getLocale())}}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            @foreach ($lexicon->getViewerLangsArray() as $viewer_lang)
+                                <a class="dropdown-item" href="/lexicon/{{$lexicon->slug}}?switchlang={{$viewer_lang}}">{{$lexicon->getDisplayTextViewerLang($viewer_lang)}}</a>
+                            @endforeach
+                        </div>
                     </div>
+                @else
+                    @if (App::getLocale() !== 'en')
+                        <div class="d-flex align-items-center mb-3 mb-md-0 me-md-auto">
+                            {{-- Offer an emergency 'back to English' button in case you land on a lexicon without language choices --}}
+                            <button type="button" class="btn btn-primary"
+                                    onclick="document.location.href='/lexicon/{{$lexicon->slug}}?switchlang=en'"
+                            >{{$lexicon->getDisplayTextViewerLang('en')}}</button>
+                        </div>
+                    @endif
                 @endif
-            @endif
+            </div>
         </div>
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="border-bottom">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/lexicon/{{$lexicon->slug}}">{{__('lexicon.header.lex_home.text', ['lexicon_name'=>$lexicon->name])}}</a></li>
+                @foreach ($breadcrumb_segments??[] as $segment)
+                    @if (isset($segment['url']))
+                        <li class="breadcrumb-item"><a href="{{$segment['url']}}">{{$segment['text']}}</a></li>
+                    @else
+                        <li class="breadcrumb-item active" aria-current="page">{{$segment['text']}}</li>
+                    @endif
+                @endforeach
+            </ol>
+        </nav>
     </header>
 
     <main>

@@ -1,4 +1,6 @@
-@extends('lexicon.layout')
+@extends('lexicon.layout', ['breadcrumb_segments' => [
+    ['text'=>__('lexicon.pages.data.breadcrumb_title', ['lexicon_name'=>$lexicon->name])]
+]])
 
 @section('title')
     {{__('lexicon.pages.data.html_head_title', ['lexicon_name'=>$lexicon->name])}}

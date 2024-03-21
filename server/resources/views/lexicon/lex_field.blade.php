@@ -1,4 +1,9 @@
-@extends('lexicon.layout-etym')
+@extends('lexicon.layout-etym', ['breadcrumb_segments' => [
+    ['text'=>__('lexicon.pages.field.breadcrumb_title', [
+        'lexicon_name'=>$lexicon->name,
+        'semantic_category'=>$field->semantic_category->text,
+        'semantic_field'=>$field->text])]
+]])
 
 @section('title')
     {{__('lexicon.general.html_head_title', ['lexicon_name'=>$lexicon->name, 'page_title'=>$field->text])}}

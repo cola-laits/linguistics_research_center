@@ -1,4 +1,8 @@
-@extends('lexicon.layout-dict')
+@extends('lexicon.layout-dict', ['breadcrumb_segments' => [
+    [
+        'text'=>__('lexicon.pages.language.breadcrumb_title', ['language_name'=>$language->name])
+    ]
+]])
 
 @section('title')
     {{__('lexicon.general.html_head_title', ['lexicon_name'=>$lexicon->name, 'page_title'=>$language->name])}}
