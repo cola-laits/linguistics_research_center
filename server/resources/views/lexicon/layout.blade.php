@@ -132,15 +132,28 @@
             search_category_sidebar('');
         }
 
+        function get_directly_contained_text(element) {
+            let text = '';
+            for (var i = 0; i < element.childNodes.length; ++i)
+                if (element.childNodes[i].nodeType === Node.TEXT_NODE)
+                    text += element.childNodes[i].textContent;
+            return text;
+        }
+
         function search_language_sidebar(value) {
             value = value.trim();
             var items = document.getElementById('sidebar-word-list').getElementsByTagName('li');
             for (var i=0;i<items.length;i++) {
                 var item = items[i];
-                if (item.innerText.toLowerCase().indexOf(value.toLowerCase()) === -1) {
-                    item.style.display = 'none';
-                } else {
+                let this_item_text = item.textContent;
+                let this_item_parent_text = get_directly_contained_text(item.parentElement.parentElement);
+                let is_matched_item = this_item_text.toLowerCase().indexOf(value.toLowerCase()) !== -1;
+                let is_child_of_matched_item = this_item_parent_text.toLowerCase().indexOf(value.toLowerCase()) !== -1;
+                console.log([this_item_text, this_item_parent_text, is_matched_item, is_child_of_matched_item]);
+                if (is_matched_item || is_child_of_matched_item) {
                     item.style.display = '';
+                } else {
+                    item.style.display = 'none';
                 }
             }
         }
