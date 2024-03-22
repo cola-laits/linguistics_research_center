@@ -140,6 +140,10 @@ a:hover {
     }
 }
 
+figure.image {
+    width: min-content;
+}
+
 figure.image.align-right {
     float: right;
 }
