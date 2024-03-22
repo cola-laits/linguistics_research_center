@@ -139,3 +139,11 @@ a:hover {
         opacity: 1;
     }
 }
+
+figure.image.align-right {
+    float: right;
+}
+
+figure.image.align-left {
+    float: left;
+}
