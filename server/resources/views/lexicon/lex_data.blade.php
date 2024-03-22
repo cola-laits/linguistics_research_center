@@ -185,13 +185,6 @@
                 - 20;
             dataTablesScrollBody.css('height', newHeight + 'px');
         }
-
-        $(document).ready(function() {
-            var instructions_modal = new bootstrap.Modal(document.getElementById('instructions_modal'), {
-                keyboard: false
-            });
-            instructions_modal.show();
-        });
     </script>
 @endsection
 
