@@ -69,8 +69,13 @@
     "lexicon.pages.data.column_header_Complement": "Complement",
 
     "lexicon.pages.data.help.modal.title": "Data Help",
-    "lexicon.pages.data.help.modal.content": "This table provides access to all data for all dictionaries in :lexicon_name. Use the search bar at the right to find a particular string of characters in any cell in the data table. Or type characters after the filter (:filter_icon) symbol in a given column to display only rows with that string in that column. Use the menu below to select columns to display, and export your results to a CSV file.",
+    "lexicon.pages.data.help.modal.content": "<p>This table provides access to all data for all dictionaries in :lexicon_name. Use the search bar at the right to find a particular string of characters in any cell in the data table. Or type characters after the filter (:filter_icon) symbol in a given column to display only rows with that string in that column. Use the menu below to select columns to display, and export your results to a CSV file.</p>",
     "lexicon.pages.data.help.modal.close": "Close",
+    "lexicon.pages.data.help-regex.modal.title": "Regex Help",
+    "lexicon.pages.data.help-regex.modal.content": "<p>Use a regular expression (regex) search to allow, among other features, the use of wildcards <code>.</code> and <code>.*</code>: <code>st.r</code> will find anything containing a single character between <code>st</code> and <code>r</code>; but <code>st.*r</code> will find anything containing <code>str</code>, as well as any number of characters between <code>st</code> and <code>r</code>.</p>",
+    "lexicon.pages.data.help-regex.modal.close": "Close",
+    "lexicon.pages.data.use-regex-checkbox.label": "Use regex",
+    "lexicon.pages.data.search-button.label": "Search:",
 
     "lexicon.pages.etymon.table_header.Etymon": "Etymon",
     "lexicon.pages.etymon.table_header.Gloss": "Gloss",

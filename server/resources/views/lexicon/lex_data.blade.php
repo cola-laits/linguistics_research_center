@@ -32,26 +32,67 @@
         }
     </style>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            $('#datatable thead tr')
-                .clone(true)
-                .addClass('filters')
-                .appendTo('#datatable thead');
+        window.search_use_regex = false;
+        window.search_conditions = {full: '', cols: {}};
 
-            var table = new DataTable('#datatable', {
+        function show_regex_help() {
+            new bootstrap.Modal(document.getElementById('regex_help_modal'), {
+                keyboard: false
+            }).show();
+        }
+
+        function clear_search() {
+            window.search_conditions = {full: '', cols: {}};
+        }
+
+        function redraw_search_conditions() {
+            document.getElementById('custom-search').value = window.search_conditions.full;
+            for (key in window.search_conditions.cols) {
+                document.getElementById('column-text-search-'+key).value = window.search_conditions.cols[key];
+            }
+            do_search();
+        }
+
+        function set_full_search(search_term) {
+            window.search_conditions.full = search_term;
+        }
+
+        function set_column_search(search_term, col_index) {
+            window.search_conditions.cols[col_index] = search_term;
+        }
+
+        function do_search() {
+            let full_search = window.search_conditions.full;
+            let col_searches = window.search_conditions.cols;
+
+            window.tableObj.search(function (full_string, data_array) {
+                let search_method = window.search_use_regex ?
+                    (term, data) => new RegExp(term, 'i').test(data) :
+                    (term, data) => data.toLowerCase().includes(term.toLowerCase());
+
+                let full_search_result = full_search === '' ||
+                    full_search.split(' ').every(term => data_array.some(data => data !== '' && search_method(term, data)));
+                let col_search_result = Object.keys(col_searches).length === 0 ||
+                    Object.keys(col_searches).every(key => col_searches[key] === '' || search_method(col_searches[key].toLowerCase(), data_array[key].toLowerCase()));
+
+                return full_search_result && col_search_result;
+            }).draw();
+        }
+
+        window.datatable_scroll_height = '50vh'; // initial guess; will be refined in a redraw after table is loaded into the dom and can be measured
+        function create_data_table() {
+            window.tableObj = new DataTable('#datatable', {
                 @if (Lang::get('lexicon.pages.data.datatables_translation_file')!=="en-US.json")
                     {{-- if the translation file is not the default (US English), load it --}}
                 language: {
                     url: '/assets/datatables/plugins/i18n/{{__('lexicon.pages.data.datatables_translation_file')}}',
                 },
                 @endif
-                search: {
-                    regex: true
-                },
+                destroy: true,
                 orderCellsTop: true,
                 fixedColumns: true,
                 fixedHeader: true,
-                scrollY: true,
+                scrollY: window.datatable_scroll_height,
                 scrollX: true,
                 paging: true,
                 lengthMenu: [
@@ -67,11 +108,19 @@
                     { orderable: false, targets: 0 }
                 ],
                 order: [[1, 'asc']],
-                dom: 'Bfrtip',
-                buttons: [
-                    {
-                        extend: 'pageLength',
+                layout: {
+                    top3Start: 'buttons',
+                    top2Start: function() {
+                        return document.getElementById('custom_regex_picker').content.cloneNode(true);
                     },
+                    topStart: 'pageLength',
+                    topEnd: function() {
+                        return document.getElementById('custom_search_control_template').content.cloneNode(true);
+                    },
+                    bottomStart: 'info',
+                    bottomEnd: 'paging'
+                },
+                buttons: [
                     {
                         text: '{{__('lexicon.pages.data.csv_export_button_label')}}',
                         extend: 'csv',
@@ -91,12 +140,7 @@
                             text: '{{__('lexicon.pages.data.hide_all_columns_button_label')}}',
                             className: 'colvis-control-button',
                             action: function(e, dt) {
-                                var cols = dt.columns()[0];
-                                cols = cols.filter(function (ix) {
-                                    // leave the 'show column' and at least one data column visible
-                                    return ix > 1;
-                                });
-                                dt.columns(cols).visible(false);
+                                dt.columns(':gt(1)').visible(false);
                             }
                         }]
                     },
@@ -104,26 +148,22 @@
                         text: '{{__('lexicon.pages.data.clear_search_button_label')}}',
                         action: function() {
                             $('.column-text-search').val('');
-                            var table = $('#datatable').DataTable();
-                            table
-                                .search('')
-                                .columns()
-                                .search('')
-                                .draw();
+                            $('#custom-search').val('');
+                            clear_search();
+                            do_search();
                         }
                     },
                     {
-                        text: '<i class="fas fa-question"></i> {{__('lexicon.pages.data.help_button_label')}}',
+                        text: '<i class="far fa-question-circle"></i> {{__('lexicon.pages.data.help_button_label')}}',
                         action: function() {
-                            var instructions_modal = new bootstrap.Modal(document.getElementById('instructions_modal'), {
+                            new bootstrap.Modal(document.getElementById('instructions_modal'), {
                                 keyboard: false
-                            });
-                            instructions_modal.show();
+                            }).show();
                         }
                     }
                 ],
                 initComplete: function () {
-                    var api = this.api();
+                    let api = this.api();
 
                     // For each column
                     api
@@ -131,30 +171,26 @@
                         .eq(0)
                         .each(function (colIdx) {
                             // Set the header cell to contain the input element
-                            var cell = $('.filters th').eq(
+                            let filter_headers = $('.filters th');
+                            let cell = filter_headers.eq(
                                 $(api.column(colIdx).header()).index()
                             );
                             if (colIdx === 0) {
                                 $(cell).html('');
                                 return;
                             }
-                            $(cell).html('<div class="column-text-search-holder d-flex"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M 5 4 L 5 6.34375 L 5.21875 6.625 L 13 16.34375 L 13 28 L 14.59375 26.8125 L 18.59375 23.8125 L 19 23.5 L 19 16.34375 L 26.78125 6.625 L 27 6.34375 L 27 4 Z M 7.28125 6 L 24.71875 6 L 17.53125 15 L 14.46875 15 Z M 15 17 L 17 17 L 17 22.5 L 15 24 Z"/></svg> <input type="text" class="column-text-search" /></div>');
+                            $(cell).html('<div class="column-text-search-holder d-flex"><i class="far fa-filter"></i> <input type="text" class="column-text-search" id="column-text-search-'+colIdx+'" /></div>');
 
                             // On every keypress in this input
                             $(
                                 'input',
-                                $('.filters th').eq($(api.column(colIdx).header()).index())
+                                filter_headers.eq($(api.column(colIdx).header()).index())
                             )
                                 .off('keyup change')
                                 .on('change', function () {
-                                    api
-                                        .column(colIdx)
-                                        .search(
-                                            this.value,
-                                            true,
-                                            false
-                                        )
-                                        .draw();
+                                    let search_term = this.value;
+                                    set_column_search(search_term, colIdx);
+                                    do_search();
                                 })
                                 .on('keyup', function (e) {
                                     e.stopPropagation();
@@ -164,6 +200,15 @@
                         });
                 },
             });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            $('#datatable thead tr')
+                .clone(true)
+                .addClass('filters')
+                .appendTo('#datatable thead');
+
+            create_data_table();
 
             window.setTimeout(function() {
                 recalcDatatableScrollY();
@@ -175,20 +220,38 @@
         });
 
         function recalcDatatableScrollY() {
-            var dataTablesScrollBody = $('.dataTables_scrollBody');
-            // set the height of the scrollable area to the remaining vertical space after the scrollable area starts,
-            // minus height of the info and pagination elements, minus a little extra for padding
-            var newHeight = document.documentElement.clientHeight
-                - dataTablesScrollBody.offset().top
-                - $('#datatable_info').outerHeight()
-                - $('#datatable_paginate').outerHeight()
-                - 20;
-            dataTablesScrollBody.css('height', newHeight + 'px');
+            let datatable_wrapper = document.getElementById('datatable_wrapper');
+            let scroll_body = datatable_wrapper.getElementsByClassName('dt-scroll-body')[0];
+            let footer = datatable_wrapper.getElementsByClassName('row')[4]; // 3 header rows, then body; footer is 5th row
+            let extra_bottom_padding_pixels = 20;
+            let new_height = window.innerHeight
+                - scroll_body.getBoundingClientRect().top
+                - footer.clientHeight
+                - extra_bottom_padding_pixels;
+
+            window.datatable_scroll_height = new_height + 'px';
+            create_data_table();
+            redraw_search_conditions();
         }
     </script>
 @endsection
 
 @section('content')
+    <template id="custom_search_control_template">
+        <div class="dt-search">
+            <label for="custom_search">{{__('lexicon.pages.data.search-button.label')}}</label>
+            <input type="search" class="form-control form-control-sm" id="custom-search" placeholder="" aria-controls="datatable"
+                   onchange="set_full_search(this.value);do_search();"
+                   onkeyup="set_full_search(this.value);do_search();"
+            >
+        </div>
+    </template>
+    <template id="custom_regex_picker">
+        <div class="dt-search">
+            <label for="regex-picker" onclick="show_regex_help()" style="cursor:pointer;">{{__('lexicon.pages.data.use-regex-checkbox.label')}} <i class="far fa-question-circle"></i>:</label>
+            <input type="checkbox" id="regex_picker" onchange="window.search_use_regex = this.checked;do_search();">
+        </div>
+    </template>
 
     <div class="modal" id="instructions_modal" tabindex="-1">
         <div class="modal-dialog">
@@ -201,12 +264,31 @@
                     <p>{!! __('lexicon.pages.data.help.modal.content', [
                         'lexicon_name'=>$lexicon->name,
                         'filter_icon'=><<<END
-<svg fill="#000000" width="24px" height="24px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M 5 4 L 5 6.34375 L 5.21875 6.625 L 13 16.34375 L 13 28 L 14.59375 26.8125 L 18.59375 23.8125 L 19 23.5 L 19 16.34375 L 26.78125 6.625 L 27 6.34375 L 27 4 Z M 7.28125 6 L 24.71875 6 L 17.53125 15 L 14.46875 15 Z M 15 17 L 17 17 L 17 22.5 L 15 24 Z"></path></svg>
+<i class="far fa-filter"></i>
 END
                         ]) !!}</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__('lexicon.pages.data.help.modal.close')}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="regex_help_modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{__('lexicon.pages.data.help-regex.modal.title')}}</i></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>{!! __('lexicon.pages.data.help-regex.modal.content', [
+                        'lexicon_name'=>$lexicon->name,
+                        ]) !!}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__('lexicon.pages.data.help-regex.modal.close')}}</button>
                 </div>
             </div>
         </div>
@@ -228,7 +310,7 @@ END
     @foreach ($reflexes as $item)
     <tr>
         <td>
-            <a href="/lexicon/semitilex/word/{{$item->id}}" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M4 21.4V2.6a.6.6 0 0 1 .6-.6h11.652a.6.6 0 0 1 .424.176l3.148 3.148A.6.6 0 0 1 20 5.75V21.4a.6.6 0 0 1-.6.6H4.6a.6.6 0 0 1-.6-.6ZM8 10h8m-8 8h8m-8-4h4"/><path d="M16 2v3.4a.6.6 0 0 0 .6.6H20"/></g></svg></a>
+            <a href="/lexicon/semitilex/word/{{$item->id}}" target="_blank"><i class="far fa-file-alt"></i></a>
         </td>
         @foreach ($columns as $column)
         <td>{{ $display_value_lookup_fn($item, $column->name) }}</td>

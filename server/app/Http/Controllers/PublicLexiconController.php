@@ -125,12 +125,15 @@ class PublicLexiconController extends Controller
             'etyma',
             'etyma.semantic_fields',
             'parts_of_speech',
+            'extra_data',
+
         ])->whereIn('language_id', $lex_language_ids)->get();
 
-        $column_descs = [];
-        $column_descs []= (object) ['display_name'=>'Meaning', 'name'=>'meaning'];
-        $column_descs []= (object) ['display_name'=>'Semantic Tag', 'name'=>'semantic_tag'];
-        $column_descs []= (object) ['display_name'=>'Etymon', 'name'=>'etymon'];
+        $column_descs = [
+            (object) ['display_name'=>'Meaning', 'name'=>'meaning'],
+            (object) ['display_name'=>'Semantic Tag', 'name'=>'semantic_tag'],
+            (object) ['display_name'=>'Etymon', 'name'=>'etymon']
+        ];
 
         // FIXME make this database-driven at some point
         if ($lexicon_slug === 'semitilex') {
