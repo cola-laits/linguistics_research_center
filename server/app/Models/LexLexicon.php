@@ -32,7 +32,7 @@ class LexLexicon extends Model
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
-    protected $translatable = ['protolang_name', 'description'];
+    protected $translatable = ['protolang_name', 'protolanguage_page_content', 'landing_page_content'];
 
     public function etyma() {
         return $this->hasMany(LexEtyma::class, 'lexicon_id')
