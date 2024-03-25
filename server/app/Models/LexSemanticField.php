@@ -38,6 +38,12 @@ use App\Models\LexSemanticCategory;
  * @method static Builder|LexSemanticField whereText($value)
  * @method static Builder|LexSemanticField whereUpdatedAt($value)
  * @method static Builder|LexSemanticField whereUpdatedBy($value)
+ * @property-read Collection<int, LexEtyma> $etyma
+ * @property-read int|null $etyma_count
+ * @property-read \App\Models\LexLexicon|null $lexicon
+ * @property-read mixed $translations
+ * @method static Builder|LexSemanticField whereLocale(string $column, string $locale)
+ * @method static Builder|LexSemanticField whereLocales(string $column, array $locales)
  * @mixin Eloquent
  */
 class LexSemanticField extends Model {

@@ -5,6 +5,14 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * 
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|MenuItem newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|MenuItem newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|MenuItem query()
+ * @mixin \Eloquent
+ */
 class MenuItem extends Model
 {
     use CrudTrait;

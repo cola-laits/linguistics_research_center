@@ -28,6 +28,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|UserPermission whereUpdatedAt($value)
  * @method static Builder|UserPermission whereUpdatedBy($value)
  * @method static Builder|UserPermission whereUserId($value)
+ * @property-read \App\Models\EieolSeries|null $eieol_series
  * @mixin Eloquent
  */
 class UserPermission extends Model {

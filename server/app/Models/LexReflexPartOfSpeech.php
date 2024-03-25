@@ -33,6 +33,7 @@ use App\Models\LexPartOfSpeech;
  * @method static Builder|LexReflexPartOfSpeech whereText($value)
  * @method static Builder|LexReflexPartOfSpeech whereUpdatedAt($value)
  * @method static Builder|LexReflexPartOfSpeech whereUpdatedBy($value)
+ * @property-read \App\Models\LexLanguage|null $language
  * @mixin Eloquent
  */
 class LexReflexPartOfSpeech extends Model {

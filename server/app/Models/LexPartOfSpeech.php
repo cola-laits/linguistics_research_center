@@ -32,6 +32,10 @@ use App\Models\LexReflex;
  * @method static Builder|LexPartOfSpeech whereId($value)
  * @method static Builder|LexPartOfSpeech whereUpdatedAt($value)
  * @method static Builder|LexPartOfSpeech whereUpdatedBy($value)
+ * @property-read \App\Models\LexLexicon|null $lexicon
+ * @property-read mixed $translations
+ * @method static Builder|LexPartOfSpeech whereLocale(string $column, string $locale)
+ * @method static Builder|LexPartOfSpeech whereLocales(string $column, array $locales)
  * @mixin Eloquent
  */
 class LexPartOfSpeech extends Model {

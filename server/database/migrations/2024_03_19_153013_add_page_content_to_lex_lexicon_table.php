@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('lex_lexicon', function (Blueprint $table) {
-            $table->text('landing_page_content')->nullable();
-            $table->text('protolanguage_page_content')->nullable();
+            $table->json('landing_page_content')->nullable();
+            $table->json('protolanguage_page_content')->nullable();
             $table->dropColumn('description');
         });
     }
@@ -24,7 +24,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('lex_lexicon', function (Blueprint $table) {
-            $table->text('description')->nullable();
+            $table->json('description')->nullable();
             $table->dropColumn('protolanguage_page_content');
             $table->dropColumn('landing_page_content');
         });

@@ -49,6 +49,9 @@ use App\Models\LexReflex;
  * @method static Builder|LexLanguage whereSubFamilyId($value)
  * @method static Builder|LexLanguage whereUpdatedAt($value)
  * @method static Builder|LexLanguage whereUpdatedBy($value)
+ * @property-read mixed $translations
+ * @method static Builder|LexLanguage whereLocale(string $column, string $locale)
+ * @method static Builder|LexLanguage whereLocales(string $column, array $locales)
  * @mixin Eloquent
  */
 class LexLanguage extends Model {

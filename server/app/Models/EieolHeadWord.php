@@ -36,6 +36,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|EieolHeadWord whereUpdatedAt($value)
  * @method static Builder|EieolHeadWord whereUpdatedBy($value)
  * @method static Builder|EieolHeadWord whereWord($value)
+ * @property-read mixed $word_without_surrounding_angle_brackets
  * @mixin Eloquent
  */
 class EieolHeadWord extends Model {

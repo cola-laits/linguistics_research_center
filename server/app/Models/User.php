@@ -44,6 +44,14 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|User whereUpdatedAt($value)
  * @method static Builder|User whereUpdatedBy($value)
  * @method static Builder|User whereUsername($value)
+ * @property-read Collection<int, \Spatie\Permission\Models\Permission> $permissions
+ * @property-read int|null $permissions_count
+ * @property-read Collection<int, \Spatie\Permission\Models\Role> $roles
+ * @property-read int|null $roles_count
+ * @method static Builder|User permission($permissions, $without = false)
+ * @method static Builder|User role($roles, $guard = null, $without = false)
+ * @method static Builder|User withoutPermission($permissions)
+ * @method static Builder|User withoutRole($roles, $guard = null)
  * @mixin Eloquent
  */
 class User extends Authenticatable

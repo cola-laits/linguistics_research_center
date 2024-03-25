@@ -37,6 +37,9 @@ use App\Models\LexLanguage;
  * @method static Builder|LexLanguageSubFamily whereOrder($value)
  * @method static Builder|LexLanguageSubFamily whereUpdatedAt($value)
  * @method static Builder|LexLanguageSubFamily whereUpdatedBy($value)
+ * @property-read mixed $translations
+ * @method static Builder|LexLanguageSubFamily whereLocale(string $column, string $locale)
+ * @method static Builder|LexLanguageSubFamily whereLocales(string $column, array $locales)
  * @mixin Eloquent
  */
 class LexLanguageSubFamily extends Model {

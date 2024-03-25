@@ -27,6 +27,9 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Page whereName($value)
  * @method static Builder|Page whereSlug($value)
  * @method static Builder|Page whereUpdatedAt($value)
+ * @property-read mixed $translations
+ * @method static Builder|Page whereLocale(string $column, string $locale)
+ * @method static Builder|Page whereLocales(string $column, array $locales)
  * @mixin Eloquent
  */
 class Page extends Model {

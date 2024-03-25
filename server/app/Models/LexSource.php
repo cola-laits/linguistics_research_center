@@ -31,6 +31,7 @@ use App\Models\LexReflex;
  * @method static Builder|LexSource whereId($value)
  * @method static Builder|LexSource whereUpdatedAt($value)
  * @method static Builder|LexSource whereUpdatedBy($value)
+ * @property-read \App\Models\LexLexicon|null $lexicon
  * @mixin Eloquent
  */
 class LexSource extends Model {

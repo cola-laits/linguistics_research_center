@@ -6,6 +6,23 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ *
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\LexEtyma> $etyma
+ * @property-read int|null $etyma_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\LexLanguageFamily> $language_families
+ * @property-read int|null $language_families_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\LexSemanticCategory> $semantic_categories
+ * @property-read int|null $semantic_categories_count
+ * @property-read mixed $translations
+ * @method static \Illuminate\Database\Eloquent\Builder|LexLexicon newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|LexLexicon newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|LexLexicon query()
+ * @method static \Illuminate\Database\Eloquent\Builder|LexLexicon whereLocale(string $column, string $locale)
+ * @method static \Illuminate\Database\Eloquent\Builder|LexLexicon whereLocales(string $column, array $locales)
+ * @mixin \Eloquent
+ */
 class LexLexicon extends Model
 {
     use CrudTrait;

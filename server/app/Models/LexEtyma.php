@@ -42,6 +42,12 @@ use Illuminate\Support\Facades\Auth;
  * @method static Builder|LexEtyma wherePageNumber($value)
  * @method static Builder|LexEtyma whereUpdatedAt($value)
  * @method static Builder|LexEtyma whereUpdatedBy($value)
+ * @property-read Collection<int, \App\Models\LexEtymaExtraData> $extra_data
+ * @property-read int|null $extra_data_count
+ * @property-read \App\Models\LexLexicon|null $lexicon
+ * @property-read mixed $translations
+ * @method static Builder|LexEtyma whereLocale(string $column, string $locale)
+ * @method static Builder|LexEtyma whereLocales(string $column, array $locales)
  * @mixin Eloquent
  */
 class LexEtyma extends Model {

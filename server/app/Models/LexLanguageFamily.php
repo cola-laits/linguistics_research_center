@@ -33,6 +33,10 @@ use App\Models\LexLanguageSubFamily;
  * @method static Builder|LexLanguageFamily whereOrder($value)
  * @method static Builder|LexLanguageFamily whereUpdatedAt($value)
  * @method static Builder|LexLanguageFamily whereUpdatedBy($value)
+ * @property-read \App\Models\LexLexicon|null $lexicon
+ * @property-read mixed $translations
+ * @method static Builder|LexLanguageFamily whereLocale(string $column, string $locale)
+ * @method static Builder|LexLanguageFamily whereLocales(string $column, array $locales)
  * @mixin Eloquent
  */
 class LexLanguageFamily extends Model {

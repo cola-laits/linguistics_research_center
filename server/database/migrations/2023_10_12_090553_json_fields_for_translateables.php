@@ -50,7 +50,6 @@ return new class extends Migration
         $this->update_to_json('page','content');
 
         $this->update_to_json('lex_lexicon','protolang_name');
-        $this->update_to_json('lex_lexicon','description');
 
         $this->update_to_json('lex_language_family','name');
         $this->update_to_json('lex_language_sub_family','name');
@@ -70,7 +69,7 @@ return new class extends Migration
 
     public function update_to_json($table, $column) {
         Schema::table($table, function (Blueprint $table) use ($column) {
-            $table->mediumtext($column)->change();
+            $table->mediumtext($column)->nullable()->change();
         });
 
         DB::table($table)->orderBy('id')->lazy()->each(function ($row) use ($table, $column) {
@@ -82,7 +81,7 @@ return new class extends Migration
         });
 
         Schema::table($table, function (Blueprint $table) use ($column) {
-            $table->json($column)->change();
+            $table->json($column)->nullable()->change();
         });
     }
 

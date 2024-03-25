@@ -50,6 +50,20 @@ use App\Models\LexSource;
  * @method static Builder|LexReflex whereLanguageId($value)
  * @method static Builder|LexReflex whereUpdatedAt($value)
  * @method static Builder|LexReflex whereUpdatedBy($value)
+ * @property-read Collection<int, \App\Models\LexReflexCrossReference> $cross_reference_to_pivots
+ * @property-read int|null $cross_reference_to_pivots_count
+ * @property-read Collection<int, LexReflex> $cross_references_from
+ * @property-read int|null $cross_references_from_count
+ * @property-read Collection<int, LexReflex> $cross_references_to
+ * @property-read int|null $cross_references_to_count
+ * @property-read Collection<int, LexEtyma> $etyma
+ * @property-read int|null $etyma_count
+ * @property-read Collection<int, \App\Models\LexReflexExtraData> $extra_data
+ * @property-read int|null $extra_data_count
+ * @property-read mixed $lang_name_entries_gloss
+ * @property-read mixed $translations
+ * @method static Builder|LexReflex whereLocale(string $column, string $locale)
+ * @method static Builder|LexReflex whereLocales(string $column, array $locales)
  * @mixin Eloquent
  */
 class LexReflex extends Model {

@@ -33,6 +33,11 @@ use Illuminate\Support\Facades\Auth;
  * @method static Builder|LexSemanticCategory whereText($value)
  * @method static Builder|LexSemanticCategory whereUpdatedAt($value)
  * @method static Builder|LexSemanticCategory whereUpdatedBy($value)
+ * @property-read mixed $lex_text
+ * @property-read \App\Models\LexLexicon|null $lexicon
+ * @property-read mixed $translations
+ * @method static Builder|LexSemanticCategory whereLocale(string $column, string $locale)
+ * @method static Builder|LexSemanticCategory whereLocales(string $column, array $locales)
  * @mixin Eloquent
  */
 class LexSemanticCategory extends Model
