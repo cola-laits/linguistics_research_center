@@ -679,9 +679,10 @@ import TextareaCustomKeyboard from "./TextareaCustomKeyboard.vue";
                     .then((response) => {
                         document.querySelector(".spinner").style.display = "none";
                         if (response.data.fail) {
-                            this.error_messages = _.mapKeys(response.data.errors, function(value,key) {
-                                return 'grammar_'+grammar.id+'_'+key;
-                            });
+                            this.error_messages = Object.entries(response.data.errors).reduce((acc, [key, value]) => {
+                                acc[`grammar_${grammar.id}_${key}`] = value;
+                                return acc;
+                            }, {});
                         } else {
                             this.error_messages = {};
                             this.flash_modal(response.data.message);
@@ -731,9 +732,10 @@ import TextareaCustomKeyboard from "./TextareaCustomKeyboard.vue";
                     .then((response) => {
                         document.querySelector(".spinner").style.display = "none";
                         if (response.data.fail) {
-                            this.error_messages = _.mapKeys(response.data.errors, function(value,key) {
-                                return 'glossed_text_'+glossed_text.id+'_'+key;
-                            });
+                            this.error_messages = Object.entries(response.data.errors).reduce((acc, [key, value]) => {
+                                acc[`glossed_text_${glossed_text.id}_${key}`] = value;
+                                return acc;
+                            }, {});
                         } else {
                             this.error_messages = {};
                             this.flash_modal(response.data.message);
@@ -792,9 +794,10 @@ import TextareaCustomKeyboard from "./TextareaCustomKeyboard.vue";
                     .then((response) => {
                         document.querySelector(".spinner").style.display = "none";
                         if (response.data.fail) {
-                            this.error_messages = _.mapKeys(response.data.errors, function(value,key) {
-                                return 'gloss_'+gloss.id+'_'+key;
-                            });
+                            this.error_messages = Object.entries(response.data.errors).reduce((acc, [key, value]) => {
+                                acc[`gloss_${gloss.id}_${key}`] = value;
+                                return acc;
+                            }, {});
                         } else {
                             this.error_messages = {};
                             this.flash_modal(response.data.message);

@@ -10,17 +10,11 @@
     "@popperjs/core": "^2.11.8",
     "@vitejs/plugin-vue": "^4.5.0",
     "@vojtechlanka/vue-tags-input": "^3.1.0",
-    "@vue/compiler-sfc": "^3.1.0",
-    "axios": "^0.24",
+    "axios": "^1.0",
     "bootstrap": "^5.0.0",
     "laravel-vite-plugin": "^0.8.0",
-    "lodash": "^4.17.21",
-    "postcss": "^8.1.14",
-    "resolve-url-loader": "^3.1.2",
     "sass": "^1.32.8",
-    "sass-loader": "^10.1.1",
     "vite": "^4.0.0",
-    "vue": "^3.1",
-    "vue-loader": "^16.0.0"
+    "vue": "^3.1"
   }
 }
