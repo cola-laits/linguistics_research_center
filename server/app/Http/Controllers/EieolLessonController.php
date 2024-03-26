@@ -115,6 +115,19 @@ class EieolLessonController extends Controller
         ];
     }
 
+    public function update_text(Request $request, $id)
+    {
+        $lesson = EieolLesson::find($id);
+        $lesson->update([
+            'lesson_text' => Normalizer::normalize($request->get('lesson_text'), Normalizer::FORM_C),
+        ]);
+
+        return [
+            'success' => true,
+            'message' => 'Text was updated successfully'
+        ];
+    }
+
     public function update_translation(Request $request, $id)
     {
         $lesson = EieolLesson::find($id);

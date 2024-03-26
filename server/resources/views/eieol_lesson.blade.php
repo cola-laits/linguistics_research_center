@@ -200,12 +200,12 @@
     <br/>
 @endforeach
 
-@if ($lesson->getLessonText() != '')
+@if ($lesson->lesson_text)
     <h2>Lesson Text</h2>
     <div class='unbreakable'>
         <blockquote>
             <span lang='{{$lesson->language->lang_attribute}}'>
-                {!! $lesson->getLessonText() !!}
+                {!! $lesson->lesson_text !!}
             </span>
         </blockquote>
     </div>

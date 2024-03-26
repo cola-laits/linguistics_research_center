@@ -317,14 +317,36 @@
 
         <h2>Text and Translation</h2>
 
-        <div class='row'>
-            <div class='col-sm-10 offset-1'>
-                <strong>Lesson Text</strong>
-                <div class="card"><div class="card-body" id="lesson_text" v-html="lesson_text">
-                </div></div>
+        <a name="lesson_text"></a>
+        <form method="POST" :action="'/admin2/eieol_lesson/update_text/'+lesson.id"
+              accept-charset="UTF-8"
+              class="form"
+              id="update_text_form"
+              @submit.prevent="save_lesson_text()"
+              :dirty="isFormDirty('update_text_form')"
+        >
+            <input name="_method" type="hidden" value="PUT">
+
+            <div class='row'>
+                <div class='col-sm-10 offset-1'>
+                    <label>Lesson Text</label>
+                    <ck-editor html_id="lesson_text"
+                               html_name="lesson_text"
+                               v-model="lesson.lesson_text"
+                               :custom_config="ckeditor_customization"
+                               @input="markFormDirty('update_text_form')"
+                    ></ck-editor>
+                    <div id="lesson_text_error" class="alert-danger errors"></div>
+                </div>
             </div>
-            <br/>
-        </div>
+
+            <div class='row'>
+                <div class='col-sm-2 offset-1'>
+                    <input class="btn btn-sm btn-primary" type="submit" value="Save Text">
+                </div>
+            </div>
+
+        </form>
 
         <a name="lesson_translation"></a>
         <form method="POST" :action="'/admin2/eieol_lesson/update_translation/'+lesson.id"
@@ -518,13 +540,7 @@ import TextareaCustomKeyboard from "./TextareaCustomKeyboard.vue";
         },
         computed: {
             lesson_text: function() {
-                let lesson_text = '';
-                this.glossed_texts.forEach(function(gt) {
-                    if (gt.glossed_text) {
-                        lesson_text += gt.glossed_text.replace('<p>', '').replace('</p>', '') + ' ';
-                    }
-                });
-                return lesson_text;
+                return this.lesson.lesson_text;
             },
         },
         methods: {
@@ -581,6 +597,23 @@ import TextareaCustomKeyboard from "./TextareaCustomKeyboard.vue";
                             this.error_messages = {};
                             this.flash_modal(response.data.message);
                             this.markFormClean('update_form');
+                        }
+                    });
+            },
+            save_lesson_text() {
+                document.querySelector(".spinner").style.display = "block";
+                axios.post('/admin2/eieol_lesson/update_text/'+this.lesson.id, {
+                    _method:'PUT',
+                    lesson_text:this.lesson.lesson_text,
+                })
+                    .then((response) => {
+                        document.querySelector(".spinner").style.display = "none";
+                        if (response.data.fail) {
+                            this.error_messages = response.data.errors;
+                        } else {
+                            this.error_messages = {};
+                            this.flash_modal(response.data.message);
+                            this.markFormClean('update_text_form');
                         }
                     });
             },

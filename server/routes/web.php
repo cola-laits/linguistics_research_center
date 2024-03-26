@@ -105,6 +105,7 @@ Route::group(array('prefix'=> 'admin2', 'middleware' => 'auth'), function() {
     Route::get('/eieol_series', [EieolSeriesController::class, 'index']);
 
     Route::get('/eieol_series/{id}/edit', [EieolSeriesController::class, 'edit']);
+    Route::put('/eieol_lesson/update_text/{id}', [EieolLessonController::class, 'update_text']);
     Route::put('/eieol_lesson/update_translation/{id}', [EieolLessonController::class, 'update_translation']);
     Route::resource('/eieol_lesson', EieolLessonController::class);
     Route::resource('/eieol_grammar', EieolGrammarController::class);

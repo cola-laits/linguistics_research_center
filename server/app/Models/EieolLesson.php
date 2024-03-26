@@ -7,9 +7,6 @@ use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\EieolGlossedText;
-use App\Models\EieolGrammar;
-use App\Models\EieolSeries;
 use Illuminate\Support\Carbon;
 
 /**
@@ -21,6 +18,7 @@ use Illuminate\Support\Carbon;
  * @property int $order
  * @property int $language_id
  * @property string|null $intro_text
+ * @property string|null $lesson_text
  * @property string|null $lesson_translation
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -76,15 +74,6 @@ class EieolLesson extends Model {
 		return $this->belongsTo(EieolLanguage::class,'language_id');
 	}
 
-	public function getLessonText()
-	{
-		$lesson_text = '';
-		foreach ($this->glossed_texts as $glossed_text) {
-			$lesson_text .= $glossed_text->glossed_text . ' ';
-		}
-		return $this->removeFormatting($lesson_text);
-	}
-
 	public function prevLesson()
 	{
 		return EieolLesson::where('order', '<', $this->order)->where('series_id', '=', $this->series_id)->orderBy('order', 'desc')->first();
@@ -94,16 +83,5 @@ class EieolLesson extends Model {
 	{
 		return EieolLesson::where('order', '>', $this->order)->where('series_id', '=', $this->series_id)->orderBy('order')->first();
 	}
-
-  private function removeFormatting($str)
-  {
-
-    $str = preg_replace('/(<font[^>]*>)|(<\/font>)/', '', $str);
-   // $str = str_replace('<sup>', '', $str);
-   // $str = str_replace('</sup>', '', $str);
-
-    return $str;
-
-  }
 
 }
