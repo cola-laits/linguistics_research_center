@@ -19,7 +19,7 @@ class EieolSeriesController extends Controller
         } else {
             $serieses = Auth::user()->editableSeries->sortBy('order');
         }
-        return view('eieol_series.eieol_series_index', ['serieses' => $serieses]);
+        return view('admin.eieol_series_index', ['serieses' => $serieses]);
     }
 
     public function edit($id) {
@@ -30,7 +30,7 @@ class EieolSeriesController extends Controller
             'text' => $language->display,
             'value' => $language->lang,
         ]);
-        return view('eieol_series.eieol_series_form', [
+        return view('admin.eieol_series_form', [
             'series' => $series,
             'lessons' => $lessons,
             'languages' => $this->all_languages(),

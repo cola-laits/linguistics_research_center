@@ -23,7 +23,7 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Facades\View::composer('admin_layout', function(View $view) {
+        Facades\View::composer('admin.layout', function(View $view) {
             $issues = Issue::where('status', 'open');
             if (Auth::user()?->isAdmin()) {
                 $numOpenIssues = $issues->count();

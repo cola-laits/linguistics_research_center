@@ -22,7 +22,7 @@ class EieolLessonController extends Controller
     {
         $series = EieolSeries::find($request->get('series_id'));
         $languages = EieolLanguage::pluck('language', 'id');
-        return view('eieol_lesson.eieol_lesson_create', [
+        return view('admin.eieol_lesson_create', [
             'series' => $series,
             'languages' => $languages
         ]);
@@ -75,7 +75,7 @@ class EieolLessonController extends Controller
             ->where('pointer', 'like', '/lesson/' . $lesson->id . '%')
             ->get();
 
-        return view('eieol_lesson.eieol_lesson_edit', ['lesson' => $lesson,
+        return view('admin.eieol_lesson_edit', ['lesson' => $lesson,
             'grammars' => $grammars,
             'glossed_texts' => $glossed_texts,
             'etymas' => $etymas,

@@ -1,4 +1,4 @@
-@extends('admin_layout')
+@extends('admin.layout')
 
 @section('title') New Issue @endsection
 

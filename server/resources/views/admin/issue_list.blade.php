@@ -1,13 +1,15 @@
 <?php
-    /**
-     * @var object $status
-    */
+/**
+ * @var object $status
+ */
 ?>
 
 
-@extends('admin_layout')
+@extends('admin.layout')
 
-@section('title') Issues @endsection
+@section('title')
+    Issues
+@endsection
 
 @section('head_extra')
     <script>
@@ -31,47 +33,51 @@
                 <button type="button"
                         @class(['btn', 'btn-sm', 'btn-secondary'=>('open'==$status), 'btn-outline-secondary'=>('open'!=$status)])
                         onclick="setStatusAndRedirect('open')"
-                >Open</button>
+                >Open
+                </button>
 
                 <button type="button"
                         @class(['btn', 'btn-sm', 'btn-secondary'=>('closed'==$status), 'btn-outline-secondary'=>('closed'!=$status)])
                         onclick="setStatusAndRedirect('closed')"
-                >Closed</button>
+                >Closed
+                </button>
 
                 <button type="button"
                         @class(['btn', 'btn-sm', 'btn-secondary'=>('all'==$status), 'btn-outline-secondary'=>('all'!=$status)])
                         onclick="setStatusAndRedirect('all')"
-                >All</button>
+                >All
+                </button>
             </div>
         </div>
         <div class="issue_list">
-        @forelse ($issues as $issue)
-            <div class="issue">
-                <div style="cursor:pointer;" class="card"
-                    onmouseover="this.classList.add('border-primary')"
-                    onmouseout="this.classList.remove('border-primary')"
-                    onclick="document.location.href='/admin2/issues/{{$issue->id}}'"
-                >
-                    <div class="card-header">
-                        <h5>
+            @forelse ($issues as $issue)
+                <div class="issue">
+                    <div style="cursor:pointer;" class="card"
+                         onmouseover="this.classList.add('border-primary')"
+                         onmouseout="this.classList.remove('border-primary')"
+                         onclick="document.location.href='/admin2/issues/{{$issue->id}}'"
+                    >
+                        <div class="card-header">
+                            <h5>
                     <span
                         @class(['badge', 'bg-success'=>($issue->status==='open'), 'bg-danger'=>($issue->status!=='open')])
                     >{{$issue->status}}</span>
-                            #{{$issue->id}}:
-                            {{$issue->name}}
-                        </h5>
+                                #{{$issue->id}}:
+                                {{$issue->name}}
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div style="font-weight:bold;">In: {{$issue->pointer_desc}}</div>
+                            @php($last_comment = $issue->comments->last())
+                            <div>{{$issue->comments->count()}} comments, last
+                                on {{explode(' ',$last_comment->created_at)[0]}} by {{$last_comment->user_logon}}</div>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <div style="font-weight:bold;">In: {{$issue->pointer_desc}}</div>
-                        @php($last_comment = $issue->comments->last())
-                        <div>{{$issue->comments->count()}} comments, last on {{explode(' ',$last_comment->created_at)[0]}} by {{$last_comment->user_logon}}</div>
-                    </div>
+                    <br>
                 </div>
-                <br>
-            </div>
-        @empty
-            <div>No issues matching current search criteria.</div>
-        @endforelse
+            @empty
+                <div>No issues matching current search criteria.</div>
+            @endforelse
         </div>
     </div>
 @endsection
