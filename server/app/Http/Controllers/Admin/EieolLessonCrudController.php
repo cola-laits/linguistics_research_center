@@ -73,6 +73,7 @@ class EieolLessonCrudController extends CrudController
         CRUD::field('order')->type('text');
         CRUD::field('language_id')->type('select')->model(EieolLanguage::class)->attribute('language');
         CRUD::field('intro_text')->type('tinymce')->options($this->getDefaultTinyMceOptions());
+        CRUD::field('lesson_text')->type('tinymce')->options($this->getDefaultTinyMceOptions());
         CRUD::field('lesson_translation')->type('tinymce')->options($this->getDefaultTinyMceOptions());
 
         /**
