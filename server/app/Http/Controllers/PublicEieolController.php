@@ -5,6 +5,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BlockPage;
 use App\Models\EieolLanguage;
 use App\Models\EieolLesson;
 use App\Models\EieolSeries;
@@ -52,6 +53,9 @@ class PublicEieolController extends Controller
             ->where('series_id', '=', $series->id)
             ->where('order', '=', $lesson_order)
             ->firstOrFail();
+
+        $page_with_blocks = BlockPage::with('blocks.blockable')->findOrFail($lesson->block_page_id);
+        dd($page_with_blocks->blocks[0]->blockable);
 
         return view('eieol_lesson', [
             'series' => $series,
