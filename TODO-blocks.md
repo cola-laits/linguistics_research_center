@@ -1,0 +1,16 @@
+- Move changing lesson order out of lesson editor into series lesson list
+- Test that adding a lesson part adds a block for:
+    - intro
+    - translation
+    - glossed text
+    - grammar
+- Test that deleting a lesson part deletes the block for:
+    - intro
+    - translation
+    - glossed text
+    - grammar
+- Test that moving a lesson part moves the block for:
+    - glossed text
+    - grammar
+- Rewrite lesson page to display blocks in order
+- Rewrite lesson editor to look more block-based

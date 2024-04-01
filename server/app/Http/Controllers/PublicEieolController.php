@@ -55,7 +55,12 @@ class PublicEieolController extends Controller
             ->firstOrFail();
 
         $page_with_blocks = BlockPage::with('blocks.blockable')->findOrFail($lesson->block_page_id);
-        dd($page_with_blocks->blocks[0]->blockable);
+        $dump = "<table border='1'>";
+        foreach ($page_with_blocks->blocks as $block) {
+            $dump .= "<tr><td>".get_class($block->blockable)."</td><td>".$block->blockable->id."</td></tr>";
+        }
+        $dump .= "</table>";
+        return $dump;
 
         return view('eieol_lesson', [
             'series' => $series,
