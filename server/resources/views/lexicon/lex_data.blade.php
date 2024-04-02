@@ -47,7 +47,7 @@
 
         function redraw_search_conditions() {
             document.getElementById('custom-search').value = window.search_conditions.full;
-            for (key in window.search_conditions.cols) {
+            for (let key in window.search_conditions.cols) {
                 document.getElementById('column-text-search-'+key).value = window.search_conditions.cols[key];
             }
             do_search();
@@ -223,7 +223,7 @@
             let datatable_wrapper = document.getElementById('datatable_wrapper');
             let scroll_body = datatable_wrapper.getElementsByClassName('dt-scroll-body')[0];
             let footer = datatable_wrapper.getElementsByClassName('row')[4]; // 3 header rows, then body; footer is 5th row
-            let extra_bottom_padding_pixels = 20;
+            let extra_bottom_padding_pixels = 30;
             let new_height = window.innerHeight
                 - scroll_body.getBoundingClientRect().top
                 - footer.clientHeight
