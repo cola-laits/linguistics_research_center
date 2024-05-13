@@ -39,7 +39,7 @@ steps:
 
 
 - name: deploy_test
-  image: quay.io/honestbee/drone-kubernetes
+  image: laitsdev/drone-kubernetes
   settings:
     kubernetes_token:
       from_secret: kubernetes_token
@@ -55,7 +55,7 @@ steps:
 
 
 - name: deploy_prod
-  image: quay.io/honestbee/drone-kubernetes
+  image: laitsdev/drone-kubernetes
   settings:
     kubernetes_token:
       from_secret: kubernetes_token
