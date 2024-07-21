@@ -88,13 +88,18 @@
 
     "lexicon.header.banner.alt_text": "Linguistics Research Center - The University of Texas at Austin",
     "lexicon.header.banner.image_url": "/images/lrc-banner-trim.png",
+    "lexicon.header.lex_home.text": "Inicio de :lexicon_name",
 
     "lexicon.menu.dictionary_jump_label": "Saltar a un diccionario",
     "lexicon.menu.dictionary_choose_language_prompt": "Elige un idioma...",
 
     "lexicon.sidebar.title_headwords": "Encabezados",
     "lexicon.sidebar.title_categories": "Categorías",
+    "lexicon.sidebar.title_languages": "Idiomas",
     "lexicon.sidebar.button_label_search": "Busca",
+    "lexicon.sidebar.search_placeholder_headwords": "Busca palabras",
+    "lexicon.sidebar.search_placeholder_categories": "Busca categorías",
+    "lexicon.sidebar.search_placeholder_languages": "Busca idiomas",
 
     "": ""
 }
