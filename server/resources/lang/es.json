@@ -2,12 +2,21 @@
     "lexicon.general.html_head_title": "LRC :lexicon_name: :page_title",
     "lexicon.pages.data.html_head_title": "LRC :lexicon_name: Datos",
     "lexicon.pages.home.html_head_title": "LRC :lexicon_name: Inicio",
+    
     "lexicon.pages.data.page_title": "Datos",
     "lexicon.pages.etymon.page_title": "Diccionario de :lexicon_protolang_name",
     "lexicon.pages.field.page_title": "Campo semántico",
     "lexicon.pages.home.page_title": ":lexicon_name",
     "lexicon.pages.language.page_title": "LRC :lexicon_name: :language_name",
     "lexicon.pages.word.page_title": "Diccionario de :language_name",
+    
+    "lexicon.pages.data.breadcrumb_title": "Datos",
+    "lexicon.pages.etymon.breadcrumb_title": ":entry",
+    "lexicon.pages.field.breadcrumb_title": "Campo semántico :semantic_field",
+    "lexicon.pages.home.breadcrumb_title": ":lexicon_name",
+    "lexicon.pages.protolang.breadcrumb_title": ":lexicon_protolang_name",
+    "lexicon.pages.language.breadcrumb_title": ":language_name",
+    "lexicon.pages.word.breadcrumb_title": ":word",
 
     "lexicon.pages.data.datatables_translation_file": "es-MX.json",
     "lexicon.pages.data.column_visibility_button_label": "Seleccionar columnas",
