@@ -24,7 +24,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string|null $remember_token
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property int $is_admin
  * @property string $name
  * @property-read Collection|\App\Models\EieolSeries[] $editableSeries
  * @property-read int|null $editable_series_count
@@ -84,6 +83,8 @@ class User extends Authenticatable
 
     public function isAdmin()
     {
-        return $this->is_admin;
+        return $this->hasRole('Site Manager')
+            || $this->hasRole('EIEOL Manager')
+            || $this->hasRole('Lexicon Manager');
     }
 }
