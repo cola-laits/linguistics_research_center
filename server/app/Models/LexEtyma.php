@@ -123,4 +123,8 @@ class LexEtyma extends Model {
     {
         return $this->belongsTo(LexLexicon::class, 'lexicon_id');
     }
+
+    public function getLexiconNameEntryAttribute() {
+        return $this->lexicon->name . ': ' . $this->entry;
+    }
 }

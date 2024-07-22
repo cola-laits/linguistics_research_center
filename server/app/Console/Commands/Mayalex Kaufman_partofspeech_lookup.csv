@@ -1,0 +1,99 @@
+Kaufman part of speech,family,spanish,english,ID to use
+aj use,adjective,uso adjetivo,adjective use,A
+ppnd/proclitic,adjective,antepuesto/proclítico,prepound/proclitic,A
+ppnd,adjective,antepuesto,prepound,A
+af,adjective,afectivo,affective,A
+aj=,adjective,adjetivo antepuesto,prepound adjective,A
+A,adjective,adjetivo,adjective,A
+aj,adjective,adjetivo,adjective,A
+dir,adjective,dirreccional,directional,DIR
+directional',adjective,direccional,directional,DIR
+expl,adjective,explicativo,explicative,
+aj (abstr ?),adjective,adjetivo (abstractivo?),adjective (abstractive?),
+a,adjective,adjetivo,adjetive,
+abstr,adjective,abstractivo,abstractive,
+s/poss,affix,sustantivo/posesivo,possesive sustantive,
+poss?,affix,posesivo?,possesive?,
+(inan poss),affix,posesivo inanimado,inanimate possesive,
+poss,affix,posesivo,possesive,
+s/poss/s1,affix,(clase sustantivo),(noun class),
+vi/sv  ,multiple parts of speech classes,verbo intransitivo o sustantivo verbal,intransitive verb/verbal noun,?
+s/aj  ,multiple parts of speech classes,sustantivo/adjetivo,substantive/adjective,?
+sv/vi,multiple parts of speech classes,sustantivo verbal o verbo intransitivo,verbal substantive/intransitive verb,?
+sv  ,multiple parts of speech classes,sustantivo verbal,verbal substantive,?
+ajs  ,multiple parts of speech classes,adjetivo-sustantivo,adjective-substantive,?
+aj/s  ,multiple parts of speech classes,adjetivo o sustantivo,adjective or substantive,?
+adv  ,multiple parts of speech classes,adverbio,adverb,AV
+vn ,multiple parts of speech classes,sustantivo verbal,verbal noun,
+sv/vn,multiple parts of speech classes,sustantivo verbal,verbal sustantive/verbal noun,
+caus (+ n),multiple parts of speech classes,causativo (+ sustantivo),causative (+ noun),
+aj(P),multiple parts of speech classes,adjetivo posicional,positional adjetive,
+pcp,not identified,misterio dolorosos ?,,
+x,not identified,,,
+cn  ,noun,clasificador numeral,numeral classifier,CN
+voc.  ,noun,vocativo.,vocative.,N
+voc  ,noun,vocativo,vocative,N
+temp  ,noun,temporal,temporal,N
+sY  ,noun,sY,sY,N
+s-voc ,noun,sustantivo-vocativo,noun-vocative,N
+sds  ,noun,sustantivo-de-sustantivo,noun-of-noun,N
+s:pl ,noun,sustantivo:plural,noun:plural,N
+sr ,noun,sustantivo relacional,relational noun,N
+s? ,noun,sustantivo,substantive,N
+s ,noun,sustantivo,substantive,N
+n  ,noun,sustantivo,substantive,N
+subj  ,noun,subjecto,subject,N
+pl ,noun,plural,plural,N
+obj ,noun,objeto,object,N
+instr  ,noun,instrumento,instrumental,N
+agt,noun,agentivo,agentive,N
+(instr),noun,(instrumento),(instrumental),N
+s1 ,noun,(clase sustantivo),(noun class),N
+"s1, s",noun,(clase sustantivo),(noun class),N
+"s1, s1a",noun,(clase sustantivo),(noun class),N
+s1/voc ,noun,(clase sustantivo),(noun class),N
+s1s ,noun,(clase sustantivo),(noun class),N
+s1a ,noun,(clase sustantivo),(noun class),N
+s(1b) ,noun,(clase sustantivo),(noun class),N
+s1a/s1b ,noun,(clase sustantivo),(noun class),N
+s2 ,noun,(clase sustantivo),(noun class),N
+s3 ,noun,(clase sustantivo),(noun class),N
+s3a,noun,(clase sustantivo),(noun class),N
+s3 (-tak),noun,(clase sustantivo),(noun class),N
+s3 (-itz ~ -atz),noun,(clase sustantivo),(noun class),N
+s3 (-itz),noun,(clase sustantivo),(noun class),N
+s3/s1  ,noun,(clase sustantivo),(noun class),N
+num  ,noun,número,number,NUM
+rp ,noun,pronombre reflexivo,reflective pronoun,PN
+simb,noun,simbolico,symbolic,
+s1?,noun,(clase sustantivo),(noun class),
+antip,verb,antipasivo,antipassivo,ANTIP
+aux ,verb,auxiliar,auxiliary,AUX
+caus ,verb,causativo,causative,CAUS
+vi (no -i),verb,verbo intransitivo (sin -i),intransitive verb (no -i),IV
+vi (def),verb,verbo intransitivo (defectivo),intransitive verb (defective),IV
+vi ,verb,verbo intransitivo,intransitive verb,IV
+vi:antip,verb,verbo intransitivo:antipasivo,intransitive verb: antipassivo,IV_ANTIP
+iv:antip ,verb,verbo intransitivo: antipasivo,intransitive verb: antipassive,IV_ANTIP
+P ,verb,posicional,positional,POS
+p,verb,posicional,positional ,POS
+T,verb,transitivo,transitive,T
+vt ,verb,verbo transitivo,transitive verb,TV
+vt/antip,verb,verbo transitivo/antipasivo,transitive/antipassive verb,TV_ANTIP
+vers,verb,versivo,versive,V
+v,verb,verbo,verb,V
+rfl ,verb,reflexivo,reflexive,V
+pt ,verb,partículo,particle ,V
+I2 ,verb,intransitivo 2,(verb class),V
+ap ,verb,antipasivo,antipassive,V
+vt:indir/instr ,verb,verbo transitivo:indirecto/instrumento,transitive verb:indirect/instrumental,
+vt/vi,verb,verbo transitivo/verbo intransitivo,transitive verb/intransitive verb,
+vt/caus,verb,verbo transitivo/causativo,transitive verb/causative,
+tv + dir,verb,verbo transitivo + (direccional),transitive verb + (directional),
+tv(+dir),verb,verbo transitivo (+direccional),transitive verb(+directional),
+tv,verb,verbo transitivo,transitive verb,
+iv ,verb,verbo intransitivo,intransitive verb,
+refl,verb,reflexivo,reflexive,
+(P >) vt/vi,verb,posicional (becomes) verbo transitivo/verbo intransitivo,positional (becomes) transitive verb/intransitive verb ,
+cau or absol,verb,causativo o absolutivo,causative or absolutive,
+cau,verb,causativo,causative,

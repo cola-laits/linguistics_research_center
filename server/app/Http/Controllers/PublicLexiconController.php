@@ -113,6 +113,8 @@ class PublicLexiconController extends Controller
 
     public function data(Request $request, $lexicon_slug)
     {
+        ini_set('memory_limit', '2048M');
+
         $lex = LexLexicon::where('slug', $lexicon_slug)->firstOrFail();
         $lex_language_ids = \DB::table('lex_language')
             ->join('lex_language_sub_family', 'lex_language.sub_family_id', '=', 'lex_language_sub_family.id')
@@ -132,14 +134,14 @@ class PublicLexiconController extends Controller
         $column_descs = [
             (object) ['display_name'=>'Meaning', 'name'=>'meaning'],
             (object) ['display_name'=>'Semantic Tag', 'name'=>'semantic_tag'],
-            (object) ['display_name'=>'Etymon', 'name'=>'etymon']
+            (object) ['display_name'=>'Etymon', 'name'=>'etymon'],
+            (object) ['display_name'=>'Language', 'name'=>'language'],
+            (object) ['display_name'=>'Part of Speech', 'name'=>'part_of_speech'],
         ];
 
         // FIXME make this database-driven at some point
         if ($lexicon_slug === 'semitilex') {
             $column_descs []= (object) ['display_name'=>'pS Root', 'name'=>'root'];
-            $column_descs []= (object) ['display_name'=>'Part of Speech', 'name'=>'part_of_speech'];
-            $column_descs []= (object) ['display_name'=>'Language', 'name'=>'language'];
             $column_descs []= (object) ['display_name'=>'Verb Root', 'name'=>'verb_root'];
             $column_descs []= (object) ['display_name'=>'Verb Root Script', 'name'=>'verb_root_script'];
             $column_descs []= (object) ['display_name'=>'Script', 'name'=>'script'];
@@ -174,6 +176,26 @@ class PublicLexiconController extends Controller
             $column_descs []= (object) ['display_name'=>'Stem', 'name'=>'stem'];
             $column_descs []= (object) ['display_name'=>'Complement', 'name'=>'complement'];
         }
+        if ($lexicon_slug === 'mayalex' || $lexicon_slug === 'mayalex_import') {
+            $column_descs []= (object) ['display_name'=>'Root', 'name'=>'root'];
+            $column_descs []= (object) ['display_name'=>'Headword (Kaufman spelling)', 'name'=>'kaufman_spelling'];
+            $column_descs []= (object) ['display_name'=>'Headword (Source spelling)', 'name'=>'source_spelling'];
+            $column_descs []= (object) ['display_name'=>'Headword (practical orthography)', 'name'=>'practical_orthography'];
+            $column_descs []= (object) ['display_name'=>'Headword (IPA)', 'name'=>'headword_ipa'];
+            $column_descs []= (object) ['display_name'=>'Definition', 'name'=>'definition'];
+            $column_descs []= (object) ['display_name'=>'Definition (practical orthography)', 'name'=>'practical_orthography_definition'];
+            $column_descs []= (object) ['display_name'=>'Meaning (Spanish)', 'name'=>'meaning_spanish'];
+            $column_descs []= (object) ['display_name'=>'Meaning Spanish (unmodernized)', 'name'=>'meaning_spanish_unmodernized'];
+            $column_descs []= (object) ['display_name'=>'Meaning (English)', 'name'=>'meaning_english'];
+            $column_descs []= (object) ['display_name'=>'Eng. Part of Speech', 'name'=>'english_part_of_speech'];
+            $column_descs []= (object) ['display_name'=>'Spn. Part of Speech', 'name'=>'spanish_part_of_speech'];
+            $column_descs []= (object) ['display_name'=>'Full Original Entry', 'name'=>'full_original_entry'];
+            $column_descs []= (object) ['display_name'=>'Alternate forms/spellings', 'name'=>'alternate_forms_spellings'];
+            $column_descs []= (object) ['display_name'=>'Manuscript Page Number', 'name'=>'source_page_number'];
+            $column_descs []= (object) ['display_name'=>'Source', 'name'=>'source'];
+            $column_descs []= (object) ['display_name'=>'Other', 'name'=>'other'];
+            $column_descs []= (object) ['display_name'=>'Editors', 'name'=>'editors'];
+        }
 
         $lookup_fn = function ($reflex, $column_name) {
             switch ($column_name) {
@@ -192,7 +214,7 @@ class PublicLexiconController extends Controller
                 case 'language':
                     return $reflex->language->name;
                 default:
-                    return $reflex->extra_data[$column_name] ?? "";
+                    return $reflex->extra_data->where('key', $column_name)->first()?->value ?? "";
             }
         };
 

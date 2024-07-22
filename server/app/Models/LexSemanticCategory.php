@@ -48,7 +48,7 @@ class LexSemanticCategory extends Model
 
     protected $table = 'lex_semantic_category';
 
-    protected $fillable = ['number', 'text', 'abbr'];
+    protected $guarded = ['id', 'created_at', 'updated_at'];
 
     protected $translatable = ['text'];
 

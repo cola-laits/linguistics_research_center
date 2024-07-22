@@ -53,7 +53,7 @@ class LexSemanticField extends Model {
 
 	protected $table = 'lex_semantic_field';
 
-	protected $fillable = ['text','number','abbr','semantic_category_id'];
+    protected $guarded = ['id', 'created_at', 'updated_at'];
 
     protected $translatable = ['text'];
 
@@ -80,4 +80,7 @@ class LexSemanticField extends Model {
             ->orderBy('order');
 	}
 
+    public function getLexiconNameTextAttribute() {
+        return $this->lexicon->name . ': ' . $this->text;
+    }
 }

@@ -125,7 +125,12 @@ class Lex_reflexCrudController extends CrudController
         CRUD::field('language_id')->label('Language')->type('relationship')->attribute('name');
         CRUD::field('lang_attribute')->type('text');
 
-        CRUD::field('sources')->type('select2_multiple')->attribute('code')->pivot(true);
+        CRUD::field('sources')->type('select2_multiple')->attribute('code')->pivot(true)
+            ->options(function($query) {
+                $reflex = $this->crud->getCurrentEntry();
+                $lexicon_id = $reflex->language?->language_sub_family?->language_family?->lexicon?->id;
+                return $query->where('lexicon_id', $lexicon_id)->get();
+            });
 
         CRUD::field('entries')->type('table')
             ->entity_singular('entry')
