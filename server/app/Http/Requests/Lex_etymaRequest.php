@@ -28,6 +28,7 @@ class Lex_etymaRequest extends FormRequest
         return [
             'entry' => 'required',
             'gloss' => 'required',
+            'order' => 'required',
         ];
     }
 

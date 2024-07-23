@@ -51,7 +51,7 @@ class Lex_semantic_fieldCrudController extends CrudController
             });
         CRUD::column('text')
             ->searchLogic(function ($query, $column, $searchTerm) {
-                $query->orWhereRaw("JSON_EXTRACT(text, '$.en') like ? collate utf8mb4_unicode_ci", ['%'.$searchTerm.'%']);
+                $query->orWhereRaw("JSON_EXTRACT(text, '$.en') like ?", ['%'.$searchTerm.'%']);
             });
         CRUD::column('number');
         CRUD::column('abbr');

@@ -46,14 +46,14 @@ class Lex_languageCrudController extends CrudController
 
         CRUD::column('name')->type('text')
             ->searchLogic(function ($query, $column, $searchTerm) {
-                $query->orWhereRaw("JSON_EXTRACT(name, '$.en') like ? collate utf8mb4_unicode_ci", ['%'.$searchTerm.'%']);
+                $query->orWhereRaw("JSON_EXTRACT(name, '$.en') like ?", ['%'.$searchTerm.'%']);
             });
         CRUD::column('order')->type('number');
         CRUD::column('language_sub_family')->type('relationship')
             ->attribute('family_sub_family')
             ->searchLogic(function ($query, $column, $searchTerm) {
                 $query->orWhereHas('language_sub_family', function ($query) use ($searchTerm) {
-                    $query->whereRaw("JSON_EXTRACT(name, '$.en') like ? collate utf8mb4_unicode_ci", ['%'.$searchTerm.'%']);
+                    $query->whereRaw("JSON_EXTRACT(name, '$.en') like ?", ['%'.$searchTerm.'%']);
                 });
             });
 

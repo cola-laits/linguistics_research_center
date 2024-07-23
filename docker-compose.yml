@@ -30,7 +30,7 @@ services:
       - SESSION_LIFETIME=120
       - VIEW_COMPILED_PATH=/tmp/laravel
   db:
-    image: mysql:8
+    image: mariadb:10.6
     environment:
       MYSQL_DATABASE: 'lrc'
       MYSQL_USER: 'lrc'

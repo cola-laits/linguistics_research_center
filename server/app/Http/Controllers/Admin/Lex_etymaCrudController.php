@@ -50,7 +50,7 @@ class Lex_etymaCrudController extends CrudController
         CRUD::column('entry')->label('Etyma')->type('text');
         CRUD::column('gloss')->type('text')
             ->searchLogic(function ($query, $column, $searchTerm) {
-                $query->orWhereRaw("JSON_EXTRACT(gloss, '$.en') like ? collate utf8mb4_unicode_ci", ['%'.$searchTerm.'%']);
+                $query->orWhereRaw("JSON_EXTRACT(gloss, '$.en') like ?", ['%'.$searchTerm.'%']);
             });
         CRUD::column('reflexes_display')->label('Reflexes')
             ->type('text')
