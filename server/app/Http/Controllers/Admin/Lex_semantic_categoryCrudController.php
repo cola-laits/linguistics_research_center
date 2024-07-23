@@ -71,7 +71,6 @@ class Lex_semantic_categoryCrudController extends CrudController
         CRUD::field('text')->type('text');
         CRUD::field('number')->type('text');
         CRUD::field('abbr')->type('text');
-        CRUD::setFromDb(); // fields
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:
