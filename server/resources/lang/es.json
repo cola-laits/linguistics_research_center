@@ -2,6 +2,7 @@
     "lexicon.general.html_head_title": "LRC :lexicon_name: :page_title",
     "lexicon.pages.data.html_head_title": "LRC :lexicon_name: Datos",
     "lexicon.pages.home.html_head_title": "LRC :lexicon_name: Inicio",
+    "lexicon.pages.protolang.html_head_title": "LRC :lexicon_name: :lexicon_protolang_name",
     
     "lexicon.pages.data.page_title": "Datos",
     "lexicon.pages.etymon.page_title": "Diccionario de :lexicon_protolang_name",
