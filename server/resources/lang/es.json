@@ -67,7 +67,7 @@
     "lexicon.pages.data.column_header_Complement": "Complemento",
 
     "lexicon.pages.etymon.table_header.Etymon": "Étimo",
-    "lexicon.pages.etymon.table_header.Gloss": "Glosa",
+    "lexicon.pages.etymon.table_header.Gloss": "Significado (Glosa)",
     "lexicon.pages.etymon.table_header.Derived Words": "Palabras derivadas",
     "lexicon.pages.etymon.table_header.Semantic Field": "Campo semántico",
     "lexicon.pages.etymon.table_header.Other Info": "Otra información",
@@ -86,7 +86,7 @@
     "lexicon.pages.word.table_header.Language": "Idioma",
     "lexicon.pages.word.table_header.Word": "Palabra",
     "lexicon.pages.word.table_header.Part of Speech": "Clase de palabra",
-    "lexicon.pages.word.table_header.Gloss": "Glosa",
+    "lexicon.pages.word.table_header.Gloss": "Significado (Glosa)",
     "lexicon.pages.word.table_header.Etymology": "Etimología",
     "lexicon.pages.word.table_header.Semantic Tag": "Etiqueta semántica",
     "lexicon.pages.word.table_header.Related Words": "Palabras relacionadas",
