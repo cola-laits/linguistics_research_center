@@ -129,7 +129,9 @@ class PublicLexiconController extends Controller
             'parts_of_speech',
             'extra_data',
 
-        ])->whereIn('language_id', $lex_language_ids)->get();
+        ])->whereIn('language_id', $lex_language_ids)
+            ->limit(10000)
+            ->get();
 
         $column_descs = [
             (object) ['display_name'=>'Meaning', 'name'=>'meaning'],
