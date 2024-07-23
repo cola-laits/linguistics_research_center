@@ -51,4 +51,8 @@ class LexSource extends Model {
     {
         return $this->belongsTo(LexLexicon::class, 'lexicon_id');
     }
+
+    public function getLexiconNameCodeAttribute() {
+        return $this->lexicon->name . ': ' . $this->code;
+    }
 }
