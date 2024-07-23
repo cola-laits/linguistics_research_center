@@ -61,6 +61,7 @@ Route::controller(PublicEieolController::class)->group(function() {
 
 Route::controller(PublicLexiconController::class)->group(function() {
     Route::get('lexicon/{lex_slug}', 'index');
+    Route::get('lexicon/{lex_slug}/switchlang/{lang}', 'switch_lang');
     Route::get('lexicon/{lex_slug}/etymon/{etymon_id}', 'etymon');
     Route::get('lexicon/{lex_slug}/field/{field_id}', 'field');
     Route::get('lexicon/{lex_slug}/word/{word_id}', 'word_home');

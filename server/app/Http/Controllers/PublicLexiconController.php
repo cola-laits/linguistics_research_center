@@ -18,15 +18,20 @@ class PublicLexiconController extends Controller
 {
     public function index(Request $request, $lexicon_slug)
     {
-        if ($request->has('switchlang')) {
-            Session::put('viewer_lang_code', $request->input('switchlang'));
-            return redirect('/lexicon/'.$lexicon_slug);
-        }
         $lex = $this->getLexicon($lexicon_slug);
         return view('lexicon/lex_home', [
             'lexicon'=>$lex,
             'selected_sidebar'=>'language',
         ]);
+    }
+
+    public function switch_lang(Request $request, $lexicon_slug, $lang)
+    {
+        Session::put('viewer_lang_code', $lang);
+        if ($request->get('return_to')) {
+            return redirect($request->get('return_to'));
+        }
+        return redirect('/lexicon/'.$lexicon_slug);
     }
 
     public function protolanguage_home(Request $request, $lexicon_slug)

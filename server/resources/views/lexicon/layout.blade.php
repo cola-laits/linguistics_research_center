@@ -228,7 +228,7 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                             @foreach ($lexicon->getViewerLangsArray() as $viewer_lang)
-                                <a class="dropdown-item" href="/lexicon/{{$lexicon->slug}}?switchlang={{$viewer_lang}}">{{$lexicon->getDisplayTextViewerLang($viewer_lang)}}</a>
+                                <a class="dropdown-item" href="/lexicon/{{$lexicon->slug}}/switchlang/{{$viewer_lang}}?return_to={{urlencode(Request::url())}}">{{$lexicon->getDisplayTextViewerLang($viewer_lang)}}</a>
                             @endforeach
                         </div>
                     </div>
