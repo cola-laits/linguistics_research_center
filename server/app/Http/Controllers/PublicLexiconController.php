@@ -225,11 +225,18 @@ class PublicLexiconController extends Controller
             }
         };
 
+        $reflex_data = $reflexes->map(function ($reflex) use ($column_descs, $lookup_fn) {
+            $data = collect($column_descs)->mapWithKeys(function ($column_desc) use ($reflex, $lookup_fn) {
+                return [$column_desc->name => $lookup_fn($reflex, $column_desc->name)];
+            });
+            $data['id'] = $reflex->id;
+            return $data;
+        });
+
         return view('lexicon/lex_data', [
             'lexicon'=>$lex,
-            'reflexes'=>$reflexes,
+            'reflexes'=>$reflex_data,
             'columns'=>$column_descs,
-            'display_value_lookup_fn'=>$lookup_fn,
         ]);
     }
 

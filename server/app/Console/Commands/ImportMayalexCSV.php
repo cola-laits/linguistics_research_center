@@ -238,9 +238,10 @@ class ImportMayalexCSV extends Command
         foreach ($kiche as $entry) {
             $language = LexLanguage::updateOrCreate([
                 'sub_family_id' => $subfamily->id,
+                'abbr' => 'KIC',
+            ], [
                 'name' => ['en'=>"K'iche'", 'es'=>"K'iche'"],
                 'order' => 1,
-                'abbr' => 'KIC',
             ]);
             $entries_0 = new \stdClass();
             $entries_0->text = $entry['Headword (Practical Orthography)'];
@@ -293,9 +294,10 @@ class ImportMayalexCSV extends Command
         foreach ($cholti as $entry) {
             $language = LexLanguage::updateOrCreate([
                 'sub_family_id' => $subfamily->id,
+                'abbr' => 'CHO',
+            ], [
                 'name' => ['en'=>"Ch'olti'", 'es'=>"Ch'olti'"],
                 'order' => 1,
-                'abbr' => 'CHO',
             ]);
             $entries_0 = new \stdClass();
             $entries_0->text = $entry['Headword (Practical Orthography)'];

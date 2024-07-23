@@ -310,10 +310,10 @@ END
     @foreach ($reflexes as $item)
     <tr>
         <td>
-            <a href="/lexicon/semitilex/word/{{$item->id}}" target="_blank"><i class="far fa-file-alt"></i></a>
+            <a href="/lexicon/semitilex/word/{{$item['id']}}" target="_blank"><i class="far fa-file-alt"></i></a>
         </td>
         @foreach ($columns as $column)
-        <td>{{ $display_value_lookup_fn($item, $column->name) }}</td>
+        <td>{{ $item[$column->name] }}</td>
         @endforeach
     </tr>
     @endforeach
