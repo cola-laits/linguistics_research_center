@@ -97,7 +97,7 @@
     "lexicon.pages.data.search-button.label": "Search:",
 
     "lexicon.pages.etymon.table_header.Etymon": "Etymon",
-    "lexicon.pages.etymon.table_header.Gloss": "Gloss",
+    "lexicon.pages.etymon.table_header.Gloss": "Meaning (Gloss)",
     "lexicon.pages.etymon.table_header.Derived Words": "Derived Words",
     "lexicon.pages.etymon.table_header.Semantic Field": "Semantic Field",
     "lexicon.pages.etymon.table_header.Other Info": "Other Info",
@@ -116,7 +116,7 @@
     "lexicon.pages.word.table_header.Language": "Language",
     "lexicon.pages.word.table_header.Word": "Word",
     "lexicon.pages.word.table_header.Part of Speech": "Part of Speech",
-    "lexicon.pages.word.table_header.Gloss": "Gloss",
+    "lexicon.pages.word.table_header.Gloss": "Meaning (Gloss)",
     "lexicon.pages.word.table_header.Etymology": "Etymology",
     "lexicon.pages.word.table_header.Semantic Tag": "Semantic Tag",
     "lexicon.pages.word.table_header.Related Words": "Related Words",
