@@ -1,4 +1,4 @@
-FROM composer:2 as phpbuild
+FROM composer:2 AS phpbuild
 ARG BACKPACK_COMPOSER_USER
 ARG BACKPACK_COMPOSER_PASS
 ADD server /var/www/html
@@ -7,7 +7,7 @@ RUN test -f auth.json || composer config http-basic.backpackforlaravel.com $BACK
 RUN composer install --ignore-platform-reqs --no-dev
 
 
-FROM node:18 as npmbuild
+FROM node:22 AS npmbuild
 COPY --from=phpbuild /var/www/html /var/www/html
 WORKDIR /var/www/html
 RUN npm ci && npm run production && rm -rf node_modules

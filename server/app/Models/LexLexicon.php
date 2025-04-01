@@ -109,22 +109,16 @@ class LexLexicon extends Model
             $column_descs []= (object) ['display_name'=>'Stem', 'name'=>'stem'];
             $column_descs []= (object) ['display_name'=>'Complement', 'name'=>'complement'];
         }
-        if ($this->slug === 'mayalex' || $this->slug === 'mayalex_import') {
-            $column_descs []= (object) ['display_name'=>'Root', 'name'=>'root'];
+        if ($this->slug === 'mayalex' || str_starts_with($this->slug, 'mayalex_')) {
             $column_descs []= (object) ['display_name'=>'Headword (Kaufman spelling)', 'name'=>'kaufman_spelling'];
-            $column_descs []= (object) ['display_name'=>'Headword (Source spelling)', 'name'=>'source_spelling'];
             $column_descs []= (object) ['display_name'=>'Headword (practical orthography)', 'name'=>'practical_orthography'];
-            $column_descs []= (object) ['display_name'=>'Headword (IPA)', 'name'=>'headword_ipa'];
-            $column_descs []= (object) ['display_name'=>'Definition', 'name'=>'definition'];
-            $column_descs []= (object) ['display_name'=>'Definition (practical orthography)', 'name'=>'practical_orthography_definition'];
-            $column_descs []= (object) ['display_name'=>'Meaning (Spanish)', 'name'=>'meaning_spanish'];
-            $column_descs []= (object) ['display_name'=>'Meaning Spanish (unmodernized)', 'name'=>'meaning_spanish_unmodernized'];
-            $column_descs []= (object) ['display_name'=>'Meaning (English)', 'name'=>'meaning_english'];
-            $column_descs []= (object) ['display_name'=>'Eng. Part of Speech', 'name'=>'english_part_of_speech'];
-            $column_descs []= (object) ['display_name'=>'Spn. Part of Speech', 'name'=>'spanish_part_of_speech'];
+            $column_descs []= (object) ['display_name'=>'Headword (IPA)', 'name'=>'ipa_spelling'];
+            $column_descs []= (object) ['display_name'=>'Meaning (English)', 'name'=>'english_definition'];
+            $column_descs []= (object) ['display_name'=>'Meaning (Spanish)', 'name'=>'spanish_definition'];
+            $column_descs []= (object) ['display_name'=>'Part of Speech', 'name'=>'part_of_speech'];
             $column_descs []= (object) ['display_name'=>'Full Original Entry', 'name'=>'full_original_entry'];
-            $column_descs []= (object) ['display_name'=>'Alternate forms/spellings', 'name'=>'alternate_forms_spellings'];
-            $column_descs []= (object) ['display_name'=>'Manuscript Page Number', 'name'=>'source_page_number'];
+            $column_descs []= (object) ['display_name'=>'Alternate forms/spellings', 'name'=>'alternate_forms'];
+            $column_descs []= (object) ['display_name'=>'Manuscript Page Number', 'name'=>'page_number'];
             $column_descs []= (object) ['display_name'=>'Source', 'name'=>'source'];
             $column_descs []= (object) ['display_name'=>'Other', 'name'=>'other'];
             $column_descs []= (object) ['display_name'=>'Editors', 'name'=>'editors'];
