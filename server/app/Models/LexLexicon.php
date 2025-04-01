@@ -115,7 +115,6 @@ class LexLexicon extends Model
             $column_descs []= (object) ['display_name'=>'Headword (IPA)', 'name'=>'ipa_spelling'];
             $column_descs []= (object) ['display_name'=>'Meaning (English)', 'name'=>'english_definition'];
             $column_descs []= (object) ['display_name'=>'Meaning (Spanish)', 'name'=>'spanish_definition'];
-            $column_descs []= (object) ['display_name'=>'Part of Speech', 'name'=>'part_of_speech'];
             $column_descs []= (object) ['display_name'=>'Full Original Entry', 'name'=>'full_original_entry'];
             $column_descs []= (object) ['display_name'=>'Alternate forms/spellings', 'name'=>'alternate_forms'];
             $column_descs []= (object) ['display_name'=>'Manuscript Page Number', 'name'=>'page_number'];
