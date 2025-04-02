@@ -88,7 +88,7 @@ class ImportMayalexCSV extends Command
         $this->info('>> Importing languages');
 
         // create language family and subfamily
-        $langs_csv = Reader::createFromPath('app/Console/Commands/Mayalex languages.csv', 'r');
+        $langs_csv = Reader::createFromPath('app/Console/Commands/import_data/Mayalex languages.csv', 'r');
         $langs_csv->setHeaderOffset(0);
         $langs = $langs_csv->getRecords();
         foreach ($langs as $lang) {
@@ -99,30 +99,30 @@ class ImportMayalexCSV extends Command
         $this->info('>> Importing semantic categories');
 
         // copy semantic categories
-        $categories_csv = Reader::createFromPath('app/Console/Commands/Mayalex Kaufman_Semantic_Categories.csv', 'r');
+        $categories_csv = Reader::createFromPath('app/Console/Commands/import_data/buck_semantic_category.csv', 'r');
         $categories_csv->setHeaderOffset(0);
         $categories = $categories_csv->getRecords();
         foreach ($categories as $category) {
             LexSemanticCategory::updateOrCreate([
                 'lexicon_id' => $this->lexicon_id,
-                'abbr' => $category['Kaufman Abbreviations'],
-                'number' => $category['Kaufman Number'],
+                'abbr' => $category['abbr'],
+                'number' => $category['number'],
             ], [
-                'text' => $category['Kaufman Categories'],
+                'text' => $category['text'],
             ]);
         }
 
         // copy semantic fields
-        $fields_csv = Reader::createFromPath('app/Console/Commands/Mayalex Kaufman_Semantic_Fields.csv', 'r');
+        $fields_csv = Reader::createFromPath('app/Console/Commands/import_data/buck_semantic_field.csv', 'r');
         $fields_csv->setHeaderOffset(0);
         $fields = $fields_csv->getRecords();
         $field_map = [];
         foreach ($fields as $field) {
-            if (!$field['Abbreviation']) {
+            if (!$field['abbr']) {
                 continue;
             }
-            $abbr = $field['Abbreviation'];
-            [$category_abbr, $junk] = explode('_', $abbr);
+            $abbr = $field['abbr'];
+            [$category_abbr, $field_abbr] = explode('_', $field['abbr']);
             if ($category_abbr == 'None') {
                 continue;
             }
@@ -131,17 +131,17 @@ class ImportMayalexCSV extends Command
                 ->first();
             $field_db = LexSemanticField::updateOrCreate([
                 'semantic_category_id' => $category->id,
-                'abbr' => $abbr,
-                'number' => $field['Number'],
+                'abbr' => $field['abbr'],
+                'number' => $field['number'],
             ], [
-                'text' => $field['Field'],
+                'text' => $field['text'],
             ]);
-            $field_map[$field['Abbreviation']] = $field_db->id;
+            $field_map[$field['abbr']] = $field_db->id;
         }
 
         // copy parts of speech
         $this->info('>> Importing parts of speech');
-        $poses_csv = Reader::createFromPath('app/Console/Commands/Mayalex Kaufman_partofspeech_lookup.csv', 'r');
+        $poses_csv = Reader::createFromPath('app/Console/Commands/import_data/Mayalex Kaufman_partofspeech_lookup.csv', 'r');
         $poses_csv->setHeaderOffset(0);
         $poses = $poses_csv->getRecords();
         foreach ($poses as $pos_entry) {
@@ -154,7 +154,7 @@ class ImportMayalexCSV extends Command
         }
 
         // copy kaufman
-        $kaufman_csv = Reader::createFromPath('app/Console/Commands/Mayalex Kaufman.csv', 'r');
+        $kaufman_csv = Reader::createFromPath('app/Console/Commands/import_data/Mayalex Kaufman.csv', 'r');
         $kaufman_csv->setHeaderOffset(0);
         $kaufman = $kaufman_csv->getRecords();
         $etyma_map = [];
@@ -253,7 +253,7 @@ class ImportMayalexCSV extends Command
         ];
         foreach ($import_lang_files as $lang_file) {
             $this->info('>> Importing '.$lang_file);
-            $lang_csv = Reader::createFromPath("app/Console/Commands/".$lang_file, 'r');
+            $lang_csv = Reader::createFromPath("app/Console/Commands/import_data/".$lang_file, 'r');
             $lang_csv->setHeaderOffset(0);
             $entries = $lang_csv->getRecords();
             $bar = $this->output->createProgressBar(count($lang_csv));
