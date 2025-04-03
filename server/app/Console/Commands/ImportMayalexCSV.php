@@ -299,15 +299,20 @@ class ImportMayalexCSV extends Command
 
     protected function createMissingLang($lang_name, $family_name, $subfamily_name): string
     {
+        if (!$subfamily_name) {
+            $subfamily_name = $family_name;
+        }
         if (array_key_exists($lang_name, $this->lang_ids_lookup)) {
             return $this->lang_ids_lookup[$lang_name];
         }
-        $this->warn('creating missing language: '.$lang_name);
+        $lang_name = trim($lang_name);
+        $family_name = trim($family_name);
+        $subfamily_name = trim($subfamily_name);
+        $this->warn('creating missing language: ('.$family_name.') ('.$subfamily_name.') ('.$lang_name.')');
         $missing_family = LexLanguageFamily::whereRaw("JSON_EXTRACT(name, '$.en') = ?", $family_name)
             ->where('lexicon_id', $this->lexicon_id)
             ->first();
         if (!$missing_family) {
-            $this->warn('creating missing family: '.$family_name);
             $missing_family = LexLanguageFamily::create([
                 'lexicon_id' => $this->lexicon_id,
                 'name' => $family_name,
@@ -318,7 +323,6 @@ class ImportMayalexCSV extends Command
             ->where('family_id', $missing_family->id)
             ->first();
         if (!$missing_subfamily) {
-            $this->warn('creating missing subfamily: '.$subfamily_name);
             $missing_subfamily = LexLanguageSubFamily::create([
                 'family_id' => $missing_family->id,
                 'name' => $subfamily_name,
@@ -329,7 +333,6 @@ class ImportMayalexCSV extends Command
             ->where('sub_family_id', $missing_subfamily->id)
             ->first();
         if (!$missing_lang) {
-            $this->warn('creating missing lang: '.$lang_name);
             $missing_lang = LexLanguage::create([
                 'sub_family_id' => $missing_subfamily->id,
                 'name' => $lang_name,
