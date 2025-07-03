@@ -1,0 +1,64 @@
+variables:
+  - &test_k8s_server
+    kubernetes_server:
+      from_secret: kubernetes_server
+    kubernetes_token:
+      from_secret: test_kubernetes_token
+  - &prod_k8s_server
+    kubernetes_server:
+      from_secret: kubernetes_server
+    kubernetes_token:
+      from_secret: prod_kubernetes_token
+  - &test_when_condition
+    when:
+      branch: master
+      event: push
+  - &prod_when_condition
+    when:
+      event: tag
+      ref: refs/tags/release-*
+
+steps:
+
+  - name: build
+    image: woodpeckerci/plugin-docker-buildx
+    settings:
+      repo: laitsdev/lrc
+      tags:
+        - woodpecker-${CI_PIPELINE_NUMBER}
+      logins:
+        - username:
+            from_secret: dockerhub_username
+          password:
+            from_secret: dockerhub_password
+      build_args:
+        BACKPACK_COMPOSER_USER:
+          from_secret: backpack_composer_user
+        BACKPACK_COMPOSER_PASS:
+          from_secret: backpack_composer_pass
+    when:
+      event: [ push, tag, manual ]
+
+  - name: deploy_test_web
+    image: laitsdev/woodpeckerci-kubernetes
+    settings:
+      <<: *test_k8s_server
+      namespace: lrc-test
+      deployment: web
+      container: web
+      repo: laitsdev/lrc
+      tag: woodpecker-${CI_PIPELINE_NUMBER}
+    <<: *test_when_condition
+    depends_on: [build]
+
+  - name: deploy_prod_web
+    image: laitsdev/woodpeckerci-kubernetes
+    settings:
+      <<: *prod_k8s_server
+      namespace: lrc
+      deployment: web
+      container: web
+      repo: laitsdev/lrc
+      tag: woodpecker-${CI_PIPELINE_NUMBER}
+    <<: *prod_when_condition
+    depends_on: [build]
