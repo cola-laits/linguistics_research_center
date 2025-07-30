@@ -10,32 +10,6 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\IssueComment;
 use Illuminate\Support\Carbon;
 
-/**
- * App\Models\Issue
- *
- * @property int $id
- * @property string $name
- * @property string $text
- * @property string $pointer
- * @property string $pointer_desc
- * @property string $status
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property-read Collection|\App\Models\IssueComment[] $comments
- * @property-read int|null $comments_count
- * @method static Builder|Issue newModelQuery()
- * @method static Builder|Issue newQuery()
- * @method static Builder|Issue query()
- * @method static Builder|Issue whereCreatedAt($value)
- * @method static Builder|Issue whereId($value)
- * @method static Builder|Issue whereName($value)
- * @method static Builder|Issue wherePointer($value)
- * @method static Builder|Issue wherePointerDesc($value)
- * @method static Builder|Issue whereStatus($value)
- * @method static Builder|Issue whereText($value)
- * @method static Builder|Issue whereUpdatedAt($value)
- * @mixin Eloquent
- */
 class Issue extends Model
 {
     protected $table = 'issue';

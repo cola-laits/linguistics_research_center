@@ -10,35 +10,6 @@ use App\Models\EieolLesson;
 use App\Models\EieolGloss;
 use Illuminate\Support\Carbon;
 
-/**
- * App\Models\EieolGlossedText
- *
- * @property int $id
- * @property int $lesson_id
- * @property string|null $glossed_text
- * @property int $order
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property string|null $audio_url
- * @property array|null $custom_gloss_mapping
- * @property-read Collection|\App\Models\EieolGloss[] $glosses
- * @property-read int|null $glosses_count
- * @property-read \App\Models\EieolLesson $lesson
- * @method static Builder|EieolGlossedText newModelQuery()
- * @method static Builder|EieolGlossedText newQuery()
- * @method static Builder|EieolGlossedText query()
- * @method static Builder|EieolGlossedText whereAudioUrl($value)
- * @method static Builder|EieolGlossedText whereCreatedAt($value)
- * @method static Builder|EieolGlossedText whereCreatedBy($value)
- * @method static Builder|EieolGlossedText whereCustomGlossMapping($value)
- * @method static Builder|EieolGlossedText whereGlossedText($value)
- * @method static Builder|EieolGlossedText whereId($value)
- * @method static Builder|EieolGlossedText whereLessonId($value)
- * @method static Builder|EieolGlossedText whereOrder($value)
- * @method static Builder|EieolGlossedText whereUpdatedAt($value)
- * @method static Builder|EieolGlossedText whereUpdatedBy($value)
- * @mixin Eloquent
- */
 class EieolGlossedText extends Model
 {
 

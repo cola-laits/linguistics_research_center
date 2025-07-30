@@ -11,31 +11,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\LexReflex;
 use App\Models\LexPartOfSpeech;
 
-/**
- * App\Models\LexReflexPartOfSpeech
- *
- * @property int $id
- * @property int $reflex_id
- * @property string|null $text
- * @property int $order
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property-read \App\Models\LexPartOfSpeech|null $part_of_speech
- * @property-read \App\Models\LexReflex $reflex
- * @method static Builder|LexReflexPartOfSpeech newModelQuery()
- * @method static Builder|LexReflexPartOfSpeech newQuery()
- * @method static Builder|LexReflexPartOfSpeech query()
- * @method static Builder|LexReflexPartOfSpeech whereCreatedAt($value)
- * @method static Builder|LexReflexPartOfSpeech whereCreatedBy($value)
- * @method static Builder|LexReflexPartOfSpeech whereId($value)
- * @method static Builder|LexReflexPartOfSpeech whereOrder($value)
- * @method static Builder|LexReflexPartOfSpeech whereReflexId($value)
- * @method static Builder|LexReflexPartOfSpeech whereText($value)
- * @method static Builder|LexReflexPartOfSpeech whereUpdatedAt($value)
- * @method static Builder|LexReflexPartOfSpeech whereUpdatedBy($value)
- * @property-read \App\Models\LexLanguage|null $language
- * @mixin Eloquent
- */
 class LexReflexPartOfSpeech extends Model {
 
     use CrudTrait;

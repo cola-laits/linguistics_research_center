@@ -13,35 +13,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\LexLanguageFamily;
 use App\Models\LexLanguage;
 
-/**
- * App\Models\LexLanguageSubFamily
- *
- * @property int $id
- * @property string|null $name
- * @property int $order
- * @property int $family_id
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property-read mixed $family_sub_family
- * @property-read \App\Models\LexLanguageFamily $language_family
- * @property-read Collection|\App\Models\LexLanguage[] $languages
- * @property-read int|null $languages_count
- * @method static Builder|LexLanguageSubFamily newModelQuery()
- * @method static Builder|LexLanguageSubFamily newQuery()
- * @method static Builder|LexLanguageSubFamily query()
- * @method static Builder|LexLanguageSubFamily whereCreatedAt($value)
- * @method static Builder|LexLanguageSubFamily whereCreatedBy($value)
- * @method static Builder|LexLanguageSubFamily whereFamilyId($value)
- * @method static Builder|LexLanguageSubFamily whereId($value)
- * @method static Builder|LexLanguageSubFamily whereName($value)
- * @method static Builder|LexLanguageSubFamily whereOrder($value)
- * @method static Builder|LexLanguageSubFamily whereUpdatedAt($value)
- * @method static Builder|LexLanguageSubFamily whereUpdatedBy($value)
- * @property-read mixed $translations
- * @method static Builder|LexLanguageSubFamily whereLocale(string $column, string $locale)
- * @method static Builder|LexLanguageSubFamily whereLocales(string $column, array $locales)
- * @mixin Eloquent
- */
 class LexLanguageSubFamily extends Model {
 
     use CrudTrait;

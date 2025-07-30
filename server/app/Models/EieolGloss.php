@@ -12,40 +12,6 @@ use App\Models\EieolElement;
 use App\Models\EieolLanguage;
 use Illuminate\Support\Carbon;
 
-/**
- * App\Models\EieolGloss
- *
- * @property int $id
- * @property string|null $surface_form
- * @property string|null $contextual_gloss
- * @property string|null $comments
- * @property string|null $underlying_form
- * @property int $language_id
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property int|null $glossed_text_id
- * @property int|null $order
- * @property-read Collection|\App\Models\EieolElement[] $elements
- * @property-read int|null $elements_count
- * @property-read \App\Models\EieolGlossedText|null $glossed_text
- * @property-read \App\Models\EieolLanguage $language
- * @method static Builder|EieolGloss newModelQuery()
- * @method static Builder|EieolGloss newQuery()
- * @method static Builder|EieolGloss query()
- * @method static Builder|EieolGloss whereComments($value)
- * @method static Builder|EieolGloss whereContextualGloss($value)
- * @method static Builder|EieolGloss whereCreatedAt($value)
- * @method static Builder|EieolGloss whereCreatedBy($value)
- * @method static Builder|EieolGloss whereGlossedTextId($value)
- * @method static Builder|EieolGloss whereId($value)
- * @method static Builder|EieolGloss whereLanguageId($value)
- * @method static Builder|EieolGloss whereOrder($value)
- * @method static Builder|EieolGloss whereSurfaceForm($value)
- * @method static Builder|EieolGloss whereUnderlyingForm($value)
- * @method static Builder|EieolGloss whereUpdatedAt($value)
- * @method static Builder|EieolGloss whereUpdatedBy($value)
- * @mixin Eloquent
- */
 class EieolGloss extends Model {
 	protected $table = 'eieol_gloss';
 

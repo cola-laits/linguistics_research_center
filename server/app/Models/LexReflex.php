@@ -18,54 +18,6 @@ use App\Models\LexLanguage;
 use App\Models\LexReflexPartOfSpeech;
 use App\Models\LexSource;
 
-/**
- * App\Models\LexReflex
- *
- * @property int $id
- * @property int $language_id
- * @property string|null $lang_attribute
- * @property string|null $gloss
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property array|null $entries
- * @property-read Collection|\App\Models\LexEtyma[] $etymas
- * @property-read int|null $etymas_count
- * @property-read mixed $lang_abbr_entries_gloss
- * @property-read mixed $lang_abbr_gloss
- * @property-read \App\Models\LexLanguage $language
- * @property-read Collection|\App\Models\LexReflexPartOfSpeech[] $parts_of_speech
- * @property-read int|null $parts_of_speech_count
- * @property-read Collection|\App\Models\LexSource[] $sources
- * @property-read int|null $sources_count
- * @method static Builder|LexReflex newModelQuery()
- * @method static Builder|LexReflex newQuery()
- * @method static Builder|LexReflex query()
- * @method static Builder|LexReflex whereClassAttribute($value)
- * @method static Builder|LexReflex whereCreatedAt($value)
- * @method static Builder|LexReflex whereCreatedBy($value)
- * @method static Builder|LexReflex whereEntries($value)
- * @method static Builder|LexReflex whereGloss($value)
- * @method static Builder|LexReflex whereId($value)
- * @method static Builder|LexReflex whereLangAttribute($value)
- * @method static Builder|LexReflex whereLanguageId($value)
- * @method static Builder|LexReflex whereUpdatedAt($value)
- * @method static Builder|LexReflex whereUpdatedBy($value)
- * @property-read Collection<int, \App\Models\LexReflexCrossReference> $cross_reference_to_pivots
- * @property-read int|null $cross_reference_to_pivots_count
- * @property-read Collection<int, LexReflex> $cross_references_from
- * @property-read int|null $cross_references_from_count
- * @property-read Collection<int, LexReflex> $cross_references_to
- * @property-read int|null $cross_references_to_count
- * @property-read Collection<int, LexEtyma> $etyma
- * @property-read int|null $etyma_count
- * @property-read Collection<int, \App\Models\LexReflexExtraData> $extra_data
- * @property-read int|null $extra_data_count
- * @property-read mixed $lang_name_entries_gloss
- * @property-read mixed $translations
- * @method static Builder|LexReflex whereLocale(string $column, string $locale)
- * @method static Builder|LexReflex whereLocales(string $column, array $locales)
- * @mixin Eloquent
- */
 class LexReflex extends Model {
 
     use CrudTrait;

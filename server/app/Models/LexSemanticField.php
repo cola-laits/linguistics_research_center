@@ -13,39 +13,6 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Models\LexSemanticCategory;
 
-/**
- * App\Models\LexSemanticField
- *
- * @property int $id
- * @property string|null $text
- * @property string|null $number
- * @property string|null $abbr
- * @property int $semantic_category_id
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property-read Collection|\App\Models\LexEtyma[] $etymas
- * @property-read int|null $etymas_count
- * @property-read \App\Models\LexSemanticCategory $semantic_category
- * @method static Builder|LexSemanticField newModelQuery()
- * @method static Builder|LexSemanticField newQuery()
- * @method static Builder|LexSemanticField query()
- * @method static Builder|LexSemanticField whereAbbr($value)
- * @method static Builder|LexSemanticField whereCreatedAt($value)
- * @method static Builder|LexSemanticField whereCreatedBy($value)
- * @method static Builder|LexSemanticField whereId($value)
- * @method static Builder|LexSemanticField whereNumber($value)
- * @method static Builder|LexSemanticField whereSemanticCategoryId($value)
- * @method static Builder|LexSemanticField whereText($value)
- * @method static Builder|LexSemanticField whereUpdatedAt($value)
- * @method static Builder|LexSemanticField whereUpdatedBy($value)
- * @property-read Collection<int, LexEtyma> $etyma
- * @property-read int|null $etyma_count
- * @property-read \App\Models\LexLexicon|null $lexicon
- * @property-read mixed $translations
- * @method static Builder|LexSemanticField whereLocale(string $column, string $locale)
- * @method static Builder|LexSemanticField whereLocales(string $column, array $locales)
- * @mixin Eloquent
- */
 class LexSemanticField extends Model {
 
     use CrudTrait;

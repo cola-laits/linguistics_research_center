@@ -11,35 +11,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
-/**
- * App\Models\LexSemanticCategory
- *
- * @property int $id
- * @property string|null $text
- * @property string|null $number
- * @property string|null $abbr
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property-read Collection|LexSemanticField[] $semantic_fields
- * @property-read int|null $semantic_fields_count
- * @method static Builder|LexSemanticCategory newModelQuery()
- * @method static Builder|LexSemanticCategory newQuery()
- * @method static Builder|LexSemanticCategory query()
- * @method static Builder|LexSemanticCategory whereAbbr($value)
- * @method static Builder|LexSemanticCategory whereCreatedAt($value)
- * @method static Builder|LexSemanticCategory whereCreatedBy($value)
- * @method static Builder|LexSemanticCategory whereId($value)
- * @method static Builder|LexSemanticCategory whereNumber($value)
- * @method static Builder|LexSemanticCategory whereText($value)
- * @method static Builder|LexSemanticCategory whereUpdatedAt($value)
- * @method static Builder|LexSemanticCategory whereUpdatedBy($value)
- * @property-read mixed $lex_text
- * @property-read \App\Models\LexLexicon|null $lexicon
- * @property-read mixed $translations
- * @method static Builder|LexSemanticCategory whereLocale(string $column, string $locale)
- * @method static Builder|LexSemanticCategory whereLocales(string $column, array $locales)
- * @mixin Eloquent
- */
 class LexSemanticCategory extends Model
 {
 

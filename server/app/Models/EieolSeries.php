@@ -13,44 +13,6 @@ use App\Models\EieolSeriesLanguage;
 use App\Models\EieolLanguage;
 use Illuminate\Support\Carbon;
 
-/**
- * App\Models\EieolSeries
- *
- * @property int $id
- * @property string|null $title
- * @property string $slug
- * @property int $order
- * @property string|null $menu_name
- * @property string|null $menu_order
- * @property string|null $expanded_title
- * @property int|null $published
- * @property string|null $meta_tags
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property-read Collection|\App\Models\EieolSeriesLanguage[] $languages
- * @property-read int|null $languages_count
- * @property-read Collection|\App\Models\EieolLanguage[] $lesson_languages
- * @property-read int|null $lesson_languages_count
- * @property-read Collection|\App\Models\EieolLesson[] $lessons
- * @property-read int|null $lessons_count
- * @method static Builder|EieolSeries newModelQuery()
- * @method static Builder|EieolSeries newQuery()
- * @method static Builder|EieolSeries query()
- * @method static Builder|EieolSeries whereCreatedAt($value)
- * @method static Builder|EieolSeries whereCreatedBy($value)
- * @method static Builder|EieolSeries whereExpandedTitle($value)
- * @method static Builder|EieolSeries whereId($value)
- * @method static Builder|EieolSeries whereMenuName($value)
- * @method static Builder|EieolSeries whereMenuOrder($value)
- * @method static Builder|EieolSeries whereMetaTags($value)
- * @method static Builder|EieolSeries whereOrder($value)
- * @method static Builder|EieolSeries wherePublished($value)
- * @method static Builder|EieolSeries whereSlug($value)
- * @method static Builder|EieolSeries whereTitle($value)
- * @method static Builder|EieolSeries whereUpdatedAt($value)
- * @method static Builder|EieolSeries whereUpdatedBy($value)
- * @mixin Eloquent
- */
 class EieolSeries extends Model {
 
     use CrudTrait;

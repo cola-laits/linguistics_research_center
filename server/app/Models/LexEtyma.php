@@ -12,44 +12,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
-/**
- * App\Models\LexEtyma
- *
- * @property int $id
- * @property string|null $old_id
- * @property int $order
- * @property string|null $page_number
- * @property string|null $entry
- * @property string|null $gloss
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property-read Collection|LexEtyma[] $cross_references
- * @property-read int|null $cross_references_count
- * @property-read Collection|LexReflex[] $reflexes
- * @property-read int|null $reflexes_count
- * @property-read Collection|LexSemanticField[] $semantic_fields
- * @property-read int|null $semantic_fields_count
- * @method static Builder|LexEtyma newModelQuery()
- * @method static Builder|LexEtyma newQuery()
- * @method static Builder|LexEtyma query()
- * @method static Builder|LexEtyma whereCreatedAt($value)
- * @method static Builder|LexEtyma whereCreatedBy($value)
- * @method static Builder|LexEtyma whereEntry($value)
- * @method static Builder|LexEtyma whereGloss($value)
- * @method static Builder|LexEtyma whereId($value)
- * @method static Builder|LexEtyma whereOldId($value)
- * @method static Builder|LexEtyma whereOrder($value)
- * @method static Builder|LexEtyma wherePageNumber($value)
- * @method static Builder|LexEtyma whereUpdatedAt($value)
- * @method static Builder|LexEtyma whereUpdatedBy($value)
- * @property-read Collection<int, \App\Models\LexEtymaExtraData> $extra_data
- * @property-read int|null $extra_data_count
- * @property-read \App\Models\LexLexicon|null $lexicon
- * @property-read mixed $translations
- * @method static Builder|LexEtyma whereLocale(string $column, string $locale)
- * @method static Builder|LexEtyma whereLocales(string $column, array $locales)
- * @mixin Eloquent
- */
 class LexEtyma extends Model {
 
     use CrudTrait;
