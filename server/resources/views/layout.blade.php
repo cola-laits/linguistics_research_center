@@ -191,7 +191,7 @@ the page content is in <section class="main-section">
                         <!-- Unit Name and Dynamic Nav -->
 
                         <!-- SYSTEM-REGION NAV-SM-UNIT -->
-                        <li class="office"><h2><a href="http://www.utexas.edu/cola/centers/lrc/">Linguistics Research Center</a></h2></li>
+                        <li class="office"><h2><a href="https://liberalarts.utexas.edu/lrc/">Linguistics Research Center</a></h2></li>
 
                         <!-- END SYSTEM-REGION NAV-SM-UNIT -->
                     </ul> <!-- close ul class="off-canvas-list" -->

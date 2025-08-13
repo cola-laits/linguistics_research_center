@@ -1,5 +1,5 @@
 <ul class="side-nav">
-    <li><a href="http://www.utexas.edu/cola/centers/lrc/">LRC Home</a></li>
+    <li><a href="https://liberalarts.utexas.edu/lrc/">LRC Home</a></li>
 
     @if (Request::is('eieol*') || Request::is('guides/eieol_user'))
     <li class="open"><a href="/eieol">EIEOL Lessons</a>
