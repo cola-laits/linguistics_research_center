@@ -40,7 +40,7 @@ class IssueCommentController extends Controller
         $comment->issue_id = $request->get('issue_id');
         $comment->type = $request->get('type');
         $comment->text = $request->get('text');
-        $comment->user_logon = Auth::user()->username;
+        $comment->user_logon = Auth::user()->name;
         $comment->save();
         return response()->json($comment);
     }

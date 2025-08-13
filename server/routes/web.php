@@ -88,8 +88,6 @@ Route::controller(PublicIELexController::class)->group(function() {
     Route::get('lex/semantic/field/{field_abbr}', 'lex_semantic_field');
 });
 
-Route::get('/admin', [AdminController::class, 'index']);
-
 Route::group(array('prefix'=> 'admin', 'middleware' => 'auth'), function() {
     Route::resource('/issue', IssueController::class);
     Route::resource('/issue_comment', IssueCommentController::class);
@@ -103,7 +101,7 @@ Route::group(array('prefix'=> 'admin2', 'middleware' => 'auth'), function() {
     Route::get('admin_app', 'AdminController@app');
     Route::resource('issues', IssueController::class);
 
-    Route::get('/eieol_series', [EieolSeriesController::class, 'index']);
+    Route::get('/eieol_series', fn() => redirect('/admin'));
 
     Route::get('/eieol_series/{id}/edit', [EieolSeriesController::class, 'edit']);
     Route::put('/eieol_lesson/update_text/{id}', [EieolLessonController::class, 'update_text']);

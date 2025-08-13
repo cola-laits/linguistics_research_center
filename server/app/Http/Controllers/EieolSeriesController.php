@@ -13,15 +13,6 @@ use Illuminate\Support\Facades\Validator;
 class EieolSeriesController extends Controller
 {
 
-    public function index() {
-        if (Auth::user()->isAdmin()) {
-            $serieses = EieolSeries::all()->sortBy('order');
-        } else {
-            $serieses = Auth::user()->editableSeries->sortBy('order');
-        }
-        return view('admin.eieol_series_index', ['serieses' => $serieses]);
-    }
-
     public function edit($id) {
         $series = EieolSeries::findOrFail($id);
         $lessons = $series->lessons;

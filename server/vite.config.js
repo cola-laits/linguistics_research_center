@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
     resolve: {
@@ -14,6 +15,7 @@ export default defineConfig({
             input: [
                 'resources/sass/admin.scss',
                 'resources/js/admin.js',
+                'resources/css/filament/admin/theme.css',
             ],
             refresh: true,
         }),
@@ -25,5 +27,6 @@ export default defineConfig({
                 },
             },
         }),
+        tailwindcss(),
     ],
 });

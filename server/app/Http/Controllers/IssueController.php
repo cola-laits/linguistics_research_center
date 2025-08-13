@@ -98,7 +98,7 @@ class IssueController extends Controller
         $comment->issue_id = $issue->id;
         $comment->type = 'comment';
         $comment->text = $comment_text;
-        $comment->user_logon = Auth::user()->username;
+        $comment->user_logon = Auth::user()->name;
         $comment->save();
 
         return redirect('/admin2/issues');
@@ -122,7 +122,7 @@ class IssueController extends Controller
             $comment->issue_id = $issue->id;
             $comment->type = $request->get('comment_type');
             $comment->text = $request->get('comment_text') ?: '';
-            $comment->user_logon = Auth::user()->username;
+            $comment->user_logon = Auth::user()->name;
             $comment->save();
         }
         return redirect('/admin2/issues/'.$issue->id);

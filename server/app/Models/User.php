@@ -3,18 +3,12 @@
 namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
-use Eloquent;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Notifications\DatabaseNotification;
-use Illuminate\Notifications\DatabaseNotificationCollection;
+use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Models\EieolSeries;
-use Illuminate\Support\Carbon;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
     protected $table = 'user';
 
@@ -38,6 +32,13 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'password' => 'hashed',
+        ];
+    }
+
     public function editableSeries() {
         return $this->belongsToMany(EieolSeries::class, 'user_permission', 'user_id', 'eieol_series_id');
     }
@@ -47,5 +48,10 @@ class User extends Authenticatable
         return $this->hasRole('Site Manager')
             || $this->hasRole('EIEOL Manager')
             || $this->hasRole('Lexicon Manager');
+    }
+
+    public function canAccessPanel($panel): bool
+    {
+        return true;
     }
 }

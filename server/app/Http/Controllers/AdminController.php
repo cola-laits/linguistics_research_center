@@ -14,10 +14,6 @@ use Normalizer;
 
 class AdminController extends Controller
 {
-    public function index() {
-        return redirect('/admin2/eieol_series');
-    }
-
     public function app() {
         return view('admin', []);
     }
