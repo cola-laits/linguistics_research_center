@@ -16,6 +16,7 @@
         "backpack/settings": "^3.0",
         "backpack/theme-tabler": "^1.2",
         "filament/filament": "^4.0",
+        "filament/spatie-laravel-settings-plugin": "^4.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^11.0",
         "laravel/ui": "^4.0",
@@ -23,6 +24,7 @@
         "league/flysystem-aws-s3-v3": "^3.0",
         "predis/predis": "^2.2",
         "sentry/sentry-laravel": "^4.0",
+        "spatie/laravel-settings": "^3.4",
         "spatie/laravel-translatable": "^6.5"
     },
     "require-dev": {

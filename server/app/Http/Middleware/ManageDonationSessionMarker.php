@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Settings\SiteSettings;
 use Carbon\Carbon;
 use Closure;
 use Illuminate\Support\Facades\Config;
@@ -17,7 +18,8 @@ class ManageDonationSessionMarker
      */
     public function handle($request, Closure $next)
     {
-        if (Config::get('settings.show_donation_popup') === "yes") {
+        $site_settings = app(SiteSettings::class);
+        if ($site_settings->show_donation_popup) {
             $page_ctr = 0;
             if ($request->session()->has('donation_page_ctr')) {
                 $page_ctr = $request->session()->get('donation_page_ctr');

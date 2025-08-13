@@ -57,87 +57,84 @@ class AdminPanelProvider extends PanelProvider
                         return $issues->count();
                     }),
 
-                NavigationItem::make('Settings')
-                    ->group('General')
-                    ->visible(fn() => auth()->user()->can('manage_settings'))
-                    ->url('/admin_mgr/setting')->sort(2),
+                // FIXME: convert this
                 NavigationItem::make('Pages')
                     ->group('General')
                     ->visible(fn() => auth()->user()->can('manage_pages'))
                     ->url('/admin_mgr/page')->sort(3),
 
-                NavigationItem::make('Help')
-                    ->group('Lexicon')
-                    ->visible(fn() => auth()->user()->can('manage_lexicon'))
-                    ->url('/admin_mgr/help_lex')->sort(1),
+                // FIXME: convert this
                 NavigationItem::make('Lexicons')
                     ->group('Lexicon')
                     ->visible(fn() => auth()->user()->can('manage_lexicon'))
                     ->url('/admin_mgr/lex-lexicon')->sort(2),
+                // FIXME: convert this
                 NavigationItem::make('Language Families')
                     ->group('Lexicon')
                     ->visible(fn() => auth()->user()->can('manage_lexicon'))
                     ->url('/admin_mgr/lex_language_family')->sort(3),
+                // FIXME: convert this
                 NavigationItem::make('Language Sub Families')
                     ->group('Lexicon')
                     ->visible(fn() => auth()->user()->can('manage_lexicon'))
                     ->url('/admin_mgr/lex_language_sub_family')->sort(4),
+                // FIXME: convert this
                 NavigationItem::make('Languages')
                     ->group('Lexicon')
                     ->visible(fn() => auth()->user()->can('manage_lexicon'))
                     ->url('/admin_mgr/lex_language')->sort(5),
+                // FIXME: convert this
                 NavigationItem::make('Etyma')
                     ->group('Lexicon')
                     ->visible(fn() => auth()->user()->can('manage_lexicon'))
                     ->url('/admin_mgr/lex_etyma')->sort(6),
+                // FIXME: convert this
                 NavigationItem::make('Reflexes')
                     ->group('Lexicon')
                     ->visible(fn() => auth()->user()->can('manage_lexicon'))
                     ->url('/admin_mgr/lex_reflex')->sort(7),
+                // FIXME: convert this
                 NavigationItem::make('Sources')
                     ->group('Lexicon')
                     ->visible(fn() => auth()->user()->can('manage_lexicon'))
                     ->url('/admin_mgr/lex_source')->sort(8),
+                // FIXME: convert this
                 NavigationItem::make('Semantic Categories')
                     ->group('Lexicon')
                     ->visible(fn() => auth()->user()->can('manage_lexicon'))
                     ->url('/admin_mgr/lex_semantic_category')->sort(9),
+                // FIXME: convert this
                 NavigationItem::make('Semantic Fields')
                     ->group('Lexicon')
                     ->visible(fn() => auth()->user()->can('manage_lexicon'))
                     ->url('/admin_mgr/lex_semantic_field')->sort(10),
+                // FIXME: convert this
                 NavigationItem::make('Parts of Speech')
                     ->group('Lexicon')
                     ->visible(fn() => auth()->user()->can('manage_lexicon'))
                     ->url('/admin_mgr/lex_part_of_speech')->sort(11),
 
+                // FIXME: convert this
                 NavigationItem::make('Languages')
                     ->group('EIEOL')
                     ->visible(fn() => auth()->user()->can('manage_eieol'))
                     ->url('/admin_mgr/eieol_language')->sort(1),
+                // FIXME: convert this
                 NavigationItem::make('Series')
                     ->group('EIEOL')
                     ->visible(fn() => auth()->user()->can('manage_eieol'))
                     ->url('/admin_mgr/eieol_series')->sort(2),
+                // FIXME: convert this
                 NavigationItem::make('Lessons')
                     ->group('EIEOL')
                     ->visible(fn() => auth()->user()->can('manage_eieol'))
                     ->url('/admin_mgr/eieol-lesson')->sort(3),
-
-                NavigationItem::make('Books')
-                    ->group('Books')
-                    ->visible(fn() => auth()->user()->can('manage_books'))
-                    ->url('/admin_mgr/book')->sort(1),
-                NavigationItem::make('Book Sections')
-                    ->group('Books')
-                    ->visible(fn() => auth()->user()->can('manage_books'))
-                    ->url('/admin_mgr/book-section')->sort(2),
             ])
             ->navigationGroups([
-                'General',
-                'Lexicon',
-                'EIEOL',
-                'Books',
+                NavigationGroup::make('General'),
+                NavigationGroup::make('Lexicon'),
+                NavigationGroup::make('EIEOL'),
+                NavigationGroup::make('Books'),
             ])
             ->pages([
                 Dashboard::class,

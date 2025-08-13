@@ -89,7 +89,7 @@
             <div class="donation-modal-body">
                 <p></p>
 
-                {!! Config::get('settings.donation_popup_text') !!}
+                {!! app(\App\Settings\SiteSettings::class)->donation_popup_text !!}
             </div>
         </div>
     </div>

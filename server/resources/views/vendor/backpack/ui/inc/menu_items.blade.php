@@ -3,10 +3,6 @@
 
 @canany(['manage_users','manage_settings','manage_pages','manage_menu'])
     <x-backpack::menu-dropdown title="General">
-@can('manage_users')
-    <x-backpack::menu-dropdown-item title="Users" icon="la la-users" :link="backpack_url('user')" />
-    <x-backpack::menu-dropdown-item title="User EIEOL Series" icon="la la-question" :link="backpack_url('user-permission')" />
-@endcan
 @can('manage_settings')
     <x-backpack::menu-dropdown-item title="Settings" icon="la la-cog" :link="backpack_url('setting')" />
 @endcan
@@ -40,12 +36,5 @@
         <x-backpack::menu-dropdown-item title="Lessons" icon="la la-question" :link="backpack_url('eieol-lesson')" />
         <x-backpack::menu-dropdown-item title="Full Lesson Editors" icon="la la-external-link-alt" link="/admin2/eieol_series#" />
         <x-backpack::menu-dropdown-item title="EIEOL Issues" icon="la la-external-link-alt" link="/admin2/issues" />
-    </x-backpack::menu-dropdown>
-@endcan
-
-@can('manage_books')
-    <x-backpack::menu-dropdown title="Books">
-        <x-backpack::menu-dropdown-item title="Books" icon="la la-book" :link="backpack_url('book')" />
-        <x-backpack::menu-dropdown-item title="Book sections" icon="la la-book-open" :link="backpack_url('book-section')" />
     </x-backpack::menu-dropdown>
 @endcan
