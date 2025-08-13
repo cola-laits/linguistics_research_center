@@ -68,9 +68,5 @@
     <li><a href="/lex">IE Lexicon</a></li>
     @endif
 
-    @foreach ($menu_items as $menu_item)
-        <li><a href="{{$menu_item->link}}">{{$menu_item->name}}</a></li>
-    @endforeach
-
 </ul>
 

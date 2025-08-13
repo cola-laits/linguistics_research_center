@@ -65,10 +65,6 @@ class AdminPanelProvider extends PanelProvider
                     ->group('General')
                     ->visible(fn() => auth()->user()->can('manage_pages'))
                     ->url('/admin_mgr/page')->sort(3),
-                NavigationItem::make('Menu Items')
-                    ->group('General')
-                    ->visible(fn() => auth()->user()->can('manage_menu'))
-                    ->url('/admin_mgr/menu-item')->sort(4),
 
                 NavigationItem::make('Help')
                     ->group('Lexicon')

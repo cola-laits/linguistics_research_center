@@ -13,9 +13,6 @@
 @can('manage_pages')
     <x-backpack::menu-dropdown-item title="Pages" icon="la la-file-alt" :link="backpack_url('page')" />
 @endcan
-@can('manage_menu')
-    <x-backpack::menu-dropdown-item title="Menu Items" icon="la la-bars" :link="backpack_url('menu-item')" />
-@endcan
     </x-backpack::menu-dropdown>
 @endcanany
 

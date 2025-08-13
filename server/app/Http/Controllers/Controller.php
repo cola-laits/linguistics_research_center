@@ -14,7 +14,6 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     public function __construct() {
-        $menu_items = MenuItem::orderBy('order')->get();
-        View::share('menu_items', $menu_items);
+
     }
 }

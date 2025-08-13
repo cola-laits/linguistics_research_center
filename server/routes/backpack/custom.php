@@ -17,9 +17,6 @@ Route::group([
     Route::middleware(['can:manage_pages'])->group(function() {
         Route::crud('page', 'PageCrudController');
     });
-    Route::middleware(['can:manage_menu'])->group(function() {
-        Route::crud('menu-item', 'MenuItemCrudController');
-    });
 
     Route::middleware(['can:manage_eieol'])->group(function() {
         Route::crud('user-permission', 'UserPermissionCrudController');
