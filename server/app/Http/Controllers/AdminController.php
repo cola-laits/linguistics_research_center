@@ -14,10 +14,6 @@ use Normalizer;
 
 class AdminController extends Controller
 {
-    public function app() {
-        return view('admin', []);
-    }
-
     public function analysis_typeahead(Request $request)
     {
         $data = DB::select("SELECT DISTINCT(analysis) as analysis FROM eieol_element, eieol_gloss"

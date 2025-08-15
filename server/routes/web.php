@@ -18,7 +18,7 @@ use App\Http\Controllers\PublicLexiconController;
 use App\Http\Controllers\PublicPageController;
 
 Route::get('robots.txt', function() {
-    if (env('APP_ENV') === 'production') {
+    if (config('app.env') === 'production') {
         return response(
             "User-agent: *
 Disallow: /eieol_printable/"
@@ -94,14 +94,10 @@ Route::group(array('prefix'=> 'admin', 'middleware' => 'auth'), function() {
 });
 
 Route::group(array('prefix'=> 'admin2', 'middleware' => 'auth'), function() {
-    Route::get('admin_error', function() {
-        return View::make('admin_error');
-    });
-
-    Route::get('admin_app', 'AdminController@app');
-    Route::resource('issues', IssueController::class);
-
     Route::get('/eieol_series', fn() => redirect('/admin'));
+    Route::get('/', fn() => redirect('/admin'));
+
+    Route::resource('issues', IssueController::class);
 
     Route::get('/eieol_series/{id}/edit', [EieolSeriesController::class, 'edit']);
     Route::put('/eieol_lesson/update_text/{id}', [EieolLessonController::class, 'update_text']);
@@ -126,5 +122,3 @@ Route::group(array('prefix'=> 'admin2', 'middleware' => 'auth'), function() {
 });
 
 Auth::routes(['register' => false]);
-
-Route::get('/home', [AdminController::class,'index'])->name('home');

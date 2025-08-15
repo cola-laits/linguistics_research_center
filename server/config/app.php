@@ -54,7 +54,7 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
-    'asset_url' => env('ASSET_URL', null),
+    'asset_url' => env('ASSET_URL', env('APP_URL', null)),
 
     /*
     |--------------------------------------------------------------------------
@@ -177,6 +177,8 @@ return [
         App\Providers\Filament\AdminPanelProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\ViewServiceProvider::class,
+
+        App\Providers\FilamentTinyMceServiceProvider::class,
 
     ],
 

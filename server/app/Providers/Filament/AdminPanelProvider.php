@@ -114,21 +114,6 @@ class AdminPanelProvider extends PanelProvider
                     ->visible(fn() => auth()->user()->can('manage_lexicon'))
                     ->url('/admin_mgr/lex_part_of_speech')->sort(11),
 
-                // FIXME: convert this
-                NavigationItem::make('Languages')
-                    ->group('EIEOL')
-                    ->visible(fn() => auth()->user()->can('manage_eieol'))
-                    ->url('/admin_mgr/eieol_language')->sort(1),
-                // FIXME: convert this
-                NavigationItem::make('Series')
-                    ->group('EIEOL')
-                    ->visible(fn() => auth()->user()->can('manage_eieol'))
-                    ->url('/admin_mgr/eieol_series')->sort(2),
-                // FIXME: convert this
-                NavigationItem::make('Lessons')
-                    ->group('EIEOL')
-                    ->visible(fn() => auth()->user()->can('manage_eieol'))
-                    ->url('/admin_mgr/eieol-lesson')->sort(3),
             ])
             ->navigationGroups([
                 NavigationGroup::make('General'),
