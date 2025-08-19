@@ -24,6 +24,7 @@ services:
       - DB_USERNAME=lrc
       - DB_PASSWORD=lrc
       - CACHE_DRIVER=database
+      - FILESYSTEM_DRIVER=public
       - SESSION_DRIVER=database
       - SESSION_LIFETIME=120
       - VIEW_COMPILED_PATH=/tmp/laravel

@@ -2,16 +2,12 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\app\Models\Traits\CrudTrait;
-use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
 use Eloquent;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Carbon;
+use Spatie\Translatable\HasTranslations;
 
 class Page extends Model {
 
-    use CrudTrait;
     use HasTranslations;
 
 	/**

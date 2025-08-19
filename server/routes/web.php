@@ -119,6 +119,7 @@ Route::group(array('prefix'=> 'admin2', 'middleware' => 'auth'), function() {
     Route::post('/related_languages/{series_id}/detach_language/{language_id}', [EieolSeriesController::class, 'detach_language']);
 
     Route::post('/files/upload', [FilesController::class, 'post_file']);
+    Route::post('/files/upload/tinymce', [FilesController::class, 'post_file_tinymce']);
 });
 
 Auth::routes(['register' => false]);

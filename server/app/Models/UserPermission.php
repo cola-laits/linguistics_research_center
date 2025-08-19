@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -10,7 +9,7 @@ use App\Models\User;
 use Illuminate\Support\Carbon;
 
 class UserPermission extends Model {
-    use CrudTrait;
+
     /*
      * FIXME old table for mapping series edit permissions - replace with Spatie/permissions eventually
      */

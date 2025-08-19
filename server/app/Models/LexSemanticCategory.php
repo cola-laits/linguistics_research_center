@@ -2,19 +2,13 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\app\Models\Traits\CrudTrait;
-use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
 use Eloquent;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\Translatable\HasTranslations;
 
 class LexSemanticCategory extends Model
 {
-
-    use CrudTrait;
     use HasTranslations;
 
     protected $table = 'lex_semantic_category';
@@ -28,12 +22,12 @@ class LexSemanticCategory extends Model
         return $this->hasMany(LexSemanticField::class, 'semantic_category_id', 'id')->orderBy('number');
     }
 
-    public function lexicon()
+    public function lexicon() : BelongsTo
     {
         return $this->belongsTo(LexLexicon::class, 'lexicon_id');
     }
 
-    public function getLexTextAttribute()
+    public function getLexTextAttribute() : string
     {
         return $this->lexicon->name . ' - ' . $this->text;
     }

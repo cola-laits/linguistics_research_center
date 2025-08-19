@@ -20,7 +20,10 @@ class UserForm
                     ->required()
                     ->default(null),
                 TextInput::make('password')
-                    ->password(),
+                    ->password()
+                    ->revealable()
+                    ->dehydrated(fn (?string $state): bool => filled($state))
+                    ->required(fn (string $operation): bool => $operation === 'create'),
                 TextInput::make('name')
                     ->required(),
                 CheckboxList::make('roles')

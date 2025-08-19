@@ -19,52 +19,34 @@
                         dark: 'oxide-dark',
                         system: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'oxide-dark' : 'oxide',
                     }[typeof theme === 'undefined' ? 'light' : theme],
+                    @if ($getContentCss())
+                    content_css: @js($getContentCss()),
+                    @else
                     content_css: {
                         light: 'default',
                         dark: 'dark',
                         system: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'default',
                     }[typeof theme === 'undefined' ? 'light' : theme],
+                    @endif
                     max_height: {{ $getMaxHeight() }},
                     min_height: {{ $getMinHeight() }},
                     plugins: @js($getPlugins()),
                     external_plugins: @js($getExternalPlugins()),
                     toolbar: '{{ $getToolbar() }}',
                     toolbar_mode: 'sliding',
-                    images_upload_handler: (blobInfo, success, failure, progress) => {
-                        if (!blobInfo.blob()) return
-
-                        $wire.upload(`componentFileAttachments.{{ $getStatePath() }}`, blobInfo.blob(), () => {
-                            $wire.getFormComponentFileAttachmentUrl('{{ $getStatePath() }}').then((url) => {
-                                if (!url) {
-                                    failure('{{ __('Error uploading file') }}')
-                                    return
-                                }
-                                success(url)
-                            })
-                        })
-                    },
-                    file_picker_callback: (cb, value, meta) => {
-                        const input = document.createElement('input');
-                        input.setAttribute('type', 'file');
-                        input.addEventListener('change', (e) => {
-                            const file = e.target.files[0];
-                            const reader = new FileReader();
-                            reader.addEventListener('load', () => {
-                                $wire.upload(`componentFileAttachments.{{ $getStatePath() }}`, file, () => {
-                                    $wire.getFormComponentFileAttachmentUrl('{{ $getStatePath() }}').then((url) => {
-                                        if (!url) {
-                                            cb('{{ __('Error uploading file') }}')
-                                            return
-                                        }
-                                        cb(url)
-                                    })
-                                })
-                            });
-                            reader.readAsDataURL(file);
-                        });
-
-                        input.click();
-                    },
+@if ($getLrcLanguages())
+                    content_langs: [
+                    @foreach ($getLrcLanguages() as $lang)
+                        { title: '{{ $lang->title }}', code: '{{ $lang->code }}' },
+                    @endforeach
+                    ],
+@endif
+@if ($getImageUploadUrl())
+                    images_upload_url: @js($getImageUploadUrl()),
+                    image_caption: true,
+                    image_advtab: true,
+                    file_picker_callback: null,
+@endif
                     automatic_uploads: true,
                     setup: function(editor) {
                         editor.on('blur', function(e) {
@@ -98,6 +80,44 @@
                                 targetDiv.setAttribute('x-trap.inert.noscroll', 'show')
                             }
                         })
+
+@if ($getLrcCharSequences())
+{{-- This is probably better off as a plugin for reuse. --}}
+                        editor.ui.registry.addButton('lrc_charsequences', {
+                            icon: 'insert-character',
+                            tooltip: 'Insert special character',
+                            onAction: () => {
+                                const seqButtons = [
+@foreach ($getLrcCharSequences() as $i => $seq)
+                                    { type: 'button', name: 'seq_{{ $i }}', text: @js($seq[1]) },
+@endforeach
+                                ];
+                                const nameToVal = {
+@foreach ($getLrcCharSequences() as $i => $seq)
+                                    'seq_{{ $i }}': @js($seq[0]),
+@endforeach
+                                };
+                                editor.windowManager.open({
+                                    title: 'Insert special character',
+                                    size: 'medium',
+                                    body: {
+                                        type: 'panel',
+                                        items: seqButtons
+                                    },
+                                    buttons: [
+                                        { type: 'cancel', name: 'close', text: 'Close' }
+                                    ],
+                                    onAction: (api, details) => {
+                                        const content = nameToVal[details.name];
+                                        if (typeof content !== 'undefined') {
+                                            editor.insertContent(content);
+                                            api.close();
+                                        }
+                                    }
+                                });
+                            }
+                        });
+@endif
 
                         function putCursorToEnd() {
                             editor.selection.select(editor.getBody(), true);

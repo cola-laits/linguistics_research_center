@@ -2,20 +2,13 @@
 
 namespace App\Models;
 
-use App\Models\LexEtyma;
-use Backpack\CRUD\app\Models\Traits\CrudTrait;
-use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
 use Eloquent;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Auth;
-use App\Models\LexSemanticCategory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\Translatable\HasTranslations;
 
 class LexSemanticField extends Model {
 
-    use CrudTrait;
     use HasTranslations;
 
 	protected $table = 'lex_semantic_field';
@@ -24,7 +17,9 @@ class LexSemanticField extends Model {
 
     protected $translatable = ['text'];
 
-	public function semantic_category()
+    protected $appends = ['lexiconNameText', 'lexiconNameAbbrText'];
+
+	public function semantic_category() : BelongsTo
 	{
 		return $this->belongsTo(LexSemanticCategory::class);
 	}
@@ -47,7 +42,13 @@ class LexSemanticField extends Model {
             ->orderBy('order');
 	}
 
-    public function getLexiconNameTextAttribute() {
+    public function getLexiconNameTextAttribute() : string
+    {
         return $this->lexicon->name . ': ' . $this->text;
+    }
+
+    public function getLexiconNameAbbrTextAttribute() : string
+    {
+        return $this->lexicon->name . ': ' . $this->abbr . ', ' . $this->text;
     }
 }

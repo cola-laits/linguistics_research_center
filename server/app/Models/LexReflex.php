@@ -2,25 +2,15 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\app\Models\Traits\CrudTrait;
-use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
 use Eloquent;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Auth;
+use Spatie\Translatable\HasTranslations;
 
-use function collect;
-use App\Models\LexEtyma;
-use App\Models\LexLanguage;
-use App\Models\LexReflexPartOfSpeech;
-use App\Models\LexSource;
 
 class LexReflex extends Model {
 
-    use CrudTrait;
     use HasTranslations;
 
 	protected $table = 'lex_reflex';
@@ -112,7 +102,7 @@ class LexReflex extends Model {
 		return $this->belongsToMany(LexEtyma::class, 'lex_etyma_reflex', 'reflex_id', 'etyma_id');
 	}
 
-	public function language()
+	public function language() : BelongsTo
 	{
 		return $this->belongsTo(LexLanguage::class);
 	}

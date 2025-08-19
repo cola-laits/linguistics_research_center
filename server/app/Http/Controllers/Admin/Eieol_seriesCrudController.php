@@ -70,7 +70,6 @@ class Eieol_seriesCrudController extends CrudController
         CRUD::field('order')->type('number');
         CRUD::field('menu_order')->type('number');
         CRUD::field('published')->type('boolean');
-        CRUD::field('meta_tags')->type('textarea');
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:

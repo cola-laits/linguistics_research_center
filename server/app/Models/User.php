@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -13,7 +12,6 @@ class User extends Authenticatable implements FilamentUser
     protected $table = 'user';
 
     use Notifiable;
-    use CrudTrait;
     use HasRoles;
 
     /**

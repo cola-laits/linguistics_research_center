@@ -2,16 +2,11 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Eloquent;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\LexEtyma;
-use App\Models\LexReflex;
-use Illuminate\Support\Carbon;
 
 class LexEtymaReflex extends Model {
-    use CrudTrait;
+
 	protected $table = 'lex_etyma_reflex';
 
     protected $guarded = [

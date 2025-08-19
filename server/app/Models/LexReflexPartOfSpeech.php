@@ -2,18 +2,10 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Eloquent;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Auth;
-use App\Models\LexReflex;
-use App\Models\LexPartOfSpeech;
 
 class LexReflexPartOfSpeech extends Model {
-
-    use CrudTrait;
 
 	protected $table = 'lex_reflex_part_of_speech';
 

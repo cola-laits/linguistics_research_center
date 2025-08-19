@@ -14,17 +14,6 @@ Route::group([
     ),
     'namespace'  => 'App\Http\Controllers\Admin',
 ], function () { // custom admin routes
-    Route::middleware(['can:manage_pages'])->group(function() {
-        Route::crud('page', 'PageCrudController');
-    });
-
-    Route::middleware(['can:manage_eieol'])->group(function() {
-        Route::crud('user-permission', 'UserPermissionCrudController');
-
-        Route::crud('eieol_series', 'Eieol_seriesCrudController');
-        Route::crud('eieol_language', 'Eieol_languageCrudController');
-        Route::crud('eieol-lesson', 'EieolLessonCrudController');
-    });
 
     Route::middleware(['can:manage_lexicon'])->group(function() {
         Route::get('help_lex', function () {
@@ -39,11 +28,6 @@ Route::group([
         Route::crud('lex_language', 'Lex_languageCrudController');
         Route::crud('lex_source', 'Lex_sourceCrudController');
         Route::crud('lex_part_of_speech', 'Lex_part_of_speechCrudController');
-    });
-
-    Route::middleware(['can:manage_books'])->group(function() {
-        Route::crud('book', 'BookCrudController');
-        Route::crud('book-section', 'BookSectionCrudController');
     });
 
     Route::crud('lex-lexicon', 'LexLexiconCrudController');

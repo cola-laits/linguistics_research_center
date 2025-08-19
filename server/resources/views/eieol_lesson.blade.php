@@ -2,8 +2,6 @@
 
 @section('title') {!! strip_tags($lesson->title) !!}@stop
 
-@section('meta') {{$lesson->series->meta_tags}} @stop
-
 @section('content')
 @if (!$printable)
 

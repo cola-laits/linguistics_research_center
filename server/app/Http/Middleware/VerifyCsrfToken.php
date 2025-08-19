@@ -19,6 +19,7 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        '/admin2/files/upload'
+        '/admin2/files/upload',
+        '/admin2/files/upload/tinymce',
     ];
 }

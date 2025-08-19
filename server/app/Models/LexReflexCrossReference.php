@@ -2,16 +2,13 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\app\Models\Traits\CrudTrait;
-use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use Spatie\Translatable\HasTranslations;
 
 class LexReflexCrossReference extends Pivot
 {
-    use CrudTrait;
-    use HasFactory;
     use HasTranslations;
 
     protected $table = 'lex_reflex_cross_reference';

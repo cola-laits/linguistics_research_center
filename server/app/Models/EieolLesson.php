@@ -2,15 +2,11 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Eloquent;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Carbon;
 
 class EieolLesson extends Model {
-    use CrudTrait;
+
 	protected $table = 'eieol_lesson';
 
 	protected $attributes = array(
@@ -49,4 +45,14 @@ class EieolLesson extends Model {
 		return EieolLesson::where('order', '>', $this->order)->where('series_id', '=', $this->series_id)->orderBy('order')->first();
 	}
 
+    public function getTinyMceLanguages() : array {
+        $langs = collect();
+        if ($this->language) {
+            $langs->add((object)['title'=>$this->language->language, 'code'=>$this->language->lang_attribute]);
+        }
+        foreach ($this->series->languages as $lang) {
+            $langs->add((object)['title'=>$lang->display, 'code'=>$lang->lang]);;
+        }
+        return $langs->toArray();
+    }
 }

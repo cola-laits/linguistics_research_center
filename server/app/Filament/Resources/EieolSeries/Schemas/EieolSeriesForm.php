@@ -29,9 +29,6 @@ class EieolSeriesForm
                     ->helperText("Order when displayed in left-hand menu ('EIEOL Lessons < Lessons')")
                     ->default(null),
                 Checkbox::make('published'),
-                Textarea::make('meta_tags')
-                    ->default(null)
-                    ->columnSpanFull(),
             ])->columns(1);
     }
 }

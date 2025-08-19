@@ -2,20 +2,12 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\app\Models\Traits\CrudTrait;
-use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
 use Eloquent;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Auth;
-use App\Models\LexLanguageFamily;
-use App\Models\LexLanguage;
+use Spatie\Translatable\HasTranslations;
 
 class LexLanguageSubFamily extends Model {
 
-    use CrudTrait;
     use HasTranslations;
 
 	protected $table = 'lex_language_sub_family';

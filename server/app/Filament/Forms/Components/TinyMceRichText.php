@@ -2,6 +2,7 @@
 
 namespace App\Filament\Forms\Components;
 
+use Closure;
 use Filament\Forms\Components\Field;
 
 class TinyMceRichText extends Field
@@ -11,8 +12,12 @@ class TinyMceRichText extends Field
     protected int $maxHeight = 1000;
     protected int $minHeight = 200;
     protected string $profile = 'default';
+    protected string $contentCss = '';
+
     // TinyMCE var: external_plugins
     protected object $externalPlugins;
+
+    protected array $extraConfig = [];
 
     public function getMaxHeight(): int
     {
@@ -27,13 +32,29 @@ class TinyMceRichText extends Field
     public function profile(string $profile): static
     {
         $this->profile = $profile;
-
         return $this;
+    }
+
+    public function contentCss(string $content_css): static
+    {
+        $this->contentCss = $content_css;
+        return $this;
+    }
+
+    public function getContentCss(): string
+    {
+        return $this->contentCss;
     }
 
     public function isSimple(): bool
     {
         return false; //return (bool) $this->evaluate($this->isSimple);
+    }
+
+    public function getImageUploadUrl(): string
+    {
+        // FIXME make configurable
+        return '/admin2/files/upload/tinymce';
     }
 
     public function getPlugins(): array
@@ -79,5 +100,34 @@ class TinyMceRichText extends Field
         }
 
         return '';
+    }
+
+    // LRC-specific options.  Not a part of getCustomConfigs() because that's static content; these are closures that need evaluation.
+    public function lrcCharSequences(array|Closure $value) : static
+    {
+        $this->extraConfig['lrcCharSequences'] = $value;
+        return $this;
+    }
+
+    public function getLrcCharSequences(): array
+    {
+        if (!isset($this->extraConfig['lrcCharSequences'])) {
+            return [];
+        }
+        return $this->evaluate($this->extraConfig['lrcCharSequences']);
+    }
+
+    public function lrcLanguages(array|Closure $value) : static
+    {
+        $this->extraConfig['lrcLanguages'] = $value;
+        return $this;
+    }
+
+    public function getLrcLanguages(): array
+    {
+        if (!isset($this->extraConfig['lrcLanguages'])) {
+            return [];
+        }
+        return $this->evaluate($this->extraConfig['lrcLanguages']);
     }
 }

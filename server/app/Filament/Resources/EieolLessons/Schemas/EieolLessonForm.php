@@ -3,9 +3,9 @@
 namespace App\Filament\Resources\EieolLessons\Schemas;
 
 use App\Filament\Forms\Components\TinyMceRichText;
+use App\Models\EieolLesson;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
 use Filament\Schemas\Schema;
 
 class EieolLessonForm
@@ -27,12 +27,24 @@ class EieolLessonForm
                     ->numeric(),
                 TinyMceRichText::make('intro_text')
                     ->default(null)
+                    ->profile('eieol_lesson')
+                    ->lrcCharSequences(fn(EieolLesson $lesson) => $lesson?->language?->getTinyMceCharmapConfig())
+                    ->lrcLanguages(fn(EieolLesson $lesson) => $lesson?->getTinyMceLanguages())
+                    ->contentCss('/css/lrcstyle.css')
                     ->columnSpanFull(),
                 TinyMceRichText::make('lesson_text')
                     ->default(null)
+                    ->profile('eieol_lesson')
+                    ->lrcCharSequences(fn(EieolLesson $lesson) => $lesson?->language?->getTinyMceCharmapConfig())
+                    ->lrcLanguages(fn(EieolLesson $lesson) => $lesson?->getTinyMceLanguages())
+                    ->contentCss('/css/lrcstyle.css')
                     ->columnSpanFull(),
                 TinyMceRichText::make('lesson_translation')
                     ->default(null)
+                    ->profile('eieol_lesson')
+                    ->lrcCharSequences(fn(EieolLesson $lesson) => $lesson?->language?->getTinyMceCharmapConfig())
+                    ->lrcLanguages(fn(EieolLesson $lesson) => $lesson?->getTinyMceLanguages())
+                    ->contentCss('/css/lrcstyle.css')
                     ->columnSpanFull(),
             ]);
     }
