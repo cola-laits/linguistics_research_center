@@ -76,7 +76,6 @@ class LexEtymaForm
                     ->relationship('reflexes', 'langNameEntriesGloss')
                     ->multiple()
                     ->getOptionLabelFromRecordUsing(fn ($record) => $record->langNameEntriesGloss)
-                    ->searchPrompt("Search for a Reflex by language or entry...")
                     ->searchPrompt("Search for a Reflex by English gloss or reflex id...")
                     ->getSearchResultsUsing(function (string $search) {
                         return LexReflex::query()
