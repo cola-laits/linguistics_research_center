@@ -14,5 +14,3 @@ FROM ghcr.io/utaustin-laits/laravel-base:11.x-php8.3
 COPY --from=npmbuild /var/www/html /var/www/html
 RUN chmod 777 -R /var/www/html/bootstrap/cache
 RUN chmod 777 -R /var/www/html/storage
-RUN php artisan storage:link
-RUN php artisan basset:cache && chmod 777 -R /var/www/html/storage/app/public/basset
