@@ -31,11 +31,6 @@ steps:
             from_secret: dockerhub_username
           password:
             from_secret: dockerhub_password
-      build_args:
-        BACKPACK_COMPOSER_USER:
-          from_secret: backpack_composer_user
-        BACKPACK_COMPOSER_PASS:
-          from_secret: backpack_composer_pass
     when:
       event: [ push, tag, manual ]
 

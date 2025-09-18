@@ -42,7 +42,7 @@ class AdminPanelProvider extends PanelProvider
                 SpatieTranslatablePlugin::make()->defaultLocales(['en', 'es'])
             )
 
-            // FIXME: temporary nav item redirects for things that haven't been converted from Backpack yet
+            // FIXME: temporary nav item redirects for things that haven't been converted to Filament yet
             ->navigationItems([
                 NavigationItem::make('Issues')
                     ->url('/admin2/issues')

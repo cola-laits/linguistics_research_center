@@ -15,7 +15,7 @@ class Lex_reflex_part_of_speechRequest extends FormRequest
     public function authorize()
     {
         // only allow updates if the user is logged in
-        return backpack_auth()->check();
+        return auth()->check();
     }
 
     /**

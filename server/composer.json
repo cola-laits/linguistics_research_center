@@ -10,9 +10,6 @@
         "ext-intl": "*",
         "ext-libxml": "*",
         "ext-mbstring": "*",
-        "backpack/crud": "^6.0",
-        "backpack/pro": "^2.0",
-        "backpack/theme-tabler": "^1.2",
         "filament/filament": "^4.0",
         "filament/spatie-laravel-settings-plugin": "^4.0",
         "guzzlehttp/guzzle": "^7.0.1",
@@ -63,12 +60,6 @@
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://repo.backpackforlaravel.com/"
-        }
-    ],
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
