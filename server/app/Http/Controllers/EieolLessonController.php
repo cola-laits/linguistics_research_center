@@ -20,7 +20,7 @@ class EieolLessonController extends Controller
 
     public function create(Request $request)
     {
-        $series = EieolSeries::find($request->get('series_id'));
+        $series = EieolSeries::findOrFail($request->get('series_id'));
         $languages = EieolLanguage::pluck('language', 'id');
         return view('admin.eieol_lesson_create', [
             'series' => $series,
@@ -59,7 +59,7 @@ class EieolLessonController extends Controller
 
     public function edit($id)
     {
-        $lesson = EieolLesson::with(['series', 'language' ,'series.languages'])->find($id);
+        $lesson = EieolLesson::with(['series', 'language' ,'series.languages'])->findOrFail($id);
         $grammars = EieolGrammar::where('lesson_id', '=', $id)->orderBy('order')->get();
         $glossed_texts = EieolGlossedText::with('glosses.language', 'glosses.elements.head_word.language')
             ->where('lesson_id', '=', $id)->orderBy('order')->get();
@@ -101,7 +101,7 @@ class EieolLessonController extends Controller
             ];
         }
 
-        $lesson = EieolLesson::find($id);
+        $lesson = EieolLesson::findOrFail($id);
         $lesson->update([
             'title' => Normalizer::normalize($request->get('title'), Normalizer::FORM_C),
             'order' => $request->get('order'),
@@ -117,7 +117,7 @@ class EieolLessonController extends Controller
 
     public function update_text(Request $request, $id)
     {
-        $lesson = EieolLesson::find($id);
+        $lesson = EieolLesson::findOrFail($id);
         $lesson->update([
             'lesson_text' => Normalizer::normalize($request->get('lesson_text'), Normalizer::FORM_C),
         ]);
@@ -130,7 +130,7 @@ class EieolLessonController extends Controller
 
     public function update_translation(Request $request, $id)
     {
-        $lesson = EieolLesson::find($id);
+        $lesson = EieolLesson::findOrFail($id);
         $lesson->update([
             'lesson_translation' => Normalizer::normalize($request->get('lesson_translation'), Normalizer::FORM_C),
         ]);

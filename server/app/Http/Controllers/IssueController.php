@@ -28,7 +28,7 @@ class IssueController extends Controller
         }
         $issues = $issues->with('comments')->get();
         $issues = $issues->sortByDesc(function($issue) {
-            return $issue->comments->sortByDesc('created_at')->first()->created_at;
+            return $issue->comments->sortByDesc('created_at')->first()?->created_at;
         });
 
         // sort by last comment created_at date

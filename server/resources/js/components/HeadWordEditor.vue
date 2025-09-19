@@ -130,9 +130,6 @@ import { VueTagsInput } from '@vojtechlanka/vue-tags-input';
                     this.$refs['attach_headword_modal'].show();
                 }, this);
             },
-            hide() {
-                this.$refs['attach_headword_modal'].hide();
-            },
             get_error_message_html(key) {
                 if (!this.modal_attached_headword_errors[key]) {
                     return null;

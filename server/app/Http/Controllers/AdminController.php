@@ -38,7 +38,7 @@ class AdminController extends Controller
                 Normalizer::FORM_C
             ) . '%'
         )
-            ->where('language_id', '=', $request->get('language') . '%')
+            ->where('language_id', $request->get('language'))
             ->take(15)->orderBy('surface_form')
             ->with(['language', 'elements.head_word.language'])
             ->get();
@@ -92,7 +92,7 @@ class AdminController extends Controller
                 Normalizer::FORM_C
             ) . '%'
         )
-            ->where('language_id', '=', $request->get('language') . '%')
+            ->where('language_id', $request->get('language'))
             ->take(50)->orderBy('word')
             ->with(['language'])
             ->get();

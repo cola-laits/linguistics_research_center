@@ -32,8 +32,7 @@ class EieolGloss extends Model {
 
 	/** Deep copy a gloss and its elements. */
 	public function deepCopy() {
-	    // clunky; refactor later
-        // Use replicate() for this, as per https://stackoverflow.com/questions/53408613/copy-record-with-all-relations-laravel-5-4 ?
+        // FIXME Use replicate() for this, as per https://stackoverflow.com/questions/53408613/copy-record-with-all-relations-laravel-5-4 ?
         $gloss = DB::select('SELECT * FROM eieol_gloss WHERE id=?', [$this->id])[0];
         DB::insert('INSERT INTO eieol_gloss '.
             '(surface_form, contextual_gloss,comments,underlying_form,language_id,created_at,updated_at) '.
