@@ -2,10 +2,6 @@
 
 namespace App\Filament\Pages;
 
-use App\Filament\Widgets\UploadEtymaWidget;
-use App\Filament\Widgets\UploadLanguagesWidget;
-use App\Filament\Widgets\UploadReflexesWidget;
-use App\Filament\Widgets\UploadSemanticsWidget;
 use App\Models\LexLanguage;
 use App\Models\LexLanguageFamily;
 use App\Models\LexLanguageSubFamily;
@@ -19,16 +15,11 @@ use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Schemas\Components\Utilities\Get;
-use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Components\Wizard\Step;
 use Filament\Schemas\Schema;
 use Filament\Support\Enums\Width;
@@ -53,9 +44,25 @@ class Utilities extends Page implements HasActions
 
     protected string $view = 'filament.pages.utilities';
 
+
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->hasRole('Site Manager') ?? false;
+    }
+
+    protected function makeChooseLexiconStep() {
+        $lexicon_options = LexLexicon::all()->pluck('name', 'id');
+        return Step::make('Choose Lexicon')
+            ->schema([
+                Select::make('selected_lexicon')
+                    ->label('Lexicon')
+                    ->options($lexicon_options)
+                    ->required()
+            ]);
+    }
+
     protected function runLanguageUploadAction(): Action
     {
-        $lexicon_options = LexLexicon::all()->pluck('name', 'id');
         $required_csv_headers = ['Family', 'Subfamily', 'Language'];
         return Action::make('upload-languages')
             ->modal()
@@ -63,13 +70,7 @@ class Utilities extends Page implements HasActions
             ->modalSubmitActionLabel('Upload')
             ->modalWidth(Width::FiveExtraLarge)
             ->steps([
-                Step::make('Choose Lexicon')
-                    ->schema([
-                        Select::make('selected_lexicon')
-                            ->label('Lexicon')
-                            ->options($lexicon_options)
-                            ->required()
-                    ]),
+                $this->makeChooseLexiconStep(),
                 Step::make('Upload CSV')
                     ->schema([
                         TextEntry::make('required_fields')->state('Required Columns: ' . implode(', ', $required_csv_headers)),
@@ -78,17 +79,7 @@ class Utilities extends Page implements HasActions
                             ->acceptedFileTypes(['text/csv'])
                             ->required()
                             ->rules([
-                                fn (): \Closure => function (string $attribute, $value, \Closure $fail) use ($required_csv_headers) {
-                                    if (! $value instanceof TemporaryUploadedFile) {
-                                        $fail('Please upload a valid CSV file.');
-                                        return;
-                                    }
-                                    try {
-                                        $this->validateUploadedCsv($value, $required_csv_headers); // only checks/throws, does not set $csvRows
-                                    } catch (\Throwable $e) {
-                                        $fail($e->getMessage());
-                                    }
-                                },
+                                $this->validateRequiredCsvHeaders($required_csv_headers),
                             ])
                     ]),
                 Step::make('Confirm')
@@ -116,7 +107,6 @@ class Utilities extends Page implements HasActions
 
     protected function runSemanticsUploadAction(): Action
     {
-        $lexicon_options = LexLexicon::all()->pluck('name', 'id');
         $required_category_csv_headers = ['Text', 'Number', 'Abbr'];
         $required_field_csv_headers = ['Text', 'Number', 'Abbr', 'SemanticCategoryAbbr'];
         return Action::make('upload-semantics')
@@ -125,13 +115,7 @@ class Utilities extends Page implements HasActions
             ->modalSubmitActionLabel('Upload')
             ->modalWidth(Width::SevenExtraLarge)
             ->steps([
-                Step::make('Choose Lexicon')
-                    ->schema([
-                        Select::make('selected_lexicon')
-                            ->label('Lexicon')
-                            ->options($lexicon_options)
-                            ->required(),
-                    ]),
+                $this->makeChooseLexiconStep(),
                 Step::make('Upload Semantic Categories CSV')
                     ->schema([
                         TextEntry::make('required_columns')->state('Required Columns: ' . implode(', ', $required_category_csv_headers)),
@@ -140,17 +124,7 @@ class Utilities extends Page implements HasActions
                             ->acceptedFileTypes(['text/csv'])
                             ->required()
                             ->rules([
-                                fn (): \Closure => function (string $attribute, $value, \Closure $fail) use ($required_category_csv_headers) {
-                                    if (! $value instanceof TemporaryUploadedFile) {
-                                        $fail('Please upload a valid CSV file.');
-                                        return;
-                                    }
-                                    try {
-                                        $this->validateUploadedCsv($value, $required_category_csv_headers);
-                                    } catch (\Throwable $e) {
-                                        $fail($e->getMessage());
-                                    }
-                                },
+                                $this->validateRequiredCsvHeaders($required_category_csv_headers),
                             ])
                     ]),
                 Step::make('Upload Semantic Fields CSV')
@@ -161,24 +135,16 @@ class Utilities extends Page implements HasActions
                             ->acceptedFileTypes(['text/csv'])
                             ->required()
                             ->rules([
-                                fn (): \Closure => function (string $attribute, $value, \Closure $fail) use ($required_field_csv_headers) {
-                                    if (! $value instanceof TemporaryUploadedFile) {
-                                        $fail('Please upload a valid CSV file.');
-                                        return;
-                                    }
-                                    try {
-                                        $this->validateUploadedCsv($value, $required_field_csv_headers);
-                                    } catch (\Throwable $e) {
-                                        $fail($e->getMessage());
-                                    }
-                                },
+                                $this->validateRequiredCsvHeaders($required_field_csv_headers),
                                 fn (Get $get): \Closure => function (string $attribute, $value, \Closure $fail) use ($get) {
                                     $fields_csv = Reader::createFromString($get('fields_csv')->get());
                                     $fields_csv->setHeaderOffset(0);
                                     $field_data = $fields_csv->getRecords();
+
                                     $cats_csv = Reader::createFromString($get('categories_csv')->get());
                                     $cats_csv->setHeaderOffset(0);
                                     $category_data = $cats_csv->getRecords();
+
                                     $actual_category_abbrs = collect($category_data)->pluck('Abbr')->unique();
                                     $found_category_abbrs = collect($field_data)->pluck('SemanticCategoryAbbr')->unique();
                                     $wrong_category_abbrs = $found_category_abbrs->diff($actual_category_abbrs);
@@ -233,7 +199,6 @@ class Utilities extends Page implements HasActions
 
     protected function runReflexesUploadAction(): Action
     {
-        $lexicon_options = LexLexicon::all()->pluck('name', 'id');
         $required_csv_headers = ['Headwords', 'Gloss'];
         return Action::make('upload-reflexes')
             ->modal()
@@ -241,18 +206,12 @@ class Utilities extends Page implements HasActions
             ->modalSubmitActionLabel('Upload')
             ->modalWidth(Width::FiveExtraLarge)
             ->steps([
-                Step::make('Choose Lexicon')
-                    ->schema([
-                        Select::make('selected_lexicon')
-                            ->label('Lexicon')
-                            ->options($lexicon_options)
-                            ->required()
-                    ]),
+                $this->makeChooseLexiconStep(),
                 Step::make('Upload CSV')
                     ->schema([
                         TextEntry::make('required_fields')
                             ->label('Required Columns')
-                            ->state(new HtmlString('<ul><li>• Headwords (comma-separated if multiple)</li><li>• Gloss (English assumed; "Gloss.es" for Spanish etc.)</li><li>• Language (name)</li></ul>')),
+                            ->state(new HtmlString('<ul><li>• Headwords (comma-separated if multiple)</li><li>• Gloss (English assumed; add "Gloss.es" column for Spanish)</li><li>• Language (name)</li></ul>')),
                         TextEntry::make('optional_fields')
                             ->label('Optional Columns')
                             ->state(new HtmlString('<ul><li>• Etyma</li><li>• HomographNumber (if multiple etyma with same spelling)</li><li>• everything else placed in "extra data"</li></ul>')),
@@ -262,17 +221,7 @@ class Utilities extends Page implements HasActions
                             ->required()
                             ->maxSize(512000) // 500 MB
                             ->rules([
-                                fn (): \Closure => function (string $attribute, $value, \Closure $fail) use ($required_csv_headers) {
-                                    if (! $value instanceof TemporaryUploadedFile) {
-                                        $fail('Please upload a valid CSV file.');
-                                        return;
-                                    }
-                                    try {
-                                        $this->validateUploadedCsv($value, $required_csv_headers); // only checks/throws, does not set $csvRows
-                                    } catch (\Throwable $e) {
-                                        $fail($e->getMessage());
-                                    }
-                                },
+                                $this->validateRequiredCsvHeaders($required_csv_headers),
                             ])
                     ]),
                 Step::make('Confirm')
@@ -306,6 +255,25 @@ class Utilities extends Page implements HasActions
 
 
     /**
+     * @param array $required_category_csv_headers
+     * @return \Closure
+     */
+    protected function validateRequiredCsvHeaders(array $required_category_csv_headers): \Closure
+    {
+        return fn(): \Closure => function (string $attribute, $value, \Closure $fail) use ($required_category_csv_headers) {
+            if (!$value instanceof TemporaryUploadedFile) {
+                $fail('Please upload a valid CSV file.');
+                return;
+            }
+            try {
+                $this->validateUploadedCsv($value, $required_category_csv_headers);
+            } catch (\Throwable $e) {
+                $fail($e->getMessage());
+            }
+        };
+    }
+
+    /**
      * @throws FileNotFoundException
      * @throws SyntaxError
      * @throws Exception
@@ -321,11 +289,6 @@ class Utilities extends Page implements HasActions
             }
         }
         return $csv->getRecords();
-    }
-
-    public static function canAccess(): bool
-    {
-        return auth()->user()?->hasRole('Site Manager') ?? false;
     }
 
     protected function createMissingLang($lexicon_id, $lang_name, $family_name, $subfamily_name): void
@@ -381,6 +344,7 @@ class Utilities extends Page implements HasActions
                 $reflex->gloss = $value;
             } else if ($key == 'Gloss.es') {
                 // FIXME
+                // Test - is this right?? $reflex->setTransalation('gloss', 'es', $value);
                 throw new \Exception("Non-English glosses not supported yet");
             } else if ($key == 'Language') {
                 $lang = $this->getLanguageByNameAndLexiconId($value, $lexicon_id);
@@ -407,17 +371,17 @@ class Utilities extends Page implements HasActions
         }
     }
 
-    protected $cached_languages = [];
-    protected function getLanguageByNameAndLexiconId($name, $lexicon_id) {
+    protected array $cachedLanguages = [];
+    protected function getLanguageByNameAndLexiconId($name, $lexicon_id): ?LexLanguage {
         $cache_key = "language-{$name}-{$lexicon_id}";
-        if (!array_key_exists($cache_key, $this->cached_languages)) {
-            $this->cached_languages[$cache_key] = LexLanguage::query()
+        if (!array_key_exists($cache_key, $this->cachedLanguages)) {
+            $this->cachedLanguages[$cache_key] = LexLanguage::query()
                 ->whereHas('language_sub_family.language_family', function ($q) use ($lexicon_id) {
                     $q->where('lexicon_id', $lexicon_id);
                 })
                 ->where('name->en', $name)
                 ->first();
         }
-        return $this->cached_languages[$cache_key];
+        return $this->cachedLanguages[$cache_key];
     }
 }
