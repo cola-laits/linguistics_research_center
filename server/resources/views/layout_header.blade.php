@@ -29,7 +29,6 @@ but also used to make printable lessons in the public controller --}}
     @section('meta') @show
     <link href="/images/favicons/apple-touch-icon-144x144.png" rel="apple-touch-icon" sizes="144x144"/>
     <link href="/images/favicons/apple-touch-icon-120x120.png" rel="apple-touch-icon" sizes="120x120"/>
-    <link href="/images/favicons/apple-touch-icon.png" rel="apple-touch-icon"/>
     <link href="/images/favicons/apple-touch-icon-57x57.png" rel="apple-touch-icon" sizes="57x57"/>
     <link href="/images/favicons/apple-touch-icon-60x60.png" rel="apple-touch-icon" sizes="60x60"/>
     <link href="/images/favicons/apple-touch-icon-76x76.png" rel="apple-touch-icon" sizes="76x76"/>
@@ -59,3 +58,6 @@ but also used to make printable lessons in the public controller --}}
 <body>
 
 @yield('page')
+
+</body>
+</html>

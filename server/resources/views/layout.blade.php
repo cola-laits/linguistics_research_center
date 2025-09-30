@@ -140,122 +140,6 @@ the page content is in <section class="main-section">
                 </nav>
 
                 <!--
-                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-                NOTE: Phone navigation uses TAB BAR - Tablet and higher uses TOP BAR
-                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ -->
-
-                <!--
-                *******************************************************
-                PHONE NAVIGATION - TAB BAR  (1 of 2 orange bars up top)
-                ******************************************************* -->
-
-                <!-- Phone - off canvass navigation - the slide out navigation functionality -->
-
-                <aside class="right-off-canvas-menu">
-                    <ul class="off-canvas-list">
-
-                        <!-- COLLEGE WIDE NAV - STATIC CONTENT -->
-                        <li class="college closed">
-                            <a class="off-canvas-submenu-call" href="#">
-                                <img alt="The University of Texas at Austin" src="https://liberalarts.utexas.edu/_internal/images/2015_cola_logo_phone.svg"/>
-                            </a>
-                            <ul class="no-bullet off-canvas-submenu">
-                                <li class="underline"><a href="https://liberalarts.utexas.edu/">College of Liberal Arts</a> </li>
-                                <li><a href="https://www.utexas.edu/">University of Texas at Austin</a> </li>
-                                <li><hr/></li>
-                                <li class="underline"><a href="https://liberalarts.utexas.edu/offices/departments/">Departments</a> </li>
-                                <li class="underline"> <a href="https://liberalarts.utexas.edu/research/graduate-studies/prospective">Graduate Resources</a> </li>
-                                <li class="underline"> <a href="https://liberalarts.utexas.edu/student-affairs/Prospective/">Undergraduate Resources</a> </li>
-                                <li class="underline"> <a href="https://liberalarts.utexas.edu/courses/">Courses</a> </li>
-                                <li> <a href="https://online-education.la.utexas.edu/">Online Courses</a> </li>
-                                <li><hr/></li>
-                                <li class="underline"> <a href="https://liberalarts.utexas.edu/office-of-the-dean/college-leadership.php">Dean's Office</a> </li>
-                                <li class="underline"> <a href="https://liberalarts.utexas.edu/alumni-and-giving/">Alumni &amp; Giving </a> </li>
-                                <li> <a href="https://liberalarts.utexas.edu/public-affairs/resources/faculty-by-department.php">Faculty by Department</a> </li>
-                                <li>
-                                    <form action="https://liberalarts.utexas.edu/search/" id="search-small">
-                                      <input name="cx" type="hidden" value="002688418440466237416:ilehtu0wbts"/>
-                                      <input name="cof" type="hidden" value="FORID:10"/>
-                                      <input name="ie" type="hidden" value="UTF-8"/>
-                                      <label class="hidden-for-small-only" for="searchSmallOnlyInput">Search the College of Liberal Arts</label>
-                                      <input id="searchSmallOnlyInput" name="q" placeholder="Search the College of Liberal Arts..." type="search"/>
-                                    </form>
-                                </li>
-                            </ul>
-                        </li>
-                        <!-- END COLLEGE WIDE NAV - STATIC CONTENT -->
-
-                        <!-- UNIT NAV - DYNAMIC -->
-                        <!-- Unit Name and Dynamic Nav -->
-
-                        <!-- SYSTEM-REGION NAV-SM-UNIT -->
-                        <li class="office"><h2><a href="https://liberalarts.utexas.edu/lrc/">Linguistics Research Center</a></h2></li>
-
-                        <!-- END SYSTEM-REGION NAV-SM-UNIT -->
-                    </ul> <!-- close ul class="off-canvas-list" -->
-                    <!-- END UNIT NAV - DYNAMIC -->
-
-                    <!-- Office Contacts and Maps Pages -->
-                    <!-- SYSTEM-REGION NAV-SM-OFFICE -->
-
-                    @yield('menu')
-
-
-                    <ul class="side-nav">
-                        <li><label>Office</label></li>
-                        <li><a href="https://liberalarts.utexas.edu/lrc/staff.php">Staff List</a></li>
-                        <li><a href="https://liberalarts.utexas.edu/lrc/contact-us.php">Contact Us</a></li>
-                    </ul>
-                    <!-- END SYSTEM-REGION NAV-SM-OFFICE -->
-
-                    <!-- Address -->
-                    <ul class="side-nav">
-                        <li>
-                            <label>Address</label>
-                        </li>
-                        <li class="phone-address">
-                            <h6>Linguistics Research Center</h6>
-                            <p>
-                                University of Texas at Austin<br/>
-                                PCL 5.556<br/>
-                                Mailcode S5490<br/>
-                                Austin, Texas 78712<br/>
-                                512-471-4566
-                            </p>
-                        </li>
-                    </ul>
-
-                    <!-- Unit Social Media Links -->
-                    <ul class="side-nav">
-                        <li><label>Linguistics Research Center Social Media</label></li>
-                        <li class="unit-social">
-                            <a data-gtm-event="nav-phone-unit-facebook" href="https://www.facebook.com/UTLRC">
-                                <i class="fa fa-facebook-square fa-2x">&#160;</i><span class="hide">Facebook</span>
-                            </a>
-                            <a data-gtm-event="nav-phone-unit-twitter" href="https://twitter.com/utlrc">
-                                <i class="fa fa-twitter-square fa-2x">&#160;</i><span class="hide">Twitter</span>
-                            </a>
-                        </li>
-                    </ul>
-            <!-- Webmaster -->
-            <ul class="side-nav">
-
-                <li><label>E-mail Us!</label></li>
-            <li class="phone-address">
-
-                <p>For comments and inquiries, or to report issues, please contact the Web Master at <a href="mailto:UTLRC@utexas.edu">UTLRC@utexas.edu</a></p>
-
-            </li>
-
-            </ul>
-
-                </aside>
-
-                <!--
-                ***************************************
-                END END END PHONE NAVIGATION - TAB BAR
-                ***************************************
-
                 ***********************************************************************
                 TABLET & DESKTOP ORANGE BAR LINKS - TOP BAR (2 of 2 orange bars up top)
                 *********************************************************************** -->
@@ -304,13 +188,13 @@ the page content is in <section class="main-section">
                         <!-- replaced by page-level template -->
                         <div class="small-6 columns hide-for-small-only">
                             <a href="https://liberalarts.utexas.edu/lrc/index.php">
-                                <img alt="" class="lockup" src="https://liberalarts.utexas.edu/_internal/images/logo-formal/Centers/LinguisticsResearchCenter.png"/>
+                                <img alt="LRC Logo" class="lockup" src="https://liberalarts.utexas.edu/_internal/images/logo-formal/Centers/LinguisticsResearchCenter.png"/>
                             </a>
                         </div>
 
                         <div class="small-12 columns hide-for-medium-up">
                             <a href="https://liberalarts.utexas.edu/lrc/index.php">
-                                <img alt="" class="lockup" src="https://liberalarts.utexas.edu/_internal/images/logo-formal/Centers/LinguisticsResearchCenter.png"/>
+                                <img alt="LRC Logo" class="lockup" src="https://liberalarts.utexas.edu/_internal/images/logo-formal/Centers/LinguisticsResearchCenter.png"/>
                             </a>
                         </div>
 
@@ -402,12 +286,12 @@ the page content is in <section class="main-section">
                             <label>Linguistics Research Center Social Media</label>
                         </li>
                         <li class="unit-social">
-                            <a data-gtm-event="nav-unit-facebook" href="https://www.facebook.com/UTLRC">
-                                <i class="fa fa-facebook-square fa-2x">&#160;</i>
+                            <a data-gtm-event="nav-unit-facebook" href="https://www.facebook.com/UTLRC" aria-label="LRC Facebook page">
+                                <i class="fa fa-facebook-square fa-2x" alt="Facebook logo">&#160;</i>
                                 <span class="hide">Facebook</span>
                             </a>
-                            <a data-gtm-event="nav-unit-twitter" href="https://twitter.com/utlrc">
-                                <i class="fa fa-twitter-square fa-2x">&#160;</i>
+                            <a data-gtm-event="nav-unit-twitter" href="https://twitter.com/utlrc" aria-label="LRC Twitter page">
+                                <i class="fa fa-twitter-square fa-2x" alt="Twitter logo">&#160;</i>
                                 <span class="hide">Twitter</span>
                             </a>
                         </li>
@@ -468,7 +352,4 @@ the page content is in <section class="main-section">
     </div>  <!-- Close <div class="inner-wrap"> -->
 </div> <!-- Close <div class="off-canvas-wrap" data-offcanvas=""> -->
 
-
-</body>
-</html>
-@stop
+@endsection
