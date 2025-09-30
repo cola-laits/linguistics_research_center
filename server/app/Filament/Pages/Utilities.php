@@ -395,7 +395,9 @@ class Utilities extends Page implements HasActions
                 // FIXME
                 throw new \Exception("Etyma crosslinking not supported yet");
             } else {
-                $extra_data[$key] = $value;
+                if ($value) {
+                    $extra_data[$key] = $value;
+                }
             }
         }
         $reflex->save();

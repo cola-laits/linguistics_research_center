@@ -34,14 +34,17 @@
             <td class="text-end" style="white-space:nowrap;">{{__('lexicon.pages.word.table_header.Word')}}:</td>
             <td>{{$word->getEntriesCSV()}}</td>
         </tr>
+        @if ($word->getDisplayPartsOfSpeech())
         <tr>
             <td class="text-end" style="white-space:nowrap;">{{__('lexicon.pages.word.table_header.Part of Speech')}}:</td>
             <td>{{$word->getDisplayPartsOfSpeech()}}</td>
         </tr>
+        @endif
         <tr>
             <td class="text-end" style="white-space:nowrap;">{{__('lexicon.pages.word.table_header.Gloss')}}:</td>
             <td>{{$word->gloss}}</td>
         </tr>
+        @if (count($word->etyma) > 0)
         <tr>
             <td class="text-end" style="white-space:nowrap;">{{__('lexicon.pages.word.table_header.Etymology')}}:</td>
             <td>
@@ -50,6 +53,7 @@
                 @endforeach
             </td>
         </tr>
+        @endif
         @if ($word->etymaSemanticTags()->count() > 0)
         <tr>
             <td class="text-end" style="white-space:nowrap;">{{__('lexicon.pages.word.table_header.Semantic Tag')}}:</td>

@@ -18,6 +18,12 @@
         </x-filament::button>
         </p>
         <p class="m-2">
+            Parts-of-speech upload still under development...
+            <x-filament::button disabled="true" wire:click="mountAction('runPartOfSpeechUpload')">
+                Upload Lexicon Parts of Speech
+            </x-filament::button>
+        </p>
+        <p class="m-2">
             Etyma upload still under development...
             <x-filament::button disabled="true" wire:click="mountAction('runEtymaUpload')">
                 Upload Lexicon Etyma
