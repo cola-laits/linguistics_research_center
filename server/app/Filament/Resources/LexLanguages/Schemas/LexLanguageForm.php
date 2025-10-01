@@ -27,7 +27,7 @@ class LexLanguageForm
                     ->default(null),
                 TextInput::make('aka')
                     ->default(null),
-                Select::make('language_sub_family')
+                Select::make('sub_family_id')
                     ->relationship('language_sub_family', 'name')
                     ->getOptionLabelFromRecordUsing(fn (LexLanguageSubFamily $sub) => $sub->familySubFamily)
                     ->required(),

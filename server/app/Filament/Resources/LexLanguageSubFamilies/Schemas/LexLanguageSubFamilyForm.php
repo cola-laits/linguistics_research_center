@@ -13,7 +13,7 @@ class LexLanguageSubFamilyForm
     {
         return $schema
             ->components([
-                Select::make('language_family')
+                Select::make('family_id')
                     ->relationship('language_family', 'name')
                     ->required(),
                 TextInput::make('order')

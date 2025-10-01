@@ -11,6 +11,7 @@ use App\Models\LexLexicon;
 use App\Models\LexReflex;
 use App\Models\LexSemanticField;
 use App\Models\Page;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Session;
 
@@ -116,63 +117,12 @@ class PublicLexiconController extends Controller
         ]);
     }
 
-    public function data(Request $request, $lexicon_slug)
+    public function data($lexicon_slug)
     {
-        ini_set('memory_limit', '2048M');
-
         $lex = LexLexicon::where('slug', $lexicon_slug)->firstOrFail();
-        $lex_language_ids = \DB::table('lex_language')
-            ->join('lex_language_sub_family', 'lex_language.sub_family_id', '=', 'lex_language_sub_family.id')
-            ->join('lex_language_family', 'lex_language_sub_family.family_id', '=', 'lex_language_family.id')
-            ->where('lex_language_family.lexicon_id', $lex->id)
-            ->pluck('lex_language.id');
-
-        $reflexes = LexReflex::with([
-            'language',
-            'etyma',
-            'etyma.semantic_fields',
-            'parts_of_speech',
-            'extra_data',
-
-        ])->whereIn('language_id', $lex_language_ids)
-            ->limit(10000)
-            ->get();
-
-        $column_descs = $lex->getDataColumns();
-
-        $lookup_fn = function ($reflex, $column_name) {
-            switch ($column_name) {
-                case 'meaning':
-                    return $reflex->gloss;
-                case 'part_of_speech':
-                    return $reflex->parts_of_speech->pluck('text')->join(', ');
-                case 'semantic_tag':
-                    return $reflex->etyma->flatMap(function ($etymon) {
-                        return $etymon->semantic_fields->pluck('text');
-                    })->join(', ');
-                case 'root':
-                    return collect($reflex->entries)->pluck('text')->join(', ');
-                case 'etymon':
-                    return $reflex->etyma->pluck('entry')->join(', ');
-                case 'language':
-                    return $reflex->language->name;
-                default:
-                    return $reflex->extra_data->where('key', $column_name)->first()?->value ?? "";
-            }
-        };
-
-        $reflex_data = $reflexes->map(function ($reflex) use ($column_descs, $lookup_fn) {
-            $data = collect($column_descs)->mapWithKeys(function ($column_desc) use ($reflex, $lookup_fn) {
-                return [$column_desc->name => $lookup_fn($reflex, $column_desc->name)];
-            });
-            $data['id'] = $reflex->id;
-            return $data;
-        });
 
         return view('lexicon/lex_data', [
             'lexicon'=>$lex,
-            'reflexes'=>$reflex_data,
-            'columns'=>$column_descs,
         ]);
     }
 
@@ -186,5 +136,76 @@ class PublicLexiconController extends Controller
                 'semantic_categories',
                 'semantic_categories.semantic_fields',
             ])->firstOrFail();
+    }
+
+    public function ajaxData($lex_slug)
+    {
+        $start = request()->integer('start', 0);
+        $length = request()->integer('length', 10);
+        if ($length>100) {
+            $length = 100;
+        }
+
+        $lex = LexLexicon::where('slug', $lex_slug)->firstOrFail();
+        $viewer_locale = Session::get('viewer_lang_code', 'en');
+
+        $reflex_count = \DB::table('lex_lexicon_data_cache')
+            ->where('lexicon_id', $lex->id)
+            ->where('content_lang_code', $viewer_locale)
+            ->count();
+
+        $filtered_reflexes = \DB::table('lex_lexicon_data_cache')
+            ->where('lexicon_id', $lex->id)
+            ->where('content_lang_code', $viewer_locale);
+
+        $columns = request()->input('columns');
+        foreach ($columns as $column) {
+            if ($column['search']['value']) {
+                if ($column['search']['regex']) {
+                    $filtered_reflexes = $filtered_reflexes->where('data->' . $column['name'], 'REGEXP', $column['search']['value']);
+                } else {
+                    $filtered_reflexes = $filtered_reflexes->where('data->' . $column['name'], 'LIKE', '%' . $column['search']['value'] . '%');
+                }
+            }
+        }
+
+        $search = request()->input('search');
+        if ($search['value']) {
+            // if regex... FIXME
+            $filtered_reflexes = $filtered_reflexes->where(function (Builder $q) use ($columns, $search) {
+                foreach ($columns as $column) {
+                    if ($search['regex']) {
+                        $q = $q->orWhere('data->' . $column['name'], 'REGEXP', $search['value']);
+                    } else {
+                        $q = $q->orWhere('data->' . $column['name'], 'LIKE', '%' . $search['value'] . '%');
+                    }
+                }
+            });
+        }
+
+        $order = request()->input('order');
+        if ($order) {
+            $order_by_key = $order[0]['name'];
+            $order_by_dir = $order[0]['dir'];
+            $filtered_reflexes->orderBy('data->'.$order_by_key, $order_by_dir);
+        }
+
+        $filtered_reflexes_count = $filtered_reflexes->count();
+        $data = $filtered_reflexes
+            ->skip($start)
+            ->limit($length)
+            ->get()
+            ->map(function($r) {
+                $d = json_decode($r->data);
+                $d->id = $r->reflex_id;
+                return $d;
+            });
+
+        return (object)[
+            'draw' => (int)request()->input('draw'),
+            'recordsTotal' => $reflex_count,
+            'recordsFiltered' => $filtered_reflexes_count,
+            'data' => $data,
+        ];
     }
 }

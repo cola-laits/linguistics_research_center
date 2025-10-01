@@ -16,7 +16,7 @@ class LexLanguageFamilyForm
                 TextInput::make('order')
                     ->required()
                     ->numeric(),
-                Select::make('lexicon')
+                Select::make('lexicon_id')
                     ->relationship('lexicon', 'name')
                     ->required(),
                 Textarea::make('name')

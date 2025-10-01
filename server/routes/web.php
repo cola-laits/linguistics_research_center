@@ -69,6 +69,7 @@ Route::controller(PublicLexiconController::class)->group(function() {
     Route::get('lexicon/{lex_slug}/language/{lang_id}', 'lang_home');
     Route::get('lexicon/{lex_slug}/page/{page_slug_fragment}', 'page');
     Route::get('lexicon/{lex_slug}/data', 'data');
+    Route::get('api/v1/lexicon/{lex_slug}/data', 'ajaxData');
 });
 
 Route::get('lex_pokorny', function() {return redirect('lex/master', 301);});
@@ -121,5 +122,7 @@ Route::group(array('prefix'=> 'admin2', 'middleware' => 'auth'), function() {
     Route::post('/files/upload', [FilesController::class, 'post_file']);
     Route::post('/files/upload/tinymce', [FilesController::class, 'post_file_tinymce']);
 });
+
+Route::get('/home', function() { return redirect('/'); });
 
 Auth::routes(['register' => false]);

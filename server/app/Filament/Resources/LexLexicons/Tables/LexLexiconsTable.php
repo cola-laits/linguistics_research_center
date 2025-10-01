@@ -2,6 +2,10 @@
 
 namespace App\Filament\Resources\LexLexicons\Tables;
 
+use App\Filament\Resources\LexLexicons\LexLexiconResource;
+use App\Models\LexLexicon;
+
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -25,6 +29,10 @@ class LexLexiconsTable
             ], layout: FiltersLayout::AboveContent)
             ->persistFiltersInSession()
             ->recordActions([
+                Action::make('dataCacheStatus')
+                    ->label('Data Cache Status')
+                    ->icon('heroicon-m-chart-bar')
+                    ->url(fn (LexLexicon $record) => LexLexiconResource::getUrl('data-cache-status', ['record' => $record])),
                 EditAction::make(),
             ])
             ->toolbarActions([

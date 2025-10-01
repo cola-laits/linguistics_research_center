@@ -32,51 +32,16 @@
         }
     </style>
     <script>
-        window.search_use_regex = false;
-        window.search_conditions = {full: '', cols: {}};
+        window.search_use_regex = @json(request()->boolean('use_regex'));
+
+        function update_regex_choice(val) {
+            document.location.href = "data?use_regex=" + val;
+        }
 
         function show_regex_help() {
             new bootstrap.Modal(document.getElementById('regex_help_modal'), {
                 keyboard: false
             }).show();
-        }
-
-        function clear_search() {
-            window.search_conditions = {full: '', cols: {}};
-        }
-
-        function redraw_search_conditions() {
-            document.getElementById('custom-search').value = window.search_conditions.full;
-            for (let key in window.search_conditions.cols) {
-                document.getElementById('column-text-search-'+key).value = window.search_conditions.cols[key];
-            }
-            do_search();
-        }
-
-        function set_full_search(search_term) {
-            window.search_conditions.full = search_term;
-        }
-
-        function set_column_search(search_term, col_index) {
-            window.search_conditions.cols[col_index] = search_term;
-        }
-
-        function do_search() {
-            let full_search = window.search_conditions.full;
-            let col_searches = window.search_conditions.cols;
-
-            window.tableObj.search(function (full_string, data_array) {
-                let search_method = window.search_use_regex ?
-                    (term, data) => new RegExp(term, 'i').test(data) :
-                    (term, data) => data.toLowerCase().includes(term.toLowerCase());
-
-                let full_search_result = full_search === '' ||
-                    full_search.split(' ').every(term => data_array.some(data => data !== '' && search_method(term, data)));
-                let col_search_result = Object.keys(col_searches).length === 0 ||
-                    Object.keys(col_searches).every(key => col_searches[key] === '' || search_method(col_searches[key].toLowerCase(), data_array[key].toLowerCase()));
-
-                return full_search_result && col_search_result;
-            }).draw();
         }
 
         window.datatable_scroll_height = '50vh'; // initial guess; will be refined in a redraw after table is loaded into the dom and can be measured
@@ -88,6 +53,27 @@
                     url: '/assets/datatables/plugins/i18n/{{__('lexicon.pages.data.datatables_translation_file')}}',
                 },
                 @endif
+                serverSide: true,
+                ajax: {
+                    url: '/api/v1/lexicon/{{$lexicon->slug}}/data',
+                },
+                search: {
+                    regex: window.search_use_regex
+                },
+                columns: [
+                    { data: 'id', name: 'id', render:
+                        function(data) {
+                            return '<a href="/lexicon/{{$lexicon->slug}}/word/'+data+'" target="_blank"><i class="far fa-file-alt"></i></a>';
+                        }
+                    },
+                    @foreach ($lexicon->getDataColumns() as $column_info)
+                    {
+                        data: @json($column_info->name),
+                        name: @json($column_info->name),
+                        title: @json($column_info->display_name),
+                    },
+                    @endforeach
+                ],
                 destroy: true,
                 orderCellsTop: true,
                 fixedColumns: true,
@@ -96,12 +82,11 @@
                 scrollX: true,
                 paging: true,
                 lengthMenu: [
-                    [ 10, 25, 50, -1 ],
+                    [ 10, 25, 50 ],
                     [
                         '{{__('lexicon.pages.data.show_n_rows_option', ['num'=>10])}}',
                         '{{__('lexicon.pages.data.show_n_rows_option', ['num'=>25])}}',
-                        '{{__('lexicon.pages.data.show_n_rows_option', ['num'=>50])}}',
-                        '{{__('lexicon.pages.data.show_all_rows_option')}}',
+                        '{{__('lexicon.pages.data.show_n_rows_option', ['num'=>50])}}'
                     ]
                 ],
                 columnDefs: [
@@ -114,9 +99,7 @@
                         return document.getElementById('custom_regex_picker').content.cloneNode(true);
                     },
                     topStart: 'pageLength',
-                    topEnd: function() {
-                        return document.getElementById('custom_search_control_template').content.cloneNode(true);
-                    },
+                    topEnd: 'search',
                     bottomStart: 'info',
                     bottomEnd: 'paging'
                 },
@@ -146,11 +129,11 @@
                     },
                     {
                         text: '{{__('lexicon.pages.data.clear_search_button_label')}}',
-                        action: function() {
+                        action: function(e, dt) {
+                            dt.search('');
                             $('.column-text-search').val('');
-                            $('#custom-search').val('');
-                            clear_search();
-                            do_search();
+                            dt.columns().search('');
+                            dt.draw();
                         }
                     },
                     {
@@ -168,8 +151,9 @@
                     // For each column
                     api
                         .columns()
-                        .eq(0)
-                        .each(function (colIdx) {
+                        .every(function (colIdx) {
+                            let column = this;
+
                             // Set the header cell to contain the input element
                             let filter_headers = $('.filters th');
                             let cell = filter_headers.eq(
@@ -186,22 +170,16 @@
                                 'input',
                                 filter_headers.eq($(api.column(colIdx).header()).index())
                             )
-                                .off('keyup change')
-                                .on('change', function () {
-                                    let search_term = this.value;
-                                    set_column_search(search_term, colIdx);
-                                    do_search();
+                                .on('keyup change', function () {
+                                    let input = $(cell).find('input')[0];
+                                    if (column.search() !== this.value) {
+                                        column.search(input.value, window.search_use_regex, false).draw();
+                                    }
                                 })
-                                .on('keyup', function (e) {
-                                    e.stopPropagation();
-
-                                    $(this).trigger('change');
-                                });
                         });
                 },
             });
         }
-
         document.addEventListener('DOMContentLoaded', function() {
             $('#datatable thead tr')
                 .clone(true)
@@ -231,25 +209,17 @@
 
             window.datatable_scroll_height = new_height + 'px';
             create_data_table();
-            redraw_search_conditions();
         }
     </script>
 @endsection
 
 @section('content')
-    <template id="custom_search_control_template">
-        <div class="dt-search">
-            <label for="custom_search">{{__('lexicon.pages.data.search-button.label')}}</label>
-            <input type="search" class="form-control form-control-sm" id="custom-search" placeholder="" aria-controls="datatable"
-                   onchange="set_full_search(this.value);do_search();"
-                   onkeyup="set_full_search(this.value);do_search();"
-            >
-        </div>
-    </template>
     <template id="custom_regex_picker">
         <div class="dt-search">
             <label for="regex-picker" onclick="show_regex_help()" style="cursor:pointer;">{{__('lexicon.pages.data.use-regex-checkbox.label')}} <i class="far fa-question-circle"></i>:</label>
-            <input type="checkbox" id="regex_picker" onchange="window.search_use_regex = this.checked;do_search();">
+            <input type="checkbox" id="regex_picker"
+                   @checked(request()->boolean('use_regex'))
+                   onchange="update_regex_choice(this.checked);">
         </div>
     </template>
 
@@ -296,31 +266,16 @@ END
 
 
     <div>
-        <div>
 <table id="datatable" class="table table-bordered">
     <thead>
     <tr>
         <th></th>
-        @foreach ($columns as $column)
-        <th>{{__('lexicon.pages.data.column_header_'.$column->display_name)}}</th>
+        @foreach ($lexicon->getDataColumns() as $column)
+            <th>{{__('lexicon.pages.data.column_header_'.$column->display_name)}}</th>
         @endforeach
     </tr>
     </thead>
-    <tbody>
-    @foreach ($reflexes as $item)
-    <tr>
-        <td>
-            <a href="/lexicon/semitilex/word/{{$item['id']}}" target="_blank"><i class="far fa-file-alt"></i></a>
-        </td>
-        @foreach ($columns as $column)
-        <td>{{ $item[$column->name] }}</td>
-        @endforeach
-    </tr>
-    @endforeach
-    </tbody>
 </table>
-
-    </div>
 </div>
 
 @endsection
