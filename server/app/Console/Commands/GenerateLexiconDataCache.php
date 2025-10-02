@@ -38,6 +38,7 @@ class GenerateLexiconDataCache extends Command
                 $this->handleLexiconId($lex_id);
             }
         }
+        return 0;
     }
 
     /**
@@ -60,6 +61,10 @@ class GenerateLexiconDataCache extends Command
             $lang_options = str($lexicon->viewer_lang_options)->explode(',')->map(fn($l) => trim($l));
         }
         $num_reflexes = LexReflex::whereIn('language_id', $lex_language_ids)->count();
+        if ($num_reflexes === 0) {
+            $this->info("Skipping empty Lexicon '{$lexicon->name}'");
+            return 0;
+        }
         $progress = progress(label: "Updating data cache for Lexicon '{$lexicon->name}'", steps: $num_reflexes);
         $progress->start();
         $column_descs = $lexicon->getDataColumns();

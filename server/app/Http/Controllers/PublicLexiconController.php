@@ -171,7 +171,6 @@ class PublicLexiconController extends Controller
 
         $search = request()->input('search');
         if ($search['value']) {
-            // if regex... FIXME
             $filtered_reflexes = $filtered_reflexes->where(function (Builder $q) use ($columns, $search) {
                 foreach ($columns as $column) {
                     if ($search['regex']) {
