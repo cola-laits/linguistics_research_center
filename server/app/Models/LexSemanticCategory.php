@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Eloquent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Translatable\HasTranslations;
@@ -22,12 +21,12 @@ class LexSemanticCategory extends Model
         return $this->hasMany(LexSemanticField::class, 'semantic_category_id', 'id')->orderBy('number');
     }
 
-    public function lexicon() : BelongsTo
+    public function lexicon(): BelongsTo
     {
         return $this->belongsTo(LexLexicon::class, 'lexicon_id');
     }
 
-    public function getLexTextAttribute() : string
+    public function getLexTextAttribute(): string
     {
         return $this->lexicon->name . ' - ' . $this->text;
     }

@@ -2,21 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\EieolLesson;
 use App\Models\EieolSeries;
 use App\Models\EieolSeriesLanguage;
 use App\Models\IsoLanguage;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 
 class EieolSeriesController extends Controller
 {
 
-    public function edit($id) {
+    public function edit($id)
+    {
         $series = EieolSeries::findOrFail($id);
         $lessons = $series->lessons;
-        $attached_languages = $series->languages->map(fn ($language) => [
+        $attached_languages = $series->languages->map(fn($language) => [
             'id' => $language->id,
             'text' => $language->display,
             'value' => $language->lang,
@@ -30,7 +28,8 @@ class EieolSeriesController extends Controller
         ]);
     }
 
-    protected function all_languages() {
+    protected function all_languages()
+    {
         $languages = IsoLanguage::whereIn('Language_Type', array('E', 'A', 'H', 'G'))
             ->orWhere('Part1', '!=', '')
             ->orWhere('Part2B', '!=', '')
@@ -51,7 +50,8 @@ class EieolSeriesController extends Controller
         return $languages;
     }
 
-    public function attach_language(Request $request) {
+    public function attach_language(Request $request)
+    {
         $language = new EieolSeriesLanguage;
         $language->series_id = $request->get('id');
         $language->lang = $request->get('lang');
@@ -61,7 +61,8 @@ class EieolSeriesController extends Controller
         return redirect('/admin2/eieol_series/' . $language->series_id . '/edit');
     }
 
-    public function detach_language($series_id, $language_id) {
+    public function detach_language($series_id, $language_id)
+    {
         $language = EieolSeriesLanguage::where('series_id', '=', $series_id)->where('id', '=', $language_id)->firstOrFail();
         $language->delete();
 

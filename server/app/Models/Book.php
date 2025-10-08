@@ -10,7 +10,8 @@ class Book extends Model
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
-    public function sections() {
+    public function sections()
+    {
         return $this->hasMany(BookSection::class)->orderBy('order');
     }
 }

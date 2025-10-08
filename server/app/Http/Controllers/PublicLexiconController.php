@@ -1,6 +1,7 @@
 <?php
 
 /** @noinspection PhpUnused */
+
 /** @noinspection PhpMissingReturnTypeInspection */
 
 namespace App\Http\Controllers;
@@ -21,8 +22,8 @@ class PublicLexiconController extends Controller
     {
         $lex = $this->getLexicon($lexicon_slug);
         return view('lexicon/lex_home', [
-            'lexicon'=>$lex,
-            'selected_sidebar'=>'language',
+            'lexicon' => $lex,
+            'selected_sidebar' => 'language',
         ]);
     }
 
@@ -32,16 +33,16 @@ class PublicLexiconController extends Controller
         if ($request->get('return_to')) {
             return redirect($request->get('return_to'));
         }
-        return redirect('/lexicon/'.$lexicon_slug);
+        return redirect('/lexicon/' . $lexicon_slug);
     }
 
     public function protolanguage_home(Request $request, $lexicon_slug)
     {
         $lex = $this->getLexicon($lexicon_slug);
         return view('lexicon/lex_protolanguage_home', [
-            'lexicon'=>$lex,
-            'protolang'=>true,
-            'selected_sidebar'=>'headword',
+            'lexicon' => $lex,
+            'protolang' => true,
+            'selected_sidebar' => 'headword',
         ]);
     }
 
@@ -53,10 +54,10 @@ class PublicLexiconController extends Controller
             'reflexes.language'
         ])->findOrFail($etymon_id);
         return view('lexicon/lex_etymon', [
-            'lexicon'=>$lex,
-            'etymon'=>$etymon,
-            'selected_sidebar'=>'headword',
-            'selected_sidebar_id'=>$etymon->id,
+            'lexicon' => $lex,
+            'etymon' => $etymon,
+            'selected_sidebar' => 'headword',
+            'selected_sidebar_id' => $etymon->id,
         ]);
     }
 
@@ -69,10 +70,10 @@ class PublicLexiconController extends Controller
             'etyma.reflexes.language',
         ])->findOrFail($field_id);
         return view('lexicon/lex_field', [
-            'lexicon'=>$lex,
-            'field'=>$field,
-            'selected_sidebar'=>'category',
-            'selected_sidebar_id'=>$field->id,
+            'lexicon' => $lex,
+            'field' => $field,
+            'selected_sidebar' => 'category',
+            'selected_sidebar_id' => $field->id,
         ]);
     }
 
@@ -87,11 +88,11 @@ class PublicLexiconController extends Controller
         ])->findOrFail($word_id);
         $language = $word->language;
         return view('lexicon/lex_word', [
-            'lexicon'=>$lex,
-            'language'=>$language,
-            'word'=>$word,
-            'selected_sidebar'=>'headword',
-            'selected_sidebar_id'=>$word->id,
+            'lexicon' => $lex,
+            'language' => $language,
+            'word' => $word,
+            'selected_sidebar' => 'headword',
+            'selected_sidebar_id' => $word->id,
         ]);
     }
 
@@ -100,21 +101,21 @@ class PublicLexiconController extends Controller
         $lex = $this->getLexicon($lexicon_slug);
         $language = LexLanguage::findOrFail($lang_id);
         return view('lexicon/lex_language', [
-            'lexicon'=>$lex,
-            'language'=>$language,
-            'selected_sidebar'=>'headword',
+            'lexicon' => $lex,
+            'language' => $language,
+            'selected_sidebar' => 'headword',
         ]);
     }
 
     public function page(Request $request, $lexicon_slug, $page_slug_fragment)
     {
         $lex = $this->getLexicon($lexicon_slug);
-        $page_url = "lexicon/".$lexicon_slug.'/page/'.$page_slug_fragment;
+        $page_url = "lexicon/" . $lexicon_slug . '/page/' . $page_slug_fragment;
         $page = Page::where('slug', $page_url)->firstOrFail();
         return view('lexicon/lex_page', [
-            'lexicon'=>$lex,
-            'page'=>$page,
-            'selected_sidebar'=>'headword',
+            'lexicon' => $lex,
+            'page' => $page,
+            'selected_sidebar' => 'headword',
         ]);
     }
 
@@ -123,7 +124,7 @@ class PublicLexiconController extends Controller
         $lex = LexLexicon::where('slug', $lexicon_slug)->firstOrFail();
 
         return view('lexicon/lex_data', [
-            'lexicon'=>$lex,
+            'lexicon' => $lex,
         ]);
     }
 
@@ -143,7 +144,7 @@ class PublicLexiconController extends Controller
     {
         $start = request()->integer('start', 0);
         $length = request()->integer('length', 10);
-        if ($length>100) {
+        if ($length > 100) {
             $length = 100;
         }
 
@@ -187,7 +188,7 @@ class PublicLexiconController extends Controller
         if ($order) {
             $order_by_key = $order[0]['name'];
             $order_by_dir = $order[0]['dir'];
-            $filtered_reflexes->orderBy('data->'.$order_by_key, $order_by_dir);
+            $filtered_reflexes->orderBy('data->' . $order_by_key, $order_by_dir);
         }
 
         $filtered_reflexes_count = $filtered_reflexes->count();
@@ -195,7 +196,7 @@ class PublicLexiconController extends Controller
             ->skip($start)
             ->limit($length)
             ->get()
-            ->map(function($r) {
+            ->map(function ($r) {
                 $d = json_decode($r->data);
                 $d->id = $r->reflex_id;
                 return $d;

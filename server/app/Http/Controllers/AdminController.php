@@ -7,7 +7,6 @@ namespace App\Http\Controllers;
 
 use App\Models\EieolGloss;
 use App\Models\EieolHeadWord;
-use App\Models\Issue;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Normalizer;
@@ -17,14 +16,16 @@ class AdminController extends Controller
     public function analysis_typeahead(Request $request)
     {
         $data = DB::select("SELECT DISTINCT(analysis) as analysis FROM eieol_element, eieol_gloss"
-                           . " WHERE eieol_element.gloss_id=eieol_gloss.id"
-                           . " AND eieol_gloss.language_id = ?"
-                           . " AND eieol_element.analysis LIKE ?"
-                           . " ORDER BY analysis LIMIT 25", [
-                               $request->get('language_id'),
-                               '%' . $request->get('term') . '%'
-                           ]);
-        return array_map(function($anl) {return $anl->analysis;}, $data);
+            . " WHERE eieol_element.gloss_id=eieol_gloss.id"
+            . " AND eieol_gloss.language_id = ?"
+            . " AND eieol_element.analysis LIKE ?"
+            . " ORDER BY analysis LIMIT 25", [
+            $request->get('language_id'),
+            '%' . $request->get('term') . '%'
+        ]);
+        return array_map(function ($anl) {
+            return $anl->analysis;
+        }, $data);
     }
 
     public function gloss_typeahead(Request $request)

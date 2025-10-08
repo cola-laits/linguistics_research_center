@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\EieolGloss;
 use App\Models\EieolGlossedText;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 /*
@@ -16,10 +15,12 @@ use Illuminate\Support\Facades\Validator;
  * the two fields that used to be on eieol_glossed_text_gloss, are now on eieol_gloss,
  * but they're still treated as a separate type of thing in the API.
  */
+
 class EieolGlossedTextGlossController extends Controller
 {
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $rules = array(
             'order' => 'required|integer|unique:eieol_glossed_text_gloss,order,null,id,glossed_text_id,' . $request->get('glossed_text_id'),
             'glossed_text_id' => 'required|exists:eieol_glossed_text,id',
@@ -46,11 +47,12 @@ class EieolGlossedTextGlossController extends Controller
 
         return [
             'success' => true,
-            'gloss'=>$gloss
+            'gloss' => $gloss
         ];
     }
 
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         $rules = array(
             'order' => 'required|integer|unique:eieol_gloss,order,' . $id . ',id,glossed_text_id,' . $request->get('glossed_text_id')
         );
@@ -74,16 +76,18 @@ class EieolGlossedTextGlossController extends Controller
         ];
     }
 
-    public function destroy($id) {
+    public function destroy($id)
+    {
         $gloss = EieolGloss::findOrFail($id);
         $gloss->glossed_text_id = null;
         $gloss->order = null;
         $gloss->save();
     }
 
-    public function postCopyGloss(Request $request) {
+    public function postCopyGloss(Request $request)
+    {
         $gloss_order = EieolGloss::where('glossed_text_id', $request->get('glossed_text_id'))
-            ->max('order')
+                ->max('order')
             + 10;
 
         $gloss = EieolGloss::findOrFail($request->get('existing_gloss_id'));
@@ -93,9 +97,9 @@ class EieolGlossedTextGlossController extends Controller
         $new_gloss->order = $gloss_order;
         $new_gloss->save();
         return [
-            'success'=>true,
-            'gloss_id'=>$new_gloss_id,
-            'glossed_text'=>EieolGlossedText::with('glosses.language', 'glosses.elements.head_word.language')
+            'success' => true,
+            'gloss_id' => $new_gloss_id,
+            'glossed_text' => EieolGlossedText::with('glosses.language', 'glosses.elements.head_word.language')
                 ->where('id', $request->get('glossed_text_id'))
                 ->first()
         ];

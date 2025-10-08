@@ -10,8 +10,6 @@ use App\Models\EieolSeries;
 use App\Models\Issue;
 use App\Models\LexEtyma;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Normalizer;
 
@@ -59,7 +57,7 @@ class EieolLessonController extends Controller
 
     public function edit($id)
     {
-        $lesson = EieolLesson::with(['series', 'language' ,'series.languages'])->findOrFail($id);
+        $lesson = EieolLesson::with(['series', 'language', 'series.languages'])->findOrFail($id);
         $grammars = EieolGrammar::where('lesson_id', '=', $id)->orderBy('order')->get();
         $glossed_texts = EieolGlossedText::with('glosses.language', 'glosses.elements.head_word.language')
             ->where('lesson_id', '=', $id)->orderBy('order')->get();

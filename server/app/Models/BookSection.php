@@ -10,7 +10,8 @@ class BookSection extends Model
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
-    public function book() {
+    public function book()
+    {
         return $this->belongsTo(Book::class);
     }
 }

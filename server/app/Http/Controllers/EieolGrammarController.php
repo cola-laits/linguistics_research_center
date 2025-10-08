@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\EieolGrammar;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Normalizer;
 
 class EieolGrammarController extends Controller
 {
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $rules = array(
             'order' => 'required|integer|unique:eieol_grammar,order,null,id,lesson_id,' . $request->get('lesson_id'),
             'section_number' => 'required|unique:eieol_grammar,section_number,null,id,lesson_id,' . $request->get('lesson_id'),
@@ -48,7 +48,8 @@ class EieolGrammarController extends Controller
         ];
     }
 
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         $rules = array(
             'order' => 'required|integer|unique:eieol_grammar,order,' . $id . ',id,lesson_id,' . $request->get('lesson_id'),
             'section_number' => 'required|unique:eieol_grammar,section_number,' . $id . ',id,lesson_id,' . $request->get('lesson_id'),
@@ -79,7 +80,8 @@ class EieolGrammarController extends Controller
         ];
     }
 
-    public function destroy($id) {
+    public function destroy($id)
+    {
         EieolGrammar::destroy($id);
     }
 

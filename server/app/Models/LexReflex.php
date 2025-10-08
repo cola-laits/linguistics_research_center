@@ -2,26 +2,26 @@
 
 namespace App\Models;
 
-use Eloquent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Translatable\HasTranslations;
 
 
-class LexReflex extends Model {
+class LexReflex extends Model
+{
 
     use HasTranslations;
 
-	protected $table = 'lex_reflex';
-	protected $guarded = ['id'];
+    protected $table = 'lex_reflex';
+    protected $guarded = ['id'];
     protected $translatable = ['gloss'];
 
-	protected $casts = [
-	    'entries' => 'array',
+    protected $casts = [
+        'entries' => 'array',
     ];
 
-    protected $appends = ['langAbbrGloss','langNameEntriesGloss'];
+    protected $appends = ['langAbbrGloss', 'langNameEntriesGloss'];
 
     private static function split_entries($entry)
     {
@@ -37,8 +37,8 @@ class LexReflex extends Model {
         $len = mb_strlen($entry, 'UTF-8') - $close;
         $last = mb_substr($entry, $close + 1, $len, 'UTF-8');
 
-        $short = $first.$last;
-        $long = $first.$middle.$last;
+        $short = $first . $last;
+        $long = $first . $middle . $last;
 
         $keys = array();
 
@@ -79,16 +79,18 @@ class LexReflex extends Model {
         }, $key_array);
 
         //Tack the original entry on to the end.  This way the keys remain unique even if it had unwanted chars, but the ending isn't really used for sorting
-        return implode('', $key_parts).$key;
+        return implode('', $key_parts) . $key;
     }
 
-    public function getLangAbbrGlossAttribute() {
-	    return $this->lang_attribute . ': ' . $this->gloss;
+    public function getLangAbbrGlossAttribute()
+    {
+        return $this->lang_attribute . ': ' . $this->gloss;
     }
 
-    public function getLangNameEntriesGlossAttribute() {
+    public function getLangNameEntriesGlossAttribute()
+    {
         $entries_csv = collect($this->entries)->pluck('text')->join(', ');
-        return $this->language->name . ': '.$entries_csv.' (' . $this->gloss . ')';
+        return $this->language->name . ': ' . $entries_csv . ' (' . $this->gloss . ')';
     }
 
     public function etyma()
@@ -98,26 +100,26 @@ class LexReflex extends Model {
 
     /** @deprecated use etyma() instead */
     public function etymas()
-	{
-		return $this->belongsToMany(LexEtyma::class, 'lex_etyma_reflex', 'reflex_id', 'etyma_id');
-	}
+    {
+        return $this->belongsToMany(LexEtyma::class, 'lex_etyma_reflex', 'reflex_id', 'etyma_id');
+    }
 
-	public function language() : BelongsTo
-	{
-		return $this->belongsTo(LexLanguage::class);
-	}
+    public function language(): BelongsTo
+    {
+        return $this->belongsTo(LexLanguage::class);
+    }
 
-	public function parts_of_speech(): HasMany
-	{
+    public function parts_of_speech(): HasMany
+    {
         return $this->hasMany(LexReflexPartOfSpeech::class, 'reflex_id')->orderBy('order');
-	}
+    }
 
-	public function sources()
-	{
-		return $this->belongsToMany(LexSource::class, 'lex_reflex_source', 'reflex_id', 'source_id')
+    public function sources()
+    {
+        return $this->belongsToMany(LexSource::class, 'lex_reflex_source', 'reflex_id', 'source_id')
             ->withPivot('page_number', 'original_text')
             ->orderBy('code');
-	}
+    }
 
     public function cross_references_to()
     {
@@ -138,26 +140,28 @@ class LexReflex extends Model {
         return $this->hasMany(LexReflexCrossReference::class, 'to_reflex_id');
     }
 
-    public function extra_data() : HasMany
+    public function extra_data(): HasMany
     {
         return $this->hasMany(LexReflexExtraData::class, 'reflex_id');
     }
 
-    public function etymaSemanticTags() {
+    public function etymaSemanticTags()
+    {
         return $this->etymas->pluck('semantic_fields')->flatten();
     }
 
-	public function getDisplayPartsOfSpeech()
-	{
+    public function getDisplayPartsOfSpeech()
+    {
         return $this->parts_of_speech->pluck('text')->join('/');
-	}
+    }
 
     public function getDisplaySources()
     {
         return $this->sources->pluck('code')->join('/');
     }
 
-    public function getEntriesCSV() {
+    public function getEntriesCSV()
+    {
         return collect($this->entries)
             ->pluck('text')
             ->map(fn($text) => strip_tags($text))

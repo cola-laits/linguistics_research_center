@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use Filament\Models\Contracts\FilamentUser;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements FilamentUser
@@ -37,7 +37,8 @@ class User extends Authenticatable implements FilamentUser
         ];
     }
 
-    public function editableSeries() {
+    public function editableSeries()
+    {
         return $this->belongsToMany(EieolSeries::class, 'user_permission', 'user_id', 'eieol_series_id');
     }
 

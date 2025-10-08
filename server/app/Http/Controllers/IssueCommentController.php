@@ -31,7 +31,7 @@ class IssueCommentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -48,7 +48,7 @@ class IssueCommentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\IssueComment  $comment
+     * @param \App\Models\IssueComment $comment
      * @return \Illuminate\Http\Response
      */
     public function show(IssueComment $comment)
@@ -59,7 +59,7 @@ class IssueCommentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\IssueComment  $comment
+     * @param \App\Models\IssueComment $comment
      * @return \Illuminate\Http\Response
      */
     public function edit(IssueComment $comment)
@@ -70,8 +70,8 @@ class IssueCommentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\IssueComment  $comment
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\IssueComment $comment
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, IssueComment $comment)
@@ -82,7 +82,7 @@ class IssueCommentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\IssueComment  $comment
+     * @param \App\Models\IssueComment $comment
      * @return \Illuminate\Http\Response
      */
     public function destroy(IssueComment $comment)

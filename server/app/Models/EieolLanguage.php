@@ -5,13 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use IntlChar;
 
-class EieolLanguage extends Model {
+class EieolLanguage extends Model
+{
 
-	protected $table = 'eieol_language';
+    protected $table = 'eieol_language';
 
     protected $guarded = ['id'];
 
-    public function getTinyMceCharmapConfig(): array {
+    public function getTinyMceCharmapConfig(): array
+    {
         $value = [];
 
         $items = explode(',', $this->custom_keyboard_layout);

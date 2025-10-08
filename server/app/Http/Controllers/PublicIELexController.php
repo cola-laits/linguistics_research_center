@@ -1,6 +1,7 @@
 <?php
 
 /** @noinspection PhpMissingReturnTypeInspection */
+
 /** @noinspection PhpUnused */
 
 namespace App\Http\Controllers;
@@ -16,8 +17,9 @@ class PublicIELexController extends Controller
 {
     const IELEX_ID = 1;
 
-    public function lex_pokorny() {
-        $etymas = LexEtyma::where('lexicon_id',self::IELEX_ID)
+    public function lex_pokorny()
+    {
+        $etymas = LexEtyma::where('lexicon_id', self::IELEX_ID)
             ->with('cross_references')
             ->withCount('reflexes')
             ->orderBy('order')
@@ -27,8 +29,9 @@ class PublicIELexController extends Controller
         ]);
     }
 
-    public function lex_reflex($pokorny_number) {
-        $etyma = LexEtyma::where('lexicon_id',self::IELEX_ID)->with(
+    public function lex_reflex($pokorny_number)
+    {
+        $etyma = LexEtyma::where('lexicon_id', self::IELEX_ID)->with(
             'reflexes.language.language_sub_family.language_family',
             'reflexes.sources',
             'reflexes.parts_of_speech',
@@ -41,8 +44,9 @@ class PublicIELexController extends Controller
         ]);
     }
 
-    public function lex_language() {
-        $language_families = LexLanguageFamily::where('lexicon_id',self::IELEX_ID)
+    public function lex_language()
+    {
+        $language_families = LexLanguageFamily::where('lexicon_id', self::IELEX_ID)
             ->with('language_sub_families.languages.reflex_count')
             ->orderBy('order')
             ->get();
@@ -52,7 +56,8 @@ class PublicIELexController extends Controller
         ]);
     }
 
-    public function lex_lang_reflexes($language_abbr) {
+    public function lex_lang_reflexes($language_abbr)
+    {
         $language = LexLanguage::where("abbr", $language_abbr)->firstOrFail();
 
         $alpha_weights = [];
@@ -67,8 +72,7 @@ class PublicIELexController extends Controller
             ->with('etymas:id,old_id,entry,gloss,homograph_number')
             ->select(['id', 'language_id', 'lang_attribute', 'gloss', 'entries'])
             ->get()
-            ->filter(fn ($reflex) => count($reflex->etymas) > 0)
-        ;
+            ->filter(fn($reflex) => count($reflex->etymas) > 0);
 
         $display_reflexes = [];
         foreach ($reflexes as $reflex) {
@@ -84,21 +88,23 @@ class PublicIELexController extends Controller
         ]);
     }
 
-    public function lex_semantic() {
+    public function lex_semantic()
+    {
         return view('lex_semantic')->with([
-            'cats' => LexSemanticCategory::where('lexicon_id',self::IELEX_ID)
+            'cats' => LexSemanticCategory::where('lexicon_id', self::IELEX_ID)
                 ->orderBy('number')
                 ->get(),
-            'alpha_cats' => LexSemanticCategory::where('lexicon_id',self::IELEX_ID)
+            'alpha_cats' => LexSemanticCategory::where('lexicon_id', self::IELEX_ID)
                 ->orderBy('text')
                 ->get()
         ]);
     }
 
-    public function lex_semantic_category($cat_abbr) {
-        $category = LexSemanticCategory::where('lexicon_id',self::IELEX_ID)
+    public function lex_semantic_category($cat_abbr)
+    {
+        $category = LexSemanticCategory::where('lexicon_id', self::IELEX_ID)
             ->whereAbbr($cat_abbr)->firstOrFail();
-        $alpha_cats = LexSemanticCategory::where('lexicon_id',self::IELEX_ID)
+        $alpha_cats = LexSemanticCategory::where('lexicon_id', self::IELEX_ID)
             ->orderBy('text')
             ->get();
         $fields = LexSemanticField::withCount('etymas')
@@ -107,37 +113,41 @@ class PublicIELexController extends Controller
             ->get();
 
         return view('lex_semantic_category')->with([
-            'cat'=>$category,
-            'alpha_cats'=>$alpha_cats,
-            'fields'=>$fields
+            'cat' => $category,
+            'alpha_cats' => $alpha_cats,
+            'fields' => $fields
         ]);
     }
 
-    public function lex_semantic_field($field_abbr) {
+    public function lex_semantic_field($field_abbr)
+    {
         $field = LexSemanticField::with('etymas', 'semantic_category')
             ->where("abbr", $field_abbr)->firstOrFail();
-        $alpha_cats = LexSemanticCategory::where('lexicon_id',self::IELEX_ID)
+        $alpha_cats = LexSemanticCategory::where('lexicon_id', self::IELEX_ID)
             ->orderBy('text')
             ->get();
 
         return view('lex_semantic_field')->with([
-            'field'=>$field,
+            'field' => $field,
             'alpha_cats' => $alpha_cats
         ]);
     }
 
     // ** redirections for old lex routes
-    public function lex_lang_reflexes_redirect($language_id) {
+    public function lex_lang_reflexes_redirect($language_id)
+    {
         $language = LexLanguage::find($language_id);
         return redirect('lex/languages/' . $language->abbr, 301);
     }
 
-    public function lex_semantic_field_redirect($field_id) {
+    public function lex_semantic_field_redirect($field_id)
+    {
         $field = LexSemanticField::find($field_id);
         return redirect('lex/semantic/field/' . $field->abbr, 301);
     }
 
-    public function lex_reflex_redirect($etyma_id) {
+    public function lex_reflex_redirect($etyma_id)
+    {
         $etyma = LexEtyma::find($etyma_id);
         return redirect('lex/master/' . $etyma->old_id, 301);//pokorny number is stored in db column 'old_id'
     }

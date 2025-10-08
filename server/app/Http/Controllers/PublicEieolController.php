@@ -1,20 +1,22 @@
 <?php
 
 /** @noinspection PhpMissingReturnTypeInspection */
+
 /** @noinspection PhpUnused */
 
 namespace App\Http\Controllers;
 
+use App\Helpers\AlphabetSorter;
 use App\Models\EieolLanguage;
 use App\Models\EieolLesson;
 use App\Models\EieolSeries;
-use App\Helpers\AlphabetSorter;
 use App\Models\Page;
 use Illuminate\Http\Request;
 
 class PublicEieolController extends Controller
 {
-    public function eieol() {
+    public function eieol()
+    {
         return view('eieol', [
             'content' => Page::whereSlug('eieol')->first()->content,
             'serieses' => EieolSeries::where('published', '=', True)
@@ -23,7 +25,8 @@ class PublicEieolController extends Controller
         ]);
     }
 
-    public function eieol_lesson_redirect(Request $request, $series_id) {
+    public function eieol_lesson_redirect(Request $request, $series_id)
+    {
         $series = EieolSeries::findOrFail($series_id);
 
         if ($request->has('id')) {
@@ -34,7 +37,8 @@ class PublicEieolController extends Controller
         return redirect('eieol/' . $series->slug, 301);
     }
 
-    public function eieol_first_lesson($series_name) {
+    public function eieol_first_lesson($series_name)
+    {
         $series = EieolSeries::findByIdOrSlug($series_name);
 
         $lesson = EieolLesson::where('series_id', $series->id)
@@ -44,7 +48,8 @@ class PublicEieolController extends Controller
         return $this->eieol_lesson($series_name, $lesson->order);
     }
 
-    public function eieol_lesson($series_name, $lesson_order) {
+    public function eieol_lesson($series_name, $lesson_order)
+    {
         $series = EieolSeries::findByIdOrSlug($series_name);
 
         $lesson = EieolLesson::with('grammars', 'language')
@@ -61,7 +66,8 @@ class PublicEieolController extends Controller
         ]);
     }
 
-    public function eieol_printable($series_id) {
+    public function eieol_printable($series_id)
+    {
         $series = EieolSeries::findByIdOrSlug($series_id);
 
         $html = view('printable_header_layout');
@@ -90,7 +96,8 @@ class PublicEieolController extends Controller
         return $html;
     }
 
-    public function eieol_toc($series_id) {
+    public function eieol_toc($series_id)
+    {
         $series = EieolSeries::findByIdOrSlug($series_id);
 
         return view('eieol_toc', [
@@ -98,7 +105,8 @@ class PublicEieolController extends Controller
         ]);
     }
 
-    public function eieol_master_gloss($series_id, $language_id) {
+    public function eieol_master_gloss($series_id, $language_id)
+    {
         $series = EieolSeries::findByIdOrSlug($series_id);
         $language = EieolLanguage::findOrFail($language_id);
         $glosses = [];
@@ -116,7 +124,7 @@ class PublicEieolController extends Controller
                     //unique key is the surface form with all pos and analysis
 
                     $key = sha1($gloss->surface_form . ' -- '
-                        . $gloss->elements->map(function($element) {
+                        . $gloss->elements->map(function ($element) {
                             return $element->part_of_speech . '; ' . $element->analysis . ':' . $element->head_word_id;
                         })->implode(' + '));
 
@@ -133,8 +141,7 @@ class PublicEieolController extends Controller
             }
         }
 
-        array_walk($glosses, fn(&$value) =>
-            $value['sortable_key'] = \Normalizer::normalize($value['surface_form'], \Normalizer::FORM_D)
+        array_walk($glosses, fn(&$value) => $value['sortable_key'] = \Normalizer::normalize($value['surface_form'], \Normalizer::FORM_D)
         );
         $sorter = new AlphabetSorter($language->substitutions, $language->custom_sort);
         uasort($glosses, [$sorter, 'alphabet_sorter']);
@@ -146,7 +153,8 @@ class PublicEieolController extends Controller
         ]);
     }
 
-    public function eieol_base_form_dictionary($series_id, $language_id) {
+    public function eieol_base_form_dictionary($series_id, $language_id)
+    {
         $series = EieolSeries::findByIdOrSlug($series_id);
         $language = EieolLanguage::findOrFail($language_id);
         $head_words = [];
@@ -203,7 +211,8 @@ class PublicEieolController extends Controller
         ]);
     }
 
-    public function eieol_english_meaning_index($series_id, $language_id) {
+    public function eieol_english_meaning_index($series_id, $language_id)
+    {
         $series = EieolSeries::findByIdOrSlug($series_id);
         $language = EieolLanguage::findOrFail($language_id);
         $keywords = [];
@@ -247,9 +256,9 @@ class PublicEieolController extends Controller
         ksort($keywords);
 
         return view('eieol_english_meaning_index', [
-             'series' => $series,
-             'language' => $language,
-             'keywords' => $keywords,
-         ]);
+            'series' => $series,
+            'language' => $language,
+            'keywords' => $keywords,
+        ]);
     }
 }

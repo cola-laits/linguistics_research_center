@@ -2,37 +2,37 @@
 
 namespace App\Models;
 
-use Eloquent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Translatable\HasTranslations;
 
-class LexPartOfSpeech extends Model {
+class LexPartOfSpeech extends Model
+{
 
     use HasTranslations;
 
-	protected $table = 'lex_part_of_speech';
+    protected $table = 'lex_part_of_speech';
 
-	protected $guarded = ['id'];
+    protected $guarded = ['id'];
 
     protected $translatable = ['display'];
 
-	public function reflex()
-	{
-		return $this->hasMany(LexReflex::class, 'part_of_speech_id', 'id');
-	}
+    public function reflex()
+    {
+        return $this->hasMany(LexReflex::class, 'part_of_speech_id', 'id');
+    }
 
-	public static function posLookup()
-	{
-		$all_pos = LexPartOfSpeech::all();
-		$pos_lookup = array();
-		foreach ($all_pos as $pos) {
-			$pos_lookup[$pos->code] = $pos->display;
-		}
-		return $pos_lookup;
-	}
+    public static function posLookup()
+    {
+        $all_pos = LexPartOfSpeech::all();
+        $pos_lookup = array();
+        foreach ($all_pos as $pos) {
+            $pos_lookup[$pos->code] = $pos->display;
+        }
+        return $pos_lookup;
+    }
 
-    public function lexicon() : BelongsTo
+    public function lexicon(): BelongsTo
     {
         return $this->belongsTo(LexLexicon::class, 'lexicon_id');
     }

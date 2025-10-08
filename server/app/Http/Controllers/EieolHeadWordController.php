@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\EieolHeadWord;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Normalizer;
 
 class EieolHeadWordController extends Controller
 {
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
 
         $rules = array(
             //have to put definition in quotes in case it has a comma in it
@@ -55,7 +55,8 @@ class EieolHeadWordController extends Controller
         ];
     }
 
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         $rules = array(
             //have to put definition in quotes in case it has a comma in it
             'word' => 'required|regex:/^<.*>$/|unique:eieol_head_word,word,' . $id . ',id,definition,"' . Normalizer::normalize($request->get('definition'), Normalizer::FORM_C) . '",language_id,' . $request->get('language_id'),

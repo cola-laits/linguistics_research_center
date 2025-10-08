@@ -8,8 +8,9 @@ use Storage;
 class FilesController extends Controller
 {
 
-    public function post_file(Request $request) {
-        if ($request->get('uploader')== 'tinymce') {
+    public function post_file(Request $request)
+    {
+        if ($request->get('uploader') == 'tinymce') {
             return $this->post_file_tinymce($request);
         } else {
             return $this->post_file_ckeditor($request);
@@ -17,7 +18,8 @@ class FilesController extends Controller
     }
 
     // uploads from CKEditor
-    protected function post_file_ckeditor(Request $request) {
+    protected function post_file_ckeditor(Request $request)
+    {
         $ret = new \stdClass();
 
         if (!$request->hasFile('upload')) {
@@ -37,7 +39,8 @@ class FilesController extends Controller
     }
 
     // uploads from TinyMCE
-    protected function post_file_tinymce(Request $request) {
+    protected function post_file_tinymce(Request $request)
+    {
         $ret = new \stdClass();
 
         if (!$request->hasFile('file')) {

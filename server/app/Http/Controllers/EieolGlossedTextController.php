@@ -5,14 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\EieolGloss;
 use App\Models\EieolGlossedText;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Normalizer;
 
 class EieolGlossedTextController extends Controller
 {
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
 
         $rules = array(
             'order' => 'required|integer|unique:eieol_glossed_text,order,null,id,lesson_id,' . $request->get('lesson_id'),
@@ -48,7 +48,8 @@ class EieolGlossedTextController extends Controller
         ];
     }
 
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         $rules = array(
             'order' => 'required|integer|unique:eieol_glossed_text,order,' . $id . ',id,lesson_id,' . $request->get('lesson_id'),
             'glossed_text' => 'required',
@@ -77,8 +78,9 @@ class EieolGlossedTextController extends Controller
         ];
     }
 
-    public function destroy($id): void {
-        foreach (EieolGloss::where('glossed_text_id',$id)->get() as $gloss) {
+    public function destroy($id): void
+    {
+        foreach (EieolGloss::where('glossed_text_id', $id)->get() as $gloss) {
             $gloss->order = null;
             $gloss->glossed_text_id = null;
             $gloss->save();

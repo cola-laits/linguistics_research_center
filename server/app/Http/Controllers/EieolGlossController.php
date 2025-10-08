@@ -6,7 +6,6 @@ use App\Models\EieolElement;
 use App\Models\EieolGloss;
 use App\Models\EieolGlossedText;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Normalizer;
@@ -14,7 +13,8 @@ use Normalizer;
 class EieolGlossController extends Controller
 {
 
-    public function show($id) {
+    public function show($id)
+    {
         $gloss = EieolGloss::with('elements.head_word', 'glossed_text.lesson')->find($id);
         $return_gloss = $gloss->toArray();
 
@@ -42,7 +42,8 @@ class EieolGlossController extends Controller
         return $return_gloss;
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
 
         $rules = [
             'surface_form' => 'required',
@@ -86,7 +87,7 @@ class EieolGlossController extends Controller
         }
         $gloss_id = DB::transaction(function () use ($request) {
 
-            $highest_order = EieolGloss::where('glossed_text_id',$request->get('glossed_text_id'))->max('order');
+            $highest_order = EieolGloss::where('glossed_text_id', $request->get('glossed_text_id'))->max('order');
             if (!$highest_order) {
                 $highest_order = 0;
             }
@@ -132,7 +133,7 @@ class EieolGlossController extends Controller
             'added' => true,
             'gloss_id' => $gloss->id,
             'message' => 'Gloss was successfully added.',
-            'glossed_text'=>EieolGlossedText::with('glosses.language', 'glosses.elements.head_word.language')
+            'glossed_text' => EieolGlossedText::with('glosses.language', 'glosses.elements.head_word.language')
                 ->where('id', $request->get('glossed_text_id'))
                 ->first()
         ];
@@ -140,7 +141,8 @@ class EieolGlossController extends Controller
 
     }
 
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         $rules = array(
             'surface_form' => 'required',
             'element_1_part_of_speech' => 'required',
@@ -226,7 +228,7 @@ class EieolGlossController extends Controller
             'success' => true,
             'message' => 'Gloss was successfully updated.',
             'gloss_id' => $gloss->id,
-            'glossed_text'=>EieolGlossedText::with('glosses.language', 'glosses.elements.head_word.language')
+            'glossed_text' => EieolGlossedText::with('glosses.language', 'glosses.elements.head_word.language')
                 ->where('id', $request->get('glossed_text_id'))
                 ->first()
         ];

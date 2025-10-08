@@ -1,17 +1,16 @@
 <?php
 /** @noinspection PhpUnhandledExceptionInspection */
+
 /** @noinspection PhpMissingReturnTypeInspection */
 
 namespace App\Http\Controllers;
 
 use App\Models\EieolLanguage;
 use App\Models\EieolLesson;
-use App\Models\EieolSeries;
 use App\Models\Issue;
 use App\Models\IssueComment;
-use Illuminate\Http\JsonResponse;
+use Auth;
 use Illuminate\Http\Request;
-use \Auth;
 
 class IssueController extends Controller
 {
@@ -27,7 +26,7 @@ class IssueController extends Controller
             $issues = $issues->where('pointer', request()->get('pointer'));
         }
         $issues = $issues->with('comments')->get();
-        $issues = $issues->sortByDesc(function($issue) {
+        $issues = $issues->sortByDesc(function ($issue) {
             return $issue->comments->sortByDesc('created_at')->first()?->created_at;
         });
 
@@ -39,26 +38,27 @@ class IssueController extends Controller
         ]);
     }
 
-    protected static function getLanguagesForPointer($pointer) {
+    protected static function getLanguagesForPointer($pointer)
+    {
         $re = '/^\/lesson\/(\d*)\/.*/m';
         preg_match_all($re, $pointer, $matches, PREG_SET_ORDER);
         $lesson = EieolLesson::findOrFail($matches[0][1]);
         $language = EieolLanguage::findOrFail($lesson->language_id);
         // convert CSV of quoted entries to an array of unquoted ones
         $language->custom_keyboard_layout = array_map(
-            function($item) {
-                return str_replace('\'','',$item);
+            function ($item) {
+                return str_replace('\'', '', $item);
             },
             explode(',', $language->custom_keyboard_layout)
         );
         $result = new \stdClass;
-        $result->language_list = [$language->lang_attribute.':'.$language->language];
+        $result->language_list = [$language->lang_attribute . ':' . $language->language];
         $result->language_lang = [$language->lang_attribute];
         $result->specialChars = $language->custom_keyboard_layout;
 
         foreach ($lesson->series->languages as $add_lang) {
-            $result->language_list []= $add_lang->lang.':'.$add_lang->display;
-            $result->language_lang []= $add_lang->lang;
+            $result->language_list [] = $add_lang->lang . ':' . $add_lang->display;
+            $result->language_lang [] = $add_lang->lang;
         }
         return $result;
     }
@@ -125,6 +125,6 @@ class IssueController extends Controller
             $comment->user_logon = Auth::user()->name;
             $comment->save();
         }
-        return redirect('/admin2/issues/'.$issue->id);
+        return redirect('/admin2/issues/' . $issue->id);
     }
 }
