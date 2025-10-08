@@ -20,7 +20,7 @@ class LexEtymaForm
                 TextInput::make('id')
                     ->disabled()
                     ->readonly(),
-                Select::make('lexicon')
+                Select::make('lexicon_id')
                     ->relationship('lexicon', 'name')
                     ->columnSpanFull()
                     ->required(),
@@ -94,6 +94,7 @@ class LexEtymaForm
                         TextInput::make('key')->required(),
                         Textarea::make('value')->required(),
                     ])
+                    ->defaultItems(0)
                     ->columns(2)
                     ->helperText("'Extra Data' is freeform info that may vary between lexicons.")
                     ->columnSpanFull(),

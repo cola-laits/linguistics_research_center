@@ -27,7 +27,7 @@ class LexReflexForm
                 TextInput::make('gloss')
                     ->hintIcon('heroicon-m-language', tooltip: 'Translatable. Use the locale selector in the upper right to swap.')
                     ->columnSpanFull(),
-                Select::make('language')
+                Select::make('language_id')
                     ->relationship('language', 'name')
                     ->live()
                     ->columnSpanFull(),
@@ -35,6 +35,7 @@ class LexReflexForm
                     ->columnSpanFull(),
                 Repeater::make('sources')
                     ->relationship('sources')
+                    ->defaultItems(0)
                     ->table([
                         TableColumn::make('Source'),
                         TableColumn::make('Page Number'),
@@ -68,6 +69,7 @@ class LexReflexForm
                     ])
                     ->columnSpanFull(),
                 Repeater::make('entries')
+                    ->defaultItems(0)
                     ->schema([
                         TextInput::make('text')->required()
                     ])
@@ -75,6 +77,7 @@ class LexReflexForm
                     ->columnSpanFull(),
                 Repeater::make('parts_of_speech')
                     ->relationship('parts_of_speech')
+                    ->defaultItems(0)
                     ->schema([
                         TextInput::make('text')->required(),
                     ])
@@ -85,6 +88,7 @@ class LexReflexForm
                 Repeater::make('cross_references')
                     ->label('Cross references')
                     ->relationship('cross_reference_to_pivots')
+                    ->defaultItems(0)
                     ->schema([
                         Select::make('from_reflex_id')
                             ->relationship('from_reflex', 'langNameEntriesGloss')
@@ -111,6 +115,7 @@ class LexReflexForm
                     ->columnSpanFull(),
                 Repeater::make('extra_data')
                     ->relationship('extra_data')
+                    ->defaultItems(0)
                     ->schema([
                         TextInput::make('key')->required(),
                         Textarea::make('value')->required(),

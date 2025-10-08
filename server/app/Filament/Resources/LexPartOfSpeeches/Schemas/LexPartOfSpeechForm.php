@@ -13,7 +13,7 @@ class LexPartOfSpeechForm
     {
         return $schema
             ->components([
-                Select::make('lexicon')
+                Select::make('lexicon_id')
                     ->relationship('lexicon', 'name')
                     ->required(),
                 TextInput::make('code')

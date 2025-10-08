@@ -18,7 +18,7 @@ class LexSemanticFieldForm
                     ->default(null),
                 TextInput::make('abbr')
                     ->default(null),
-                Select::make('semantic_category')
+                Select::make('semantic_category_id')
                     ->relationship('semantic_category', 'abbr')
                     ->getOptionLabelFromRecordUsing(fn (LexSemanticCategory $category) => "{$category->lexicon->name}: {$category->abbr}")
                     ->required(),

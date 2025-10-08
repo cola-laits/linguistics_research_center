@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Eloquent;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class LexSource extends Model {
 
@@ -17,7 +17,7 @@ class LexSource extends Model {
 		return $this->hasMany(LexReflex::class, 'source_id', 'id');
 	}
 
-    public function lexicon()
+    public function lexicon() : BelongsTo
     {
         return $this->belongsTo(LexLexicon::class, 'lexicon_id');
     }
