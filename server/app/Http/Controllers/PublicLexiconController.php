@@ -83,6 +83,7 @@ class PublicLexiconController extends Controller
             'etyma',
             'etyma.reflexes',
             'etyma.reflexes.language',
+            'sources'
         ])->findOrFail($word_id);
         $language = $word->language;
         return view('lexicon/lex_word', [

@@ -11,6 +11,7 @@ use Illuminate\Support\Carbon;
 
 class LexReflexSource extends Model {
 	protected $table = 'lex_reflex_source';
+    protected $guarded = ['id', 'created_at', 'updated_at'];
 
 	public function reflex()
 	{

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Eloquent;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 
 class LexSource extends Model {
@@ -21,7 +22,17 @@ class LexSource extends Model {
         return $this->belongsTo(LexLexicon::class, 'lexicon_id');
     }
 
-    public function getLexiconNameCodeAttribute() {
-        return $this->lexicon->name . ': ' . $this->code;
+    protected function lexiconNameCode(): Attribute
+    {
+        return Attribute::make(
+            get: fn (mixed $value, array $attributes) => $this->lexicon->name . ': ' . $this->code
+        );
+    }
+
+    protected function lexiconNameCodeTitle(): Attribute
+    {
+        return Attribute::make(
+            get: fn (mixed $value, array $attributes) => $this->lexicon->name . ': ' . $this->code . ' (' . $this->display . ')'
+        );
     }
 }

@@ -125,6 +125,9 @@
     "lexicon.pages.word.table_header.Related Words Borrowed Into": "Borrowed Into",
     "lexicon.pages.word.table_header.Other Info": "Other Info",
     "lexicon.pages.word.table_header.Cognates": "Cognates",
+    "lexicon.pages.word.table_header.Sources": "Sources",
+    "lexicon.pages.word.table_header.Source": "Source",
+    "lexicon.pages.word.table_header.Original Entry": "Original Entry",
 
     "lexicon.header.banner.alt_text": "Linguistics Research Center - The University of Texas at Austin",
     "lexicon.header.banner.image_url": "/images/lrc-banner-trim.png",

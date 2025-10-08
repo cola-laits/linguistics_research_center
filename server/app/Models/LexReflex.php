@@ -114,7 +114,9 @@ class LexReflex extends Model {
 
 	public function sources()
 	{
-		return $this->belongsToMany(LexSource::class, 'lex_reflex_source', 'reflex_id', 'source_id')->orderBy('code');
+		return $this->belongsToMany(LexSource::class, 'lex_reflex_source', 'reflex_id', 'source_id')
+            ->withPivot('page_number', 'original_text')
+            ->orderBy('code');
 	}
 
     public function cross_references_to()

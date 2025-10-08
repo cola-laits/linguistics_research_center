@@ -101,6 +101,33 @@
             @endif
         @endif
 
+        @if ($word->sources)
+            <div>
+                <h2>{{__('lexicon.pages.word.table_header.Sources')}}:</h2>
+                <div>
+                    <table class="table table-bordered table-responsive">
+                        <tr>
+                            <th>{{__('lexicon.pages.word.table_header.Source')}}</th>
+                            <th style="width:100%;">{{__('lexicon.pages.word.table_header.Original Entry')}}</th>
+                        </tr>
+                        @foreach ($word->sources as $source)
+                        <tr>
+                            <td style="white-space:nowrap;">
+                                {{$source->display}}
+                                @if ($source->pivot->page_number)
+                                    p. {{$source->pivot->page_number}}
+                                @endif
+                            </td>
+                            <td>
+                                {{$source->pivot->original_text}}
+                            </td>
+                        </tr>
+                        @endforeach
+                    </table>
+                </div>
+            </div>
+        @endif
+
         @if ($word->extra_data)
         <h2>{{__('lexicon.pages.word.table_header.Other Info')}}:</h2>
         <div>

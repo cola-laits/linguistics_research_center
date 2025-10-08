@@ -2,12 +2,17 @@
 
 namespace App\Filament\Resources\LexReflexes\Schemas;
 
+use App\Models\LexLanguage;
 use App\Models\LexReflex;
+use App\Models\LexSource;
 use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Repeater\TableColumn;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
+use Illuminate\Database\Eloquent\Model;
 
 class LexReflexForm
 {
@@ -24,13 +29,43 @@ class LexReflexForm
                     ->columnSpanFull(),
                 Select::make('language')
                     ->relationship('language', 'name')
+                    ->live()
                     ->columnSpanFull(),
                 TextInput::make('lang_attribute')
                     ->columnSpanFull(),
-                Select::make('sources')
-                    ->multiple()
-                    ->relationship('sources', 'name')
-                    ->getOptionLabelFromRecordUsing(fn($record) => $record->lexiconNameCode)
+                Repeater::make('sources')
+                    ->relationship('sources')
+                    ->table([
+                        TableColumn::make('Source'),
+                        TableColumn::make('Page Number'),
+                        TableColumn::make('Original Text'),
+                    ])
+                    ->schema([
+                        Select::make('source_id')
+                            ->label('Source')
+                            ->options(function (Get $get) {
+                                $language = LexLanguage::find($get('../../language'));
+                                $lex = $language?->language_sub_family?->language_family?->lexicon;
+
+                                $query = LexSource::query()
+                                    ->with('lexicon')
+                                    ->orderBy('lexicon_id')
+                                    ->orderBy('code');
+
+                                if ($lex) {
+                                    $query->where('lexicon_id', $lex->id);
+                                }
+
+                                return $query->get()->pluck('lexicon_name_code_title', 'id')->toArray();
+                            })
+                            ->searchable()
+                            ->preload(false)
+                            ->required(),
+                        TextInput::make('page_number')
+                            ->label('Page Number'),
+                        TextArea::make('original_text')
+                            ->label('Original Text'),
+                    ])
                     ->columnSpanFull(),
                 Repeater::make('entries')
                     ->schema([
@@ -48,6 +83,7 @@ class LexReflexForm
                     ->hint("Use codes, as listed in the Lexicon > Parts of Speech table")
                     ->columnSpanFull(),
                 Repeater::make('cross_references')
+                    ->label('Cross references')
                     ->relationship('cross_reference_to_pivots')
                     ->schema([
                         Select::make('from_reflex_id')

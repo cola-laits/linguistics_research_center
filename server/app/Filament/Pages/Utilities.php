@@ -10,6 +10,7 @@ use App\Models\LexReflex;
 use App\Models\LexReflexExtraData;
 use App\Models\LexSemanticCategory;
 use App\Models\LexSemanticField;
+use App\Models\LexSource;
 use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
@@ -26,7 +27,6 @@ use Filament\Support\Enums\Width;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\HtmlString;
-use League\Csv\Exception;
 use League\Csv\Reader;
 use League\Csv\SyntaxError;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
@@ -76,7 +76,7 @@ class Utilities extends Page implements HasActions
                         TextEntry::make('required_fields')->state('Required Columns: ' . implode(', ', $required_csv_headers)),
                         FileUpload::make('csv')
                             ->storeFiles(false)
-                            ->acceptedFileTypes(['text/csv'])
+                            //->acceptedFileTypes(['text/csv'])
                             ->required()
                             ->rules([
                                 $this->validateRequiredCsvHeaders($required_csv_headers),
@@ -121,7 +121,7 @@ class Utilities extends Page implements HasActions
                         TextEntry::make('required_columns')->state('Required Columns: ' . implode(', ', $required_category_csv_headers)),
                         FileUpload::make('categories_csv')
                             ->storeFiles(false)
-                            ->acceptedFileTypes(['text/csv'])
+                            //->acceptedFileTypes(['text/csv'])
                             ->required()
                             ->rules([
                                 $this->validateRequiredCsvHeaders($required_category_csv_headers),
@@ -132,7 +132,7 @@ class Utilities extends Page implements HasActions
                         TextEntry::make('required_columns')->state('Required Columns: ' . implode(', ', $required_field_csv_headers)),
                         FileUpload::make('fields_csv')
                             ->storeFiles(false)
-                            ->acceptedFileTypes(['text/csv'])
+                            //->acceptedFileTypes(['text/csv'])
                             ->required()
                             ->rules([
                                 $this->validateRequiredCsvHeaders($required_field_csv_headers),
@@ -214,10 +214,10 @@ class Utilities extends Page implements HasActions
                             ->state(new HtmlString('<ul><li>• Headwords (comma-separated if multiple)</li><li>• Gloss (English assumed; add "Gloss.es" column for Spanish)</li><li>• Language (name)</li></ul>')),
                         TextEntry::make('optional_fields')
                             ->label('Optional Columns')
-                            ->state(new HtmlString('<ul><li>• Etyma</li><li>• HomographNumber (if multiple etyma with same spelling)</li><li>• everything else placed in "extra data"</li></ul>')),
+                            ->state(new HtmlString('<ul><li>• Etyma</li><li>• HomographNumber (if multiple etyma with same spelling)</li><li>• Sources (JSON array, with keys "source", "page_number", "original_entry")</li><li>• everything else placed in "extra data"</li></ul>')),
                         FileUpload::make('reflexes_csv')
                             ->storeFiles(false)
-                            ->acceptedFileTypes(['text/csv'])
+                            //->acceptedFileTypes(['text/csv'])
                             ->required()
                             ->maxSize(512000) // 500 MB
                             ->rules([
@@ -233,16 +233,27 @@ class Utilities extends Page implements HasActions
             ->action(function (array $data): void {
                 $upload_ctr = 0;
                 \DB::beginTransaction();
-                $selected_lexicon_id = $data['selected_lexicon'];
-                $csv = Reader::createFromString($data['reflexes_csv']->get());
-                $csv->setHeaderOffset(0);
-                $rows = $csv->getRecords();
-                foreach ($rows as $row) {
-                    $this->createMissingReflex($selected_lexicon_id, $row);
-                    $upload_ctr++;
-                    if ($upload_ctr % 100 == 0) {
-                        \Log::info("Uploaded " . $upload_ctr);
+                try {
+                    $selected_lexicon_id = $data['selected_lexicon'];
+                    $csv = Reader::createFromString($data['reflexes_csv']->get());
+                    $csv->setHeaderOffset(0);
+                    $rows = $csv->getRecords();
+                    foreach ($rows as $row) {
+                        $this->createMissingReflex($selected_lexicon_id, $row);
+                        $upload_ctr++;
+                        if ($upload_ctr % 100 == 0) {
+                            \Log::info("Uploaded " . $upload_ctr);
+                        }
                     }
+                } catch (\League\Csv\Exception $e) {
+                    \DB::rollback();
+                    Notification::make()
+                        ->title('Upload failed')
+                        ->body('Error: ' . $e->getMessage())
+                        ->danger()
+                        ->seconds(60)
+                        ->send();
+                    return;
                 }
                 \DB::commit();
 
@@ -276,7 +287,7 @@ class Utilities extends Page implements HasActions
     /**
      * @throws FileNotFoundException
      * @throws SyntaxError
-     * @throws Exception
+     * @throws \League\Csv\Exception
      */
     private function validateUploadedCsv(TemporaryUploadedFile $file, $required_headers): \Iterator
     {
@@ -320,6 +331,10 @@ class Utilities extends Page implements HasActions
         ]);
     }
 
+    /**
+     * @throws \League\Csv\Exception
+     * @throws \Exception
+     */
     protected function createMissingReflex($lexicon_id, $row): void
     {
         // fields in $row:
@@ -327,10 +342,12 @@ class Utilities extends Page implements HasActions
         // * Gloss (assuming English; columns 'Gloss.es' for Spanish
         // * Language (name of LexLanguage)
         // * (Optional) Etyma and HomographNumber (for building Reflex->Etyma linkage)
+        // * (Optional) Sources (json describing sources)
         // * everything else gets put in LexReflexExtraData
 
         $reflex = new LexReflex();
         $extra_data = [];
+        $sources_data = [];
         foreach ($row as $key=>$value) {
             if ($key == 'Headwords') {
                 $headword_split = explode(',', $value);
@@ -349,7 +366,7 @@ class Utilities extends Page implements HasActions
             } else if ($key == 'Language') {
                 $lang = $this->getLanguageByNameAndLexiconId($value, $lexicon_id);
                 if (!$lang) {
-                    throw new Exception('Unknown Language: ' . $value);
+                    throw new \League\Csv\Exception('Unknown Language: ' . $value);
                 }
                 $reflex->language_id = $lang->id;
             } else if ($key == 'Etyma') {
@@ -358,6 +375,35 @@ class Utilities extends Page implements HasActions
             } else if ($key == 'HomographNumber') {
                 // FIXME
                 throw new \Exception("Etyma crosslinking not supported yet");
+            } else if ($key == 'Sources') {
+                $raw = is_string($value) ? trim($value) : $value;
+                if ($raw === null || $raw === '') {
+                    continue;
+                }
+                $decoded = json_decode($raw, true);
+                if ($decoded === null && json_last_error() !== JSON_ERROR_NONE) {
+                    throw new \League\Csv\Exception("'Sources' must be valid JSON. Error: " . json_last_error_msg());
+                }
+                if (!is_array($decoded)) {
+                    throw new \League\Csv\Exception("'Sources' must decode to an array of source objects.");
+                }
+                $allowedKeys = ['source', 'page_number', 'original_entry'];
+                foreach ($decoded as $idx => $item) {
+                    if (!is_array($item)) {
+                        throw new \League\Csv\Exception("'Sources' element #" . ($idx + 1) . " must be a JSON object.");
+                    }
+                    // Ensure required 'source' key
+                    if (!array_key_exists('source', $item) || $item['source'] === null || $item['source'] === '') {
+                        throw new \League\Csv\Exception("'Sources' element #" . ($idx + 1) . " is missing required key 'source'.");
+                    }
+                    // Ensure no unexpected keys
+                    $extraKeys = array_diff(array_keys($item), $allowedKeys);
+                    if (!empty($extraKeys)) {
+                        throw new \League\Csv\Exception("'Sources' element #" . ($idx + 1) . " contains unsupported keys: " . implode(', ', $extraKeys) . ". Allowed keys are: " . implode(', ', $allowedKeys) . ".");
+                    }
+
+                    $sources_data []= $item;
+                }
             } else {
                 if ($value) {
                     $extra_data[$key] = $value;
@@ -365,6 +411,20 @@ class Utilities extends Page implements HasActions
             }
         }
         $reflex->save();
+        foreach ($sources_data as $source_data) {
+            $source_code = $source_data['source'];
+            $lexicon = $reflex->language->language_sub_family->language_family->lexicon;
+            $source = LexSource::where('lexicon_id', $lexicon->id)
+                ->where('code', $source_code)
+                ->first();
+            if (!$source) {
+                throw new \League\Csv\Exception('Source "'.$source_code.'" not found in this language\'s lexicon');
+            }
+            $reflex->sources()->attach($source, [
+                'page_number'=>$source_data['page_number']??'',
+                'original_text'=>$source_data['original_entry']??'',
+            ]);
+        }
         foreach ($extra_data as $key=>$val) {
             $ex = new LexReflexExtraData(['key'=>$key, 'value'=>$val]);
             $reflex->extra_data()->save($ex);
