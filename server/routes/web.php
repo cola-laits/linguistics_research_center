@@ -47,16 +47,33 @@ Route::controller(PublicBookController::class)->group(function() {
     Route::get('books/{book_slug}/{section_slug}', 'bookSection');
 });
 
+// Route old-style Series DB IDs in URLs to series slugs instead
+// FIXME: watch stats, and see when these can be removed
+Route::get('eieol_lesson/{series_id}', function ($series_id) {
+    return redirect("eieol/{$series_id}", 301);
+});
+Route::get('eieol/{series_id}/{lesson_order}', function ($series_id, $lesson_order) {
+    $series_slug = \App\Models\EieolSeries::findOrFail($series_id)->slug;
+    return redirect("eieol/{$series_slug}/{$lesson_order}", 301);
+})->whereNumber('series_id');
+Route::get('{prefix}/{series_id}', function ($prefix, $series_id) {
+    $series_slug = \App\Models\EieolSeries::findOrFail($series_id)->slug;
+    return redirect("{$prefix}/{$series_slug}", 301);
+})->whereNumber('series_id')->whereIn('prefix', ['eieol', 'eieol_printable', 'eieol_toc']);
+Route::get('{prefix}/{series_id}/{language_id}', function ($prefix, $series_id, $language_id) {
+    $series_slug = \App\Models\EieolSeries::findOrFail($series_id)->slug;
+    return redirect("{$prefix}/{$series_slug}/{$language_id}", 301);
+})->whereNumber('series_id')->whereIn('prefix', ['eieol_master_gloss', 'eieol_base_form_dictionary', 'eieol_english_meaning_index']);
+
 Route::controller(PublicEieolController::class)->group(function() {
     Route::get('eieol', 'eieol');
-    Route::get('eieol_lesson/{series_id}', 'eieol_lesson_redirect');
-    Route::get('eieol/{series_name}', 'eieol_first_lesson');
-    Route::get('eieol/{series_name}/{lesson_order}', 'eieol_lesson');
-    Route::get('eieol_printable/{series_id}', 'eieol_printable');
-    Route::get('eieol_toc/{series_id}', 'eieol_toc');
-    Route::get('eieol_master_gloss/{series_id}/{language_id}', 'eieol_master_gloss');
-    Route::get('eieol_base_form_dictionary/{series_id}/{language_id}', 'eieol_base_form_dictionary');
-    Route::get('eieol_english_meaning_index/{series_id}/{language_id}', 'eieol_english_meaning_index');
+    Route::get('eieol/{series:slug}', 'eieol_first_lesson');
+    Route::get('eieol/{series:slug}/{lesson_order}', 'eieol_lesson');
+    Route::get('eieol_printable/{series:slug}', 'eieol_printable');
+    Route::get('eieol_toc/{series:slug}', 'eieol_toc');
+    Route::get('eieol_master_gloss/{series:slug}/{language_id}', 'eieol_master_gloss');
+    Route::get('eieol_base_form_dictionary/{series:slug}/{language_id}', 'eieol_base_form_dictionary');
+    Route::get('eieol_english_meaning_index/{series:slug}/{language_id}', 'eieol_english_meaning_index');
 });
 
 Route::controller(PublicLexiconController::class)->group(function() {

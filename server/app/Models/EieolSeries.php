@@ -29,16 +29,6 @@ class EieolSeries extends Model
             ->distinct('language_id');
     }
 
-    public static function findByIdOrSlug($text)
-    {
-        // series are referenced by slug, but there's still calls out there that reference them by DB PK.
-        if (is_numeric($text)) {
-            return self::findOrFail($text);
-        }
-
-        return self::where("slug", $text)->firstOrFail();
-    }
-
     public function getBibliographyLesson()
     {
         return Models\EieolLesson::where('series_id', $this->id)

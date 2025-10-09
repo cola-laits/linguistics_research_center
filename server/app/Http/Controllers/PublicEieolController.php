@@ -25,33 +25,17 @@ class PublicEieolController extends Controller
         ]);
     }
 
-    public function eieol_lesson_redirect(Request $request, $series_id)
+    public function eieol_first_lesson(EieolSeries $series)
     {
-        $series = EieolSeries::findOrFail($series_id);
-
-        if ($request->has('id')) {
-            $lesson = EieolLesson::findOrFail($request->get('id'));
-            return redirect('eieol/' . $series->slug . '/' . $lesson->order, 301);
-        }
-
-        return redirect('eieol/' . $series->slug, 301);
-    }
-
-    public function eieol_first_lesson($series_name)
-    {
-        $series = EieolSeries::findByIdOrSlug($series_name);
-
         $lesson = EieolLesson::where('series_id', $series->id)
             ->orderBy('order')
             ->firstOrFail();
 
-        return $this->eieol_lesson($series_name, $lesson->order);
+        return redirect("/eieol/{$series->slug}/{$lesson->order}");
     }
 
-    public function eieol_lesson($series_name, $lesson_order)
+    public function eieol_lesson(EieolSeries $series, $lesson_order)
     {
-        $series = EieolSeries::findByIdOrSlug($series_name);
-
         $lesson = EieolLesson::with('grammars', 'language')
             ->with('glossed_texts.glosses.language', 'glossed_texts.glosses.elements.head_word.language')
             ->where('series_id', '=', $series->id)
@@ -66,10 +50,8 @@ class PublicEieolController extends Controller
         ]);
     }
 
-    public function eieol_printable($series_id)
+    public function eieol_printable(EieolSeries $series)
     {
-        $series = EieolSeries::findByIdOrSlug($series_id);
-
         $html = view('printable_header_layout');
 
         $lessons = EieolLesson::with('grammars')
@@ -96,18 +78,15 @@ class PublicEieolController extends Controller
         return $html;
     }
 
-    public function eieol_toc($series_id)
+    public function eieol_toc(EieolSeries $series)
     {
-        $series = EieolSeries::findByIdOrSlug($series_id);
-
         return view('eieol_toc', [
             'series' => $series
         ]);
     }
 
-    public function eieol_master_gloss($series_id, $language_id)
+    public function eieol_master_gloss(EieolSeries $series, $language_id)
     {
-        $series = EieolSeries::findByIdOrSlug($series_id);
         $language = EieolLanguage::findOrFail($language_id);
         $glosses = [];
 
@@ -153,9 +132,8 @@ class PublicEieolController extends Controller
         ]);
     }
 
-    public function eieol_base_form_dictionary($series_id, $language_id)
+    public function eieol_base_form_dictionary(EieolSeries $series, $language_id)
     {
-        $series = EieolSeries::findByIdOrSlug($series_id);
         $language = EieolLanguage::findOrFail($language_id);
         $head_words = [];
 
@@ -211,9 +189,8 @@ class PublicEieolController extends Controller
         ]);
     }
 
-    public function eieol_english_meaning_index($series_id, $language_id)
+    public function eieol_english_meaning_index(EieolSeries $series, $language_id)
     {
-        $series = EieolSeries::findByIdOrSlug($series_id);
         $language = EieolLanguage::findOrFail($language_id);
         $keywords = [];
 
