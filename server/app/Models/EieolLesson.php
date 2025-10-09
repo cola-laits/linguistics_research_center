@@ -37,16 +37,6 @@ class EieolLesson extends Model
         return $this->belongsTo(EieolLanguage::class, 'language_id');
     }
 
-    public function prevLesson()
-    {
-        return EieolLesson::where('order', '<', $this->order)->where('series_id', '=', $this->series_id)->orderBy('order', 'desc')->first();
-    }
-
-    public function nextLesson()
-    {
-        return EieolLesson::where('order', '>', $this->order)->where('series_id', '=', $this->series_id)->orderBy('order')->first();
-    }
-
     public function getTinyMceLanguages(): array
     {
         $langs = collect();

@@ -31,16 +31,23 @@ class PublicIELexController extends Controller
 
     public function lex_reflex($pokorny_number)
     {
-        $etyma = LexEtyma::where('lexicon_id', self::IELEX_ID)->with(
+        $etyma = LexEtyma::where('lexicon_id', self::IELEX_ID)->with([
             'reflexes.language.language_sub_family.language_family',
             'reflexes.sources',
             'reflexes.parts_of_speech',
-            'semantic_fields.semantic_category')
+            'semantic_fields.semantic_category'])
             ->where('old_id', '=', $pokorny_number)
             ->firstOrFail();
 
+        $nextEtyma = LexEtyma::where('lexicon_id', self::IELEX_ID)
+            ->where('order', '>', $etyma->order)->orderBy('order')->first();
+        $prevEtyma = LexEtyma::where('lexicon_id', self::IELEX_ID)
+            ->where('order', '<', $etyma->order)->orderBy('order', 'desc')->first();
+
         return view('lex_reflex')->with([
-            'etyma' => $etyma
+            'etyma' => $etyma,
+            'nextEtyma' => $nextEtyma,
+            'prevEtyma' => $prevEtyma,
         ]);
     }
 

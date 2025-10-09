@@ -74,16 +74,6 @@ class LexEtyma extends Model
         return $poses;
     }
 
-    public function prevEtyma()
-    {
-        return LexEtyma::where('order', '<', $this->order)->orderBy('order', 'desc')->first();
-    }
-
-    public function nextEtyma()
-    {
-        return LexEtyma::where('order', '>', $this->order)->orderBy('order')->first();
-    }
-
     public function getLexiconNameEntryAttribute()
     {
         return $this->lexicon->name . ': ' . $this->entry;

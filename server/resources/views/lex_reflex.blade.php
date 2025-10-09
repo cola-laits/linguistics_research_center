@@ -98,14 +98,14 @@ $prev_family=''; @endphp
 </table>
 
 <p class='center'>Nearby etymon: &nbsp;&nbsp;
-    @if ($etyma->prevEtyma())
-        <a href="/lex/master/{{$etyma->prevEtyma()->old_id}}" title="previous etymon with reflexes">previous</a>
+    @if ($prevEtyma)
+        <a href="/lex/master/{{$prevEtyma->old_id}}" title="previous etymon with reflexes">previous</a>
     @else
         first
     @endif
     &nbsp; | &nbsp;
-    @if ($etyma->nextEtyma())
-        <a href="/lex/master/{{$etyma->nextEtyma()->old_id}}" title="next etymon with reflexes">next</a>
+    @if ($nextEtyma)
+        <a href="/lex/master/{{$nextEtyma->old_id}}" title="next etymon with reflexes">next</a>
     @else
         last
     @endif

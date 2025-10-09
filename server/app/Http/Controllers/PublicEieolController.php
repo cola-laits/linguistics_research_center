@@ -36,17 +36,22 @@ class PublicEieolController extends Controller
 
     public function eieol_lesson(EieolSeries $series, $lesson_order)
     {
-        $lesson = EieolLesson::with('grammars', 'language')
+        $lesson = EieolLesson::with(['grammars', 'language'])
             ->with('glossed_texts.glosses.language', 'glossed_texts.glosses.elements.head_word.language')
             ->where('series_id', '=', $series->id)
             ->where('order', '=', $lesson_order)
             ->firstOrFail();
 
+        $prev_lessson = $series->lessons->where('order', '<', $lesson->order)->last();
+        $next_lesson = $series->lessons->where('order', '>', $lesson->order)->first();
+
         return view('eieol_lesson', [
             'series' => $series,
             'printable' => False,
             'clickable' => True,
-            'lesson' => $lesson
+            'lesson' => $lesson,
+            'nextLesson' => $next_lesson,
+            'prevLesson' => $prev_lessson,
         ]);
     }
 

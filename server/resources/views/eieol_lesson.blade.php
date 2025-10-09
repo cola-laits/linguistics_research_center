@@ -262,14 +262,14 @@
 @if (!$printable)
 
     <p class='center'>
-        @if ($lesson->prevLesson())
-            <a href="/eieol/{{$series->slug}}/{{$lesson->prevLesson()->order}}" title="previous lesson">previous lesson</a>
+        @if ($prevLesson)
+            <a href="/eieol/{{$series->slug}}/{{$prevLesson->order}}" title="previous lesson">previous lesson</a>
         @else
             first lesson
         @endif
         &nbsp; | &nbsp;
-        @if ($lesson->nextLesson())
-            <a href="/eieol/{{$series->slug}}/{{$lesson->nextLesson()->order}}" title="next lesson">next lesson</a>
+        @if ($nextLesson)
+            <a href="/eieol/{{$series->slug}}/{{$nextLesson->order}}" title="next lesson">next lesson</a>
         @else
             last lesson
         @endif
