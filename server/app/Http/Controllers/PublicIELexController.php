@@ -1,9 +1,5 @@
 <?php
 
-/** @noinspection PhpMissingReturnTypeInspection */
-
-/** @noinspection PhpUnused */
-
 namespace App\Http\Controllers;
 
 use App\Models\LexEtyma;
@@ -87,7 +83,7 @@ class PublicIELexController extends Controller
         } //foreach reflex
 
         //we have to use a string sort or it will think these are ints and shortest entries will come first
-        ksort($display_reflexes, $sort_flags = SORT_STRING);
+        ksort($display_reflexes, flags: SORT_STRING);
 
         return view('lex_lang_reflexes')->with([
             'language' => $language,
@@ -128,7 +124,7 @@ class PublicIELexController extends Controller
 
     public function lex_semantic_field($field_abbr)
     {
-        $field = LexSemanticField::with('etymas', 'semantic_category')
+        $field = LexSemanticField::with(['etymas', 'semantic_category'])
             ->where("abbr", $field_abbr)->firstOrFail();
         $alpha_cats = LexSemanticCategory::where('lexicon_id', self::IELEX_ID)
             ->orderBy('text')

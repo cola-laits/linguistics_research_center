@@ -1,9 +1,5 @@
 <?php
 
-/** @noinspection PhpMissingReturnTypeInspection */
-
-/** @noinspection PhpUnused */
-
 namespace App\Http\Controllers;
 
 use App\Helpers\AlphabetSorter;

@@ -1,9 +1,5 @@
 <?php
 
-/** @noinspection PhpUnused */
-
-/** @noinspection PhpMissingReturnTypeInspection */
-
 namespace App\Http\Controllers;
 
 use App\Models\LexEtyma;
@@ -13,12 +9,11 @@ use App\Models\LexReflex;
 use App\Models\LexSemanticField;
 use App\Models\Page;
 use Illuminate\Database\Query\Builder;
-use Illuminate\Http\Request;
 use Session;
 
 class PublicLexiconController extends Controller
 {
-    public function index(Request $request, $lexicon_slug)
+    public function index($lexicon_slug)
     {
         $lex = $this->getLexicon($lexicon_slug);
         return view('lexicon/lex_home', [
@@ -27,16 +22,16 @@ class PublicLexiconController extends Controller
         ]);
     }
 
-    public function switch_lang(Request $request, $lexicon_slug, $lang)
+    public function switch_lang($lexicon_slug, $lang)
     {
         Session::put('viewer_lang_code', $lang);
-        if ($request->get('return_to')) {
-            return redirect($request->get('return_to'));
+        if (request()->input('return_to')) {
+            return redirect(request()->input('return_to'));
         }
         return redirect('/lexicon/' . $lexicon_slug);
     }
 
-    public function protolanguage_home(Request $request, $lexicon_slug)
+    public function protolanguage_home($lexicon_slug)
     {
         $lex = $this->getLexicon($lexicon_slug);
         return view('lexicon/lex_protolanguage_home', [
@@ -46,7 +41,7 @@ class PublicLexiconController extends Controller
         ]);
     }
 
-    public function etymon(Request $request, $lexicon_slug, $etymon_id)
+    public function etymon($lexicon_slug, $etymon_id)
     {
         $lex = $this->getLexicon($lexicon_slug);
         $etymon = LexEtyma::with([
@@ -61,7 +56,7 @@ class PublicLexiconController extends Controller
         ]);
     }
 
-    public function field(Request $request, $lexicon_slug, $field_id)
+    public function field($lexicon_slug, $field_id)
     {
         $lex = $this->getLexicon($lexicon_slug);
         $field = LexSemanticField::with([
@@ -77,7 +72,7 @@ class PublicLexiconController extends Controller
         ]);
     }
 
-    public function word_home(Request $request, $lexicon_slug, $word_id)
+    public function word_home($lexicon_slug, $word_id)
     {
         $lex = $this->getLexicon($lexicon_slug);
         $word = LexReflex::with([
@@ -96,7 +91,7 @@ class PublicLexiconController extends Controller
         ]);
     }
 
-    public function lang_home(Request $request, $lexicon_slug, $lang_id)
+    public function lang_home($lexicon_slug, $lang_id)
     {
         $lex = $this->getLexicon($lexicon_slug);
         $language = LexLanguage::findOrFail($lang_id);
@@ -107,7 +102,7 @@ class PublicLexiconController extends Controller
         ]);
     }
 
-    public function page(Request $request, $lexicon_slug, $page_slug_fragment)
+    public function page($lexicon_slug, $page_slug_fragment)
     {
         $lex = $this->getLexicon($lexicon_slug);
         $page_url = "lexicon/" . $lexicon_slug . '/page/' . $page_slug_fragment;
@@ -142,7 +137,7 @@ class PublicLexiconController extends Controller
 
     public function ajaxData($lex_slug)
     {
-        $start = request()->integer('start', 0);
+        $start = request()->integer('start');
         $length = request()->integer('length', 10);
         if ($length > 100) {
             $length = 100;

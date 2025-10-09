@@ -1,9 +1,5 @@
 <?php
 
-/** @noinspection PhpUnused */
-
-/** @noinspection PhpMissingReturnTypeInspection */
-
 namespace App\Http\Controllers;
 
 use App\Models\Book;
