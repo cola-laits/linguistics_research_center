@@ -4,22 +4,24 @@ namespace App\Models;
 
 use DB;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class EieolGloss extends Model
 {
     protected $table = 'eieol_gloss';
 
-    public function glossed_text()
+    public function glossed_text(): BelongsTo
     {
         return $this->belongsTo(EieolGlossedText::class, 'glossed_text_id');
     }
 
-    public function elements()
+    public function elements(): HasMany
     {
         return $this->hasMany(EieolElement::class, 'gloss_id', 'id')->orderBy('order');
     }
 
-    public function language()
+    public function language(): BelongsTo
     {
         return $this->belongsTo(EieolLanguage::class);
     }

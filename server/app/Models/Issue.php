@@ -4,12 +4,19 @@ namespace App\Models;
 
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Issue extends Model
 {
     protected $table = 'issue';
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
+
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(IssueComment::class);
+    }
 
     protected function serializeDate(DateTimeInterface $date)
     {
@@ -88,10 +95,5 @@ EOT;
         }
 
         return 'Unknown';
-    }
-
-    public function comments()
-    {
-        return $this->hasMany(IssueComment::class);
     }
 }

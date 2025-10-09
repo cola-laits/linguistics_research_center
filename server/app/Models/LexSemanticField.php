@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Spatie\Translatable\HasTranslations;
 
 class LexSemanticField extends Model
@@ -24,19 +26,19 @@ class LexSemanticField extends Model
         return $this->belongsTo(LexSemanticCategory::class);
     }
 
-    public function lexicon()
+    public function lexicon(): HasOneThrough
     {
         return $this->hasOneThrough(LexLexicon::class, LexSemanticCategory::class, 'id', 'id', 'semantic_category_id', 'lexicon_id');
     }
 
-    public function etyma()
+    public function etyma(): BelongsToMany
     {
         return $this->belongsToMany(LexEtyma::class, 'lex_etyma_semantic_field', 'semantic_field_id', 'etyma_id')
             ->orderBy('order');
     }
 
     /** @deprecated use etyma() instead */
-    public function etymas()
+    public function etymas(): BelongsToMany
     {
         return $this->belongsToMany(LexEtyma::class, 'lex_etyma_semantic_field', 'semantic_field_id', 'etyma_id')
             ->orderBy('order');

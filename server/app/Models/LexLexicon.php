@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Translatable\HasTranslations;
 
 class LexLexicon extends Model
@@ -15,19 +16,19 @@ class LexLexicon extends Model
 
     protected $translatable = ['protolang_name', 'protolanguage_page_content', 'landing_page_content'];
 
-    public function etyma()
+    public function etyma(): HasMany
     {
         return $this->hasMany(LexEtyma::class, 'lexicon_id')
             ->orderBy('entry');
     }
 
-    public function semantic_categories()
+    public function semantic_categories(): HasMany
     {
         return $this->hasMany(LexSemanticCategory::class, 'lexicon_id')
             ->orderBy('number');
     }
 
-    public function language_families()
+    public function language_families(): HasMany
     {
         return $this->hasMany(LexLanguageFamily::class, 'lexicon_id')
             ->orderBy('order');

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Translatable\HasTranslations;
 
@@ -22,6 +23,58 @@ class LexReflex extends Model
     ];
 
     protected $appends = ['langAbbrGloss', 'langNameEntriesGloss'];
+
+    public function etyma(): BelongsToMany
+    {
+        return $this->belongsToMany(LexEtyma::class, 'lex_etyma_reflex', 'reflex_id', 'etyma_id');
+    }
+
+    /** @deprecated use etyma() instead */
+    public function etymas(): BelongsToMany
+    {
+        return $this->belongsToMany(LexEtyma::class, 'lex_etyma_reflex', 'reflex_id', 'etyma_id');
+    }
+
+    public function language(): BelongsTo
+    {
+        return $this->belongsTo(LexLanguage::class);
+    }
+
+    public function parts_of_speech(): HasMany
+    {
+        return $this->hasMany(LexReflexPartOfSpeech::class, 'reflex_id')->orderBy('order');
+    }
+
+    public function sources(): BelongsToMany
+    {
+        return $this->belongsToMany(LexSource::class, 'lex_reflex_source', 'reflex_id', 'source_id')
+            ->withPivot('page_number', 'original_text')
+            ->orderBy('code');
+    }
+
+    public function cross_references_to(): BelongsToMany
+    {
+        return $this->belongsToMany(LexReflex::class, 'lex_reflex_cross_reference', 'from_reflex_id', 'to_reflex_id')
+            ->withPivot(['relationship'])
+            ->using(LexReflexCrossReference::class);
+    }
+
+    public function cross_references_from(): BelongsToMany
+    {
+        return $this->belongsToMany(LexReflex::class, 'lex_reflex_cross_reference', 'to_reflex_id', 'from_reflex_id')
+            ->withPivot(['relationship'])
+            ->using(LexReflexCrossReference::class);
+    }
+
+    public function cross_reference_to_pivots(): HasMany
+    {
+        return $this->hasMany(LexReflexCrossReference::class, 'to_reflex_id');
+    }
+
+    public function extra_data(): HasMany
+    {
+        return $this->hasMany(LexReflexExtraData::class, 'reflex_id');
+    }
 
     private static function split_entries($entry)
     {
@@ -91,58 +144,6 @@ class LexReflex extends Model
     {
         $entries_csv = collect($this->entries)->pluck('text')->join(', ');
         return $this->language->name . ': ' . $entries_csv . ' (' . $this->gloss . ')';
-    }
-
-    public function etyma()
-    {
-        return $this->belongsToMany(LexEtyma::class, 'lex_etyma_reflex', 'reflex_id', 'etyma_id');
-    }
-
-    /** @deprecated use etyma() instead */
-    public function etymas()
-    {
-        return $this->belongsToMany(LexEtyma::class, 'lex_etyma_reflex', 'reflex_id', 'etyma_id');
-    }
-
-    public function language(): BelongsTo
-    {
-        return $this->belongsTo(LexLanguage::class);
-    }
-
-    public function parts_of_speech(): HasMany
-    {
-        return $this->hasMany(LexReflexPartOfSpeech::class, 'reflex_id')->orderBy('order');
-    }
-
-    public function sources()
-    {
-        return $this->belongsToMany(LexSource::class, 'lex_reflex_source', 'reflex_id', 'source_id')
-            ->withPivot('page_number', 'original_text')
-            ->orderBy('code');
-    }
-
-    public function cross_references_to()
-    {
-        return $this->belongsToMany(LexReflex::class, 'lex_reflex_cross_reference', 'from_reflex_id', 'to_reflex_id')
-            ->withPivot(['relationship'])
-            ->using(LexReflexCrossReference::class);
-    }
-
-    public function cross_references_from()
-    {
-        return $this->belongsToMany(LexReflex::class, 'lex_reflex_cross_reference', 'to_reflex_id', 'from_reflex_id')
-            ->withPivot(['relationship'])
-            ->using(LexReflexCrossReference::class);
-    }
-
-    public function cross_reference_to_pivots()
-    {
-        return $this->hasMany(LexReflexCrossReference::class, 'to_reflex_id');
-    }
-
-    public function extra_data(): HasMany
-    {
-        return $this->hasMany(LexReflexExtraData::class, 'reflex_id');
     }
 
     public function etymaSemanticTags()

@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class EieolLesson extends Model
 {
@@ -15,22 +17,22 @@ class EieolLesson extends Model
 
     protected $guarded = ['id'];
 
-    public function series()
+    public function series(): BelongsTo
     {
         return $this->belongsTo(EieolSeries::class);
     }
 
-    public function grammars()
+    public function grammars(): HasMany
     {
         return $this->hasMany(EieolGrammar::class, 'lesson_id', 'id')->orderBy('order');
     }
 
-    public function glossed_texts()
+    public function glossed_texts(): HasMany
     {
         return $this->hasMany(EieolGlossedText::class, 'lesson_id', 'id')->orderBy('order');
     }
 
-    public function language()
+    public function language(): BelongsTo
     {
         return $this->belongsTo(EieolLanguage::class, 'language_id');
     }
@@ -52,7 +54,7 @@ class EieolLesson extends Model
             $langs->add((object)['title' => $this->language->language, 'code' => $this->language->lang_attribute]);
         }
         foreach ($this->series->languages as $lang) {
-            $langs->add((object)['title' => $lang->display, 'code' => $lang->lang]);;
+            $langs->add((object)['title' => $lang->display, 'code' => $lang->lang]);
         }
         return $langs->toArray();
     }

@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Translatable\HasTranslations;
 
@@ -17,17 +19,17 @@ class LexEtyma extends Model
 
     protected $appends = ['lexiconNameEntry', 'lexiconNameEntryGloss'];
 
-    public function semantic_fields()
+    public function semantic_fields(): BelongsToMany
     {
         return $this->belongsToMany(LexSemanticField::class, 'lex_etyma_semantic_field', 'etyma_id', 'semantic_field_id');
     }
 
-    public function reflexes()
+    public function reflexes(): BelongsToMany
     {
         return $this->belongsToMany(LexReflex::class, 'lex_etyma_reflex', 'etyma_id', 'reflex_id');
     }
 
-    public function cross_references()
+    public function cross_references(): BelongsToMany
     {
         return $this->belongsToMany(LexEtyma::class, 'lex_etyma_cross_reference', 'from_etyma_id', 'to_etyma_id');
     }
@@ -35,6 +37,11 @@ class LexEtyma extends Model
     public function extra_data(): HasMany
     {
         return $this->hasMany(LexEtymaExtraData::class, 'etyma_id');
+    }
+
+    public function lexicon(): BelongsTo
+    {
+        return $this->belongsTo(LexLexicon::class, 'lexicon_id');
     }
 
     public function getSources()
@@ -75,11 +82,6 @@ class LexEtyma extends Model
     public function nextEtyma()
     {
         return LexEtyma::where('order', '>', $this->order)->orderBy('order')->first();
-    }
-
-    public function lexicon()
-    {
-        return $this->belongsTo(LexLexicon::class, 'lexicon_id');
     }
 
     public function getLexiconNameEntryAttribute()

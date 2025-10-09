@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class BookSection extends Model
 {
@@ -10,7 +11,7 @@ class BookSection extends Model
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
-    public function book()
+    public function book(): BelongsTo
     {
         return $this->belongsTo(Book::class);
     }

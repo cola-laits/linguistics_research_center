@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Translatable\HasTranslations;
 
 class LexLanguageSubFamily extends Model
@@ -16,13 +18,13 @@ class LexLanguageSubFamily extends Model
 
     protected $translatable = ['name'];
 
-    public function languages()
+    public function languages(): HasMany
     {
         return $this->hasMany(LexLanguage::class, 'sub_family_id', 'id')
             ->orderBy('order');
     }
 
-    public function language_family()
+    public function language_family(): BelongsTo
     {
         return $this->belongsTo(LexLanguageFamily::class, 'family_id');
     }

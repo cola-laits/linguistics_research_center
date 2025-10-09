@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class EieolSeriesLanguage extends Model
 {
@@ -11,7 +12,7 @@ class EieolSeriesLanguage extends Model
 
     public $timestamps = false;
 
-    public function series()
+    public function series(): BelongsTo
     {
         return $this->belongsTo(EieolSeries::class);
     }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class LexEtymaSemanticField extends Model
 {
@@ -10,12 +11,12 @@ class LexEtymaSemanticField extends Model
 
     protected $guarded = ['id'];
 
-    public function etyma()
+    public function etyma(): HasOne
     {
         return $this->hasOne(LexEtyma::class, 'id', 'etyma_id');
     }
 
-    public function semantic_field()
+    public function semantic_field(): HasOne
     {
         return $this->hasOne(LexSemanticField::class, 'id', 'semantic_field_id');
     }

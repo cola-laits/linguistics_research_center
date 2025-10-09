@@ -4,6 +4,8 @@ namespace App\Models;
 
 use DB;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Translatable\HasTranslations;
 
 class LexLanguage extends Model
@@ -17,23 +19,23 @@ class LexLanguage extends Model
 
     protected $translatable = ['name', 'description'];
 
-    public function language_sub_family()
+    public function language_sub_family(): BelongsTo
     {
         return $this->belongsTo(LexLanguageSubFamily::class, 'sub_family_id');
     }
 
-    public function reflexes()
+    public function reflexes(): HasMany
     {
         return $this->hasMany(LexReflex::class, 'language_id', 'id')
             ->orderBy('entries');
     }
 
-    public function small_reflexes()
+    public function small_reflexes(): HasMany
     {
         return $this->hasMany(LexReflex::class, 'language_id', 'id');
     }
 
-    public function reflex_count()
+    public function reflex_count(): HasMany
     {
         return $this->hasMany(LexReflex::class, 'language_id', 'id')->select(DB::raw('language_id, count(*) as count'))->groupBy('language_id');
     }

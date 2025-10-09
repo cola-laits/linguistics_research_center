@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class EieolGlossedText extends Model
 {
@@ -12,12 +14,12 @@ class EieolGlossedText extends Model
         'custom_gloss_mapping' => 'array'
     ];
 
-    public function lesson()
+    public function lesson(): BelongsTo
     {
         return $this->belongsTo(EieolLesson::class);
     }
 
-    public function glosses()
+    public function glosses(): HasMany
     {
         return $this->hasMany(EieolGloss::class, 'glossed_text_id')
             ->orderBy('order');

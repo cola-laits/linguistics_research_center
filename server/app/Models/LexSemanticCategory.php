@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Translatable\HasTranslations;
 
 class LexSemanticCategory extends Model
@@ -16,7 +17,7 @@ class LexSemanticCategory extends Model
 
     protected $translatable = ['text'];
 
-    public function semantic_fields()
+    public function semantic_fields(): HasMany
     {
         return $this->hasMany(LexSemanticField::class, 'semantic_category_id', 'id')->orderBy('number');
     }
