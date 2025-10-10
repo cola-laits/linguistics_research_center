@@ -11,6 +11,7 @@ use App\Models\LexReflexExtraData;
 use App\Models\LexSemanticCategory;
 use App\Models\LexSemanticField;
 use App\Models\LexSource;
+use ArrayObject;
 use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
@@ -235,9 +236,13 @@ class Utilities extends Page implements HasActions
                 \DB::beginTransaction();
                 try {
                     $selected_lexicon_id = $data['selected_lexicon'];
-                    $csv = Reader::createFromString($data['reflexes_csv']->get());
-                    $csv->setHeaderOffset(0);
-                    $rows = $csv->getRecords();
+                    if (str_ends_with($data['reflexes_csv']->getFilename(), ".json")) {
+                        $rows = json_decode($data['reflexes_csv']->get());
+                    } else {
+                        $csv = Reader::createFromString($data['reflexes_csv']->get());
+                        $csv->setHeaderOffset(0);
+                        $rows = $csv->getRecords();
+                    }
                     foreach ($rows as $row) {
                         $this->createMissingReflex($selected_lexicon_id, $row);
                         $upload_ctr++;
@@ -277,7 +282,11 @@ class Utilities extends Page implements HasActions
                 return;
             }
             try {
-                $this->validateUploadedCsv($value, $required_category_csv_headers);
+                if (str_ends_with($value->getFilename(), ".json")) {
+                    $this->validateUploadedJSON($value, $required_category_csv_headers);
+                } else {
+                    $this->validateUploadedCsv($value, $required_category_csv_headers);
+                }
             } catch (\Throwable $e) {
                 $fail($e->getMessage());
             }
@@ -300,6 +309,18 @@ class Utilities extends Page implements HasActions
             }
         }
         return $csv->getRecords();
+    }
+
+    private function validateUploadedJson(TemporaryUploadedFile $file, $required_headers): \Iterator
+    {
+        $json_data = json_decode($file->getContent());
+        $obj = new ArrayObject($json_data);
+        foreach ($required_headers as $required_header) {
+            if (!property_exists($json_data[0], $required_header)) {
+                throw new \League\Csv\Exception("Header '{$required_header}' is missing");
+            }
+        }
+        return $obj->getIterator();
     }
 
     protected function createMissingLang($lexicon_id, $lang_name, $family_name, $subfamily_name): void
@@ -376,28 +397,32 @@ class Utilities extends Page implements HasActions
                 // FIXME
                 throw new \Exception("Etyma crosslinking not supported yet");
             } else if ($key == 'Sources') {
-                $raw = is_string($value) ? trim($value) : $value;
-                if ($raw === null || $raw === '') {
-                    continue;
-                }
-                $decoded = json_decode($raw, true);
-                if ($decoded === null && json_last_error() !== JSON_ERROR_NONE) {
-                    throw new \League\Csv\Exception("'Sources' must be valid JSON. Error: " . json_last_error_msg());
+                if (is_string($value)) {
+                    $raw = trim($value);
+                    if ($raw === '') {
+                        continue;
+                    }
+                    $decoded = json_decode($raw);
+                    if ($decoded === null && json_last_error() !== JSON_ERROR_NONE) {
+                        throw new \League\Csv\Exception("'Sources' must be valid JSON. Error: " . json_last_error_msg());
+                    }
+                } else {
+                    $decoded = $value;
                 }
                 if (!is_array($decoded)) {
                     throw new \League\Csv\Exception("'Sources' must decode to an array of source objects.");
                 }
                 $allowedKeys = ['source', 'page_number', 'original_entry'];
                 foreach ($decoded as $idx => $item) {
-                    if (!is_array($item)) {
+                    if (!is_object($item)) {
                         throw new \League\Csv\Exception("'Sources' element #" . ($idx + 1) . " must be a JSON object.");
                     }
                     // Ensure required 'source' key
-                    if (!array_key_exists('source', $item) || $item['source'] === null || $item['source'] === '') {
+                    if (!property_exists($item, 'source') || $item->source === null || $item->source === '') {
                         throw new \League\Csv\Exception("'Sources' element #" . ($idx + 1) . " is missing required key 'source'.");
                     }
                     // Ensure no unexpected keys
-                    $extraKeys = array_diff(array_keys($item), $allowedKeys);
+                    $extraKeys = array_diff(array_keys(get_object_vars($item)), $allowedKeys);
                     if (!empty($extraKeys)) {
                         throw new \League\Csv\Exception("'Sources' element #" . ($idx + 1) . " contains unsupported keys: " . implode(', ', $extraKeys) . ". Allowed keys are: " . implode(', ', $allowedKeys) . ".");
                     }
@@ -412,7 +437,7 @@ class Utilities extends Page implements HasActions
         }
         $reflex->save();
         foreach ($sources_data as $source_data) {
-            $source_code = $source_data['source'];
+            $source_code = $source_data->source;
             $lexicon = $reflex->language->language_sub_family->language_family->lexicon;
             $source = LexSource::where('lexicon_id', $lexicon->id)
                 ->where('code', $source_code)
@@ -421,8 +446,8 @@ class Utilities extends Page implements HasActions
                 throw new \League\Csv\Exception('Source "'.$source_code.'" not found in this language\'s lexicon');
             }
             $reflex->sources()->attach($source, [
-                'page_number'=>$source_data['page_number']??'',
-                'original_text'=>$source_data['original_entry']??'',
+                'page_number'=>$source_data->page_number ?? '',
+                'original_text'=>$source_data->original_entry ?? '',
             ]);
         }
         foreach ($extra_data as $key=>$val) {
