@@ -77,6 +77,7 @@ class Utilities extends Page implements HasActions
                         TextEntry::make('required_fields')->state('Required Columns: ' . implode(', ', $required_csv_headers)),
                         FileUpload::make('csv')
                             ->storeFiles(false)
+                            ->visibility('public')
                             //->acceptedFileTypes(['text/csv'])
                             ->required()
                             ->rules([
@@ -122,6 +123,7 @@ class Utilities extends Page implements HasActions
                         TextEntry::make('required_columns')->state('Required Columns: ' . implode(', ', $required_category_csv_headers)),
                         FileUpload::make('categories_csv')
                             ->storeFiles(false)
+                            ->visibility('public')
                             //->acceptedFileTypes(['text/csv'])
                             ->required()
                             ->rules([
@@ -133,6 +135,7 @@ class Utilities extends Page implements HasActions
                         TextEntry::make('required_columns')->state('Required Columns: ' . implode(', ', $required_field_csv_headers)),
                         FileUpload::make('fields_csv')
                             ->storeFiles(false)
+                            ->visibility('public')
                             //->acceptedFileTypes(['text/csv'])
                             ->required()
                             ->rules([
@@ -218,6 +221,7 @@ class Utilities extends Page implements HasActions
                             ->state(new HtmlString('<ul><li>• Etyma</li><li>• HomographNumber (if multiple etyma with same spelling)</li><li>• Sources (JSON array, with keys "source", "page_number", "original_entry")</li><li>• everything else placed in "extra data"</li></ul>')),
                         FileUpload::make('reflexes_csv')
                             ->storeFiles(false)
+                            ->visibility('public')
                             //->acceptedFileTypes(['text/csv'])
                             ->required()
                             ->maxSize(512000) // 500 MB
@@ -313,7 +317,7 @@ class Utilities extends Page implements HasActions
 
     private function validateUploadedJson(TemporaryUploadedFile $file, $required_headers): \Iterator
     {
-        $json_data = json_decode($file->getContent());
+        $json_data = json_decode($file->get());
         $obj = new ArrayObject($json_data);
         foreach ($required_headers as $required_header) {
             if (!property_exists($json_data[0], $required_header)) {
