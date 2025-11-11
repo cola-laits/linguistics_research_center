@@ -1,86 +1,66 @@
 <?php
-/** @noinspection PhpUnhandledExceptionInspection */
-/** @noinspection PhpMissingReturnTypeInspection */
-/** @noinspection PhpUnused */
 
 namespace App\Http\Controllers;
 
+use App\Models\EieolElement;
 use App\Models\EieolGloss;
 use App\Models\EieolHeadWord;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Normalizer;
 
 class AdminController extends Controller
 {
     public function analysis_typeahead(Request $request)
     {
-        $data = DB::select("SELECT DISTINCT(analysis) as analysis FROM eieol_element, eieol_gloss"
-            . " WHERE eieol_element.gloss_id=eieol_gloss.id"
-            . " AND eieol_gloss.language_id = ?"
-            . " AND eieol_element.analysis LIKE ?"
-            . " ORDER BY analysis LIMIT 25", [
-            $request->get('language_id'),
-            '%' . $request->get('term') . '%'
-        ]);
-        return array_map(function ($anl) {
-            return $anl->analysis;
-        }, $data);
+        return EieolElement::query()
+            ->join('eieol_gloss', 'eieol_element.gloss_id', '=', 'eieol_gloss.id')
+            ->where('eieol_gloss.language_id', $request->get('language_id'))
+            ->where('eieol_element.analysis', 'LIKE', '%' . $request->get('term') . '%')
+            ->distinct()
+            ->orderBy('eieol_element.analysis')
+            ->pluck('eieol_element.analysis');
     }
 
     public function gloss_typeahead(Request $request)
     {
-        //this is a search that returns glosses that start with the url parm "gloss"
-        $glosses = EieolGloss::with('elements.head_word')->where(
-            'surface_form',
-            'LIKE',
-            Normalizer::normalize(
-                $request->get('gloss'),
-                Normalizer::FORM_C
-            ) . '%'
-        )
+        // Eloquent query that returns glosses starting with the supplied "gloss" parameter.
+        $glosses = EieolGloss::with(['elements.head_word.language', 'language'])
+            ->where('surface_form', 'LIKE', Normalizer::normalize(
+                    $request->get('gloss'),
+                    Normalizer::FORM_C
+                ) . '%')
             ->where('language_id', $request->get('language'))
-            ->take(15)->orderBy('surface_form')
-            ->with(['language', 'elements.head_word.language'])
+            ->orderBy('surface_form')
+            ->take(15)
             ->get();
 
         return [
-            'glosses' => $glosses
+            'glosses' => $glosses,
         ];
     }
 
     public function part_of_speech_typeahead(Request $request)
     {
-        $data = DB::select(
-            "SELECT DISTINCT(part_of_speech) as part_of_speech FROM eieol_element, eieol_gloss"
-            . " WHERE eieol_element.gloss_id=eieol_gloss.id"
-            . " AND eieol_gloss.language_id = ?"
-            . " AND eieol_element.part_of_speech LIKE ?"
-            . " ORDER BY part_of_speech LIMIT 25",
-            [
-                $request->get('language_id'),
-                '%' . $request->get('term') . '%'
-            ]
-        );
-        return array_map(function ($pos) {
-            return $pos->part_of_speech;
-        }, $data);
+        return EieolElement::query()
+            ->join('eieol_gloss', 'eieol_element.gloss_id', '=', 'eieol_gloss.id')
+            ->where('eieol_gloss.language_id', $request->get('language_id'))
+            ->where('eieol_element.part_of_speech', 'LIKE', '%' . $request->get('term') . '%')
+            ->orderBy('eieol_element.part_of_speech')
+            ->distinct()
+            ->limit(25)
+            ->pluck('eieol_element.part_of_speech');
+
     }
 
     public function headword_keyword_typeahead(Request $request)
     {
-        $keywords = EieolHeadWord::where('language_id', $request->get('language'))
+        return EieolHeadWord::where('language_id', $request->get('language'))
             ->get()
-            ->map(function ($headword) {
-                return explode(',', $headword->keywords);
-            })
+            ->map(fn($headword) => explode(',', $headword->keywords))
             ->flatten()
             ->unique()->values()
-            ->filter(function ($value) {
-                return $value;
-            })
+            ->filter(fn($value) => $value) // non-null values only
             ->sort()->values();
-        return $keywords;
     }
 
     public function headword_typeahead(Request $request)
