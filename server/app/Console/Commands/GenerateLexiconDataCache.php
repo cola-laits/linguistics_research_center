@@ -70,8 +70,9 @@ class GenerateLexiconDataCache extends Command
         $column_descs = $lexicon->getDataColumns();
 
         \DB::table('lex_lexicon_data_cache')->where('lexicon_id', $lex_id)->delete();
+        $chunkSize = 100;
         LexReflex::whereIn('language_id', $lex_language_ids)
-            ->chunk(100, function(Collection $reflexes) use ($progress, $lang_options, $lex_id, $column_descs) {
+            ->chunk($chunkSize, function(Collection $reflexes) use ($progress, $lang_options, $lex_id, $column_descs, $chunkSize) {
                 foreach ($reflexes as $reflex) {
                     foreach ($lang_options as $lang) {
                         $data = [];
@@ -105,8 +106,8 @@ class GenerateLexiconDataCache extends Command
                             'updated_at' => Carbon::now(),
                         ]);
                     }
-                    $progress->advance();
                 }
+                $progress->advance($chunkSize);
             });
         $progress->finish();
 
