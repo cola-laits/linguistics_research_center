@@ -241,7 +241,7 @@ class Utilities extends Page implements HasActions
                 try {
                     $selected_lexicon_id = $data['selected_lexicon'];
                     if (str_ends_with($data['reflexes_csv']->getFilename(), ".json")) {
-                        $rows = json_decode($data['reflexes_csv']->get());
+                        $rows = json_decode($this->stripBom($data['reflexes_csv']->get()));
                     } else {
                         $csv = Reader::createFromString($data['reflexes_csv']->get());
                         $csv->setHeaderOffset(0);
@@ -317,7 +317,7 @@ class Utilities extends Page implements HasActions
 
     private function validateUploadedJson(TemporaryUploadedFile $file, $required_headers): \Iterator
     {
-        $json_data = json_decode($file->get());
+        $json_data = json_decode($this->stripBom($file->get()));
         $obj = new ArrayObject($json_data);
         foreach ($required_headers as $required_header) {
             if (!property_exists($json_data[0], $required_header)) {
@@ -458,6 +458,14 @@ class Utilities extends Page implements HasActions
             $ex = new LexReflexExtraData(['key'=>$key, 'value'=>$val]);
             $reflex->extra_data()->save($ex);
         }
+    }
+
+    private function stripBom(string $text): string
+    {
+        if (substr($text, 0, 3) === "\xEF\xBB\xBF") {
+            return substr($text, 3);
+        }
+        return $text;
     }
 
     protected array $cachedLanguages = [];
