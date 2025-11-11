@@ -20,7 +20,7 @@ class PublicIELexController extends Controller
             ->withCount('reflexes')
             ->orderBy('order')
             ->get();
-        return view('lex_pokorny')->with([
+        return view('lex_pokorny', [
             'etymas' => $etymas
         ]);
     }
@@ -40,7 +40,7 @@ class PublicIELexController extends Controller
         $prevEtyma = LexEtyma::where('lexicon_id', self::IELEX_ID)
             ->where('order', '<', $etyma->order)->orderBy('order', 'desc')->first();
 
-        return view('lex_reflex')->with([
+        return view('lex_reflex', [
             'etyma' => $etyma,
             'nextEtyma' => $nextEtyma,
             'prevEtyma' => $prevEtyma,
@@ -54,7 +54,7 @@ class PublicIELexController extends Controller
             ->orderBy('order')
             ->get();
 
-        return view('lex_language')->with([
+        return view('lex_language', [
             'language_families' => $language_families
         ]);
     }
@@ -85,7 +85,7 @@ class PublicIELexController extends Controller
         //we have to use a string sort or it will think these are ints and shortest entries will come first
         ksort($display_reflexes, flags: SORT_STRING);
 
-        return view('lex_lang_reflexes')->with([
+        return view('lex_lang_reflexes', [
             'language' => $language,
             'display_reflexes' => $display_reflexes,
         ]);
@@ -93,7 +93,7 @@ class PublicIELexController extends Controller
 
     public function lex_semantic()
     {
-        return view('lex_semantic')->with([
+        return view('lex_semantic', [
             'cats' => LexSemanticCategory::where('lexicon_id', self::IELEX_ID)
                 ->orderBy('number')
                 ->get(),
@@ -115,7 +115,7 @@ class PublicIELexController extends Controller
             ->orderBy('number')
             ->get();
 
-        return view('lex_semantic_category')->with([
+        return view('lex_semantic_category', [
             'cat' => $category,
             'alpha_cats' => $alpha_cats,
             'fields' => $fields
@@ -130,29 +130,9 @@ class PublicIELexController extends Controller
             ->orderBy('text')
             ->get();
 
-        return view('lex_semantic_field')->with([
+        return view('lex_semantic_field', [
             'field' => $field,
             'alpha_cats' => $alpha_cats
         ]);
     }
-
-    // ** redirections for old lex routes
-    public function lex_lang_reflexes_redirect($language_id)
-    {
-        $language = LexLanguage::find($language_id);
-        return redirect('lex/languages/' . $language->abbr, 301);
-    }
-
-    public function lex_semantic_field_redirect($field_id)
-    {
-        $field = LexSemanticField::find($field_id);
-        return redirect('lex/semantic/field/' . $field->abbr, 301);
-    }
-
-    public function lex_reflex_redirect($etyma_id)
-    {
-        $etyma = LexEtyma::find($etyma_id);
-        return redirect('lex/master/' . $etyma->old_id, 301);//pokorny number is stored in db column 'old_id'
-    }
-
 }
