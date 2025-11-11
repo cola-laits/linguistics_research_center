@@ -53,6 +53,7 @@ class LexLexicon extends Model
     public function getDataColumns()
     {
         $column_descs = [
+            (object)['display_name' => 'Root', 'name' => 'root'],
             (object)['display_name' => 'Meaning', 'name' => 'meaning'],
             (object)['display_name' => 'Semantic Tag', 'name' => 'semantic_tag'],
             (object)['display_name' => 'Etymon', 'name' => 'etymon'],
