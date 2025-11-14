@@ -385,9 +385,7 @@ class Utilities extends Page implements HasActions
             } else if ($key == 'Gloss') {
                 $reflex->gloss = $value;
             } else if ($key == 'Gloss.es') {
-                // FIXME
-                // Test - is this right?? $reflex->setTransalation('gloss', 'es', $value);
-                throw new \Exception("Non-English glosses not supported yet");
+                $reflex->setTranslation('gloss', 'es', $value);
             } else if ($key == 'Language') {
                 $lang = $this->getLanguageByNameAndLexiconId($value, $lexicon_id);
                 if (!$lang) {
