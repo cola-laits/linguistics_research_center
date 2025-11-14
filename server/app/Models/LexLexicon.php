@@ -96,6 +96,11 @@ class LexLexicon extends Model
             $column_descs [] = (object)['display_name' => 'Stem', 'name' => 'stem'];
             $column_descs [] = (object)['display_name' => 'Complement', 'name' => 'complement'];
         } else if ($this->slug === 'mayalex' || str_starts_with($this->slug, 'mayalex_')) {
+            $column_descs [] = (object)['display_name' => 'Meaning', 'name' => 'meaning'];
+            $column_descs [] = (object)['display_name' => 'Semantic Tag', 'name' => 'semantic_tag'];
+            $column_descs [] = (object)['display_name' => 'Etymon', 'name' => 'etymon'];
+            $column_descs [] = (object)['display_name' => 'Language', 'name' => 'language'];
+            $column_descs [] = (object)['display_name' => 'Part of Speech', 'name' => 'part_of_speech'];
             $column_descs [] = (object)['display_name' => 'Headword (Kaufman spelling)', 'name' => 'kaufman_spelling'];
             $column_descs [] = (object)['display_name' => 'Headword (practical orthography)', 'name' => 'practical_orthography'];
             $column_descs [] = (object)['display_name' => 'Headword (IPA)', 'name' => 'ipa_spelling'];
