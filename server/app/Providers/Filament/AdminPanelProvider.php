@@ -39,7 +39,7 @@ class AdminPanelProvider extends PanelProvider
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->plugin(
-                SpatieTranslatablePlugin::make()->defaultLocales(['en', 'es'])
+                SpatieTranslatablePlugin::make()->defaultLocales(['en', 'es'])->useFallbackLocale()
             )
 
             // FIXME: temporary nav item redirects for things that haven't been converted to Filament yet
