@@ -92,7 +92,9 @@ class LexEtymaForm
                     ->relationship('extra_data')
                     ->schema([
                         TextInput::make('key')->required(),
-                        Textarea::make('value')->required(),
+                        Textarea::make('value')
+                            ->hintIcon('heroicon-m-language', tooltip: 'Translatable. Use the locale selector in the upper right to swap.')
+                            ->required(),
                     ])
                     ->defaultItems(0)
                     ->columns(2)

@@ -109,6 +109,7 @@ class LexReflexForm
                             ->required(),
                         TextInput::make('relationship')
                             ->helperText('e.g. borrowing, calque, ...')
+                            ->hintIcon('heroicon-m-language', tooltip: 'Translatable. Use the locale selector in the upper right to swap.')
                             ->required(),
                     ])
                     ->helperText("If the LexReflex entry you're editing is borrowed or calqued from another language, click here to add its source from another dictionary.")
@@ -118,7 +119,9 @@ class LexReflexForm
                     ->defaultItems(0)
                     ->schema([
                         TextInput::make('key')->required(),
-                        Textarea::make('value')->required(),
+                        Textarea::make('value')
+                            ->hintIcon('heroicon-m-language', tooltip: 'Translatable. Use the locale selector in the upper right to swap.')
+                            ->required(),
                     ])
                     ->columns(2)
                     ->helperText("'Extra Data' is freeform info that may vary between lexicons.")
