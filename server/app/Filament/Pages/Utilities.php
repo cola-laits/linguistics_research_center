@@ -248,7 +248,12 @@ class Utilities extends Page implements HasActions
                         $rows = $csv->getRecords();
                     }
                     foreach ($rows as $row) {
-                        $this->createMissingReflex($selected_lexicon_id, $row);
+                        try {
+                            $this->createMissingReflex($selected_lexicon_id, $row);
+                        } catch (\League\Csv\Exception $e) {
+                            \Log::error('Error creating reflex for row ' . json_encode($row) . ': ' . $e->getMessage());
+                            throw new \League\Csv\Exception("Error creating reflex for row " . ($upload_ctr + 1) . " '" . $row['Headwords'] . "': " . $e->getMessage(), 0, $e);
+                        }
                         $upload_ctr++;
                         if ($upload_ctr % 100 == 0) {
                             \Log::info("Uploaded " . $upload_ctr);
