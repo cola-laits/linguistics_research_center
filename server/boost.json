@@ -1,0 +1,11 @@
+{
+    "agents": [
+        "codex"
+    ],
+    "editors": [
+        "codex"
+    ],
+    "guidelines": [
+        "filament/filament"
+    ]
+}
