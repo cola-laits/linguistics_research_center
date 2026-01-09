@@ -125,6 +125,9 @@
     "lexicon.pages.word.table_header.Related Words Borrowed Into": "Prestado a",
     "lexicon.pages.word.table_header.Other Info": "Otra información",
     "lexicon.pages.word.table_header.Cognates": "Cognados",
+    "lexicon.pages.word.table_header.Sources": "Fuentes",
+    "lexicon.pages.word.table_header.Source": "Fuente",
+    "lexicon.pages.word.table_header.Original Entry": "Entrada original",
 
     "lexicon.header.banner.alt_text": "Linguistics Research Center - The University of Texas at Austin",
     "lexicon.header.banner.image_url": "/images/lrc-banner-trim.png",
