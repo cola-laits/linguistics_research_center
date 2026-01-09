@@ -104,27 +104,15 @@
         @if ($word->sources)
             <div>
                 <h2>{{__('lexicon.pages.word.table_header.Sources')}}:</h2>
-                <div>
-                    <table class="table table-bordered table-responsive">
-                        <tr>
-                            <th>{{__('lexicon.pages.word.table_header.Source')}}</th>
-                            <th style="width:100%;">{{__('lexicon.pages.word.table_header.Original Entry')}}</th>
-                        </tr>
-                        @foreach ($word->sources as $source)
-                        <tr>
-                            <td style="white-space:nowrap;">
-                                {{$source->display}}
-                                @if ($source->pivot->page_number)
-                                    p. {{$source->pivot->page_number}}
-                                @endif
-                            </td>
-                            <td>
-                                {{$source->pivot->original_text}}
-                            </td>
-                        </tr>
-                        @endforeach
-                    </table>
-                </div>
+                @foreach ($word->sources as $source)
+                    <div>
+                    <div
+                        style="font-weight: bold; font-size: 1.2em;"
+                    >{{$source->display}}{{ $source->pivot->page_number ? " p. " . $source->pivot->page_number : '' }}:
+                    </div>
+                    <p>{{$source->pivot->original_text}}</p>
+                    </div>
+                @endforeach
             </div>
         @endif
 
