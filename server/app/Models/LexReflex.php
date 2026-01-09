@@ -52,6 +52,11 @@ class LexReflex extends Model
             ->orderBy('code');
     }
 
+    public function reflexSources(): HasMany
+    {
+        return $this->hasMany(LexReflexSource::class, 'reflex_id');
+    }
+
     public function cross_references_to(): BelongsToMany
     {
         return $this->belongsToMany(LexReflex::class, 'lex_reflex_cross_reference', 'from_reflex_id', 'to_reflex_id')

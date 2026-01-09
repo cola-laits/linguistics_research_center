@@ -34,7 +34,8 @@ class LexReflexForm
                 TextInput::make('lang_attribute')
                     ->columnSpanFull(),
                 Repeater::make('sources')
-                    ->relationship('sources')
+                    ->label('Sources')
+                    ->relationship('reflexSources')
                     ->defaultItems(0)
                     ->table([
                         TableColumn::make('Source'),
