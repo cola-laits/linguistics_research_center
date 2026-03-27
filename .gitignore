@@ -1,4 +1,4 @@
 .idea
-/docker-compose.local.yml
+/compose.override.yaml
 /.env
 /.ai

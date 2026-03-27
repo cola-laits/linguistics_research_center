@@ -4,7 +4,7 @@ WORKDIR /var/www/html
 RUN composer install --ignore-platform-reqs --no-dev
 
 
-FROM node:22 AS npmbuild
+FROM node:24 AS npmbuild
 COPY --from=phpbuild /var/www/html /var/www/html
 WORKDIR /var/www/html
 RUN npm ci && npm run production && rm -rf node_modules

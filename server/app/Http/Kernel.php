@@ -35,7 +35,7 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\SetLocaleFromSessionMiddleware::class,
             \App\Http\Middleware\ManageDonationSessionMarker::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-            \App\Http\Middleware\VerifyCsrfToken::class,
+            \App\Http\Middleware\PreventRequestForgery::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
 
