@@ -61,6 +61,8 @@ class PublicIELexController extends Controller
 
     public function lex_lang_reflexes($language_abbr)
     {
+        ini_set('memory_limit', '256M'); // mostly for English, which has a lot of reflexes
+
         $language = LexLanguage::where("abbr", $language_abbr)->firstOrFail();
 
         $alpha_weights = [];
