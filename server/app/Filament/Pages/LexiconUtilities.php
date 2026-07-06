@@ -33,22 +33,29 @@ use League\Csv\SyntaxError;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use UnitEnum;
 
-class Utilities extends Page implements HasActions
+class LexiconUtilities extends Page implements HasActions
 {
     use InteractsWithActions;
 
-    protected static ?string $title = 'Utilities';
-    protected static string | UnitEnum | null $navigationGroup = 'General';
+    protected static ?string $title = 'Lexicon Utilities';
+    protected static string | UnitEnum | null $navigationGroup = 'Lexicon';
     protected static string | BackedEnum | null $navigationIcon = Heroicon::OutlinedWrenchScrewdriver;
-    protected static ?string $navigationLabel = 'Utilities';
-    protected static ?int $navigationSort = 3;
+    protected static ?string $navigationLabel = 'Lexicon Utilities';
+    protected static ?int $navigationSort = 999;
 
-    protected string $view = 'filament.pages.utilities';
+    protected string $view = 'filament.pages.lexicon-utilities';
 
 
     public static function canAccess(): bool
     {
-        return auth()->user()?->hasRole('Site Manager') ?? false;
+        // FIXME check the 'manage lexicon' permission instead of roles
+        if (auth()->user()?->hasRole('Site Manager')) {
+            return true;
+        }
+        if (auth()->user()?->hasRole('Lexicon Manager')) {
+            return true;
+        }
+        return false;
     }
 
     protected function makeChooseLexiconStep() {
