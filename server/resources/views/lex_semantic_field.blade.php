@@ -12,7 +12,7 @@
 <p>This page lists Proto-Indo-European lexical entries (PIE etyma) drawn from Julius
 Pokorny's <i lang='de'>Indogermanisches etymologisches W&ouml;rterbuch</i> (2 vols,
 1959-69) assigned to the
-    <a href="/lex_semantic" title="Semantic Fields">semantic field</a>
+    <a href="/lex/semantic" title="Semantic Fields">semantic field</a>
 <b>{!! $field->semantic_category->text !!}</b>, subcategory <b>{{$field->number}}. {{$field->text}}</b>. Category numbers are as defined by Carl
 Darling Buck (cf. <i>A Dictionary of Selected Synonyms in the Principal Indo-European
 Languages</i>, 1949); our field &amp; subcategory labels are sometimes adapted from
