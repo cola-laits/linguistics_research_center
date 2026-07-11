@@ -47,7 +47,9 @@ class PublicLexiconController extends Controller
         $etymon = LexEtyma::with([
             'reflexes',
             'reflexes.language'
-        ])->findOrFail($etymon_id);
+        ])
+            ->where('lexicon_id', $lex->id)
+            ->findOrFail($etymon_id);
         return view('lexicon/lex_etymon', [
             'lexicon' => $lex,
             'etymon' => $etymon,
@@ -63,7 +65,11 @@ class PublicLexiconController extends Controller
             'etyma',
             'etyma.reflexes',
             'etyma.reflexes.language',
-        ])->findOrFail($field_id);
+        ])
+            ->whereHas('semantic_category', function ($query) use ($lex) {
+                $query->where('lexicon_id', $lex->id);
+            })
+            ->findOrFail($field_id);
         return view('lexicon/lex_field', [
             'lexicon' => $lex,
             'field' => $field,
@@ -80,7 +86,11 @@ class PublicLexiconController extends Controller
             'etyma.reflexes',
             'etyma.reflexes.language',
             'sources'
-        ])->findOrFail($word_id);
+        ])
+            ->whereHas('language.language_sub_family.language_family', function ($query) use ($lex) {
+                $query->where('lexicon_id', $lex->id);
+            })
+            ->findOrFail($word_id);
         $language = $word->language;
         return view('lexicon/lex_word', [
             'lexicon' => $lex,
@@ -94,7 +104,11 @@ class PublicLexiconController extends Controller
     public function lang_home($lexicon_slug, $lang_id)
     {
         $lex = $this->getLexicon($lexicon_slug);
-        $language = LexLanguage::findOrFail($lang_id);
+        $language = LexLanguage::query()
+            ->whereHas('language_sub_family.language_family', function ($query) use ($lex) {
+                $query->where('lexicon_id', $lex->id);
+            })
+            ->findOrFail($lang_id);
         return view('lexicon/lex_language', [
             'lexicon' => $lex,
             'language' => $language,
