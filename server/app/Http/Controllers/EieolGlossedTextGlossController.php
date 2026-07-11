@@ -22,7 +22,7 @@ class EieolGlossedTextGlossController extends Controller
     public function store(Request $request)
     {
         $rules = array(
-            'order' => 'required|integer|unique:eieol_glossed_text_gloss,order,null,id,glossed_text_id,' . $request->get('glossed_text_id'),
+            'order' => 'required|integer|unique:eieol_gloss,order,null,id,glossed_text_id,' . $request->get('glossed_text_id'),
             'glossed_text_id' => 'required|exists:eieol_glossed_text,id',
             'gloss_id' => 'required|exists:eieol_gloss,id'
         );

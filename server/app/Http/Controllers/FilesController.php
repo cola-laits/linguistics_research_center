@@ -18,7 +18,7 @@ class FilesController extends Controller
     }
 
     // uploads from CKEditor
-    protected function post_file_ckeditor(Request $request)
+    public function post_file_ckeditor(Request $request)
     {
         $ret = new \stdClass();
 
@@ -39,7 +39,7 @@ class FilesController extends Controller
     }
 
     // uploads from TinyMCE
-    protected function post_file_tinymce(Request $request)
+    public function post_file_tinymce(Request $request)
     {
         $ret = new \stdClass();
 
