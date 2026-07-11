@@ -63,7 +63,12 @@ class PublicIELexController extends Controller
     {
         ini_set('memory_limit', '256M'); // mostly for English, which has a lot of reflexes
 
-        $language = LexLanguage::where("abbr", $language_abbr)->firstOrFail();
+        $language = LexLanguage::query()
+            ->whereHas('language_sub_family.language_family', function ($query) {
+                $query->where('lexicon_id', self::IELEX_ID);
+            })
+            ->where('abbr', $language_abbr)
+            ->firstOrFail();
 
         $alpha_weights = [];
         $alphabet = explode(',', 'aAàǣ,ā,bB,cC,dD,eEēÉe̐,é,fF,gG,hH,iIīí,jJ,kK,lL,mM,nN,oOò,ō,ð,pP,qQ,rR,sS,tT,uUúū,vV,wW,xX,yY,zZ');
@@ -127,7 +132,11 @@ class PublicIELexController extends Controller
     public function lex_semantic_field($field_abbr)
     {
         $field = LexSemanticField::with(['etymas', 'semantic_category'])
-            ->where("abbr", $field_abbr)->firstOrFail();
+            ->whereHas('semantic_category', function ($query) {
+                $query->where('lexicon_id', self::IELEX_ID);
+            })
+            ->where('abbr', $field_abbr)
+            ->firstOrFail();
         $alpha_cats = LexSemanticCategory::where('lexicon_id', self::IELEX_ID)
             ->orderBy('text')
             ->get();
