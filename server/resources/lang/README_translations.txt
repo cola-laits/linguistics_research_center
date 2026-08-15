@@ -65,4 +65,8 @@ This key specifies the name of the Datatables translation file you want to use. 
 in /public/assets/datatables/plugins/i18n.  This has already been done for (Mexican) Spanish, so for Spanish you should
 use 'es-MX.json' as the value for this key.
 
-
+This has also been done for Telugu ('te.json'), downloaded 2026-08-15 from
+http://cdn.datatables.net/plug-ins/2.1.8/i18n/te.json .  The Telugu file covers only Datatables' core UI (search box,
+pagination, "showing X of Y", "no data"); any key it omits falls back to Datatables' English default.  To refresh it
+with an updated upstream translation, re-download the same file from the DataTables CDN (or the DataTables/Plugins
+repo, https://github.com/DataTables/Plugins/tree/master/i18n) and overwrite /public/assets/datatables/plugins/i18n/te.json.
