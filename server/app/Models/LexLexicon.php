@@ -46,7 +46,7 @@ class LexLexicon extends Model
 
     public static function getDisplayTextViewerLang($lang_code)
     {
-        $lang_names = ['en' => 'English', 'es' => 'Español'];
+        $lang_names = ['en' => 'English', 'es' => 'Español', 'te' => 'తెలుగు'];
         return $lang_names[$lang_code] ?? ('Unknown: ' . $lang_code);
     }
 
