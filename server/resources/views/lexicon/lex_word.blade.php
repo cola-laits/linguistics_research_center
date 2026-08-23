@@ -110,7 +110,7 @@
                         style="font-weight: bold; font-size: 1.2em;"
                     >{{$source->display}}{{ $source->pivot->page_number ? " p. " . $source->pivot->page_number : '' }}:
                     </div>
-                    <p>{{$source->pivot->original_text}}</p>
+                    <p>{!! $source->pivot->original_text !!}</p>
                     </div>
                 @endforeach
             </div>
@@ -158,4 +158,3 @@
         @endforeach
     </script>
 @endsection
-
