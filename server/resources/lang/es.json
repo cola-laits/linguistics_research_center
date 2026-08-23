@@ -3,7 +3,7 @@
     "lexicon.pages.data.html_head_title": "LRC :lexicon_name: Datos",
     "lexicon.pages.home.html_head_title": "LRC :lexicon_name: Inicio",
     "lexicon.pages.protolang.html_head_title": "LRC :lexicon_name: :lexicon_protolang_name",
-    
+
     "lexicon.pages.data.page_title": "Datos",
     "lexicon.pages.etymon.page_title": "Diccionario de :lexicon_protolang_name",
     "lexicon.pages.field.page_title": "Campo semántico",
@@ -11,7 +11,7 @@
     "lexicon.pages.protolang.page_title": ":lexicon_name",
     "lexicon.pages.language.page_title": "LRC :lexicon_name: :language_name",
     "lexicon.pages.word.page_title": "Diccionario de :language_name",
-    
+
     "lexicon.pages.data.breadcrumb_title": "Datos",
     "lexicon.pages.etymon.breadcrumb_title": ":entry",
     "lexicon.pages.field.breadcrumb_title": "Campo semántico :semantic_field",
@@ -68,7 +68,7 @@
     "lexicon.pages.data.column_header_SC Thematic Vowel": "Vocal temática SC",
     "lexicon.pages.data.column_header_Stem": "Tallo",
     "lexicon.pages.data.column_header_Complement": "Complemento",
-    
+
     "lexicon.pages.data.column_header_Root": "Raíz",
     "lexicon.pages.data.column_header_Headword (Kaufman spelling)": "Encabezado (ortografía Kaufman)",
     "lexicon.pages.data.column_header_Headword (Source spelling)": "Encabezado (ortografía fuente)",
@@ -87,6 +87,17 @@
     "lexicon.pages.data.column_header_Source": "Fuente",
     "lexicon.pages.data.column_header_Other": "Otro",
     "lexicon.pages.data.column_header_Editors": "Editores",
+    "lexicon.pages.data.column_header_Headword": "Lema",
+    "lexicon.pages.data.column_header_Number in DED": "Número en DED",
+    "lexicon.pages.data.column_header_Number in CVOTGD": "Número en CVOTGD",
+    "lexicon.pages.data.column_header_Parent Word": "Palabra matriz",
+    "lexicon.pages.data.column_header_Parent Language": "Idioma matriz",
+    "lexicon.pages.data.column_header_Dialect (Starling)": "Dialecto (Starling)",
+    "lexicon.pages.data.column_header_Source Language/Dialect": "Idioma/dialecto fuente",
+    "lexicon.pages.data.column_header_Meaning (source)": "Significado (fuente)",
+    "lexicon.pages.data.column_header_Etymology": "Etimología",
+    "lexicon.pages.data.column_header_Additional forms": "Formas adicionales",
+    "lexicon.pages.data.column_header_Derivates": "Derivados",
 
     "lexicon.pages.data.help.modal.title": "Ayuda con los datos",
     "lexicon.pages.data.help.modal.content": "<p>Esta tabla proporciona acceso a todos los datos de todos los diccionarios en :lexicon_name. Utiliza la barra de búsqueda a la derecha para encontrar una cadena particular de caracteres en cualquier celda de la tabla de datos. O escribe caracteres después del símbolo de filtro (:filter_icon) en una columna determinada para mostrar sólo las filas con esa cadena en esa columna. Utiliza el menú a continuación para seleccionar las columnas que deseas mostrar, y exporta tus resultados a un archivo CSV. /p>",

@@ -70,7 +70,7 @@
                     {
                         data: @json($column_info->name),
                         name: @json($column_info->name),
-                        title: @json($column_info->display_name),
+                        title: @json(__('lexicon.pages.data.column_header_'.$column_info->display_name)),
                     },
                     @endforeach
                 ],
