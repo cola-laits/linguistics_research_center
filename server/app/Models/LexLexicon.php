@@ -112,7 +112,7 @@ class LexLexicon extends Model
             $column_descs [] = (object)['display_name' => 'Source', 'name' => 'source'];
             $column_descs [] = (object)['display_name' => 'Other', 'name' => 'other'];
             $column_descs [] = (object)['display_name' => 'Editors', 'name' => 'editors'];
-        } else if ($this->slug === 'dravidilex' || str_starts_with($this->slug, 'dravidilex_')) {
+        } else if ($this->slug === 'dravidilex_pilot') {
             // Headword/Meaning/Language/Etymon/Semantic Tag are computed columns;
             // the rest string-match lex_reflex_extra_data keys (must match exactly).
             $column_descs [] = (object)['display_name' => 'Headword', 'name' => 'root'];
