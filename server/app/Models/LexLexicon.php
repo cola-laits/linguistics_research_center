@@ -112,6 +112,19 @@ class LexLexicon extends Model
             $column_descs [] = (object)['display_name' => 'Source', 'name' => 'source'];
             $column_descs [] = (object)['display_name' => 'Other', 'name' => 'other'];
             $column_descs [] = (object)['display_name' => 'Editors', 'name' => 'editors'];
+        } else if ($this->slug === 'dravidilex_pilot') {
+            // Headword/Meaning/Language/Etymon/Semantic Tag are computed columns;
+            // the rest string-match lex_reflex_extra_data keys (must match exactly).
+            $column_descs [] = (object)['display_name' => 'Headword', 'name' => 'root'];
+            $column_descs [] = (object)['display_name' => 'Meaning', 'name' => 'meaning'];
+            $column_descs [] = (object)['display_name' => 'Language', 'name' => 'language'];
+            $column_descs [] = (object)['display_name' => 'Etymon', 'name' => 'etymon'];
+            $column_descs [] = (object)['display_name' => 'Semantic Tag', 'name' => 'semantic_tag'];
+            $column_descs [] = (object)['display_name' => 'Number in DED', 'name' => 'Number in DED'];
+            $column_descs [] = (object)['display_name' => 'Parent Word', 'name' => 'Parent Word'];
+            $column_descs [] = (object)['display_name' => 'Parent Language', 'name' => 'Parent Language'];
+            $column_descs [] = (object)['display_name' => 'Dialect (Starling)', 'name' => 'Language (Starling)'];
+            $column_descs [] = (object)['display_name' => 'Notes', 'name' => 'Notes'];
         } else {
             $column_descs = [
                 (object)['display_name' => 'Root', 'name' => 'root'],
