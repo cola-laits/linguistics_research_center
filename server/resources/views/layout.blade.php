@@ -325,7 +325,7 @@ the page content is in <section class="main-section">
             <!-- Logo Social Media Row --><div class="row footer">
 <div class="small-12 medium-5 large-4 columns">
 <ul class="small-block-grid-1 logo-footer">
-<li><a data-gtm-event="nav-college-footer-cla" href="https://liberalarts.utexas.edu/index.php"><img alt="The University of Texas at Austin College of Liberal Arts" height="45" src="https://liberalarts.utexas.edu/_internal/images/2015_colafooter_logo.svg" width="280"/></a></li>
+<li><a data-gtm-event="nav-college-footer-cla" href="https://liberalarts.utexas.edu/"><img alt="The University of Texas at Austin College of Liberal Arts" height="45" src="https://liberalarts.utexas.edu/_internal/images/2015_colafooter_logo.svg" width="280"/></a></li>
 </ul>
 </div>
 </div>
@@ -336,9 +336,7 @@ the page content is in <section class="main-section">
 <div class="row">
 <div class="small-11 small-offset-1 columns end">
 
-<p class="address"><a data-gtm-event="nav-college-footer" href="https://www.utexas.edu/cio/policies/web-privacy">Web Privacy Policy</a><br/>
- <a data-gtm-event="nav-college-footer" href="https://www.utexas.edu/cio/policies/web-accessibility">Web Accessibility Policy</a><br/>
- <a data-gtm-event="nav-college-footer" href="https://www.utexas.edu/policies/dmca.html">&#169; Copyright</a> <span id="year">{{date('Y')}}</span></p>
+<p class="address">&#169; Copyright <span id="year">{{date('Y')}}</span></p>
 </div>
 </div>
 </div>
