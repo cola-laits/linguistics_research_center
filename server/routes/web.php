@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DatabaseExportController;
 use App\Http\Controllers\EieolGlossController;
 use App\Http\Controllers\EieolGlossedTextController;
 use App\Http\Controllers\EieolGlossedTextGlossController;
@@ -108,6 +109,10 @@ Route::controller(PublicIELexController::class)->group(function() {
 });
 
 Route::group(array('prefix'=> 'admin', 'middleware' => 'auth'), function() {
+    Route::post('/database-export', DatabaseExportController::class)
+        ->middleware('throttle:2,1')
+        ->name('admin.database-export');
+
     Route::resource('/issue', IssueController::class);
     Route::resource('/issue_comment', IssueCommentController::class);
 });
